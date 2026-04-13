@@ -1,8 +1,9 @@
 #pragma once
-#include "../CoreBase.h"
 #include "../../Common/Vector2.h"
 
-class ScreenShake : public CoreBase
+class SceneManager;
+
+class ScreenShake
 {
 public:
 
@@ -40,6 +41,9 @@ public:
 	const bool IsEnd() { return isEnd_; }
 
 private:
+
+	// シーン管理クラスの参照
+	SceneManager& scnMng_;
 
 	// 位置
 	Vector2 currentPos_;

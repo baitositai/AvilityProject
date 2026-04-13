@@ -9,7 +9,8 @@ namespace
 	std::mt19937 shakeRandom{ std::random_device{}() };
 }
 
-ScreenShake::ScreenShake()
+ScreenShake::ScreenShake() :
+	scnMng_(SceneManager::GetInstance())
 {
 	isEnd_ = false;
 	shakeTime_ = 0.0f;

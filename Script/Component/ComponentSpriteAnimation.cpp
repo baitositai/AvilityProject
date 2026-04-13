@@ -1,6 +1,6 @@
-#include "ControllerSpriteAnimation.h"
+#include "ComponentSpriteAnimation.h"
 
-ControllerSpriteAnimation::ControllerSpriteAnimation()
+ComponentSpriteAnimation::ComponentSpriteAnimation()
 {
 	animIndex_ = -1;
 	startIndex_ = -1;
@@ -11,11 +11,11 @@ ControllerSpriteAnimation::ControllerSpriteAnimation()
 	isPlay_ = false;
 }
 
-ControllerSpriteAnimation::~ControllerSpriteAnimation()
+ComponentSpriteAnimation::~ComponentSpriteAnimation()
 {
 }
 
-void ControllerSpriteAnimation::SetAnimParam(const int startIndex, const int finishIndex, const float animSpeed, const bool isLoop)
+void ComponentSpriteAnimation::SetAnimParam(const int startIndex, const int finishIndex, const float animSpeed, const bool isLoop)
 {
 	//設定する値が変わってない場合
 	if (startIndex_ == startIndex &&
@@ -35,7 +35,7 @@ void ControllerSpriteAnimation::SetAnimParam(const int startIndex, const int fin
 	animIndex_ = startIndex_;
 }
 
-void ControllerSpriteAnimation::Update()
+void ComponentSpriteAnimation::Update()
 {
 	//アニメーションが非再生の場合
 	if (!isPlay_) { return; }
@@ -58,7 +58,7 @@ void ControllerSpriteAnimation::Update()
 	animIndex_ = startIndex_ + static_cast<int>(animStep_) % animMax;
 }
 
-void ControllerSpriteAnimation::PlayAnimation()
+void ComponentSpriteAnimation::PlayAnimation()
 {
 	isPlay_ = true; //再生フラグを立てる
 	animStep_ = 0.0f; //ステップを初期化

@@ -1,6 +1,7 @@
 #pragma once
+#include "ComponentBase.h"
 
-class ControllerSpriteAnimation
+class ComponentSpriteAnimation : public ComponentBase
 {
 
 public:
@@ -8,12 +9,12 @@ public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	ControllerSpriteAnimation();
+	ComponentSpriteAnimation();
 
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~ControllerSpriteAnimation();
+	~ComponentSpriteAnimation() override;
 
 	/// <summary>
 	/// アニメーションパラメーターの設定
@@ -27,7 +28,7 @@ public:
 	/// <summary>
 	/// 更新処理
 	/// </summary>
-	void Update();
+	void Update() override;
 
 	/// <summary>
 	/// アニメーションの開始

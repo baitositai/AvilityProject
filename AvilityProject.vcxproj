@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Component\ComponentBase.cpp" />
     <ClCompile Include="Script\Application.cpp" />
     <ClCompile Include="Script\Common\CharacterString.cpp" />
     <ClCompile Include="Script\Common\Fader.cpp" />
@@ -155,13 +156,10 @@
     <ClCompile Include="Script\Common\Sprite.cpp" />
     <ClCompile Include="Script\Common\Vector2.cpp" />
     <ClCompile Include="Script\Common\Vector2F.cpp" />
-    <ClCompile Include="Script\Core\Common\CircleGauge.cpp" />
-    <ClCompile Include="Script\Core\Common\ControllerSpriteAnimation.cpp" />
-    <ClCompile Include="Script\Core\Common\ControllerTextAnimation.cpp" />
-    <ClCompile Include="Script\Core\Common\GlitchScreen.cpp" />
-    <ClCompile Include="Script\Core\Common\ScreenShake.cpp" />
-    <ClCompile Include="Script\Core\Common\Timer.cpp" />
-    <ClCompile Include="Script\Core\CoreBase.cpp" />
+    <ClCompile Include="Script\Object\Common\CircleGauge.cpp" />
+    <ClCompile Include="Script\Component\ComponentSpriteAnimation.cpp" />
+    <ClCompile Include="Script\Object\Common\ScreenShake.cpp" />
+    <ClCompile Include="Script\Object\Common\Timer.cpp" />
     <ClCompile Include="Script\FpsControl\FpsControl.cpp" />
     <ClCompile Include="Script\main.cpp" />
     <ClCompile Include="Script\Manager\Common\Camera.cpp" />
@@ -204,6 +202,7 @@
     <ClCompile Include="Script\Utility\UtilityLoad.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Component\ComponentBase.h" />
     <ClInclude Include="Script\Application.h" />
     <ClInclude Include="Script\Common\CharacterString.h" />
     <ClInclude Include="Script\Common\Fader.h" />
@@ -214,13 +213,10 @@
     <ClInclude Include="Script\Common\Sprite.h" />
     <ClInclude Include="Script\Common\Vector2.h" />
     <ClInclude Include="Script\Common\Vector2F.h" />
-    <ClInclude Include="Script\Core\Common\CircleGauge.h" />
-    <ClInclude Include="Script\Core\Common\ControllerSpriteAnimation.h" />
-    <ClInclude Include="Script\Core\Common\ControllerTextAnimation.h" />
-    <ClInclude Include="Script\Core\Common\GlitchScreen.h" />
-    <ClInclude Include="Script\Core\Common\ScreenShake.h" />
-    <ClInclude Include="Script\Core\Common\Timer.h" />
-    <ClInclude Include="Script\Core\CoreBase.h" />
+    <ClInclude Include="Script\Object\Common\CircleGauge.h" />
+    <ClInclude Include="Script\Component\ComponentSpriteAnimation.h" />
+    <ClInclude Include="Script\Object\Common\ScreenShake.h" />
+    <ClInclude Include="Script\Object\Common\Timer.h" />
     <ClInclude Include="Script\FpsControl\FpsControl.h" />
     <ClInclude Include="Script\Lib\DxLib\DxCompileConfig.h" />
     <ClInclude Include="Script\Lib\DxLib\DxDataType.h" />
