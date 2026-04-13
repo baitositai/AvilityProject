@@ -22,7 +22,7 @@ bool Application::Init()
 {
 
 	// アプリケーションの初期設定
-	SetWindowText(L"ERROR");
+	SetWindowText(L"AvilityProject");
 
 	// ウィンドウサイズ
 	SetGraphMode(SCREEN_SIZE_X, SCREEN_SIZE_Y, COLOR_DEPTH);
