@@ -145,6 +145,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Manager\Game\CollisionTags.cpp" />
+    <ClCompile Include="Script\Manager\Game\CollisionManager.cpp" />
+    <ClCompile Include="Script\Collider\ColliderType.cpp" />
+    <ClCompile Include="Script\Collider\ColliderBase.cpp" />
+    <ClCompile Include="Script\Object\Character\Player.cpp" />
+    <ClCompile Include="Script\Object\Character\CharacterBase.cpp" />
     <ClCompile Include="Script\Component\ComponentBase.cpp" />
     <ClCompile Include="Script\Application.cpp" />
     <ClCompile Include="Script\Common\CharacterString.cpp" />
@@ -200,8 +206,16 @@
     <ClCompile Include="Script\Utility\UtilityCommon.cpp" />
     <ClCompile Include="Script\Utility\UtilityDraw.cpp" />
     <ClCompile Include="Script\Utility\UtilityLoad.cpp" />
+    <ClCompile Include="Script\Object\Stage\Stage.cpp" />
+    <ClCompile Include="Script\Object\Stage\Tile\TileBase.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Manager\Game\CollisionTags.h" />
+    <ClInclude Include="Script\Manager\Game\CollisionManager.h" />
+    <ClInclude Include="Script\Collider\ColliderType.h" />
+    <ClInclude Include="Script\Collider\ColliderBase.h" />
+    <ClInclude Include="Script\Object\Character\Player.h" />
+    <ClInclude Include="Script\Object\Character\CharacterBase.h" />
     <ClInclude Include="Script\Component\ComponentBase.h" />
     <ClInclude Include="Script\Application.h" />
     <ClInclude Include="Script\Common\CharacterString.h" />
@@ -316,6 +330,8 @@
     <ClInclude Include="Script\Utility\UtilityDraw.h" />
     <ClInclude Include="Script\Utility\UtilityLoad.h" />
     <ClInclude Include="Script\Utility\UtilityTemplates.h" />
+    <ClInclude Include="Script\Object\Stage\Stage.h" />
+    <ClInclude Include="Script\Object\Stage\Tile\TileBase.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

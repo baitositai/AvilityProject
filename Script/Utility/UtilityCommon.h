@@ -131,13 +131,6 @@ public:
 	/// <param name="_end">終了位置</param>
 	/// <returns>変化量</returns>
 	static float EaseInOutBack(float _time, const float _totalTime, const float _start, const float _end);
-
-	/// <summary>
-	/// CSVファイルの読み込み
-	/// </summary>
-	/// <param name="filePath">ファイルパス</param>
-	/// <returns>読み込んだデータ</returns>
-	static std::vector<std::vector<int>> LoadCSVData(const std::wstring& filePath);
 	
 	/// <summary>
 	/// stringオブジェクトから(SJIS)からwstringオブジェクトに変換

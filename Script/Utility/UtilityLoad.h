@@ -18,6 +18,14 @@ public:
 	/// <returns></returns>
 	static std::string OpenFileDialog();
 
+
+	/// <summary>
+	/// CSVファイルの読み込み
+	/// </summary>
+	/// <param name="filePath">ファイルパス</param>
+	/// <returns>読み込んだデータ</returns>
+	static std::vector<std::vector<int>> LoadCSVData(const std::wstring& filePath);
+
 	/// <summary>
 	/// JSONデータを読み込んでMap型で要素を配列で返す
 	/// </summary>

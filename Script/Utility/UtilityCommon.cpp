@@ -375,47 +375,6 @@ float UtilityCommon::EaseInOutBack(float _time, const float _totalTime, const fl
     return distance * easedT + _start;
 }
 
-std::vector<std::vector<int>> UtilityCommon::LoadCSVData(const std::wstring& filePath)
-{
-    std::vector<std::vector<int>> csvData;
-
-    //ファイルの準備
-    std::wifstream ifs = std::wifstream(filePath);
-    // ifs.imbue(std::locale(std::locale(), new std::codecvt_utf8<wchar_t>)); // UTF-8対応
-    if (!ifs)
-    {
-        OutputDebugString(L"ステージのifstream準備失敗\n");
-        return csvData;
-    }
-
-    std::wstring line;
-
-    // CSVデータの読み込み
-    while (getline(ifs, line))
-    {
-        std::wstringstream lineStream(line);
-        std::wstring cell;
-        std::vector<int> row;
-
-        // 各セルをカンマで区切って取得し、数値に変換して行に追加
-        while (getline(lineStream, cell, L',')) {
-            try
-            {
-                row.push_back(std::stoi(cell));
-            }
-            catch (...)
-            {
-                row.push_back(0); // 数値変換失敗時は0を入れる
-            }
-        }
-        csvData.push_back(row); // 行を追加
-    }
-
-    ifs.close();
-
-    return csvData;
-}
-
 std::wstring UtilityCommon::GetWStringFromString(const std::string& str)
 {
     //根幹数を正しく使うには2回呼び出す必要がある
