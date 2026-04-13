@@ -46,12 +46,12 @@ std::string UtilityLoad::OpenFileDialog()
     return selected_path; 
 }
 
-std::vector<std::vector<int>> UtilityLoad::LoadCSVData(const std::wstring& filePath)
+std::vector<std::vector<int>> UtilityLoad::LoadCSVData(const std::string& filePath)
 {
     std::vector<std::vector<int>> csvData;
 
     //ファイルの準備
-    std::wifstream ifs = std::wifstream(filePath);
+    std::ifstream ifs = std::ifstream(filePath);
 
     if (!ifs)
     {
@@ -59,17 +59,17 @@ std::vector<std::vector<int>> UtilityLoad::LoadCSVData(const std::wstring& fileP
         return csvData;
     }
 
-    std::wstring line;
+    std::string line;
 
     // CSVデータの読み込み
     while (getline(ifs, line))
     {
-        std::wstringstream lineStream(line);
-        std::wstring cell;
+        std::stringstream lineStream(line);
+        std::string cell;
         std::vector<int> row;
 
         // 各セルをカンマで区切って取得し、数値に変換して行に追加
-        while (getline(lineStream, cell, L',')) {
+        while (getline(lineStream, cell, ',')) {
             try
             {
                 row.push_back(std::stoi(cell));

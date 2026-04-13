@@ -145,6 +145,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Manager\Game\EnemyManager.cpp" />
+    <ClCompile Include="Script\Manager\Game\PlayerManager.cpp" />
+    <ClCompile Include="Script\Scene\Game\GameStateBoss.cpp" />
+    <ClCompile Include="Script\Scene\Game\GameStateEvent.cpp" />
+    <ClCompile Include="Script\Scene\Game\GameStateRoad.cpp" />
+    <ClCompile Include="Script\Scene\Game\GameStateBase.cpp" />
+    <ClCompile Include="Script\Manager\Game\GameManager.cpp" />
     <ClCompile Include="Script\Manager\Game\CollisionTags.cpp" />
     <ClCompile Include="Script\Manager\Game\CollisionManager.cpp" />
     <ClCompile Include="Script\Collider\ColliderType.cpp" />
@@ -210,6 +217,13 @@
     <ClCompile Include="Script\Object\Stage\Tile\TileBase.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Manager\Game\EnemyManager.h" />
+    <ClInclude Include="Script\Manager\Game\PlayerManager.h" />
+    <ClInclude Include="Script\Scene\Game\GameStateBoss.h" />
+    <ClInclude Include="Script\Scene\Game\GameStateEvent.h" />
+    <ClInclude Include="Script\Scene\Game\GameStateRoad.h" />
+    <ClInclude Include="Script\Scene\Game\GameStateBase.h" />
+    <ClInclude Include="Script\Manager\Game\GameManager.h" />
     <ClInclude Include="Script\Manager\Game\CollisionTags.h" />
     <ClInclude Include="Script\Manager\Game\CollisionManager.h" />
     <ClInclude Include="Script\Collider\ColliderType.h" />

@@ -7,6 +7,10 @@
 #include "../Manager/Common/FontManager.h"
 #include "../Manager/Common/SoundManager.h"
 #include "../Manager/Common/ScoreManager.h"
+#include "../Manager/Game/CollisionManager.h"
+#include "../Manager/Game/EnemyManager.h"
+#include "../Manager/Game/GameManager.h"
+#include "../Manager/Game/PlayerManager.h"
 #include "../Utility/UtilityCommon.h"
 #include "ScenePause.h"
 #include "SceneGame.h"
@@ -18,6 +22,9 @@ SceneGame::SceneGame()
 
 	// 描画関数のセット
 	drawFunc_ = std::bind(&SceneGame::LoadingDraw, this);
+
+	// 管理クラスの生成
+	GameManager::CreateInstance();
 }
 
 SceneGame::~SceneGame()
@@ -29,8 +36,8 @@ void SceneGame::Init()
 	// カメラ設定
 	mainCamera.ChangeMode(Camera::MODE::FIXED_POINT); 
 
-	// BGMの再生
-	//sndMng_.PlayBgm(SoundType::BGM::GAME);
+	// 管理クラスの初期化
+	GameManager::GetInstance().Init();
 }
 
 void SceneGame::NormalUpdate()
@@ -42,6 +49,9 @@ void SceneGame::NormalUpdate()
 	//	return;
 	//}
 
+	// 管理クラスの更新
+	GameManager::GetInstance().Update();
+
 #ifdef _DEBUG	
 
 	DebugUpdate();
@@ -51,9 +61,15 @@ void SceneGame::NormalUpdate()
 
 void SceneGame::NormalDraw()
 {	
+	// 管理クラスの描画
+	GameManager::GetInstance().Draw();
+
 #ifdef _DEBUG
 
 	DebugDraw();
+
+	// デバッグ用の当たり判定描画
+	GameManager::GetInstance().DebugDraw();
 
 #endif
 }
@@ -83,9 +99,6 @@ void SceneGame::DebugDraw()
 	constexpr int INIT_POS_Y = 60;
 	constexpr int OFFSET_Y = 20;
 	int posY = INIT_POS_Y;
-
-	// 背景
-	DrawBox(0, 0, Application::SCREEN_SIZE_X, Application::SCREEN_SIZE_Y, UtilityCommon::CYAN, true);
 	
 	// カメラ位置
 	VECTOR cPos = mainCamera.GetPos();

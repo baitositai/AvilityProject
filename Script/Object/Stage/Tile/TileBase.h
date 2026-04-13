@@ -15,9 +15,13 @@ public:
 	// パラメータ
 	struct Parameter
 	{
+		int id = -1;
 		TYPE type = TYPE::NONE;
 		Vector2	position = Vector2(0, 0);
-	};
+	};	
+	
+	// タイルのサイズ
+	static constexpr int SIZE_TILE = 32;
 
 	/// <summary>
 	/// コンストラクタ
@@ -45,9 +49,6 @@ public:
 	virtual void DebugDraw();
 
 private:
-	
-	// タイルのサイズ
-	static constexpr int SIZE_TILE = 32;	
 
 	// パラメータ情報
 	Parameter parameter_;
