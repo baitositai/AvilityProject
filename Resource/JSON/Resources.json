@@ -43,8 +43,8 @@
     {
       "key": "player",
       "sceneId": 2,
-      "type": "model",
-      "path": "Resource/Model/Player/Player.mv1"
+      "type": "texture",
+      "path": "Resource/Image/Player/Player.png"
     },
     {
       "key": "bgmTitle",
@@ -76,7 +76,7 @@
     },
     {
       "key": "titleLogo",
-      "path": "Resource/Image/TitleLogo.png",
+      "path": "Resource/Image/BackGround/TitleLogo.png",
       "sceneId": 1,
       "type": "texture"
     }

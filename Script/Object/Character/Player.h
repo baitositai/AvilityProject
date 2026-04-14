@@ -1,11 +1,6 @@
 #pragma once
 #include "CharacterBase.h"
 
-struct PlayerParameter : public CharacterParameterBase
-{
-	CharacterParameterBase base;	// 基本パラメータ
-};
-
 class Player : public CharacterBase
 {
 public:
@@ -14,7 +9,7 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="parameter">パラメータ情報</param>
-	Player(const PlayerParameter& parameter);
+	Player(const Parameter& parameter);
 
 	/// <summary>
 	/// デストラクタ
@@ -37,9 +32,6 @@ public:
 	void Draw() override;
 
 private:
-
-	// パラメータ
-	PlayerParameter parameter_;
 
 };
 

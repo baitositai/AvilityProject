@@ -1,6 +1,8 @@
+#include "../../Component/ComponentSpriteAnimation.h"
 #include "CharacterBase.h"
 
-CharacterBase::CharacterBase()
+CharacterBase::CharacterBase(const Parameter& parameter) :
+	parameter_(parameter)
 {
 }
 
@@ -14,6 +16,7 @@ void CharacterBase::Init()
 
 void CharacterBase::Update()
 {
+	spriteAnimation_->Update();
 }
 
 void CharacterBase::Draw()

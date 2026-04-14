@@ -1,7 +1,7 @@
 #include "Player.h"
 
-Player::Player(const PlayerParameter& parameter) :
-	parameter_(parameter)
+Player::Player(const Parameter& parameter) :
+	CharacterBase(parameter)
 {
 }
 
