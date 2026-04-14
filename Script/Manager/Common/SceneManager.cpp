@@ -132,7 +132,7 @@ void SceneManager::Draw()
 	ClearDrawScreen();
 
 	// カメラ設定
-	camera_->SetBeforeDraw();
+	//camera_->SetBeforeDraw();
 
 	// Effekseerにより再生中のエフェクトを更新する。
 	UpdateEffekseer3D();
@@ -144,7 +144,7 @@ void SceneManager::Draw()
 	}
 
 	// 主にポストエフェクト用
-	camera_->Draw();
+	//camera_->Draw();
 
 	// Effekseerにより再生中のエフェクトを描画する。
 	DrawEffekseer3D();
@@ -156,7 +156,7 @@ void SceneManager::Draw()
 	SetDrawScreen(DX_SCREEN_BACK);
 
 	// カメラ設定
-	camera_->CameraSetting();
+	//camera_->CameraSetting();
 
 	// メインスクリーンを描画
 	DrawGraph(screenPos_.x, screenPos_.y, mainScreen_, true);

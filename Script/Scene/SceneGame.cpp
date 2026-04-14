@@ -29,6 +29,8 @@ SceneGame::SceneGame()
 
 SceneGame::~SceneGame()
 {
+	// 管理クラスの解放
+	GameManager::Destroy();
 }
 
 void SceneGame::Init()
@@ -65,11 +67,11 @@ void SceneGame::NormalDraw()
 	GameManager::GetInstance().Draw();
 
 #ifdef _DEBUG
-
-	DebugDraw();
-
 	// デバッグ用の当たり判定描画
 	GameManager::GetInstance().DebugDraw();
+
+	// デバッグ用の情報描画
+	DebugDraw();
 
 #endif
 }
@@ -92,6 +94,34 @@ void SceneGame::DebugUpdate()
 		scnMng_.ChangeScene(SceneManager::SCENE_ID::RESULT);
 		return;
 	}
+
+	// カメラモード切替
+	switch (mainCamera.GetMode())
+	{
+		case Camera::MODE::FREE:
+		if (inputMng_.IsTrgDown(InputManager::TYPE::DEBUG_CAMERA_CHANGE))
+		{
+			mainCamera.ChangeMode(Camera::MODE::FIXED_POINT);
+		}
+		break;
+
+		case Camera::MODE::FIXED_POINT:
+		if (inputMng_.IsTrgDown(InputManager::TYPE::DEBUG_CAMERA_CHANGE))
+		{
+			mainCamera.ChangeMode(Camera::MODE::PLAYER_FOLLOW);
+		}
+		break;
+
+		case Camera::MODE::PLAYER_FOLLOW:
+		if (inputMng_.IsTrgDown(InputManager::TYPE::DEBUG_CAMERA_CHANGE))
+		{
+			mainCamera.ChangeMode(Camera::MODE::FREE);
+		}
+		break;
+
+		default:
+		break;
+	}
 }
 
 void SceneGame::DebugDraw()
@@ -101,15 +131,9 @@ void SceneGame::DebugDraw()
 	int posY = INIT_POS_Y;
 	
 	// カメラ位置
-	VECTOR cPos = mainCamera.GetPos();
-	VECTOR cTarget = mainCamera.GetTargetPos();
-	VECTOR cAngles = mainCamera.GetAngles();
+	Vector2F cPos = mainCamera.GetPos();
 
 	// 描画
-	DrawFormatString(0, posY, UtilityCommon::RED, L"カメラ位置：%2f,%2f,%2f", cPos.x, cPos.y, cPos.z);
-	posY += OFFSET_Y;
-	DrawFormatString(0, posY, UtilityCommon::RED, L"注視点位置：%2f,%2f,%2f", cTarget.x, cTarget.y, cTarget.z);
-	posY += OFFSET_Y;
-	DrawFormatString(0, posY, UtilityCommon::RED, L"カメラ角度：%2f,%2f,%2f", cAngles.x, cAngles.y, cAngles.z);
+	DrawFormatString(0, posY, UtilityCommon::RED, L"カメラ位置：%2f,%2f", cPos.x, cPos.y);
 	posY += OFFSET_Y;
 }

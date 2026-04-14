@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Manager\Common\Camera.cpp" />
     <ClCompile Include="Script\Manager\Game\EnemyManager.cpp" />
     <ClCompile Include="Script\Manager\Game\PlayerManager.cpp" />
     <ClCompile Include="Script\Scene\Game\GameStateBoss.cpp" />
@@ -175,7 +176,6 @@
     <ClCompile Include="Script\Object\Common\Timer.cpp" />
     <ClCompile Include="Script\FpsControl\FpsControl.cpp" />
     <ClCompile Include="Script\main.cpp" />
-    <ClCompile Include="Script\Manager\Common\Camera.cpp" />
     <ClCompile Include="Script\Manager\Common\EffectManager.cpp" />
     <ClCompile Include="Script\Manager\Common\EffectType.cpp" />
     <ClCompile Include="Script\Manager\Common\FontManager.cpp" />
@@ -217,6 +217,7 @@
     <ClCompile Include="Script\Object\Stage\Tile\TileBase.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Manager\Common\Camera.h" />
     <ClInclude Include="Script\Manager\Game\EnemyManager.h" />
     <ClInclude Include="Script\Manager\Game\PlayerManager.h" />
     <ClInclude Include="Script\Scene\Game\GameStateBoss.h" />
@@ -304,7 +305,6 @@
     <ClInclude Include="Script\Lib\nlohmann\thirdparty\hedley\hedley.hpp" />
     <ClInclude Include="Script\Lib\nlohmann\thirdparty\hedley\hedley_undef.hpp" />
     <ClInclude Include="Script\main.h" />
-    <ClInclude Include="Script\Manager\Common\Camera.h" />
     <ClInclude Include="Script\Manager\Common\EffectManager.h" />
     <ClInclude Include="Script\Manager\Common\EffectType.h" />
     <ClInclude Include="Script\Manager\Common\FontManager.h" />

@@ -7,8 +7,7 @@
 ActorBase::ActorBase() :
 	scnMng_(SceneManager::GetInstance()),
 	sndMng_(SoundManager::GetInstance()),
-	resMng_(ResourceManager::GetInstance()),
-	inputMng_(InputManager::GetInstance())
+	resMng_(ResourceManager::GetInstance())
 {
 
 }

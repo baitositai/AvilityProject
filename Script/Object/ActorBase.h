@@ -41,7 +41,6 @@ protected:
 	SceneManager& scnMng_;
 	ResourceManager& resMng_;
 	SoundManager& sndMng_;
-	InputManager& inputMng_;
 
 	// トランスフォーム
 	Transform transform_;
