@@ -1,5 +1,7 @@
 #pragma once
 
+class ActorBase;
+
 class ComponentBase
 {
 public:
@@ -7,7 +9,8 @@ public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	ComponentBase();
+	/// <param name="owner">所有者</param>
+	ComponentBase(ActorBase* owner);
 
 	/// <summary>
 	/// デストラクタ
@@ -19,6 +22,8 @@ public:
 	/// </summary>
 	virtual void Update() {};
 
-private:
+protected:
+
+	ActorBase* owner_;
 };
 

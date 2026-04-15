@@ -1,6 +1,7 @@
 #include "ComponentBase.h"
 
-ComponentBase::ComponentBase()
+ComponentBase::ComponentBase(ActorBase* owner) :
+	owner_(owner)
 {
 }
 

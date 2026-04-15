@@ -1,28 +1,38 @@
 #pragma once
+#include <functional>
+#include <unordered_map>
 #include "../ActorBase.h"
 #include "../../Common/Vector2.h"
 #include "../../Common/Vector2F.h"
 
-class ComponentSpriteAnimation;
+class ComponentBase;
 
 class CharacterBase : public ActorBase
 {
 public:
 	
 	// キャラクターの共通パラメータ
-	struct Parameter
+	struct Parameter : public ActorBase::Parameter
 	{
 		int hp = -1;				// 体力
 		int attackPower = -1;		// 攻撃力
-		float moveSpeed = 0.0f;		// 移動速度
-		Vector2F pos = {};			// 位置
+	};
+
+	// キャラクター共通の状態
+	enum class STATE
+	{
+		RESPAWN,	// 復活
+		ALIVE,		// 生存
+		DEAD,		// 死亡
+		MAX
 	};
 	
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="parameter">パラメータ情報</param>
-	CharacterBase(const Parameter& parameter);
+	/// <param name="componentNameList">コンポーネント生成用名前リスト</param>
+	CharacterBase(Parameter* parameter, const std::vector<std::string> componentNameList);
 
 	/// <summary>
 	/// デストラクタ
@@ -30,7 +40,7 @@ public:
 	virtual ~CharacterBase();
 
 	/// <summary>
-	/// 初期化
+	/// 初期化処理
 	/// </summary>
 	virtual void Init() override;
 
@@ -40,25 +50,35 @@ public:
 	virtual void Update() override;
 
 	/// <summary>
-	/// 描画処理
+	/// 状態遷移処理
 	/// </summary>
-	virtual void Draw() override;
+	/// <param name="state">状態</param>
+	void ChangeState(const STATE state);
 
-	/// <summary>
-	/// パラメータを返す
-	/// </summary>
-	/// <returns>パラメータ</returns>
-	const Parameter& GetParameter() const { return parameter_; }
+protected:	
+	
+	// キャラクターの状態
+	STATE state_;
 
-protected:
-
+private:		
+	
 	// キャラクターのパラメータ
-	Parameter parameter_;
+	Parameter* characterParameterPtr_;	
 
-private:
+	// 状態別更新処理
+	std::function<void()> updateStateFunction_;
 
-	// スプライトアニメーションコンポーネント
-	std::unique_ptr<ComponentSpriteAnimation> spriteAnimation_;
+	// 状態遷移管理マップ
+	std::unordered_map<STATE, std::function<void()>> stateChangeMap_;
 
+	// 状態別遷移処理
+	void ChangeStateRespawn();
+	void ChangeStateAlive();
+	void ChangeStateDead();
+
+	// 状態別更新処理
+	void UpdateStateRespawn();
+	void UpdateStateAlive();
+	void UpdateStateDead();
 };
 

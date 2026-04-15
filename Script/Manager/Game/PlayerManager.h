@@ -1,5 +1,8 @@
 #pragma once
+#include <vector>
 #include "../../Template/Singleton.h"
+
+class Player;
 
 class PlayerManager : public Singleton<PlayerManager>
 {
@@ -30,11 +33,12 @@ public:
 
 private:
 
+	// プレイヤーのリスト
+	std::vector<std::unique_ptr<Player>> playerList_;
+
 	// コンストラクタ
 	PlayerManager();
 
 	// デストラクタ
 	~PlayerManager();
-
 };
-

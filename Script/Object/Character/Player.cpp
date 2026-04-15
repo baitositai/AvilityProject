@@ -1,7 +1,8 @@
 #include "Player.h"
 
-Player::Player(const Parameter& parameter) :
-	CharacterBase(parameter)
+Player::Player(const Parameter& parameter, const std::vector<std::string> componentNameList):
+	parameter_(parameter),
+	CharacterBase(&parameter_, componentNameList)
 {
 }
 
@@ -14,9 +15,5 @@ void Player::Init()
 }
 
 void Player::Update()
-{
-}
-
-void Player::Draw()
 {
 }

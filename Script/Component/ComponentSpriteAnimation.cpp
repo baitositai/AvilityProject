@@ -1,66 +1,41 @@
+#include "../Object/ActorBase.h"
 #include "ComponentSpriteAnimation.h"
 
-ComponentSpriteAnimation::ComponentSpriteAnimation()
+ComponentSpriteAnimation::ComponentSpriteAnimation(ActorBase& owner) :
+	ComponentBase(&owner)
 {
-	animIndex_ = -1;
-	startIndex_ = -1;
-	finishIndex_ = -1;
 	animStep_ = 0.0f;
-	animSpeed_ = 0.0f;
-	isLoop_ = false;
-	isPlay_ = false;
 }
 
 ComponentSpriteAnimation::~ComponentSpriteAnimation()
 {
 }
 
-void ComponentSpriteAnimation::SetAnimParam(const int startIndex, const int finishIndex, const float animSpeed, const bool isLoop)
-{
-	//設定する値が変わってない場合
-	if (startIndex_ == startIndex &&
-		finishIndex_ == finishIndex &&
-		animSpeed_ == animSpeed)
-	{
-		return;
-	}
-
-	//設定
-	startIndex_ = startIndex;
-	finishIndex_ = finishIndex;
-	animSpeed_ = animSpeed;
-	isLoop_ = isLoop;
-
-	//初期化
-	animIndex_ = startIndex_;
-}
-
 void ComponentSpriteAnimation::Update()
 {
+	// アニメーション情報の取得
+	ActorBase::ParameterAnimation parameterAnimation = owner_->GetParameterAnimation();
+
 	//アニメーションが非再生の場合
-	if (!isPlay_) { return; }
+	if (!parameterAnimation.isPlay) { return; }
 
 	//アニメーション終了かつループを行わない場合
-	if (animIndex_ == finishIndex_ && !isLoop_)
+	if (parameterAnimation.animationIndex == parameterAnimation.animationFinishIndex && !parameterAnimation.isLoop)
 	{
-		isPlay_ = false;	//再生しない
+		parameterAnimation.isPlay = false;	//再生しない
 		animStep_ = 0.0f;	//初期化
 		return;				//処理終了
 	}
 
 	//ステップ更新
-	animStep_ += animSpeed_;
+	animStep_ += parameterAnimation.animationSpeed;
 
 	//アニメーション最大値を入手
-	int animMax = finishIndex_ + 1 - startIndex_;
+	int animMax = parameterAnimation.animationFinishIndex + 1 - parameterAnimation.animationStartIndex;
 
-	//アニメーション設定
-	animIndex_ = startIndex_ + static_cast<int>(animStep_) % animMax;
-}
+	//アニメーション番号の割り当て
+	parameterAnimation.animationIndex = parameterAnimation.animationStartIndex + static_cast<int>(animStep_) % animMax;
 
-void ComponentSpriteAnimation::PlayAnimation()
-{
-	isPlay_ = true; //再生フラグを立てる
-	animStep_ = 0.0f; //ステップを初期化
-	animIndex_ = startIndex_; //アニメーションインデックスを開始位置に設定
+	// アニメーション情報の更新
+	owner_->SetAnimationIndex(parameterAnimation.animationIndex);
 }

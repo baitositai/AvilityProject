@@ -1,0 +1,38 @@
+#include "FactoryComponent.h"
+
+FactoryComponent::FactoryComponent()
+{
+    // ê∂ê¨èàóùÇÃìoò^
+    componentCreateMap_.emplace("spriteAnimation", std::bind(&FactoryComponent::CreateComponentSpriteAnimation(), this));
+    componentCreateMap_.emplace("actionPlayer", std::bind(&FactoryComponent::CreateComponentActionPlayer(), this));
+}
+
+FactoryComponent::~FactoryComponent()
+{
+}
+
+std::unique_ptr<ComponentBase> FactoryComponent::CreateComponent(const std::string& name)
+{
+    // ïKóvÇ∆Ç∑ÇÈÇ‡ÇÃÇ™Ç†ÇÈÇ©íTçı
+    auto it = componentCreateMap_.find(name);
+
+    // Ç†ÇÈèÍçá
+    if (it != componentCreateMap_.end())
+    {
+        // ê∂ê¨ÇµÇΩÇ‡ÇÃÇï‘Ç∑
+        return it->second();
+    }
+
+    // å©Ç¬Ç©ÇÁÇ»Ç¢èÍçáãÛÇ≈ï‘Ç∑
+    return nullptr;
+}
+
+std::unique_ptr<ComponentSpriteAnimation> FactoryComponent::CreateComponentSpriteAnimation()
+{
+    return std::make_unique<ComponentSpriteAnimation>();
+}
+
+std::unique_ptr<ComponentActionPlayer> FactoryComponent::CreateComponentActionPlayer()
+{
+    return std::make_unique<ComponentActionPlayer>();
+}

@@ -1,31 +1,24 @@
 #pragma once
 #include "ComponentBase.h"
 
-class ActorBase;
-
-class ComponentSpriteAnimation : public ComponentBase
+class ComponentMove : public ComponentBase
 {
-
 public:
 
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	ComponentSpriteAnimation(ActorBase& owner);
-
+	ComponentMove(ActorBase& owner);
+	
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~ComponentSpriteAnimation() override;
-
+	~ComponentMove() override;
+	
 	/// <summary>
 	/// 更新処理
 	/// </summary>
 	void Update() override;
 
-private:
-
-	//アニメーションステップ
-	float animStep_;
 };
 

@@ -5,11 +5,16 @@ class Player : public CharacterBase
 {
 public:
 
+	struct Parameter : public CharacterBase::Parameter
+	{
+	};
+
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="parameter">パラメータ情報</param>
-	Player(const Parameter& parameter);
+	/// <param name="componentNameList">コンポーネント生成用名前リスト</param>
+	Player(const Parameter& parameter, const std::vector<std::string> componentNameList);
 
 	/// <summary>
 	/// デストラクタ
@@ -26,12 +31,8 @@ public:
 	/// </summary>
 	void Update() override;
 
-	/// <summary>
-	/// 描画処理
-	/// </summary>
-	void Draw() override;
-
 private:
 
+	// パラメータ情報
+	Parameter parameter_;
 };
-
