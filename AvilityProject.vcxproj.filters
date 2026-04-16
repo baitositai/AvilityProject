@@ -198,10 +198,7 @@
     <ClCompile Include="Script\Manager\Game\CollisionTags.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Script\Object\Stage\Stage.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Script\Object\Stage\Tile\TileBase.cpp">
+    <ClCompile Include="Script\Object\Tile\TileBase.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Script\Manager\Game\GameManager.cpp">
@@ -237,7 +234,7 @@
     <ClCompile Include="Script\Component\ComponentMove.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Script\Manager\Game\TileManager.cpp">
+    <ClCompile Include="Script\Manager\Game\StageManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -602,10 +599,7 @@
     <ClInclude Include="Script\Manager\Game\CollisionTags.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Script\Object\Stage\Stage.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Script\Object\Stage\Tile\TileBase.h">
+    <ClInclude Include="Script\Object\Tile\TileBase.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Script\Manager\Game\GameManager.h">
@@ -641,7 +635,7 @@
     <ClInclude Include="Script\Component\ComponentMove.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Script\Manager\Game\TileManager.h">
+    <ClInclude Include="Script\Manager\Game\StageManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

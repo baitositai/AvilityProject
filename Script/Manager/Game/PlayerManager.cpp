@@ -39,7 +39,7 @@ void PlayerManager::DebugDraw()
 PlayerManager::PlayerManager()
 {
 	// 情報の取得
-	const auto jsonParameterMap = UtilityLoad::GetJsonMapArrayData("PlayerParameter.json");
+	const auto jsonParameterMap = UtilityLoad::GetJsonMapArrayData("PlayerParameter");
 	const auto jsonPparameter = jsonParameterMap.at("player").front();
 
 	// プレイヤーのパラメータ

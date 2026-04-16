@@ -15,6 +15,9 @@ ComponentActionPlayer::~ComponentActionPlayer()
 
 void ComponentActionPlayer::Update()
 {
+	// ˆÚ“®—Ê‚Ì‰Šú‰»
+	moveAmount_ = {};
+
 	// “ü—Íˆ—
 	ProcessInputMove();
 

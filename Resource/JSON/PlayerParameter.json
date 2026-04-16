@@ -1,7 +1,7 @@
 {
   "player": {
-    "componentList": [
-      "playerAction",
+    "componentNameList": [
+      "actionPlayer",
       "move",
       "spriteAnimation"
     ],

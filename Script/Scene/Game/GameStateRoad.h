@@ -7,8 +7,7 @@ public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	/// <param name="stage">ステージクラス</param>
-	GameStateRoad(Stage& stage);
+	GameStateRoad();
 	
 	/// <summary>
 	/// デストラクタ

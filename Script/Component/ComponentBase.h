@@ -20,7 +20,7 @@ public:
 	/// <summary>
 	/// XVˆ—
 	/// </summary>
-	virtual void Update() {};
+	virtual void Update();
 
 protected:
 

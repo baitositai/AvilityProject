@@ -12,8 +12,10 @@ Player::~Player()
 
 void Player::Init()
 {
+	CharacterBase::Init();
 }
 
 void Player::Update()
 {
+	CharacterBase::Update();
 }

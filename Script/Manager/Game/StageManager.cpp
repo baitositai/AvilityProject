@@ -1,23 +1,12 @@
 #include <algorithm>
 #include "../../Application.h"
-#include "../../Manager/Common/Camera.h"
-#include "../../Manager/Common/SceneManager.h"
 #include "../../Utility/UtilityLoad.h"
-#include "Tile/TileBase.h"
-#include "Stage.h"
+#include "../../Object/Tile/TileBase.h"
+#include "../Common/Camera.h"
+#include "../Common/SceneManager.h"
+#include "StageManager.h"
 
-Stage::Stage()
-{	
-	type_ = TYPE::NONE;
-	tileNums_ = Vector2(0, 0);
-	stageSize_ = Vector2(0, 0);
-}
-
-Stage::~Stage()
-{
-}
-
-void Stage::Init()
+void StageManager::Init()
 {
 	// タイルの初期化
 	for (const auto& tileRow : tiles_)
@@ -29,11 +18,11 @@ void Stage::Init()
 	}
 }
 
-void Stage::Update()
+void StageManager::Update()
 {
 }
 
-void Stage::Draw()
+void StageManager::Draw()
 {
 	// 描画範囲の取得
 	Vector2 rangeMin, rangeMax;
@@ -48,7 +37,7 @@ void Stage::Draw()
 	}
 }
 
-void Stage::ChageStage(const TYPE type)
+void StageManager::ChageStage(const TYPE type)
 {
 	// 種類の定義
 	type_ = type;
@@ -57,7 +46,7 @@ void Stage::ChageStage(const TYPE type)
 	SetStage();
 }
 
-void Stage::DebugDraw()
+void StageManager::DebugDraw()
 {
 	// タイルの仮描画
 	for (int i = 0; i < tileNums_.x; i++)
@@ -69,7 +58,7 @@ void Stage::DebugDraw()
 	}
 }
 
-void Stage::SetStage()
+void StageManager::SetStage()
 {
 	// タイルの読み込み
 	const std::vector<std::vector<int>> chipIds = UtilityLoad::LoadCSVData(Application::PATH_CSV + STAGE_PATH_MAP.at(type_));
@@ -102,19 +91,19 @@ void Stage::SetStage()
 	stageSize_.y = tileNums_.y * TileBase::SIZE_TILE;
 }
 
-void Stage::ClearStage()
+void StageManager::ClearStage()
 {
 	// タイルの配列が空の場合
 	if (tiles_.empty())
 	{
 		return;
 	}
-	
+
 	// タイルの配列をクリア
 	tiles_.clear();
 }
 
-void Stage::GetDrawRange(Vector2& rangeMin, Vector2& rangeMax)
+void StageManager::GetDrawRange(Vector2& rangeMin, Vector2& rangeMax)
 {
 	// カメラの位置を取得
 	Vector2F cameraPosF = mainCamera.GetPos();
@@ -136,4 +125,12 @@ void Stage::GetDrawRange(Vector2& rangeMin, Vector2& rangeMax)
 	rangeMin.y = std::clamp(rangeMin.y, 0, tileNums_.y - 1);
 	rangeMax.x = std::clamp(rangeMax.x, 0, tileNums_.x - 1);
 	rangeMax.y = std::clamp(rangeMax.y, 0, tileNums_.y - 1);
+}
+
+StageManager::StageManager()
+{
+}
+
+StageManager::~StageManager()
+{
 }

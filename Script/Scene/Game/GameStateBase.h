@@ -3,7 +3,7 @@
 class PlayerManager;
 class EnemyManager;
 class CollisionManager;
-class Stage;
+class StageManager;
 
 class GameStateBase
 {
@@ -12,8 +12,7 @@ public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	/// <param name="stage">ステージクラス</param>
-	GameStateBase(Stage& stage);
+	GameStateBase();
 
 	/// <summary>
 	/// デストラクタ
@@ -51,6 +50,6 @@ protected:
 	// 衝突管理
 	CollisionManager& collisionMng_;
 	
-	// ステージ
-	Stage& stage_;
+	// ステージ管理
+	StageManager& stageMng_;
 };

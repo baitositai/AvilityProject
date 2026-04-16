@@ -217,9 +217,8 @@
     <ClCompile Include="Script\Utility\UtilityCommon.cpp" />
     <ClCompile Include="Script\Utility\UtilityDraw.cpp" />
     <ClCompile Include="Script\Utility\UtilityLoad.cpp" />
-    <ClCompile Include="Script\Object\Stage\Stage.cpp" />
-    <ClCompile Include="Script\Object\Stage\Tile\TileBase.cpp" />
-    <ClCompile Include="Script\Manager\Game\TileManager.cpp" />
+    <ClCompile Include="Script\Object\Tile\TileBase.cpp" />
+    <ClCompile Include="Script\Manager\Game\StageManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\Component\ComponentMove.h" />
@@ -353,9 +352,8 @@
     <ClInclude Include="Script\Utility\UtilityDraw.h" />
     <ClInclude Include="Script\Utility\UtilityLoad.h" />
     <ClInclude Include="Script\Utility\UtilityTemplates.h" />
-    <ClInclude Include="Script\Object\Stage\Stage.h" />
-    <ClInclude Include="Script\Object\Stage\Tile\TileBase.h" />
-    <ClInclude Include="Script\Manager\Game\TileManager.h" />
+    <ClInclude Include="Script\Object\Tile\TileBase.h" />
+    <ClInclude Include="Script\Manager\Game\StageManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

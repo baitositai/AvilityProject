@@ -8,3 +8,7 @@ ComponentBase::ComponentBase(ActorBase* owner) :
 ComponentBase::~ComponentBase()
 {
 }
+
+void ComponentBase::Update()
+{
+}

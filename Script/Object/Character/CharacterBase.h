@@ -37,7 +37,7 @@ public:
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	virtual ~CharacterBase();
+	virtual ~CharacterBase() override;
 
 	/// <summary>
 	/// 初期化処理
@@ -48,6 +48,11 @@ public:
 	/// 更新処理
 	/// </summary>
 	virtual void Update() override;
+
+	/// <summary>
+	/// デバッグ描画
+	/// </summary>
+	virtual void DebugDraw() override;
 
 	/// <summary>
 	/// 状態遷移処理

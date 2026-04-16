@@ -5,7 +5,6 @@
 #include "../../Template/Singleton.h"
 
 class GameStateBase;
-class Stage;
 
 class GameManager : public Singleton<GameManager>
 {
@@ -53,9 +52,6 @@ private:
 
 	// 現在の状態
 	STATE state_;	
-	
-	// ステージ
-	std::unique_ptr<Stage> stage_;
 
 	// 状態遷移の関数マップ
 	std::unordered_map<STATE, std::function<void()>> changeStateMap_;

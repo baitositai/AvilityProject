@@ -8,8 +8,7 @@ public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	/// <param name="stage">ステージクラス</param>
-	GameStateEvent(Stage& stage);
+	GameStateEvent();
 
 	/// <summary>
 	/// デストラクタ

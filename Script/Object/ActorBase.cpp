@@ -6,17 +6,12 @@
 #include "ActorBase.h"
 
 ActorBase::ActorBase(Parameter* parameter, const std::vector<std::string>& componentNameList) :
+	DEFAULT_COMPONENT_CREATE_LIST(componentNameList),
 	actorParameterPtr_(parameter),
 	scnMng_(SceneManager::GetInstance()),
 	sndMng_(SoundManager::GetInstance()),
 	resMng_(ResourceManager::GetInstance())
 {
-	// 必要なコンポーネントの生成
-	std::unique_ptr<FactoryComponent> factoryComponent = std::make_unique<FactoryComponent>();
-	for (const std::string& name : componentNameList)
-	{
-		AddComponent(name, factoryComponent->CreateComponent(name));
-	}
 }
 
 ActorBase::~ActorBase()
@@ -26,20 +21,24 @@ ActorBase::~ActorBase()
 
 void ActorBase::Init()
 {
-
+	CreateComponents();
 }
 
 void ActorBase::Update()
 {
+	if (componentMap_.empty()) return;
+
 	for (const auto& componet : componentMap_)
 	{
+		if (componet.second == nullptr) continue;
+
 		componet.second->Update();
 	}
 }
 
 void ActorBase::Draw()
 {
-	DrawRotaGraph(
+	/*DrawRotaGraph(
 		actorParameterPtr_->drawPos.x,
 		actorParameterPtr_->drawPos.y,
 		actorParameterPtr_->scale,
@@ -47,15 +46,15 @@ void ActorBase::Draw()
 		actorParameterPtr_->texuresHandle[parameterAnimation_.animationIndex],
 		actorParameterPtr_->transparent,
 		actorParameterPtr_->direction
-	);
+	);*/
 }
 
-void ActorBase::AddComponent(const std::string& name, const std::unique_ptr<ComponentBase> component)
+void ActorBase::AddComponent(const std::string& name, std::unique_ptr<ComponentBase> component)
 {
 	// 同名のコンポーネントが既に存在するか確認しながら挿入
-	auto result = componentMap_.insert(std::make_pair(name, std::move(component)));
+	auto result = componentMap_.try_emplace(name, std::move(component));
 
-	// 挿入に失敗\した場合
+	// 挿入に失敗した場合
 	if (!result.second)
 	{
 		// 文字列を作成してデバッグ出力に送る
@@ -83,4 +82,14 @@ void ActorBase::SetAnimationParameter(const int animationStartIndex, const int a
 	parameterAnimation_.animationFinishIndex = animationFinishIndex;
 	parameterAnimation_.animationSpeed = animationSpeed;
 	parameterAnimation_.isLoop = isLoop;
+}
+
+void ActorBase::CreateComponents()
+{
+	// 必要なコンポーネントの生成
+	std::unique_ptr<FactoryComponent> factoryComponent = std::make_unique<FactoryComponent>();
+	for (const std::string& name : DEFAULT_COMPONENT_CREATE_LIST)
+	{
+		AddComponent(name, std::move(factoryComponent->CreateComponent(name, *this)));
+	}
 }

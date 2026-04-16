@@ -84,7 +84,7 @@ public:
 	/// </summary>
 	/// <param name="name">コンポーネントの名前</param>
 	/// <param name="component">コンポーネント</param>
-	void AddComponent(const std::string& name, const std::unique_ptr<ComponentBase> component);
+	void AddComponent(const std::string& name, std::unique_ptr<ComponentBase> component);
 
 	/// <summary>
 	/// コンポーネントを外す
@@ -152,6 +152,12 @@ protected:
 
 private:
 
+	// 生成するコンポーネントのリスト
+	const std::vector<std::string> DEFAULT_COMPONENT_CREATE_LIST;
+
 	// 共通パラメータ(ポインタで所持)
 	Parameter* actorParameterPtr_;
+
+	// コンポーネントの生成
+	void CreateComponents();
 };

@@ -1,3 +1,5 @@
+#include <DxLib.h>
+#include "../Utility/UtilityCommon.h"
 #include "../Component/ComponentBase.h"
 #include "CharacterBase.h"
 
@@ -5,6 +7,8 @@ CharacterBase::CharacterBase(Parameter* parameter, const std::vector<std::string
 	ActorBase(parameter, componentNameList),
 	characterParameterPtr_(parameter)
 {
+	state_ = STATE::MAX;
+
 	// ó‘Ô‘JˆÚˆ—‚Ì“o˜^
 	stateChangeMap_.emplace(STATE::ALIVE, std::bind(&CharacterBase::ChangeStateAlive, this));
 	stateChangeMap_.emplace(STATE::DEAD, std::bind(&CharacterBase::ChangeStateDead, this));
@@ -13,11 +17,12 @@ CharacterBase::CharacterBase(Parameter* parameter, const std::vector<std::string
 
 CharacterBase::~CharacterBase()
 {
-	componentMap_.clear();
 }
 
 void CharacterBase::Init()
 {
+	ActorBase::Init();
+
 	// ‰Šúó‘Ô‚ðÝ’è
 	ChangeState(STATE::ALIVE);
 }
@@ -25,6 +30,18 @@ void CharacterBase::Init()
 void CharacterBase::Update()
 {
 	updateStateFunction_();
+}
+
+void CharacterBase::DebugDraw()
+{
+	DrawBox(
+		characterParameterPtr_->pos.x - 48,
+		characterParameterPtr_->pos.y - 48,
+		characterParameterPtr_->pos.x + 48,
+		characterParameterPtr_->pos.y + 48,
+		UtilityCommon::CYAN,
+		false
+	);
 }
 
 void CharacterBase::ChangeState(const STATE state)
@@ -60,6 +77,7 @@ void CharacterBase::UpdateStateRespawn()
 
 void CharacterBase::UpdateStateAlive()
 {
+	ActorBase::Update();
 }
 
 void CharacterBase::UpdateStateDead()

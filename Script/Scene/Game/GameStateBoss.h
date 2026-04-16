@@ -7,8 +7,7 @@ public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	/// <param name="stage">ステージ</param>
-	GameStateBoss(Stage& stage);
+	GameStateBoss();
 
 	/// <summary>
 	/// デストラクタ

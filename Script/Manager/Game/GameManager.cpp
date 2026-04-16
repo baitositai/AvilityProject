@@ -1,8 +1,8 @@
 #include "../../Scene/Game/GameStateBoss.h"
 #include "../../Scene/Game/GameStateRoad.h"
 #include "../../Scene/Game/GameStateEvent.h"
-#include "../Object/Stage/Stage.h"
 #include "CollisionManager.h"
+#include "StageManager.h"
 #include "PlayerManager.h"
 #include "EnemyManager.h"
 #include "GameManager.h"
@@ -10,7 +10,7 @@
 void GameManager::Init()
 {
 	// 各種オブジェクトらの初期化
-	stage_->Init();
+	StageManager::GetInstance().Init();
 	PlayerManager::GetInstance().Init();
 	EnemyManager::GetInstance().Init();
 	CollisionManager::GetInstance().Init();
@@ -51,20 +51,20 @@ void GameManager::DebugDraw()
 
 void GameManager::ChangeStateRoad()
 {
-	game_ = std::make_unique<GameStateRoad>(*stage_);
+	game_ = std::make_unique<GameStateRoad>();
 
 	// ステージの変更
-	stage_->ChageStage(Stage::TYPE::STAGE_FIRST);
+	StageManager::GetInstance().ChageStage(StageManager::TYPE::STAGE_FIRST);
 }
 
 void GameManager::ChangeStateBoss()
 {
-	game_ = std::make_unique<GameStateRoad>(*stage_);
+	game_ = std::make_unique<GameStateRoad>();
 }
 
 void GameManager::ChangeStateEvent()
 {
-	game_ = std::make_unique<GameStateRoad>(*stage_);
+	game_ = std::make_unique<GameStateRoad>();
 }
 
 GameManager::GameManager()
@@ -74,7 +74,7 @@ GameManager::GameManager()
 	state_ = STATE::MAX;
 
 	// 各種オブジェクトらの生成
-	stage_ = std::make_unique<Stage>();
+	StageManager::CreateInstance();
 	PlayerManager::CreateInstance();
 	EnemyManager::CreateInstance();
 	CollisionManager::CreateInstance();
@@ -87,6 +87,7 @@ GameManager::GameManager()
 
 GameManager::~GameManager()
 {
+	StageManager::GetInstance().Destroy();
 	PlayerManager::GetInstance().Destroy();
 	EnemyManager::GetInstance().Destroy();
 	CollisionManager::GetInstance().Destroy();

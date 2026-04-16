@@ -2,13 +2,16 @@
 #include <vector>
 #include <unordered_map>
 #include <memory>
-#include "../ActorBase.h"
+#include <string>
 #include "../../Common/Vector2.h"
 
 class TileBase;
 
-class Stage : public ActorBase
+class StageManager : public Singleton<StageManager>
 {
+	//シングルトンにだけ共有する
+	friend class Singleton<StageManager>;
+
 public:
 
 	// ステージの種類
@@ -22,29 +25,19 @@ public:
 	};
 
 	/// <summary>
-	/// コンストラクタ
-	/// </summary>
-	Stage();
-
-	/// <summary>
-	/// デストラクタ
-	/// </summary>
-	~Stage() override;
-
-	/// <summary>
 	/// 初期化処理
 	/// </summary>
-	void Init() override;
+	void Init();
 
 	/// <summary>
 	/// 更新処理
 	/// </summary>
-	void Update() override;
+	void Update();
 
 	/// <summary>
 	/// 描画処理
 	/// </summary>
-	void Draw() override;
+	void Draw();
 
 	/// <summary>
 	/// ステージの変更
@@ -72,14 +65,14 @@ public:
 private:
 
 	// 各種ステージごとのパス
-	const std::unordered_map<TYPE, std::string> STAGE_PATH_MAP = 
+	const std::unordered_map<TYPE, std::string> STAGE_PATH_MAP =
 	{
 		{ TYPE::STAGE_FIRST, "StageTest.csv" },
 		{ TYPE::STAGE_SECOND, "StageSecond.csv" },
 		{ TYPE::STAGE_THIRD, "StageThird.csv" },
 		{ TYPE::BOSS_STAGE, "BossStage.csv" },
-	};	
-	
+	};
+
 	// ステージサイズ
 	Vector2 stageSize_;
 
@@ -100,5 +93,11 @@ private:
 
 	// 描画範囲の取得
 	void GetDrawRange(Vector2& rangeMin, Vector2& rangeMax);
+
+	// コンストラクタ
+	StageManager();
+
+	// デストラクタ
+	~StageManager();	
 };
 
