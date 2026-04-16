@@ -21,7 +21,7 @@ public:
 	{	
 		// 描画に必要な情報
 		int texureHandle = -1;			// テクスチャハンドル
-		int* texuresHandle = nullptr;	// テクスチャハンドル(スプライト用)
+		const int* texuresHandle = nullptr;	// テクスチャハンドル(スプライト用)
 		float scale = 1.0f;				// 拡大率
 		float angle = 0.0f;				// 角度
 		bool direction = false;			// 向き(false:右,true:左)

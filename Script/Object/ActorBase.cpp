@@ -38,7 +38,9 @@ void ActorBase::Update()
 
 void ActorBase::Draw()
 {
-	/*DrawRotaGraph(
+	// •`‰æˆÊ’u
+
+	DrawRotaGraph(
 		actorParameterPtr_->drawPos.x,
 		actorParameterPtr_->drawPos.y,
 		actorParameterPtr_->scale,
@@ -46,7 +48,7 @@ void ActorBase::Draw()
 		actorParameterPtr_->texuresHandle[parameterAnimation_.animationIndex],
 		actorParameterPtr_->transparent,
 		actorParameterPtr_->direction
-	);*/
+	);
 }
 
 void ActorBase::AddComponent(const std::string& name, std::unique_ptr<ComponentBase> component)

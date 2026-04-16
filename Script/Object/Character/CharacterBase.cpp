@@ -34,14 +34,14 @@ void CharacterBase::Update()
 
 void CharacterBase::DebugDraw()
 {
-	DrawBox(
-		characterParameterPtr_->pos.x - 48,
-		characterParameterPtr_->pos.y - 48,
-		characterParameterPtr_->pos.x + 48,
-		characterParameterPtr_->pos.y + 48,
-		UtilityCommon::CYAN,
-		false
-	);
+	//DrawBox(
+	//	characterParameterPtr_->pos.x - 48,
+	//	characterParameterPtr_->pos.y - 48,
+	//	characterParameterPtr_->pos.x + 48,
+	//	characterParameterPtr_->pos.y + 48,
+	//	UtilityCommon::CYAN,
+	//	false
+	//);
 }
 
 void CharacterBase::ChangeState(const STATE state)

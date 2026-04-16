@@ -17,11 +17,7 @@ void TileBase::Init()
 }
 
 void TileBase::Draw()
-{
-}
-
-void TileBase::DebugDraw()
-{
+{	
 	// ƒ^ƒCƒ‹‚Ì‰¼•`‰æ
 	int color = UtilityCommon::WHITE;	// ”’F
 
@@ -41,4 +37,9 @@ void TileBase::DebugDraw()
 		color,
 		true
 	);
+}
+
+void TileBase::DebugDraw()
+{
+
 }
