@@ -6,6 +6,7 @@
 #include "../Common/Vector2.h"
 #include "../Common/Vector2F.h"
 
+class ColliderBase;
 class ComponentBase;
 class SceneManager;
 class ResourceManager;
@@ -14,7 +15,17 @@ class InputManager;
 
 class ActorBase
 {
-public:
+public:	
+	
+	// 方向(重力用)
+	enum class DIR
+	{
+		RIGHT,
+		LEFT,
+		UP,
+		DOWN,
+		MAX
+	};
 
 	// 共通パラメータ
 	struct Parameter
@@ -33,6 +44,10 @@ public:
 		float moveSpeed = 0.0f;			// 移動速度
 		Vector2F pos = {};				// 位置
 		Vector2F moveAmount = {};		// 移動量
+
+		// 重力関係
+		float gravityPower = 0.0f;		// 重力
+		DIR gravityDir = DIR::DOWN;		// 重力方向
 	};
 	
 	// アニメーション用の情報
@@ -77,7 +92,7 @@ public:
 	/// <summary>
 	/// デバッグ描画
 	/// </summary>
-	virtual void DebugDraw() {};
+	virtual void DebugDraw();
 
 	/// <summary>
 	/// コンポーネントの追加
@@ -90,7 +105,13 @@ public:
 	/// コンポーネントを外す
 	/// </summary>
 	/// <param name="name">コンポーネントの名前</param>
-	void RemoveComponent(const std::string& name);
+	void RemoveComponent(const std::string& name);	
+	
+	/// <summary>
+	/// 衝突後の処理
+	/// </summary>
+	/// <param name="opponentCollider">衝突した相手のコライダー</param>
+	void OnHit(const std::weak_ptr<ColliderBase>& opponentCollider);
 
 	/// <summary>
 	/// アニメーション情報の設定
@@ -137,6 +158,18 @@ public:
 	/// <returns>アニメーション情報</returns>
 	const ParameterAnimation& GetParameterAnimation() const { return parameterAnimation_; }
 
+	/// <summary>
+	/// 活動しているか返す
+	/// </summary>
+	/// <returns>活動判定</returns>
+	const bool IsActive() const { return isActive_; }
+
+	/// <summary>
+	/// 削除するか返す
+	/// </summary>
+	/// <returns>削除判定</returns>
+	const bool IsDelete() const { return isDelete_; }
+
 protected:
 
 	// 管理クラスの参照
@@ -149,6 +182,12 @@ protected:
 
 	// コンポーネントの管理マップ
 	std::unordered_map<std::string, std::unique_ptr<ComponentBase>> componentMap_;
+
+	// 活動状態
+	bool isActive_;
+
+	// 削除判定
+	bool isDelete_;
 
 private:
 

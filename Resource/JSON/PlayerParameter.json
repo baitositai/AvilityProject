@@ -2,6 +2,7 @@
   "player": {
     "componentNameList": [
       "actionPlayer",
+      "gravity",
       "move",
       "spriteAnimation"
     ],
@@ -13,7 +14,7 @@
     "hp": 100,
     "attackPower": 10,
     "jumpPower": 0.2,
-    "gravity": 0.01,
+    "gravityPower": 9.8,
     "jumpCount": 2,
     "divisionNum": {
       "x": 1,

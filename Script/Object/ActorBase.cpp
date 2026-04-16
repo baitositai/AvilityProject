@@ -3,6 +3,7 @@
 #include "../../Manager/Common/InputManager.h"
 #include "../../Manager/Common/SceneManager.h"
 #include "../../Manager/Common/SoundManager.h"
+#include "../../Manager/Common/Camera.h"
 #include "ActorBase.h"
 
 ActorBase::ActorBase(Parameter* parameter, const std::vector<std::string>& componentNameList) :
@@ -12,6 +13,8 @@ ActorBase::ActorBase(Parameter* parameter, const std::vector<std::string>& compo
 	sndMng_(SoundManager::GetInstance()),
 	resMng_(ResourceManager::GetInstance())
 {
+	isActive_ = true;
+	isDelete_ = false;
 }
 
 ActorBase::~ActorBase()
@@ -38,8 +41,11 @@ void ActorBase::Update()
 
 void ActorBase::Draw()
 {
-	// •`‰æˆÊ’u
+	// •`‰æˆÊ’u‚ðÝ’è
+	Vector2F cameraPos = mainCamera.GetPos();
+	actorParameterPtr_->drawPos = Vector2::AddVector2(actorParameterPtr_->pos.ToVector2(), cameraPos.ToVector2());
 
+	// •`‰æ
 	DrawRotaGraph(
 		actorParameterPtr_->drawPos.x,
 		actorParameterPtr_->drawPos.y,
@@ -49,6 +55,10 @@ void ActorBase::Draw()
 		actorParameterPtr_->transparent,
 		actorParameterPtr_->direction
 	);
+}
+
+void ActorBase::DebugDraw()
+{
 }
 
 void ActorBase::AddComponent(const std::string& name, std::unique_ptr<ComponentBase> component)
@@ -94,4 +104,9 @@ void ActorBase::CreateComponents()
 	{
 		AddComponent(name, std::move(factoryComponent->CreateComponent(name, *this)));
 	}
+}
+
+void ActorBase::OnHit(const std::weak_ptr<ColliderBase>& opponentCollider)
+{
+
 }

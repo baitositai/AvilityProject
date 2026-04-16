@@ -1,6 +1,7 @@
 #include "../../Component/ComponentBase.h"
 #include "../../Component/ComponentMove.h"
 #include "../../Component/ComponentSpriteAnimation.h"
+#include "../../Component/ComponentGravity.h"
 #include "../../Component/Action/ComponentActionPlayer.h"
 #include "../../Object/Character/CharacterBase.h" 
 #include "../../Object/Character/Player.h" 
@@ -21,6 +22,10 @@ FactoryComponent::FactoryComponent()
     componentCreateMap_.emplace("actionPlayer", [this](ActorBase& owner)
         {
             return CreateComponentActionPlayer(owner);
+        });
+    componentCreateMap_.emplace("gravity", [this](ActorBase& owner)
+        {
+            return CreateComponentGravity(owner);
         });
 }
 
@@ -66,4 +71,9 @@ std::unique_ptr<ComponentActionPlayer> FactoryComponent::CreateComponentActionPl
 
     return std::make_unique<ComponentActionPlayer>(*characterPtr);
 
+}
+
+std::unique_ptr<ComponentGravity> FactoryComponent::CreateComponentGravity(ActorBase& owner)
+{
+    return std::make_unique<ComponentGravity>(owner);
 }

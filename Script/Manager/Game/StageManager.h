@@ -21,7 +21,7 @@ public:
 		STAGE_FIRST,
 		STAGE_SECOND,
 		STAGE_THIRD,
-		BOSS_STAGE,
+		STAGE_BOSS,
 	};
 
 	/// <summary>
@@ -70,7 +70,7 @@ private:
 		{ TYPE::STAGE_FIRST, "StageTest.csv" },
 		{ TYPE::STAGE_SECOND, "StageSecond.csv" },
 		{ TYPE::STAGE_THIRD, "StageThird.csv" },
-		{ TYPE::BOSS_STAGE, "BossStage.csv" },
+		{ TYPE::STAGE_BOSS, "StageBoss.csv" },
 	};
 
 	// ステージサイズ

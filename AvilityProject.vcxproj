@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Component\ComponentGravity.cpp" />
     <ClCompile Include="Script\Component\ComponentMove.cpp" />
     <ClCompile Include="Script\Factory\FactoryComponent.cpp" />
     <ClCompile Include="Script\Component\Action\ComponentActionPlayer.cpp" />
@@ -219,8 +220,10 @@
     <ClCompile Include="Script\Utility\UtilityLoad.cpp" />
     <ClCompile Include="Script\Object\Tile\TileBase.cpp" />
     <ClCompile Include="Script\Manager\Game\StageManager.cpp" />
+    <ClCompile Include="Script\Utility\UtilityCollision.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Component\ComponentGravity.h" />
     <ClInclude Include="Script\Component\ComponentMove.h" />
     <ClInclude Include="Script\Factory\FactoryComponent.h" />
     <ClInclude Include="Script\Component\Action\ComponentActionPlayer.h" />
@@ -354,6 +357,7 @@
     <ClInclude Include="Script\Utility\UtilityTemplates.h" />
     <ClInclude Include="Script\Object\Tile\TileBase.h" />
     <ClInclude Include="Script\Manager\Game\StageManager.h" />
+    <ClInclude Include="Script\Utility\UtilityCollision.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

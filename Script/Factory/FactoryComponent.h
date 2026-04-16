@@ -9,6 +9,7 @@ class ComponentBase;
 class ComponentMove;
 class ComponentSpriteAnimation;
 class ComponentActionPlayer;
+class ComponentGravity;
 
 class FactoryComponent
 {
@@ -39,5 +40,6 @@ private:
 	std::unique_ptr<ComponentMove> CreateComponentMove(ActorBase& owner);
 	std::unique_ptr<ComponentSpriteAnimation> CreateComponentSpriteAnimation(ActorBase& owner);
 	std::unique_ptr<ComponentActionPlayer> CreateComponentActionPlayer(ActorBase& owner);
+	std::unique_ptr<ComponentGravity> CreateComponentGravity(ActorBase& owner);
 };
 

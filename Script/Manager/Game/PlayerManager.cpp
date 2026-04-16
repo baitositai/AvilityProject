@@ -21,6 +21,7 @@ void PlayerManager::Init()
 	parameter.divisionNum.y = jsonPparameter["divisionNum"]["y"].get<int>();
 	parameter.hp = jsonPparameter["hp"].get<int>();
 	parameter.attackPower = jsonPparameter["attackPower"].get<int>();
+	parameter.gravityPower = jsonPparameter["gravityPower"].get<float>();
 	std::vector<std::string> componentNameList = jsonPparameter["componentNameList"].get<std::vector<std::string>>();
 
 	// ƒŠƒ\[ƒX‚Ìæ“¾

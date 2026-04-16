@@ -49,13 +49,13 @@ void StageManager::ChageStage(const TYPE type)
 void StageManager::DebugDraw()
 {
 	// タイルの仮描画
-	for (int i = 0; i < tileNums_.x; i++)
+	/*for (int i = 0; i < tileNums_.x; i++)
 	{
 		for (int j = 0; j < tileNums_.y; j++)
 		{
 			tiles_[j][i]->DebugDraw();
 		}
-	}
+	}*/
 }
 
 void StageManager::SetStage()
@@ -109,8 +109,8 @@ void StageManager::GetDrawRange(Vector2& rangeMin, Vector2& rangeMax)
 	Vector2F cameraPosF = mainCamera.GetPos();
 
 	// 計算用に整数へキャスト
-	int cameraX = (std::max)(static_cast<int>(cameraPosF.x), 0);
-	int cameraY = (std::max)(static_cast<int>(cameraPosF.y), 0);
+	int cameraX = std::abs(static_cast<int>(cameraPosF.x));
+	int cameraY = std::abs(static_cast<int>(cameraPosF.y));
 
 	// 最小値の計算
 	rangeMin.x = cameraX / TileBase::SIZE_TILE;
@@ -121,14 +121,15 @@ void StageManager::GetDrawRange(Vector2& rangeMin, Vector2& rangeMax)
 	rangeMax.y = (cameraY + Application::SCREEN_SIZE_Y) / TileBase::SIZE_TILE + 1;
 
 	// 範囲内にクランプ
-	rangeMin.x = std::clamp(rangeMin.x, 0, tileNums_.x - 1);
-	rangeMin.y = std::clamp(rangeMin.y, 0, tileNums_.y - 1);
-	rangeMax.x = std::clamp(rangeMax.x, 0, tileNums_.x - 1);
-	rangeMax.y = std::clamp(rangeMax.y, 0, tileNums_.y - 1);
+	rangeMin.x = std::clamp(rangeMin.x, 0, tileNums_.x);
+	rangeMin.y = std::clamp(rangeMin.y, 0, tileNums_.y);
+	rangeMax.x = std::clamp(rangeMax.x, 0, tileNums_.x);
+	rangeMax.y = std::clamp(rangeMax.y, 0, tileNums_.y);
 }
 
 StageManager::StageManager()
 {
+	type_ = TYPE::NONE;
 }
 
 StageManager::~StageManager()
