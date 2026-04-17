@@ -41,7 +41,7 @@ float Vector2::Length(void) const
 	return std::sqrt(x * x + y * y);
 }
 
-bool Vector2::IsVector2(const Vector2 value1, const Vector2 value2)
+bool Vector2::IsVector2(const Vector2& value1, const Vector2& value2)
 {
 	if (value1.x < value2.x &&
 		value1.y < value2.y)
@@ -52,7 +52,7 @@ bool Vector2::IsVector2(const Vector2 value1, const Vector2 value2)
 	return false;
 }
 
-bool Vector2::IsSameVector2(const Vector2 value1, const Vector2 value2)
+bool Vector2::IsSameVector2(const Vector2& value1, const Vector2& value2)
 {
 	if (value1.x == value2.x &&
 		value1.y == value2.y)
@@ -63,7 +63,7 @@ bool Vector2::IsSameVector2(const Vector2 value1, const Vector2 value2)
 	return false;
 }
 
-Vector2 Vector2::AddVector2(const Vector2 value1, const Vector2 value2)
+Vector2 Vector2::AddVector2(const Vector2& value1, const Vector2& value2)
 {
 	Vector2 ret;
 	ret.x = value1.x + value2.x;
@@ -71,7 +71,7 @@ Vector2 Vector2::AddVector2(const Vector2 value1, const Vector2 value2)
 	return ret;
 }
 
-Vector2 Vector2::SubVector2(const Vector2 value1, const Vector2 value2)
+Vector2 Vector2::SubVector2(const Vector2& value1, const Vector2& value2)
 {
 	Vector2 ret;
 	ret.x = value1.x - value2.x;
@@ -79,7 +79,7 @@ Vector2 Vector2::SubVector2(const Vector2 value1, const Vector2 value2)
 	return ret;
 }
 
-Vector2 Vector2::MultiVector2(const Vector2 value1, const Vector2 value2)
+Vector2 Vector2::MultiVector2(const Vector2& value1, const Vector2& value2)
 {
 	Vector2 ret;
 	ret.x = value1.x * value2.x;

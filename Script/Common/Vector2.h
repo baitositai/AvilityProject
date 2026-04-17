@@ -28,19 +28,19 @@ public:
 	float Length(void) const;
 
 	//Vector2“¯Žm‚Ì”äŠr
-	static bool IsVector2(const Vector2 value1, const Vector2 value2);
+	static bool IsVector2(const Vector2& value1, const Vector2& value2);
 
 	//Vector2“¯Žm‚Ì’l‚ª“™‚µ‚¢‚©”äŠr
-	static bool IsSameVector2(const Vector2 value1, const Vector2 value2);
+	static bool IsSameVector2(const Vector2& value1, const Vector2& value2);
 
 	//Vector2“¯Žm‚Ì‘«‚µŽZ
-	static Vector2 AddVector2(const Vector2 value1, const Vector2 value2);
+	static Vector2 AddVector2(const Vector2& value1, const Vector2& value2);
 
 	//Vector2“¯Žm‚Ìˆø‚«ŽZ
-	static Vector2 SubVector2(const Vector2 value1, const Vector2 value2);
+	static Vector2 SubVector2(const Vector2& value1, const Vector2& value2);
 
 	//Vector2“¯Žm‚ÌŠ|‚¯ŽZ
-	static Vector2 MultiVector2(const Vector2 value1, const Vector2 value2);
+	static Vector2 MultiVector2(const Vector2& value1, const Vector2& value2);
 
 };
 
