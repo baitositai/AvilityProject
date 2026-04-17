@@ -49,7 +49,7 @@ private:
 	std::vector<std::vector<bool>> collTagMatrix_;
 
 	// 衝突判定処理用のマトリックス
-	std::vector<std::vector<std::function<bool(std::weak_ptr<ColliderBase>, std::weak_ptr<ColliderBase>)>>> collFuncMatrix_;
+	std::vector<std::vector<std::function<bool(std::weak_ptr<ColliderBase>, std::weak_ptr<ColliderBase>)>>> collisionFunctionMatrix_;
 
 	// コライダー配列
 	std::vector<std::shared_ptr<ColliderBase>> colliders_;

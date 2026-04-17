@@ -14,7 +14,7 @@ public:
 		CIRCLE,		// サークル
 		LINE,		// ライン
 		ARRAY,		// 配列
-		MAX,		// 最大値
+		MAX
 	};
 
 	// コライダー種別名前管理マップ
