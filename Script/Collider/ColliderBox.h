@@ -44,6 +44,18 @@ public:
 	/// <returns>左下座標</returns>
 	const Vector2& GetBottomPos() const { return bottomPos_; }
 
+	/// <summary>
+	/// 右上座標の相対位置を返す
+	/// </summary>
+	/// <returns>右上座標の相対位置</returns>
+	const Vector2& GetLocalTopPos() const;
+
+	/// <summary>
+	/// 左下座標の相対位置を返す
+	/// </summary>
+	/// <returns>左下座標の相対位置</returns>
+	const Vector2& GetLocalBottomPos() const;
+
 private:
 
 	// 右上座標

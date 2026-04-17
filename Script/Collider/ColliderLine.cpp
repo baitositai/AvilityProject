@@ -1,5 +1,6 @@
 #include "../Object/ActorBase.h"
 #include "ColliderLine.h"
+#include "ColliderBox.h"
 
 ColliderLine::ColliderLine(ActorBase& owner, const CollisionTags::TAG tag, const Vector2& topPos, const Vector2& endPos) :
 	ColliderBase(owner, tag),
