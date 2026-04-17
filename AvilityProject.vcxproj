@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Collider\ColliderArray.cpp" />
     <ClCompile Include="Script\Collider\ColliderBox.cpp" />
     <ClCompile Include="Script\Collider\ColliderCircle.cpp" />
     <ClCompile Include="Script\Collider\ColliderLine.cpp" />
@@ -226,6 +227,7 @@
     <ClCompile Include="Script\Utility\UtilityCollision.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Collider\ColliderArray.h" />
     <ClInclude Include="Script\Collider\ColliderBox.h" />
     <ClInclude Include="Script\Collider\ColliderCircle.h" />
     <ClInclude Include="Script\Collider\ColliderLine.h" />
