@@ -1,9 +1,35 @@
 #pragma once
+#include <vector>
 #include "../Common/Vector2.h"
+#include "../Collider/ColliderArray.h"
 
 class UtilityCollision
 {
 public:
+
+	/// <summary>
+	/// 配列と円の衝突判定
+	/// </summary>
+	/// <param name="arrayOfArrays">配列</param>
+	/// <param name="hitIds">衝突するID配列</param>
+	/// <param name="chipSize">チップサイズ</param>
+	/// <param name="result">衝突結果</param>
+	/// <param name="circlePos">円の座標</param>
+	/// <param name="radius">半径</param>
+	/// <returns>判定結果</returns>
+	static bool IsHitArrayToCircle(const std::vector<std::vector<int>>& arrayOfArrays, const std::vector<int>& hitIds, const Vector2& chipSize, ColliderArray::Result& result, const Vector2& circlePos, const float radius);
+
+	/// <summary>
+	/// 配列とボックスの衝突判定
+	/// </summary>
+	/// <param name="arrayOfArrays">配列</param>
+	/// <param name="hitIds">衝突するID配列</param>
+	/// <param name="chipSize">チップサイズ</param>
+	/// <param name="result">衝突結果</param>
+	/// <param name="boxTopPos">ボックストップ</param>
+	/// <param name="boxBottomPos">ボックスボトム</param>
+	/// <returns>判定結果</returns>
+	static bool IsHitArrayToBox(const std::vector<std::vector<int>>& arrayOfArrays, const std::vector<int>& hitIds, const Vector2& chipSize, ColliderArray::Result& result, const Vector2& boxTopPos, const Vector2& boxBottomPos);
 
 	/// <summary>
 	/// 円同士の衝突判定
@@ -54,5 +80,10 @@ public:
 	/// <param name="lineEndPos">ライン末端座標</param>
 	/// <returns>判定結果</returns>
 	static bool IsHitBoxToLine(const Vector2& boxTopPos, const Vector2& boxBotmPos, const Vector2& lineTopPos, const Vector2& lineEndPos);
+
+private:
+
+	// マップチップ番号を取得
+	int GetMapChipData(const int x, const int y, const std::vector<int>& hitIds);
 };
 

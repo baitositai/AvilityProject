@@ -18,7 +18,13 @@ public:
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~ColliderLine();
+	~ColliderLine() override;
+
+	/// <summary>
+	/// 自身の複製を生成
+	/// </summary>
+	/// <returns>複製したインスタンス</returns>
+	std::shared_ptr<ColliderBase> Clone() const override;
 
 	/// <summary>
 	/// 先端座標の設定

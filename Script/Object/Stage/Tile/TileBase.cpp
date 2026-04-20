@@ -1,6 +1,6 @@
-#include "../../Manager/Common/Camera.h"
-#include "../../Manager/Common/SceneManager.h"
-#include "../../Utility/UtilityCommon.h"
+#include "../../../Manager/Common/Camera.h"
+#include "../../../Manager/Common/SceneManager.h"
+#include "../../../Utility/UtilityCommon.h"
 #include "TileBase.h"
 
 TileBase::TileBase(const Parameter& parameter) :

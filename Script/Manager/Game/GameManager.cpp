@@ -8,13 +8,13 @@
 #include "GameManager.h"
 
 void GameManager::Init()
-{
+{	
 	// 各種オブジェクトらの初期化
 	StageManager::GetInstance().Init();
 	PlayerManager::GetInstance().Init();
 	EnemyManager::GetInstance().Init();
-	CollisionManager::GetInstance().Init();
-
+	CollisionManager::GetInstance().Init();	
+	
 	// 初期状態の設定
 	ChangeState(STATE::ROAD);
 }

@@ -11,9 +11,8 @@ public:
 	/// </summary>
 	/// <param name="owner">所有者</param>
 	/// <param name="tag">衝突判定タグ</param>
-	/// <param name="topPos">右上座標</param>
-	/// <param name="endPos">左下座標</param>
-	ColliderBox(ActorBase& owner, const CollisionTags::TAG tag, const Vector2& topPos, const Vector2& bottomPos);
+	/// <param name="topPos">ボックスサイズ</param>
+	ColliderBox(ActorBase& owner, const CollisionTags::TAG tag, const Vector2& boxSize);
 	
 	/// <summary>
 	/// デストラクタ
@@ -21,28 +20,22 @@ public:
 	~ColliderBox() override;
 
 	/// <summary>
-	/// 右上座標の設定
+	/// 自身の複製を生成
 	/// </summary>
-	/// <param name="topPos">右上座標</param>
-	void SetTopPos(const Vector2& topPos) { topPos_ = topPos; }
+	/// <returns>複製したインスタンス</returns>
+	std::shared_ptr<ColliderBase> Clone() const override;
 
 	/// <summary>
-	/// 左下座標の設定
+	/// ボックスサイズの設定
 	/// </summary>
-	/// <param name="endPos">左下座標</param>
-	void SetBottomPos(const Vector2& bottomPos) { bottomPos_ = bottomPos; }
+	/// <param name="topPos">ボックスサイズ</param>
+	void SetBoxSize(const Vector2& topPos) { boxSize_ = topPos; }
 
 	/// <summary>
-	/// 右上座標を返す
+	/// ボックスサイズを返す
 	/// </summary>
-	/// <returns>右上座標</returns>
-	const Vector2& GetTopPos() const { return topPos_; }
-
-	/// <summary>
-	/// 左下座標
-	/// </summary>
-	/// <returns>左下座標</returns>
-	const Vector2& GetBottomPos() const { return bottomPos_; }
+	/// <returns>ボックスサイズ</returns>
+	const Vector2& GetBoxSize() const { return boxSize_; }
 
 	/// <summary>
 	/// 右上座標の相対位置を返す
@@ -56,11 +49,16 @@ public:
 	/// <returns>左下座標の相対位置</returns>
 	const Vector2& GetLocalBottomPos() const;
 
+	/// <summary>
+	/// デバッグ描画
+	/// </summary>
+	void DebugDraw() override;
+
 private:
 
-	// 右上座標
-	Vector2 topPos_;
+	// ボックスサイズ
+	Vector2 boxSize_;
 
-	// 左下座標
-	Vector2 bottomPos_;
+	// ハーフサイズ
+	Vector2 boxHalfSize_;
 };

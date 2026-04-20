@@ -19,6 +19,12 @@ public:
 	~ColliderCircle() override;
 
 	/// <summary>
+	/// 自身の複製を生成
+	/// </summary>
+	/// <returns>複製したインスタンス</returns>
+	std::shared_ptr<ColliderBase> Clone() const override;
+
+	/// <summary>
 	/// 半径の設定
 	/// </summary>
 	/// <param name="radius">半径</param>

@@ -6,10 +6,16 @@ ColliderLine::ColliderLine(ActorBase& owner, const CollisionTags::TAG tag, const
 	topPos_(topPos),
 	endPos_(endPos)
 {
+	type_ = ColliderType::TYPE::LINE;
 }
 
 ColliderLine::~ColliderLine()
 {
+}
+
+std::shared_ptr<ColliderBase> ColliderLine::Clone() const
+{
+	return std::shared_ptr<ColliderLine>();
 }
 
 const Vector2& ColliderLine::GetLocalTopPos() const

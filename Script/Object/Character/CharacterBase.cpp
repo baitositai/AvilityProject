@@ -1,6 +1,7 @@
 #include <DxLib.h>
 #include "../Utility/UtilityCommon.h"
 #include "../Component/ComponentBase.h"
+#include "../Collider/ColliderBase.h"
 #include "CharacterBase.h"
 
 CharacterBase::CharacterBase(Parameter* parameter, const std::vector<std::string> componentNameList):
@@ -34,14 +35,8 @@ void CharacterBase::Update()
 
 void CharacterBase::DebugDraw()
 {
-	//DrawBox(
-	//	characterParameterPtr_->pos.x - 48,
-	//	characterParameterPtr_->pos.y - 48,
-	//	characterParameterPtr_->pos.x + 48,
-	//	characterParameterPtr_->pos.y + 48,
-	//	UtilityCommon::CYAN,
-	//	false
-	//);
+	if (collider_ == nullptr) return;
+	collider_->DebugDraw();
 }
 
 void CharacterBase::ChangeState(const STATE state)

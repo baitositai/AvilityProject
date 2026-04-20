@@ -3,7 +3,10 @@
 #include "../../Manager/Common/InputManager.h"
 #include "../../Manager/Common/SceneManager.h"
 #include "../../Manager/Common/SoundManager.h"
+#include "../../Manager/Game/CollisionManager.h"
 #include "../../Manager/Common/Camera.h"
+#include "../OnHit/OnHitBase.h"
+#include "../Collider/ColliderBase.h"
 #include "ActorBase.h"
 
 ActorBase::ActorBase(Parameter* parameter, const std::vector<std::string>& componentNameList) :
@@ -11,7 +14,8 @@ ActorBase::ActorBase(Parameter* parameter, const std::vector<std::string>& compo
 	actorParameterPtr_(parameter),
 	scnMng_(SceneManager::GetInstance()),
 	sndMng_(SoundManager::GetInstance()),
-	resMng_(ResourceManager::GetInstance())
+	resMng_(ResourceManager::GetInstance()),
+	collMng_(CollisionManager::GetInstance())
 {
 	isActive_ = true;
 	isDelete_ = false;
@@ -24,7 +28,11 @@ ActorBase::~ActorBase()
 
 void ActorBase::Init()
 {
+	// コンポーネント生成
 	CreateComponents();
+
+	// コライダーの登録
+	RegisterCollider();
 }
 
 void ActorBase::Update()
@@ -96,6 +104,18 @@ void ActorBase::SetAnimationParameter(const int animationStartIndex, const int a
 	parameterAnimation_.isLoop = isLoop;
 }
 
+void ActorBase::RegisterCollider()
+{
+	// 空の場合無視
+	if (collider_ == nullptr)
+	{
+		return;
+	}
+
+	// 登録
+	collMng_.Add(collider_);
+}
+
 void ActorBase::CreateComponents()
 {
 	// 必要なコンポーネントの生成
@@ -108,5 +128,6 @@ void ActorBase::CreateComponents()
 
 void ActorBase::OnHit(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
-
+	if (onHit_ == nullptr) return;
+	onHit_->Update(opponentCollider);
 }

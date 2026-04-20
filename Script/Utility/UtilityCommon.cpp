@@ -1,5 +1,8 @@
-#include "UtilityCommon.h"
+#include <algorithm>
 #include "../Manager/Common/SceneManager.h"
+#include "../Manager/Common/Camera.h"
+#include "UtilityCommon.h"
+
 
 int UtilityCommon::Round(float v)
 {
@@ -432,4 +435,17 @@ float UtilityCommon::NormalizeMinMax(const float value, const float min, const f
     if (normalized < 0.0) return 0.0;
     if (normalized > 1.0) return 1.0;
     return normalized;
+}
+
+bool UtilityCommon::FindIndex(const std::vector<int>& array, const int index)
+{
+    // íTçı
+    auto it = std::find(array.begin(), array.end(), index);
+
+    // å©Ç¬Ç©ÇÁÇ»Ç©Ç¡ÇΩèÍçá
+    if (it == array.end())
+    {
+        return false;
+    }
+    return true;
 }

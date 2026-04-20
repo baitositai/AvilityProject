@@ -145,6 +145,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Object\Stage\Stage.cpp" />
+    <ClCompile Include="Script\Object\Stage\Tile\TileBase.cpp" />
+    <ClCompile Include="Script\OnHit\OnHitPlayer.cpp" />
+    <ClCompile Include="Script\OnHit\OnHitBase.cpp" />
     <ClCompile Include="Script\Collider\ColliderArray.cpp" />
     <ClCompile Include="Script\Collider\ColliderBox.cpp" />
     <ClCompile Include="Script\Collider\ColliderCircle.cpp" />
@@ -222,11 +226,14 @@
     <ClCompile Include="Script\Utility\UtilityCommon.cpp" />
     <ClCompile Include="Script\Utility\UtilityDraw.cpp" />
     <ClCompile Include="Script\Utility\UtilityLoad.cpp" />
-    <ClCompile Include="Script\Object\Tile\TileBase.cpp" />
     <ClCompile Include="Script\Manager\Game\StageManager.cpp" />
     <ClCompile Include="Script\Utility\UtilityCollision.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Object\Stage\Stage.h" />
+    <ClInclude Include="Script\Object\Stage\Tile\TileBase.h" />
+    <ClInclude Include="Script\OnHit\OnHitPlayer.h" />
+    <ClInclude Include="Script\OnHit\OnHitBase.h" />
     <ClInclude Include="Script\Collider\ColliderArray.h" />
     <ClInclude Include="Script\Collider\ColliderBox.h" />
     <ClInclude Include="Script\Collider\ColliderCircle.h" />
@@ -363,7 +370,6 @@
     <ClInclude Include="Script\Utility\UtilityDraw.h" />
     <ClInclude Include="Script\Utility\UtilityLoad.h" />
     <ClInclude Include="Script\Utility\UtilityTemplates.h" />
-    <ClInclude Include="Script\Object\Tile\TileBase.h" />
     <ClInclude Include="Script\Manager\Game\StageManager.h" />
     <ClInclude Include="Script\Utility\UtilityCollision.h" />
   </ItemGroup>

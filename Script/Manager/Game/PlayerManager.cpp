@@ -22,6 +22,8 @@ void PlayerManager::Init()
 	parameter.hp = jsonPparameter["hp"].get<int>();
 	parameter.attackPower = jsonPparameter["attackPower"].get<int>();
 	parameter.gravityPower = jsonPparameter["gravityPower"].get<float>();
+	parameter.hitBoxSize_ = Vector2(jsonPparameter["hitBoxSize"]["x"].get<int>(), jsonPparameter["hitBoxSize"]["y"].get<int>());
+	parameter.pos = Vector2F(400.0f, 400.0f);
 	std::vector<std::string> componentNameList = jsonPparameter["componentNameList"].get<std::vector<std::string>>();
 
 	// ƒŠƒ\[ƒX‚Ìæ“¾

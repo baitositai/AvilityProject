@@ -1,5 +1,10 @@
 #include "../../Collider/ColliderBase.h"
+#include "../../Collider/ColliderBox.h"
+#include "../../Collider/ColliderCircle.h"
+#include "../../Collider/ColliderLine.h"
+#include "../../Collider/ColliderArray.h"
 #include "../../Object/ActorBase.h"
+#include "../../Utility/UtilityCollision.h"
 #include "CollisionManager.h"
 
 void CollisionManager::Init()
@@ -119,6 +124,11 @@ void CollisionManager::DebugDraw()
 
 void CollisionManager::InitTagMatrix()
 {
+	// サイズの定義
+	collTagMatrix_.resize(CollisionTags::TAG_COUNT, std::vector<bool>(CollisionTags::TAG_COUNT, false));
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::STAGE)] = true;				// プレイヤーとステージ
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::STAGE)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
 }
 
 void CollisionManager::InitColliderMatrix()
@@ -127,59 +137,114 @@ void CollisionManager::InitColliderMatrix()
 	collisionFunctionMatrix_.resize(ColliderType::COLLIDER_TYPES, std::vector<std::function<bool(std::weak_ptr<ColliderBase>, std::weak_ptr<ColliderBase>)>>(ColliderType::COLLIDER_TYPES));
 
 	// 特定の組み合わせの関数を代入
-	collisionFunctionMatrix_[static_cast<int>(ColliderType::TYPE::CIRCLE)][static_cast<int>(ColliderType::TYPE::CIRCLE)] =
-		[this](std::weak_ptr<ColliderBase> collA, std::weak_ptr<ColliderBase> collB) -> bool
+	collisionFunctionMatrix_[static_cast<int>(ColliderType::TYPE::ARRAY)][static_cast<int>(ColliderType::TYPE::CIRCLE)] =
+		[this](std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2) -> bool
 		{
-			return IsHitCheckCircleToCircle(collA, collB);
+			return IsHitCheckArrayToCircle(collider1, collider2);
+		};
+
+	collisionFunctionMatrix_[static_cast<int>(ColliderType::TYPE::ARRAY)][static_cast<int>(ColliderType::TYPE::BOX)] =
+		[this](std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2) -> bool
+		{
+			return IsHitCheckArrayToBox(collider1, collider2);
+		};
+
+	collisionFunctionMatrix_[static_cast<int>(ColliderType::TYPE::CIRCLE)][static_cast<int>(ColliderType::TYPE::CIRCLE)] =
+		[this](std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2) -> bool
+		{
+			return IsHitCheckCircleToCircle(collider1, collider2);
 		};
 
 	collisionFunctionMatrix_[static_cast<int>(ColliderType::TYPE::CIRCLE)][static_cast<int>(ColliderType::TYPE::BOX)] =
-		[this](std::weak_ptr<ColliderBase> collA, std::weak_ptr<ColliderBase> collB) -> bool
+		[this](std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2) -> bool
 		{
-			return IsHitCheckCircleToBox(collA, collB);
+			return IsHitCheckCircleToBox(collider1, collider2);
 		};
 
 	collisionFunctionMatrix_[static_cast<int>(ColliderType::TYPE::CIRCLE)][static_cast<int>(ColliderType::TYPE::LINE)] =
-		[this](std::weak_ptr<ColliderBase> collA, std::weak_ptr<ColliderBase> collB) -> bool
+		[this](std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2) -> bool
 		{
-			return IsHitCheckCircleToLine(collA, collB);
+			return IsHitCheckCircleToLine(collider1, collider2);
 		};
 
 	collisionFunctionMatrix_[static_cast<int>(ColliderType::TYPE::BOX)][static_cast<int>(ColliderType::TYPE::CIRCLE)] =
-		[this](std::weak_ptr<ColliderBase> collA, std::weak_ptr<ColliderBase> collB) -> bool
+		[this](std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2) -> bool
 		{
-			return IsHitCheckCircleToCircle(collA, collB);
+			return IsHitCheckCircleToCircle(collider1, collider2);
 		};
 
 	collisionFunctionMatrix_[static_cast<int>(ColliderType::TYPE::BOX)][static_cast<int>(ColliderType::TYPE::BOX)] =
-		[this](std::weak_ptr<ColliderBase> collA, std::weak_ptr<ColliderBase> collB) -> bool
+		[this](std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2) -> bool
 		{
-			return IsHitCheckBoxToBox(collA, collB);
+			return IsHitCheckBoxToBox(collider1, collider2);
 		};
 
 	collisionFunctionMatrix_[static_cast<int>(ColliderType::TYPE::BOX)][static_cast<int>(ColliderType::TYPE::LINE)] =
-		[this](std::weak_ptr<ColliderBase> collA, std::weak_ptr<ColliderBase> collB) -> bool
+		[this](std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2) -> bool
 		{
-			return IsHitCheckBoxToLine(collA, collB);
+			return IsHitCheckBoxToLine(collider1, collider2);
 		};
 
 	collisionFunctionMatrix_[static_cast<int>(ColliderType::TYPE::LINE)][static_cast<int>(ColliderType::TYPE::CIRCLE)] =
-		[this](std::weak_ptr<ColliderBase> collA, std::weak_ptr<ColliderBase> collB) -> bool
+		[this](std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2) -> bool
 		{
-			return IsHitCheckCircleToLine(collA, collB);
+			return IsHitCheckCircleToLine(collider1, collider2);
 		};
 
 	collisionFunctionMatrix_[static_cast<int>(ColliderType::TYPE::LINE)][static_cast<int>(ColliderType::TYPE::BOX)] =
-		[this](std::weak_ptr<ColliderBase> collA, std::weak_ptr<ColliderBase> collB) -> bool
+		[this](std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2) -> bool
 		{
-			return IsHitCheckBoxToLine(collA, collB);
+			return IsHitCheckBoxToLine(collider1, collider2);
 		};
 
 	collisionFunctionMatrix_[static_cast<int>(ColliderType::TYPE::LINE)][static_cast<int>(ColliderType::TYPE::LINE)] =
-		[this](std::weak_ptr<ColliderBase> collA, std::weak_ptr<ColliderBase> collB) -> bool
+		[this](std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2) -> bool
 		{
-			return IsHitCheckLineToLine(collA, collB);
+			return IsHitCheckLineToLine(collider1, collider2);
 		};
+}
+
+bool CollisionManager::IsHitCheckArrayToCircle(std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2)
+{
+	return false;
+}
+
+bool CollisionManager::IsHitCheckArrayToBox(std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2)
+{
+	std::weak_ptr<ColliderArray> colliderArray;
+	std::weak_ptr<ColliderBox> colliderBox;
+
+	// モデルコライダーの用意
+	if (collider1.lock()->GetType() == ColliderType::TYPE::ARRAY) { colliderArray = std::dynamic_pointer_cast<ColliderArray>(collider1.lock()); }
+	else if (collider2.lock()->GetType() == ColliderType::TYPE::ARRAY) { colliderArray = std::dynamic_pointer_cast<ColliderArray>(collider2.lock()); }
+
+	// カプセルコライダーの用意
+	if (collider1.lock()->GetType() == ColliderType::TYPE::BOX) { colliderBox = std::dynamic_pointer_cast<ColliderBox>(collider1.lock()); }
+	else if (collider2.lock()->GetType() == ColliderType::TYPE::BOX) { colliderBox = std::dynamic_pointer_cast<ColliderBox>(collider2.lock()); }
+
+	// 判定結果
+	ColliderArray::Result result = {};
+
+	const Vector2 top = colliderBox.lock()->GetLocalTopPos();
+	const Vector2 bottom = colliderBox.lock()->GetLocalBottomPos();
+	const auto ar = colliderArray.lock()->GetArrayOfArrys();
+	const auto id = colliderArray.lock()->GetHitIds();
+	const Vector2 size = colliderArray.lock()->GetChipSize();
+
+	// 衝突判定
+	bool isHit = UtilityCollision::IsHitArrayToBox(
+		ar, 
+		id, 
+		size, 
+		result,
+		top, 
+		bottom);
+
+	// 判定結果を保存
+	colliderArray.lock()->SetResult(result);
+
+	// 衝突しているか返す
+	return isHit;
 }
 
 bool CollisionManager::IsHitCheckCircleToCircle(std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2)

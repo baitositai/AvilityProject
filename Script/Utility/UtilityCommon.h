@@ -154,4 +154,12 @@ public:
 	/// <param name="max">最大値</param>
 	/// <returns>0.0f~1.0fの値</returns>
 	static float NormalizeMinMax(const float value, const float min, const float max);
+
+	/// <summary>
+	/// 配列の中から指定の番号を探す
+	/// </summary>
+	/// <param name="array">配列</param>
+	/// <param name="index">指定番号</param>
+	/// <returns>探索結果</returns>
+	static bool FindIndex(const std::vector<int>& array, const int index);
 };

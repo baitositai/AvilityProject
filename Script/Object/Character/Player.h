@@ -7,6 +7,8 @@ public:
 
 	struct Parameter : public CharacterBase::Parameter
 	{
+		Vector2 hitBoxSize_;
+		Vector2 hitLocalPos_;
 	};
 
 	/// <summary>
@@ -30,6 +32,12 @@ public:
 	/// XVˆ—
 	/// </summary>
 	void Update() override;
+
+	/// <summary>
+	/// Õ“Ë‚·‚é”ÍˆÍ‚ğ•Ô‚·
+	/// </summary>
+	/// <returns>Õ“Ë‚·‚é”ÍˆÍ</returns>
+	const Vector2& GetHitBoxSize() const { return parameter_.hitBoxSize_; }
 
 private:
 
