@@ -6,37 +6,42 @@ bool UtilityCollision::IsHitArrayToCircle(const std::vector<std::vector<int>>& a
     return false;
 }
 
-bool UtilityCollision::IsHitArrayToBox(const std::vector<std::vector<int>>& arrayOfArrays, const std::vector<int>& hitIds, const Vector2& chipSize, std::vector<ColliderArray::Result>& results, const Vector2& boxTopPos, const Vector2& boxBottomPos)
+bool UtilityCollision::IsHitArrayToBox(const std::vector<std::vector<int>>& arrayOfArrays, const std::vector<int>& hitIds, const Vector2& chipSize, ColliderArray::Result& result, const Vector2& boxTopPos, const Vector2& boxBottomPos)
 {
-    // 短径の頂点ををマップ番号に変換
-    int startX = boxTopPos.x / chipSize.x - 1;
-    int endX = boxBottomPos.x / chipSize.x + 1;
-    int startY = boxTopPos.y / chipSize.y - 1;
-    int endY = boxBottomPos.y / chipSize.y + 1;
+    // 配列のサイズを確定
+    const int ROWS = static_cast<int>(arrayOfArrays.size());
+    if (ROWS == 0) return false;    // 中身がない場合終了
+    const int COLS = static_cast<int>(arrayOfArrays[0].size());
 
-    // 最大・最小を設定
-    if (startX < 0) { startX = 0; }
-    if (endX >= (int)arrayOfArrays[0].size()) { endX = (int)arrayOfArrays[0].size() - 1; }
-    if (startY < 0) { startY = 0; }
-    if (endY >= (int)arrayOfArrays.size()) { endY = (int)arrayOfArrays.size() - 1; }
+    // 最大最小値を決定
+    int startX = (std::max)(0, static_cast<int>(boxTopPos.x / chipSize.x));
+    int endX = (std::min)(COLS - 1, static_cast<int>(boxBottomPos.x / chipSize.x));
+    int startY = (std::max)(0, static_cast<int>(boxTopPos.y / chipSize.y));
+    int endY = (std::min)(ROWS - 1, static_cast<int>(boxBottomPos.y / chipSize.y));
 
-    bool isHit = false;
-    results.clear();
+    // 範囲チェック
+    if (startX > endX || startY > endY) return false;
 
-    for (int ty = startY; ty <= endY; ty++)
+    // 前回の判定結果を削除
+    result.indexes.clear();
+    int area = (endX - startX + 1) * (endY - startY + 1);
+    result.indexes.reserve(area);
+
+    for (int ty = startY; ty <= endY; ++ty)
     {
-        for (int tx = startX; tx <= endX; tx++)
+        const auto& row = arrayOfArrays[ty];
+        for (int tx = startX; tx <= endX; ++tx)
         {
-            ColliderArray::Result result;
-            result.indexes = Vector2(tx, ty);
-            result.type = arrayOfArrays[ty][tx];
-            result.isHit = UtilityCommon::FindIndex(hitIds, result.type);
-            results.push_back(result);
-            if (result.isHit) { isHit = true; }
+            // 衝突番号を探索する
+            if (UtilityCommon::FindIndex(hitIds, row[tx]))
+            {
+                // インデックスを格納
+                result.indexes.emplace_back(static_cast<float>(tx), static_cast<float>(ty));
+            }
         }
     }
 
-    return isHit;
+    return !result.indexes.empty();
 }
 
 bool UtilityCollision::IsHitCircleToCircle(const Vector2& circlePos1, const float radius1, const Vector2& circlePos2, const float radius2)
