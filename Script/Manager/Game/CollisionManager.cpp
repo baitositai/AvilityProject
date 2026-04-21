@@ -223,7 +223,7 @@ bool CollisionManager::IsHitCheckArrayToBox(std::weak_ptr<ColliderBase> collider
 	else if (collider2.lock()->GetType() == ColliderType::TYPE::BOX) { colliderBox = std::dynamic_pointer_cast<ColliderBox>(collider2.lock()); }
 
 	// ”»’èŒ‹‰Ê
-	ColliderArray::Result result = {};
+	std::vector<ColliderArray::Result> results = {};
 
 	const Vector2 top = colliderBox.lock()->GetLocalTopPos();
 	const Vector2 bottom = colliderBox.lock()->GetLocalBottomPos();
@@ -236,12 +236,12 @@ bool CollisionManager::IsHitCheckArrayToBox(std::weak_ptr<ColliderBase> collider
 		ar, 
 		id, 
 		size, 
-		result,
+		results,
 		top, 
 		bottom);
 
 	// ”»’èŒ‹‰Ê‚ğ•Û‘¶
-	colliderArray.lock()->SetResult(result);
+	colliderArray.lock()->SetResults(results);
 
 	// Õ“Ë‚µ‚Ä‚¢‚é‚©•Ô‚·
 	return isHit;

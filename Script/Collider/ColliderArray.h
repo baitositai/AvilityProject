@@ -11,8 +11,9 @@ public:
 	// 衝突判定の結果
 	struct Result
 	{
-		Vector2 hitIndex;
-		std::vector<Vector2> hitIndexes;
+		Vector2 indexes = {};		// インデックス番号
+		int type = 0;				// 種類(1なら壁)
+		bool isHit = false;				// 衝突してるか
 	};
 
 	/// <summary>
@@ -52,7 +53,10 @@ public:
 	/// 衝突判定の結果を設定
 	/// </summary>
 	/// <param name="result">衝突判定の結果</param>
-	void SetResult(const Result& result) { result_ = result; }
+	//void SetResult(const Result& result) { result_ = result; }
+	void SetResults(const std::vector<Result>& results) { results_ = results; }
+	void AddResult(const Result& result) { results_.push_back(result); }
+	void ClearResult() { results_.clear(); }
 
 	/// <summary>
 	/// 衝突判定結果のリセット
@@ -75,7 +79,13 @@ public:
 	/// 衝突判定の結果を返す
 	/// </summary>
 	/// <returns>衝突判定の結果</returns>
-	const Result& GetResult() const { return result_; }
+	//const Result& GetResult() const { return result_; }
+
+	/// <summary>
+	/// 結果を返す
+	/// </summary>
+	/// <returns>結果</returns>
+	const std::vector<Result> GetResults() const { return results_; }
 
 	/// <summary>
 	/// チップサイズを返す
@@ -100,6 +110,6 @@ private:
 	Vector2 chipSize_;
 
 	// 判定結果
-	Result result_;
+	std::vector<Result> results_;
 
 };

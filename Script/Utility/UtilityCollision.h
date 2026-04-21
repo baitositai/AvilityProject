@@ -29,7 +29,7 @@ public:
 	/// <param name="boxTopPos">ボックストップ</param>
 	/// <param name="boxBottomPos">ボックスボトム</param>
 	/// <returns>判定結果</returns>
-	static bool IsHitArrayToBox(const std::vector<std::vector<int>>& arrayOfArrays, const std::vector<int>& hitIds, const Vector2& chipSize, ColliderArray::Result& result, const Vector2& boxTopPos, const Vector2& boxBottomPos);
+	static bool IsHitArrayToBox(const std::vector<std::vector<int>>& arrayOfArrays, const std::vector<int>& hitIds, const Vector2& chipSize, std::vector<ColliderArray::Result>& results, const Vector2& boxTopPos, const Vector2& boxBottomPos);
 
 	/// <summary>
 	/// 円同士の衝突判定

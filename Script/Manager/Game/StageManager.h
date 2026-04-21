@@ -62,7 +62,7 @@ private:
 	const std::unordered_map<TYPE, std::string> STAGE_PATH_MAP =
 	{
 		{ TYPE::NONE, "none" },
-		{ TYPE::STAGE_FIRST, "StageTest.csv" },
+		{ TYPE::STAGE_FIRST, "StageFirst.csv" },
 		{ TYPE::STAGE_SECOND, "StageSecond.csv" },
 		{ TYPE::STAGE_THIRD, "StageThird.csv" },
 		{ TYPE::STAGE_BOSS, "StageBoss.csv" },

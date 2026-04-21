@@ -6,32 +6,33 @@ bool UtilityCollision::IsHitArrayToCircle(const std::vector<std::vector<int>>& a
     return false;
 }
 
-bool UtilityCollision::IsHitArrayToBox(const std::vector<std::vector<int>>& arrayOfArrays, const std::vector<int>& hitIds, const Vector2& chipSize, ColliderArray::Result& result, const Vector2& boxTopPos, const Vector2& boxBottomPos)
+bool UtilityCollision::IsHitArrayToBox(const std::vector<std::vector<int>>& arrayOfArrays, const std::vector<int>& hitIds, const Vector2& chipSize, std::vector<ColliderArray::Result>& results, const Vector2& boxTopPos, const Vector2& boxBottomPos)
 {
     // 短径の頂点ををマップ番号に変換
-    int startX = boxTopPos.x / chipSize.x;
-    int endX = boxBottomPos.x / chipSize.x;
-    int startY = boxTopPos.y / chipSize.y;
-    int endY = boxBottomPos.y / chipSize.y;
+    int startX = boxTopPos.x / chipSize.x - 1;
+    int endX = boxBottomPos.x / chipSize.x + 1;
+    int startY = boxTopPos.y / chipSize.y - 1;
+    int endY = boxBottomPos.y / chipSize.y + 1;
+
+    // 最大・最小を設定
+    if (startX < 0) { startX = 0; }
+    if (endX >= (int)arrayOfArrays[0].size()) { endX = (int)arrayOfArrays[0].size() - 1; }
+    if (startY < 0) { startY = 0; }
+    if (endY >= (int)arrayOfArrays.size()) { endY = (int)arrayOfArrays.size() - 1; }
 
     bool isHit = false;
-    result.hitIndexes.clear();
+    results.clear();
 
     for (int ty = startY; ty <= endY; ty++)
     {
         for (int tx = startX; tx <= endX; tx++)
         {
-            if (ty < 0 || ty >= (int)arrayOfArrays.size() || tx < 0 || tx >= (int)arrayOfArrays[0].size())
-            {
-                continue;
-            }
-
-            if (UtilityCommon::FindIndex(hitIds, arrayOfArrays[ty][tx]))
-            {
-                isHit = true;
-                // 見つかったインデックスをすべて追加
-                result.hitIndexes.push_back(Vector2((float)tx, (float)ty));
-            }
+            ColliderArray::Result result;
+            result.indexes = Vector2(tx, ty);
+            result.type = arrayOfArrays[ty][tx];
+            result.isHit = UtilityCommon::FindIndex(hitIds, result.type);
+            results.push_back(result);
+            if (result.isHit) { isHit = true; }
         }
     }
 

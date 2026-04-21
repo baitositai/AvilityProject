@@ -9,7 +9,7 @@ ColliderArray::ColliderArray(ActorBase& owner, const CollisionTags::TAG tag, con
 	chipSize_(chipSize)
 {	
 	type_ = ColliderType::TYPE::ARRAY;
-	result_ = {};
+	results_ = {};
 }
 
 ColliderArray::~ColliderArray()
@@ -18,7 +18,7 @@ ColliderArray::~ColliderArray()
 
 void ColliderArray::ResetResult()
 {
-	result_ = {};
+	results_ = {};
 }
 
 void ColliderArray::DebugDraw()

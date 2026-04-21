@@ -2,6 +2,7 @@
 #include "../Collider/ColliderArray.h"
 #include "OnHitPlayer.h"
 
+
 OnHitPlayer::OnHitPlayer(Player& owner) :
     OnHitBase(owner),
     owner_(owner)
@@ -22,15 +23,18 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
     if (!collider) return;
 
     // 当たったすべてのタイルインデックスを取得
-    const auto& hitIndexes = collider->GetResult().hitIndexes;
-    if (hitIndexes.empty()) return;
+    const auto& results = collider->GetResults();
+    if (results.empty()) return;
 
     Vector2F pos = owner_.GetParameter()->pos;
    // Vector2F moveAmount = owner_.GetParameter()->moveAmount;
     Vector2 boxSize = owner_.GetHitBoxSize();
     Vector2 chipSize = collider->GetChipSize();
 
-    for (const auto& hitIndex : hitIndexes)
+
+    std::vector<Vector2> nextIndexs;
+
+    for (const auto& result : results)
     {
         Vector2F moveAmount = owner_.GetParameter()->moveAmount;
 
@@ -39,10 +43,15 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
             break;
         }
 
+        if (result.type == 0 || result.isHit == false)
+        {
+            continue;
+        }
+
         // 1. ボックス化（座標化）
-        float tLeft = hitIndex.x * chipSize.x;
+        float tLeft = result.indexes.x * chipSize.x;
         float tRight = tLeft + chipSize.x;
-        float tTop = hitIndex.y * chipSize.y;
+        float tTop = result.indexes.y * chipSize.y;
         float tBottom = tTop + chipSize.y;
 
         // プレイヤーの四端
@@ -70,18 +79,28 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
             // 【ここが重要】移動方向と矛盾しない押し出し方向だけを候補に入れる
 
             // 1. 右に移動中なら、左へ押し戻す判定を有効にする
-            if (moveAmount.x > 0 && overL < minOverlap) { minOverlap = overL; dir = 0; }
+            if (moveAmount.x > 0 && overL < minOverlap) 
+            { 
+                minOverlap = overL; dir = 0; 
+            }
 
             // 2. 左に移動中なら、右へ押し戻す判定を有効にする
-            if (moveAmount.x < 0 && overR < minOverlap) { minOverlap = overR; dir = 1; }
+            if (moveAmount.x < 0 && overR < minOverlap && pBottom >= tBottom) 
+            {
+                minOverlap = overR; dir = 1;
+            }
 
             // 3. 下に移動（落下）中なら、上へ押し戻す（床）判定を有効にする
-            if (moveAmount.y > 0 && overT < minOverlap) { minOverlap = overT; dir = 2; }
+            if (moveAmount.y > 0 && overT < minOverlap) { minOverlap = overT; dir = 2;
+            //押し戻した方向のindexを保存
+            nextIndexs.push_back(Vector2(result.indexes.x, result.indexes.y - 1));
+            }
 
             // 4. 上に移動中なら、下へ押し戻す（天井）判定を有効にする
             if (moveAmount.y < 0 && overB < minOverlap) { minOverlap = overB; dir = 3; }
 
             // 決定した方向にのみ補正
+            Vector2F MoveAmount = Vector2F(0.0f, 0.0f);
             if (dir == 0) { pos.x -= (overL + 0.01f); owner_.SetMoveAmount(Vector2F(0.0f, moveAmount.y)); }
             else if (dir == 1) { pos.x += (overR + 0.01f); owner_.SetMoveAmount(Vector2F(0.0f, moveAmount.y)); }
             else if (dir == 2) { pos.y -= (overT + 0.01f); owner_.SetMoveAmount(Vector2F(moveAmount.x, 0.0f)); }
@@ -90,7 +109,5 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
             owner_.SetPosition(pos);
         }
     }
-
-    // 衝突結果リセット
-    collider->SetResult(ColliderArray::Result());
+    return;
 }
