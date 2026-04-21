@@ -34,6 +34,11 @@ public:
 	void Update() override;
 
 	/// <summary>
+	/// デバッグ描画
+	/// </summary>
+	void DebugDraw() override;
+
+	/// <summary>
 	/// 衝突する範囲を返す
 	/// </summary>
 	/// <returns>衝突する範囲</returns>
