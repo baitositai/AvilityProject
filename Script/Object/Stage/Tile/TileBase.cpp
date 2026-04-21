@@ -37,6 +37,15 @@ void TileBase::Draw()
 		color,
 		true
 	);
+
+	DrawBox(
+		rendererPos.x,
+		rendererPos.y,
+		rendererPos.x + SIZE_TILE,
+		rendererPos.y + SIZE_TILE,
+		UtilityCommon::RED,
+		false
+	);
 }
 
 void TileBase::DebugDraw()
