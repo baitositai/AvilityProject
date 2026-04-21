@@ -14,11 +14,13 @@ bool UtilityCollision::IsHitArrayToBox(const std::vector<std::vector<int>>& arra
     int startY = boxTopPos.y / chipSize.y;
     int endY = boxBottomPos.y / chipSize.y;
 
+    bool isHit = false;
+    result.hitIndexes.clear();
+
     for (int ty = startY; ty <= endY; ty++)
     {
         for (int tx = startX; tx <= endX; tx++)
         {
-            // 範囲外チェック
             if (ty < 0 || ty >= (int)arrayOfArrays.size() || tx < 0 || tx >= (int)arrayOfArrays[0].size())
             {
                 continue;
@@ -26,15 +28,14 @@ bool UtilityCollision::IsHitArrayToBox(const std::vector<std::vector<int>>& arra
 
             if (UtilityCommon::FindIndex(hitIds, arrayOfArrays[ty][tx]))
             {
-                // 当たったタイルのインデックスを保存して終了
-                result.hitIndex.x = tx;
-                result.hitIndex.y = ty;
-                return true;
+                isHit = true;
+                // 見つかったインデックスをすべて追加
+                result.hitIndexes.push_back(Vector2((float)tx, (float)ty));
             }
         }
     }
 
-    return  false;
+    return isHit;
 }
 
 bool UtilityCollision::IsHitCircleToCircle(const Vector2& circlePos1, const float radius1, const Vector2& circlePos2, const float radius2)

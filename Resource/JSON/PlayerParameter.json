@@ -10,7 +10,7 @@
     "angle": 0.0,
     "direction": false,
     "transparent": true,
-    "moveSpeed": 0.1,
+    "moveSpeed": 2.0,
     "hp": 100,
     "attackPower": 10,
     "jumpPower": 0.2,
@@ -21,8 +21,8 @@
       "y": 1
     },
     "hitBoxSize": {
-      "x": 96,
-      "y": 96
+      "x": 48,
+      "y": 48
     }
   }
 }

@@ -1,3 +1,4 @@
+#include <DxLib.h>
 #include "../../OnHit/OnHitPlayer.h"
 #include "../Collider/ColliderBox.h"
 #include "Player.h"
@@ -28,4 +29,10 @@ void Player::Init()
 void Player::Update()
 {
 	CharacterBase::Update();
+}
+
+void Player::DebugDraw()
+{
+	CharacterBase::DebugDraw();
+	DrawFormatString(0, 20, 0x00ff00, L"プレイヤー位置:%2f,%2f", parameter_.pos.x, parameter_.pos.y);
 }

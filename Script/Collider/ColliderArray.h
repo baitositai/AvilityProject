@@ -12,6 +12,7 @@ public:
 	struct Result
 	{
 		Vector2 hitIndex;
+		std::vector<Vector2> hitIndexes;
 	};
 
 	/// <summary>

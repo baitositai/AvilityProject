@@ -27,13 +27,24 @@ void ComponentActionPlayer::Update()
 
 void ComponentActionPlayer::ProcessInputMove()
 {
+	const float moveSpeed = owner_.GetParameter()->moveSpeed;
+
 	// ç∂âEà⁄ìÆ
 	if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_RIGHT))
 	{
-		moveAmount_.x += 1.0f;
+		moveAmount_.x += moveSpeed;
 	}
 	else if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_LEFT))
 	{
-		moveAmount_.x -= 1.0f;
+		moveAmount_.x -= moveSpeed;
+	}
+
+	if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_UP))
+	{
+		moveAmount_.y -= moveSpeed;
+	}
+	else if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_DOWN))
+	{
+		moveAmount_.y += moveSpeed;
 	}
 }
