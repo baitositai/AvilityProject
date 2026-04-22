@@ -2,6 +2,7 @@
 #include "../../Application.h"
 #include "../../Utility/UtilityLoad.h"
 #include "../../Object/Stage/Stage.h"
+#include "../../Object/Gimmick/AvilityBox.h"
 #include "../Common/Camera.h"
 #include "../Common/SceneManager.h"
 #include "StageManager.h"
@@ -15,16 +16,39 @@ void StageManager::Init()
 	parameter.hitIds = { 1 };
 	stage_ = std::make_unique<Stage>(parameter);
 	stage_->Init();
+
+	AvilityBox::Parameter avParam = {};
+	avParam.hitBoxSize_ = Vector2(100, 100);
+	avParam.pos = Vector2F(300, 300);
+	avParam.gravityPower = 0.1f;
+	std::vector<std::string> componentNameList = { "gravity","move" };
+	//std::unique_ptr avBox = std::make_unique<AvilityBox>(avParam);
+	gimmick_=std::make_unique<AvilityBox>(avParam, componentNameList);
+	gimmick_->Init();
+	//for (const auto& gim : gimmick_)
+	//{
+	//	gim->Init();
+	//}
 }
 
 void StageManager::Update()
 {
 	stage_->Update();
+	gimmick_->Update();
+	//for (const auto& gim : gimmick_)
+	//{
+	//	gim->Update();
+	//}
 }
 
 void StageManager::Draw()
 {
 	stage_->Draw();
+	gimmick_->Draw();
+	//for (const auto& gim : gimmick_)
+	//{
+	//	gim->Draw();
+	//}
 }
 
 void StageManager::ChageStage(const TYPE type)
@@ -43,6 +67,11 @@ void StageManager::DebugDraw()
 			tiles_[j][i]->DebugDraw();
 		}
 	}*/
+	gimmick_->DebugDraw();
+	//for (const auto& gim : gimmick_)
+	//{
+	//	gim->DebugDraw();
+	//}
 }
 
 const Vector2& StageManager::GetStageSize() const
