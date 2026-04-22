@@ -30,7 +30,7 @@ void ComponentActionPlayer::Update()
 	Jump();
 
 	// ˆÚ“®—Ê‚ÌXV
-	owner_.AddMoveAmount(moveAmount_);
+	owner_.SetMoveAmount(moveAmount_);
 }
 
 void ComponentActionPlayer::ProcessInputMove()
