@@ -449,3 +449,20 @@ bool UtilityCommon::FindIndex(const std::vector<int>& array, const int index)
     }
     return true;
 }
+
+Vector2F UtilityCommon::Reflect(const Vector2F& v, const Vector2F& n)
+{
+    // ³‹K‰»
+    const float len = sqrt(n.x * n.x + n.y * n.y);
+    if (len == 0.0f) return v;
+    Vector2F normal = { n.x / len, n.y / len };
+
+    // n ‚Í³‹K‰»‚³‚ê‚Ä‚¢‚é‘O’ñ
+    const float dot = v.x * normal.x + v.y * normal.y;
+
+    Vector2F result;
+    result.x = v.x - 2.0f * dot * normal.x;
+    result.y = v.y - 2.0f * dot * normal.y;
+
+    return result;
+}

@@ -3,7 +3,7 @@
 #include "../Collider/ColliderBox.h"
 #include "Player.h"
 
-#include "../../Component/Avility/AvilityShot.h"
+#include "../../Component/Avility/ComponentAvilityShot.h"
 
 Player::Player(const Parameter& parameter, const std::vector<std::string> componentNameList):
 	parameter_(parameter),
@@ -28,7 +28,7 @@ void Player::Init()
 	CharacterBase::Init();
 
 	// デバッグ用
-	componentMap_.try_emplace(std::string("AvilityShot"), std::make_unique<AvilityShot>(*this));
+	componentMap_.try_emplace(std::string("AvilityShot"), std::make_unique<ComponentAvilityShot>(*this));
 }
 
 void Player::Update()

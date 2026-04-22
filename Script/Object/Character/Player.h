@@ -9,6 +9,7 @@ public:
 	{
 		Vector2 hitBoxSize;			// 衝突判定用ボックスサイズ
 		Vector2 hitLocalPos;		// 衝突判定ボックスの相対位置
+		Vector2F shotVec_;			// ショットベクトル
 		float dashSpeed;			// ダッシュスピード
 		float jumpPow;				// ジャンプ力
 		float jumpPowMax;			// ジャンプ力の最大量
@@ -44,6 +45,12 @@ public:
 	void DebugDraw() override;	
 	
 	/// <summary>
+	/// ショットベクトルの設定
+	/// </summary>
+	/// <param name="shotVec">ショットベクトル</param>
+	void SetShotVec(const Vector2F shotVec) { parameter_.shotVec_ = shotVec; }
+
+	/// <summary>
 	/// 地面判定の設定
 	/// </summary>
 	/// <param name="isGround">地面判定</param>
@@ -66,6 +73,12 @@ public:
 	/// </summary>
 	/// <returns>衝突する範囲</returns>
 	const Vector2& GetHitBoxSize() const { return parameter_.hitBoxSize; }
+
+	/// <summary>
+	/// ショットベクトル（parameter_.shotVec_）を取得して返します。
+	/// </summary>
+	/// <returns>parameter_.shotVec_ のコピーを Vector2F 型で返します。メソッド自体はオブジェクトを変更しません（const）。</returns>
+	const Vector2F GetShotVec() const { return parameter_.shotVec_; }
 
 	/// <summary>
 	/// 最大ジャンプ力を返す

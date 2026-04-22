@@ -162,4 +162,8 @@ public:
 	/// <param name="index">指定番号</param>
 	/// <returns>探索結果</returns>
 	static bool FindIndex(const std::vector<int>& array, const int index);
+
+	// 法線に合わせたベクトルの反射
+	static Vector2F Reflect(const Vector2F& v, const Vector2F& n);
+
 };

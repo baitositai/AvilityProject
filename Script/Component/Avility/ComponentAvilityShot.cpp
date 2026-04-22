@@ -2,14 +2,15 @@
 #include "../../Manager/Common/InputManager.h"
 #include "../../Object/Character/CharacterBase.h"
 #include "../../Object/Character/Player.h"
+#include "../../Object/ActorBase.h"
 
-#include "AvilityShot.h"
+#include "ComponentAvilityShot.h"
 
-AvilityShot::AvilityShot(Player& owner)
+ComponentAvilityShot::ComponentAvilityShot(Player& owner)
     : ComponentAvilityBase(owner),
 	inputManager_(InputManager::GetInstance()),
 	moveAmount_({}),
-	shotCount_(0.0f)
+	shotTime_(0.0f)
 {
 	stateFunctionMap_=
 	{
@@ -20,11 +21,11 @@ AvilityShot::AvilityShot(Player& owner)
 	currentStateFunction_ = stateFunctionMap_[currentState_];
 }
 
-AvilityShot::~AvilityShot()
+ComponentAvilityShot::~ComponentAvilityShot()
 {
 }
 
-void AvilityShot::Update()
+void ComponentAvilityShot::Update()
 {
     int x = 0;
 	// 移動量の初期化
@@ -35,7 +36,7 @@ void AvilityShot::Update()
 }
 
 
-void AvilityShot::ProcessInputShot()
+void ComponentAvilityShot::ProcessInputShot()
 {
 	const float moveSpeed = owner_.GetParameter()->moveSpeed;
 
@@ -57,28 +58,28 @@ void AvilityShot::ProcessInputShot()
 	{
 		shotVec_.y += 1;
 	}
+	// 横の移動量がゼロなら現在の向きを入れる
+	if (shotVec_.x == 0)
+	{
+		shotVec_.x = owner_.GetParameter()->direction ? -1 : 1;
+	}
+	owner_.SetShotVec(shotVec_);
 
 	if (inputManager_.IsNew(InputManager::TYPE::CAMERA_MODE_CHANGE))
 	{
-		// 横の移動量がゼロなら現在の向きを入れる
-		if (shotVec_.x == 0)
-		{
-			shotVec_.x = owner_.GetParameter()->direction ? -1 : 1;
-		}
 
-
-		shotCount_ = 2.0f;
+		shotTime_ = 2.0f;
 
 		currentState_ = "move";
 		currentStateFunction_ = stateFunctionMap_[currentState_];
 	}
 }
 
-void AvilityShot::ProcessMoveShot()
+void ComponentAvilityShot::ProcessMoveShot()
 {
-	shotCount_ -= 0.1f;
+	shotTime_ -= 0.1f;
 
-	if (shotCount_ <= 0.0f)
+	if (shotTime_ <= 0.0f)
 	{
 		currentState_ = "shot";
 		currentStateFunction_ = stateFunctionMap_[currentState_];
@@ -86,8 +87,19 @@ void AvilityShot::ProcessMoveShot()
 	}
 	else
 	{
-		moveAmount_.y = shotVec_.y * shotCount_ * SHOT_SPEED;
-		moveAmount_.x = shotVec_.x * shotCount_ * SHOT_SPEED;
+		//// ぶつかっていた場合shotVec_を９０度変更する
+		//if(owner_.)
+		//{
+		//	float temp = shotVec_.x;
+		//	shotVec_.x = -shotVec_.y;
+		//	shotVec_.y = temp;
+		//}
+
+		Vector2F dir = owner_.GetShotVec();
+
+		moveAmount_.y = dir.y * shotTime_ * SHOT_SPEED;
+		moveAmount_.x = dir.x * shotTime_ * SHOT_SPEED;
+		
 	}
 
 	// 移動量の更新
