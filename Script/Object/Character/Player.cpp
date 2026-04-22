@@ -17,7 +17,7 @@ Player::~Player()
 void Player::Init()
 {	
 	// コライダー
-	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::PLAYER, parameter_.hitBoxSize_);
+	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::PLAYER, parameter_.hitBoxSize);
 
 	// 衝突後処理
 	onHit_ = std::make_unique<OnHitPlayer>(*this);

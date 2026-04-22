@@ -61,7 +61,7 @@ std::unique_ptr<ComponentSpriteAnimation> FactoryComponent::CreateComponentSprit
 
 std::unique_ptr<ComponentActionPlayer> FactoryComponent::CreateComponentActionPlayer(ActorBase& owner)
 {
-    auto* characterPtr = dynamic_cast<CharacterBase*>(&owner);
+    auto* characterPtr = dynamic_cast<Player*>(&owner);
 
     if (characterPtr == nullptr)
     {

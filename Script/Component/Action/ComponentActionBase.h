@@ -19,7 +19,5 @@ public:
 
 protected:
 
-	// Š—LÒ
-	CharacterBase& owner_;
 };
 

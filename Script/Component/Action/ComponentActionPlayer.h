@@ -13,7 +13,7 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="owner">所有者</param>
-	ComponentActionPlayer(CharacterBase& owner);
+	ComponentActionPlayer(Player& owner);
 	
 	/// <summary>
 	/// デストラクタ
@@ -30,10 +30,22 @@ private:
 	// 入力管理クラスの参照
 	InputManager& inputManager_;
 
+	// 所有者
+	Player& owner_;
+
 	// 移動量
 	Vector2F moveAmount_;
 
+	// ジャンプ力
+	float velocityY_;
+
 	// 移動入力処理
 	void ProcessInputMove();
+
+	// ジャンプ入力処理
+	void ProcessInputJump();
+
+	// ジャンプによる移動量を計算
+	void Jump();
 };
 
