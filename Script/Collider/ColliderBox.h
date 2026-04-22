@@ -12,7 +12,7 @@ public:
 	/// <param name="owner">所有者</param>
 	/// <param name="tag">衝突判定タグ</param>
 	/// <param name="topPos">ボックスサイズ</param>
-	ColliderBox(ActorBase& owner, const CollisionTags::TAG tag, const Vector2& boxSize);
+	ColliderBox(ActorBase& owner, const CollisionTags::TAG tag, const Vector2& boxSize,float& degAngle);
 	
 	/// <summary>
 	/// デストラクタ
@@ -61,4 +61,7 @@ private:
 
 	// ハーフサイズ
 	Vector2 boxHalfSize_;
+
+	//角度(デグリー)
+	const float& degAngle_;
 };

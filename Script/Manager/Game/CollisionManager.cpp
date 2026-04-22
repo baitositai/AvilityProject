@@ -129,6 +129,15 @@ void CollisionManager::InitTagMatrix()
 
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::STAGE)] = true;				// プレイヤーとステージ
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::STAGE)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;			//アビリティ設置ボックスとプレイヤー
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::STAGE)] = true;			//アビリティ設置ボックスとステージ
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::STAGE)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::ENEMY)] = true;			//アビリティ設置ボックスと敵
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;
 }
 
 void CollisionManager::InitColliderMatrix()

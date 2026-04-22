@@ -1,7 +1,9 @@
 #include "ComponentAvilityBox.h"
 
 ComponentAvilityBox::ComponentAvilityBox(Player& owner):
-	ComponentAvilityBase(owner)
+	ComponentAvilityBase(owner),
+	boxCnt_(),
+	coolCnt_()
 {
 }
 

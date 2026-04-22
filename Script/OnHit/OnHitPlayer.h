@@ -25,5 +25,6 @@ private:
 
 	// ƒ^ƒO•ÊÕ“ËŒãˆ—
 	void OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider);
+	void OnHitAvilityBox(const std::weak_ptr<ColliderBase>& opponentCollider);
 };
 

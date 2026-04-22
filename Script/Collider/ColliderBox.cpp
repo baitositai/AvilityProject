@@ -3,9 +3,10 @@
 #include "../Object/ActorBase.h"
 #include "ColliderBox.h"
 
-ColliderBox::ColliderBox(ActorBase& owner, const CollisionTags::TAG tag, const Vector2& boxSize) :
+ColliderBox::ColliderBox(ActorBase& owner, const CollisionTags::TAG tag, const Vector2& boxSize, float& degAngle):
 	ColliderBase(owner, tag),
 	boxSize_(boxSize),
+	degAngle_(degAngle),
 	boxHalfSize_(Vector2(boxSize_.x / 2, boxSize_.y / 2))
 {
 	type_ = ColliderType::TYPE::BOX;

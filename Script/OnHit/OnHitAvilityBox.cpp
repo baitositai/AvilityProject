@@ -26,6 +26,9 @@ OnHitAvilityBox::~OnHitAvilityBox()
 
 void OnHitAvilityBox::OnHitPlayer(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
+    const ActorBase& player = opponentCollider.lock()->GetOwner();
+    Vector2F moveAmount = owner_.GetParameter()->moveAmount;
+    owner_.SetMoveAmount(moveAmount);
 
 }
 void OnHitAvilityBox::OnHitEnemy(const std::weak_ptr<ColliderBase>& opponentCollider)

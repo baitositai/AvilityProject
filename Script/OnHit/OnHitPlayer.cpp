@@ -11,6 +11,10 @@ OnHitPlayer::OnHitPlayer(Player& owner) :
         {
             return OnHitStage(opponentCollider);
         });
+    onHitMap_.emplace(CollisionTags::TAG::AVILITY_BOX, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
+        {
+            return OnHitAvilityBox(opponentCollider);
+        });
 }
 
 OnHitPlayer::~OnHitPlayer()
@@ -99,7 +103,6 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
             }
 
             // åàíËÇµÇΩï˚å¸Ç…ÇÃÇ›ï‚ê≥
-            Vector2F MoveAmount = Vector2F(0.0f, 0.0f);
             if (dir == ActorBase::DIR::LEFT) { pos.x -= (overL + 0.01f); owner_.SetMoveAmount(Vector2F(0.0f, moveAmount.y)); }
             else if (dir == ActorBase::DIR::RIGHT) { pos.x += (overR + 0.01f); owner_.SetMoveAmount(Vector2F(0.0f, moveAmount.y)); }
             else if (dir == ActorBase::DIR::UP) { pos.y -= (overT + 0.01f); owner_.SetMoveAmount(Vector2F(moveAmount.x, 0.0f)); }
@@ -109,4 +112,11 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
             owner_.SetPosition(pos);
         }
     }
+}
+
+void OnHitPlayer::OnHitAvilityBox(const std::weak_ptr<ColliderBase>& opponentCollider)
+{
+    //const ActorBase& box = opponentCollider.lock()->GetOwner();
+    //Vector2F moveAmount = owner_.GetParameter()->moveAmount;
+
 }

@@ -10,6 +10,15 @@ public:
 	static int SqrMagnitude(const Vector2& v);
 	static double Distance(const Vector2& v1, const Vector2& v2);
 
+	//内席
+	static float Dot(Vector2& v1, Vector2& v2);
+
+	//軸
+	static Vector2 GetAxisX(const float angle);
+	static Vector2 GetAxisY(const float angle);
+
+	static bool OverlapOnAxis();
+
 	/// <summary>
 	/// ワールド座標をマップ座標へ
 	/// </summary>

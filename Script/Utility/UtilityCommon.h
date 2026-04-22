@@ -162,4 +162,6 @@ public:
 	/// <param name="index">w’è”Ô†</param>
 	/// <returns>’TõŒ‹‰Ê</returns>
 	static bool FindIndex(const std::vector<int>& array, const int index);
+
+
 };
