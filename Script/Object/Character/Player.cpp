@@ -3,6 +3,8 @@
 #include "../Collider/ColliderBox.h"
 #include "Player.h"
 
+#include "../../Component/Avility/AvilityShot.h"
+
 Player::Player(const Parameter& parameter, const std::vector<std::string> componentNameList):
 	parameter_(parameter),
 	CharacterBase(&parameter_, componentNameList)
@@ -24,6 +26,9 @@ void Player::Init()
 	
 	// 基底クラスの初期化
 	CharacterBase::Init();
+
+	// デバッグ用
+	componentMap_.try_emplace(std::string("AvilityShot"), std::make_unique<AvilityShot>(*this));
 }
 
 void Player::Update()
