@@ -149,6 +149,12 @@ public:
 	void SetMoveAmount(const Vector2F moveAmount) { actorParameterPtr_->moveAmount = moveAmount; }
 
 	/// <summary>
+	/// ˆÚ“®—Ê‚Ìİ’è
+	/// </summary>
+	/// <param name="moveAmount">ˆÚ“®—Ê</param>
+	void AddMoveAmount(const Vector2F moveAmount);
+
+	/// <summary>
 	/// ƒpƒ‰ƒ[ƒ^î•ñ‚ğ•Ô‚·
 	/// </summary>
 	/// <returns></returns>
