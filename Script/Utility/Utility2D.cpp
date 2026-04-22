@@ -16,6 +16,13 @@ double Utility2D::Distance(const Vector2& v1, const Vector2& v2)
     return sqrt(pow(v2.x - v1.x, 2) + pow(v2.y - v1.y, 2));
 }
 
+float Utility2D::Dot(const Vector2F& v1, const Vector2F& v2)
+{
+    return v1.x * v2.x + v1.y * v2.y;
+}
+
+
+
 Vector2 Utility2D::WorldToMapPos(const Vector2& worldPos, const Vector2& mapSize)
 {
     Vector2 mapPos = worldPos;

@@ -1,5 +1,6 @@
 #pragma once
 #include "../Common/Vector2.h"
+#include "../Common/Vector2F.h"
 
 class Utility2D
 {
@@ -10,14 +11,12 @@ public:
 	static int SqrMagnitude(const Vector2& v);
 	static double Distance(const Vector2& v1, const Vector2& v2);
 
-	//内席
-	static float Dot(Vector2& v1, Vector2& v2);
+	/// @brief 内積を求める
+	/// @param v1 
+	/// @param v2 
+	/// @return 
+	static float Dot(const Vector2F& v1, const Vector2F& v2);
 
-	//軸
-	static Vector2 GetAxisX(const float angle);
-	static Vector2 GetAxisY(const float angle);
-
-	static bool OverlapOnAxis();
 
 	/// <summary>
 	/// ワールド座標をマップ座標へ
