@@ -33,12 +33,13 @@ void ActorBase::Init()
 
 	// コライダーの登録
 	RegisterCollider();
+
+	// アニメーション初期化
+	InitAnimation();
 }
 
 void ActorBase::Update()
 {
-	//SetMoveAmount(Vector2F(0.0f, 0.0f));
-
 	if (componentMap_.empty()) return;
 
 	for (const auto& componet : componentMap_)
@@ -53,7 +54,7 @@ void ActorBase::Draw()
 {
 	// 描画位置を設定
 	Vector2F cameraPos = mainCamera.GetPos();
-	actorParameterPtr_->drawPos = Vector2::AddVector2(actorParameterPtr_->pos.ToVector2(), cameraPos.ToVector2());
+	actorParameterPtr_->drawPos = Vector2::AddVector2(Vector2::AddVector2(actorParameterPtr_->pos.ToVector2(), actorParameterPtr_->localPos), cameraPos.ToVector2());
 
 	// 描画
 	DrawRotaGraph(
@@ -68,6 +69,10 @@ void ActorBase::Draw()
 }
 
 void ActorBase::DebugDraw()
+{
+}
+
+void ActorBase::InitAnimation()
 {
 }
 

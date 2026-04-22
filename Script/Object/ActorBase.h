@@ -39,6 +39,7 @@ public:
 		float angle = 0.0f;						// 角度
 		bool direction = false;					// 向き(false:右,true:左)
 		bool transparent = true;				// 透過判定
+		Vector2 localPos = {};					// 相対位置
 		Vector2 drawPos = {};					// 描画位置
 		Vector2 divisionNum = {};				// 分割数
 
@@ -50,19 +51,22 @@ public:
 		// 重力関係
 		float gravityPower = 0.0f;				// 重力
 		DIR gravityDir = DIR::DOWN;				// 重力方向
+
+		float animationSpeed = 0.0f;			// アニメーション速度の格納
 	};
 	
 	// アニメーション用の情報
 	struct ParameterAnimation
 	{
-		int animationType = -1;			// アニメーションの種類		
-		int animationIndex = 0;			// アニメーションインデックス
-		int animationStartIndex = 0;	// アニメーション開始インデックス
-		int animationFinishIndex = 0;	// アニメーション終了インデックス
-		float animationSpeed = 0.0f;	// アニメーションスピード
-		bool isPlay = false;			// アニメーション再生判定 
-		bool isStop = false;			// アニメーション停止判定
-		bool isLoop = false;			// アニメーションループ判定
+		int animationType = -1;						// アニメーションの種類		
+		int animationIndex = 0;						// アニメーションインデックス
+		int animationStartIndex = 0;				// アニメーション開始インデックス
+		int animationFinishIndex = 0;				// アニメーション終了インデックス
+		float animationSpeed = 0.0f;				// アニメーションスピード
+		bool isPlay = false;						// アニメーション再生判定 
+		bool isStop = false;						// アニメーション停止判定
+		bool isLoop = false;						// アニメーションループ判定
+		std::unordered_map<int, int> animationsMap;	// 種類別アニメーション数管理マップ
 	};
 
 	/// <summary>
@@ -97,6 +101,11 @@ public:
 	virtual void DebugDraw();
 
 	/// <summary>
+	/// アニメーションの初期化
+	/// </summary>
+	virtual void InitAnimation();
+
+	/// <summary>
 	/// コンポーネントの追加
 	/// </summary>
 	/// <param name="name">コンポーネントの名前</param>
@@ -129,12 +138,24 @@ public:
 	/// </summary>
 	/// <param name="animationIndex">アニメーションインデックス</param>
 	void SetAnimationIndex(const int animationIndex) { parameterAnimation_.animationIndex = animationIndex; }
+
+	/// <summary>
+	/// アニメーション速度の設定
+	/// </summary>
+	/// <param name="animationSpeed">アニメーション速度</param>
+	void SetAnimationSpeed(const int animationSpeed) { parameterAnimation_.animationSpeed = animationSpeed; }
 	
 	/// <summary>
 	/// 角度の設定
 	/// </summary>
 	/// <param name="angle">角度</param>
 	void SetAngle(const float angle) { actorParameterPtr_->angle = angle; }
+
+	/// <summary>
+	/// 方向の設定
+	/// </summary>
+	/// <param name="direction">方向</param>
+	void SetDirection(const bool direction) { actorParameterPtr_->direction = direction; }
 
 	/// <summary>
 	/// 座標の設定

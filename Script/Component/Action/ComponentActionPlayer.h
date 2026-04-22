@@ -39,6 +39,9 @@ private:
 	// ƒWƒƒƒ“ƒv—Í
 	float velocityY_;
 
+	// ’n–Ê”»’è
+	bool isGround_;
+
 	// ˆÚ“®“ü—Íˆ—
 	void ProcessInputMove();
 

@@ -17,6 +17,7 @@ void PlayerManager::Init()
 	parameter.direction = jsonPparameter["direction"].get<bool>();
 	parameter.transparent = jsonPparameter["transparent"].get<bool>();
 	parameter.moveSpeed = jsonPparameter["moveSpeed"].get<float>();
+	parameter.animationSpeed = jsonPparameter["animationSpeed"].get<float>();
 	parameter.divisionNum.x = jsonPparameter["divisionNum"]["x"].get<int>();
 	parameter.divisionNum.y = jsonPparameter["divisionNum"]["y"].get<int>();
 	parameter.hp = jsonPparameter["hp"].get<int>();
@@ -26,7 +27,17 @@ void PlayerManager::Init()
 	parameter.attackPower = jsonPparameter["attackPower"].get<int>();
 	parameter.gravityPower = jsonPparameter["gravityPower"].get<float>();
 	parameter.hitBoxSize = Vector2(jsonPparameter["hitBoxSize"]["x"].get<int>(), jsonPparameter["hitBoxSize"]["y"].get<int>());
+	parameter.localPos = Vector2(jsonPparameter["loacalPos"]["x"].get<int>(), jsonPparameter["loacalPos"]["y"].get<int>());
 	parameter.pos = Vector2F(400.0f, 400.0f);
+
+	// アニメーションの登録
+	parameter.animationsIdle = jsonPparameter["animationsIdle"].get<int>();
+	parameter.animationsWalk = jsonPparameter["animationsWalk"].get<int>();
+	parameter.animationsJump = jsonPparameter["animationsJump"].get<int>();
+	parameter.animationsFall = jsonPparameter["animationsFall"].get<int>();
+	parameter.animationsDie = jsonPparameter["animationsDie"].get<int>();
+	parameter.animationsDamage = jsonPparameter["animationsDamage"].get<int>();
+	parameter.animationsPause = jsonPparameter["animationsPause"].get<int>();
 	std::vector<std::string> componentNameList = jsonPparameter["componentNameList"].get<std::vector<std::string>>();
 
 	// リソースの取得

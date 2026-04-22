@@ -18,13 +18,25 @@
     "jumpPowerMax": 10.0,
     "gravityPower": 0.5,
     "jumpCount": 2,
+    "animationSpeed": 0.1,
+    "animationsIdle": 6,
+    "animationsWalk": 8,
+    "animationsJump": 3,
+    "animationsFall": 3,
+    "animationsDie": 9,
+    "animationsDamage": 4,
+    "animationsPause": 6,
     "divisionNum": {
-      "x": 1,
-      "y": 1
+      "x": 9,
+      "y": 7
     },
     "hitBoxSize": {
       "x": 48,
-      "y": 48
+      "y": 64
+    },
+    "loacalPos": {
+      "x": 0,
+      "y": 8
     }
   }
 }

@@ -7,13 +7,34 @@ public:
 
 	struct Parameter : public CharacterBase::Parameter
 	{
-		Vector2 hitBoxSize;			// 衝突判定用ボックスサイズ
-		Vector2 hitLocalPos;		// 衝突判定ボックスの相対位置
-		float dashSpeed;			// ダッシュスピード
-		float jumpPow;				// ジャンプ力
-		float jumpPowMax;			// ジャンプ力の最大量
-		bool isGround;				// 地面判定
-		bool isFall;				// 落下判定
+		Vector2 hitBoxSize = {};			// 衝突判定用ボックスサイズ
+		float dashSpeed = 0.0f;				// ダッシュスピード
+		float jumpPow = 0.0f;				// ジャンプ力
+		float jumpPowMax = 0.0f;			// ジャンプ力の最大量
+		bool isGround = false;				// 地面判定
+		bool isFall = false;				// 落下判定
+
+		// アニメーション関係
+		int animationsIdle;					// 待機アニメーション数
+		int animationsWalk;					// 移動アニメーション
+		int animationsJump;					// ジャンプアニメーション
+		int animationsFall;					// 落下アニメーション
+		int animationsDie;					// 死亡アニメーション
+		int animationsDamage;				// ダメージアニメーション
+		int animationsPause;				// ポーズアニメーション
+	};
+
+	// アニメーション種類
+	enum class ANIMATION
+	{
+		IDLE,
+		WALK,
+		JUMP,
+		FALL,
+		DIE,
+		DAMAGE,
+		PAUSE,
+		MAX
 	};
 
 	/// <summary>
@@ -42,6 +63,16 @@ public:
 	/// デバッグ描画
 	/// </summary>
 	void DebugDraw() override;	
+
+	/// <summary>
+	/// アニメーションの初期化
+	/// </summary>
+	void InitAnimation() override;
+
+	/// <summary>
+	/// アニメーションの変更
+	/// </summary>
+	void ChangeAnimation(const ANIMATION type, const bool isLoop = true);
 	
 	/// <summary>
 	/// 地面判定の設定
