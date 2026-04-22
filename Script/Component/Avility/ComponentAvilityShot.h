@@ -5,7 +5,7 @@
 class InputManager;
 class Player;
 
-class AvilityShot :
+class ComponentAvilityShot :
     public ComponentAvilityBase
 {
 public:
@@ -17,12 +17,12 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="owner">所有者</param>
-	AvilityShot(Player& owner);
+	ComponentAvilityShot(Player& owner);
 
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~AvilityShot() override;
+	~ComponentAvilityShot() override;
 
 	/// <summary>
 	/// 更新処理
@@ -48,7 +48,7 @@ private:
 	std::function<void(void)> currentStateFunction_;
 
 	// ショット変数
-	float shotCount_;
+	float shotTime_;
 	Vector2F shotVec_;
 
 };

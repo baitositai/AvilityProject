@@ -8,6 +8,7 @@ public:
 	struct Parameter : public CharacterBase::Parameter
 	{
 		Vector2 hitBoxSize = {};			// 衝突判定用ボックスサイズ
+		Vector2F shotVec_;					// ショットベクトル
 		float dashSpeed = 0.0f;				// ダッシュスピード
 		float jumpPow = 0.0f;				// ジャンプ力
 		float jumpPowMax = 0.0f;			// ジャンプ力の最大量
@@ -65,15 +66,11 @@ public:
 	void DebugDraw() override;	
 
 	/// <summary>
-	/// アニメーションの初期化
+	/// ショットベクトルの設定
 	/// </summary>
-	void InitAnimation() override;
+	/// <param name="shotVec">ショットベクトル</param>
+	void SetShotVec(const Vector2F shotVec) { parameter_.shotVec_ = shotVec; }
 
-	/// <summary>
-	/// アニメーションの変更
-	/// </summary>
-	void ChangeAnimation(const ANIMATION type, const bool isLoop = true);
-	
 	/// <summary>
 	/// 地面判定の設定
 	/// </summary>
@@ -97,6 +94,12 @@ public:
 	/// </summary>
 	/// <returns>衝突する範囲</returns>
 	const Vector2& GetHitBoxSize() const { return parameter_.hitBoxSize; }
+
+	/// <summary>
+	/// ショットベクトル（parameter_.shotVec_）を取得して返します。
+	/// </summary>
+	/// <returns>parameter_.shotVec_ のコピーを Vector2F 型で返します。メソッド自体はオブジェクトを変更しません（const）。</returns>
+	const Vector2F GetShotVec() const { return parameter_.shotVec_; }
 
 	/// <summary>
 	/// 最大ジャンプ力を返す

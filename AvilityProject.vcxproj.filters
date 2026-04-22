@@ -267,7 +267,7 @@
     <ClCompile Include="Script\Component\Avility\ComponentAvilityBase.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Script\Component\Avility\AvilityShot.cpp">
+    <ClCompile Include="Script\Component\Avility\ComponentAvilityShot.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -701,7 +701,7 @@
     <ClInclude Include="Script\Component\Avility\ComponentAvilityBase.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Script\Component\Avility\AvilityShot.h">
+    <ClInclude Include="Script\Component\Avility\ComponentAvilityShot.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
