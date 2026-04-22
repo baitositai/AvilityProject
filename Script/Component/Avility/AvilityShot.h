@@ -11,7 +11,7 @@ class AvilityShot :
 public:
 
 	static constexpr float SHOT_INTERVAL = 0.5f;	// ショットのインターバル
-	static constexpr float SHOT_SPEED = 30.0f;		// ショットの速度
+	static constexpr float SHOT_SPEED = 15.0f;		// ショットの速度
 
 	/// <summary>
 	/// コンストラクタ

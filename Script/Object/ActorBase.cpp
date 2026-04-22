@@ -37,7 +37,7 @@ void ActorBase::Init()
 
 void ActorBase::Update()
 {
-	SetMoveAmount(Vector2F(0.0f, 0.0f));
+	//SetMoveAmount(Vector2F(0.0f, 0.0f));
 
 	if (componentMap_.empty()) return;
 

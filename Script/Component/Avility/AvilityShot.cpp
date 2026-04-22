@@ -32,8 +32,6 @@ void AvilityShot::Update()
 
 	currentStateFunction_();
 
-	// 移動量の更新
-	owner_.AddMoveAmount(moveAmount_);
 }
 
 
@@ -92,4 +90,6 @@ void AvilityShot::ProcessMoveShot()
 		moveAmount_.x = shotVec_.x * shotCount_ * SHOT_SPEED;
 	}
 
+	// 移動量の更新
+	owner_.SetMoveAmount(moveAmount_);
 }
