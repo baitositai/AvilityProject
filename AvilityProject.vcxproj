@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Component\Avility\ComponentAvilityBase.cpp" />
     <ClCompile Include="Script\Object\Stage\Stage.cpp" />
     <ClCompile Include="Script\Object\Stage\Tile\TileBase.cpp" />
     <ClCompile Include="Script\OnHit\OnHitPlayer.cpp" />
@@ -230,6 +231,7 @@
     <ClCompile Include="Script\Utility\UtilityCollision.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Component\Avility\ComponentAvilityBase.h" />
     <ClInclude Include="Script\Object\Stage\Stage.h" />
     <ClInclude Include="Script\Object\Stage\Tile\TileBase.h" />
     <ClInclude Include="Script\OnHit\OnHitPlayer.h" />

@@ -198,9 +198,6 @@
     <ClCompile Include="Script\Manager\Game\CollisionTags.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Script\Object\Tile\TileBase.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Script\Manager\Game\GameManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -261,13 +258,13 @@
     <ClCompile Include="Script\OnHit\OnHitPlayer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Stage.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Script\Object\Stage\Tile\TileBase.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Script\Object\Stage\Stage.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Component\Avility\ComponentAvilityBase.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -632,9 +629,6 @@
     <ClInclude Include="Script\Manager\Game\CollisionTags.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Script\Object\Tile\TileBase.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Script\Manager\Game\GameManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -695,13 +689,13 @@
     <ClInclude Include="Script\OnHit\OnHitPlayer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Stage.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Script\Object\Stage\Tile\TileBase.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Script\Object\Stage\Stage.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Component\Avility\ComponentAvilityBase.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
