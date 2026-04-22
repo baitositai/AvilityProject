@@ -37,6 +37,8 @@ void ActorBase::Init()
 
 void ActorBase::Update()
 {
+	SetMoveAmount(Vector2F(0.0f, 0.0f));
+
 	if (componentMap_.empty()) return;
 
 	for (const auto& componet : componentMap_)
@@ -102,6 +104,21 @@ void ActorBase::SetAnimationParameter(const int animationStartIndex, const int a
 	parameterAnimation_.animationFinishIndex = animationFinishIndex;
 	parameterAnimation_.animationSpeed = animationSpeed;
 	parameterAnimation_.isLoop = isLoop;
+}
+
+void ActorBase::AddMoveAmount(const Vector2F moveAmount)
+{
+	if (actorParameterPtr_->moveAmount.x == 0.0f && actorParameterPtr_->moveAmount.y == 0.0f)
+	{
+		// 0ならリセット（上書き）
+		actorParameterPtr_->moveAmount = moveAmount;
+	}
+	else
+	{
+		// 0以外なら加算
+		actorParameterPtr_->moveAmount.x += moveAmount.x;
+		actorParameterPtr_->moveAmount.y += moveAmount.y;
+	}
 }
 
 void ActorBase::RegisterCollider()

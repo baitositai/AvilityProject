@@ -22,7 +22,7 @@ void ComponentActionPlayer::Update()
 	ProcessInputMove();
 
 	// ˆÚ“®—Ê‚ÌXV
-	owner_.SetMoveAmount(moveAmount_);
+	owner_.AddMoveAmount(moveAmount_);
 }
 
 void ComponentActionPlayer::ProcessInputMove()
