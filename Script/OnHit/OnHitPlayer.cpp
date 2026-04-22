@@ -86,6 +86,9 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
                 // ã‚Ö‰Ÿ‚µ–ß‚·”»’è‚ğ—LŒø‚É‚·‚é
                 minOverlap = overT; 
                 dir = ActorBase::DIR::UP;
+                
+                // ’n–Ê”»’è‚ğİ’è
+                owner_.SetIsGround(true);
             }
             // ã‚ÉˆÚ“®’†‚Ìê‡@
             if (moveAmount.y < 0 && overB < minOverlap) 

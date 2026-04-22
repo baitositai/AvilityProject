@@ -11,10 +11,12 @@
     "direction": false,
     "transparent": true,
     "moveSpeed": 2.0,
+    "dashSpeed": 4.0,
     "hp": 100,
     "attackPower": 10,
     "jumpPower": 0.2,
-    "gravityPower": 9.8,
+    "jumpPowerMax": 10.0,
+    "gravityPower": 0.5,
     "jumpCount": 2,
     "divisionNum": {
       "x": 1,
