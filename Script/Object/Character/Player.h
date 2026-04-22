@@ -66,6 +66,18 @@ public:
 	void DebugDraw() override;	
 
 	/// <summary>
+	/// アニメーションの初期化
+	/// </summary>
+	void InitAnimation() override;
+
+	/// <summary>
+	/// アニメーションの変更
+	/// </summary>
+	/// <param name="type">種類</param>
+	/// <param name="isLoop">ループ判定</param>
+	void ChangeAnimation(const ANIMATION type, const bool isLoop = true);
+
+	/// <summary>
 	/// ショットベクトルの設定
 	/// </summary>
 	/// <param name="shotVec">ショットベクトル</param>
