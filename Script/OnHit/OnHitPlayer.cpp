@@ -73,7 +73,8 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
             if (moveAmount.x > 0 && overL < minOverlap) { minOverlap = overL; dir = 0; }
 
             // 2. 左に移動中なら、右へ押し戻す判定を有効にする
-            if (moveAmount.x < 0 && overR < minOverlap) { minOverlap = overR; dir = 1; }
+            if (moveAmount.x < 0 && overR < minOverlap) { 
+                minOverlap = overR; dir = 1; }
 
             // 3. 下に移動（落下）中なら、上へ押し戻す（床）判定を有効にする
             if (moveAmount.y > 0 && overT < minOverlap) { minOverlap = overT; dir = 2; }
