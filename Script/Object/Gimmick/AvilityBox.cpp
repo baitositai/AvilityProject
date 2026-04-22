@@ -28,6 +28,7 @@ void AvilityBox::Init(void)
 void AvilityBox::Update(void)
 {
 	GimmickBase::Update();
+	if (!collider_->IsHit()) { parameter_.moveAmount.x = 0.0f; }
 }
 
 void AvilityBox::Draw(void)
