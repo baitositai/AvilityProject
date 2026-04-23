@@ -137,7 +137,8 @@ void OnHitPlayer::OnHitAvilityBox(const std::weak_ptr<ColliderBase>& opponentCol
     int signX = UtilityCommon::GetSign(diff.x);
     int signY = UtilityCommon::GetSign(diff.y);
 
-    float overlap= static_cast<float>(owner_.GetHitBoxSize().x / 2.0f) + static_cast<float>(collider->GetBoxHalfSize().x)-fabsf(diff.x);
+    float overlap= static_cast<float>(owner_.GetHitBoxSize().x / 2.0f)
+                    + static_cast<float>(collider->GetBoxHalfSize().x)-fabsf(diff.x)+myParam->moveAmount.x;
     
     Vector2F moveAmount=Vector2F();
     moveAmount.x = overlap * -weightDiff * signX;
