@@ -60,7 +60,6 @@ public:
 	/// </summary>
 	void DebugDraw() override;
 
-
 	/// @brief OBB(回転矩形)のローカル軸の取得
 	/// @param angle 向いている角度
 	/// @return 矩形が向いている右方向

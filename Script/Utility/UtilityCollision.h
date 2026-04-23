@@ -82,6 +82,7 @@ public:
 	/// <returns>判定結果</returns>
 	static bool IsHitBoxToLine(const Vector2& boxTopPos, const Vector2& boxBotmPos, const Vector2& lineTopPos, const Vector2& lineEndPos);
 
+
 private:
 
 	// マップチップ番号を取得

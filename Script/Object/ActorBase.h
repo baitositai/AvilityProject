@@ -50,6 +50,7 @@ public:
 		// 重力関係
 		float gravityPower = 0.0f;				// 重力
 		DIR gravityDir = DIR::DOWN;				// 重力方向
+		float weight = 0.0f;					//物体の重み
 	};
 	
 	// アニメーション用の情報

@@ -1,9 +1,8 @@
 {
   "player": {
     "componentNameList": [
-      "actionPlayer",
-      "gravity",
       "move",
+      "actionPlayer",
       "spriteAnimation"
     ],
     "scale": 1.0,
@@ -25,6 +24,7 @@
     "hitBoxSize": {
       "x": 48,
       "y": 48
-    }
+    },
+    "weight": 0.9
   }
 }

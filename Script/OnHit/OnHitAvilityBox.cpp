@@ -1,5 +1,7 @@
+#include "../Utility/UtilityCommon.h"
 #include "../Object/Gimmick/AvilityBox.h"
 #include "../Collider/ColliderArray.h"
+#include "../Collider/ColliderBox.h"
 #include "./OnHitAvilityBox.h"
 
 OnHitAvilityBox::OnHitAvilityBox(AvilityBox& owner):
@@ -26,9 +28,39 @@ OnHitAvilityBox::~OnHitAvilityBox()
 
 void OnHitAvilityBox::OnHitPlayer(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
+    //プレイヤー
     const ActorBase& player = opponentCollider.lock()->GetOwner();
-    Vector2F moveAmount = player.GetParameter()->moveAmount;
-    Vector2F pos = owner_.GetParameter()->pos;
+    //パラメーター
+    const ActorBase::Parameter* playerParam = player.GetParameter();
+    //移動量
+    Vector2F moveAmount = playerParam->moveAmount;
+    //プレイヤー座標
+    Vector2F opponentPos = playerParam->pos;
+    //相手のボックスコライダ
+    auto playerCol = std::dynamic_pointer_cast<ColliderBox>(opponentCollider.lock());
+    //-------------------------------------------------
+    //ボックス
+    //-------------------------------------------------
+    //座標
+    Vector2F ownerPos = owner_.GetParameter()->pos;
+    //重さ
+    float weight = owner_.GetWeight();
+    //-------------------------------------------------
+    //2間のベクトル
+    Vector2F diff = Vector2F::SubVector2F(opponentPos, ownerPos);
+    
+
+    //箱に向かって動いていないときは処理しない
+    if (UtilityCommon::GetSign(moveAmount.x) != UtilityCommon::GetSign(diff.x))
+    {
+        return;
+    }
+    //押し出し量
+    float overlapX = owner_.GetHitBoxSize().x / 2 + playerCol->GetBoxHalfSize().x - std::fabsf(diff.x);
+
+    //Y成分はなくす
+    moveAmount.x = playerParam->moveAmount.x;
+    moveAmount.y = 0.0f;
     owner_.SetMoveAmount(moveAmount);
 
 }

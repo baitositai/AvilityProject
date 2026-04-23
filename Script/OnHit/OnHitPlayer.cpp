@@ -1,5 +1,8 @@
+#include "../Utility/UtilityCommon.h"
 #include "../Object/Character/Player.h"
 #include "../Collider/ColliderArray.h"
+#include "../Collider/ColliderBox.h"
+#include "../../Object/Gimmick/AvilityBox.h"
 #include "OnHitPlayer.h"
 
 
@@ -116,7 +119,29 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
 
 void OnHitPlayer::OnHitAvilityBox(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
-    //const ActorBase& box = opponentCollider.lock()->GetOwner();
-    //Vector2F moveAmount = owner_.GetParameter()->moveAmount;
+    auto collider = std::dynamic_pointer_cast<ColliderBox>(opponentCollider.lock());
 
+    const auto& opOwner = opponentCollider.lock()->GetOwner();
+
+    //お互いのパラメータ
+    const ActorBase::Parameter* myParam = owner_.GetParameter();
+    const ActorBase::Parameter* opParam = opOwner.GetParameter();
+
+    //互いの重さ
+    float myWeight = myParam->weight;
+    float opWeight = opParam->weight;
+    float weightDiff = myWeight - opWeight;
+
+    //お互いの距離
+    Vector2F diff = Vector2F::SubVector2F(opParam->pos, myParam->pos);
+    int signX = UtilityCommon::GetSign(diff.x);
+    int signY = UtilityCommon::GetSign(diff.y);
+
+    float overlap= static_cast<float>(owner_.GetHitBoxSize().x / 2.0f) + static_cast<float>(collider->GetBoxHalfSize().x)-fabsf(diff.x);
+    
+    Vector2F moveAmount=Vector2F();
+    moveAmount.x = overlap * -weightDiff * signX;
+    moveAmount.y = 0.0f;
+
+    owner_.SetMoveAmount(moveAmount);
 }

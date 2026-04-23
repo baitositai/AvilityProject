@@ -8,8 +8,8 @@ public:
 
 	struct Parameter :public ActorBase::Parameter
 	{
-		Vector2 hitBoxSize_;
-		Vector2 hitLocalPos_;
+		Vector2 hitBoxSize;
+		Vector2 hitLocalPos;
 	};
 
 	/// <summary>
@@ -53,7 +53,14 @@ public:
 	/// </summary>
 	/// <param name=""></param>
 	/// <returns></returns>
-	const Vector2& GetHitBoxSize(void)const { return parameter_.hitBoxSize_; }
+	const Vector2& GetHitBoxSize(void)const { return parameter_.hitBoxSize; }
+
+	/// <summary>
+	/// ボックスの重みを取得
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns></returns>
+	const float GetWeight(void)const { return parameter_.weight; }
 
 private:
 	// パラメータ情報

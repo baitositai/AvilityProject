@@ -47,6 +47,14 @@ void ComponentActionPlayer::ProcessInputMove()
 	{
 		moveAmount_.x = - moveSpeed;
 	}
+	else if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_UP))
+	{
+		moveAmount_.y = - moveSpeed;
+	}
+	else if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_DOWN))
+	{
+		moveAmount_.y = + moveSpeed;
+	}
 }
 
 void ComponentActionPlayer::ProcessInputJump()
