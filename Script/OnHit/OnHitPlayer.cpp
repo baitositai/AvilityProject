@@ -128,7 +128,9 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
             // ç¿ïWäiî[
             owner_.SetPosition(pos);
         }
-    }
+    }   
+    
+    AvilityShot(opponentCollider, bestNormal);
 }
 
 void OnHitPlayer::OnHitAvilityBox(const std::weak_ptr<ColliderBase>& opponentCollider)
@@ -151,19 +153,14 @@ void OnHitPlayer::OnHitAvilityBox(const std::weak_ptr<ColliderBase>& opponentCol
     int signX = UtilityCommon::GetSign(diff.x);
     int signY = UtilityCommon::GetSign(diff.y);
 
-    float overlap= static_cast<float>(owner_.GetHitBoxSize().x / 2.0f)
-                    + static_cast<float>(collider->GetBoxHalfSize().x)-fabsf(diff.x)+myParam->moveAmount.x;
-    
-    Vector2F moveAmount=Vector2F();
+    float overlap = static_cast<float>(owner_.GetHitBoxSize().x / 2.0f)
+        + static_cast<float>(collider->GetBoxHalfSize().x) - fabsf(diff.x) + myParam->moveAmount.x;
+
+    Vector2F moveAmount = Vector2F();
     moveAmount.x = overlap * -weightDiff * signX;
     moveAmount.y = 0.0f;
 
     owner_.SetMoveAmount(moveAmount);
-}
-    }
-
-    AvilityShot(opponentCollider, bestNormal);
-
 }
 
 void OnHitPlayer::AvilityShot(const std::weak_ptr<ColliderBase>& opponentCollider, const Vector2F& normal)

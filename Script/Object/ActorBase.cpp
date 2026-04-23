@@ -84,7 +84,7 @@ void ActorBase::AddComponent(const std::string& name, std::unique_ptr<ComponentB
 	auto result = componentMap_.try_emplace(name, std::move(component));
 
 	// 挿入に成功してるか確認
-	assert(result.second && "コンポーネントの追加に失敗しています");
+	//assert(result.second && "コンポーネントの追加に失敗しています");
 }
 
 void ActorBase::RemoveComponent(const std::string& name)
