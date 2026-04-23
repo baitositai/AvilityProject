@@ -12,8 +12,6 @@ AvilityBox::AvilityBox(const Parameter& parameter, const std::vector<std::string
 	// Õ“ËŒãˆ—
 	onHit_ = std::make_unique<OnHitAvilityBox>(*this);
 
-	// Šî’êƒNƒ‰ƒX‚Ì‰Šú‰»
-	GimmickBase::Init();
 }
 
 AvilityBox::~AvilityBox()

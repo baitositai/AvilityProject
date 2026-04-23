@@ -52,6 +52,7 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
             break;
         }
 
+
         // É^ÉCÉãÇÃélã˜
         float tLeft = index.x * chipSize.x;
         float tRight = tLeft + chipSize.x;
@@ -121,7 +122,7 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
 
             // åàíËÇµÇΩï˚å¸Ç…ÇÃÇ›ï‚ê≥
             if (dir == ActorBase::DIR::LEFT) { pos.x -= (overL + 0.01f); owner_.SetMoveAmount(Vector2F(0.0f, moveAmount.y)); }
-            else if (dir == ActorBase::DIR::RIGHT) { pos.x += (overR + 0.01f); owner_.SetMoveAmount(Vector2F(0.0f, moveAmount.y)); }
+            else if (dir == ActorBase::DIR::RIGHT) {pos.x += (overR + 0.01f); owner_.SetMoveAmount(Vector2F(0.0f, moveAmount.y)); }
             else if (dir == ActorBase::DIR::UP) { pos.y -= (overT + 0.01f); owner_.SetMoveAmount(Vector2F(moveAmount.x, 0.0f)); }
             else if (dir == ActorBase::DIR::DOWN) { pos.y += (overB + 0.01f); owner_.SetMoveAmount(Vector2F(moveAmount.x, 0.0f)); }
 
@@ -156,8 +157,8 @@ void OnHitPlayer::OnHitAvilityBox(const std::weak_ptr<ColliderBase>& opponentCol
     float overlap = static_cast<float>(owner_.GetHitBoxSize().x / 2.0f)
         + static_cast<float>(collider->GetBoxHalfSize().x) - fabsf(diff.x) + myParam->moveAmount.x;
 
-    Vector2F moveAmount = Vector2F();
-    moveAmount.x = overlap * -weightDiff * signX;
+    Vector2F moveAmount = myParam->moveAmount;
+    moveAmount.x = 0.0f;
     moveAmount.y = 0.0f;
 
     owner_.SetMoveAmount(moveAmount);
