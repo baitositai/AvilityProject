@@ -53,7 +53,11 @@ void OnHitAvilityBox::OnHitPlayer(const std::weak_ptr<ColliderBase>& opponentCol
     moveAmount.x = opParam->moveAmount.x;
     moveAmount.y = 0.0f;
 
-    owner_.SetMoveAmount(moveAmount);
+    Vector2F pos = myParam->pos;
+    pos.x += overlap * (1.0 - myWeight) * signX;
+
+    owner_.SetPosition(pos);
+    //owner_.SetMoveAmount(moveAmount);
 
 }
 void OnHitAvilityBox::OnHitEnemy(const std::weak_ptr<ColliderBase>& opponentCollider)
