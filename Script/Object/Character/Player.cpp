@@ -1,15 +1,13 @@
 #include <DxLib.h>
+#include "../../Component/Avility/ComponentAvilityShot.h"
 #include "../../OnHit/OnHitPlayer.h"
 #include "../Collider/ColliderBox.h"
 #include "Player.h"
 
-#include "../../Component/Avility/ComponentAvilityShot.h"
-
-Player::Player(const Parameter& parameter, const std::vector<std::string> componentNameList):
+Player::Player(const Parameter& parameter, const std::unordered_map<std::string, std::string> stateComponentNameList, const std::vector<std::string> defaultComponentNameList) :
 	parameter_(parameter),
-	CharacterBase(&parameter_, componentNameList)
+	CharacterBase(&parameter_, stateComponentNameList, defaultComponentNameList)
 {
-
 }
 
 Player::~Player()
@@ -48,6 +46,8 @@ void Player::InitAnimation()
 	// アニメーションの登録
 	parameterAnimation_.animationsMap.emplace(static_cast<int>(ANIMATION::IDLE), parameter_.animationsIdle);
 	parameterAnimation_.animationsMap.emplace(static_cast<int>(ANIMATION::WALK), parameter_.animationsWalk);
+	parameterAnimation_.animationsMap.emplace(static_cast<int>(ANIMATION::BRAKE), parameter_.animationsBrake);
+	parameterAnimation_.animationsMap.emplace(static_cast<int>(ANIMATION::ATTACK), parameter_.animationsAttack);
 	parameterAnimation_.animationsMap.emplace(static_cast<int>(ANIMATION::JUMP), parameter_.animationsJump);
 	parameterAnimation_.animationsMap.emplace(static_cast<int>(ANIMATION::FALL), parameter_.animationsFall);
 	parameterAnimation_.animationsMap.emplace(static_cast<int>(ANIMATION::DIE), parameter_.animationsDie);

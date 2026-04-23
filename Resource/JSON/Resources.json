@@ -44,8 +44,8 @@
       "key": "player",
       "sceneId": 2,
       "type": "sprite",
-      "divX": 9,
-      "divY": 7,
+      "divX": 10,
+      "divY": 9,
       "sizeX": 96,
       "sizeY": 96,
       "path": "Resource/Image/Player/Player.png"

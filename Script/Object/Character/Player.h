@@ -18,6 +18,8 @@ public:
 		// アニメーション関係
 		int animationsIdle;					// 待機アニメーション数
 		int animationsWalk;					// 移動アニメーション
+		int animationsBrake;				// ブレーキアニメーション
+		int animationsAttack;				// 攻撃アニメーション
 		int animationsJump;					// ジャンプアニメーション
 		int animationsFall;					// 落下アニメーション
 		int animationsDie;					// 死亡アニメーション
@@ -28,13 +30,15 @@ public:
 	// アニメーション種類
 	enum class ANIMATION
 	{
-		IDLE,
-		WALK,
-		JUMP,
-		FALL,
-		DIE,
-		DAMAGE,
-		PAUSE,
+		IDLE = 0,
+		WALK = 1,
+		BRAKE = 2,
+		ATTACK = 3,
+		JUMP = 4,
+		FALL = 5,
+		DIE = 6,
+		DAMAGE = 7,
+		PAUSE = 8,
 		MAX
 	};
 
@@ -42,8 +46,9 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="parameter">パラメータ情報</param>
-	/// <param name="componentNameList">コンポーネント生成用名前リスト</param>
-	Player(const Parameter& parameter, const std::vector<std::string> componentNameList);
+	/// <param name="stateComponentNameList">状態別コンポーネント生成リスト</param>
+	/// <param name="defaultComponentNameList">通常コンポーネント生成リスト</param>
+	Player(const Parameter& parameter, const std::unordered_map<std::string, std::string> stateComponentNameList, const std::vector<std::string> defaultComponentNameList = {});
 
 	/// <summary>
 	/// デストラクタ

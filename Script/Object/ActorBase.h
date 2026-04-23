@@ -9,11 +9,12 @@
 class ColliderBase;
 class OnHitBase;
 class ComponentBase;
+
 class SceneManager;
 class ResourceManager;
 class SoundManager;
-class InputManager;
 class CollisionManager;
+class FactoryComponent;
 
 class ActorBase
 {
@@ -123,15 +124,6 @@ public:
 	/// </summary>
 	/// <param name="opponentCollider">衝突した相手のコライダー</param>
 	void OnHit(const std::weak_ptr<ColliderBase>& opponentCollider);
-
-	/// <summary>
-	/// アニメーション情報の設定
-	/// </summary>
-	/// <param name="animationStartIndex">開始番号</param>
-	/// <param name="animationFinishIndex">終了番号</param>
-	/// <param name="animationSpeed">アニメーション速度</param>
-	/// <param name="isLoop">ループ再生判定(基本ループ)</param>
-	void SetAnimationParameter(const int animationStartIndex, const int animationFinishIndex, const float animationSpeed, const bool isLoop = true);
 	
 	/// <summary>
 	/// アニメーションインデックスの設定
@@ -144,6 +136,12 @@ public:
 	/// </summary>
 	/// <param name="animationSpeed">アニメーション速度</param>
 	void SetAnimationSpeed(const int animationSpeed) { parameterAnimation_.animationSpeed = animationSpeed; }
+
+	/// <summary>
+	/// アニメーションの再生判定を設定
+	/// </summary>
+	/// <param name="isPlay">再生判定</param>
+	void SetAnimationIsPlay(const bool isPlay) { parameterAnimation_.isPlay = isPlay; } 
 	
 	/// <summary>
 	/// 角度の設定
@@ -206,6 +204,7 @@ protected:
 	ResourceManager& resMng_;
 	SoundManager& sndMng_;
 	CollisionManager& collMng_;
+	FactoryComponent& facCom_;
 
 	// アニメーション用のパラメータ
 	ParameterAnimation parameterAnimation_;
@@ -226,7 +225,10 @@ protected:
 	bool isDelete_;
 
 	// コライダーの登録
-	void RegisterCollider();
+	void RegisterCollider();	
+	
+	// コンポーネントの生成
+	virtual void CreateComponents();
 
 private:
 
@@ -235,7 +237,4 @@ private:
 
 	// 共通パラメータ(ポインタで所持)
 	Parameter* actorParameterPtr_;
-
-	// コンポーネントの生成
-	void CreateComponents();
 };

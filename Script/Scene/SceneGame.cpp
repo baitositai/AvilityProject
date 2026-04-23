@@ -3,14 +3,8 @@
 #include "../Manager/Common/SceneManager.h"
 #include "../Manager/Common/Camera.h"
 #include "../Manager/Common/InputManager.h"
-#include "../Manager/Common/ResourceManager.h"
-#include "../Manager/Common/FontManager.h"
-#include "../Manager/Common/SoundManager.h"
-#include "../Manager/Common/ScoreManager.h"
-#include "../Manager/Game/CollisionManager.h"
-#include "../Manager/Game/EnemyManager.h"
 #include "../Manager/Game/GameManager.h"
-#include "../Manager/Game/PlayerManager.h"
+#include "../Factory/FactoryComponent.h"
 #include "../Utility/UtilityCommon.h"
 #include "ScenePause.h"
 #include "SceneGame.h"
@@ -24,13 +18,15 @@ SceneGame::SceneGame()
 	drawFunc_ = std::bind(&SceneGame::LoadingDraw, this);
 
 	// 管理クラスの生成
+	FactoryComponent::CreateInstance();
 	GameManager::CreateInstance();
 }
 
 SceneGame::~SceneGame()
 {
 	// 管理クラスの解放
-	GameManager::Destroy();
+	GameManager::GetInstance().Destroy();
+	FactoryComponent::GetInstance().Destroy();
 }
 
 void SceneGame::Init()

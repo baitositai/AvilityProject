@@ -33,12 +33,17 @@ void PlayerManager::Init()
 	// アニメーションの登録
 	parameter.animationsIdle = jsonPparameter["animationsIdle"].get<int>();
 	parameter.animationsWalk = jsonPparameter["animationsWalk"].get<int>();
+	parameter.animationsBrake = jsonPparameter["animationsBrake"].get<int>();
+	parameter.animationsAttack = jsonPparameter["animationsAttack"].get<int>();
 	parameter.animationsJump = jsonPparameter["animationsJump"].get<int>();
 	parameter.animationsFall = jsonPparameter["animationsFall"].get<int>();
 	parameter.animationsDie = jsonPparameter["animationsDie"].get<int>();
 	parameter.animationsDamage = jsonPparameter["animationsDamage"].get<int>();
 	parameter.animationsPause = jsonPparameter["animationsPause"].get<int>();
+
+	// コンポーネントリストの取得
 	std::vector<std::string> componentNameList = jsonPparameter["componentNameList"].get<std::vector<std::string>>();
+	std::unordered_map<std::string, std::string> componentStateNameMap = jsonPparameter["componentStateNameList"].get<std::unordered_map<std::string, std::string>>();
 
 	// リソースの取得
 	ResourceManager& resourceManager = ResourceManager::GetInstance();
@@ -47,7 +52,7 @@ void PlayerManager::Init()
 	parameter.texuresHandle = resourceManager.GetHandles("player");
 
 	// プレイヤーの生成
-	playerList_.emplace_back(std::make_unique<Player>(parameter, componentNameList));
+	playerList_.emplace_back(std::make_unique<Player>(parameter, componentStateNameMap, componentNameList));
 
 	// 初期化
 	for(const auto& player : playerList_)

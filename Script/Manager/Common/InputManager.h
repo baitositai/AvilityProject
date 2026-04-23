@@ -24,6 +24,7 @@ public:
 		PLAYER_MOVE_LEFT,		// 移動左
 		PLAYER_MOVE_UP,			// 移動上
 		PLAYER_MOVE_DOWN,		// 移動下
+		PLAYER_ATTACK,			// 攻撃
 		PLAYER_JUMP,			// ジャンプ
 		PLAYER_DASH,			// ダッシュ
 

@@ -27,5 +27,7 @@ private:
 
 	//アニメーションステップ
 	float animStep_;
-};
 
+	// アニメーション種類のバックアップ
+	int animationPreType_;
+};

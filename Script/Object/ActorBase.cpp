@@ -1,3 +1,4 @@
+#include <cassert>
 #include "../../Factory/FactoryComponent.h"
 #include "../../Manager/Common/ResourceManager.h"
 #include "../../Manager/Common/InputManager.h"
@@ -15,7 +16,8 @@ ActorBase::ActorBase(Parameter* parameter, const std::vector<std::string>& compo
 	scnMng_(SceneManager::GetInstance()),
 	sndMng_(SoundManager::GetInstance()),
 	resMng_(ResourceManager::GetInstance()),
-	collMng_(CollisionManager::GetInstance())
+	collMng_(CollisionManager::GetInstance()),
+	facCom_(FactoryComponent::GetInstance())
 {
 	isActive_ = true;
 	isDelete_ = false;
@@ -81,13 +83,8 @@ void ActorBase::AddComponent(const std::string& name, std::unique_ptr<ComponentB
 	// 同名のコンポーネントが既に存在するか確認しながら挿入
 	auto result = componentMap_.try_emplace(name, std::move(component));
 
-	// 挿入に失敗した場合
-	if (!result.second)
-	{
-		// 文字列を作成してデバッグ出力に送る
-		std::string errorMessage = "Warning: Component [" + name + "] already exists.\n";
-		OutputDebugStringA(errorMessage.c_str());
-	}
+	// 挿入に成功してるか確認
+	assert(result.second && "コンポーネントの追加に失敗しています");
 }
 
 void ActorBase::RemoveComponent(const std::string& name)
@@ -100,15 +97,6 @@ void ActorBase::RemoveComponent(const std::string& name)
 	{
 		componentMap_.erase(it);
 	}
-}
-
-
-void ActorBase::SetAnimationParameter(const int animationStartIndex, const int animationFinishIndex, const float animationSpeed, const bool isLoop)
-{
-	parameterAnimation_.animationStartIndex = animationStartIndex;
-	parameterAnimation_.animationFinishIndex = animationFinishIndex;
-	parameterAnimation_.animationSpeed = animationSpeed;
-	parameterAnimation_.isLoop = isLoop;
 }
 
 void ActorBase::AddMoveAmount(const Vector2F moveAmount)
@@ -141,10 +129,9 @@ void ActorBase::RegisterCollider()
 void ActorBase::CreateComponents()
 {
 	// 必要なコンポーネントの生成
-	std::unique_ptr<FactoryComponent> factoryComponent = std::make_unique<FactoryComponent>();
 	for (const std::string& name : DEFAULT_COMPONENT_CREATE_LIST)
 	{
-		AddComponent(name, std::move(factoryComponent->CreateComponent(name, *this)));
+		AddComponent(name, std::move(facCom_.CreateComponent(name, *this)));
 	}
 }
 

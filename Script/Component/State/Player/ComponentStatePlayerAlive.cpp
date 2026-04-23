@@ -1,10 +1,9 @@
-#include "../../Common/Vector2F.h"
-#include "../../Manager/Common/InputManager.h"
-#include "../../Object/Character/Player.h"
-#include "ComponentActionPlayer.h"
+#include "../../../Manager/Common/InputManager.h"
+#include "../../../Object/Character/Player.h"
+#include "ComponentStatePlayerAlive.h"
 
-ComponentActionPlayer::ComponentActionPlayer(Player& owner) :
-	ComponentActionBase(owner),
+ComponentStatePlayerAlive::ComponentStatePlayerAlive(Player& owner) :
+	ComponentCharacterStateBase(owner),
 	owner_(owner),
 	inputManager_(InputManager::GetInstance())
 {
@@ -12,11 +11,11 @@ ComponentActionPlayer::ComponentActionPlayer(Player& owner) :
 	isGround_ = false;
 }
 
-ComponentActionPlayer::~ComponentActionPlayer()
+ComponentStatePlayerAlive::~ComponentStatePlayerAlive()
 {
 }
 
-void ComponentActionPlayer::Update()
+void ComponentStatePlayerAlive::Update()
 {
 	// 移動量の初期化
 	moveAmount_ = {};
@@ -31,14 +30,17 @@ void ComponentActionPlayer::Update()
 	ProcessInputJump();
 
 	// ジャンプ処理
-	Jump();
+	Jump();	
+	
+	// 通常攻撃の入力処理
+	ProcessInputAttack();
 
 	// 情報の更新
 	owner_.SetMoveAmount(moveAmount_);
 	owner_.SetIsGround(isGround_);
 }
 
-void ComponentActionPlayer::ProcessInputMove()
+void ComponentStatePlayerAlive::ProcessInputMove()
 {
 	// ダッシュの入力判定に応じて速度を変更
 	const float moveSpeed = inputManager_.IsNew(InputManager::TYPE::PLAYER_DASH) ? owner_.GetDashSpeed() : owner_.GetParameter()->moveSpeed;
@@ -51,7 +53,7 @@ void ComponentActionPlayer::ProcessInputMove()
 	}
 	else if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_LEFT))
 	{
-		moveAmount_.x = - moveSpeed;
+		moveAmount_.x = -moveSpeed;
 		owner_.SetDirection(true);
 	}
 
@@ -72,7 +74,7 @@ void ComponentActionPlayer::ProcessInputMove()
 	}
 }
 
-void ComponentActionPlayer::ProcessInputJump()
+void ComponentStatePlayerAlive::ProcessInputJump()
 {
 	// 地面にいる場合
 	if (isGround_)
@@ -85,7 +87,7 @@ void ComponentActionPlayer::ProcessInputJump()
 		{
 			// 地面判定を無効にする
 			isGround_ = false;
-
+			
 			// ジャンプ力設定
 			velocityY_ = -owner_.GetJumpPow();
 
@@ -95,7 +97,24 @@ void ComponentActionPlayer::ProcessInputJump()
 	}
 }
 
-void ComponentActionPlayer::Jump()
+void ComponentStatePlayerAlive::ProcessInputAttack()
+{
+	if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_ATTACK))
+	{
+		// 攻撃のコライダーを生成
+
+		// 攻撃のアニメーションを開始（ループしない）
+		owner_.ChangeAnimation(Player::ANIMATION::ATTACK, false);
+
+		// 状態遷移
+		owner_.ChangeState(Player::STATE::ATTACK);
+		
+		// 横移動の値をなくす
+		moveAmount_.x = 0.0f;
+	}
+}
+
+void ComponentStatePlayerAlive::Jump()
 {
 	// 現在の縦の移動量
 	float currentY = owner_.GetParameter()->moveAmount.y;

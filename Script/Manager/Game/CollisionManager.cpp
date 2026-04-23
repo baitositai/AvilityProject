@@ -120,6 +120,11 @@ void CollisionManager::Sweep()
 
 void CollisionManager::DebugDraw()
 {
+	for (auto& coll : colliders_)
+	{
+		if (coll->IsHit() || coll->IsDelete()) continue;
+		coll->DebugDraw();
+	}
 }
 
 void CollisionManager::InitTagMatrix()

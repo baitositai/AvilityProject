@@ -145,6 +145,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Component\State\Player\ComponentStatePlayerRespawn.cpp" />
+    <ClCompile Include="Script\Component\State\Player\ComponentStatePlayerHit.cpp" />
+    <ClCompile Include="Script\Component\State\Player\ComponentStatePlayerDead.cpp" />
+    <ClCompile Include="Script\Component\State\Player\ComponentStatePlayerAttack.cpp" />
+    <ClCompile Include="Script\Component\State\Player\ComponentStatePlayerAlive.cpp" />
+    <ClCompile Include="Script\Component\State\ComponentCharacterStateBase.cpp" />
     <ClCompile Include="Script\Component\Avility\ComponentAvilityShot.cpp" />
     <ClCompile Include="Script\Component\Avility\ComponentAvilityBase.cpp" />
     <ClCompile Include="Script\Object\Stage\Stage.cpp" />
@@ -158,8 +164,6 @@
     <ClCompile Include="Script\Component\ComponentGravity.cpp" />
     <ClCompile Include="Script\Component\ComponentMove.cpp" />
     <ClCompile Include="Script\Factory\FactoryComponent.cpp" />
-    <ClCompile Include="Script\Component\Action\ComponentActionPlayer.cpp" />
-    <ClCompile Include="Script\Component\Action\ComponentActionBase.cpp" />
     <ClCompile Include="Script\Manager\Common\Camera.cpp" />
     <ClCompile Include="Script\Manager\Game\EnemyManager.cpp" />
     <ClCompile Include="Script\Manager\Game\PlayerManager.cpp" />
@@ -232,6 +236,12 @@
     <ClCompile Include="Script\Utility\UtilityCollision.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Component\State\Player\ComponentStatePlayerRespawn.h" />
+    <ClInclude Include="Script\Component\State\Player\ComponentStatePlayerHit.h" />
+    <ClInclude Include="Script\Component\State\Player\ComponentStatePlayerDead.h" />
+    <ClInclude Include="Script\Component\State\Player\ComponentStatePlayerAttack.h" />
+    <ClInclude Include="Script\Component\State\Player\ComponentStatePlayerAlive.h" />
+    <ClInclude Include="Script\Component\State\ComponentCharacterStateBase.h" />
     <ClInclude Include="Script\Component\Avility\ComponentAvilityShot.h" />
     <ClInclude Include="Script\Component\Avility\ComponentAvilityBase.h" />
     <ClInclude Include="Script\Object\Stage\Stage.h" />
@@ -245,8 +255,6 @@
     <ClInclude Include="Script\Component\ComponentGravity.h" />
     <ClInclude Include="Script\Component\ComponentMove.h" />
     <ClInclude Include="Script\Factory\FactoryComponent.h" />
-    <ClInclude Include="Script\Component\Action\ComponentActionPlayer.h" />
-    <ClInclude Include="Script\Component\Action\ComponentActionBase.h" />
     <ClInclude Include="Script\Manager\Common\Camera.h" />
     <ClInclude Include="Script\Manager\Game\EnemyManager.h" />
     <ClInclude Include="Script\Manager\Game\PlayerManager.h" />

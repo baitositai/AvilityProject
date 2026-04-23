@@ -2,36 +2,15 @@
 #include "../../Component/ComponentMove.h"
 #include "../../Component/ComponentSpriteAnimation.h"
 #include "../../Component/ComponentGravity.h"
-#include "../../Component/Action/ComponentActionPlayer.h"
+#include "../../Component/State/Player/ComponentStatePlayerAttack.h"
+#include "../../Component/State/Player/ComponentStatePlayerDead.h"
+#include "../../Component/State/Player/ComponentStatePlayerHit.h"
+#include "../../Component/State/Player/ComponentStatePlayerRespawn.h"
+#include "../../Component/State/Player/ComponentStatePlayerAlive.h"
 #include "../../Object/Character/CharacterBase.h" 
 #include "../../Object/Character/Player.h" 
 #include "../../Object/ActorBase.h" 
 #include "FactoryComponent.h"
-
-FactoryComponent::FactoryComponent()
-{
-    // ê∂ê¨èàóùÇÃìoò^
-    componentCreateMap_.emplace("move", [this](ActorBase& owner)
-        {
-            return CreateComponentMove(owner);
-        });
-    componentCreateMap_.emplace("spriteAnimation", [this](ActorBase& owner)
-        {
-            return CreateComponentSpriteAnimation(owner);
-        });
-    componentCreateMap_.emplace("actionPlayer", [this](ActorBase& owner)
-        {
-            return CreateComponentActionPlayer(owner);
-        });
-    componentCreateMap_.emplace("gravity", [this](ActorBase& owner)
-        {
-            return CreateComponentGravity(owner);
-        });
-}
-
-FactoryComponent::~FactoryComponent()
-{
-}
 
 std::unique_ptr<ComponentBase> FactoryComponent::CreateComponent(const std::string& name, ActorBase& owner)
 {
@@ -59,21 +38,108 @@ std::unique_ptr<ComponentSpriteAnimation> FactoryComponent::CreateComponentSprit
     return std::make_unique<ComponentSpriteAnimation>(owner);
 }
 
-std::unique_ptr<ComponentActionPlayer> FactoryComponent::CreateComponentActionPlayer(ActorBase& owner)
+std::unique_ptr<ComponentGravity> FactoryComponent::CreateComponentGravity(ActorBase& owner)
 {
-    auto* characterPtr = dynamic_cast<Player*>(&owner);
+    return std::make_unique<ComponentGravity>(owner);
+}
 
-    if (characterPtr == nullptr)
+std::unique_ptr<ComponentStatePlayerAlive> FactoryComponent::CreateComponentStatePlayerAlive(ActorBase& owner)
+{
+    auto* playerPtr = dynamic_cast<Player*>(&owner);
+
+    if (playerPtr == nullptr)
     {
         // ÉLÉÉÉXÉgÇ…é∏îsÇµÇΩèÍçánullptrÇï‘Ç∑
         return nullptr;
     }
-
-    return std::make_unique<ComponentActionPlayer>(*characterPtr);
-
+    return std::make_unique<ComponentStatePlayerAlive>(*playerPtr);
 }
 
-std::unique_ptr<ComponentGravity> FactoryComponent::CreateComponentGravity(ActorBase& owner)
+std::unique_ptr<ComponentStatePlayerAttack> FactoryComponent::CreateComponentStatePlayerAttack(ActorBase& owner)
 {
-    return std::make_unique<ComponentGravity>(owner);
+    auto* playerPtr = dynamic_cast<Player*>(&owner);
+
+    if (playerPtr == nullptr)
+    {
+        // ÉLÉÉÉXÉgÇ…é∏îsÇµÇΩèÍçánullptrÇï‘Ç∑
+        return nullptr;
+    }
+    return std::make_unique<ComponentStatePlayerAttack>(*playerPtr);
+}
+
+std::unique_ptr<ComponentStatePlayerDead> FactoryComponent::CreateComponentStatePlayerDead(ActorBase& owner)
+{
+    auto* playerPtr = dynamic_cast<Player*>(&owner);
+
+    if (playerPtr == nullptr)
+    {
+        // ÉLÉÉÉXÉgÇ…é∏îsÇµÇΩèÍçánullptrÇï‘Ç∑
+        return nullptr;
+    }
+    return std::make_unique<ComponentStatePlayerDead>(*playerPtr);
+}
+
+std::unique_ptr<ComponentStatePlayerHit> FactoryComponent::CreateComponentStatePlayerHit(ActorBase& owner)
+{
+    auto* playerPtr = dynamic_cast<Player*>(&owner);
+
+    if (playerPtr == nullptr)
+    {
+        // ÉLÉÉÉXÉgÇ…é∏îsÇµÇΩèÍçánullptrÇï‘Ç∑
+        return nullptr;
+    }
+    return std::make_unique<ComponentStatePlayerHit>(*playerPtr);
+}
+
+std::unique_ptr<ComponentStatePlayerRespawn> FactoryComponent::CreateComponentStatePlayerRespawn(ActorBase& owner)
+{
+    auto* playerPtr = dynamic_cast<Player*>(&owner);
+
+    if (playerPtr == nullptr)
+    {
+        // ÉLÉÉÉXÉgÇ…é∏îsÇµÇΩèÍçánullptrÇï‘Ç∑
+        return nullptr;
+    }
+    return std::make_unique<ComponentStatePlayerRespawn>(*playerPtr);
+}
+
+FactoryComponent::FactoryComponent()
+{
+    // ê∂ê¨èàóùÇÃìoò^
+    componentCreateMap_.emplace("move", [this](ActorBase& owner)
+        {
+            return CreateComponentMove(owner);
+        });
+    componentCreateMap_.emplace("spriteAnimation", [this](ActorBase& owner)
+        {
+            return CreateComponentSpriteAnimation(owner);
+        });
+    componentCreateMap_.emplace("gravity", [this](ActorBase& owner)
+        {
+            return CreateComponentGravity(owner);
+        });
+    componentCreateMap_.emplace("playerAlive", [this](ActorBase& owner)
+        {
+            return CreateComponentStatePlayerAlive(owner);
+        });
+    componentCreateMap_.emplace("playerDead", [this](ActorBase& owner)
+        {
+            return CreateComponentStatePlayerDead(owner);
+        });
+    componentCreateMap_.emplace("playerHit", [this](ActorBase& owner)
+        {
+            return CreateComponentStatePlayerHit(owner);
+        });
+    componentCreateMap_.emplace("playerAttack", [this](ActorBase& owner)
+        {
+            return CreateComponentStatePlayerAttack(owner);
+        });
+    componentCreateMap_.emplace("playerRespawn", [this](ActorBase& owner)
+        {
+            return CreateComponentStatePlayerRespawn(owner);
+        });
+}
+
+FactoryComponent::~FactoryComponent()
+{
 }

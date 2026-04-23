@@ -5,6 +5,7 @@ ComponentSpriteAnimation::ComponentSpriteAnimation(ActorBase& owner) :
 	ComponentBase(&owner)
 {
 	animStep_ = 0.0f;
+	animationPreType_ = -1;
 }
 
 ComponentSpriteAnimation::~ComponentSpriteAnimation()
@@ -16,16 +17,26 @@ void ComponentSpriteAnimation::Update()
 	// アニメーション情報の取得
 	ActorBase::ParameterAnimation parameterAnimation = owner_->GetParameterAnimation();
 
-	//アニメーションが非再生の場合
+	// アニメーションが非再生の場合
 	if (!parameterAnimation.isPlay) { return; }
 
-	//アニメーション終了かつループを行わない場合
+	// アニメーション終了かつループを行わない場合
 	if (parameterAnimation.animationIndex == parameterAnimation.animationFinishIndex && !parameterAnimation.isLoop)
 	{
-		parameterAnimation.isPlay = false;	//再生しない
-		animStep_ = 0.0f;	//初期化
-		return;				//処理終了
+		animStep_ = 0.0f;					// 初期化
+		owner_->SetAnimationIsPlay(false);	// 再生判定を下げる
+		return;								// 処理終了
 	}
+
+	// 前回のアニメーションと現在のアニメーションが異なる場合
+	if (parameterAnimation.animationType != animationPreType_)
+	{
+		// アニメーションステップ初期化
+		animStep_ = 0.0f;
+	}
+
+	// バックアップを取得
+	animationPreType_ = parameterAnimation.animationType;
 
 	//ステップ更新
 	animStep_ += parameterAnimation.animationSpeed;

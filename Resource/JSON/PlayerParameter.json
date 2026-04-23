@@ -1,11 +1,17 @@
 {
   "player": {
     "componentNameList": [
-      "actionPlayer",
       "gravity",
       "move",
       "spriteAnimation"
     ],
+    "componentStateNameList": {
+      "alive": "playerAlive",
+      "attack": "playerAttack",
+      "hit": "playerHit",
+      "dead": "playereDead",
+      "resaown": "playerRespawn"
+    },
     "scale": 1.0,
     "angle": 0.0,
     "direction": false,
@@ -21,14 +27,16 @@
     "animationSpeed": 0.1,
     "animationsIdle": 6,
     "animationsWalk": 8,
-    "animationsJump": 3,
-    "animationsFall": 3,
-    "animationsDie": 9,
+    "animationsBrake": 4,
+    "animationsAttack": 7,
+    "animationsJump": 6,
+    "animationsFall": 6,
+    "animationsDie": 10,
     "animationsDamage": 4,
     "animationsPause": 6,
     "divisionNum": {
-      "x": 9,
-      "y": 7
+      "x": 10,
+      "y": 9
     },
     "hitBoxSize": {
       "x": 48,
@@ -36,7 +44,7 @@
     },
     "loacalPos": {
       "x": 0,
-      "y": 8
+      "y": 0
     }
   }
 }
