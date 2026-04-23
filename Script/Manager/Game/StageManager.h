@@ -6,6 +6,7 @@
 #include "../../Common/Vector2.h"
 
 class Stage;
+class GimmickBase;
 
 class StageManager : public Singleton<StageManager>
 {
@@ -74,10 +75,14 @@ private:
 	// メインステージ
 	std::unique_ptr<Stage> stage_;
 
+	//ギミック(後々に複数置きたい)
+	//std::vector<std::unique_ptr<GimmickBase>>gimmick_;
+	std::unique_ptr<GimmickBase>gimmick_;
+
 	// コンストラクタ
 	StageManager();
 
 	// デストラクタ
-	~StageManager();	
+	~StageManager()override;	
 };
 

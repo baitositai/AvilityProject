@@ -134,6 +134,15 @@ void CollisionManager::InitTagMatrix()
 
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::STAGE)] = true;				// プレイヤーとステージ
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::STAGE)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;			//アビリティ設置ボックスとプレイヤー
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::STAGE)] = true;			//アビリティ設置ボックスとステージ
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::STAGE)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::ENEMY)] = true;			//アビリティ設置ボックスと敵
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;
 }
 
 void CollisionManager::InitColliderMatrix()
@@ -269,7 +278,31 @@ bool CollisionManager::IsHitCheckCircleToLine(std::weak_ptr<ColliderBase> collid
 
 bool CollisionManager::IsHitCheckBoxToBox(std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2)
 {
-	return false;
+	std::weak_ptr<ColliderBox> colliderBox1;
+	std::weak_ptr<ColliderBox> colliderBox2;
+
+	// モデルコライダーの用意
+	colliderBox1 = std::dynamic_pointer_cast<ColliderBox>(collider1.lock()); 
+	colliderBox2 = std::dynamic_pointer_cast<ColliderBox>(collider2.lock()); 
+
+
+	Vector2F axis4[4] = {
+		colliderBox1.lock()->GetAxisX(),
+		colliderBox1.lock()->GetAxisY(),
+		colliderBox2.lock()->GetAxisX(),
+		colliderBox2.lock()->GetAxisY()
+	};
+
+
+	for (const Vector2F axis : axis4)
+	{
+		if (!colliderBox1.lock()->OverlapOnAxis(colliderBox2, axis))
+		{
+			return false;
+		}
+	}
+
+	return true;
 }
 
 bool CollisionManager::IsHitCheckBoxToLine(std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2)

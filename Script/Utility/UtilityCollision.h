@@ -69,7 +69,8 @@ public:
 	/// <param name="boxTopPos2">ボックス2トップ</param>
 	/// <param name="boxBotmPos2">ボックス2ボトム</param>
 	/// <returns>判定結果</returns>
-	static bool IsHitBoxToBox(const Vector2& boxTopPos1, const Vector2& boxBotmPos1, const Vector2& boxTopPos2, const Vector2& boxBotmPos2);
+	static bool IsHitBoxToBox(const Vector2& boxTopPos1, const Vector2& boxBotmPos1, const float degAngle1,
+		const Vector2& boxTopPos2, const Vector2& boxBotmPos2, const float degAngle2);
 
 	/// <summary>
 	/// ボックスと線の衝突判定
@@ -80,6 +81,7 @@ public:
 	/// <param name="lineEndPos">ライン末端座標</param>
 	/// <returns>判定結果</returns>
 	static bool IsHitBoxToLine(const Vector2& boxTopPos, const Vector2& boxBotmPos, const Vector2& lineTopPos, const Vector2& lineEndPos);
+
 
 private:
 

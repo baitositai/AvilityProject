@@ -28,6 +28,7 @@ void PlayerManager::Init()
 	parameter.gravityPower = jsonPparameter["gravityPower"].get<float>();
 	parameter.hitBoxSize = Vector2(jsonPparameter["hitBoxSize"]["x"].get<int>(), jsonPparameter["hitBoxSize"]["y"].get<int>());
 	parameter.localPos = Vector2(jsonPparameter["loacalPos"]["x"].get<int>(), jsonPparameter["loacalPos"]["y"].get<int>());
+	parameter.weight = jsonPparameter["weight"].get<float>();
 	parameter.pos = Vector2F(400.0f, 400.0f);
 
 	// アニメーションの登録

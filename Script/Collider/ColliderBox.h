@@ -12,7 +12,7 @@ public:
 	/// <param name="owner">所有者</param>
 	/// <param name="tag">衝突判定タグ</param>
 	/// <param name="topPos">ボックスサイズ</param>
-	ColliderBox(ActorBase& owner, const CollisionTags::TAG tag, const Vector2& boxSize);
+	ColliderBox(ActorBase& owner, const CollisionTags::TAG tag, const Vector2& boxSize,float& radAngle);
 	
 	/// <summary>
 	/// デストラクタ
@@ -38,6 +38,12 @@ public:
 	const Vector2& GetBoxSize() const { return boxSize_; }
 
 	/// <summary>
+	/// ハーフサイズを返す
+	/// </summary>
+	/// <returns></returns>
+	const Vector2& GetBoxHalfSize()const { return boxHalfSize_; }
+
+	/// <summary>
 	/// 右上座標の相対位置を返す
 	/// </summary>
 	/// <returns>右上座標の相対位置</returns>
@@ -54,6 +60,25 @@ public:
 	/// </summary>
 	void DebugDraw() override;
 
+	/// @brief OBB(回転矩形)のローカル軸の取得
+	/// @param angle 向いている角度
+	/// @return 矩形が向いている右方向
+	const Vector2F& GetAxisX(void)const;
+
+	/// @brief OBB(回転矩形)のローカル軸の取得
+	/// @param angle 向いている角度
+	/// @return 矩形が向いている上方向
+	const Vector2F& GetAxisY(void)const;
+
+	/// <summary>
+	/// 軸上で相手と重なっているかを返す
+	/// </summary>
+	/// <param name="opponent">相手のボックスコライダ</param>
+	/// <returns></returns>重なっている
+	bool OverlapOnAxis(const std::weak_ptr<ColliderBox>& opponent,const Vector2F& axis);
+
+
+
 private:
 
 	// ボックスサイズ
@@ -61,4 +86,7 @@ private:
 
 	// ハーフサイズ
 	Vector2 boxHalfSize_;
+
+	//角度(デグリー)
+	const float& radAngle_;
 };

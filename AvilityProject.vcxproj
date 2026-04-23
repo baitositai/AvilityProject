@@ -152,6 +152,11 @@
     <ClCompile Include="Script\Component\State\Player\ComponentStatePlayerAlive.cpp" />
     <ClCompile Include="Script\Component\State\ComponentCharacterStateBase.cpp" />
     <ClCompile Include="Script\Component\Avility\ComponentAvilityShot.cpp" />
+    <ClCompile Include="Script\OnHit\OnHitAvilityBox.cpp" />
+    <ClCompile Include="Script\Object\Gimmick\AvilityBox.cpp" />
+    <ClCompile Include="Script\Object\Gimmick\GimmickBase.cpp" />
+    <ClCompile Include="Script\Component\Avility\ComponentAvilityBox.cpp" />
+    <ClCompile Include="Script\Component\Avility\AvilityShot.cpp" />
     <ClCompile Include="Script\Component\Avility\ComponentAvilityBase.cpp" />
     <ClCompile Include="Script\Object\Stage\Stage.cpp" />
     <ClCompile Include="Script\Object\Stage\Tile\TileBase.cpp" />
@@ -243,6 +248,11 @@
     <ClInclude Include="Script\Component\State\Player\ComponentStatePlayerAlive.h" />
     <ClInclude Include="Script\Component\State\ComponentCharacterStateBase.h" />
     <ClInclude Include="Script\Component\Avility\ComponentAvilityShot.h" />
+    <ClInclude Include="Script\OnHit\OnHitAvilityBox.h" />
+    <ClInclude Include="Script\Object\Gimmick\AvilityBox.h" />
+    <ClInclude Include="Script\Object\Gimmick\GimmickBase.h" />
+    <ClInclude Include="Script\Component\Avility\ComponentAvilityBox.h" />
+    <ClInclude Include="Script\Component\Avility\AvilityShot.h" />
     <ClInclude Include="Script\Component\Avility\ComponentAvilityBase.h" />
     <ClInclude Include="Script\Object\Stage\Stage.h" />
     <ClInclude Include="Script\Object\Stage\Tile\TileBase.h" />

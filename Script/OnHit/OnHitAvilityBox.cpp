@@ -1,30 +1,66 @@
 #include "../Utility/UtilityCommon.h"
-#include "../Object/Character/Player.h"
+#include "../Object/Gimmick/AvilityBox.h"
 #include "../Collider/ColliderArray.h"
 #include "../Collider/ColliderBox.h"
-#include "../../Object/Gimmick/AvilityBox.h"
-#include "OnHitPlayer.h"
+#include "./OnHitAvilityBox.h"
 
-
-OnHitPlayer::OnHitPlayer(Player& owner) :
-    OnHitBase(owner),
-    owner_(owner)
+OnHitAvilityBox::OnHitAvilityBox(AvilityBox& owner):
+	OnHitBase(owner),
+	owner_(owner)
 {
-    onHitMap_.emplace(CollisionTags::TAG::STAGE , [this](const std::weak_ptr<ColliderBase>& opponentCollider)
+	onHitMap_.emplace(CollisionTags::TAG::PLAYER, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
+		{
+			return OnHitPlayer(opponentCollider);
+		});
+	onHitMap_.emplace(CollisionTags::TAG::ENEMY, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
+		{
+			return OnHitEnemy(opponentCollider);
+		});
+    onHitMap_.emplace(CollisionTags::TAG::STAGE, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
         {
             return OnHitStage(opponentCollider);
         });
-    onHitMap_.emplace(CollisionTags::TAG::AVILITY_BOX, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
-        {
-            return OnHitAvilityBox(opponentCollider);
-        });
 }
 
-OnHitPlayer::~OnHitPlayer()
+OnHitAvilityBox::~OnHitAvilityBox()
 {
 }
 
-void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider)
+void OnHitAvilityBox::OnHitPlayer(const std::weak_ptr<ColliderBase>& opponentCollider)
+{
+    auto collider = std::dynamic_pointer_cast<ColliderBox>(opponentCollider.lock());
+
+    const auto& opOwner = opponentCollider.lock()->GetOwner();
+
+    //お互いのパラメータ
+    const ActorBase::Parameter* myParam = owner_.GetParameter();
+    const ActorBase::Parameter* opParam = opOwner.GetParameter();
+
+    //互いの重さ
+    float myWeight = myParam->weight;
+    float opWeight = opParam->weight;
+    float weightDiff = myWeight - opWeight;
+
+    //お互いの距離
+    Vector2F diff = Vector2F::SubVector2F(opParam->pos, myParam->pos);
+    int signX = UtilityCommon::GetSign(diff.x);
+    int signY = UtilityCommon::GetSign(diff.y);
+
+    float overlap = static_cast<float>(owner_.GetHitBoxSize().x / 2.0f)
+        + static_cast<float>(collider->GetBoxHalfSize().x) - fabsf(diff.x) + opParam->moveAmount.x;
+
+    Vector2F moveAmount = Vector2F();
+    moveAmount.x = overlap * -weightDiff * signX;
+    moveAmount.y = 0.0f;
+
+    owner_.SetMoveAmount(moveAmount);
+
+}
+void OnHitAvilityBox::OnHitEnemy(const std::weak_ptr<ColliderBase>& opponentCollider)
+{
+
+}
+void OnHitAvilityBox::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
     auto collider = std::dynamic_pointer_cast<ColliderArray>(opponentCollider.lock());
     if (!collider) return;              // コライダーが空の場合終了
@@ -36,9 +72,6 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
     Vector2F pos = owner_.GetParameter()->pos;          // 座標取得
     Vector2 boxSize = owner_.GetHitBoxSize();           // ボックスサイズ          
     Vector2 chipSize = collider->GetChipSize();         // チップサイズ
-
-    float bestOverlap = 10000.0f;
-    Vector2F bestNormal(0.0f, 0.0f);
 
     for (const Vector2& index : indexes)
     {
@@ -74,7 +107,6 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
         {
             float minOverlap = 10000.0f;
             ActorBase::DIR dir = ActorBase::DIR::MAX;
-            Vector2F normal = Vector2F(0.0f, 0.0f);    // 法線ベクトル
 
             // 右に移動中の場合
             if (moveAmount.x > 0 && overL < minOverlap)
@@ -82,7 +114,6 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
                 // 左へ押し戻す判定を有効にする
                 minOverlap = overL;
                 dir = ActorBase::DIR::LEFT;
-                normal =Vector2F(-1.0f, 0.0f);
             }
             // 左に移動中の場合
             if (moveAmount.x < 0 && overR < minOverlap && pBottom >= tBottom)
@@ -90,7 +121,6 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
                 // 右へ押し戻す判定を有効にする
                 minOverlap = overR;
                 dir = ActorBase::DIR::RIGHT;
-                normal = Vector2F(1.0f, 0.0f);
             }
 
             // 落下中の場合　
@@ -99,10 +129,6 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
                 // 上へ押し戻す判定を有効にする
                 minOverlap = overT;
                 dir = ActorBase::DIR::UP;
-                normal = Vector2F(0.0f, -1.0f);
-
-                // 地面判定を設定
-                owner_.SetIsGround(true);
             }
             // 上に移動中の場合　
             if (moveAmount.y < 0 && overB < minOverlap)
@@ -110,16 +136,10 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
                 // 下へ押し戻す判定を有効にする
                 minOverlap = overB;
                 dir = ActorBase::DIR::DOWN;
-                normal = Vector2F(0.0f, 1.0f);
-            }
-
-            if (minOverlap < bestOverlap)
-            {
-                bestOverlap = minOverlap;
-                bestNormal = normal;
             }
 
             // 決定した方向にのみ補正
+            Vector2F MoveAmount = Vector2F(0.0f, 0.0f);
             if (dir == ActorBase::DIR::LEFT) { pos.x -= (overL + 0.01f); owner_.SetMoveAmount(Vector2F(0.0f, moveAmount.y)); }
             else if (dir == ActorBase::DIR::RIGHT) { pos.x += (overR + 0.01f); owner_.SetMoveAmount(Vector2F(0.0f, moveAmount.y)); }
             else if (dir == ActorBase::DIR::UP) { pos.y -= (overT + 0.01f); owner_.SetMoveAmount(Vector2F(moveAmount.x, 0.0f)); }
@@ -129,54 +149,4 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
             owner_.SetPosition(pos);
         }
     }
-}
-
-void OnHitPlayer::OnHitAvilityBox(const std::weak_ptr<ColliderBase>& opponentCollider)
-{
-    auto collider = std::dynamic_pointer_cast<ColliderBox>(opponentCollider.lock());
-
-    const auto& opOwner = opponentCollider.lock()->GetOwner();
-
-    //お互いのパラメータ
-    const ActorBase::Parameter* myParam = owner_.GetParameter();
-    const ActorBase::Parameter* opParam = opOwner.GetParameter();
-
-    //互いの重さ
-    float myWeight = myParam->weight;
-    float opWeight = opParam->weight;
-    float weightDiff = myWeight - opWeight;
-
-    //お互いの距離
-    Vector2F diff = Vector2F::SubVector2F(opParam->pos, myParam->pos);
-    int signX = UtilityCommon::GetSign(diff.x);
-    int signY = UtilityCommon::GetSign(diff.y);
-
-    float overlap= static_cast<float>(owner_.GetHitBoxSize().x / 2.0f)
-                    + static_cast<float>(collider->GetBoxHalfSize().x)-fabsf(diff.x)+myParam->moveAmount.x;
-    
-    Vector2F moveAmount=Vector2F();
-    moveAmount.x = overlap * -weightDiff * signX;
-    moveAmount.y = 0.0f;
-
-    owner_.SetMoveAmount(moveAmount);
-}
-    }
-
-    AvilityShot(opponentCollider, bestNormal);
-
-}
-
-void OnHitPlayer::AvilityShot(const std::weak_ptr<ColliderBase>& opponentCollider, const Vector2F& normal)
-{
-    // 地面にいたら反射させない
-    /*if(owner_.IsGround()) {
-        return;
-	}*/
-
-
-	// ショットベクトルを法線ベクトルで反射させる
-    Vector2F dir = UtilityCommon::Reflect( owner_.GetShotVec(), normal);
-
-
-	owner_.SetShotVec(dir);
 }
