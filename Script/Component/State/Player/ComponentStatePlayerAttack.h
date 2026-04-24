@@ -1,7 +1,9 @@
 #pragma once
 #include "../ComponentCharacterStateBase.h"
+#include "../Common/Vector2F.h"
 
 class Player;
+class ColliderCircle;
 
 class ComponentStatePlayerAttack : public ComponentCharacterStateBase
 {
@@ -27,5 +29,13 @@ private:
 
 	// 所有者
 	Player& owner_;
+
+	// 攻撃位置
+	Vector2F attackPos_;
+
+	// 攻撃開始
+	bool isAttack_;
+
+	std::shared_ptr<ColliderCircle> collider_;
 };
 
