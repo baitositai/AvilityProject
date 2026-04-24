@@ -144,6 +144,7 @@ void OnHitPlayer::OnHitAvilityBox(const std::weak_ptr<ColliderBase>& opponentCol
     const ActorBase::Parameter* myParam = owner_.GetParameter();
     const ActorBase::Parameter* opParam = opOwner.GetParameter();
 
+
     //互いの重さ
     float myWeight = myParam->weight;
     float opWeight = opParam->weight;
@@ -154,28 +155,43 @@ void OnHitPlayer::OnHitAvilityBox(const std::weak_ptr<ColliderBase>& opponentCol
     int signX = UtilityCommon::GetSign(diff.x);
     int signY = UtilityCommon::GetSign(diff.y);
 
+    //それぞれのめり込み量
     float overlapX = static_cast<float>(owner_.GetHitBoxSize().x/2 )
         + static_cast<float>(collider->GetBoxHalfSize().x) - fabsf(diff.x);
-
     float overlapY = static_cast<float>(owner_.GetHitBoxSize().y/2)
         + static_cast<float>(collider->GetBoxHalfSize().y) - fabsf(diff.y);
 
+    //移動量
     Vector2F moveAmount = myParam->moveAmount;
-    moveAmount.x = 0.0f;
-    moveAmount.y = 0.0f;
 
+
+    //ボックスの上に乗っているかを判断
     Vector2F pos = myParam->pos;
-    if (overlapX < overlapY)
+
+    //ボックスの上に乗っていたら地面判定を付与
+    if (overlapX>= overlapY)
     {
-        pos.x += overlapX * -opWeight * signX;
-    }
-    else
-    {
+        //ジャンプ中(ジャンプアニメーション中)は吸いつきを防ぐため、処理を飛ばす
+        if (int anim = owner_.GetParameterAnimation().animationType == 4)
+        {
+            return;
+        }
+
         pos.y -= (overlapY + 0.01f) * signY;
         // 地面判定を設定
         owner_.SetIsGround(true);
+
+        //落下を防止するためにYの移動量をゼロにする
+        moveAmount.y = 0;
+        owner_.SetMoveAmount(moveAmount);
+    }
+    else
+    {
+        //ボックスを押し出す
+        pos.x += overlapX * -opWeight * signX;
     }
 
+    //座標更新
     owner_.SetPosition(pos);
 }
 
