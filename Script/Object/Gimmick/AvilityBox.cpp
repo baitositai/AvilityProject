@@ -7,7 +7,7 @@ AvilityBox::AvilityBox(const Parameter& parameter, const std::vector<std::string
 	GimmickBase(&parameter_,componentNameList)
 {
 	// コライダー
-	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::AVILITY_BOX, parameter_.hitBoxSize, parameter_.angle);
+	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::AVILITY_BOX, parameter_.pos, parameter_.hitBoxSize, parameter_.angle);
 
 	// 衝突後処理
 	onHit_ = std::make_unique<OnHitAvilityBox>(*this);
