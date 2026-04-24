@@ -4,12 +4,12 @@
 #include "../Object/ActorBase.h"
 #include "ColliderBox.h"
 
-ColliderBox::ColliderBox(ActorBase& owner, const CollisionTags::TAG tag, const Vector2& boxSize, float& radAngle):
-	ColliderBase(owner, tag),
+ColliderBox::ColliderBox(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos, const Vector2& boxSize, float& radAngle) :
+	ColliderBase(owner, tag, followPos),
 	boxSize_(boxSize),
 	radAngle_(radAngle),
 	boxHalfSize_(Vector2(boxSize_.x / 2, boxSize_.y / 2))
-{
+{	
 	type_ = ColliderType::TYPE::BOX;
 }
 
@@ -19,17 +19,13 @@ ColliderBox::~ColliderBox()
 
 const Vector2& ColliderBox::GetLocalTopPos() const
 {
-	Vector2F posF = owner_.GetParameter()->pos;
-	Vector2 pos = posF.ToVector2();		
-	pos = Vector2::AddVector2(pos, Vector2::MultiVector2(boxHalfSize_, Vector2(-1, -1)));
+	Vector2 pos = Vector2::AddVector2(followPos_.ToVector2(), Vector2::MultiVector2(boxHalfSize_, Vector2(-1, -1)));
 	return pos;
 }
 
 const Vector2& ColliderBox::GetLocalBottomPos() const
 {
-	Vector2F posF = owner_.GetParameter()->pos;
-	Vector2 pos = posF.ToVector2();
-	pos = Vector2::AddVector2(pos, boxHalfSize_);
+	Vector2 pos = Vector2::AddVector2(followPos_.ToVector2(), boxHalfSize_);
 	return pos;
 }
 
@@ -79,7 +75,7 @@ bool ColliderBox::OverlapOnAxis(const std::weak_ptr<ColliderBox>& opponent, cons
 	Vector2F ayB = opponent.lock()->GetAxisY();
 	
 	//íÜêSÇÃìäâe
-	float aCenter = Utility2D::Dot(owner_.GetParameter()->pos, axis);
+	float aCenter = Utility2D::Dot(followPos_, axis);
 	float bCenter = Utility2D::Dot(opponent.lock()->GetOwner().GetParameter()->pos, axis);
 
 	//ìäâeÇÃçLÇ™ÇË

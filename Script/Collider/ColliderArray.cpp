@@ -2,8 +2,8 @@
 #include "../Utility/UtilityCommon.h"
 #include "ColliderArray.h"
 
-ColliderArray::ColliderArray(ActorBase& owner, const CollisionTags::TAG tag, const std::vector<std::vector<int>>& arrayOfArrays, const std::vector<int>& hitIds, const Vector2& chipSize) :
-	ColliderBase(owner, tag),
+ColliderArray::ColliderArray(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos, const std::vector<std::vector<int>>& arrayOfArrays, const std::vector<int>& hitIds, const Vector2& chipSize) :
+	ColliderBase(owner, tag, followPos),
 	arrayOfArrays_(arrayOfArrays),
 	hitIds_(hitIds),
 	chipSize_(chipSize)

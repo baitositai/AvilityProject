@@ -10,8 +10,9 @@ public:
 	/// </summary>
 	/// <param name="owner">所有者</param>
 	/// <param name="tag">タグ</param>
+	/// <param name="followPos">追従対象の座標</param>
 	/// <param name="radius">半径</param>
-	ColliderCircle(ActorBase& owner, const CollisionTags::TAG tag, const float radius);
+	ColliderCircle(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos, const float radius);
 	
 	/// <summary>
 	/// デストラクタ
