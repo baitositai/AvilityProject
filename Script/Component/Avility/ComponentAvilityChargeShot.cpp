@@ -15,6 +15,7 @@ ComponentAvilityChargeShot::ComponentAvilityChargeShot(Player& owner)
 	stateFunctionMap_ =
 	{
 		{"shot", [this]() { return ProcessInputShot(); }},
+		{"charge", [this]() { return ProcessInputCharge(); }},
 		{"move", [this]() { return ProcessMoveShot(); }}
 	};
 	currentState_ = "shot";
@@ -41,6 +42,17 @@ void ComponentAvilityChargeShot::ProcessInputShot()
 	// 横向きにしか撃てないようにするため、縦の入力は無視する
 	const float moveSpeed = owner_.GetParameter()->moveSpeed;
 
+	//　ショット入力があったらCharge開始(現在Qキー)
+	if (inputManager_.IsNew(InputManager::TYPE::LIGHT_SWITCH))
+	{
+		currentState_ = "charge";
+		currentStateFunction_ = stateFunctionMap_[currentState_];
+	}
+}
+
+void ComponentAvilityChargeShot::ProcessInputCharge()
+{
+
 	shotVec_ = {};
 	// 方向判定
 	if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_RIGHT))
@@ -59,13 +71,15 @@ void ComponentAvilityChargeShot::ProcessInputShot()
 	}
 	owner_.SetShotVec(shotVec_);
 
-	//　ショット入力があったらCharge開始
+	//　ショット入力があったらCharge開始(現在Qキー)
 	if (inputManager_.IsNew(InputManager::TYPE::LIGHT_SWITCH))
 	{
+	}
+	else{
 
 		shotTime_ = 2.0f;
 
-		currentState_ = "move";
+		currentState_ = "shot";
 		currentStateFunction_ = stateFunctionMap_[currentState_];
 	}
 }

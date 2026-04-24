@@ -39,6 +39,7 @@ private:
 
 	// 移動入力処理
 	void ProcessInputShot();
+	void ProcessInputCharge();
 	void ProcessMoveShot();
 
 	// 状態関数マップ
