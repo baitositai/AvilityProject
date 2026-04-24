@@ -13,5 +13,9 @@ ComponentAvilityBox::~ComponentAvilityBox()
 
 void ComponentAvilityBox::Update()
 {
-	//プレイヤーがボックスを置く処理を書く
+	if (boxCnt_ < SET_BLAST_NUM)
+	{
+		//プレイヤーがボックスを置く処理を書く
+	}
+
 }

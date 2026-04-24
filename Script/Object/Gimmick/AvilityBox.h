@@ -10,6 +10,12 @@ public:
 	{
 		Vector2 hitBoxSize;
 		Vector2 hitLocalPos;
+		float blastTime;
+	};
+
+	enum class STATE
+	{
+
 	};
 
 	/// <summary>
@@ -63,6 +69,10 @@ public:
 	const float GetWeight(void)const { return parameter_.weight; }
 
 private:
+
 	// パラメータ情報
 	Parameter parameter_;
+
+	//爆発までのカウント
+	float blastWaitCnt_;
 };

@@ -1,3 +1,4 @@
+#include "../Manager/Common/SceneManager.h"
 #include "../Collider/ColliderBox.h"
 #include "../OnHit/OnHitAvilityBox.h"
 #include "AvilityBox.h"
@@ -25,8 +26,18 @@ void AvilityBox::Init(void)
 
 void AvilityBox::Update(void)
 {
+
+	if (blastWaitCnt_ > 0.0f)
+	{
+		blastWaitCnt_ -= scnMng_.GetDeltaTime();
+	}
+	else
+	{
+		collider_->SetDelete();
+		return;
+	}
 	GimmickBase::Update();
-	if (!collider_->IsHit()) { parameter_.moveAmount.x = 0.0f; }
+
 }
 
 void AvilityBox::Draw(void)

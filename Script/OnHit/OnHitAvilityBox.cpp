@@ -39,7 +39,8 @@ void OnHitAvilityBox::OnHitPlayer(const std::weak_ptr<ColliderBase>& opponentCol
     //互いの重さ
     float myWeight = myParam->weight;
     float opWeight = opParam->weight;
-    float weightDiff = myWeight - opWeight;
+    float weightDiff = myWeight + opWeight;
+    float weightRatio = myWeight / weightDiff;
 
     //お互いの距離
     Vector2F diff = Vector2F::SubVector2F(opParam->pos, myParam->pos);
@@ -65,7 +66,7 @@ void OnHitAvilityBox::OnHitPlayer(const std::weak_ptr<ColliderBase>& opponentCol
     //ボックスの押し出し
     if (overlapX < overlapY)
     {
-        pos.x += overlapX * -myWeight * signX;
+        pos.x += overlapX * -weightRatio * signX;
     }
     else
     {

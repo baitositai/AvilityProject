@@ -21,7 +21,8 @@ void StageManager::Init()
 	avParam.hitBoxSize = Vector2(100, 100);
 	avParam.pos = Vector2F(300, 400);
 	avParam.gravityPower = 0.1f;
-	avParam.weight = 0.1f;
+	avParam.weight = 0.5f;
+	avParam.blastTime = 3.0f;
 	std::vector<std::string> componentNameList = { "gravity","move"};
 	//std::unique_ptr avBox = std::make_unique<AvilityBox>(avParam);
 	gimmick_=std::make_unique<AvilityBox>(avParam, componentNameList);
