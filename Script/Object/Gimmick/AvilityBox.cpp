@@ -1,3 +1,4 @@
+#include "../Manager/Common/SceneManager.h"
 #include "../Collider/ColliderBox.h"
 #include "../OnHit/OnHitAvilityBox.h"
 #include "AvilityBox.h"
@@ -12,8 +13,6 @@ AvilityBox::AvilityBox(const Parameter& parameter, const std::vector<std::string
 	// Õ“ËŒãˆ—
 	onHit_ = std::make_unique<OnHitAvilityBox>(*this);
 
-	// Šî’êƒNƒ‰ƒX‚Ì‰Šú‰»
-	GimmickBase::Init();
 }
 
 AvilityBox::~AvilityBox()
@@ -27,8 +26,18 @@ void AvilityBox::Init(void)
 
 void AvilityBox::Update(void)
 {
+
+	if (blastWaitCnt_ > 0.0f)
+	{
+		blastWaitCnt_ -= scnMng_.GetDeltaTime();
+	}
+	else
+	{
+		collider_->SetDelete();
+		return;
+	}
 	GimmickBase::Update();
-	if (!collider_->IsHit()) { parameter_.moveAmount.x = 0.0f; }
+
 }
 
 void AvilityBox::Draw(void)

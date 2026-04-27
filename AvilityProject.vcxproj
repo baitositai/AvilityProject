@@ -149,6 +149,8 @@
     <ClCompile Include="Script\OnHit\OnHitCharacterBase.cpp" />
     <ClCompile Include="Script\OnHit\OnHitEnemyClone.cpp" />
     <ClCompile Include="Script\Object\Character\Enemy\EnemyClone.cpp" />
+    <ClCompile Include="Script\Component\Avility\ComponentAvilityChargeShot.cpp" />
+    <ClCompile Include="Script\Component\ComponentBlast.cpp" />
     <ClCompile Include="Script\Component\Avility\ComponentAvilityShot.cpp" />
     <ClCompile Include="Script\Component\State\Player\ComponentStatePlayerRespawn.cpp" />
     <ClCompile Include="Script\Component\State\Player\ComponentStatePlayerHit.cpp" />
@@ -248,6 +250,8 @@
     <ClInclude Include="Script\OnHit\OnHitCharacterBase.h" />
     <ClInclude Include="Script\OnHit\OnHitEnemyClone.h" />
     <ClInclude Include="Script\Object\Character\Enemy\EnemyClone.h" />
+    <ClInclude Include="Script\Component\Avility\ComponentAvilityChargeShot.h" />
+    <ClInclude Include="Script\Component\ComponentBlast.h" />
     <ClInclude Include="Script\Component\State\Player\ComponentStatePlayerRespawn.h" />
     <ClInclude Include="Script\Component\State\Player\ComponentStatePlayerHit.h" />
     <ClInclude Include="Script\Component\State\Player\ComponentStatePlayerDead.h" />

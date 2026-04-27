@@ -39,20 +39,42 @@ void OnHitAvilityBox::OnHitPlayer(const std::weak_ptr<ColliderBase>& opponentCol
     //互いの重さ
     float myWeight = myParam->weight;
     float opWeight = opParam->weight;
-    float weightDiff = myWeight - opWeight;
+    float weightDiff = myWeight + opWeight;
+    float weightRatio = myWeight / weightDiff;
 
     //お互いの距離
     Vector2F diff = Vector2F::SubVector2F(opParam->pos, myParam->pos);
     int signX = UtilityCommon::GetSign(diff.x);
     int signY = UtilityCommon::GetSign(diff.y);
 
-    float overlap = static_cast<float>(owner_.GetHitBoxSize().x / 2.0f)
-        + static_cast<float>(collider->GetBoxHalfSize().x) - fabsf(diff.x) + opParam->moveAmount.x;
+    //それぞれのめり込み量
+    float overlapX = static_cast<float>(owner_.GetHitBoxSize().x/2)
+        + static_cast<float>(collider->GetBoxHalfSize().x) - fabsf(diff.x);
+    float overlapY = static_cast<float>(owner_.GetHitBoxSize().y/2)
+        + static_cast<float>(collider->GetBoxHalfSize().y) - fabsf(diff.y);
 
     Vector2F moveAmount = Vector2F();
-    moveAmount.x = overlap * -weightDiff * signX;
+    moveAmount.x = myParam->moveAmount.x;
     moveAmount.y = 0.0f;
 
+    float myUpPosY = myParam->pos.y - owner_.GetHitBoxSize().y / 2;
+    float opDownPosY = opParam->pos.y + collider->GetBoxHalfSize().y;
+
+    //当たっている対象が自分より上にいたら処理を飛ばす
+    Vector2F pos = myParam->pos;
+
+    //ボックスの押し出し
+    if (overlapX < overlapY)
+    {
+        pos.x += overlapX * -weightRatio * signX;
+    }
+    else
+    {
+        return;
+    }
+
+    //ステータスをセット
+    owner_.SetPosition(pos);
     owner_.SetMoveAmount(moveAmount);
 
 }

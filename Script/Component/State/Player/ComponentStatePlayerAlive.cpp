@@ -17,6 +17,7 @@ ComponentStatePlayerAlive::~ComponentStatePlayerAlive()
 
 void ComponentStatePlayerAlive::Update()
 {
+
 	// ˆÚ“®—Ê‚Ì‰Šú‰»
 	moveAmount_ = {};
 
@@ -38,6 +39,7 @@ void ComponentStatePlayerAlive::Update()
 	// î•ñ‚ÌXV
 	owner_.SetMoveAmount(moveAmount_);
 	owner_.SetIsGround(isGround_);
+
 }
 
 void ComponentStatePlayerAlive::ProcessInputMove()

@@ -2,6 +2,7 @@
 #include "../../Component/Avility/ComponentAvilityShot.h"
 #include "../../OnHit/OnHitPlayer.h"
 #include "../Collider/ColliderBox.h"
+#include "../../Component/Avility/ComponentAvilityChargeShot.h"
 #include "Player.h"
 
 Player::Player(const Parameter& parameter, const std::unordered_map<std::string, std::string> stateComponentNameList, const std::vector<std::string> defaultComponentNameList) :
@@ -27,6 +28,7 @@ void Player::Init()
 
 	// デバッグ用
 	componentMap_.try_emplace(std::string("AvilityShot"), std::make_unique<ComponentAvilityShot>(*this));
+	componentMap_.try_emplace(std::string("AvilityChargeShot"), std::make_unique<ComponentAvilityChargeShot>(*this));
 }
 
 void Player::Update()
