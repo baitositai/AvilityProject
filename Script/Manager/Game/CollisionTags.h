@@ -13,7 +13,7 @@ public:
 		PLAYER,					// プレイヤー
 		PLAYER_ATTACK_NORMAL,	// プレイヤーの通常攻撃			
 		STAGE,					// ステージ
-		ENEMY,					// 敵
+		ENEMY_CLONE,			// 敵:クローン
 		AVILITY_BOX,			// アビリティ設置のボックス
 		MAX
 	};

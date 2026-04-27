@@ -11,13 +11,6 @@ CharacterBase::CharacterBase(Parameter* parameter, const std::unordered_map<std:
 	characterParameterPtr_(parameter)
 {	
 	state_ = STATE::MAX;
-
-	// ó‘Ô‘JˆÚˆ—‚Ì“o˜^
-	//stateChangeMap_.emplace(STATE::ALIVE, std::bind(&CharacterBase::ChangeStateAlive, this));
-	//stateChangeMap_.emplace(STATE::ATTACK, std::bind(&CharacterBase::ChangeStateAttack, this));
-	//stateChangeMap_.emplace(STATE::HIT, std::bind(&CharacterBase::ChangeStateHit, this));
-	//stateChangeMap_.emplace(STATE::DEAD, std::bind(&CharacterBase::ChangeStateDead, this));
-	//stateChangeMap_.emplace(STATE::RESPAWN, std::bind(&CharacterBase::ChangeStateRespawn, this));
 }
 
 CharacterBase::~CharacterBase()
@@ -48,13 +41,50 @@ void CharacterBase::Update()
 	ActorBase::Update();
 }
 
+void CharacterBase::Draw()
+{
+	if (state_ == STATE::DEAD) { return; }
+	ActorBase::Draw();
+}
+
 void CharacterBase::DebugDraw()
 {
+	// Ž©g‚Ì‘Ì—Í‚ð•`‰æ
+	DrawFormatString(
+		characterParameterPtr_->pos.x - characterParameterPtr_->hitBoxSize.x / 2,
+		characterParameterPtr_->pos.y - characterParameterPtr_->hitBoxSize.y / 2 -20,
+		UtilityCommon::RED,
+		L"AT:%d",
+		characterParameterPtr_->attackPower);
+
+	DrawFormatString(
+		characterParameterPtr_->pos.x - characterParameterPtr_->hitBoxSize.x / 2,
+		characterParameterPtr_->pos.y - characterParameterPtr_->hitBoxSize.y / 2 -40,
+		UtilityCommon::RED,
+		L"HP:%d",
+		characterParameterPtr_->hp);
 }
 
 void CharacterBase::ChangeState(const STATE state)
 {
 	state_ = state;
+}
+
+void CharacterBase::Damage(const int damage)
+{
+	// ‘Ì—Í‚ðŒ¸‚ç‚·
+	characterParameterPtr_->hp -= damage;
+
+	// ‘Ì—Í‚ª0ˆÈ‰º‚Ìê‡
+	if (characterParameterPtr_->hp <= 0)
+	{
+		ChangeState(STATE::DEAD);
+	}
+}
+
+const int CharacterBase::GetAttackPower() const
+{
+	return characterParameterPtr_->attackPower;
 }
 
 void CharacterBase::CreateComponents()

@@ -1,4 +1,5 @@
 #include "../Collider/ColliderBase.h"
+#include "../Object/ActorBase.h"
 #include "OnHitBase.h"
 
 OnHitBase::OnHitBase(ActorBase& owner)

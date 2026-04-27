@@ -7,24 +7,22 @@ public:
 
 	struct Parameter : public CharacterBase::Parameter
 	{
-		Vector2 hitBoxSize = {};			// 衝突判定用ボックスサイズ
+		Vector2F defaultAttackLocalPos = {};// 通常攻撃の当たり判定調整座標	
 		Vector2F shotVec_;					// ショットベクトル
+		float defaultAttackRadius = 0.0f;	// 通常攻撃の範囲半径
 		float dashSpeed = 0.0f;				// ダッシュスピード
-		float jumpPow = 0.0f;				// ジャンプ力
-		float jumpPowMax = 0.0f;			// ジャンプ力の最大量
-		bool isGround = false;				// 地面判定
-		bool isFall = false;				// 落下判定
 
 		// アニメーション関係
-		int animationsIdle;					// 待機アニメーション数
-		int animationsWalk;					// 移動アニメーション
-		int animationsBrake;				// ブレーキアニメーション
-		int animationsAttack;				// 攻撃アニメーション
-		int animationsJump;					// ジャンプアニメーション
-		int animationsFall;					// 落下アニメーション
-		int animationsDie;					// 死亡アニメーション
-		int animationsDamage;				// ダメージアニメーション
-		int animationsPause;				// ポーズアニメーション
+		int animationsIdle = -1;			// 待機アニメーション数
+		int animationsWalk = -1;			// 移動アニメーション
+		int animationsBrake = -1;			// ブレーキアニメーション
+		int animationsAttack = -1;			// 攻撃アニメーション
+		int animationsJump = -1;			// ジャンプアニメーション
+		int animationsFall = -1;			// 落下アニメーション
+		int animationsDie = -1;				// 死亡アニメーション
+		int animationsDamage = -1;			// ダメージアニメーション
+		int animationsPause = -1;			// ポーズアニメーション
+		float animationAttackSpeed = 0.0f;	// 攻撃アニメーション速度
 	};
 
 	// アニメーション種類
@@ -76,6 +74,11 @@ public:
 	void InitAnimation() override;
 
 	/// <summary>
+	/// アニメーション速度を攻撃用に変える
+	/// </summary>
+	void SetAttackAnimationSpeed() { parameterAnimation_.animationSpeed =  parameter_.animationAttackSpeed; }
+
+	/// <summary>
 	/// アニメーションの変更
 	/// </summary>
 	/// <param name="type">種類</param>
@@ -89,46 +92,16 @@ public:
 	void SetShotVec(const Vector2F shotVec) { parameter_.shotVec_ = shotVec; }
 
 	/// <summary>
-	/// 地面判定の設定
-	/// </summary>
-	/// <param name="isGround">地面判定</param>
-	void SetIsGround(const bool isGround) { parameter_.isGround = isGround; }
-
-	/// <summary>
-	/// 落下判定の設定
-	/// </summary>
-	/// <param name="isFall">落下判定</param>
-	void SetIsFall(const bool isFall) { parameter_.isGround = isFall; }
-
-	/// <summary>
-	/// 最大ジャンプ力を設定
-	/// </summary>
-	/// <param name="jumpPowMax">最大ジャンプ力</param>
-	void SetJumpPowMax(const float jumpPowMax) { parameter_.jumpPow = jumpPowMax; }
-
-	/// <summary>
-	/// 衝突する範囲を返す
-	/// </summary>
-	/// <returns>衝突する範囲</returns>
-	const Vector2& GetHitBoxSize() const { return parameter_.hitBoxSize; }
-
-	/// <summary>
 	/// ショットベクトル（parameter_.shotVec_）を取得して返します。
 	/// </summary>
 	/// <returns>parameter_.shotVec_ のコピーを Vector2F 型で返します。メソッド自体はオブジェクトを変更しません（const）。</returns>
 	const Vector2F GetShotVec() const { return parameter_.shotVec_; }
 
 	/// <summary>
-	/// 最大ジャンプ力を返す
+	/// 通常攻撃の位置を調整する座標を返す
 	/// </summary>
-	/// <returns>ジャンプ力</returns>
-	const float GetJumpPow() const { return parameter_.jumpPow; }
-
-	/// <summary>
-	/// 最大ジャンプ力を返す
-	/// </summary>
-	/// <returns>最大ジャンプ力</returns>
-	const float GetJumpPowMax() const { return parameter_.jumpPowMax; }
+	/// <returns>通常攻撃の相対座標</returns>
+	const Vector2F GetDefaultAttackLocalPos() const { return parameter_.defaultAttackLocalPos; }
 
 	/// <summary>
 	/// ダッシュ速度を返す
@@ -137,16 +110,10 @@ public:
 	const float GetDashSpeed() const { return parameter_.dashSpeed; }
 
 	/// <summary>
-	/// 地面判定を返す
+	/// 通常攻撃の範囲半径を返す
 	/// </summary>
-	/// <returns>地面判定</returns>
-	const bool IsGround() const { return parameter_.isGround; }
-
-	/// <summary>
-	/// 落下判定を返す
-	/// </summary>
-	/// <returns>落下判定</returns>
-	const bool IsFall() const { return parameter_.isFall; }
+	/// <returns>通常攻撃の範囲半径</returns>
+	const float GetDefaultAttackRadius() const { return parameter_.defaultAttackRadius; }
 	
 private:
 

@@ -135,14 +135,20 @@ void CollisionManager::InitTagMatrix()
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::STAGE)] = true;				// プレイヤーとステージ
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::STAGE)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
 
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;			//アビリティ設置ボックスとプレイヤー
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;			// アビリティ設置ボックスとプレイヤー
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;
 
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::STAGE)] = true;			//アビリティ設置ボックスとステージ
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::STAGE)] = true;			// アビリティ設置ボックスとステージ
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::STAGE)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;
 
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::ENEMY)] = true;			//アビリティ設置ボックスと敵
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;	// アビリティ設置ボックスと敵
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::STAGE)] = true;				// 敵とステージ
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::STAGE)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::PLAYER_ATTACK_NORMAL)] = true;	// 敵とプレイヤーの通常攻撃
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_ATTACK_NORMAL)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;
 }
 
 void CollisionManager::InitColliderMatrix()
@@ -268,7 +274,35 @@ bool CollisionManager::IsHitCheckCircleToCircle(std::weak_ptr<ColliderBase> coll
 
 bool CollisionManager::IsHitCheckCircleToBox(std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2)
 {
-	return false;
+	std::weak_ptr<ColliderCircle> colliderCircle;
+	std::weak_ptr<ColliderBox> colliderBox;
+
+	// モデルコライダーの用意
+	if (collider1.lock()->GetType() == ColliderType::TYPE::CIRCLE) { colliderCircle = std::dynamic_pointer_cast<ColliderCircle>(collider1.lock()); }
+	else if (collider2.lock()->GetType() == ColliderType::TYPE::CIRCLE) { colliderCircle = std::dynamic_pointer_cast<ColliderCircle>(collider2.lock()); }
+
+	// カプセルコライダーの用意
+	if (collider1.lock()->GetType() == ColliderType::TYPE::BOX) { colliderBox = std::dynamic_pointer_cast<ColliderBox>(collider1.lock()); }
+	else if (collider2.lock()->GetType() == ColliderType::TYPE::BOX) { colliderBox = std::dynamic_pointer_cast<ColliderBox>(collider2.lock()); }
+
+	// 判定結果
+	ColliderArray::Result result = {};
+
+	const Vector2 top = colliderBox.lock()->GetLocalTopPos();
+	const Vector2 bottom = colliderBox.lock()->GetLocalBottomPos();
+	Vector2F centerF = colliderCircle.lock()->GetPos();
+	const Vector2 center = centerF.ToVector2();
+	const float radius = colliderCircle.lock()->GetRadius();
+
+	// 衝突判定
+	const bool isHit = UtilityCollision::IsHitCircleToBox(
+		center,
+		radius,
+		top,
+		bottom);
+
+	// 衝突しているか返す
+	return isHit;
 }
 
 bool CollisionManager::IsHitCheckCircleToLine(std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2)
@@ -281,7 +315,7 @@ bool CollisionManager::IsHitCheckBoxToBox(std::weak_ptr<ColliderBase> collider1,
 	std::weak_ptr<ColliderBox> colliderBox1;
 	std::weak_ptr<ColliderBox> colliderBox2;
 
-	// モデルコライダーの用意
+	// ボックスコライダーの用意
 	colliderBox1 = std::dynamic_pointer_cast<ColliderBox>(collider1.lock()); 
 	colliderBox2 = std::dynamic_pointer_cast<ColliderBox>(collider2.lock()); 
 

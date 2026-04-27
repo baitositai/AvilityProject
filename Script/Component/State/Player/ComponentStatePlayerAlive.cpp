@@ -106,6 +106,9 @@ void ComponentStatePlayerAlive::ProcessInputAttack()
 		// 攻撃のアニメーションを開始（ループしない）
 		owner_.ChangeAnimation(Player::ANIMATION::ATTACK, false);
 
+		// アニメーション速度の変更
+		owner_.SetAttackAnimationSpeed();
+
 		// 状態遷移
 		owner_.ChangeState(Player::STATE::ATTACK);
 		

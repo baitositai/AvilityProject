@@ -108,6 +108,11 @@ public:
 	virtual void InitAnimation();
 
 	/// <summary>
+	/// アニメーション速度をリセット
+	/// </summary>
+	void ResetAnimationSpeed() { parameterAnimation_.animationSpeed = actorParameterPtr_->animationSpeed; }
+
+	/// <summary>
 	/// コンポーネントの追加
 	/// </summary>
 	/// <param name="name">コンポーネントの名前</param>

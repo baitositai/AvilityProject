@@ -27,6 +27,9 @@ public:
 
 private:
 
+	// ’ÊíUŒ‚‚Ì‘Š‘ÎˆÊ’u
+	const Vector2F DEFAULT_ATTACK_LOCAL_POS;
+
 	// Š—LÒ
 	Player& owner_;
 

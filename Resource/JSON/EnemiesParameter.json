@@ -1,12 +1,12 @@
 {
-  "player": {
+  "clone": {
     "componentNameList": [
       "gravity",
       "move",
       "spriteAnimation"
     ],
     "componentStateNameList": {
-      "alive": "playerAlive",
+      "alive": "enemyAlive",
       "attack": "playerAttack",
       "hit": "playerHit",
       "dead": "playereDead",
@@ -14,19 +14,15 @@
     },
     "scale": 1.0,
     "angle": 0.0,
-    "direction": false,
+    "direction": true,
     "transparent": true,
     "moveSpeed": 2.0,
-    "dashSpeed": 4.0,
     "hp": 100,
     "attackPower": 10,
-    "jumpPower": 0.2,
-    "jumpPowerMax": 10.0,
     "gravityPower": 0.5,
-    "jumpCount": 2,
     "defaultAttackRadius":  20.0,
     "animationDefaultSpeed": 0.1,
-    "animationAttackSpeed": 0.2,
+    "animationAttackSpeed": 0.3,
     "animationsIdle": 6,
     "animationsWalk": 8,
     "animationsBrake": 4,

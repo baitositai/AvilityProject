@@ -51,6 +51,16 @@
       "path": "Resource/Image/Player/Player.png"
     },
     {
+      "key": "clone",
+      "sceneId": 2,
+      "type": "sprite",
+      "divX": 10,
+      "divY": 9,
+      "sizeX": 96,
+      "sizeY": 96,
+      "path": "Resource/Image/Enemy/Clone.png"
+    },
+    {
       "key": "bgmTitle",
       "path": "Resource/Sound/BGM/BgmTitle.mp3",
       "sceneId": 1,

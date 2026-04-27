@@ -7,6 +7,7 @@
 #include "../../Component/State/Player/ComponentStatePlayerHit.h"
 #include "../../Component/State/Player/ComponentStatePlayerRespawn.h"
 #include "../../Component/State/Player/ComponentStatePlayerAlive.h"
+#include "../../Component/State/EnemyClone/ComponentStateEnemyAlive.h"
 #include "../../Object/Character/CharacterBase.h" 
 #include "../../Object/Character/Player.h" 
 #include "../../Object/ActorBase.h" 
@@ -103,6 +104,18 @@ std::unique_ptr<ComponentStatePlayerRespawn> FactoryComponent::CreateComponentSt
     return std::make_unique<ComponentStatePlayerRespawn>(*playerPtr);
 }
 
+std::unique_ptr<ComponentStateEnemyAlive> FactoryComponent::CreateComponentStateEnemyAlive(ActorBase& owner)
+{
+    auto* playerPtr = dynamic_cast<CharacterBase*>(&owner);
+
+    if (playerPtr == nullptr)
+    {
+        // ÉLÉÉÉXÉgÇ…é∏îsÇµÇΩèÍçánullptrÇï‘Ç∑
+        return nullptr;
+    }
+    return std::make_unique<ComponentStateEnemyAlive>(*playerPtr);
+}
+
 FactoryComponent::FactoryComponent()
 {
     // ê∂ê¨èàóùÇÃìoò^
@@ -137,6 +150,10 @@ FactoryComponent::FactoryComponent()
     componentCreateMap_.emplace("playerRespawn", [this](ActorBase& owner)
         {
             return CreateComponentStatePlayerRespawn(owner);
+        });
+    componentCreateMap_.emplace("enemyAlive", [this](ActorBase& owner)
+        {
+            return CreateComponentStateEnemyAlive(owner);
         });
 }
 

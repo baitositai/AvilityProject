@@ -4,20 +4,14 @@
 #include "../Collider/ColliderBox.h"
 #include "../../Object/Gimmick/AvilityBox.h"
 #include "OnHitPlayer.h"
+#include "OnHitCharacterBase.h"
+#include "OnHitEnemyClone.h"
 
 
 OnHitPlayer::OnHitPlayer(Player& owner) :
-    OnHitBase(owner),
+    OnHitCharacterBase(owner),
     owner_(owner)
 {
-    onHitMap_.emplace(CollisionTags::TAG::STAGE , [this](const std::weak_ptr<ColliderBase>& opponentCollider)
-        {
-            return OnHitStage(opponentCollider);
-        });
-    onHitMap_.emplace(CollisionTags::TAG::AVILITY_BOX, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
-        {
-            return OnHitAvilityBox(opponentCollider);
-        });
 }
 
 OnHitPlayer::~OnHitPlayer()
@@ -133,35 +127,6 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
     AvilityShot(opponentCollider, bestNormal);
 }
 
-void OnHitPlayer::OnHitAvilityBox(const std::weak_ptr<ColliderBase>& opponentCollider)
-{
-    auto collider = std::dynamic_pointer_cast<ColliderBox>(opponentCollider.lock());
-
-    const auto& opOwner = opponentCollider.lock()->GetOwner();
-
-    //お互いのパラメータ
-    const ActorBase::Parameter* myParam = owner_.GetParameter();
-    const ActorBase::Parameter* opParam = opOwner.GetParameter();
-
-    //互いの重さ
-    float myWeight = myParam->weight;
-    float opWeight = opParam->weight;
-    float weightDiff = myWeight - opWeight;
-
-    //お互いの距離
-    Vector2F diff = Vector2F::SubVector2F(opParam->pos, myParam->pos);
-    int signX = UtilityCommon::GetSign(diff.x);
-    int signY = UtilityCommon::GetSign(diff.y);
-
-    float overlap = static_cast<float>(owner_.GetHitBoxSize().x / 2.0f)
-        + static_cast<float>(collider->GetBoxHalfSize().x) - fabsf(diff.x) + myParam->moveAmount.x;
-
-    Vector2F moveAmount = Vector2F();
-    moveAmount.x = overlap * -weightDiff * signX;
-    moveAmount.y = 0.0f;
-
-    owner_.SetMoveAmount(moveAmount);
-}
 
 void OnHitPlayer::AvilityShot(const std::weak_ptr<ColliderBase>& opponentCollider, const Vector2F& normal)
 {

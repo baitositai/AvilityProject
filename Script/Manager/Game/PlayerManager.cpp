@@ -17,7 +17,8 @@ void PlayerManager::Init()
 	parameter.direction = jsonPparameter["direction"].get<bool>();
 	parameter.transparent = jsonPparameter["transparent"].get<bool>();
 	parameter.moveSpeed = jsonPparameter["moveSpeed"].get<float>();
-	parameter.animationSpeed = jsonPparameter["animationSpeed"].get<float>();
+	parameter.animationSpeed = jsonPparameter["animationDefaultSpeed"].get<float>();
+	parameter.animationAttackSpeed = jsonPparameter["animationAttackSpeed"].get<float>();
 	parameter.divisionNum.x = jsonPparameter["divisionNum"]["x"].get<int>();
 	parameter.divisionNum.y = jsonPparameter["divisionNum"]["y"].get<int>();
 	parameter.hp = jsonPparameter["hp"].get<int>();
@@ -25,9 +26,11 @@ void PlayerManager::Init()
 	parameter.jumpPowMax = jsonPparameter["jumpPowerMax"].get<float>();
 	parameter.dashSpeed = jsonPparameter["dashSpeed"].get<float>();
 	parameter.attackPower = jsonPparameter["attackPower"].get<int>();
+	parameter.defaultAttackRadius = jsonPparameter["defaultAttackRadius"].get<int>();
 	parameter.gravityPower = jsonPparameter["gravityPower"].get<float>();
 	parameter.hitBoxSize = Vector2(jsonPparameter["hitBoxSize"]["x"].get<int>(), jsonPparameter["hitBoxSize"]["y"].get<int>());
 	parameter.localPos = Vector2(jsonPparameter["localPos"]["x"].get<int>(), jsonPparameter["localPos"]["y"].get<int>());
+	parameter.defaultAttackLocalPos = Vector2F(jsonPparameter["defaultAttackLoaclPos"]["x"].get<float>(), jsonPparameter["defaultAttackLoaclPos"]["y"].get<float>());
 	parameter.weight = jsonPparameter["weight"].get<float>();
 	parameter.pos = Vector2F(400.0f, 400.0f);
 
