@@ -71,8 +71,10 @@ bool UtilityCollision::IsHitCircleToLine(const Vector2& circlePos, const float r
 	return false;
 }
 
-bool UtilityCollision::IsHitBoxToBox(const Vector2& boxTopPos1, const Vector2& boxBotmPos1, const Vector2& boxTopPos2, const Vector2& boxBotmPos2)
+bool UtilityCollision::IsHitBoxToBox(const Vector2& boxTopPos1, const Vector2& boxBotmPos1, const float degAngle1,
+    const Vector2& boxTopPos2, const Vector2& boxBotmPos2,const float degAngle2)
 {
+
 	return false;
 }
 
@@ -80,3 +82,5 @@ bool UtilityCollision::IsHitBoxToLine(const Vector2& boxTopPos, const Vector2& b
 {
 	return false;
 }
+
+

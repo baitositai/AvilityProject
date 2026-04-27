@@ -37,6 +37,17 @@ Vector2 Vector2F::ToVector2(void)
 	return ret;
 }
 
+float Vector2F::Length(void)const
+{
+	return std::sqrt(x * x + y * y);
+}
+Vector2F Vector2F::Normalize(void)
+{
+	float len = Length();
+	return (len != 0) ? Vector2F(x / len, y / len) : Vector2F(0, 0);
+}
+
+
 //ƒxƒNƒgƒ‹ü‚ğì‚é
 Vector2F Vector2F::CreateVectorLine(Vector2 value1, Vector2 value2)
 {

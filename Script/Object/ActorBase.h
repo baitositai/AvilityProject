@@ -9,11 +9,12 @@
 class ColliderBase;
 class OnHitBase;
 class ComponentBase;
+
 class SceneManager;
 class ResourceManager;
 class SoundManager;
-class InputManager;
 class CollisionManager;
+class FactoryComponent;
 
 class ActorBase
 {
@@ -39,6 +40,7 @@ public:
 		float angle = 0.0f;						// 角度
 		bool direction = false;					// 向き(false:右,true:左)
 		bool transparent = true;				// 透過判定
+		Vector2 localPos = {};					// 相対位置
 		Vector2 drawPos = {};					// 描画位置
 		Vector2 divisionNum = {};				// 分割数
 
@@ -50,19 +52,23 @@ public:
 		// 重力関係
 		float gravityPower = 0.0f;				// 重力
 		DIR gravityDir = DIR::DOWN;				// 重力方向
+		float weight = 0.0f;					//物体の重み
+
+		float animationSpeed = 0.0f;			// アニメーション速度の格納
 	};
 	
 	// アニメーション用の情報
 	struct ParameterAnimation
 	{
-		int animationType = -1;			// アニメーションの種類		
-		int animationIndex = 0;			// アニメーションインデックス
-		int animationStartIndex = 0;	// アニメーション開始インデックス
-		int animationFinishIndex = 0;	// アニメーション終了インデックス
-		float animationSpeed = 0.0f;	// アニメーションスピード
-		bool isPlay = false;			// アニメーション再生判定 
-		bool isStop = false;			// アニメーション停止判定
-		bool isLoop = false;			// アニメーションループ判定
+		int animationType = -1;						// アニメーションの種類		
+		int animationIndex = 0;						// アニメーションインデックス
+		int animationStartIndex = 0;				// アニメーション開始インデックス
+		int animationFinishIndex = 0;				// アニメーション終了インデックス
+		float animationSpeed = 0.0f;				// アニメーションスピード
+		bool isPlay = false;						// アニメーション再生判定 
+		bool isStop = false;						// アニメーション停止判定
+		bool isLoop = false;						// アニメーションループ判定
+		std::unordered_map<int, int> animationsMap;	// 種類別アニメーション数管理マップ
 	};
 
 	/// <summary>
@@ -97,6 +103,11 @@ public:
 	virtual void DebugDraw();
 
 	/// <summary>
+	/// アニメーションの初期化
+	/// </summary>
+	virtual void InitAnimation();
+
+	/// <summary>
 	/// コンポーネントの追加
 	/// </summary>
 	/// <param name="name">コンポーネントの名前</param>
@@ -114,27 +125,36 @@ public:
 	/// </summary>
 	/// <param name="opponentCollider">衝突した相手のコライダー</param>
 	void OnHit(const std::weak_ptr<ColliderBase>& opponentCollider);
-
-	/// <summary>
-	/// アニメーション情報の設定
-	/// </summary>
-	/// <param name="animationStartIndex">開始番号</param>
-	/// <param name="animationFinishIndex">終了番号</param>
-	/// <param name="animationSpeed">アニメーション速度</param>
-	/// <param name="isLoop">ループ再生判定(基本ループ)</param>
-	void SetAnimationParameter(const int animationStartIndex, const int animationFinishIndex, const float animationSpeed, const bool isLoop = true);
 	
 	/// <summary>
 	/// アニメーションインデックスの設定
 	/// </summary>
 	/// <param name="animationIndex">アニメーションインデックス</param>
 	void SetAnimationIndex(const int animationIndex) { parameterAnimation_.animationIndex = animationIndex; }
+
+	/// <summary>
+	/// アニメーション速度の設定
+	/// </summary>
+	/// <param name="animationSpeed">アニメーション速度</param>
+	void SetAnimationSpeed(const int animationSpeed) { parameterAnimation_.animationSpeed = animationSpeed; }
+
+	/// <summary>
+	/// アニメーションの再生判定を設定
+	/// </summary>
+	/// <param name="isPlay">再生判定</param>
+	void SetAnimationIsPlay(const bool isPlay) { parameterAnimation_.isPlay = isPlay; } 
 	
 	/// <summary>
 	/// 角度の設定
 	/// </summary>
 	/// <param name="angle">角度</param>
 	void SetAngle(const float angle) { actorParameterPtr_->angle = angle; }
+
+	/// <summary>
+	/// 方向の設定
+	/// </summary>
+	/// <param name="direction">方向</param>
+	void SetDirection(const bool direction) { actorParameterPtr_->direction = direction; }
 
 	/// <summary>
 	/// 座標の設定
@@ -185,6 +205,7 @@ protected:
 	ResourceManager& resMng_;
 	SoundManager& sndMng_;
 	CollisionManager& collMng_;
+	FactoryComponent& facCom_;
 
 	// アニメーション用のパラメータ
 	ParameterAnimation parameterAnimation_;
@@ -205,7 +226,10 @@ protected:
 	bool isDelete_;
 
 	// コライダーの登録
-	void RegisterCollider();
+	void RegisterCollider();	
+	
+	// コンポーネントの生成
+	virtual void CreateComponents();
 
 private:
 
@@ -214,7 +238,4 @@ private:
 
 	// 共通パラメータ(ポインタで所持)
 	Parameter* actorParameterPtr_;
-
-	// コンポーネントの生成
-	void CreateComponents();
 };

@@ -74,6 +74,11 @@ double UtilityCommon::RadIn2PI(double rad)
     return rad;
 }
 
+int UtilityCommon::GetSign(const float value)
+{
+    return value < 0.0f ? -1 : 1;
+}
+
 int UtilityCommon::DirNearAroundRad(float from, float to)
 {
 

@@ -1,8 +1,8 @@
 #include "../Object/ActorBase.h"
 #include "ColliderCircle.h"
 
-ColliderCircle::ColliderCircle(ActorBase& owner, const CollisionTags::TAG tag, const float radius) :
-	ColliderBase(owner, tag),
+ColliderCircle::ColliderCircle(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos, const float radius) :
+	ColliderBase(owner, tag, followPos),
 	radius_(radius)
 {
 	type_ = ColliderType::TYPE::CIRCLE;

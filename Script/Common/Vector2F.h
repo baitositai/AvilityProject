@@ -17,6 +17,12 @@ struct Vector2F
 	//Vector2‚Ö•ÏŠ·‚·‚éŠÖ”
 	Vector2 ToVector2(void);
 
+	//’·‚³‚ğ‹‚ß‚é
+	float Length(void)const;
+
+	//³‹K‰»
+	Vector2F Normalize(void);
+
 	//ƒxƒNƒgƒ‹ü‚ğì‚é
 	Vector2F CreateVectorLine(Vector2 value1, Vector2 value2);
 
