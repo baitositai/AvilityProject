@@ -26,9 +26,14 @@ void ComponentAvilityBox::Update()
 void ComponentAvilityBox::PlaceBox()
 {
 	//ボックスが３個までなら設置
-	if (boxCnt_ <= SET_BLAST_NUM)
+	if (boxCnt_ < SET_BLAST_NUM)
 	{
 		//プレイヤーの座標からボックスの位置を決める
-		stageManager_.AddGimmick(owner_.GetParameter()->pos);
+		const bool dir=owner_.GetParameter()->direction;
+		const Vector2F pos = owner_.GetParameter()->pos;
+		stageManager_.AddGimmick(pos,dir);
+
+		//ボックスカウントを増加
+		boxCnt_++;
 	}
 }

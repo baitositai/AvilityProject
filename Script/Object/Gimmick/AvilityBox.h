@@ -10,7 +10,7 @@ public:
 	{
 		Vector2 hitBoxSize;			//サイズ
 		Vector2 hitLocalPos;		//ボックスの当たり判定のローカル座標
-		Vector2F placeLocalPos;		//設置時のプレイヤーとのローカル座標
+		Vector2F placePos;		//設置時のプレイヤーとのローカル座標
 		float blastTime;			//爆発するまでの時間
 	};
 
@@ -70,9 +70,6 @@ public:
 	const float GetWeight(void)const { return parameter_.weight; }
 
 private:
-
-	//ボックスを置く親の座標
-	const Vector2F& charaPos_;
 
 	// パラメータ情報
 	Parameter parameter_;

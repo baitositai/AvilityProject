@@ -62,7 +62,7 @@ public:
 	/// <summary>
 	/// ギミックの追加
 	/// </summary>
-	void AddGimmick(const Vector2F& _charaPos);
+	void AddGimmick(const Vector2F& _charaPos,const bool _direction);
 
 	/// <summary>
 	/// ギミックの削除

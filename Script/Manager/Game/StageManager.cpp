@@ -76,14 +76,17 @@ void StageManager::DebugDraw()
 	}
 }
 
-void StageManager::AddGimmick(const Vector2F& _charaPos)
+void StageManager::AddGimmick(const Vector2F& _charaPos, const bool _direction)
 {
 	AvilityBox::Parameter avParam = {};
 	avParam.hitBoxSize = Vector2(48, 48);
-	avParam.placeLocalPos = Vector2F(50.0f, 50.0f);
 	avParam.gravityPower = 0.5f;
 	avParam.weight = 0.8f;
 	avParam.blastTime = 3.0f;
+
+	//ローカル座標をJsonで読み込み、プレイヤーの向きによって設置場所を変える
+	Vector2F localPos = { 50.0f,50.0f };
+	avParam.placePos= _direction? Vector2F::SubVector2F(_charaPos, localPos): Vector2F::AddVector2F(_charaPos, localPos);
 	std::vector<std::string> componentNameList = { "gravity","move" };
 
 	//いったんアビリティボックスのみ対応
