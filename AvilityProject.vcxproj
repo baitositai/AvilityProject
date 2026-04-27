@@ -145,11 +145,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <ClCompile Include="Script\Component\Avility\ComponentAvilityChargeShot.cpp" />
-=======
     <ClCompile Include="Script\Component\ComponentBlast.cpp" />
->>>>>>> origin/AvilityBox
     <ClCompile Include="Script\Component\Avility\ComponentAvilityShot.cpp" />
     <ClCompile Include="Script\Component\State\Player\ComponentStatePlayerRespawn.cpp" />
     <ClCompile Include="Script\Component\State\Player\ComponentStatePlayerHit.cpp" />
@@ -245,9 +242,7 @@
     <ClCompile Include="Script\Utility\UtilityCollision.cpp" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <ClInclude Include="Script\Component\Avility\ComponentAvilityChargeShot.h" />
-=======
     <ClInclude Include="Script\Component\ComponentBlast.h" />
     <ClInclude Include="Script\Component\State\Player\ComponentStatePlayerRespawn.h" />
     <ClInclude Include="Script\Component\State\Player\ComponentStatePlayerHit.h" />
@@ -255,7 +250,6 @@
     <ClInclude Include="Script\Component\State\Player\ComponentStatePlayerAttack.h" />
     <ClInclude Include="Script\Component\State\Player\ComponentStatePlayerAlive.h" />
     <ClInclude Include="Script\Component\State\ComponentCharacterStateBase.h" />
->>>>>>> origin/AvilityBox
     <ClInclude Include="Script\Component\Avility\ComponentAvilityShot.h" />
     <ClInclude Include="Script\OnHit\OnHitAvilityBox.h" />
     <ClInclude Include="Script\Object\Gimmick\AvilityBox.h" />

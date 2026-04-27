@@ -2,16 +2,10 @@
 #include "../../Component/Avility/ComponentAvilityShot.h"
 #include "../../OnHit/OnHitPlayer.h"
 #include "../Collider/ColliderBox.h"
+#include "../../Component/Avility/ComponentAvilityChargeShot.h"
 #include "Player.h"
 
-<<<<<<< HEAD
-#include "../../Component/Avility/ComponentAvilityShot.h"
-#include "../../Component/Avility/ComponentAvilityChargeShot.h"
-
-Player::Player(const Parameter& parameter, const std::vector<std::string> componentNameList):
-=======
 Player::Player(const Parameter& parameter, const std::unordered_map<std::string, std::string> stateComponentNameList, const std::vector<std::string> defaultComponentNameList) :
->>>>>>> origin/AvilityBox
 	parameter_(parameter),
 	CharacterBase(&parameter_, stateComponentNameList, defaultComponentNameList)
 {
