@@ -23,4 +23,5 @@ private:
 	void OnHitPlayer(const std::weak_ptr<ColliderBase>& opponentCollider);
 	void OnHitEnemy(const std::weak_ptr<ColliderBase>& opponentCollider);
 	void OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider);
+	void OnAvilityBox(const std::weak_ptr<ColliderBase>& opponentCollider);
 };

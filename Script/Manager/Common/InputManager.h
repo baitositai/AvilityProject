@@ -27,6 +27,7 @@ public:
 		PLAYER_ATTACK,			// 攻撃
 		PLAYER_JUMP,			// ジャンプ
 		PLAYER_DASH,			// ダッシュ
+		PLAYER_AVILITY,			//アビリティ使用
 
 		CAMERA_MOVE_RIGHT,		// カメラ右移動
 		CAMERA_MOVE_LEFT,		// カメラ左移動

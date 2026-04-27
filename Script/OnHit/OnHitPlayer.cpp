@@ -148,7 +148,8 @@ void OnHitPlayer::OnHitAvilityBox(const std::weak_ptr<ColliderBase>& opponentCol
     //互いの重さ
     float myWeight = myParam->weight;
     float opWeight = opParam->weight;
-    float weightDiff = myWeight - opWeight;
+    float weightTotal = myWeight + opWeight;
+    float weightRatio = myWeight / weightTotal;
 
     //お互いの距離
     Vector2F diff = Vector2F::SubVector2F(opParam->pos, myParam->pos);
@@ -171,11 +172,11 @@ void OnHitPlayer::OnHitAvilityBox(const std::weak_ptr<ColliderBase>& opponentCol
     //ボックスの上に乗っていたら地面判定を付与
     if (overlapX>= overlapY)
     {
-        //ジャンプ中(ジャンプアニメーション中)は吸いつきを防ぐため、処理を飛ばす
-        if (int anim = owner_.GetParameterAnimation().animationType == 4)
-        {
-            return;
-        }
+        ////ジャンプ中(ジャンプアニメーション中)は吸いつきを防ぐため、処理を飛ばす
+        //if (int anim = owner_.GetParameterAnimation().animationType == 4)
+        //{
+        //    return;
+        //}
 
         pos.y -= (overlapY + 0.01f) * signY;
         // 地面判定を設定
@@ -188,7 +189,7 @@ void OnHitPlayer::OnHitAvilityBox(const std::weak_ptr<ColliderBase>& opponentCol
     else
     {
         //ボックスを押し出す
-        pos.x += overlapX * -opWeight * signX;
+        pos.x += overlapX * -weightRatio * signX;
     }
 
     //座標更新

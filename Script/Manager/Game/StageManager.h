@@ -5,9 +5,11 @@
 #include <string>
 #include "../../Common/Vector2.h"
 
+#include "../Template/Singleton.h"
+
 class Stage;
 class GimmickBase;
-
+class CharacterBase;
 class StageManager : public Singleton<StageManager>
 {
 	//シングルトンにだけ共有する
@@ -57,6 +59,16 @@ public:
 	/// </summary>
 	void DebugDraw();
 
+	/// <summary>
+	/// ギミックの追加
+	/// </summary>
+	void AddGimmick(const Vector2F& _charaPos);
+
+	/// <summary>
+	/// ギミックの削除
+	/// </summary>
+	void GimmickSweep();
+
 private:
 
 	// 各種ステージごとのパス
@@ -76,8 +88,8 @@ private:
 	std::unique_ptr<Stage> stage_;
 
 	//ギミック(後々に複数置きたい)
-	//std::vector<std::unique_ptr<GimmickBase>>gimmick_;
-	std::unique_ptr<GimmickBase>gimmick_;
+	std::vector<std::unique_ptr<GimmickBase>>gimmick_;
+	//std::unique_ptr<GimmickBase>gimmick_;
 
 	// コンストラクタ
 	StageManager();

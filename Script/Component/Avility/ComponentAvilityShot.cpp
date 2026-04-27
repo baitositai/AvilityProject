@@ -8,7 +8,6 @@
 
 ComponentAvilityShot::ComponentAvilityShot(Player& owner)
     : ComponentAvilityBase(owner),
-	inputManager_(InputManager::GetInstance()),
 	moveAmount_({}),
 	shotTime_(0.0f)
 {
@@ -65,7 +64,7 @@ void ComponentAvilityShot::ProcessInputShot()
 	}
 	owner_.SetShotVec(shotVec_);
 
-	if (inputManager_.IsNew(InputManager::TYPE::CAMERA_MODE_CHANGE))
+	if (inputManager_.IsNew(InputManager::TYPE::PLAYER_AVILITY))
 	{
 
 		shotTime_ = 2.0f;

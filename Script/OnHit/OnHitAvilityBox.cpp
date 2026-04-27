@@ -20,6 +20,10 @@ OnHitAvilityBox::OnHitAvilityBox(AvilityBox& owner):
         {
             return OnHitStage(opponentCollider);
         });
+    onHitMap_.emplace(CollisionTags::TAG::STAGE, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
+        {
+            return OnHitStage(opponentCollider);
+        });
 }
 
 OnHitAvilityBox::~OnHitAvilityBox()
@@ -171,4 +175,9 @@ void OnHitAvilityBox::OnHitStage(const std::weak_ptr<ColliderBase>& opponentColl
             owner_.SetPosition(pos);
         }
     }
+}
+
+void OnHitAvilityBox::OnAvilityBox(const std::weak_ptr<ColliderBase>& opponentCollider)
+{
+    int i = 0;
 }

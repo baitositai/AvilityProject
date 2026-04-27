@@ -143,6 +143,8 @@ void CollisionManager::InitTagMatrix()
 
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::ENEMY)] = true;			//アビリティ設置ボックスと敵
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;	//アビリティ設置ボックス同士
 }
 
 void CollisionManager::InitColliderMatrix()

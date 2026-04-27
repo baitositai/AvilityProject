@@ -3,9 +3,10 @@
 #include "../OnHit/OnHitAvilityBox.h"
 #include "AvilityBox.h"
 
-AvilityBox::AvilityBox(const Parameter& parameter, const std::vector<std::string>& componentNameList):
+AvilityBox::AvilityBox(const Parameter& parameter,const Vector2F& _charaPos,const std::vector<std::string>& componentNameList) :
 	parameter_(parameter),
-	GimmickBase(&parameter_,componentNameList)
+	GimmickBase(&parameter_,componentNameList),
+	charaPos_(_charaPos)
 {
 	// コライダー
 	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::AVILITY_BOX, parameter_.pos, parameter_.hitBoxSize, parameter_.angle);
@@ -22,11 +23,14 @@ AvilityBox::~AvilityBox()
 void AvilityBox::Init(void)
 {
 	GimmickBase::Init();
+
+	//座標をプレイヤーとローカル座標分離れている座標にする
+	parameter_.pos = Vector2F::AddVector2F(charaPos_,parameter_.placeLocalPos);
 }
 
 void AvilityBox::Update(void)
 {
-
+	GimmickBase::Update();
 	if (blastWaitCnt_ > 0.0f)
 	{
 		blastWaitCnt_ -= scnMng_.GetDeltaTime();
@@ -36,7 +40,6 @@ void AvilityBox::Update(void)
 		collider_->SetDelete();
 		return;
 	}
-	GimmickBase::Update();
 
 }
 
