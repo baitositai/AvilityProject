@@ -3,7 +3,8 @@
     "componentNameList": [
       "gravity",
       "move",
-      "spriteAnimation"
+      "spriteAnimation",
+      "avilityBox"
     ],
     "componentStateNameList": {
       "alive": "playerAlive",

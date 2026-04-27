@@ -2,6 +2,8 @@
 #include "../../Component/ComponentMove.h"
 #include "../../Component/ComponentSpriteAnimation.h"
 #include "../../Component/ComponentGravity.h"
+#include "../../Component/Avility/ComponentAvilityBox.h"
+#include "../../Component/Avility/ComponentAvilityShot.h"
 #include "../../Component/State/Player/ComponentStatePlayerAttack.h"
 #include "../../Component/State/Player/ComponentStatePlayerDead.h"
 #include "../../Component/State/Player/ComponentStatePlayerHit.h"
@@ -43,6 +45,8 @@ std::unique_ptr<ComponentGravity> FactoryComponent::CreateComponentGravity(Actor
 {
     return std::make_unique<ComponentGravity>(owner);
 }
+
+
 
 std::unique_ptr<ComponentStatePlayerAlive> FactoryComponent::CreateComponentStatePlayerAlive(ActorBase& owner)
 {
@@ -116,6 +120,30 @@ std::unique_ptr<ComponentStateEnemyAlive> FactoryComponent::CreateComponentState
     return std::make_unique<ComponentStateEnemyAlive>(*playerPtr);
 }
 
+std::unique_ptr<ComponentAvilityBox> FactoryComponent::CreateComponentAvilityBox(ActorBase& owner)
+{
+    auto* playerPtr = dynamic_cast<Player*>(&owner);
+
+    if (playerPtr == nullptr)
+    {
+        // ÉLÉÉÉXÉgÇ…é∏îsÇµÇΩèÍçánullptrÇï‘Ç∑
+        return nullptr;
+    }
+    return std::make_unique<ComponentAvilityBox>(*playerPtr);
+}
+
+std::unique_ptr<ComponentAvilityShot> FactoryComponent::CreateComponentAvilityShot(ActorBase& owner)
+{
+    auto* playerPtr = dynamic_cast<Player*>(&owner);
+
+    if (playerPtr == nullptr)
+    {
+        // ÉLÉÉÉXÉgÇ…é∏îsÇµÇΩèÍçánullptrÇï‘Ç∑
+        return nullptr;
+    }
+    return std::make_unique<ComponentAvilityShot>(*playerPtr);
+}
+
 FactoryComponent::FactoryComponent()
 {
     // ê∂ê¨èàóùÇÃìoò^
@@ -154,6 +182,14 @@ FactoryComponent::FactoryComponent()
     componentCreateMap_.emplace("enemyAlive", [this](ActorBase& owner)
         {
             return CreateComponentStateEnemyAlive(owner);
+        });
+    componentCreateMap_.emplace("avilityBox", [this](ActorBase& owner)
+        {
+            return CreateComponentAvilityBox(owner);
+        });
+    componentCreateMap_.emplace("avilityShot", [this](ActorBase& owner)
+        {
+            return CreateComponentAvilityShot(owner);
         });
 }
 

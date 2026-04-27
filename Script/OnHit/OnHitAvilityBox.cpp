@@ -20,6 +20,10 @@ OnHitAvilityBox::OnHitAvilityBox(AvilityBox& owner):
         {
             return OnHitStage(opponentCollider);
         });
+    onHitMap_.emplace(CollisionTags::TAG::AVILITY_BOX, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
+        {
+            return OnHitBox(opponentCollider);
+        });
 }
 
 OnHitAvilityBox::~OnHitAvilityBox()
@@ -62,11 +66,13 @@ void OnHitAvilityBox::OnHitPlayer(const std::weak_ptr<ColliderBase>& opponentCol
 
     //当たっている対象が自分より上にいたら処理を飛ばす
     Vector2F pos = myParam->pos;
+    Vector2F prevPos = myParam->pos;;
 
     //ボックスの押し出し
     if (overlapX < overlapY)
     {
         pos.x += overlapX * -weightRatio * signX;
+        moveAmount = Vector2F::SubVector2F(pos, prevPos);
     }
     else
     {
@@ -74,7 +80,7 @@ void OnHitAvilityBox::OnHitPlayer(const std::weak_ptr<ColliderBase>& opponentCol
     }
 
     //ステータスをセット
-    owner_.SetPosition(pos);
+    //owner_.SetPosition(pos);
     owner_.SetMoveAmount(moveAmount);
 
 }
@@ -171,4 +177,9 @@ void OnHitAvilityBox::OnHitStage(const std::weak_ptr<ColliderBase>& opponentColl
             owner_.SetPosition(pos);
         }
     }
+}
+
+void OnHitAvilityBox::OnHitBox(const std::weak_ptr<ColliderBase>& opponentCollider)
+{
+    int i = 0;
 }

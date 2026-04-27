@@ -27,8 +27,7 @@ void Player::Init()
 	CharacterBase::Init();
 
 	// デバッグ用
-	componentMap_.try_emplace(std::string("AvilityShot"), std::make_unique<ComponentAvilityShot>(*this));
-	componentMap_.try_emplace(std::string("AvilityChargeShot"), std::make_unique<ComponentAvilityChargeShot>(*this));
+	//componentMap_.try_emplace(std::string("AvilityShot"), std::make_unique<ComponentAvilityShot>(*this));
 }
 
 void Player::Update()

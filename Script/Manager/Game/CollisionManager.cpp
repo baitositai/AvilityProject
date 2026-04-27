@@ -149,6 +149,9 @@ void CollisionManager::InitTagMatrix()
 
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::PLAYER_ATTACK_NORMAL)] = true;	// 敵とプレイヤーの通常攻撃
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_ATTACK_NORMAL)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;
+
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;	//アビリティ設置ボックス同士
 }
 
 void CollisionManager::InitColliderMatrix()

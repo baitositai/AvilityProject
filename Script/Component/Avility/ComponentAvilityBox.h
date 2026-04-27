@@ -32,5 +32,8 @@ private:
 	//クールタイム
 	float coolCnt_;
 
+	//ボックスの設置
+	void PlaceBox();
+
 
 };

@@ -8,9 +8,10 @@ public:
 
 	struct Parameter :public ActorBase::Parameter
 	{
-		Vector2 hitBoxSize;
-		Vector2 hitLocalPos;
-		float blastTime;
+		Vector2 hitBoxSize;			//サイズ
+		Vector2 hitLocalPos;		//ボックスの当たり判定のローカル座標
+		Vector2F placePos;		//設置時のプレイヤーとのローカル座標
+		float blastTime;			//爆発するまでの時間
 	};
 
 	enum class STATE
@@ -23,7 +24,7 @@ public:
 	/// </summary>
 	/// <param name="parameter">パラメータ</param>
 	/// <param name="componentNameList">付与コンポーネント</param>
-	AvilityBox(const Parameter& parameter, const std::vector<std::string>& componentNameList = {});
+	AvilityBox(const Parameter& parameter, const Vector2F& _charaPos, const std::vector<std::string>& componentNameList = {});
 
 	/// <summary>
 	/// デストラクタ
