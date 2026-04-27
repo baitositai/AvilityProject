@@ -13,6 +13,8 @@ public:
 		PLAYER,					// プレイヤー
 		STAGE,					// ステージ
 		ENEMY,					// 敵
+		AVILITY_BOX,			//アビリティ設置のボックス
+		BLAST,
 		MAX
 	};
 

@@ -23,7 +23,7 @@ Stage::~Stage()
 void Stage::Init()
 {
 	// コライダーの生成
-	collider_ = std::make_unique<ColliderArray>(*this, CollisionTags::TAG::STAGE, chipIndexs_, parameter_.hitIds, parameter_.chipSize);
+	collider_ = std::make_unique<ColliderArray>(*this, CollisionTags::TAG::STAGE, parameter_.pos, chipIndexs_, parameter_.hitIds, parameter_.chipSize);
 
 	// 衝突後処理
 	onHit_ = nullptr;

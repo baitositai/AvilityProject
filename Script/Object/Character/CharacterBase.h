@@ -6,6 +6,7 @@
 #include "../../Common/Vector2F.h"
 
 class ComponentBase;
+//class ComponentCharacterStateBase;
 
 class CharacterBase : public ActorBase
 {
@@ -23,6 +24,8 @@ public:
 	{
 		RESPAWN,	// 復活
 		ALIVE,		// 生存
+		ATTACK,		// 攻撃
+		HIT,		// ヒット
 		DEAD,		// 死亡
 		MAX
 	};
@@ -31,8 +34,9 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="parameter">パラメータ情報</param>
-	/// <param name="componentNameList">コンポーネント生成用名前リスト</param>
-	CharacterBase(Parameter* parameter, const std::vector<std::string> componentNameList);
+	/// <param name="stateComponentNameList">状態別コンポーネント生成リスト</param>
+	/// <param name="defaultComponentNameList">通常コンポーネント生成リスト</param>
+	CharacterBase(Parameter* parameter, const std::unordered_map<std::string, std::string> stateComponentNameList, const std::vector<std::string> defaultComponentNameList = {});
 
 	/// <summary>
 	/// デストラクタ
@@ -63,27 +67,40 @@ public:
 protected:	
 	
 	// キャラクターの状態
-	STATE state_;
+	STATE state_;	
+	
+	// 状態別更新処理を管理するコンポーネントマップ
+	std::unordered_map<STATE, std::unique_ptr<ComponentBase>> componentStateMap_;
 
-private:		
+private:	
+
+	// 状態をストリングで取得できる用
+	const std::unordered_map<std::string, STATE> NAME_TO_STATE_MAP =
+	{
+		{ "alive", STATE::ALIVE },
+		{ "dead", STATE::DEAD },
+		{ "attack", STATE::ATTACK },
+		{ "hit", STATE::HIT },
+		{ "respawn", STATE::RESPAWN },
+	};	
+	
+	// 生成するコンポーネントのマップ
+	const std::unordered_map<std::string, std::string> STATE_COMPONENT_CREATE_MAP;
 	
 	// キャラクターのパラメータ
 	Parameter* characterParameterPtr_;	
-
-	// 状態別更新処理
-	std::function<void()> updateStateFunction_;
 
 	// 状態遷移管理マップ
 	std::unordered_map<STATE, std::function<void()>> stateChangeMap_;
 
 	// 状態別遷移処理
-	void ChangeStateRespawn();
-	void ChangeStateAlive();
-	void ChangeStateDead();
+	//virtual void ChangeStateRespawn();
+	//virtual void ChangeStateAlive();
+	//virtual void ChangeStateAttack();
+	//virtual void ChangeStateHit();
+	//virtual void ChangeStateDead();
 
-	// 状態別更新処理
-	void UpdateStateRespawn();
-	void UpdateStateAlive();
-	void UpdateStateDead();
+	// コンポーネントの生成処理
+	void CreateComponents() override;
 };
 

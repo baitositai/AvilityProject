@@ -1,8 +1,8 @@
 #include "../Object/ActorBase.h"
 #include "ColliderLine.h"
 
-ColliderLine::ColliderLine(ActorBase& owner, const CollisionTags::TAG tag, const Vector2& topPos, const Vector2& endPos) :
-	ColliderBase(owner, tag),
+ColliderLine::ColliderLine(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos, const Vector2& topPos, const Vector2& endPos):
+	ColliderBase(owner, tag, followPos),
 	topPos_(topPos),
 	endPos_(endPos)
 {
@@ -20,16 +20,12 @@ std::shared_ptr<ColliderBase> ColliderLine::Clone() const
 
 const Vector2& ColliderLine::GetLocalTopPos() const
 {
-	Vector2F posF = owner_.GetParameter()->pos;
-	Vector2 pos = posF.ToVector2();
-	pos = Vector2::AddVector2(pos, topPos_);
+	Vector2 pos = Vector2::AddVector2(followPos_.ToVector2(), topPos_);
 	return pos;
 }
 
 const Vector2& ColliderLine::GetLocalEndPos() const
 {
-	Vector2F posF = owner_.GetParameter()->pos;
-	Vector2 pos = posF.ToVector2();
-	pos = Vector2::AddVector2(pos, endPos_);
+	Vector2 pos = Vector2::AddVector2(followPos_.ToVector2(), endPos_);
 	return pos;
 }

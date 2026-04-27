@@ -1,4 +1,7 @@
 #pragma once
+#include <unordered_map>
+#include <functional>
+#include <string>
 #include "ComponentAvilityBase.h"
 #include "../../Common/Vector2F.h"
 

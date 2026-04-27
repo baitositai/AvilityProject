@@ -1,7 +1,8 @@
+#include "../Utility/UtilityCommon.h"
 #include "../Object/Character/Player.h"
 #include "../Collider/ColliderArray.h"
-#include "../Utility/UtilityCommon.h"
-
+#include "../Collider/ColliderBox.h"
+#include "../../Object/Gimmick/AvilityBox.h"
 #include "OnHitPlayer.h"
 
 
@@ -12,6 +13,10 @@ OnHitPlayer::OnHitPlayer(Player& owner) :
     onHitMap_.emplace(CollisionTags::TAG::STAGE , [this](const std::weak_ptr<ColliderBase>& opponentCollider)
         {
             return OnHitStage(opponentCollider);
+        });
+    onHitMap_.emplace(CollisionTags::TAG::AVILITY_BOX, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
+        {
+            return OnHitAvilityBox(opponentCollider);
         });
 }
 
@@ -46,6 +51,7 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
             // 終了
             break;
         }
+
 
         // タイルの四隅
         float tLeft = index.x * chipSize.x;
@@ -115,19 +121,78 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
             }
 
             // 決定した方向にのみ補正
-            Vector2F MoveAmount = Vector2F(0.0f, 0.0f);
             if (dir == ActorBase::DIR::LEFT) { pos.x -= (overL + 0.01f); owner_.SetMoveAmount(Vector2F(0.0f, moveAmount.y)); }
-            else if (dir == ActorBase::DIR::RIGHT) { pos.x += (overR + 0.01f); owner_.SetMoveAmount(Vector2F(0.0f, moveAmount.y)); }
+            else if (dir == ActorBase::DIR::RIGHT) {pos.x += (overR + 0.01f); owner_.SetMoveAmount(Vector2F(0.0f, moveAmount.y)); }
             else if (dir == ActorBase::DIR::UP) { pos.y -= (overT + 0.01f); owner_.SetMoveAmount(Vector2F(moveAmount.x, 0.0f)); }
             else if (dir == ActorBase::DIR::DOWN) { pos.y += (overB + 0.01f); owner_.SetMoveAmount(Vector2F(moveAmount.x, 0.0f)); }
 
             // 座標格納
             owner_.SetPosition(pos);
         }
+    }   
+    
+    AvilityShot(opponentCollider, bestNormal);
+}
+
+void OnHitPlayer::OnHitAvilityBox(const std::weak_ptr<ColliderBase>& opponentCollider)
+{
+    auto collider = std::dynamic_pointer_cast<ColliderBox>(opponentCollider.lock());
+
+    const auto& opOwner = opponentCollider.lock()->GetOwner();
+
+    //お互いのパラメータ
+    const ActorBase::Parameter* myParam = owner_.GetParameter();
+    const ActorBase::Parameter* opParam = opOwner.GetParameter();
+
+
+    //互いの重さ
+    float myWeight = myParam->weight;
+    float opWeight = opParam->weight;
+    float weightDiff = myWeight - opWeight;
+
+    //お互いの距離
+    Vector2F diff = Vector2F::SubVector2F(opParam->pos, myParam->pos);
+    int signX = UtilityCommon::GetSign(diff.x);
+    int signY = UtilityCommon::GetSign(diff.y);
+
+    //それぞれのめり込み量
+    float overlapX = static_cast<float>(owner_.GetHitBoxSize().x/2 )
+        + static_cast<float>(collider->GetBoxHalfSize().x) - fabsf(diff.x);
+    float overlapY = static_cast<float>(owner_.GetHitBoxSize().y/2)
+        + static_cast<float>(collider->GetBoxHalfSize().y) - fabsf(diff.y);
+
+    //移動量
+    Vector2F moveAmount = myParam->moveAmount;
+
+
+    //ボックスの上に乗っているかを判断
+    Vector2F pos = myParam->pos;
+
+    //ボックスの上に乗っていたら地面判定を付与
+    if (overlapX>= overlapY)
+    {
+        //ジャンプ中(ジャンプアニメーション中)は吸いつきを防ぐため、処理を飛ばす
+        if (int anim = owner_.GetParameterAnimation().animationType == 4)
+        {
+            return;
+        }
+
+        pos.y -= (overlapY + 0.01f) * signY;
+        // 地面判定を設定
+        owner_.SetIsGround(true);
+
+        //落下を防止するためにYの移動量をゼロにする
+        moveAmount.y = 0;
+        owner_.SetMoveAmount(moveAmount);
+    }
+    else
+    {
+        //ボックスを押し出す
+        pos.x += overlapX * -opWeight * signX;
     }
 
-    AvilityShot(opponentCollider, bestNormal);
-
+    //座標更新
+    owner_.SetPosition(pos);
 }
 
 void OnHitPlayer::AvilityShot(const std::weak_ptr<ColliderBase>& opponentCollider, const Vector2F& normal)

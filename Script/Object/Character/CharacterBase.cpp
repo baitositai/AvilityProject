@@ -1,19 +1,23 @@
 #include <DxLib.h>
-#include "../Utility/UtilityCommon.h"
-#include "../Component/ComponentBase.h"
-#include "../Collider/ColliderBase.h"
+#include "../../Factory/FactoryComponent.h"
+#include "../../Utility/UtilityCommon.h"
+#include "../../Component/ComponentBase.h"
+#include "../../Collider/ColliderBase.h"
 #include "CharacterBase.h"
 
-CharacterBase::CharacterBase(Parameter* parameter, const std::vector<std::string> componentNameList):
-	ActorBase(parameter, componentNameList),
+CharacterBase::CharacterBase(Parameter* parameter, const std::unordered_map<std::string, std::string> stateComponentNameMap, const std::vector<std::string> defaultComponentNameList)	:
+	ActorBase(parameter, defaultComponentNameList),
+	STATE_COMPONENT_CREATE_MAP(stateComponentNameMap),
 	characterParameterPtr_(parameter)
-{
+{	
 	state_ = STATE::MAX;
 
 	// 状態遷移処理の登録
-	stateChangeMap_.emplace(STATE::ALIVE, std::bind(&CharacterBase::ChangeStateAlive, this));
-	stateChangeMap_.emplace(STATE::DEAD, std::bind(&CharacterBase::ChangeStateDead, this));
-	stateChangeMap_.emplace(STATE::RESPAWN, std::bind(&CharacterBase::ChangeStateRespawn, this));
+	//stateChangeMap_.emplace(STATE::ALIVE, std::bind(&CharacterBase::ChangeStateAlive, this));
+	//stateChangeMap_.emplace(STATE::ATTACK, std::bind(&CharacterBase::ChangeStateAttack, this));
+	//stateChangeMap_.emplace(STATE::HIT, std::bind(&CharacterBase::ChangeStateHit, this));
+	//stateChangeMap_.emplace(STATE::DEAD, std::bind(&CharacterBase::ChangeStateDead, this));
+	//stateChangeMap_.emplace(STATE::RESPAWN, std::bind(&CharacterBase::ChangeStateRespawn, this));
 }
 
 CharacterBase::~CharacterBase()
@@ -30,51 +34,47 @@ void CharacterBase::Init()
 
 void CharacterBase::Update()
 {
-	updateStateFunction_();
+	// マップから現在の状態のものがあるか探す
+	auto it = componentStateMap_.find(state_);
+
+	// 存在する場合
+	if (it != componentStateMap_.end() && it->second)
+	{
+		// 更新処理
+		it->second->Update();
+	}
+
+	// 基底クラスの処理
+	ActorBase::Update();
 }
 
 void CharacterBase::DebugDraw()
 {
-	if (collider_ == nullptr) return;
-	collider_->DebugDraw();
 }
 
 void CharacterBase::ChangeState(const STATE state)
 {
 	state_ = state;
-	
-	// 状態遷移処理の呼び出し
-	auto it = stateChangeMap_.find(state_);
-	if (it != stateChangeMap_.end())
+}
+
+void CharacterBase::CreateComponents()
+{
+	// 状態別コンポーネントの取得
+	for (const auto & name : STATE_COMPONENT_CREATE_MAP)
 	{
-		it->second();
+		// 状態の名前が取得できているか確認
+		auto it = NAME_TO_STATE_MAP.find(name.first);
+
+		// ない場合次へ
+		if (it == NAME_TO_STATE_MAP.end()) { continue; }
+
+		// 同名のコンポーネントが既に存在するか確認しながら挿入
+		auto result = componentStateMap_.emplace(NAME_TO_STATE_MAP.at(name.first), std::move(facCom_.CreateComponent(name.second, *this)));
+
+		// 挿入に成功してるか確認
+		assert(result.second && "状態別コンポーネントの追加に失敗しています");
 	}
-}
 
-void CharacterBase::ChangeStateRespawn()
-{
-	updateStateFunction_ = std::bind(&CharacterBase::UpdateStateRespawn, this);
-}
-
-void CharacterBase::ChangeStateAlive()
-{
-	updateStateFunction_ = std::bind(&CharacterBase::UpdateStateAlive, this);
-}
-
-void CharacterBase::ChangeStateDead()
-{
-	updateStateFunction_ = std::bind(&CharacterBase::UpdateStateDead, this);
-}
-
-void CharacterBase::UpdateStateRespawn()
-{
-}
-
-void CharacterBase::UpdateStateAlive()
-{
-	ActorBase::Update();
-}
-
-void CharacterBase::UpdateStateDead()
-{
+	// 基底クラスの処理
+	ActorBase::CreateComponents();
 }

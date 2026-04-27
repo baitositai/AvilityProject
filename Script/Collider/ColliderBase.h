@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include "../Manager/Game/CollisionTags.h"
+#include "../Common/Vector2F.h"
 #include "ColliderType.h"
 
 class ActorBase;
@@ -14,7 +15,8 @@ public:
 	/// </summary>
 	/// <param name="owner">所有者</param>
 	/// <param name="tag">衝突判定タグ</param>
-	ColliderBase(ActorBase& owner, const CollisionTags::TAG tag);
+	/// <param name="followPos">追従対象</param>
+	ColliderBase(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos);
 
 	/// <summary>
 	/// デストラクタ
@@ -69,6 +71,12 @@ public:
 	const ActorBase& GetOwner() const { return owner_; }
 
 	/// <summary>
+	/// 追従対象の座標を渡す
+	/// </summary>
+	/// <returns>追従対象の座標</returns>
+	const Vector2F& GetPos() const { return followPos_; }
+
+	/// <summary>
 	/// 衝突相手の種類を設定
 	/// </summary>
 	/// <param name="partnerTag"></param>
@@ -94,6 +102,9 @@ protected:
 	
 	// オーナー
 	ActorBase& owner_;
+
+	// 追従対象
+	Vector2F& followPos_;
 	
 	// タグ
 	CollisionTags::TAG tag_;

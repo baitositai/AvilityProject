@@ -7,22 +7,48 @@ public:
 
 	struct Parameter : public CharacterBase::Parameter
 	{
-		Vector2 hitBoxSize;			// 衝突判定用ボックスサイズ
-		Vector2 hitLocalPos;		// 衝突判定ボックスの相対位置
-		Vector2F shotVec_;			// ショットベクトル
-		float dashSpeed;			// ダッシュスピード
-		float jumpPow;				// ジャンプ力
-		float jumpPowMax;			// ジャンプ力の最大量
-		bool isGround;				// 地面判定
-		bool isFall;				// 落下判定
+		Vector2 hitBoxSize = {};			// 衝突判定用ボックスサイズ
+		Vector2F shotVec_;					// ショットベクトル
+		float dashSpeed = 0.0f;				// ダッシュスピード
+		float jumpPow = 0.0f;				// ジャンプ力
+		float jumpPowMax = 0.0f;			// ジャンプ力の最大量
+		bool isGround = false;				// 地面判定
+		bool isFall = false;				// 落下判定
+
+		// アニメーション関係
+		int animationsIdle;					// 待機アニメーション数
+		int animationsWalk;					// 移動アニメーション
+		int animationsBrake;				// ブレーキアニメーション
+		int animationsAttack;				// 攻撃アニメーション
+		int animationsJump;					// ジャンプアニメーション
+		int animationsFall;					// 落下アニメーション
+		int animationsDie;					// 死亡アニメーション
+		int animationsDamage;				// ダメージアニメーション
+		int animationsPause;				// ポーズアニメーション
+	};
+
+	// アニメーション種類
+	enum class ANIMATION
+	{
+		IDLE = 0,
+		WALK = 1,
+		BRAKE = 2,
+		ATTACK = 3,
+		JUMP = 4,
+		FALL = 5,
+		DIE = 6,
+		DAMAGE = 7,
+		PAUSE = 8,
+		MAX
 	};
 
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="parameter">パラメータ情報</param>
-	/// <param name="componentNameList">コンポーネント生成用名前リスト</param>
-	Player(const Parameter& parameter, const std::vector<std::string> componentNameList);
+	/// <param name="stateComponentNameList">状態別コンポーネント生成リスト</param>
+	/// <param name="defaultComponentNameList">通常コンポーネント生成リスト</param>
+	Player(const Parameter& parameter, const std::unordered_map<std::string, std::string> stateComponentNameList, const std::vector<std::string> defaultComponentNameList = {});
 
 	/// <summary>
 	/// デストラクタ
@@ -43,7 +69,19 @@ public:
 	/// デバッグ描画
 	/// </summary>
 	void DebugDraw() override;	
-	
+
+	/// <summary>
+	/// アニメーションの初期化
+	/// </summary>
+	void InitAnimation() override;
+
+	/// <summary>
+	/// アニメーションの変更
+	/// </summary>
+	/// <param name="type">種類</param>
+	/// <param name="isLoop">ループ判定</param>
+	void ChangeAnimation(const ANIMATION type, const bool isLoop = true);
+
 	/// <summary>
 	/// ショットベクトルの設定
 	/// </summary>
