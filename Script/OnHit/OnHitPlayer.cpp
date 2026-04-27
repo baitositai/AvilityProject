@@ -131,6 +131,7 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
         }
     }   
     
+	// 最もめり込んでいるタイルの法線ベクトルを取得してショットベクトルを反射させる
     AvilityShot(opponentCollider, bestNormal);
 }
 

@@ -3,6 +3,7 @@
 ComponentBase::ComponentBase(ActorBase* owner) :
 	owner_(owner)
 {
+	isActive_ = true;
 }
 
 ComponentBase::~ComponentBase()

@@ -78,3 +78,27 @@ void CharacterBase::CreateComponents()
 	// 基底クラスの処理
 	ActorBase::CreateComponents();
 }
+
+bool CharacterBase::IsStateComponentActive(const STATE state) const
+{
+	// 指定された名前の要素を検索する
+	auto it = componentStateMap_.find(state);
+
+	// 要素が見つかった場合は削除する
+	if (it != componentStateMap_.end())
+	{
+		return it->second->IsActive();
+	}
+}
+
+void CharacterBase::SetStateComponentActive(const STATE state, const bool isActive)
+{
+	// 指定された名前の要素を検索する
+	auto it = componentStateMap_.find(state);
+
+	// 要素が見つかった場合は削除する
+	if (it != componentStateMap_.end())
+	{
+		return it->second->SetActive(isActive);
+	}
+}

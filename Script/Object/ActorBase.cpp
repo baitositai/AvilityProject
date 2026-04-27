@@ -47,6 +47,7 @@ void ActorBase::Update()
 	for (const auto& componet : componentMap_)
 	{
 		if (componet.second == nullptr) continue;
+		if (!componet.second->IsActive()) continue;
 
 		componet.second->Update();
 	}
@@ -99,6 +100,18 @@ void ActorBase::RemoveComponent(const std::string& name)
 	}
 }
 
+bool ActorBase::IsComponentActive(const std::string& name) const
+{
+	// Žw’è‚³‚ê‚½–¼‘O‚Ì—v‘f‚ðŒŸõ‚·‚é
+	auto it = componentMap_.find(name);
+
+	// —v‘f‚ªŒ©‚Â‚©‚Á‚½ê‡‚Ííœ‚·‚é
+	if (it != componentMap_.end())
+	{
+		return it->second->IsActive();
+	}
+}
+
 void ActorBase::AddMoveAmount(const Vector2F moveAmount)
 {
 	if (actorParameterPtr_->moveAmount.x == 0.0f && actorParameterPtr_->moveAmount.y == 0.0f)
@@ -132,6 +145,18 @@ void ActorBase::CreateComponents()
 	for (const std::string& name : DEFAULT_COMPONENT_CREATE_LIST)
 	{
 		AddComponent(name, std::move(facCom_.CreateComponent(name, *this)));
+	}
+}
+
+void ActorBase::SetComponentActive(const std::string& name, const bool isActive)
+{
+	// Žw’è‚³‚ê‚½–¼‘O‚Ì—v‘f‚ðŒŸõ‚·‚é
+	auto it = componentMap_.find(name);
+
+	// —v‘f‚ªŒ©‚Â‚©‚Á‚½ê‡‚Ííœ‚·‚é
+	if (it != componentMap_.end())
+	{
+		return it->second->SetActive(isActive);
 	}
 }
 

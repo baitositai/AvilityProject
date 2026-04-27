@@ -22,8 +22,23 @@ public:
 	/// </summary>
 	virtual void Update();
 
+	/// <summary>
+	/// Šˆ“®ó‘Ô‚ğİ’è‚·‚é
+	/// </summary>
+	/// <param name="isActive">Šˆ“®ó‘Ô</param>
+	void SetActive(const bool isActive) { isActive_ = isActive; }
+
+	/// <summary>
+	/// Šˆ“®ó‘Ô‚ğ•Ô‚·
+	/// </summary>
+	/// <returns>Šˆ“®ó‘Ô</returns>
+	const bool IsActive() const { return isActive_; }
+
 protected:
 
 	ActorBase* owner_;
+
+	// Šˆ“®ó‘Ô
+	bool isActive_;
 };
 

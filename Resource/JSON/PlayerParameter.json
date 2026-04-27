@@ -2,6 +2,7 @@
   "player": {
     "componentNameList": [
       "gravity",
+      "chargeShot",
       "move",
       "spriteAnimation"
     ],

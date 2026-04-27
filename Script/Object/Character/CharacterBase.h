@@ -64,6 +64,10 @@ public:
 	/// <param name="state">状態</param>
 	void ChangeState(const STATE state);
 
+	bool IsStateComponentActive(const STATE state) const;
+
+	void SetStateComponentActive(const STATE state, const bool isActive);
+
 protected:	
 	
 	// キャラクターの状態

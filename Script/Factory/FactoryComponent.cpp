@@ -2,6 +2,7 @@
 #include "../../Component/ComponentMove.h"
 #include "../../Component/ComponentSpriteAnimation.h"
 #include "../../Component/ComponentGravity.h"
+#include "../../Component/Avility/ComponentAvilityChargeShot.h"
 #include "../../Component/State/Player/ComponentStatePlayerAttack.h"
 #include "../../Component/State/Player/ComponentStatePlayerDead.h"
 #include "../../Component/State/Player/ComponentStatePlayerHit.h"
@@ -41,6 +42,18 @@ std::unique_ptr<ComponentSpriteAnimation> FactoryComponent::CreateComponentSprit
 std::unique_ptr<ComponentGravity> FactoryComponent::CreateComponentGravity(ActorBase& owner)
 {
     return std::make_unique<ComponentGravity>(owner);
+}
+
+std::unique_ptr<ComponentAvilityChargeShot> FactoryComponent::CreateComponentAvilityChargeShot(ActorBase& owner)
+{
+    auto* playerPtr = dynamic_cast<Player*>(&owner);
+
+    if (playerPtr == nullptr)
+    {
+        // ÉLÉÉÉXÉgÇ…é∏îsÇµÇΩèÍçánullptrÇï‘Ç∑
+        return nullptr;
+    }
+    return std::make_unique<ComponentAvilityChargeShot>(*playerPtr);
 }
 
 std::unique_ptr<ComponentStatePlayerAlive> FactoryComponent::CreateComponentStatePlayerAlive(ActorBase& owner)
@@ -117,6 +130,10 @@ FactoryComponent::FactoryComponent()
     componentCreateMap_.emplace("gravity", [this](ActorBase& owner)
         {
             return CreateComponentGravity(owner);
+        });
+    componentCreateMap_.emplace("chargeShot", [this](ActorBase& owner)
+        {
+            return CreateComponentAvilityChargeShot(owner);
         });
     componentCreateMap_.emplace("playerAlive", [this](ActorBase& owner)
         {

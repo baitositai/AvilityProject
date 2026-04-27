@@ -119,6 +119,20 @@ public:
 	/// </summary>
 	/// <param name="name">コンポーネントの名前</param>
 	void RemoveComponent(const std::string& name);	
+
+	/// <summary>
+	/// 指定したコンポーネントの活動状態を返す
+	/// </summary>
+	/// <param name="name">コンポーネント名</param>
+	/// <returns>コンポーネント名前</returns>
+	bool IsComponentActive(const std::string& name) const;
+
+	/// <summary>
+	/// 指定したコンポーネントの活動状態を設定
+	/// </summary>
+	/// <param name="name">コンポーネント名</param>
+	/// <param name="isActive">活動状態</param>
+	void SetComponentActive(const std::string& name, const bool isActive);
 	
 	/// <summary>
 	/// 衝突後の処理

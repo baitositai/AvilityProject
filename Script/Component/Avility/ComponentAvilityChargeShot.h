@@ -1,6 +1,8 @@
 #pragma once
+#include <functional>
 #include "ComponentAvilityBase.h"
 #include "../../Common/Vector2F.h"
+
 
 class InputManager;
 class Player;
@@ -49,6 +51,7 @@ private:
 	std::function<void(void)> currentStateFunction_;
 
 	// ショット変数
+	float chageTime_;
 	float shotTime_;
 	Vector2F shotVec_;
 
