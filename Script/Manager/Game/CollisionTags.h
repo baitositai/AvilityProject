@@ -15,7 +15,6 @@ public:
 		STAGE,					// ステージ
 		ENEMY_CLONE,			// 敵:クローン
 		AVILITY_BOX,			// アビリティ設置のボックス
-		AVILITY_BOX,			//アビリティ設置のボックス
 		BLAST,
 		MAX
 	};
