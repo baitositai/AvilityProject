@@ -34,12 +34,15 @@ void OnHitAvilityBox::OnHitPlayer(const std::weak_ptr<ColliderBase>& opponentCol
 {
     auto collider = std::dynamic_pointer_cast<ColliderBox>(opponentCollider.lock());
 
-    const auto& opOwner = opponentCollider.lock()->GetOwner();
+    const auto& opOwner = opponentCollider.lock()->GetOwner();    
 
     //お互いのパラメータ
     const ActorBase::Parameter* myParam = owner_.GetParameter();
     const ActorBase::Parameter* opParam = opOwner.GetParameter();
 
+    //プレイヤーが動いてなければ飛ばす
+    if(Vector2F::IsSameVector2F(opParam->moveAmount,Vector2F()))return;
+    
     //互いの重さ
     float myWeight = myParam->weight;
     float opWeight = opParam->weight;
@@ -52,7 +55,7 @@ void OnHitAvilityBox::OnHitPlayer(const std::weak_ptr<ColliderBase>& opponentCol
     int signY = UtilityCommon::GetSign(diff.y);
 
     //それぞれのめり込み量
-    float overlapX = static_cast<float>(owner_.GetHitBoxSize().x/2)
+    float overlapX = static_cast<float>(owner_.GetHitBoxSize().x / 2)
         + static_cast<float>(collider->GetBoxHalfSize().x) - fabsf(diff.x);
     float overlapY = static_cast<float>(owner_.GetHitBoxSize().y/2)
         + static_cast<float>(collider->GetBoxHalfSize().y) - fabsf(diff.y);
@@ -66,7 +69,7 @@ void OnHitAvilityBox::OnHitPlayer(const std::weak_ptr<ColliderBase>& opponentCol
 
     //当たっている対象が自分より上にいたら処理を飛ばす
     Vector2F pos = myParam->pos;
-    Vector2F prevPos = myParam->pos;;
+    Vector2F prevPos = myParam->pos;
 
     //ボックスの押し出し
     if (overlapX < overlapY)
@@ -80,7 +83,7 @@ void OnHitAvilityBox::OnHitPlayer(const std::weak_ptr<ColliderBase>& opponentCol
     }
 
     //ステータスをセット
-    //owner_.SetPosition(pos);
+    owner_.SetPosition(pos);
     owner_.SetMoveAmount(moveAmount);
 
 }
@@ -90,6 +93,7 @@ void OnHitAvilityBox::OnHitEnemy(const std::weak_ptr<ColliderBase>& opponentColl
 }
 void OnHitAvilityBox::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
+
     auto collider = std::dynamic_pointer_cast<ColliderArray>(opponentCollider.lock());
     if (!collider) return;              // コライダーが空の場合終了
 
@@ -181,5 +185,54 @@ void OnHitAvilityBox::OnHitStage(const std::weak_ptr<ColliderBase>& opponentColl
 
 void OnHitAvilityBox::OnHitBox(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
-    int i = 0;
+    owner_.SetMoveAmount(Vector2F());
+
+    auto collider = std::dynamic_pointer_cast<ColliderBox>(opponentCollider.lock());
+
+    const auto& opOwner = opponentCollider.lock()->GetOwner();
+
+    //お互いのパラメータ
+    const ActorBase::Parameter* myParam = owner_.GetParameter();
+    const ActorBase::Parameter* opParam = opOwner.GetParameter();
+
+    //お互いの距離
+    Vector2F diff = Vector2F::SubVector2F(opParam->pos, myParam->pos);
+    int signX = UtilityCommon::GetSign(diff.x);
+    int signY = UtilityCommon::GetSign(diff.y);
+
+    //それぞれのめり込み量
+    float overlapX = static_cast<float>(owner_.GetHitBoxSize().x / 2)
+        + static_cast<float>(collider->GetBoxHalfSize().x) - fabsf(diff.x);
+    float overlapY = static_cast<float>(owner_.GetHitBoxSize().y / 2)
+        + static_cast<float>(collider->GetBoxHalfSize().y) - fabsf(diff.y);
+
+    Vector2F moveAmount = myParam->moveAmount;
+
+
+    //互いの重さ
+    float myWeight = myParam->weight;
+    float opWeight = opParam->weight;
+    float weightTotal = myWeight + opWeight;
+    float weightRatio = opWeight / weightTotal;
+
+    Vector2F pos=myParam->pos;
+    Vector2F prevPos = myParam->pos;
+    //ボックスの押し出し
+    if (overlapX < overlapY)
+    {
+        //pos.x += -(overlapX) * signX;
+        pos.x += overlapX * -weightRatio * signX;
+        moveAmount = opParam->moveAmount;
+
+    }
+    else
+    {
+        pos.y += -(overlapX)* signY;
+    }
+
+    // 座標格納
+    owner_.SetPosition(pos);
+    owner_.SetMoveAmount(moveAmount);
+
+
 }

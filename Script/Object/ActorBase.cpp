@@ -114,6 +114,15 @@ void ActorBase::AddMoveAmount(const Vector2F moveAmount)
 	}
 }
 
+void ActorBase::SetIsDelete(void)
+{
+	isActive_ = false;
+	isDelete_ = true;
+
+	//“–‚½‚è”»’è‚ÌÁ‹
+	collider_->SetDelete();
+}
+
 void ActorBase::RegisterCollider()
 {
 	// ‹ó‚Ìê‡–³‹

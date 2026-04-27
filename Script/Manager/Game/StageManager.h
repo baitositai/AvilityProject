@@ -67,6 +67,12 @@ public:
 	/// <summary>
 	/// ギミックの削除
 	/// </summary>
+	/// <param name=""></param>
+	void DeleteGimmick(void);
+
+	/// <summary>
+	/// ギミックの削除
+	/// </summary>
 	void GimmickSweep();
 
 private:

@@ -41,6 +41,7 @@ void StageManager::Update()
 	{
 		gim->Update();
 	}
+	GimmickSweep();
 }
 
 void StageManager::Draw()
@@ -93,6 +94,12 @@ void StageManager::AddGimmick(const Vector2F& _charaPos, const bool _direction)
 	std::unique_ptr avBox = std::make_unique<AvilityBox>(avParam, _charaPos, componentNameList);
 	avBox->Init();
 	gimmick_.push_back(std::move(avBox));
+}
+
+void StageManager::DeleteGimmick(void)
+{
+	//ˆê”ÔŒÃ‚¢ƒMƒ~ƒbƒN‚ðÁ‚·
+	gimmick_.back()->SetIsDelete();
 }
 
 void StageManager::GimmickSweep()

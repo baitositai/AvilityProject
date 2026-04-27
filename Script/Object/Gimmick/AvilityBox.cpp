@@ -7,6 +7,9 @@ AvilityBox::AvilityBox(const Parameter& parameter,const Vector2F& _placePos,cons
 	parameter_(parameter),
 	GimmickBase(&parameter_,componentNameList)
 {
+	//種類の設定
+	gimmickType_ = TYPE::AVILITY_BOX;
+
 	// コライダー
 	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::AVILITY_BOX, parameter_.pos, parameter_.hitBoxSize, parameter_.angle);
 
@@ -30,11 +33,13 @@ void AvilityBox::Init(void)
 
 void AvilityBox::Update(void)
 {
-	if (parameter_.moveAmount.x != 0)
+	if (collider_->IsHit())
 	{
-		int i = 0;
+		parameter_.moveAmount = Vector2F();
 	}
+
 	GimmickBase::Update();
+
 	//if (blastWaitCnt_ > 0.0f)
 	//{
 	//	blastWaitCnt_ -= scnMng_.GetDeltaTime();

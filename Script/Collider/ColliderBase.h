@@ -36,6 +36,13 @@ public:
 	const bool IsHit() const { return isHit_; }
 
 	/// <summary>
+	/// Õ“Ë”»’è‚ÌƒZƒbƒg
+	/// </summary>
+	/// <param name="_isHit"></param>
+	/// <returns></returns>
+	const void SetIsHit(const bool _isHit) { isHit_ = _isHit; }
+
+	/// <summary>
 	/// íœ”»’è
 	/// </summary>
 	/// <returns>íœ‚·‚éê‡true,‚»‚¤‚Å‚È‚¢ê‡false</returns>

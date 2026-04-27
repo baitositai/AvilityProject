@@ -198,6 +198,12 @@ public:
 	/// <returns>削除判定</returns>
 	const bool IsDelete() const { return isDelete_; }
 
+	/// <summary>
+	/// 削除フラグをtrueにする
+	/// </summary>
+	/// <param name="_isDelete"></param>
+	void SetIsDelete(void);
+
 protected:
 
 	// 管理クラスの参照
