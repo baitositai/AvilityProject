@@ -22,6 +22,7 @@ public:
 		float jumpPow = 0.0f;				// ジャンプ力
 		float jumpPowMax = 0.0f;			// ジャンプ力の最大量
 		Vector2 hitBoxSize = {};			// 衝突判定用ボックスサイズ
+		Vector2F knockBackPower = {};		// ノックバックパワー
 	};
 
 	// キャラクター共通の状態
@@ -99,6 +100,12 @@ public:
 	void SetJumpPowMax(const float jumpPowMax) { characterParameterPtr_->jumpPow = jumpPowMax; }
 
 	/// <summary>
+	/// ノックバックパワーの設定
+	/// </summary>
+	/// <param name="knockBackPower">ノックバックパワー</param>
+	void SetKnockBackPower(const Vector2F& knockBackPower) { characterParameterPtr_->knockBackPower = knockBackPower; }
+
+	/// <summary>
 	/// 衝突する範囲を返す
 	/// </summary>
 	/// <returns>衝突する範囲</returns>
@@ -133,6 +140,12 @@ public:
 	/// </summary>
 	/// <returns>落下判定</returns>
 	const bool IsFall() const { return characterParameterPtr_->isFall; }
+
+	/// <summary>
+	/// ノックバックパワーを返す
+	/// </summary>
+	/// <returns></returns>
+	const Vector2F& GeKnockBackPower() const { return characterParameterPtr_->knockBackPower; }
 
 protected:	
 	

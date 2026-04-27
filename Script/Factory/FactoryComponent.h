@@ -10,6 +10,7 @@ class ComponentBase;
 class ComponentMove;
 class ComponentSpriteAnimation;
 class ComponentGravity;
+class ComponentKnockBack;
 class ComponentStatePlayerAlive;
 class ComponentStatePlayerAttack;
 class ComponentStatePlayerDead;
@@ -50,6 +51,7 @@ private:
 	std::unique_ptr<ComponentStateEnemyAlive> CreateComponentStateEnemyAlive(ActorBase& owner);
 	std::unique_ptr<ComponentAvilityBox> CreateComponentAvilityBox(ActorBase& owner);
 	std::unique_ptr<ComponentAvilityShot> CreateComponentAvilityShot(ActorBase& owner);
+	std::unique_ptr<ComponentKnockBack> CreateComponentKnockBack(ActorBase& owner);
 	
 	// コンストラクタ
 	FactoryComponent();

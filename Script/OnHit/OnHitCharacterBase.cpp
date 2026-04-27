@@ -180,8 +180,16 @@ void OnHitCharacterBase::OnHitPlayerDefaultAttack(const std::weak_ptr<ColliderBa
         owner_.Damage(damage);
     }
 
-    // ノックバック処理
+    // 攻撃位置から自分に向かうベクトルを計算
+    Vector2F direction = Vector2F::SubVector2F(owner_.GetParameter()->pos, opponentCollider.lock()->GetPos());
 
+    // 方向を正規化して長さを1にする
+    Vector2F normalizedDir = direction.Normalize();
+
+    // ノックバック値を決定
+    owner_.SetKnockBackPower(Vector2F::MulVector2F(normalizedDir, Vector2F(5.0f, 5.0f)));
+
+    // アニメーションの変更
 
     // 衝突判定終了
     opponentCollider.lock()->SetIsActive(false);

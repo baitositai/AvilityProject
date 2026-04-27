@@ -2,6 +2,7 @@
 #include "../../Component/ComponentMove.h"
 #include "../../Component/ComponentSpriteAnimation.h"
 #include "../../Component/ComponentGravity.h"
+#include "../../Component/ComponentKnockBack.h"
 #include "../../Component/Avility/ComponentAvilityBox.h"
 #include "../../Component/Avility/ComponentAvilityShot.h"
 #include "../../Component/State/Player/ComponentStatePlayerAttack.h"
@@ -110,14 +111,14 @@ std::unique_ptr<ComponentStatePlayerRespawn> FactoryComponent::CreateComponentSt
 
 std::unique_ptr<ComponentStateEnemyAlive> FactoryComponent::CreateComponentStateEnemyAlive(ActorBase& owner)
 {
-    auto* playerPtr = dynamic_cast<CharacterBase*>(&owner);
+    auto* charaPtr = dynamic_cast<CharacterBase*>(&owner);
 
-    if (playerPtr == nullptr)
+    if (charaPtr == nullptr)
     {
         // キャストに失敗した場合nullptrを返す
         return nullptr;
     }
-    return std::make_unique<ComponentStateEnemyAlive>(*playerPtr);
+    return std::make_unique<ComponentStateEnemyAlive>(*charaPtr);
 }
 
 std::unique_ptr<ComponentAvilityBox> FactoryComponent::CreateComponentAvilityBox(ActorBase& owner)
@@ -142,6 +143,18 @@ std::unique_ptr<ComponentAvilityShot> FactoryComponent::CreateComponentAvilitySh
         return nullptr;
     }
     return std::make_unique<ComponentAvilityShot>(*playerPtr);
+}
+
+std::unique_ptr<ComponentKnockBack> FactoryComponent::CreateComponentKnockBack(ActorBase& owner)
+{
+    auto* charaPtr = dynamic_cast<CharacterBase*>(&owner);
+
+    if (charaPtr == nullptr)
+    {
+        // キャストに失敗した場合nullptrを返す
+        return nullptr;
+    }
+    return std::make_unique<ComponentKnockBack>(*charaPtr);
 }
 
 FactoryComponent::FactoryComponent()
@@ -190,6 +203,10 @@ FactoryComponent::FactoryComponent()
     componentCreateMap_.emplace("avilityShot", [this](ActorBase& owner)
         {
             return CreateComponentAvilityShot(owner);
+        });
+    componentCreateMap_.emplace("knockBack", [this](ActorBase& owner)
+        {
+            return CreateComponentKnockBack(owner);
         });
 }
 

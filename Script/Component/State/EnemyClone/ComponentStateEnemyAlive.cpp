@@ -14,20 +14,27 @@ ComponentStateEnemyAlive::~ComponentStateEnemyAlive()
 
 void ComponentStateEnemyAlive::Update()
 {
+	// ˆÚ“®—Ê‚Ì‰Šú‰»
+	Vector2F moveAmount = {};
+	moveAmount.y = owner_.GetParameter()->moveAmount.y;
+	float moveSpeed = owner_.GetParameter()->moveSpeed;
+
 	if (CheckHitKey(KEY_INPUT_RIGHT))
 	{
-		owner_.SetMoveAmount(Vector2F(3.0f, 0.0f));
+		moveAmount.x += moveSpeed;
 	}
 	if (CheckHitKey(KEY_INPUT_LEFT))
 	{
-		owner_.SetMoveAmount(Vector2F(-3.0f, 0.0f));
+		moveAmount.x -= moveSpeed;
 	}
 	if (CheckHitKey(KEY_INPUT_UP))
 	{
-		owner_.SetMoveAmount(Vector2F(0.0f, -3.0f));
+		moveAmount.y -= moveSpeed;
 	}
 	if (CheckHitKey(KEY_INPUT_DOWN))
 	{
-		owner_.SetMoveAmount(Vector2F(0.0f, 3.0f));
+		moveAmount.y += moveSpeed;
 	}
+
+	owner_.SetMoveAmount(moveAmount);
 }

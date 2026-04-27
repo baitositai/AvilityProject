@@ -2,6 +2,7 @@
   "clone": {
     "componentNameList": [
       "gravity",
+      "knockBack",
       "move",
       "spriteAnimation"
     ],

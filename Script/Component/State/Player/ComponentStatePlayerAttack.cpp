@@ -23,7 +23,7 @@ ComponentStatePlayerAttack::~ComponentStatePlayerAttack()
 
 void ComponentStatePlayerAttack::Update()
 {
-	if (!isAttack_)
+	if (!isAttack_ && owner_.GetParameterAnimation().animationIndex >= 33)
 	{
 		// コライダーを活動状態へ
 		collider_->SetIsActive(true);
