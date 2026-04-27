@@ -21,8 +21,8 @@ void CollisionManager::Update()
 
 	for (int i = 0; i < size - 1; i++)
 	{
-		// 所有者が非活動状態の場合
-		if (!colliders_[i]->GetOwner().IsActive())
+		// コライダーや所有者が非活動状態の場合
+		if (!colliders_[i]->GetOwner().IsActive() || !colliders_[i]->IsActive())
 		{
 			// 次へ
 			continue;
@@ -34,7 +34,7 @@ void CollisionManager::Update()
 			auto& collider2 = colliders_[j];
 
 			// 所有者が非活動状態の場合
-			if (!colliders_[j]->GetOwner().IsActive())
+			if (!colliders_[j]->GetOwner().IsActive() || !colliders_[i]->IsActive())
 			{
 				// 次へ
 				continue;

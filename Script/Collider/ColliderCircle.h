@@ -31,6 +31,11 @@ public:
 	/// <param name="radius">”¼Œa</param>
 	void SetRadius(const float radius) { radius_ = radius; }
 
+	/// <summary>
+	/// ƒfƒoƒbƒO•`‰æ
+	/// </summary>
+	void DebugDraw() override;
+
 private:
 
 	// ”¼Œa

@@ -42,9 +42,21 @@ public:
 	const bool IsDelete() const { return isDelete_; }
 
 	/// <summary>
+	/// 活動判定を返す
+	/// </summary>
+	/// <returns>活動判定</returns>
+	const bool IsActive() const { return isActive_; }
+
+	/// <summary>
 	/// 削除設定
 	/// </summary>
 	void SetDelete() { isDelete_ = true; }
+
+	/// <summary>
+	/// 活動判定を格納
+	/// </summary>
+	/// <param name="isActive">活動判定</param>
+	void SetIsActive(const bool isActive) { isActive_ = isActive; }
 
 	/// <summary>
 	/// 自身のコライダー種類を返す
@@ -120,4 +132,7 @@ protected:
 
 	// 削除判定
 	bool isDelete_;
+
+	// 活動判定
+	bool isActive_;
 };

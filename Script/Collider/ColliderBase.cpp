@@ -10,6 +10,7 @@ ColliderBase::ColliderBase(ActorBase& owner, const CollisionTags::TAG tag, Vecto
 	type_ = ColliderType::TYPE::MAX;
 	isHit_ = false;
 	isDelete_ = false;
+	isActive_ = true;
 }
 
 ColliderBase::~ColliderBase()

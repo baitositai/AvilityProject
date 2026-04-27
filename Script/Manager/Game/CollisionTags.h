@@ -11,6 +11,7 @@ public:
 	{
 		NONE,
 		PLAYER,					// プレイヤー
+		PLAYER_ATTACK_NORMAL,	// プレイヤーの通常攻撃			
 		STAGE,					// ステージ
 		ENEMY,					// 敵
 		AVILITY_BOX,			//アビリティ設置のボックス
