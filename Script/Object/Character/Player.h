@@ -46,7 +46,12 @@ public:
 	/// <param name="parameter">パラメータ情報</param>
 	/// <param name="stateComponentNameList">状態別コンポーネント生成リスト</param>
 	/// <param name="defaultComponentNameList">通常コンポーネント生成リスト</param>
-	Player(const Parameter& parameter, const std::unordered_map<std::string, std::string> stateComponentNameList, const std::vector<std::string> defaultComponentNameList = {});
+	/// <param name="animation">アニメーション</param>
+	Player(
+		const Parameter& parameter, 
+		const std::unordered_map<std::string, std::string> stateComponentNameList,
+		const std::vector<std::string> defaultComponentNameList = {},
+		std::unique_ptr<Animation> animation = nullptr);
 
 	/// <summary>
 	/// デストラクタ
@@ -66,24 +71,7 @@ public:
 	/// <summary>
 	/// デバッグ描画
 	/// </summary>
-	void DebugDraw() override;	
-
-	/// <summary>
-	/// アニメーションの初期化
-	/// </summary>
-	void InitAnimation() override;
-
-	/// <summary>
-	/// アニメーション速度を攻撃用に変える
-	/// </summary>
-	void SetAttackAnimationSpeed() { parameterAnimation_.animationSpeed =  parameter_.animationAttackSpeed; }
-
-	/// <summary>
-	/// アニメーションの変更
-	/// </summary>
-	/// <param name="type">種類</param>
-	/// <param name="isLoop">ループ判定</param>
-	void ChangeAnimation(const ANIMATION type, const bool isLoop = true);
+	void DebugDraw() override;
 
 	/// <summary>
 	/// ショットベクトルの設定

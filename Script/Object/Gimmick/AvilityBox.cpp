@@ -1,6 +1,7 @@
 #include "../Manager/Common/SceneManager.h"
 #include "../Collider/ColliderBox.h"
 #include "../OnHit/OnHitAvilityBox.h"
+#include "../Common/Animation.h"
 #include "AvilityBox.h"
 
 AvilityBox::AvilityBox(const Parameter& parameter,const Vector2F& _placePos,const std::vector<std::string>& componentNameList) :

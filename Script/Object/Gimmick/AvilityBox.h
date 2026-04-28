@@ -1,6 +1,6 @@
 #pragma once
 #include "../Common/Vector2.h"
-#include "./GimmickBase.h"
+#include "GimmickBase.h"
 
 class AvilityBox :public GimmickBase
 {

@@ -6,6 +6,7 @@
 #include "../Common/Vector2.h"
 #include "../Common/Vector2F.h"
 
+class Animation;
 class ColliderBase;
 class OnHitBase;
 class ComponentBase;
@@ -52,30 +53,15 @@ public:
 		// 重力関係
 		float gravityPower = 0.0f;				// 重力
 		DIR gravityDir = DIR::DOWN;				// 重力方向
-		float weight = 0.0f;					//物体の重み
-
-		float animationSpeed = 0.0f;			// アニメーション速度の格納
-	};
-	
-	// アニメーション用の情報
-	struct ParameterAnimation
-	{
-		int animationType = -1;						// アニメーションの種類		
-		int animationIndex = 0;						// アニメーションインデックス
-		int animationStartIndex = 0;				// アニメーション開始インデックス
-		int animationFinishIndex = 0;				// アニメーション終了インデックス
-		float animationSpeed = 0.0f;				// アニメーションスピード
-		bool isPlay = false;						// アニメーション再生判定 
-		bool isStop = false;						// アニメーション停止判定
-		bool isLoop = false;						// アニメーションループ判定
-		std::unordered_map<int, int> animationsMap;	// 種類別アニメーション数管理マップ
+		float weight = 0.0f;					// 物体の重み
 	};
 
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="parameter">パラメータ情報</param>
-	ActorBase(Parameter* parameter, const std::vector<std::string>& componentNameList = {});
+	/// <param name="animation">アニメーション情報</param>
+	ActorBase(Parameter* parameter, const std::vector<std::string>& componentNameList = {}, std::unique_ptr<Animation> animation = nullptr);
 
 	/// <summary>
 	/// デストラクタ
@@ -108,11 +94,6 @@ public:
 	virtual void InitAnimation();
 
 	/// <summary>
-	/// アニメーション速度をリセット
-	/// </summary>
-	void ResetAnimationSpeed() { parameterAnimation_.animationSpeed = actorParameterPtr_->animationSpeed; }
-
-	/// <summary>
 	/// コンポーネントの追加
 	/// </summary>
 	/// <param name="name">コンポーネントの名前</param>
@@ -130,24 +111,6 @@ public:
 	/// </summary>
 	/// <param name="opponentCollider">衝突した相手のコライダー</param>
 	void OnHit(const std::weak_ptr<ColliderBase>& opponentCollider);
-	
-	/// <summary>
-	/// アニメーションインデックスの設定
-	/// </summary>
-	/// <param name="animationIndex">アニメーションインデックス</param>
-	void SetAnimationIndex(const int animationIndex) { parameterAnimation_.animationIndex = animationIndex; }
-
-	/// <summary>
-	/// アニメーション速度の設定
-	/// </summary>
-	/// <param name="animationSpeed">アニメーション速度</param>
-	void SetAnimationSpeed(const int animationSpeed) { parameterAnimation_.animationSpeed = animationSpeed; }
-
-	/// <summary>
-	/// アニメーションの再生判定を設定
-	/// </summary>
-	/// <param name="isPlay">再生判定</param>
-	void SetAnimationIsPlay(const bool isPlay) { parameterAnimation_.isPlay = isPlay; } 
 	
 	/// <summary>
 	/// 角度の設定
@@ -186,10 +149,10 @@ public:
 	const Parameter* GetParameter() const { return actorParameterPtr_; }
 
 	/// <summary>
-	/// アニメーション情報を返す
+	/// アニメーションを返す
 	/// </summary>
-	/// <returns>アニメーション情報</returns>
-	const ParameterAnimation& GetParameterAnimation() const { return parameterAnimation_; }
+	/// <returns>アニメーション</returns>
+	Animation& GetAnimation() const { return *animation_; }
 
 	/// <summary>
 	/// 活動しているか返す
@@ -212,8 +175,8 @@ protected:
 	CollisionManager& collMng_;
 	FactoryComponent& facCom_;
 
-	// アニメーション用のパラメータ
-	ParameterAnimation parameterAnimation_;
+	// アニメーション
+	std::unique_ptr<Animation> animation_;
 
 	// コンポーネントの管理マップ
 	std::unordered_map<std::string, std::unique_ptr<ComponentBase>> componentMap_;

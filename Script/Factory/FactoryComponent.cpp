@@ -11,6 +11,7 @@
 #include "../../Component/State/Player/ComponentStatePlayerRespawn.h"
 #include "../../Component/State/Player/ComponentStatePlayerAlive.h"
 #include "../../Component/State/EnemyClone/ComponentStateEnemyAlive.h"
+#include "../../Component/State/ComponentStateDead.h"
 #include "../../Object/Character/CharacterBase.h" 
 #include "../../Object/Character/Player.h" 
 #include "../../Object/ActorBase.h" 
@@ -157,6 +158,18 @@ std::unique_ptr<ComponentKnockBack> FactoryComponent::CreateComponentKnockBack(A
     return std::make_unique<ComponentKnockBack>(*charaPtr);
 }
 
+std::unique_ptr<ComponentStateDead> FactoryComponent::CreateComponentStateDead(ActorBase& owner)
+{
+    auto* charaPtr = dynamic_cast<CharacterBase*>(&owner);
+
+    if (charaPtr == nullptr)
+    {
+        // ÉLÉÉÉXÉgÇ…é∏îsÇµÇΩèÍçánullptrÇï‘Ç∑
+        return nullptr;
+    }
+    return std::make_unique<ComponentStateDead>(*charaPtr);
+}
+
 FactoryComponent::FactoryComponent()
 {
     // ê∂ê¨èàóùÇÃìoò^
@@ -207,6 +220,10 @@ FactoryComponent::FactoryComponent()
     componentCreateMap_.emplace("knockBack", [this](ActorBase& owner)
         {
             return CreateComponentKnockBack(owner);
+        });
+    componentCreateMap_.emplace("dead", [this](ActorBase& owner)
+        {
+            return CreateComponentStateDead(owner);
         });
 }
 

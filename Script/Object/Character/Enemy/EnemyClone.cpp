@@ -1,10 +1,13 @@
+#include <DxLib.h>
+#include "../../../Utility/UtilityCommon.h"
 #include "../../../Collider/ColliderBox.h"
 #include "../../../OnHit/OnHitEnemyClone.h"
+#include "../../Common/Animation.h"
 #include "EnemyClone.h"
 
-EnemyClone::EnemyClone(const Parameter& parameter, const std::unordered_map<std::string, std::string> stateComponentNameList, const std::vector<std::string> defaultComponentNameList) :
+EnemyClone::EnemyClone(const Parameter& parameter, const std::unordered_map<std::string, std::string> stateComponentNameList, const std::vector<std::string> defaultComponentNameList, std::unique_ptr<Animation> animation) :
 	parameter_(parameter),
-	CharacterBase(&parameter_, stateComponentNameList, defaultComponentNameList)
+	CharacterBase(&parameter_, stateComponentNameList, defaultComponentNameList, std::move(animation))
 {
 }
 
@@ -24,46 +27,9 @@ void EnemyClone::Init()
 	CharacterBase::Init();
 }
 
-void EnemyClone::InitAnimation()
+void EnemyClone::DebugDraw()
 {
-	// アニメーションの登録
-	parameterAnimation_.animationsMap.emplace(static_cast<int>(ANIMATION::IDLE), parameter_.animationsIdle);
-	parameterAnimation_.animationsMap.emplace(static_cast<int>(ANIMATION::WALK), parameter_.animationsWalk);
-	parameterAnimation_.animationsMap.emplace(static_cast<int>(ANIMATION::BRAKE), parameter_.animationsBrake);
-	parameterAnimation_.animationsMap.emplace(static_cast<int>(ANIMATION::ATTACK), parameter_.animationsAttack);
-	parameterAnimation_.animationsMap.emplace(static_cast<int>(ANIMATION::JUMP), parameter_.animationsJump);
-	parameterAnimation_.animationsMap.emplace(static_cast<int>(ANIMATION::FALL), parameter_.animationsFall);
-	parameterAnimation_.animationsMap.emplace(static_cast<int>(ANIMATION::DIE), parameter_.animationsDie);
-	parameterAnimation_.animationsMap.emplace(static_cast<int>(ANIMATION::DAMAGE), parameter_.animationsDamage);
-	parameterAnimation_.animationsMap.emplace(static_cast<int>(ANIMATION::PAUSE), parameter_.animationsPause);
-
-	// 初期アニメーション速度の登録
-	parameterAnimation_.animationSpeed = parameter_.animationSpeed;
-
-	// 初期アニメーション
-	ChangeAnimation(ANIMATION::IDLE);
-}
-
-void EnemyClone::ChangeAnimation(const ANIMATION type, const bool isLoop)
-{
-	// 型変換
-	int intType = static_cast<int>(type);
-
-	// 同じアニメーション種類の場合無視
-	if (intType == parameterAnimation_.animationType) return;
-
-	// 種類格納
-	parameterAnimation_.animationType = intType;
-
-	// 開始インデックス格納
-	parameterAnimation_.animationStartIndex = parameterAnimation_.animationType * parameter_.divisionNum.x;
-
-	// 終了インデックス格納
-	parameterAnimation_.animationFinishIndex = parameterAnimation_.animationStartIndex + parameterAnimation_.animationsMap.at(parameterAnimation_.animationType) - 1;
-
-	// ループ判定
-	parameterAnimation_.isLoop = isLoop;
-
-	// 再生判定
-	parameterAnimation_.isPlay = true;
+	CharacterBase::DebugDraw();
+	Vector2 k = parameter_.knockBackPower.ToVector2();
+	DrawFormatString(0, 80, UtilityCommon::BLACK, L"敵kb:%d,%d", k.x, k.y);
 }

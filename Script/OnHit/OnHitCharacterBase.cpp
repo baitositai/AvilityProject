@@ -167,10 +167,7 @@ void OnHitCharacterBase::OnHitAvilityBox(const std::weak_ptr<ColliderBase>& oppo
 
 void OnHitCharacterBase::OnHitPlayerDefaultAttack(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
-    // 通常攻撃を放ったのが自身の場合
-    // return;
-
-   // 参照で返ってくる場合、アドレスを取ってポインタにする
+    // 所有者情報の取得
     const auto& ownerRef = opponentCollider.lock()->GetOwner();
     auto charaPtr = dynamic_cast<const CharacterBase*>(&ownerRef);
 
@@ -180,17 +177,39 @@ void OnHitCharacterBase::OnHitPlayerDefaultAttack(const std::weak_ptr<ColliderBa
         owner_.Damage(damage);
     }
 
-    // 攻撃位置から自分に向かうベクトルを計算
-    Vector2F direction = Vector2F::SubVector2F(owner_.GetParameter()->pos, opponentCollider.lock()->GetPos());
+    // 攻撃者から自分へのベクトルを計算する
+    Vector2F attackerPos = opponentCollider.lock()->GetOwner().GetParameter()->pos;
+    Vector2F myPos = owner_.GetParameter()->pos;
+    Vector2F direction = Vector2F::SubVector2F(myPos, attackerPos);
 
-    // 方向を正規化して長さを1にする
+    // ゼロ除算防止のガード
+    if (direction.Length() < 0.0001f)
+    {
+        direction = Vector2F(0.0f, -1.0f);
+    }
+
+    // 基本となるノックバック方向を正規化して取得
     Vector2F normalizedDir = direction.Normalize();
 
-    // ノックバック値を決定
-    owner_.SetKnockBackPower(Vector2F::MulVector2F(normalizedDir, Vector2F(5.0f, 5.0f)));
+    float horizontalWeight = 1.5f;
+    normalizedDir.x *= horizontalWeight;
 
-    // アニメーションの変更
+    // 重力の影響を打ち消すための上向きベクトルを加算する
+    // 重力が常に下向き（0, 1）ならその逆方向（0, -1）を足す
+    Vector2F gravityResist = Vector2F(0.0f, -0.5f);
+    Vector2F finalDir = Vector2F::AddVector2F(normalizedDir, gravityResist);
 
-    // 衝突判定終了
+    // 加算によって長さが変わるため再度正規化する
+    finalDir = finalDir.Normalize();
+    //finalDir = Vector2F(direction.Normalize().x, -1.0f);
+
+    // 最終的なノックバックパワーを決定する
+    float power = 450.0f;
+    Vector2F finalPower = Vector2F::MulVector2F(finalDir, Vector2F(power, power));
+
+    // パワーをセットする
+    owner_.SetKnockBackPower(finalPower);
+
+    // 衝突判定を無効化する
     opponentCollider.lock()->SetIsActive(false);
 }

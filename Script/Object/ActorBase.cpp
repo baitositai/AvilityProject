@@ -8,11 +8,13 @@
 #include "../../Manager/Common/Camera.h"
 #include "../OnHit/OnHitBase.h"
 #include "../Collider/ColliderBase.h"
+#include "Common/Animation.h"
 #include "ActorBase.h"
 
-ActorBase::ActorBase(Parameter* parameter, const std::vector<std::string>& componentNameList) :
+ActorBase::ActorBase(Parameter* parameter, const std::vector<std::string>& componentNameList, std::unique_ptr<Animation> animation) :
 	DEFAULT_COMPONENT_CREATE_LIST(componentNameList),
 	actorParameterPtr_(parameter),
+	animation_(std::move(animation)),
 	scnMng_(SceneManager::GetInstance()),
 	sndMng_(SoundManager::GetInstance()),
 	resMng_(ResourceManager::GetInstance()),
@@ -64,7 +66,7 @@ void ActorBase::Draw()
 		actorParameterPtr_->drawPos.y,
 		actorParameterPtr_->scale,
 		actorParameterPtr_->angle,
-		actorParameterPtr_->texuresHandle[parameterAnimation_.animationIndex],
+		actorParameterPtr_->texuresHandle[animation_->GetAnimationIndex()],
 		actorParameterPtr_->transparent,
 		actorParameterPtr_->direction
 	);

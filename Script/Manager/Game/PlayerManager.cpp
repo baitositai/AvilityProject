@@ -1,6 +1,7 @@
 #include <string>
 #include "../../Utility/UtilityLoad.h"
 #include "../../Object/Character/Player.h"
+#include "../../Object/Common/Animation.h"
 #include "../Common/ResourceManager.h"
 #include "PlayerManager.h"
 
@@ -17,7 +18,6 @@ void PlayerManager::Init()
 	parameter.direction = jsonPparameter["direction"].get<bool>();
 	parameter.transparent = jsonPparameter["transparent"].get<bool>();
 	parameter.moveSpeed = jsonPparameter["moveSpeed"].get<float>();
-	parameter.animationSpeed = jsonPparameter["animationDefaultSpeed"].get<float>();
 	parameter.animationAttackSpeed = jsonPparameter["animationAttackSpeed"].get<float>();
 	parameter.divisionNum.x = jsonPparameter["divisionNum"]["x"].get<int>();
 	parameter.divisionNum.y = jsonPparameter["divisionNum"]["y"].get<int>();
@@ -45,6 +45,20 @@ void PlayerManager::Init()
 	parameter.animationsDamage = jsonPparameter["animationsDamage"].get<int>();
 	parameter.animationsPause = jsonPparameter["animationsPause"].get<int>();
 
+	// アニメーションの登録
+	std::unique_ptr<Animation> animation = std::make_unique<Animation>();
+	for (auto it = jsonPparameter["animation"].begin(); it != jsonPparameter["animation"].end(); ++it)
+	{
+		std::string animationName = it.key();
+		auto& data = it.value();
+		int start = data["no"].get<int>() * parameter.divisionNum.x;
+		int end = data["num"].get<int>() + start - 1;
+		float speed = data["speed"].get<float>();
+
+		// アニメーション情報を格納
+		animation->Add(animationName, start, end, speed);
+	}
+
 	// コンポーネントリストの取得
 	std::vector<std::string> componentNameList = jsonPparameter["componentNameList"].get<std::vector<std::string>>();
 	std::unordered_map<std::string, std::string> componentStateNameMap = jsonPparameter["componentStateNameList"].get<std::unordered_map<std::string, std::string>>();
@@ -56,7 +70,7 @@ void PlayerManager::Init()
 	parameter.texuresHandle = resourceManager.GetHandles("player");
 
 	// プレイヤーの生成
-	playerList_.emplace_back(std::make_unique<Player>(parameter, componentStateNameMap, componentNameList));
+	playerList_.emplace_back(std::make_unique<Player>(parameter, componentStateNameMap, componentNameList, std::move(animation)));
 
 	// 初期化
 	for(const auto& player : playerList_)

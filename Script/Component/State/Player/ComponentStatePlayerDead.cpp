@@ -12,4 +12,5 @@ ComponentStatePlayerDead::~ComponentStatePlayerDead()
 
 void ComponentStatePlayerDead::Update()
 {
+	owner_->SetMoveAmount(Vector2F(0.0f,0.0f));
 }

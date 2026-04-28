@@ -1,6 +1,7 @@
 #include "../../../Manager/Game/CollisionManager.h"
 #include "../../../Object/Character/Player.h"
 #include "../../../Object/ActorBase.h"
+#include "../../../Object/Common/Animation.h"
 #include "../Collider/ColliderCircle.h"
 #include "ComponentStatePlayerAttack.h"
 
@@ -23,7 +24,9 @@ ComponentStatePlayerAttack::~ComponentStatePlayerAttack()
 
 void ComponentStatePlayerAttack::Update()
 {
-	if (!isAttack_ && owner_.GetParameterAnimation().animationIndex >= 33)
+	Animation& animation = owner_.GetAnimation();
+
+	if (!isAttack_ && animation.GetAnimationIndex() >= 33)
 	{
 		// コライダーを活動状態へ
 		collider_->SetIsActive(true);
@@ -34,11 +37,8 @@ void ComponentStatePlayerAttack::Update()
 	float dir = owner_.GetParameter()->direction ? -1.0f : 1.0f;
 	attackPos_ = Vector2F::AddVector2F(owner_.GetParameter()->pos, Vector2F(DEFAULT_ATTACK_LOCAL_POS.x * dir, DEFAULT_ATTACK_LOCAL_POS.y));
 
-	// アニメーションパラメータ取得
-	const auto& parameter = owner_.GetParameterAnimation();
-
 	// 再生中の場合
-	if (parameter.isPlay)
+	if (animation.IsPlay())
 	{
 		return;
 	}
@@ -47,10 +47,7 @@ void ComponentStatePlayerAttack::Update()
 	owner_.ChangeState(Player::STATE::ALIVE);
 
 	// アニメーション変更
-	owner_.ChangeAnimation(Player::ANIMATION::IDLE);
-
-	// アニメーション速度変更
-	owner_.ResetAnimationSpeed();
+	animation.Play(Animation::TYPE::IDLE);
 
 	// コライダーの判定を一時消す
 	collider_->SetIsActive(false);

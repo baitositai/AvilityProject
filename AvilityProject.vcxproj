@@ -145,6 +145,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Object\Common\Animation.cpp" />
+    <ClCompile Include="Script\Component\State\ComponentStateDead.cpp" />
     <ClCompile Include="Script\Component\ComponentKnockBack.cpp" />
     <ClCompile Include="Script\Component\State\EnemyClone\ComponentStateEnemyAlive.cpp" />
     <ClCompile Include="Script\OnHit\OnHitCharacterBase.cpp" />
@@ -247,6 +249,8 @@
     <ClCompile Include="Script\Utility\UtilityCollision.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Object\Common\Animation.h" />
+    <ClInclude Include="Script\Component\State\ComponentStateDead.h" />
     <ClInclude Include="Script\Component\ComponentKnockBack.h" />
     <ClInclude Include="Script\Component\State\EnemyClone\ComponentStateEnemyAlive.h" />
     <ClInclude Include="Script\OnHit\OnHitCharacterBase.h" />

@@ -37,6 +37,7 @@
     "animationsDie": 10,
     "animationsDamage": 4,
     "animationsPause": 6,
+    "weight": 0.9,
     "divisionNum": {
       "x": 10,
       "y": 9
@@ -53,6 +54,52 @@
       "x": 40,
       "y": 8
     },
-    "weight": 0.9
+    "animation": {
+      "idle": {
+        "no": 0,
+        "speed": 0.1,
+        "num": 6
+      },
+      "walk": {
+        "no": 1,
+        "speed": 0.1,
+        "num": 8
+      },
+      "brake": {
+        "no": 2,
+        "speed": 0.1,
+        "num": 4
+      },
+      "attack": {
+        "no": 3,
+        "speed": 0.2,
+        "num": 7
+      },
+      "jump": {
+        "no": 4,
+        "speed": 0.1,
+        "num": 6
+      },
+      "fall": {
+        "no": 5,
+        "speed": 0.1,
+        "num": 6
+      },
+      "dead": {
+        "no": 6,
+        "speed": 0.1,
+        "num": 10
+      },
+      "damage": {
+        "no": 7,
+        "speed": 0.1,
+        "num": 4
+      },
+      "pause": {
+        "no": 8,
+        "speed": 0.1,
+        "num": 6
+      }
+    }
   }
 }

@@ -1,5 +1,6 @@
 #include "../../../Manager/Common/InputManager.h"
 #include "../../../Object/Character/Player.h"
+#include "../../../Object/Common/Animation.h"
 #include "ComponentStatePlayerAlive.h"
 
 ComponentStatePlayerAlive::ComponentStatePlayerAlive(Player& owner) :
@@ -66,12 +67,12 @@ void ComponentStatePlayerAlive::ProcessInputMove()
 		if (moveAmount_.x > 0.0f || moveAmount_.x < 0.0f)
 		{
 			// 走るアニメーションの変更
-			owner_.ChangeAnimation(Player::ANIMATION::WALK);
+			owner_.GetAnimation().Play(Animation::TYPE::WALK);
 		}
 		else
 		{
 			// 待機のアニメーションに変更
-			owner_.ChangeAnimation(Player::ANIMATION::IDLE);
+			owner_.GetAnimation().Play(Animation::TYPE::IDLE);
 		}
 	}
 }
@@ -94,7 +95,7 @@ void ComponentStatePlayerAlive::ProcessInputJump()
 			velocityY_ = -owner_.GetJumpPow();
 
 			// アニメーションを変更
-			owner_.ChangeAnimation(Player::ANIMATION::JUMP);
+			owner_.GetAnimation().Play(Animation::TYPE::JUMP);
 		}
 	}
 }
@@ -103,13 +104,8 @@ void ComponentStatePlayerAlive::ProcessInputAttack()
 {
 	if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_ATTACK))
 	{
-		// 攻撃のコライダーを生成
-
 		// 攻撃のアニメーションを開始（ループしない）
-		owner_.ChangeAnimation(Player::ANIMATION::ATTACK, false);
-
-		// アニメーション速度の変更
-		owner_.SetAttackAnimationSpeed();
+		owner_.GetAnimation().Play(Animation::TYPE::ATTACK, false);
 
 		// 状態遷移
 		owner_.ChangeState(Player::STATE::ATTACK);
@@ -142,7 +138,7 @@ void ComponentStatePlayerAlive::Jump()
 		if (moveAmount_.y > 0.0f && !isGround_)
 		{
 			// アニメーションを落下に変更
-			owner_.ChangeAnimation(Player::ANIMATION::FALL);
+			owner_.GetAnimation().Play(Animation::TYPE::FALL);
 		}
 	}
 }

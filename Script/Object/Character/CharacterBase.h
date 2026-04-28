@@ -23,6 +23,7 @@ public:
 		float jumpPowMax = 0.0f;			// ジャンプ力の最大量
 		Vector2 hitBoxSize = {};			// 衝突判定用ボックスサイズ
 		Vector2F knockBackPower = {};		// ノックバックパワー
+		float knockBackDistance_;			// ノックバック距離
 	};
 
 	// キャラクター共通の状態
@@ -42,7 +43,12 @@ public:
 	/// <param name="parameter">パラメータ情報</param>
 	/// <param name="stateComponentNameList">状態別コンポーネント生成リスト</param>
 	/// <param name="defaultComponentNameList">通常コンポーネント生成リスト</param>
-	CharacterBase(Parameter* parameter, const std::unordered_map<std::string, std::string> stateComponentNameList, const std::vector<std::string> defaultComponentNameList = {});
+	/// <param name="animation">アニメーション</param>
+	CharacterBase(
+		Parameter* parameter, 
+		const std::unordered_map<std::string, std::string> stateComponentNameList,
+		const std::vector<std::string> defaultComponentNameList = {}, 
+		std::unique_ptr<Animation> animation = nullptr);
 
 	/// <summary>
 	/// デストラクタ

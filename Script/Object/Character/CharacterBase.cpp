@@ -3,10 +3,11 @@
 #include "../../Utility/UtilityCommon.h"
 #include "../../Component/ComponentBase.h"
 #include "../../Collider/ColliderBase.h"
+#include "../Common/Animation.h"
 #include "CharacterBase.h"
 
-CharacterBase::CharacterBase(Parameter* parameter, const std::unordered_map<std::string, std::string> stateComponentNameMap, const std::vector<std::string> defaultComponentNameList)	:
-	ActorBase(parameter, defaultComponentNameList),
+CharacterBase::CharacterBase(Parameter* parameter, const std::unordered_map<std::string, std::string> stateComponentNameMap, const std::vector<std::string> defaultComponentNameList, std::unique_ptr<Animation> animation)	:
+	ActorBase(parameter, defaultComponentNameList, std::move(animation)),
 	STATE_COMPONENT_CREATE_MAP(stateComponentNameMap),
 	characterParameterPtr_(parameter)
 {	

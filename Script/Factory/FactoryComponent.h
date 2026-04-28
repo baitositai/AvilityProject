@@ -19,6 +19,7 @@ class ComponentStatePlayerRespawn;
 class ComponentStateEnemyAlive;
 class ComponentAvilityBox;
 class ComponentAvilityShot;
+class ComponentStateDead;
 
 class FactoryComponent : public Singleton<FactoryComponent>
 {
@@ -52,6 +53,7 @@ private:
 	std::unique_ptr<ComponentAvilityBox> CreateComponentAvilityBox(ActorBase& owner);
 	std::unique_ptr<ComponentAvilityShot> CreateComponentAvilityShot(ActorBase& owner);
 	std::unique_ptr<ComponentKnockBack> CreateComponentKnockBack(ActorBase& owner);
+	std::unique_ptr<ComponentStateDead> CreateComponentStateDead(ActorBase& owner);
 	
 	// コンストラクタ
 	FactoryComponent();
