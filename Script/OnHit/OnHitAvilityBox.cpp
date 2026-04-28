@@ -221,13 +221,13 @@ void OnHitAvilityBox::OnHitBox(const std::weak_ptr<ColliderBase>& opponentCollid
     if (overlapX < overlapY)
     {
         //pos.x += -(overlapX) * signX;
-        pos.x += overlapX * -weightRatio * signX;
+        pos.x -= overlapX * /*-weightRatio*/  signX;
         moveAmount = opParam->moveAmount;
 
     }
     else
     {
-        pos.y += -(overlapX)* signY;
+        pos.y += -(overlapY)* signY;
     }
 
     // ç¿ïWäiî[

@@ -82,7 +82,7 @@ void StageManager::AddGimmick(const Vector2F& _charaPos, const bool _direction)
 	AvilityBox::Parameter avParam = {};
 	avParam.hitBoxSize = Vector2(48, 48);
 	avParam.gravityPower = 0.5f;
-	avParam.weight = 0.8f;
+	avParam.weight = 1.0f;
 	avParam.blastTime = 3.0f;
 
 	//ローカル座標をJsonで読み込み、プレイヤーの向きによって設置場所を変える
