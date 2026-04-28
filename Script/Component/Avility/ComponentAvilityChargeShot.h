@@ -3,7 +3,6 @@
 #include "ComponentAvilityBase.h"
 #include "../../Common/Vector2F.h"
 
-
 class InputManager;
 class Player;
 
@@ -14,6 +13,8 @@ public:
 
 	static constexpr float SHOT_INTERVAL = 0.5f;	// ショットのインターバル
 	static constexpr float SHOT_SPEED = 15.0f;		// ショットの速度
+
+	static constexpr const char* STATE_SHOT = "Shot";		// ショット状態
 
 	/// <summary>
 	/// コンストラクタ
