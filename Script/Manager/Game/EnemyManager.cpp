@@ -30,18 +30,8 @@ void EnemyManager::Init()
 	parameter.localPos = Vector2(jsonPparameter["localPos"]["x"].get<int>(), jsonPparameter["localPos"]["y"].get<int>());
 	parameter.defaultAttackLocalPos = Vector2F(jsonPparameter["defaultAttackLoaclPos"]["x"].get<float>(), jsonPparameter["defaultAttackLoaclPos"]["y"].get<float>());
 	parameter.weight = jsonPparameter["weight"].get<float>();
+	parameter.invincibleTimeMax = jsonPparameter["invincibleTimeMax"].get<float>();
 	parameter.pos = Vector2F(900.0f, 400.0f);
-
-	// アニメーションの登録
-	parameter.animationsIdle = jsonPparameter["animationsIdle"].get<int>();
-	parameter.animationsWalk = jsonPparameter["animationsWalk"].get<int>();
-	parameter.animationsBrake = jsonPparameter["animationsBrake"].get<int>();
-	parameter.animationsAttack = jsonPparameter["animationsAttack"].get<int>();
-	parameter.animationsJump = jsonPparameter["animationsJump"].get<int>();
-	parameter.animationsFall = jsonPparameter["animationsFall"].get<int>();
-	parameter.animationsDie = jsonPparameter["animationsDie"].get<int>();
-	parameter.animationsDamage = jsonPparameter["animationsDamage"].get<int>();
-	parameter.animationsPause = jsonPparameter["animationsPause"].get<int>();
 
 	// アニメーションの登録
 	std::unique_ptr<Animation> animation = std::make_unique<Animation>();

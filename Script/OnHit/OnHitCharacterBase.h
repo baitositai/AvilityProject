@@ -24,7 +24,7 @@ protected:
 	// ƒ^ƒO•ÊÕ“ËŒãˆ—
 	virtual void OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider);
 	virtual void OnHitAvilityBox(const std::weak_ptr<ColliderBase>& opponentCollider);
-	virtual void OnHitPlayerDefaultAttack(const std::weak_ptr<ColliderBase>& opponentCollider);
+	virtual void OnHitAttack(const std::weak_ptr<ColliderBase>& opponentCollider);
 
 private:
 

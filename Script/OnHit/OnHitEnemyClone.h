@@ -23,7 +23,8 @@ private:
 	// Š—LÒ
 	EnemyClone& owner_;
 
-
+	// ŠeíÕ“ËŒãˆ—
+	void OnHitPlayerAttack(const std::weak_ptr<ColliderBase>& opponentCollider);
 
 };
 

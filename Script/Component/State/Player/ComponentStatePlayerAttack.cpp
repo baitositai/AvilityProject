@@ -22,6 +22,12 @@ ComponentStatePlayerAttack::~ComponentStatePlayerAttack()
 {
 }
 
+void ComponentStatePlayerAttack::Init()
+{
+	collider_->SetIsActive(false);
+	isAttack_ = false;
+}
+
 void ComponentStatePlayerAttack::Update()
 {
 	Animation& animation = owner_.GetAnimation();

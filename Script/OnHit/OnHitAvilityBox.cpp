@@ -86,8 +86,8 @@ void OnHitAvilityBox::OnHitPlayer(const std::weak_ptr<ColliderBase>& opponentCol
 }
 void OnHitAvilityBox::OnHitEnemy(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
-
 }
+
 void OnHitAvilityBox::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
     auto collider = std::dynamic_pointer_cast<ColliderArray>(opponentCollider.lock());

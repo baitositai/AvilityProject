@@ -42,6 +42,9 @@ private:
 	// ’n–Ê”»’è
 	bool isGround_;
 
+	// –³“GŠÔ
+	float invincibleTime_;
+
 	// ˆÚ“®“ü—Íˆ—
 	void ProcessInputMove();
 

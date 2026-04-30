@@ -29,6 +29,7 @@ void ComponentSpriteAnimation::Update()
 	{
 		animStep_ = 0.0f;					// 初期化
 		animation.Stop();					// 停止
+		animation.CheckNextAnimation();		// 次回アニメーションの確認
 		return;								// 処理終了
 	}
 

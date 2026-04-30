@@ -28,6 +28,9 @@ void CharacterBase::Init()
 
 void CharacterBase::Update()
 {
+	// 移動後の値を初期化
+	characterParameterPtr_->moveAmount = {};
+
 	// マップから現在の状態のものがあるか探す
 	auto it = componentStateMap_.find(state_);
 
@@ -44,8 +47,29 @@ void CharacterBase::Update()
 
 void CharacterBase::Draw()
 {
-	if (state_ == STATE::DEAD) { return; }
-	ActorBase::Draw();
+	if (IsInvincible())
+	{
+		// 点滅の1周期にかかる時間
+		constexpr int BLINK_CYCLE_MS = 200;
+
+		// 現在の時間を取得
+		int nowTime = GetNowCount();
+
+		// 周期に基づいて角度を計算
+		float currentAngle = (nowTime % BLINK_CYCLE_MS) * DX_PI_F * 2.0f / static_cast<float>(BLINK_CYCLE_MS);
+
+		// サイン波を使って範囲変換
+		int alphaValue = static_cast<int>((sin(currentAngle) + 1.0f) * (UtilityCommon::ALPHA_MAX / 2.0f));
+
+		// アルファ値を変更して点滅
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, alphaValue);
+		ActorBase::Draw();
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+	else
+	{
+		ActorBase::Draw();
+	}
 }
 
 void CharacterBase::DebugDraw()
@@ -79,8 +103,26 @@ void CharacterBase::Damage(const int damage)
 	// 体力が0以下の場合
 	if (characterParameterPtr_->hp <= 0)
 	{
+		// 状態変更
 		ChangeState(STATE::DEAD);
+
+		// アニメーション開始
+		animation_->Play(Animation::TYPE::DEAD, false);
+		animation_->SetNextAnimationType(Animation::TYPE::MAX);
+		return;
 	}
+
+	// 無敵時間の設定
+	characterParameterPtr_->invincibleTime = characterParameterPtr_->invincibleTimeMax;
+
+	// 状態遷移
+	ChangeState(STATE::ALIVE);
+}
+
+void CharacterBase::SetJumpPow(const float jumpPow)
+{
+	characterParameterPtr_->jumpPow = jumpPow; 
+	if (characterParameterPtr_->jumpPow > 0.0f) characterParameterPtr_->jumpPow = 0.0f;
 }
 
 const int CharacterBase::GetAttackPower() const

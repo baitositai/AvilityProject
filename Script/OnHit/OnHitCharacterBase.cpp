@@ -2,6 +2,7 @@
 #include "../Collider/ColliderArray.h"
 #include "../Collider/ColliderBox.h"
 #include "../Object/ActorBase.h"
+#include "../Object/Common/Animation.h"
 #include "../Object/Character/CharacterBase.h"
 #include "OnHitCharacterBase.h"
 
@@ -16,10 +17,6 @@ OnHitCharacterBase::OnHitCharacterBase(CharacterBase& owner) :
     onHitMap_.emplace(CollisionTags::TAG::AVILITY_BOX, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
         {
             return OnHitAvilityBox(opponentCollider);
-        });
-    onHitMap_.emplace(CollisionTags::TAG::PLAYER_ATTACK_NORMAL, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
-        {
-            return OnHitPlayerDefaultAttack(opponentCollider);
         });
 }
 
@@ -165,17 +162,13 @@ void OnHitCharacterBase::OnHitAvilityBox(const std::weak_ptr<ColliderBase>& oppo
     owner_.SetMoveAmount(moveAmount);
 }
 
-void OnHitCharacterBase::OnHitPlayerDefaultAttack(const std::weak_ptr<ColliderBase>& opponentCollider)
+void OnHitCharacterBase::OnHitAttack(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
+    // 衝突者が無敵のときは無視
+    if (owner_.IsInvincible() || opponentCollider.lock()->GetPartnerTag() == CollisionTags::TAG::PLAYER_ATTACK_NORMAL) return;
+
     // 所有者情報の取得
     const auto& ownerRef = opponentCollider.lock()->GetOwner();
-    auto charaPtr = dynamic_cast<const CharacterBase*>(&ownerRef);
-
-    if (charaPtr != nullptr)
-    {
-        int damage = charaPtr->GetAttackPower();
-        owner_.Damage(damage);
-    }
 
     // 攻撃者から自分へのベクトルを計算する
     Vector2F attackerPos = opponentCollider.lock()->GetOwner().GetParameter()->pos;
@@ -185,7 +178,7 @@ void OnHitCharacterBase::OnHitPlayerDefaultAttack(const std::weak_ptr<ColliderBa
     // ゼロ除算防止のガード
     if (direction.Length() < 0.0001f)
     {
-        direction = Vector2F(0.0f, -1.0f);
+        direction = Vector2F(0.0f, -0.5f);
     }
 
     // 基本となるノックバック方向を正規化して取得
@@ -201,7 +194,6 @@ void OnHitCharacterBase::OnHitPlayerDefaultAttack(const std::weak_ptr<ColliderBa
 
     // 加算によって長さが変わるため再度正規化する
     finalDir = finalDir.Normalize();
-    //finalDir = Vector2F(direction.Normalize().x, -1.0f);
 
     // 最終的なノックバックパワーを決定する
     float power = 450.0f;
@@ -209,7 +201,21 @@ void OnHitCharacterBase::OnHitPlayerDefaultAttack(const std::weak_ptr<ColliderBa
 
     // パワーをセットする
     owner_.SetKnockBackPower(finalPower);
+    
+    // アニメション設定
+    owner_.GetAnimation().Play(Animation::TYPE::DAMAGE, false);
 
-    // 衝突判定を無効化する
-    opponentCollider.lock()->SetIsActive(false);
+    // 次回アニメーション設定
+    owner_.GetAnimation().SetNextAnimationType(Animation::TYPE::IDLE);
+
+    // ダメージ処理    
+    auto charaPtr = dynamic_cast<const CharacterBase*>(&ownerRef);
+    if (charaPtr != nullptr)
+    {
+        int damage = charaPtr->GetAttackPower();
+        owner_.Damage(damage);
+    }
+
+    // 地面判定無効
+    owner_.SetIsGround(false);
 }

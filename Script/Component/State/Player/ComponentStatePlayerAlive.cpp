@@ -1,4 +1,5 @@
 #include "../../../Manager/Common/InputManager.h"
+#include "../../../Manager/Common/SceneManager.h"
 #include "../../../Object/Character/Player.h"
 #include "../../../Object/Common/Animation.h"
 #include "ComponentStatePlayerAlive.h"
@@ -18,7 +19,6 @@ ComponentStatePlayerAlive::~ComponentStatePlayerAlive()
 
 void ComponentStatePlayerAlive::Update()
 {
-
 	// 移動量の初期化
 	moveAmount_ = {};
 
@@ -40,7 +40,6 @@ void ComponentStatePlayerAlive::Update()
 	// 情報の更新
 	owner_.SetMoveAmount(moveAmount_);
 	owner_.SetIsGround(isGround_);
-
 }
 
 void ComponentStatePlayerAlive::ProcessInputMove()
@@ -79,22 +78,18 @@ void ComponentStatePlayerAlive::ProcessInputMove()
 
 void ComponentStatePlayerAlive::ProcessInputJump()
 {
-	// 地面にいる場合
 	if (isGround_)
 	{
-		// 初期化
-		velocityY_ = 0.0f;
-
-		// 入力判定
+		// Python: if キー入力があったら:
 		if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_JUMP))
 		{
-			// 地面判定を無効にする
+			// Python: canJump = False
 			isGround_ = false;
-			
-			// ジャンプ力設定
-			velocityY_ = -owner_.GetJumpPow();
 
-			// アニメーションを変更
+			// Python: vel = -10 (初速を与える)
+			// jumpPowMaxを 10.0f ～ 15.0f 程度にすると緩やかになります
+			owner_.SetJumpPow(-owner_.GetJumpPowMax());
+
 			owner_.GetAnimation().Play(Animation::TYPE::JUMP);
 		}
 	}
@@ -107,8 +102,14 @@ void ComponentStatePlayerAlive::ProcessInputAttack()
 		// 攻撃のアニメーションを開始（ループしない）
 		owner_.GetAnimation().Play(Animation::TYPE::ATTACK, false);
 
+		// 次回アニメーションを指定しない
+		owner_.GetAnimation().SetNextAnimationType(Animation::TYPE::MAX);
+
 		// 状態遷移
 		owner_.ChangeState(Player::STATE::ATTACK);
+
+		// 攻撃の初期化
+		owner_.AttackReset();
 		
 		// 横移動の値をなくす
 		moveAmount_.x = 0.0f;
@@ -117,28 +118,29 @@ void ComponentStatePlayerAlive::ProcessInputAttack()
 
 void ComponentStatePlayerAlive::Jump()
 {
-	// 現在の縦の移動量
-	float currentY = owner_.GetParameter()->moveAmount.y;
+	// Python: if canJump: return (地面にいる時は何もしない)
+	if (isGround_) return;
 
-	// ジャンプ力がある場合
-	if (velocityY_ < 0.0f)
+	// 現在の速度(vel)を取得
+	float currentJumpPow = owner_.GetJumpPow();
+
+	// --- 更新処理 ---
+
+	// 1. 速度に加速度（重力）を加える
+	// Python: vel += acc
+	currentJumpPow += owner_.GetParameter()->gravityPower;
+	owner_.SetJumpPow(currentJumpPow);
+
+	// 2. 位置（移動量）を更新する
+	// Python: y += vel
+	// moveAmount_が毎フレーム 0 にリセットされるなら、これでOK
+	moveAmount_.y = currentJumpPow;
+
+	// --- 地面判定などの後処理 ---
+
+	// 下向きの速度になったら落下アニメーション
+	if (currentJumpPow >= 0.0f)
 	{
-		// 移動量に追加
-		moveAmount_.y = velocityY_;
-
-		// 初期化
-		velocityY_ = 0.0f;
-	}
-	else
-	{
-		// 現在の移動量を保持
-		moveAmount_.y = currentY;
-
-		// 移動量が下方向でかつ地面についてない場合
-		if (moveAmount_.y > 0.0f && !isGround_)
-		{
-			// アニメーションを落下に変更
-			owner_.GetAnimation().Play(Animation::TYPE::FALL);
-		}
+		owner_.GetAnimation().Play(Animation::TYPE::FALL);
 	}
 }

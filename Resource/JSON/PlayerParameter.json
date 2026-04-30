@@ -2,15 +2,17 @@
   "player": {
     "componentNameList": [
       "gravity",
+      "knockBack",
       "move",
       "spriteAnimation",
+      "invincible",
       "avilityBox"
     ],
     "componentStateNameList": {
       "alive": "playerAlive",
       "attack": "playerAttack",
       "hit": "playerHit",
-      "dead": "playereDead",
+      "dead": "dead",
       "resaown": "playerRespawn"
     },
     "scale": 1.0,
@@ -21,11 +23,11 @@
     "dashSpeed": 4.0,
     "hp": 100,
     "attackPower": 10,
-    "jumpPower": 0.2,
-    "jumpPowerMax": 10.0,
-    "gravityPower": 0.5,
+    "jumpPowerMax": 30.0,
+    "gravityPower": 9.8,
     "jumpCount": 2,
-    "defaultAttackRadius":  20.0,
+    "invincibleTimeMax": 2.0,
+    "defaultAttackRadius": 20.0,
     "animationDefaultSpeed": 0.1,
     "animationAttackSpeed": 0.2,
     "animationsIdle": 6,
@@ -92,7 +94,7 @@
       },
       "damage": {
         "no": 7,
-        "speed": 0.1,
+        "speed": 0.2,
         "num": 4
       },
       "pause": {

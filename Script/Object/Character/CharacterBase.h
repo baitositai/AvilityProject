@@ -6,7 +6,6 @@
 #include "../../Common/Vector2F.h"
 
 class ComponentBase;
-//class ComponentCharacterStateBase;
 
 class CharacterBase : public ActorBase
 {
@@ -19,6 +18,8 @@ public:
 		int attackPower = -1;				// 攻撃力
 		bool isGround = false;				// 地面判定
 		bool isFall = false;				// 落下判定
+		float invincibleTimeMax = 0.0f;		// 最大無敵時間
+		float invincibleTime = 0.0f;			// 無敵時間
 		float jumpPow = 0.0f;				// ジャンプ力
 		float jumpPowMax = 0.0f;			// ジャンプ力の最大量
 		Vector2 hitBoxSize = {};			// 衝突判定用ボックスサイズ
@@ -100,10 +101,22 @@ public:
 	void SetIsFall(const bool isFall) { characterParameterPtr_->isGround = isFall; }
 
 	/// <summary>
+	/// 無敵判定
+	/// </summary>
+	/// <param name="isInvicible">無敵判定</param>
+	void SetIsInvincibleTime(const float invicibleTime) { characterParameterPtr_->invincibleTime = invicibleTime; }
+
+	/// <summary>
+	/// ジャンプ力を設定
+	/// </summary>
+	/// <param name="jumpPowMax">ジャンプ力</param>
+	void SetJumpPow(const float jumpPow);
+
+	/// <summary>
 	/// 最大ジャンプ力を設定
 	/// </summary>
 	/// <param name="jumpPowMax">最大ジャンプ力</param>
-	void SetJumpPowMax(const float jumpPowMax) { characterParameterPtr_->jumpPow = jumpPowMax; }
+	void SetJumpPowMax(const float jumpPowMax) { characterParameterPtr_->jumpPowMax = jumpPowMax; }
 
 	/// <summary>
 	/// ノックバックパワーの設定
@@ -136,6 +149,12 @@ public:
 	const float GetJumpPowMax() const { return characterParameterPtr_->jumpPowMax; }
 
 	/// <summary>
+	/// 無敵時間を返す
+	/// </summary>
+	/// <returns>無敵時間</returns>
+	const float GetInvincibleTime() const { return characterParameterPtr_->invincibleTime; }
+
+	/// <summary>
 	/// 地面判定を返す
 	/// </summary>
 	/// <returns>地面判定</returns>
@@ -146,6 +165,12 @@ public:
 	/// </summary>
 	/// <returns>落下判定</returns>
 	const bool IsFall() const { return characterParameterPtr_->isFall; }
+	
+	/// <summary>
+	/// 無敵判定を返す
+	/// </summary>
+	/// <returns>無敵判定</returns>
+	const bool IsInvincible() const { return characterParameterPtr_->invincibleTime > 0.0f; }
 
 	/// <summary>
 	/// ノックバックパワーを返す

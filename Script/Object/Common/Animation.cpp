@@ -2,6 +2,11 @@
 
 Animation::Animation()
 {
+    animationIndex_ = -1;
+    isLoop_ = false;
+    isPlay_ = false;
+    type_ = TYPE::MAX;
+    nextType_ = TYPE::MAX;
 }
 
 Animation::~Animation()
@@ -41,6 +46,22 @@ void Animation::Play(const TYPE type, const bool isLoop)
 void Animation::Stop()
 {
 	isPlay_ = false;
+}
+
+void Animation::CheckNextAnimation()
+{
+    // éwíËÇ≥ÇÍÇƒÇ¢Ç»Ç¢èÍçá
+    if (nextType_ == TYPE::MAX)
+    {
+        // ñ≥éã
+        return;
+    }
+
+    // çƒê∂
+    Play(nextType_);
+   
+    // ãÛÇ…Ç∑ÇÈ
+    nextType_ = TYPE::MAX;
 }
 
 const Animation::Data Animation::GetAnimationData() const

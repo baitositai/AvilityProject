@@ -44,8 +44,10 @@ void ActorBase::Init()
 
 void ActorBase::Update()
 {
+	// 空の場合無視
 	if (componentMap_.empty()) return;
 
+	// コンポーネントを回す
 	for (const auto& componet : componentMap_)
 	{
 		if (componet.second == nullptr) continue;

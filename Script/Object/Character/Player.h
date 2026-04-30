@@ -74,6 +74,11 @@ public:
 	void DebugDraw() override;
 
 	/// <summary>
+	/// 攻撃のリセット
+	/// </summary>
+	void AttackReset();
+
+	/// <summary>
 	/// ショットベクトルの設定
 	/// </summary>
 	/// <param name="shotVec">ショットベクトル</param>

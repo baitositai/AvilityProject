@@ -1,17 +1,19 @@
+#include "../../Object/Common/Animation.h"
 #include "../Utility/UtilityCommon.h"
 #include "../Object/Character/Player.h"
 #include "../Collider/ColliderArray.h"
 #include "../Collider/ColliderBox.h"
-#include "../../Object/Gimmick/AvilityBox.h"
 #include "OnHitPlayer.h"
-#include "OnHitCharacterBase.h"
-#include "OnHitEnemyClone.h"
 
 
 OnHitPlayer::OnHitPlayer(Player& owner) :
     OnHitCharacterBase(owner),
     owner_(owner)
 {
+    onHitMap_.emplace(CollisionTags::TAG::ENEMY_CLONE, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
+        {
+            return OnHitEnemy(opponentCollider);
+        });
 }
 
 OnHitPlayer::~OnHitPlayer()
@@ -128,6 +130,11 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
     AvilityShot(opponentCollider, bestNormal);
 }
 
+void OnHitPlayer::OnHitEnemy(const std::weak_ptr<ColliderBase>& opponentCollider)
+{
+    // çUåÇîªíË
+    OnHitAttack(opponentCollider);
+}
 
 void OnHitPlayer::AvilityShot(const std::weak_ptr<ColliderBase>& opponentCollider, const Vector2F& normal)
 {

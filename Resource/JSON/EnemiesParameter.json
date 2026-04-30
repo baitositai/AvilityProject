@@ -1,8 +1,8 @@
 {
   "clone": {
     "componentNameList": [
-      "gravity",
       "knockBack",
+      "invincible",
       "move",
       "spriteAnimation"
     ],
@@ -34,6 +34,7 @@
     "animationsDamage": 4,
     "animationsPause": 6,
     "weight": 0.9,
+    "invincibleTimeMax": 2.0,
     "divisionNum": {
       "x": 10,
       "y": 9
@@ -88,7 +89,7 @@
       },
       "damage": {
         "no": 7,
-        "speed": 0.1,
+        "speed": 0.2,
         "num": 4
       },
       "pause": {

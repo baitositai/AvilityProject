@@ -25,6 +25,8 @@ void EnemyClone::Init()
 
 	// Šî’êƒNƒ‰ƒX‚Ì‰Šú‰»
 	CharacterBase::Init();
+
+	animation_->Play(Animation::TYPE::IDLE);
 }
 
 void EnemyClone::DebugDraw()

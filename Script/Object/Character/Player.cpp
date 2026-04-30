@@ -38,3 +38,9 @@ void Player::DebugDraw()
 	CharacterBase::DebugDraw();
 	DrawFormatString(0, 20, 0x000000, L"プレイヤー位置:%2f,%2f", parameter_.pos.x, parameter_.pos.y);
 }
+
+void Player::AttackReset()
+{
+	// 初期化
+	componentStateMap_.at(STATE::ATTACK)->Init();
+}

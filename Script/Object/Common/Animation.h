@@ -61,10 +61,21 @@ public:
 	void Stop();
 
 	/// <summary>
+	/// 次に再生するアニメーションを確認
+	/// </summary>
+	void CheckNextAnimation();
+
+	/// <summary>
 	/// アニメーションの番号の設定
 	/// </summary>
 	/// <param name="animationIndex">アニメーション番号</param>
 	void SetAnimationIndex(const int animationIndex) { animationIndex_ = animationIndex; }
+
+	/// <summary>
+	/// 次回再生予定のアニメーション種類の設定
+	/// </summary>
+	/// <param name="nextType">次回再生予定のアニメーション種類</param>
+	void SetNextAnimationType(const TYPE nextType) { nextType_ = nextType; }
 
 	/// <summary>
 	/// ループ判定を返す
@@ -114,6 +125,9 @@ private:
 
 	// アニメーション種類
 	TYPE type_;
+
+	// 次の再生予定のアニメーション種類
+	TYPE nextType_;
 
 	// アニメーション番号
 	int animationIndex_;

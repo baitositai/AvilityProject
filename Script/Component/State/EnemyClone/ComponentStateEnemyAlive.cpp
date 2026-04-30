@@ -16,7 +16,7 @@ void ComponentStateEnemyAlive::Update()
 {
 	// ˆÚ“®—Ê‚Ì‰Šú‰»
 	Vector2F moveAmount = {};
-	moveAmount.y = owner_.GetParameter()->moveAmount.y;
+	//moveAmount.y = owner_.GetParameter()->moveAmount.y;
 	float moveSpeed = owner_.GetParameter()->moveSpeed;
 
 	if (CheckHitKey(KEY_INPUT_RIGHT))
@@ -36,5 +36,6 @@ void ComponentStateEnemyAlive::Update()
 		moveAmount.y += moveSpeed;
 	}
 
+	// 
 	owner_.SetMoveAmount(moveAmount);
 }

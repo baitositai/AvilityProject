@@ -2,6 +2,7 @@
 #include "../../Component/ComponentMove.h"
 #include "../../Component/ComponentSpriteAnimation.h"
 #include "../../Component/ComponentGravity.h"
+#include "../../Component/ComponentInvincible.h"
 #include "../../Component/ComponentKnockBack.h"
 #include "../../Component/Avility/ComponentAvilityBox.h"
 #include "../../Component/Avility/ComponentAvilityShot.h"
@@ -170,6 +171,18 @@ std::unique_ptr<ComponentStateDead> FactoryComponent::CreateComponentStateDead(A
     return std::make_unique<ComponentStateDead>(*charaPtr);
 }
 
+std::unique_ptr<ComponentInvincible> FactoryComponent::CreateComponentInvincible(ActorBase& owner)
+{
+    auto* charaPtr = dynamic_cast<CharacterBase*>(&owner);
+
+    if (charaPtr == nullptr)
+    {
+        // ÉLÉÉÉXÉgÇ…é∏îsÇµÇΩèÍçánullptrÇï‘Ç∑
+        return nullptr;
+    }
+    return std::make_unique<ComponentInvincible>(*charaPtr);
+}
+
 FactoryComponent::FactoryComponent()
 {
     // ê∂ê¨èàóùÇÃìoò^
@@ -184,6 +197,10 @@ FactoryComponent::FactoryComponent()
     componentCreateMap_.emplace("gravity", [this](ActorBase& owner)
         {
             return CreateComponentGravity(owner);
+        });
+    componentCreateMap_.emplace("invincible", [this](ActorBase& owner)
+        {
+            return CreateComponentInvincible(owner);
         });
     componentCreateMap_.emplace("playerAlive", [this](ActorBase& owner)
         {
