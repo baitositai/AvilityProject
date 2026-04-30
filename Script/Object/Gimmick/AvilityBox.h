@@ -69,6 +69,8 @@ public:
 	/// <returns></returns>
 	const float GetWeight(void)const { return parameter_.weight; }
 
+	void SetPlayerPush(void) { isPushPlayer_ = true; }
+
 private:
 
 	// パラメータ情報
@@ -76,4 +78,7 @@ private:
 
 	//爆発までのカウント
 	float blastWaitCnt_;
+
+	//プレイヤー押し出しの判別
+	bool isPushPlayer_;
 };

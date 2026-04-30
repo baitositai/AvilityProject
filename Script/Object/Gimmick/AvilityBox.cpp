@@ -37,7 +37,7 @@ void AvilityBox::Update(void)
 	{
 		parameter_.moveAmount = Vector2F();
 	}
-
+	isPushPlayer_ = false;
 	GimmickBase::Update();
 
 	//if (blastWaitCnt_ > 0.0f)

@@ -207,7 +207,7 @@ void OnHitAvilityBox::OnHitBox(const std::weak_ptr<ColliderBase>& opponentCollid
         + static_cast<float>(collider->GetBoxHalfSize().y) - fabsf(diff.y);
 
     Vector2F moveAmount = myParam->moveAmount;
-
+    Vector2F opMoveAmount = opParam->moveAmount;
 
     //互いの重さ
     float myWeight = myParam->weight;
@@ -217,11 +217,12 @@ void OnHitAvilityBox::OnHitBox(const std::weak_ptr<ColliderBase>& opponentCollid
 
     Vector2F pos=myParam->pos;
     Vector2F prevPos = myParam->pos;
+    bool opDir = opParam->direction;
     //ボックスの押し出し
     if (overlapX < overlapY)
     {
         //pos.x += -(overlapX) * signX;
-        pos.x -= overlapX * /*-weightRatio*/  signX;
+        opDir ? pos.x -= overlapX-0.1f : pos.x += overlapX + 0.1f;
         moveAmount = opParam->moveAmount;
 
     }
