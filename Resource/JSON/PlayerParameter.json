@@ -1,8 +1,9 @@
 {
   "player": {
     "componentNameList": [
-      "gravity",
+      "jump",
       "knockBack",
+      "gravity",
       "move",
       "spriteAnimation",
       "invincible",

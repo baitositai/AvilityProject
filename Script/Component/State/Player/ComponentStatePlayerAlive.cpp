@@ -30,9 +30,6 @@ void ComponentStatePlayerAlive::Update()
 
 	// ジャンプの入力処理
 	ProcessInputJump();
-
-	// ジャンプ処理
-	Jump();	
 	
 	// 通常攻撃の入力処理
 	ProcessInputAttack();
@@ -83,11 +80,8 @@ void ComponentStatePlayerAlive::ProcessInputJump()
 		// Python: if キー入力があったら:
 		if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_JUMP))
 		{
-			// Python: canJump = False
 			isGround_ = false;
 
-			// Python: vel = -10 (初速を与える)
-			// jumpPowMaxを 10.0f ～ 15.0f 程度にすると緩やかになります
 			owner_.SetJumpPow(-owner_.GetJumpPowMax());
 
 			owner_.GetAnimation().Play(Animation::TYPE::JUMP);
@@ -113,31 +107,5 @@ void ComponentStatePlayerAlive::ProcessInputAttack()
 		
 		// 横移動の値をなくす
 		moveAmount_.x = 0.0f;
-	}
-}
-
-void ComponentStatePlayerAlive::Jump()
-{
-	// 地面にいる場合何もしない
-	if (isGround_) return;
-
-	// 情報の取得・定義
-	float currentJumpPow = owner_.GetJumpPow();	// 現在のジャンプ量
-	const float JUMP_ACC = owner_.GetParameter()->gravityPower * SceneManager::GetInstance().GetDeltaTime() * 3.0f;	// 加速度
-	const float HIGHEST = -owner_.GetJumpPowMax() / 2.0f + 2.0f;	// ジャンプ最高点(遅めに切り替えるよう少し調整)
-
-	// 速度に加速度を加える
-	currentJumpPow += JUMP_ACC;
-
-	// ジャンプ量を設定
-	owner_.SetJumpPow(currentJumpPow);
-
-	// 移動量を更新
-	moveAmount_.y = currentJumpPow;
-
-	// 最高点に達した場合
-	if (currentJumpPow >= HIGHEST)
-	{
-		owner_.GetAnimation().Play(Animation::TYPE::FALL);
 	}
 }

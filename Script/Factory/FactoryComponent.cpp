@@ -4,6 +4,7 @@
 #include "../../Component/ComponentGravity.h"
 #include "../../Component/ComponentInvincible.h"
 #include "../../Component/ComponentKnockBack.h"
+#include "../../Component/ComponentJump.h"
 #include "../../Component/Avility/ComponentAvilityBox.h"
 #include "../../Component/Avility/ComponentAvilityShot.h"
 #include "../../Component/State/Player/ComponentStatePlayerAttack.h"
@@ -183,6 +184,18 @@ std::unique_ptr<ComponentInvincible> FactoryComponent::CreateComponentInvincible
     return std::make_unique<ComponentInvincible>(*charaPtr);
 }
 
+std::unique_ptr<ComponentJump> FactoryComponent::CreateComponentJump(ActorBase& owner)
+{
+    auto* charaPtr = dynamic_cast<CharacterBase*>(&owner);
+
+    if (charaPtr == nullptr)
+    {
+        // ÉLÉÉÉXÉgÇ…é∏îsÇµÇΩèÍçánullptrÇï‘Ç∑
+        return nullptr;
+    }
+    return std::make_unique<ComponentJump>(*charaPtr);
+}
+
 FactoryComponent::FactoryComponent()
 {
     // ê∂ê¨èàóùÇÃìoò^
@@ -241,6 +254,10 @@ FactoryComponent::FactoryComponent()
     componentCreateMap_.emplace("dead", [this](ActorBase& owner)
         {
             return CreateComponentStateDead(owner);
+        });
+    componentCreateMap_.emplace("jump", [this](ActorBase& owner)
+        {
+            return CreateComponentJump(owner);
         });
 }
 

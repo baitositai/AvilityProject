@@ -53,7 +53,4 @@ private:
 
 	// UŒ‚“ü—Íˆ—
 	void ProcessInputAttack();
-
-	// ƒWƒƒƒ“ƒv‚É‚æ‚éˆÚ“®—Ê‚ğŒvZ
-	void Jump();
 };

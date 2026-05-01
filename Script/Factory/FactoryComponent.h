@@ -21,6 +21,7 @@ class ComponentAvilityBox;
 class ComponentAvilityShot;
 class ComponentStateDead;
 class ComponentInvincible;
+class ComponentJump;
 
 class FactoryComponent : public Singleton<FactoryComponent>
 {
@@ -56,6 +57,7 @@ private:
 	std::unique_ptr<ComponentKnockBack> CreateComponentKnockBack(ActorBase& owner);
 	std::unique_ptr<ComponentStateDead> CreateComponentStateDead(ActorBase& owner);
 	std::unique_ptr<ComponentInvincible> CreateComponentInvincible(ActorBase& owner);
+	std::unique_ptr<ComponentJump> CreateComponentJump(ActorBase& owner);
 	
 	// コンストラクタ
 	FactoryComponent();
