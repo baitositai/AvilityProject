@@ -3,6 +3,7 @@
 #include "../../Component/Avility/ComponentAvilityChargeShot.h"
 #include "../../OnHit/OnHitPlayer.h"
 #include "../../Collider/ColliderBox.h"
+#include ".././Utility/UtilityCommon.h"
 #include "../Common/Animation.h"
 #include "Player.h"
 
@@ -36,7 +37,8 @@ void Player::Update()
 void Player::DebugDraw()
 {
 	CharacterBase::DebugDraw();
-	DrawFormatString(0, 20, 0x000000, L"プレイヤー位置:%2f,%2f", parameter_.pos.x, parameter_.pos.y);
+	DrawFormatString(0, 20, UtilityCommon::LIME, L"ジャンプ力    :%2f", parameter_.jumpPow);
+	DrawFormatString(0, 40, UtilityCommon::LIME, L"プレイヤー位置:%2f,%2f", parameter_.pos.x, parameter_.pos.y);
 }
 
 void Player::AttackReset()

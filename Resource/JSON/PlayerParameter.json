@@ -23,7 +23,7 @@
     "dashSpeed": 4.0,
     "hp": 100,
     "attackPower": 10,
-    "jumpPowerMax": 30.0,
+    "jumpPowerMax": 20.0,
     "gravityPower": 9.8,
     "jumpCount": 2,
     "invincibleTimeMax": 2.0,

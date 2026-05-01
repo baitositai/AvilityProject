@@ -118,28 +118,25 @@ void ComponentStatePlayerAlive::ProcessInputAttack()
 
 void ComponentStatePlayerAlive::Jump()
 {
-	// Python: if canJump: return (地面にいる時は何もしない)
+	// 地面にいる場合何もしない
 	if (isGround_) return;
 
-	// 現在の速度(vel)を取得
-	float currentJumpPow = owner_.GetJumpPow();
+	// 情報の取得・定義
+	float currentJumpPow = owner_.GetJumpPow();	// 現在のジャンプ量
+	const float JUMP_ACC = owner_.GetParameter()->gravityPower * SceneManager::GetInstance().GetDeltaTime() * 3.0f;	// 加速度
+	const float HIGHEST = -owner_.GetJumpPowMax() / 2.0f + 2.0f;	// ジャンプ最高点(遅めに切り替えるよう少し調整)
 
-	// --- 更新処理 ---
+	// 速度に加速度を加える
+	currentJumpPow += JUMP_ACC;
 
-	// 1. 速度に加速度（重力）を加える
-	// Python: vel += acc
-	currentJumpPow += owner_.GetParameter()->gravityPower;
+	// ジャンプ量を設定
 	owner_.SetJumpPow(currentJumpPow);
 
-	// 2. 位置（移動量）を更新する
-	// Python: y += vel
-	// moveAmount_が毎フレーム 0 にリセットされるなら、これでOK
+	// 移動量を更新
 	moveAmount_.y = currentJumpPow;
 
-	// --- 地面判定などの後処理 ---
-
-	// 下向きの速度になったら落下アニメーション
-	if (currentJumpPow >= 0.0f)
+	// 最高点に達した場合
+	if (currentJumpPow >= HIGHEST)
 	{
 		owner_.GetAnimation().Play(Animation::TYPE::FALL);
 	}
