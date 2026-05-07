@@ -30,6 +30,11 @@ OnHitAvilityBox::~OnHitAvilityBox()
 {
 }
 
+void OnHitAvilityBox::ResultPush(void)
+{
+    
+}
+
 void OnHitAvilityBox::OnHitPlayer(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
     auto collider = std::dynamic_pointer_cast<ColliderBox>(opponentCollider.lock());
@@ -71,28 +76,42 @@ void OnHitAvilityBox::OnHitPlayer(const std::weak_ptr<ColliderBase>& opponentCol
     Vector2F pos = myParam->pos;
     Vector2F prevPos = myParam->pos;
 
-    //ボックスの押し出し
-    if (overlapX < overlapY)
-    {
-        bool dir = opParam->direction;
+    AvilityBox::HitInfo info = {};
 
-        //方向をセット
-        owner_.SetDirection(dir);
+    info.overlapX = overlapX;
+    info.overlapY = overlapY;
 
-        //プレイヤーに押し出されているフラグ
-        owner_.SetPlayerPush();
+    info.priority = static_cast<int>(PRIORITY::CHARACTER_PUSH);
+    info.selfPlayerPush = true;
+    info.signX = signX;
+    info.signY = signY;
 
-        pos.x += overlapX * -weightRatio * signX;
-        moveAmount = Vector2F::SubVector2F(pos, prevPos);
-    }
-    else
-    {
-        return;
-    }
+    owner_.AddHitInfo(info);
 
-    //ステータスをセット
-    owner_.SetPosition(pos);
-    owner_.SetMoveAmount(moveAmount);
+    ////ボックスの押し出し
+    //if (overlapX < overlapY)
+    //{
+    //    bool dir = opParam->direction;
+
+    //    //方向をセット
+    //    owner_.SetDirection(dir);
+
+    //    //プレイヤーに押し出されているフラグ
+    //    owner_.SetPlayerPush();
+
+    //    pushDir_ = dir;
+
+    //    pos.x += overlapX * -weightRatio * signX;
+    //    moveAmount = Vector2F::SubVector2F(pos, prevPos);
+    //}
+    //else
+    //{
+    //    return;
+    //}
+
+    ////ステータスをセット
+    //owner_.SetPosition(pos);
+    //owner_.SetMoveAmount(moveAmount);
 
 }
 void OnHitAvilityBox::OnHitEnemy(const std::weak_ptr<ColliderBase>& opponentCollider)
@@ -143,114 +162,210 @@ void OnHitAvilityBox::OnHitStage(const std::weak_ptr<ColliderBase>& opponentColl
         float overT = pBottom - tTop;
         float overB = tBottom - pTop;
 
+        AvilityBox::HitInfo info = {};
+
         if (overL > 0 && overR > 0 && overT > 0 && overB > 0)
         {
             float minOverlap = 10000.0f;
             ActorBase::DIR dir = ActorBase::DIR::MAX;
 
-            // 右に移動中の場合
-            if (moveAmount.x > 0 && overL < minOverlap)
+            //// 右に移動中の場合
+            //if (moveAmount.x > 0 && overL < minOverlap)
+            //{
+            //    // 左へ押し戻す判定を有効にする
+            //    minOverlap = overL;
+            //    info.overlapX = overL;
+            //    dir = ActorBase::DIR::LEFT;
+            //}
+            //// 左に移動中の場合
+            //if (moveAmount.x < 0 && overR < minOverlap && pBottom >= tBottom)
+            //{
+            //    // 右へ押し戻す判定を有効にする
+            //    minOverlap = overR;
+            //    info.overlapX = minOverlap;
+            //    dir = ActorBase::DIR::RIGHT;
+            //}
+
+            //// 落下中の場合　
+            //if (moveAmount.y > 0 && overT < minOverlap)
+            //{
+            //    // 上へ押し戻す判定を有効にする
+            //    minOverlap = overT;
+            //    info.overlapY = overT;
+            //    dir = ActorBase::DIR::UP;
+            //}
+            //// 上に移動中の場合　
+            //if (moveAmount.y < 0 && overB < minOverlap)
+            //{
+            //    // 下へ押し戻す判定を有効にする
+            //    minOverlap = overB;
+            //    info.overlapY = overB;
+            //    dir = ActorBase::DIR::DOWN;
+            //}
+
+            //float overlapX = std::min(overL, overR);
+            //float overlapY = std::min(overT, overB);
+
+            if (overlapX < overlapY)
             {
-                // 左へ押し戻す判定を有効にする
-                minOverlap = overL;
-                dir = ActorBase::DIR::LEFT;
+                info.overlapX = overlapX;
+                if (overL < overR)
+                {
+                    info.signX = -1;
+                }
+                else
+                {
+                    info.signX = 1;
+                }
             }
-            // 左に移動中の場合
-            if (moveAmount.x < 0 && overR < minOverlap && pBottom >= tBottom)
+            else
             {
-                // 右へ押し戻す判定を有効にする
-                minOverlap = overR;
-                dir = ActorBase::DIR::RIGHT;
+                info.overlapY = overlapY;
+
+                if (overT < overB)
+                {
+                    info.signY = -1;
+                }
+                else
+                {
+                    info.signY = 1;
+                }
             }
 
-            // 落下中の場合　
-            if (moveAmount.y > 0 && overT < minOverlap)
-            {
-                // 上へ押し戻す判定を有効にする
-                minOverlap = overT;
-                dir = ActorBase::DIR::UP;
-            }
-            // 上に移動中の場合　
-            if (moveAmount.y < 0 && overB < minOverlap)
-            {
-                // 下へ押し戻す判定を有効にする
-                minOverlap = overB;
-                dir = ActorBase::DIR::DOWN;
-            }
+            //// 決定した方向にのみ補正
+            //Vector2F MoveAmount = Vector2F(0.0f, 0.0f);
+            //if (dir == ActorBase::DIR::LEFT)
+            //{ 
+            //    pos.x -= (overL + 0.01f); 
+            //    owner_.SetMoveAmount(Vector2F(0.0f, moveAmount.y));
 
-            // 決定した方向にのみ補正
-            Vector2F MoveAmount = Vector2F(0.0f, 0.0f);
-            if (dir == ActorBase::DIR::LEFT) { pos.x -= (overL + 0.01f); owner_.SetMoveAmount(Vector2F(0.0f, moveAmount.y)); }
-            else if (dir == ActorBase::DIR::RIGHT) { pos.x += (overR + 0.01f); owner_.SetMoveAmount(Vector2F(0.0f, moveAmount.y)); }
-            else if (dir == ActorBase::DIR::UP) { pos.y -= (overT + 0.01f); owner_.SetMoveAmount(Vector2F(moveAmount.x, 0.0f)); }
-            else if (dir == ActorBase::DIR::DOWN) { pos.y += (overB + 0.01f); owner_.SetMoveAmount(Vector2F(moveAmount.x, 0.0f)); }
+            //    info.signX = -1;
+            //}
+            //else if (dir == ActorBase::DIR::RIGHT) 
+            //{
+            //    pos.x += (overR + 0.01f); 
+            //    owner_.SetMoveAmount(Vector2F(0.0f, moveAmount.y));
+            //    info.signX = 1;
+            //}
+            //else if (dir == ActorBase::DIR::UP) 
+            //{ 
+            //    pos.y -= (overT + 0.01f); 
+            //    owner_.SetMoveAmount(Vector2F(moveAmount.x, 0.0f)); 
+            //    info.signY = -1;
+            //}
+            //else if (dir == ActorBase::DIR::DOWN) 
+            //{ 
+            //    pos.y += (overB + 0.01f); 
+            //    owner_.SetMoveAmount(Vector2F(moveAmount.x, 0.0f)); 
+            //    info.signY = 1;
+            //}
 
-            // 座標格納
-            owner_.SetPosition(pos);
+            info.priority = static_cast<int>(PRIORITY::STAGE);
+            owner_.AddHitInfo(info);
+            //// 座標格納
+            //owner_.SetPosition(pos);
         }
     }
 }
 
 void OnHitAvilityBox::OnHitBox(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
-    //プレイヤーが押し出している時は処理しない
-    if (owner_.GetIsPlayerPush())return;
+    //int boxNum = owner_.GetBoxNum();
+    ////プレイヤーが押し出している時は処理しない
 
-    owner_.SetMoveAmount(Vector2F());
+    //owner_.SetMoveAmount(Vector2F());
 
     auto collider = std::dynamic_pointer_cast<ColliderBox>(opponentCollider.lock());
 
-    const auto& opOwner = opponentCollider.lock()->GetOwner();
+    const ActorBase& opOwnerBase = opponentCollider.lock()->GetOwner();
 
-    //お互いのパラメータ
+    const AvilityBox* opOwner =
+        dynamic_cast<const AvilityBox*>(&opOwnerBase);
+
+    //bool isPlayerPush = owner_.GetIsPlayerPush();
+    //bool opPlayerPush = opOwner->GetIsPlayerPush();
+
+    ////お互いのパラメータ
     const ActorBase::Parameter* myParam = owner_.GetParameter();
-    const ActorBase::Parameter* opParam = opOwner.GetParameter();
+    const ActorBase::Parameter* opParam = opOwner->GetParameter();
 
+    ////お互いの距離
+    //Vector2F diff = Vector2F::SubVector2F(opParam->pos, myParam->pos);
+    //int signX = UtilityCommon::GetSign(diff.x);
+    //int signY = UtilityCommon::GetSign(diff.y);
+
+    ////それぞれのめり込み量
+    //float overlapX = static_cast<float>(owner_.GetHitBoxSize().x / 2)
+    //    + static_cast<float>(collider->GetBoxHalfSize().x) - fabsf(diff.x);
+    //float overlapY = static_cast<float>(owner_.GetHitBoxSize().y / 2)
+    //    + static_cast<float>(collider->GetBoxHalfSize().y) - fabsf(diff.y);
+
+    //Vector2F moveAmount = myParam->moveAmount;
+    //Vector2F opMoveAmount = opParam->moveAmount;
+
+    ////互いの重さ
+    //float myWeight = myParam->weight;
+    //float opWeight = opParam->weight;
+    //float weightTotal = myWeight + opWeight;
+    //float weightRatio = opWeight / weightTotal;
+
+    //Vector2F pos=myParam->pos;
+    //Vector2F prevPos = myParam->pos;
+    //bool opDir = opParam->direction;
+    ////ボックスの押し出し
+    //if (overlapX < overlapY)
+    //{
+    //    //プレイヤー押し出し中のボックスより先に
+    //    //プレイヤーが押し出してないボックスのほうが先に当たった場合
+    //    if (isPlayerPush && !opPlayerPush)
+    //    {
+    //        pos.x += (overlapX + 0.01f) * signX;
+    //    }
+    //    else
+    //    {
+    //        pos.x += -(overlapX + 0.01f) * signX;
+    //    }
+    //    moveAmount = opParam->moveAmount;
+
+    //}
+    //else
+    //{
+    //    pos.y += -(overlapY)* signY;
+    //}
+
+    //// 座標格納
+    //owner_.SetDirection(opDir);
+    //owner_.SetPosition(pos);
+    ////owner_.SetMoveAmount(moveAmount);
+
+    AvilityBox::HitInfo info = {};
+    CollisionTags::TAG tag = collider->GetTag();
+
+    info.priority = static_cast<int>(PRIORITY::NORMAL);
+  
     //お互いの距離
     Vector2F diff = Vector2F::SubVector2F(opParam->pos, myParam->pos);
     int signX = UtilityCommon::GetSign(diff.x);
     int signY = UtilityCommon::GetSign(diff.y);
 
-    //それぞれのめり込み量
-    float overlapX = static_cast<float>(owner_.GetHitBoxSize().x / 2)
-        + static_cast<float>(collider->GetBoxHalfSize().x) - fabsf(diff.x);
-    float overlapY = static_cast<float>(owner_.GetHitBoxSize().y / 2)
-        + static_cast<float>(collider->GetBoxHalfSize().y) - fabsf(diff.y);
+    info.selfPlayerPush = owner_.GetIsPlayerPush();
 
-    Vector2F moveAmount = myParam->moveAmount;
-    Vector2F opMoveAmount = opParam->moveAmount;
+    info.overlapX= static_cast<float>(owner_.GetHitBoxSize().x / 2)
+            + static_cast<float>(collider->GetBoxHalfSize().x) - fabsf(diff.x);
+    info.overlapY= static_cast<float>(owner_.GetHitBoxSize().y / 2)
+            + static_cast<float>(collider->GetBoxHalfSize().y) - fabsf(diff.y);
 
-    //互いの重さ
-    float myWeight = myParam->weight;
-    float opWeight = opParam->weight;
-    float weightTotal = myWeight + opWeight;
-    float weightRatio = opWeight / weightTotal;
+    info.signX= UtilityCommon::GetSign(diff.x);
+    info.signY= UtilityCommon::GetSign(diff.y);
 
-    Vector2F pos=myParam->pos;
-    Vector2F prevPos = myParam->pos;
-    bool opDir = opParam->direction;
-    //ボックスの押し出し
-    if (overlapX < overlapY)
-    {
-        //pos.x += -(overlapX) * signX;
-        if (opDir)
-        {
-            pos.x -= overlapX + 0.01f;
-        }
-        else
-        {
-            pos.x += overlapX + 0.01f;
-        }
-        moveAmount = opParam->moveAmount;
+    //衝突情報を集める
+    owner_.AddHitInfo(info);
+}
 
-    }
-    else
-    {
-        pos.y += -(overlapY)* signY;
-    }
+void OnHitAvilityBox::PushOnHitPlayer(void)
+{
+}
 
-    // 座標格納
-    owner_.SetDirection(opDir);
-    owner_.SetPosition(pos);
-    owner_.SetMoveAmount(moveAmount);
+void OnHitAvilityBox::PushOnHitBox(void)
+{
 }

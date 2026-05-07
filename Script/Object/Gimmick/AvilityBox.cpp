@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "../Utility/UtilityCommon.h"
 #include "../Manager/Common/SceneManager.h"
 #include "../Collider/ColliderBox.h"
@@ -34,10 +35,8 @@ void AvilityBox::Init(void)
 
 void AvilityBox::Update(void)
 {
-	if (!collider_->IsHit())
-	{
-		parameter_.moveAmount = Vector2F();
-	}
+	PushResult();
+	parameter_.moveAmount = Vector2F();
 	isPushPlayer_ = false;
 	GimmickBase::Update();
 
@@ -79,4 +78,43 @@ void AvilityBox::DebugDraw(void)
 	DrawCircle(parameter_.pos.x + dirPos.x, parameter_.pos.y, 3, UtilityCommon::LIME);
 
 
+}
+
+void AvilityBox::AddHitInfo(const HitInfo& _hitInfo)
+{
+	hitInfo_.push_back(_hitInfo);
+}
+
+void AvilityBox::PushResult(void)
+{
+	if (hitInfo_.empty())return;
+
+	std::sort(hitInfo_.begin(), hitInfo_.end(),
+		[](const HitInfo& a, const HitInfo& b)
+		{
+			//優先度の値が低い順に並べる
+			return a.priority < b.priority;
+		});
+	Vector2F totalPush = {};
+	for (auto& info : hitInfo_)
+	{
+		Vector2F push = {};
+
+		//X方向押し出し
+		//if (info.overlapX < info.overlapY)
+		{
+			push.x = -(info.overlapX + 0.01f) * info.signX;
+		}
+		//else
+		{
+			push.y = -(info.overlapY + 0.01f) * info.signY;
+		}
+
+		totalPush = Vector2F::AddVector2F(totalPush, push);
+	}
+
+	parameter_.pos = Vector2F::AddVector2F(parameter_.pos, totalPush);
+
+	//処理し終わったら破棄
+	hitInfo_.clear();
 }

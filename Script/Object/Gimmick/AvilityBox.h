@@ -2,6 +2,8 @@
 #include "../Common/Vector2.h"
 #include "GimmickBase.h"
 
+class OnHitAvilityBox;
+
 class AvilityBox :public GimmickBase
 {
 public:
@@ -13,6 +15,23 @@ public:
 		Vector2F placePos;		//設置時のプレイヤーとのローカル座標
 		float blastTime;		//爆発するまでの時間
 		int boxNum;				//何個目のボックスか
+	};
+
+	struct HitInfo
+	{
+		//優先度
+		int priority;
+
+		//めり込み量
+		float overlapX = 0.0f;
+		float overlapY = 0.0f;
+
+		//押し出し方向
+		int signX;
+		int signY;
+
+		//誰が押しているか
+		bool selfPlayerPush = false;			//自身がプレイヤーに押されている
 	};
 
 	enum class STATE
@@ -81,12 +100,19 @@ public:
 	/// </summary>
 	/// <param name=""></param>
 	/// <returns>true：プレイヤー押し出し中　false:押し出していない</returns>
-	const bool GetIsPlayerPush(void) { return isPushPlayer_; }
+	const bool GetIsPlayerPush(void)const { return isPushPlayer_; }
 
 
 	const int GetBoxNum(void) { return parameter_.boxNum; }
 
+
+	void AddHitInfo(const HitInfo& _hitInfo);
+
 private:
+
+
+	//当たっている箱の情報
+	std::vector<HitInfo> hitInfo_;
 
 	// パラメータ情報
 	Parameter parameter_;
@@ -96,4 +122,8 @@ private:
 
 	//プレイヤー押し出しの判別
 	bool isPushPlayer_;
+
+
+
+	void PushResult(void);
 };
