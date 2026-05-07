@@ -1,5 +1,6 @@
 #pragma once
 #include <unordered_map>
+#include <map>
 #include <memory>
 #include <vector>
 #include <string>
@@ -144,6 +145,12 @@ public:
 	void SetDirection(const bool direction) { actorParameterPtr_->direction = direction; }
 
 	/// <summary>
+	/// 重力方向の設定
+	/// </summary>
+	/// <param name="gravityDir">重力方向</param>
+	void SetGravityDir(const DIR gravityDir) { actorParameterPtr_->gravityDir = gravityDir; }
+
+	/// <summary>
 	/// 座標の設定
 	/// </summary>
 	/// <param name="pos">座標</param>
@@ -191,6 +198,12 @@ public:
 	/// <param name="_isDelete"></param>
 	void SetIsDelete(void);
 
+	/// <summary>
+	/// 重力方向をベクトル変換して返す
+	/// </summary>
+	/// <returns>重力方向のベクトル</returns>
+	const Vector2F GetGravityDirectionVector() const;
+
 protected:
 
 	// 管理クラスの参照
@@ -204,7 +217,10 @@ protected:
 	std::unique_ptr<Animation> animation_;
 
 	// コンポーネントの管理マップ
-	std::unordered_map<std::string, std::unique_ptr<ComponentBase>> componentMap_;
+	std::unordered_map<std::string, ComponentBase*> componentMap_;
+
+	// 追加順を保持し、更新（Update等）で使用するリスト
+	std::vector<std::unique_ptr<ComponentBase>> componentList_;
 
 	// コライダー
 	std::shared_ptr<ColliderBase> collider_;

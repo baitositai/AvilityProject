@@ -72,6 +72,8 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
             float minOverlap = 10000.0f;
             ActorBase::DIR dir = ActorBase::DIR::MAX;
             Vector2F normal = Vector2F(0.0f, 0.0f);    // 法線ベクトル
+            Vector2F gravityDirVec = owner_.GetGravityDirectionVector();
+            ActorBase::DIR gDir = owner_.GetParameter()->gravityDir;
 
             // 右に移動中の場合
             if (moveAmount.x > 0 && overL < minOverlap)
@@ -79,7 +81,12 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
                 // 左へ押し戻す判定を有効にする
                 minOverlap = overL;
                 dir = ActorBase::DIR::LEFT;
-                normal =Vector2F(-1.0f, 0.0f);
+                if (gDir == ActorBase::DIR::DOWN) { normal = Vector2F(-1.0f, 0.0f); }
+                else if (gDir == ActorBase::DIR::RIGHT) { normal = Vector2F(0.0f, 1.0f);// 地面判定を設定
+                owner_.SetIsGround(true);
+                }
+                else if (gDir == ActorBase::DIR::LEFT) { normal = Vector2F(0.0f, -1.0f); }
+                else if (gDir == ActorBase::DIR::UP) { normal = Vector2F(1.0f, 0.0f); }
             }
             // 左に移動中の場合
             if (moveAmount.x < 0 && overR < minOverlap && pBottom >= tBottom)
@@ -87,7 +94,12 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
                 // 右へ押し戻す判定を有効にする
                 minOverlap = overR;
                 dir = ActorBase::DIR::RIGHT;
-                normal = Vector2F(1.0f, 0.0f);
+                if (gDir == ActorBase::DIR::DOWN) { normal = Vector2F(1.0f, 0.0f); }
+                else if (gDir == ActorBase::DIR::RIGHT) { normal = Vector2F(0.0f, -1.0f); }
+                else if (gDir == ActorBase::DIR::LEFT) { normal = Vector2F(0.0f, 1.0f);// 地面判定を設定
+                owner_.SetIsGround(true);
+                }
+                else if (gDir == ActorBase::DIR::UP) { normal = Vector2F(-1.0f, 0.0f); }
             }
 
             // 落下中の場合　
@@ -96,7 +108,12 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
                 // 上へ押し戻す判定を有効にする
                 minOverlap = overT;
                 dir = ActorBase::DIR::UP;
-                normal = Vector2F(0.0f, -1.0f);
+                if (gDir == ActorBase::DIR::DOWN) { normal = Vector2F(0.0f, -1.0f);// 地面判定を設定
+                owner_.SetIsGround(true);
+                }
+                else if (gDir == ActorBase::DIR::RIGHT) { normal = Vector2F(-1.0f, .0f); }
+                else if (gDir == ActorBase::DIR::LEFT) { normal = Vector2F(1.0f, 0.0f); }
+                else if (gDir == ActorBase::DIR::UP) { normal = Vector2F(0.0f, 1.0f); }
 
                 // 地面判定を設定
                 owner_.SetIsGround(true);
@@ -107,7 +124,12 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
                 // 下へ押し戻す判定を有効にする
                 minOverlap = overB;
                 dir = ActorBase::DIR::DOWN;
-                normal = Vector2F(0.0f, 1.0f);
+                if (gDir == ActorBase::DIR::DOWN) { normal = Vector2F(.0f, 1.0f); }
+                else if (gDir == ActorBase::DIR::RIGHT) { normal = Vector2F(1.0f, 0.0f); }
+                else if (gDir == ActorBase::DIR::LEFT) { normal = Vector2F(-1.0f, 0.0f); }
+                else if (gDir == ActorBase::DIR::UP) { normal = Vector2F(0.0f, -1.0f);// 地面判定を設定
+                owner_.SetIsGround(true);
+                }
             }
 
             if (minOverlap < bestOverlap)
@@ -117,7 +139,11 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
             }
 
             // 決定した方向にのみ補正
-            if (dir == ActorBase::DIR::LEFT) { pos.x -= (overL + 0.01f); owner_.SetMoveAmount(Vector2F(0.0f, moveAmount.y)); }
+            if (dir == ActorBase::DIR::LEFT)
+            { 
+                pos.x -= (overL + 0.01f);
+                owner_.SetMoveAmount(Vector2F(0.0f, moveAmount.y));
+             }
             else if (dir == ActorBase::DIR::RIGHT) {pos.x += (overR + 0.01f); owner_.SetMoveAmount(Vector2F(0.0f, moveAmount.y)); }
             else if (dir == ActorBase::DIR::UP) { pos.y -= (overT + 0.01f); owner_.SetMoveAmount(Vector2F(moveAmount.x, 0.0f)); }
             else if (dir == ActorBase::DIR::DOWN) { pos.y += (overB + 0.01f); owner_.SetMoveAmount(Vector2F(moveAmount.x, 0.0f)); }

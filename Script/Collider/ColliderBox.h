@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include "ColliderBase.h"
 #include "../Common/Vector2.h"
 
@@ -49,13 +50,13 @@ public:
 	/// 右上座標の相対位置を返す
 	/// </summary>
 	/// <returns>右上座標の相対位置</returns>
-	const Vector2& GetLocalTopPos() const;
+	const Vector2& GetAABBMin() const;
 
 	/// <summary>
 	/// 左下座標の相対位置を返す
 	/// </summary>
 	/// <returns>左下座標の相対位置</returns>
-	const Vector2& GetLocalBottomPos() const;
+	const Vector2& GetAABBMax() const;
 
 	/// <summary>
 	/// デバッグ描画
@@ -79,8 +80,6 @@ public:
 	/// <returns></returns>重なっている
 	bool OverlapOnAxis(const std::weak_ptr<ColliderBox>& opponent,const Vector2F& axis);
 
-
-
 private:
 
 	// ボックスサイズ
@@ -91,4 +90,6 @@ private:
 
 	//角度(デグリー)
 	const float& radAngle_;
+
+	std::vector<Vector2F> GetRotatedVertices() const;
 };

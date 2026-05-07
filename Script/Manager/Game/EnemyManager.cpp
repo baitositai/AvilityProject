@@ -64,7 +64,7 @@ void EnemyManager::Init()
 	enemies.push_back(std::move(std::make_unique<EnemyClone>(parameter, componentStateNameMap, componentNameList, std::move(animation))));
 
 	// Œ^‚ªˆê’v‚·‚é‚½‚ßA³í‚É emplace ‚Å‚«‚é
-	enemiesMap_.emplace(TYPE::CLONE, std::move(enemies));
+	//enemiesMap_.emplace(TYPE::CLONE, std::move(enemies));
 
 	// ‰Šú‰»
 	for (const auto& enemiesList : enemiesMap_)

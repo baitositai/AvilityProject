@@ -263,8 +263,8 @@ bool CollisionManager::IsHitCheckArrayToBox(std::weak_ptr<ColliderBase> collider
 	// ”»’èŒ‹‰Ê
 	ColliderArray::Result result = {};
 
-	const Vector2 top = colliderBox.lock()->GetLocalTopPos();
-	const Vector2 bottom = colliderBox.lock()->GetLocalBottomPos();
+	const Vector2 top = colliderBox.lock()->GetAABBMin();
+	const Vector2 bottom = colliderBox.lock()->GetAABBMax();
 	const auto arrayOfarray = colliderArray.lock()->GetArrayOfArrys();
 	const auto ids = colliderArray.lock()->GetHitIds();
 	const Vector2 size = colliderArray.lock()->GetChipSize();
@@ -306,8 +306,8 @@ bool CollisionManager::IsHitCheckCircleToBox(std::weak_ptr<ColliderBase> collide
 	// ”»’èŒ‹‰Ê
 	ColliderArray::Result result = {};
 
-	const Vector2 top = colliderBox.lock()->GetLocalTopPos();
-	const Vector2 bottom = colliderBox.lock()->GetLocalBottomPos();
+	const Vector2 top = colliderBox.lock()->GetAABBMin();
+	const Vector2 bottom = colliderBox.lock()->GetAABBMax();
 	Vector2F centerF = colliderCircle.lock()->GetPos();
 	const Vector2 center = centerF.ToVector2();
 	const float radius = colliderCircle.lock()->GetRadius();

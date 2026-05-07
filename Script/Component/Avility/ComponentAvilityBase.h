@@ -3,6 +3,7 @@
 
 class Player;
 class StageManager;
+class SceneManager;
 class InputManager;
 class ComponentAvilityBase : public ComponentBase
 {
@@ -30,6 +31,9 @@ protected:
 
 	//ステージマネージャ
 	StageManager& stageManager_;
+
+	// シーン管理クラス
+	SceneManager& sceneManager_;
 
 	// 入力管理クラスの参照
 	InputManager& inputManager_;
