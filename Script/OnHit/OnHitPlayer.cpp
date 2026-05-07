@@ -41,33 +41,52 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
 
     for (const Vector2& index : indexes)
     {
-        // タイル・プレイヤーの境界計算
+        // タイルの境界計算
         float tLeft = index.x * chipSize.x;
         float tRight = tLeft + chipSize.x;
         float tTop = index.y * chipSize.y;
         float tBottom = tTop + chipSize.y;
-
+        
+        // プレイヤーの矩形を計算
         float pLeft = pos.x - boxSize.x / 2.0f;
         float pRight = pos.x + boxSize.x / 2.0f;
         float pTop = pos.y - boxSize.y / 2.0f;
         float pBottom = pos.y + boxSize.y / 2.0f;
 
+        // めり込み具合を計算
         float overlaps[4] = { pRight - tLeft, tRight - pLeft, pBottom - tTop, tBottom - pTop };
 
         // 全ての面でめり込みがあるか（矩形交差判定）
         if (overlaps[0] > 0 && overlaps[1] > 0 && overlaps[2] > 0 && overlaps[3] > 0)
         {
             float minOverlap = 10000.0f;
-            ActorBase::DIR pushDir = ActorBase::DIR::MAX;
-            Vector2F currentNormal(0.0f, 0.0f);
+            ActorBase::DIR pushDir = ActorBase::DIR::MAX;   // 押し込み方向
+            Vector2F currentNormal(0.0f, 0.0f);      
+
+            bool flag = false;
+            if (gDir == ActorBase::DIR::DOWN) { flag = pBottom > tBottom; }
+            else if (gDir == ActorBase::DIR::UP) { flag = pTop < tTop; }
+           /* else if (gDir == ActorBase::DIR::LEFT) { flag = pBottom >= tLeft; }
+            else if (gDir == ActorBase::DIR::RIGHT) { flag = pBottom <= tRight; }*/
 
             // 移動方向に基づいた最小めり込みの特定
-            if (moveAmount.x > 0 && overlaps[0] < minOverlap) { minOverlap = overlaps[0]; pushDir = ActorBase::DIR::LEFT;  currentNormal = { -1.0f, 0.0f }; }
-            if (moveAmount.x < 0 && overlaps[1] < minOverlap && pBottom >= tBottom) { minOverlap = overlaps[1]; pushDir = ActorBase::DIR::RIGHT; currentNormal = { 1.0f, 0.0f }; }
-            if (moveAmount.y > 0 && overlaps[2] < minOverlap) { minOverlap = overlaps[2]; pushDir = ActorBase::DIR::UP;    currentNormal = { 0.0f, -1.0f }; }
-            if (moveAmount.y < 0 && overlaps[3] < minOverlap) { minOverlap = overlaps[3]; pushDir = ActorBase::DIR::DOWN;  currentNormal = { 0.0f, 1.0f }; }
+            if (moveAmount.x > 0 && overlaps[0] < minOverlap) { 
+                minOverlap = overlaps[0]; pushDir = ActorBase::DIR::LEFT;  currentNormal = { -1.0f, 0.0f }; }
+            if (moveAmount.x < 0 && overlaps[1] < minOverlap && flag) {
+                minOverlap = overlaps[1]; pushDir = ActorBase::DIR::RIGHT; currentNormal = { 1.0f, 0.0f }; }
+            if (moveAmount.y > 0 && overlaps[2] < minOverlap) {
+                minOverlap = overlaps[2]; pushDir = ActorBase::DIR::UP;    currentNormal = { 0.0f, -1.0f }; }
+            if (moveAmount.y < 0 && overlaps[3] < minOverlap) { 
+                minOverlap = overlaps[3]; pushDir = ActorBase::DIR::DOWN;  currentNormal = { 0.0f, 1.0f }; }
 
             if (pushDir == ActorBase::DIR::MAX) continue;
+
+            if (gDir == ActorBase::DIR::DOWN && (pushDir == ActorBase::DIR::LEFT)){
+                pushDir = ActorBase::DIR::RIGHT;
+            }
+            if (gDir == ActorBase::DIR::DOWN && (pushDir == ActorBase::DIR::RIGHT)){
+                pushDir = ActorBase::DIR::LEFT;
+            }
 
             // 接地判定 (重力方向と押し戻し方向が逆なら地面)
             bool isGround = false;
@@ -78,7 +97,7 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
 
             if (isGround) owner_.SetIsGround(true);
 
-            // 反射用情報の更新（最も浅いものを採用）
+            // 反射用の情報の更新（最も浅いものを採用）
             if (minOverlap < bestOverlap)
             {
                 bestOverlap = minOverlap;
