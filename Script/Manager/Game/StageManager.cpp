@@ -41,6 +41,7 @@ void StageManager::Update()
 	{
 		gim->Update();
 	}
+	GimmickSweep();
 }
 
 void StageManager::Draw()
@@ -76,13 +77,14 @@ void StageManager::DebugDraw()
 	}
 }
 
-void StageManager::AddGimmick(const Vector2F& _charaPos, const bool _direction)
+void StageManager::AddGimmick(const Vector2F& _charaPos, const bool _direction, const int _boxNum)
 {
 	AvilityBox::Parameter avParam = {};
 	avParam.hitBoxSize = Vector2(48, 48);
 	avParam.gravityPower = 0.5f;
-	avParam.weight = 0.8f;
+	avParam.weight = 1.0f;
 	avParam.blastTime = 3.0f;
+	avParam.boxNum = _boxNum;
 
 	//ローカル座標をJsonで読み込み、プレイヤーの向きによって設置場所を変える
 	Vector2F localPos = { 50.0f,50.0f };
@@ -93,6 +95,12 @@ void StageManager::AddGimmick(const Vector2F& _charaPos, const bool _direction)
 	std::unique_ptr avBox = std::make_unique<AvilityBox>(avParam, _charaPos, componentNameList);
 	avBox->Init();
 	gimmick_.push_back(std::move(avBox));
+}
+
+void StageManager::DeleteGimmick(void)
+{
+	//一番古いギミックを消す
+	gimmick_.back()->SetIsDelete();
 }
 
 void StageManager::GimmickSweep()

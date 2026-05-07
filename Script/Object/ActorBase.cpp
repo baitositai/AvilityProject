@@ -153,6 +153,15 @@ void ActorBase::SetComponentActive(const std::string& name, const bool isActive)
 		return it->second->SetActive(isActive);
 	}
 }
+void ActorBase::SetIsDelete(void)
+{
+	isActive_ = false;
+	isDelete_ = true;
+
+	//“–‚½‚è”»’è‚ÌÁ‹
+	collider_->SetDelete();
+}
+
 void ActorBase::RegisterCollider()
 {
 	// ‹ó‚Ìê‡–³‹

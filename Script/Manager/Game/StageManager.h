@@ -62,7 +62,13 @@ public:
 	/// <summary>
 	/// ギミックの追加
 	/// </summary>
-	void AddGimmick(const Vector2F& _charaPos,const bool _direction);
+	void AddGimmick(const Vector2F& _charaPos,const bool _direction,const int _boxNum);
+
+	/// <summary>
+	/// ギミックの削除
+	/// </summary>
+	/// <param name=""></param>
+	void DeleteGimmick(void);
 
 	/// <summary>
 	/// ギミックの削除

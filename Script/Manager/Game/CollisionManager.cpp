@@ -21,6 +21,9 @@ void CollisionManager::Update()
 
 	for (int i = 0; i < size - 1; i++)
 	{
+		//衝突判定の初期化
+		colliders_[i]->SetIsHit(false);
+
 		// コライダーや所有者が非活動状態の場合
 		if (!colliders_[i]->GetOwner().IsActive() || !colliders_[i]->IsActive())
 		{
@@ -33,6 +36,13 @@ void CollisionManager::Update()
 			auto& collider = colliders_[i];
 			auto& collider2 = colliders_[j];
 
+			// 各コライダーからタグを取得
+			const auto& tag1 = colliders_[i]->GetTag();
+			const auto& tag2 = colliders_[j]->GetTag();
+
+			//衝突判定の初期化
+			colliders_[j]->SetIsHit(false);
+
 			// 所有者が非活動状態の場合
 			if (!colliders_[j]->GetOwner().IsActive() || !colliders_[i]->IsActive())
 			{
@@ -40,9 +50,9 @@ void CollisionManager::Update()
 				continue;
 			}
 
-			// 各コライダーからタグを取得
-			const auto& tag1 = colliders_[i]->GetTag();
-			const auto& tag2 = colliders_[j]->GetTag();
+			//// 各コライダーからタグを取得
+			//const auto& tag1 = colliders_[i]->GetTag();
+			//const auto& tag2 = colliders_[j]->GetTag();
 
 			/*if (tag1 == CollisionTags::TAG::ANOMALY && tag2 == CollisionTags::TAG::REPORT ||
 				tag1 == CollisionTags::TAG::REPORT && tag2 == CollisionTags::TAG::ANOMALY)
@@ -74,6 +84,9 @@ void CollisionManager::Update()
 			// 衝突判定を実行
 			if (collisionFunction(colliders_[i], colliders_[j]))
 			{
+				colliders_[i]->SetIsHit(true);
+				colliders_[j]->SetIsHit(true);
+
 				// お互いに相手のタグを設定
 				colliders_[i]->SetPertnerTag(tag2);
 				colliders_[j]->SetPertnerTag(tag1);
