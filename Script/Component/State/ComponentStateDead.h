@@ -28,4 +28,3 @@ private:
 	// Š—LÒ
 	CharacterBase& owner_;
 };
-

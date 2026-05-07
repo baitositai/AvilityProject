@@ -25,6 +25,8 @@ public:
 		Vector2 hitBoxSize = {};			// 衝突判定用ボックスサイズ
 		Vector2F knockBackPower = {};		// ノックバックパワー
 		float knockBackDistance_;			// ノックバック距離
+		Vector2F defaultAttackLocalPos = {};// 通常攻撃の当たり判定調整座標	
+		float defaultAttackRadius = 0.0f;	// 通常攻撃の範囲半径
 	};
 
 	// 種類
@@ -211,6 +213,18 @@ public:
 	/// <param name="state">状態</param>
 	/// <returns>活動状態</returns>
 	bool IsStateComponentActive(const STATE state) const;
+
+	/// <summary>
+	/// 通常攻撃の位置を調整する座標を返す
+	/// </summary>
+	/// <returns>通常攻撃の相対座標</returns>
+	const Vector2F GetDefaultAttackLocalPos() const { return characterParameterPtr_->defaultAttackLocalPos; }
+
+	/// <summary>
+	/// 通常攻撃の範囲半径を返す
+	/// </summary>
+	/// <returns>通常攻撃の範囲半径</returns>
+	const float GetDefaultAttackRadius() const { return characterParameterPtr_->defaultAttackRadius; }
 
 protected:	
 	

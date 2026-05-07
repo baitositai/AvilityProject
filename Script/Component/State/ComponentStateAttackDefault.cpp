@@ -1,11 +1,11 @@
-#include "../../../Manager/Game/CollisionManager.h"
-#include "../../../Object/Character/Player.h"
-#include "../../../Object/ActorBase.h"
-#include "../../../Object/Common/Animation.h"
+#include "../../Manager/Game/CollisionManager.h"
+#include "../../Object/Character/Player.h"
+#include "../../Object/ActorBase.h"
+#include "../../Object/Common/Animation.h"
 #include "../Collider/ColliderCircle.h"
-#include "ComponentStatePlayerAttack.h"
+#include "ComponentStateAttackDefault.h"
 
-ComponentStatePlayerAttack::ComponentStatePlayerAttack(Player& owner) :
+ComponentStateAttackDefault::ComponentStateAttackDefault(CharacterBase& owner) :
 	owner_(owner),
 	DEFAULT_ATTACK_LOCAL_POS(owner.GetDefaultAttackLocalPos()),
 	ComponentCharacterStateBase(owner)
@@ -18,17 +18,17 @@ ComponentStatePlayerAttack::ComponentStatePlayerAttack(Player& owner) :
 	CollisionManager::GetInstance().Add(collider_);
 }
 
-ComponentStatePlayerAttack::~ComponentStatePlayerAttack()
+ComponentStateAttackDefault::~ComponentStateAttackDefault()
 {
 }
 
-void ComponentStatePlayerAttack::Init()
+void ComponentStateAttackDefault::Init()
 {
 	collider_->SetIsActive(false);
 	isAttack_ = false;
 }
 
-void ComponentStatePlayerAttack::Update()
+void ComponentStateAttackDefault::Update()
 {
 	Animation& animation = owner_.GetAnimation();
 
@@ -50,7 +50,7 @@ void ComponentStatePlayerAttack::Update()
 	}
 
 	// 状態遷移
-	owner_.ChangeState(Player::STATE::ALIVE);
+	owner_.ChangeState(CharacterBase::STATE::ALIVE);
 
 	// アニメーション変更
 	animation.Play(Animation::TYPE::IDLE);

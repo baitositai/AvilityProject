@@ -7,9 +7,7 @@ public:
 
 	struct Parameter : public CharacterBase::Parameter
 	{
-		Vector2F defaultAttackLocalPos = {};// 通常攻撃の当たり判定調整座標	
 		Vector2F shotVec_;					// ショットベクトル
-		float defaultAttackRadius = 0.0f;	// 通常攻撃の範囲半径
 		float dashSpeed = 0.0f;				// ダッシュスピード
 
 		// アニメーション関係
@@ -91,22 +89,10 @@ public:
 	const Vector2F GetShotVec() const { return parameter_.shotVec_; }
 
 	/// <summary>
-	/// 通常攻撃の位置を調整する座標を返す
-	/// </summary>
-	/// <returns>通常攻撃の相対座標</returns>
-	const Vector2F GetDefaultAttackLocalPos() const { return parameter_.defaultAttackLocalPos; }
-
-	/// <summary>
 	/// ダッシュ速度を返す
 	/// </summary>
 	/// <returns>ダッシュ速度</returns>
 	const float GetDashSpeed() const { return parameter_.dashSpeed; }
-
-	/// <summary>
-	/// 通常攻撃の範囲半径を返す
-	/// </summary>
-	/// <returns>通常攻撃の範囲半径</returns>
-	const float GetDefaultAttackRadius() const { return parameter_.defaultAttackRadius; }
 	
 private:
 

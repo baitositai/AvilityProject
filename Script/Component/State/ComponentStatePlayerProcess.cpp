@@ -1,10 +1,10 @@
-#include "../../../Manager/Common/InputManager.h"
-#include "../../../Manager/Common/SceneManager.h"
-#include "../../../Object/Character/Player.h"
-#include "../../../Object/Common/Animation.h"
-#include "ComponentStatePlayerAlive.h"
+#include "../../Manager/Common/InputManager.h"
+#include "../../Manager/Common/SceneManager.h"
+#include "../../Object/Character/Player.h"
+#include "../../Object/Common/Animation.h"
+#include "ComponentStatePlayerProcess.h"
 
-ComponentStatePlayerAlive::ComponentStatePlayerAlive(Player& owner) :
+ComponentStatePlayerProcess::ComponentStatePlayerProcess(Player& owner) :
 	ComponentCharacterStateBase(owner),
 	owner_(owner),
 	inputManager_(InputManager::GetInstance())
@@ -13,11 +13,11 @@ ComponentStatePlayerAlive::ComponentStatePlayerAlive(Player& owner) :
 	isGround_ = false;
 }
 
-ComponentStatePlayerAlive::~ComponentStatePlayerAlive()
+ComponentStatePlayerProcess::~ComponentStatePlayerProcess()
 {
 }
 
-void ComponentStatePlayerAlive::Update()
+void ComponentStatePlayerProcess::Update()
 {
 	// 移動量の初期化
 	moveAmount_ = {};
@@ -39,7 +39,7 @@ void ComponentStatePlayerAlive::Update()
 	owner_.SetIsGround(isGround_);
 }
 
-void ComponentStatePlayerAlive::ProcessInputMove()
+void ComponentStatePlayerProcess::ProcessInputMove()
 {
 	// ダッシュの入力判定に応じて速度を変更
 	const float moveSpeed = inputManager_.IsNew(InputManager::TYPE::PLAYER_DASH) ? owner_.GetDashSpeed() : owner_.GetParameter()->moveSpeed;
@@ -73,7 +73,7 @@ void ComponentStatePlayerAlive::ProcessInputMove()
 	}
 }
 
-void ComponentStatePlayerAlive::ProcessInputJump()
+void ComponentStatePlayerProcess::ProcessInputJump()
 {
 	if (isGround_)
 	{
@@ -89,7 +89,7 @@ void ComponentStatePlayerAlive::ProcessInputJump()
 	}
 }
 
-void ComponentStatePlayerAlive::ProcessInputAttack()
+void ComponentStatePlayerProcess::ProcessInputAttack()
 {
 	if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_ATTACK))
 	{

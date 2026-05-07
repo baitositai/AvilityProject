@@ -1,11 +1,11 @@
 #pragma once
-#include "../ComponentCharacterStateBase.h"
-#include "../../Common/Vector2F.h"
+#include "ComponentCharacterStateBase.h"
+#include "../Common/Vector2F.h"
 
 class InputManager;
 class Player;
 
-class ComponentStatePlayerAlive : public ComponentCharacterStateBase
+class ComponentStatePlayerProcess : public ComponentCharacterStateBase
 {
 public:
 
@@ -13,12 +13,12 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="owner">所有者</param>
-	ComponentStatePlayerAlive(Player& owner);
+	ComponentStatePlayerProcess(Player& owner);
 
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~ComponentStatePlayerAlive() override;
+	~ComponentStatePlayerProcess() override;
 
 	/// <summary>
 	/// 更新処理
@@ -41,9 +41,6 @@ private:
 
 	// 地面判定
 	bool isGround_;
-
-	// 無敵時間
-	float invincibleTime_;
 
 	// 移動入力処理
 	void ProcessInputMove();

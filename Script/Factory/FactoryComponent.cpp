@@ -8,11 +8,11 @@
 #include "../../Component/Avility/ComponentAvilityBox.h"
 #include "../../Component/Avility/ComponentAvilityShot.h"
 #include "../../Component/Avility/ComponentAvilityChargeShot.h"
-#include "../../Component/State/Player/ComponentStatePlayerAttack.h"
-#include "../../Component/State/Player/ComponentStatePlayerAlive.h"
+#include "../../Component/State/ComponentStatePlayerProcess.h"
+#include "../../Component/State/ComponentStateAttackDefault.h"
 #include "../../Component/State/ComponentStateDead.h"
 #include "../../Component/State/ComponentStateIdle.h"
-#include "../../Component/State/ComponentStateDummy.h"co
+#include "../../Component/State/ComponentStateDummy.h"
 #include "../../Object/Character/CharacterBase.h" 
 #include "../../Object/Character/Player.h" 
 #include "../../Object/ActorBase.h" 
@@ -49,9 +49,7 @@ std::unique_ptr<ComponentGravity> FactoryComponent::CreateComponentGravity(Actor
     return std::make_unique<ComponentGravity>(owner);
 }
 
-
-
-std::unique_ptr<ComponentStatePlayerAlive> FactoryComponent::CreateComponentStatePlayerAlive(ActorBase& owner)
+std::unique_ptr<ComponentStatePlayerProcess> FactoryComponent::CreateComponentStatePlayerProcess(ActorBase& owner)
 {
     auto* playerPtr = dynamic_cast<Player*>(&owner);
 
@@ -60,19 +58,19 @@ std::unique_ptr<ComponentStatePlayerAlive> FactoryComponent::CreateComponentStat
         // キャストに失敗した場合nullptrを返す
         return nullptr;
     }
-    return std::make_unique<ComponentStatePlayerAlive>(*playerPtr);
+    return std::make_unique<ComponentStatePlayerProcess>(*playerPtr);
 }
 
-std::unique_ptr<ComponentStatePlayerAttack> FactoryComponent::CreateComponentStatePlayerAttack(ActorBase& owner)
+std::unique_ptr<ComponentStateAttackDefault> FactoryComponent::CreateComponentStateAttackDefault(ActorBase& owner)
 {
-    auto* playerPtr = dynamic_cast<Player*>(&owner);
+    auto* charaPtr = dynamic_cast<CharacterBase*>(&owner);
 
-    if (playerPtr == nullptr)
+    if (charaPtr == nullptr)
     {
         // キャストに失敗した場合nullptrを返す
         return nullptr;
     }
-    return std::make_unique<ComponentStatePlayerAttack>(*playerPtr);
+    return std::make_unique<ComponentStateAttackDefault>(*charaPtr);
 }
 
 std::unique_ptr<ComponentAvilityBox> FactoryComponent::CreateComponentAvilityBox(ActorBase& owner)
@@ -190,13 +188,13 @@ FactoryComponent::FactoryComponent()
         {
             return CreateComponentInvincible(owner);
         });
-    componentCreateMap_.emplace("playerAlive", [this](ActorBase& owner)
+    componentCreateMap_.emplace("playerProcess", [this](ActorBase& owner)
         {
-            return CreateComponentStatePlayerAlive(owner);
+            return CreateComponentStatePlayerProcess(owner);
         });
-    componentCreateMap_.emplace("playerAttack", [this](ActorBase& owner)
+    componentCreateMap_.emplace("attackDefault", [this](ActorBase& owner)
         {
-            return CreateComponentStatePlayerAttack(owner);
+            return CreateComponentStateAttackDefault(owner);
         });
     componentCreateMap_.emplace("avilityBox", [this](ActorBase& owner)
         {

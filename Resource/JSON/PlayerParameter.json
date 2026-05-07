@@ -11,8 +11,8 @@
       "avilityBox"
     ],
     "componentStateNameList": {
-      "alive": "playerAlive",
-      "attack": "playerAttack",
+      "alive": "playerProcess",
+      "attack": "attackDefault",
       "hit": "dummy",
       "dead": "dead",
       "respawn": "dummy"

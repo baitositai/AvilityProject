@@ -1,11 +1,10 @@
 #pragma once
-#include "../ComponentCharacterStateBase.h"
-#include "../Common/Vector2F.h"
+#include "../Component/State/ComponentCharacterStateBase.h"
 
-class Player;
+class CharacterBase;
 class ColliderCircle;
 
-class ComponentStatePlayerAttack : public ComponentCharacterStateBase
+class ComponentStateAttackDefault : public ComponentCharacterStateBase
 {
 public:
 
@@ -13,12 +12,12 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="owner">所有者</param>
-	ComponentStatePlayerAttack(Player& owner);
+	ComponentStateAttackDefault(CharacterBase& owner);
 
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~ComponentStatePlayerAttack() override;
+	~ComponentStateAttackDefault() override;
 
 	/// <summary>
 	/// 初期化処理
@@ -36,7 +35,7 @@ private:
 	const Vector2F DEFAULT_ATTACK_LOCAL_POS;
 
 	// 所有者
-	Player& owner_;
+	CharacterBase& owner_;
 
 	// 攻撃位置
 	Vector2F attackPos_;
@@ -46,4 +45,3 @@ private:
 
 	std::shared_ptr<ColliderCircle> collider_;
 };
-
