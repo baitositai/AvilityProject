@@ -197,12 +197,6 @@ void OnHitCharacterBase::OnHitAttack(const std::weak_ptr<ColliderBase>& opponent
     // パワーをセットする
     owner_.SetKnockBackPower(finalPower);
 
-    // アニメーション設定
-    owner_.GetAnimation().Play(Animation::TYPE::DAMAGE, false);
-
-    // 次回アニメーション設定
-    owner_.GetAnimation().SetNextAnimationType(Animation::TYPE::IDLE);
-
     // ダメージ処理
     auto charaPtr = dynamic_cast<const CharacterBase*>(&ownerRef);
     if (charaPtr != nullptr)

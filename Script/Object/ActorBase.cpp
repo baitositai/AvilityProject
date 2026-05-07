@@ -83,6 +83,17 @@ void ActorBase::InitAnimation()
 {
 }
 
+void ActorBase::Delete()
+{
+	// コライダーがある場合削除
+	if (collider_ != nullptr)
+	{
+		collider_->SetDelete();
+	}
+	// 削除
+	isDelete_ = true;
+}
+
 void ActorBase::AddComponent(const std::string& name, std::unique_ptr<ComponentBase> component)
 {
 	// 同名のコンポーネントが既に存在するか確認しながら挿入
@@ -104,18 +115,6 @@ void ActorBase::RemoveComponent(const std::string& name)
 	}
 }
 
-bool ActorBase::IsComponentActive(const std::string& name) const
-{
-	// 指定された名前の要素を検索する
-	auto it = componentMap_.find(name);
-
-	// 要素が見つかった場合は削除する
-	if (it != componentMap_.end())
-	{
-		return it->second->IsActive();
-	}
-}
-
 void ActorBase::AddMoveAmount(const Vector2F moveAmount)
 {
 	if (actorParameterPtr_->moveAmount.x == 0.0f && actorParameterPtr_->moveAmount.y == 0.0f)
@@ -131,6 +130,29 @@ void ActorBase::AddMoveAmount(const Vector2F moveAmount)
 	}
 }
 
+bool ActorBase::IsComponentActive(const std::string& name) const
+{
+	// 指定された名前の要素を検索する
+	auto it = componentMap_.find(name);
+
+	// 要素が見つかった場合は削除する
+	if (it != componentMap_.end())
+	{
+		return it->second->IsActive();
+	}
+}
+
+void ActorBase::SetComponentActive(const std::string& name, const bool isActive)
+{
+	// 指定された名前の要素を検索する
+	auto it = componentMap_.find(name);
+
+	// 要素が見つかった場合は削除する
+	if (it != componentMap_.end())
+	{
+		return it->second->SetActive(isActive);
+	}
+}
 void ActorBase::RegisterCollider()
 {
 	// 空の場合無視
@@ -149,18 +171,6 @@ void ActorBase::CreateComponents()
 	for (const std::string& name : DEFAULT_COMPONENT_CREATE_LIST)
 	{
 		AddComponent(name, std::move(facCom_.CreateComponent(name, *this)));
-	}
-}
-
-void ActorBase::SetComponentActive(const std::string& name, const bool isActive)
-{
-	// 指定された名前の要素を検索する
-	auto it = componentMap_.find(name);
-
-	// 要素が見つかった場合は削除する
-	if (it != componentMap_.end())
-	{
-		return it->second->SetActive(isActive);
 	}
 }
 

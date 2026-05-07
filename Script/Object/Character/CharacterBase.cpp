@@ -111,12 +111,18 @@ void CharacterBase::Damage(const int damage)
 		animation_->SetNextAnimationType(Animation::TYPE::MAX);
 
 		// ジャンプを更新しない
-		//componentMap_.at("jump")
+		SetComponentActive("jump", false);
 		return;
 	}
 
 	// 無敵時間の設定
 	characterParameterPtr_->invincibleTime = characterParameterPtr_->invincibleTimeMax;
+
+	// アニメーション設定
+	animation_->Play(Animation::TYPE::DAMAGE, false);
+
+	// 次回アニメーション設定
+	animation_->SetNextAnimationType(Animation::TYPE::IDLE);
 
 	// 状態遷移
 	ChangeState(STATE::ALIVE);

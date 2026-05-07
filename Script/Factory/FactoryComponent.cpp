@@ -9,12 +9,10 @@
 #include "../../Component/Avility/ComponentAvilityShot.h"
 #include "../../Component/Avility/ComponentAvilityChargeShot.h"
 #include "../../Component/State/Player/ComponentStatePlayerAttack.h"
-#include "../../Component/State/Player/ComponentStatePlayerDead.h"
-#include "../../Component/State/Player/ComponentStatePlayerHit.h"
-#include "../../Component/State/Player/ComponentStatePlayerRespawn.h"
 #include "../../Component/State/Player/ComponentStatePlayerAlive.h"
-#include "../../Component/State/EnemyClone/ComponentStateEnemyAlive.h"
 #include "../../Component/State/ComponentStateDead.h"
+#include "../../Component/State/ComponentStateIdle.h"
+#include "../../Component/State/ComponentStateDummy.h"co
 #include "../../Object/Character/CharacterBase.h" 
 #include "../../Object/Character/Player.h" 
 #include "../../Object/ActorBase.h" 
@@ -77,54 +75,6 @@ std::unique_ptr<ComponentStatePlayerAttack> FactoryComponent::CreateComponentSta
     return std::make_unique<ComponentStatePlayerAttack>(*playerPtr);
 }
 
-std::unique_ptr<ComponentStatePlayerDead> FactoryComponent::CreateComponentStatePlayerDead(ActorBase& owner)
-{
-    auto* playerPtr = dynamic_cast<Player*>(&owner);
-
-    if (playerPtr == nullptr)
-    {
-        // キャストに失敗した場合nullptrを返す
-        return nullptr;
-    }
-    return std::make_unique<ComponentStatePlayerDead>(*playerPtr);
-}
-
-std::unique_ptr<ComponentStatePlayerHit> FactoryComponent::CreateComponentStatePlayerHit(ActorBase& owner)
-{
-    auto* playerPtr = dynamic_cast<Player*>(&owner);
-
-    if (playerPtr == nullptr)
-    {
-        // キャストに失敗した場合nullptrを返す
-        return nullptr;
-    }
-    return std::make_unique<ComponentStatePlayerHit>(*playerPtr);
-}
-
-std::unique_ptr<ComponentStatePlayerRespawn> FactoryComponent::CreateComponentStatePlayerRespawn(ActorBase& owner)
-{
-    auto* playerPtr = dynamic_cast<Player*>(&owner);
-
-    if (playerPtr == nullptr)
-    {
-        // キャストに失敗した場合nullptrを返す
-        return nullptr;
-    }
-    return std::make_unique<ComponentStatePlayerRespawn>(*playerPtr);
-}
-
-std::unique_ptr<ComponentStateEnemyAlive> FactoryComponent::CreateComponentStateEnemyAlive(ActorBase& owner)
-{
-    auto* charaPtr = dynamic_cast<CharacterBase*>(&owner);
-
-    if (charaPtr == nullptr)
-    {
-        // キャストに失敗した場合nullptrを返す
-        return nullptr;
-    }
-    return std::make_unique<ComponentStateEnemyAlive>(*charaPtr);
-}
-
 std::unique_ptr<ComponentAvilityBox> FactoryComponent::CreateComponentAvilityBox(ActorBase& owner)
 {
     auto* playerPtr = dynamic_cast<Player*>(&owner);
@@ -161,6 +111,18 @@ std::unique_ptr<ComponentKnockBack> FactoryComponent::CreateComponentKnockBack(A
     return std::make_unique<ComponentKnockBack>(*charaPtr);
 }
 
+std::unique_ptr<ComponentStateIdle> FactoryComponent::CreateComponentStateIdle(ActorBase& owner)
+{
+    auto* charaPtr = dynamic_cast<CharacterBase*>(&owner);
+
+    if (charaPtr == nullptr)
+    {
+        // キャストに失敗した場合nullptrを返す
+        return nullptr;
+    }
+    return std::make_unique<ComponentStateIdle>(*charaPtr);
+}
+
 std::unique_ptr<ComponentStateDead> FactoryComponent::CreateComponentStateDead(ActorBase& owner)
 {
     auto* charaPtr = dynamic_cast<CharacterBase*>(&owner);
@@ -171,6 +133,18 @@ std::unique_ptr<ComponentStateDead> FactoryComponent::CreateComponentStateDead(A
         return nullptr;
     }
     return std::make_unique<ComponentStateDead>(*charaPtr);
+}
+
+std::unique_ptr<ComponentStateDummy> FactoryComponent::CreateComponentStateDummy(ActorBase& owner)
+{
+    auto* charaPtr = dynamic_cast<CharacterBase*>(&owner);
+
+    if (charaPtr == nullptr)
+    {
+        // キャストに失敗した場合nullptrを返す
+        return nullptr;
+    }
+    return std::make_unique<ComponentStateDummy>(*charaPtr);
 }
 
 std::unique_ptr<ComponentInvincible> FactoryComponent::CreateComponentInvincible(ActorBase& owner)
@@ -220,25 +194,9 @@ FactoryComponent::FactoryComponent()
         {
             return CreateComponentStatePlayerAlive(owner);
         });
-    componentCreateMap_.emplace("playerDead", [this](ActorBase& owner)
-        {
-            return CreateComponentStatePlayerDead(owner);
-        });
-    componentCreateMap_.emplace("playerHit", [this](ActorBase& owner)
-        {
-            return CreateComponentStatePlayerHit(owner);
-        });
     componentCreateMap_.emplace("playerAttack", [this](ActorBase& owner)
         {
             return CreateComponentStatePlayerAttack(owner);
-        });
-    componentCreateMap_.emplace("playerRespawn", [this](ActorBase& owner)
-        {
-            return CreateComponentStatePlayerRespawn(owner);
-        });
-    componentCreateMap_.emplace("enemyAlive", [this](ActorBase& owner)
-        {
-            return CreateComponentStateEnemyAlive(owner);
         });
     componentCreateMap_.emplace("avilityBox", [this](ActorBase& owner)
         {
@@ -252,9 +210,17 @@ FactoryComponent::FactoryComponent()
         {
             return CreateComponentKnockBack(owner);
         });
+    componentCreateMap_.emplace("idle", [this](ActorBase& owner)
+        {
+            return CreateComponentStateIdle(owner);
+        });
     componentCreateMap_.emplace("dead", [this](ActorBase& owner)
         {
             return CreateComponentStateDead(owner);
+        });
+    componentCreateMap_.emplace("dummy", [this](ActorBase& owner)
+        {
+            return CreateComponentStateDummy(owner);
         });
     componentCreateMap_.emplace("jump", [this](ActorBase& owner)
         {

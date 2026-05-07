@@ -27,6 +27,14 @@ public:
 		float knockBackDistance_;			// ノックバック距離
 	};
 
+	// 種類
+	enum class TYPE
+	{
+		PLAYER,								// プレイヤー
+		ENEMY_CLONE,						// 敵:クローン
+		MAX
+	};
+
 	// キャラクター共通の状態
 	enum class STATE
 	{
@@ -99,6 +107,13 @@ public:
 	/// </summary>
 	/// <param name="isFall">落下判定</param>
 	void SetIsFall(const bool isFall) { characterParameterPtr_->isGround = isFall; }
+
+	/// <summary>
+	/// 状態別コンポーネントの活動状態を設定
+	/// </summary>
+	/// <param name="state">状態</param>
+	/// <param name="isActive">活動状態</param>
+	void SetStateComponentActive(const STATE state, const bool isActive);
 
 	/// <summary>
 	/// 無敵判定
@@ -179,17 +194,29 @@ public:
 	const Vector2F& GeKnockBackPower() const { return characterParameterPtr_->knockBackPower; }
 	
 	/// <summary>
+	/// 種類を返す
+	/// </summary>
+	/// <returns>種類</returns>
+	const TYPE GetType() const { return type_; }
+
+	/// <summary>
 	/// 状態を返す
 	/// </summary>
 	/// <returns>状態</returns>
 	const STATE GetState() const { return state_; }
 
+	/// <summary>
+	/// 状態別コンポーネントの活動状態を返す
+	/// </summary>
+	/// <param name="state">状態</param>
+	/// <returns>活動状態</returns>
 	bool IsStateComponentActive(const STATE state) const;
-
-	void SetStateComponentActive(const STATE state, const bool isActive);
 
 protected:	
 	
+	// 種類
+	TYPE type_;
+
 	// キャラクターの状態
 	STATE state_;	
 	

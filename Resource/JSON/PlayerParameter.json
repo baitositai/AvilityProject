@@ -13,9 +13,9 @@
     "componentStateNameList": {
       "alive": "playerAlive",
       "attack": "playerAttack",
-      "hit": "playerHit",
+      "hit": "dummy",
       "dead": "dead",
-      "resaown": "playerRespawn"
+      "respawn": "dummy"
     },
     "scale": 1.0,
     "angle": 0.0,

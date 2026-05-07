@@ -50,7 +50,9 @@ void ComponentJump::Update()
 		Animation::TYPE type = animation_.GetType();
 
 		// —‰º’†A‚à‚µ‚­‚ÍUŒ‚’†‚Ìê‡‚Í–³‹
-		if (type != Animation::TYPE::FALL && type != Animation::TYPE::ATTACK)
+		if (type != Animation::TYPE::FALL && 
+			type != Animation::TYPE::ATTACK &&
+			type != Animation::TYPE::DAMAGE)
 		{
 			animation_.Play(Animation::TYPE::FALL);
 		}

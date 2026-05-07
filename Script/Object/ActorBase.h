@@ -94,6 +94,11 @@ public:
 	virtual void InitAnimation();
 
 	/// <summary>
+	/// 削除処理
+	/// </summary>
+	void Delete();
+
+	/// <summary>
 	/// コンポーネントの追加
 	/// </summary>
 	/// <param name="name">コンポーネントの名前</param>
