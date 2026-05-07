@@ -74,6 +74,14 @@ void OnHitAvilityBox::OnHitPlayer(const std::weak_ptr<ColliderBase>& opponentCol
     //ボックスの押し出し
     if (overlapX < overlapY)
     {
+        bool dir = opParam->direction;
+
+        //方向をセット
+        owner_.SetDirection(dir);
+
+        //プレイヤーに押し出されているフラグ
+        owner_.SetPlayerPush();
+
         pos.x += overlapX * -weightRatio * signX;
         moveAmount = Vector2F::SubVector2F(pos, prevPos);
     }
@@ -185,6 +193,9 @@ void OnHitAvilityBox::OnHitStage(const std::weak_ptr<ColliderBase>& opponentColl
 
 void OnHitAvilityBox::OnHitBox(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
+    //プレイヤーが押し出している時は処理しない
+    if (owner_.GetIsPlayerPush())return;
+
     owner_.SetMoveAmount(Vector2F());
 
     auto collider = std::dynamic_pointer_cast<ColliderBox>(opponentCollider.lock());
@@ -222,7 +233,14 @@ void OnHitAvilityBox::OnHitBox(const std::weak_ptr<ColliderBase>& opponentCollid
     if (overlapX < overlapY)
     {
         //pos.x += -(overlapX) * signX;
-        opDir ? pos.x -= overlapX-0.1f : pos.x += overlapX + 0.1f;
+        if (opDir)
+        {
+            pos.x -= overlapX + 0.01f;
+        }
+        else
+        {
+            pos.x += overlapX + 0.01f;
+        }
         moveAmount = opParam->moveAmount;
 
     }
@@ -232,8 +250,7 @@ void OnHitAvilityBox::OnHitBox(const std::weak_ptr<ColliderBase>& opponentCollid
     }
 
     // 座標格納
+    owner_.SetDirection(opDir);
     owner_.SetPosition(pos);
     owner_.SetMoveAmount(moveAmount);
-
-
 }

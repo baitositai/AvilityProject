@@ -1,3 +1,4 @@
+#include "../Utility/UtilityCommon.h"
 #include "../Manager/Common/SceneManager.h"
 #include "../Collider/ColliderBox.h"
 #include "../OnHit/OnHitAvilityBox.h"
@@ -27,13 +28,12 @@ void AvilityBox::Init(void)
 	GimmickBase::Init();
 
 	//座標をプレイヤーとローカル座標分離れている座標にする
-	//parameter_.pos = Vector2F::AddVector2F(placePos_,parameter_.placePos);
 	parameter_.pos = parameter_.placePos;
 }
 
 void AvilityBox::Update(void)
 {
-	if (collider_->IsHit())
+	if (!collider_->IsHit())
 	{
 		parameter_.moveAmount = Vector2F();
 	}
@@ -61,4 +61,21 @@ void AvilityBox::DebugDraw(void)
 {
 	if (collider_ == nullptr) return;
 	collider_->DebugDraw();
+
+	unsigned int color = UtilityCommon::RED;
+	if (parameter_.boxNum == 1) { color = UtilityCommon::GREEN; }
+	else if (parameter_.boxNum == 2) { color = UtilityCommon::BLUE; }
+
+	DrawCircle(parameter_.pos.x, parameter_.pos.y,10, color);
+
+	//プレイヤーが押し出している最中のみ描画
+	if(isPushPlayer_){ DrawCircle(parameter_.pos.x, parameter_.pos.y, 3, UtilityCommon::CYAN); }
+
+
+	Vector2F dirPos = Vector2F();
+	constexpr float LOCAL = 15.0f;
+	parameter_.direction ? dirPos.x = -LOCAL : dirPos.x = LOCAL;
+	DrawCircle(parameter_.pos.x + dirPos.x, parameter_.pos.y, 3, UtilityCommon::LIME);
+
+
 }

@@ -8,10 +8,11 @@ public:
 
 	struct Parameter :public ActorBase::Parameter
 	{
-		Vector2 hitBoxSize;			//サイズ
-		Vector2 hitLocalPos;		//ボックスの当たり判定のローカル座標
+		Vector2 hitBoxSize;		//サイズ
+		Vector2 hitLocalPos;	//ボックスの当たり判定のローカル座標
 		Vector2F placePos;		//設置時のプレイヤーとのローカル座標
-		float blastTime;			//爆発するまでの時間
+		float blastTime;		//爆発するまでの時間
+		int boxNum;				//何個目のボックスか
 	};
 
 	enum class STATE
@@ -69,7 +70,21 @@ public:
 	/// <returns></returns>
 	const float GetWeight(void)const { return parameter_.weight; }
 
+	/// <summary>
+	/// プレイヤーが押している状態のセット
+	/// </summary>
+	/// <param name=""></param>
 	void SetPlayerPush(void) { isPushPlayer_ = true; }
+
+	/// <summary>
+	/// プレイヤー押し出し状態の取得
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns>true：プレイヤー押し出し中　false:押し出していない</returns>
+	const bool GetIsPlayerPush(void) { return isPushPlayer_; }
+
+
+	const int GetBoxNum(void) { return parameter_.boxNum; }
 
 private:
 

@@ -36,6 +36,10 @@ void CollisionManager::Update()
 			auto& collider = colliders_[i];
 			auto& collider2 = colliders_[j];
 
+			// 各コライダーからタグを取得
+			const auto& tag1 = colliders_[i]->GetTag();
+			const auto& tag2 = colliders_[j]->GetTag();
+
 			//衝突判定の初期化
 			colliders_[j]->SetIsHit(false);
 
@@ -46,9 +50,9 @@ void CollisionManager::Update()
 				continue;
 			}
 
-			// 各コライダーからタグを取得
-			const auto& tag1 = colliders_[i]->GetTag();
-			const auto& tag2 = colliders_[j]->GetTag();
+			//// 各コライダーからタグを取得
+			//const auto& tag1 = colliders_[i]->GetTag();
+			//const auto& tag2 = colliders_[j]->GetTag();
 
 			/*if (tag1 == CollisionTags::TAG::ANOMALY && tag2 == CollisionTags::TAG::REPORT ||
 				tag1 == CollisionTags::TAG::REPORT && tag2 == CollisionTags::TAG::ANOMALY)
