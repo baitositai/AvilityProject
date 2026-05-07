@@ -23,137 +23,81 @@ OnHitPlayer::~OnHitPlayer()
 void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
     auto collider = std::dynamic_pointer_cast<ColliderArray>(opponentCollider.lock());
-    if (!collider) return;              // コライダーが空の場合終了
+    if (!collider) return;
 
-    // 当たったすべてのタイルインデックスを取得
     const auto& indexes = collider->GetResult().indexes;
-    if (indexes.empty()) return;       // インデックスリストが空の場合終了
+    if (indexes.empty()) return;
 
-    Vector2F pos = owner_.GetParameter()->pos;          // 座標取得
-    Vector2 boxSize = owner_.GetHitBoxSize();           // ボックスサイズ          
-    Vector2 chipSize = collider->GetChipSize();         // チップサイズ
+    Vector2F pos = owner_.GetParameter()->pos;
+    Vector2 boxSize = owner_.GetHitBoxSize();
+    Vector2 chipSize = collider->GetChipSize();
+    Vector2F moveAmount = owner_.GetParameter()->moveAmount;
+    ActorBase::DIR gDir = owner_.GetParameter()->gravityDir;
+
+    if (moveAmount.x == 0.0f && moveAmount.y == 0.0f) return;
 
     float bestOverlap = 10000.0f;
     Vector2F bestNormal(0.0f, 0.0f);
 
     for (const Vector2& index : indexes)
     {
-        // 移動量取得
-        Vector2F moveAmount = owner_.GetParameter()->moveAmount;
-
-        // 移動量が0の場合
-        if (moveAmount.x == 0.0f && moveAmount.y == 0.0f)
-        {
-            // 終了
-            break;
-        }
-
-
-        // タイルの四隅
+        // タイル・プレイヤーの境界計算
         float tLeft = index.x * chipSize.x;
         float tRight = tLeft + chipSize.x;
         float tTop = index.y * chipSize.y;
         float tBottom = tTop + chipSize.y;
 
-        // プレイヤーの四端
         float pLeft = pos.x - boxSize.x / 2.0f;
         float pRight = pos.x + boxSize.x / 2.0f;
         float pTop = pos.y - boxSize.y / 2.0f;
         float pBottom = pos.y + boxSize.y / 2.0f;
 
-        // どのくらいめり込み具合
-        float overL = pRight - tLeft;
-        float overR = tRight - pLeft;
-        float overT = pBottom - tTop;
-        float overB = tBottom - pTop;
+        float overlaps[4] = { pRight - tLeft, tRight - pLeft, pBottom - tTop, tBottom - pTop };
 
-        if (overL > 0 && overR > 0 && overT > 0 && overB > 0)
+        // 全ての面でめり込みがあるか（矩形交差判定）
+        if (overlaps[0] > 0 && overlaps[1] > 0 && overlaps[2] > 0 && overlaps[3] > 0)
         {
             float minOverlap = 10000.0f;
-            ActorBase::DIR dir = ActorBase::DIR::MAX;
-            Vector2F normal = Vector2F(0.0f, 0.0f);    // 法線ベクトル
-            Vector2F gravityDirVec = owner_.GetGravityDirectionVector();
-            ActorBase::DIR gDir = owner_.GetParameter()->gravityDir;
+            ActorBase::DIR pushDir = ActorBase::DIR::MAX;
+            Vector2F currentNormal(0.0f, 0.0f);
 
-            // 右に移動中の場合
-            if (moveAmount.x > 0 && overL < minOverlap)
-            {
-                // 左へ押し戻す判定を有効にする
-                minOverlap = overL;
-                dir = ActorBase::DIR::LEFT;
-                if (gDir == ActorBase::DIR::DOWN) { normal = Vector2F(-1.0f, 0.0f); }
-                else if (gDir == ActorBase::DIR::RIGHT) { normal = Vector2F(0.0f, 1.0f);// 地面判定を設定
-                owner_.SetIsGround(true);
-                }
-                else if (gDir == ActorBase::DIR::LEFT) { normal = Vector2F(0.0f, -1.0f); }
-                else if (gDir == ActorBase::DIR::UP) { normal = Vector2F(1.0f, 0.0f); }
-            }
-            // 左に移動中の場合
-            if (moveAmount.x < 0 && overR < minOverlap && pBottom >= tBottom)
-            {
-                // 右へ押し戻す判定を有効にする
-                minOverlap = overR;
-                dir = ActorBase::DIR::RIGHT;
-                if (gDir == ActorBase::DIR::DOWN) { normal = Vector2F(1.0f, 0.0f); }
-                else if (gDir == ActorBase::DIR::RIGHT) { normal = Vector2F(0.0f, -1.0f); }
-                else if (gDir == ActorBase::DIR::LEFT) { normal = Vector2F(0.0f, 1.0f);// 地面判定を設定
-                owner_.SetIsGround(true);
-                }
-                else if (gDir == ActorBase::DIR::UP) { normal = Vector2F(-1.0f, 0.0f); }
-            }
+            // 移動方向に基づいた最小めり込みの特定
+            if (moveAmount.x > 0 && overlaps[0] < minOverlap) { minOverlap = overlaps[0]; pushDir = ActorBase::DIR::LEFT;  currentNormal = { -1.0f, 0.0f }; }
+            if (moveAmount.x < 0 && overlaps[1] < minOverlap && pBottom >= tBottom) { minOverlap = overlaps[1]; pushDir = ActorBase::DIR::RIGHT; currentNormal = { 1.0f, 0.0f }; }
+            if (moveAmount.y > 0 && overlaps[2] < minOverlap) { minOverlap = overlaps[2]; pushDir = ActorBase::DIR::UP;    currentNormal = { 0.0f, -1.0f }; }
+            if (moveAmount.y < 0 && overlaps[3] < minOverlap) { minOverlap = overlaps[3]; pushDir = ActorBase::DIR::DOWN;  currentNormal = { 0.0f, 1.0f }; }
 
-            // 落下中の場合　
-            if (moveAmount.y > 0 && overT < minOverlap)
-            {
-                // 上へ押し戻す判定を有効にする
-                minOverlap = overT;
-                dir = ActorBase::DIR::UP;
-                if (gDir == ActorBase::DIR::DOWN) { normal = Vector2F(0.0f, -1.0f);// 地面判定を設定
-                owner_.SetIsGround(true);
-                }
-                else if (gDir == ActorBase::DIR::RIGHT) { normal = Vector2F(-1.0f, .0f); }
-                else if (gDir == ActorBase::DIR::LEFT) { normal = Vector2F(1.0f, 0.0f); }
-                else if (gDir == ActorBase::DIR::UP) { normal = Vector2F(0.0f, 1.0f); }
+            if (pushDir == ActorBase::DIR::MAX) continue;
 
-                // 地面判定を設定
-                owner_.SetIsGround(true);
-            }
-            // 上に移動中の場合　
-            if (moveAmount.y < 0 && overB < minOverlap)
-            {
-                // 下へ押し戻す判定を有効にする
-                minOverlap = overB;
-                dir = ActorBase::DIR::DOWN;
-                if (gDir == ActorBase::DIR::DOWN) { normal = Vector2F(.0f, 1.0f); }
-                else if (gDir == ActorBase::DIR::RIGHT) { normal = Vector2F(1.0f, 0.0f); }
-                else if (gDir == ActorBase::DIR::LEFT) { normal = Vector2F(-1.0f, 0.0f); }
-                else if (gDir == ActorBase::DIR::UP) { normal = Vector2F(0.0f, -1.0f);// 地面判定を設定
-                owner_.SetIsGround(true);
-                }
-            }
+            // 接地判定 (重力方向と押し戻し方向が逆なら地面)
+            bool isGround = false;
+            if (gDir == ActorBase::DIR::DOWN && pushDir == ActorBase::DIR::UP)    isGround = true;
+            else if (gDir == ActorBase::DIR::UP && pushDir == ActorBase::DIR::DOWN)  isGround = true;
+            else if (gDir == ActorBase::DIR::LEFT && pushDir == ActorBase::DIR::RIGHT) isGround = true;
+            else if (gDir == ActorBase::DIR::RIGHT && pushDir == ActorBase::DIR::LEFT)  isGround = true;
 
+            if (isGround) owner_.SetIsGround(true);
+
+            // 反射用情報の更新（最も浅いものを採用）
             if (minOverlap < bestOverlap)
             {
                 bestOverlap = minOverlap;
-                bestNormal = normal;
+                bestNormal = currentNormal;
             }
 
-            // 決定した方向にのみ補正
-            if (dir == ActorBase::DIR::LEFT)
-            { 
-                pos.x -= (overL + 0.01f);
-                owner_.SetMoveAmount(Vector2F(0.0f, moveAmount.y));
-             }
-            else if (dir == ActorBase::DIR::RIGHT) {pos.x += (overR + 0.01f); owner_.SetMoveAmount(Vector2F(0.0f, moveAmount.y)); }
-            else if (dir == ActorBase::DIR::UP) { pos.y -= (overT + 0.01f); owner_.SetMoveAmount(Vector2F(moveAmount.x, 0.0f)); }
-            else if (dir == ActorBase::DIR::DOWN) { pos.y += (overB + 0.01f); owner_.SetMoveAmount(Vector2F(moveAmount.x, 0.0f)); }
-
-            // 座標格納
+            // 座標補正と速度減衰
+            const float epsilon = 0.01f;
+            switch (pushDir)
+            {
+            case ActorBase::DIR::LEFT:  pos.x -= (overlaps[0] + epsilon); owner_.SetMoveAmount({ 0.0f, moveAmount.y }); break;
+            case ActorBase::DIR::RIGHT: pos.x += (overlaps[1] + epsilon); owner_.SetMoveAmount({ 0.0f, moveAmount.y }); break;
+            case ActorBase::DIR::UP:    pos.y -= (overlaps[2] + epsilon); owner_.SetMoveAmount({ moveAmount.x, 0.0f }); break;
+            case ActorBase::DIR::DOWN:  pos.y += (overlaps[3] + epsilon); owner_.SetMoveAmount({ moveAmount.x, 0.0f }); break;
+            }
             owner_.SetPosition(pos);
         }
-    }   
-    
-	// 最もめり込んでいるタイルの法線ベクトルを取得してショットベクトルを反射させる
+    }
+
     AvilityShot(opponentCollider, bestNormal);
 }
 
