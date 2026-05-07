@@ -1,4 +1,5 @@
 #pragma once
+#include <functional>
 #include "ComponentAvilityBase.h"
 #include "../../Common/Vector2F.h"
 
@@ -12,6 +13,8 @@ public:
 
 	static constexpr float SHOT_INTERVAL = 0.5f;	// ショットのインターバル
 	static constexpr float SHOT_SPEED = 15.0f;		// ショットの速度
+
+	static constexpr const char* STATE_SHOT = "Shot";		// ショット状態
 
 	/// <summary>
 	/// コンストラクタ
@@ -49,6 +52,7 @@ private:
 	std::function<void(void)> currentStateFunction_;
 
 	// ショット変数
+	float chageTime_;
 	float shotTime_;
 	Vector2F shotVec_;
 

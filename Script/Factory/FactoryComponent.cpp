@@ -7,6 +7,7 @@
 #include "../../Component/ComponentJump.h"
 #include "../../Component/Avility/ComponentAvilityBox.h"
 #include "../../Component/Avility/ComponentAvilityShot.h"
+#include "../../Component/Avility/ComponentAvilityChargeShot.h"
 #include "../../Component/State/Player/ComponentStatePlayerAttack.h"
 #include "../../Component/State/Player/ComponentStatePlayerDead.h"
 #include "../../Component/State/Player/ComponentStatePlayerHit.h"

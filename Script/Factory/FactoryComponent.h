@@ -11,6 +11,7 @@ class ComponentMove;
 class ComponentSpriteAnimation;
 class ComponentGravity;
 class ComponentKnockBack;
+class ComponentAvilityChargeShot;
 class ComponentStatePlayerAlive;
 class ComponentStatePlayerAttack;
 class ComponentStatePlayerDead;
@@ -46,6 +47,7 @@ private:
 	std::unique_ptr<ComponentMove> CreateComponentMove(ActorBase& owner);
 	std::unique_ptr<ComponentSpriteAnimation> CreateComponentSpriteAnimation(ActorBase& owner);
 	std::unique_ptr<ComponentGravity> CreateComponentGravity(ActorBase& owner);
+	std::unique_ptr<ComponentAvilityChargeShot> CreateComponentAvilityChargeShot(ActorBase& owner);
 	std::unique_ptr<ComponentStatePlayerAlive> CreateComponentStatePlayerAlive(ActorBase& owner);
 	std::unique_ptr<ComponentStatePlayerAttack> CreateComponentStatePlayerAttack(ActorBase& owner);
 	std::unique_ptr<ComponentStatePlayerDead> CreateComponentStatePlayerDead(ActorBase& owner);

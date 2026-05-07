@@ -4,6 +4,7 @@
       "jump",
       "knockBack",
       "gravity",
+      "chargeShot",
       "move",
       "spriteAnimation",
       "invincible",

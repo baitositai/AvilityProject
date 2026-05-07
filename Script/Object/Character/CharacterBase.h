@@ -184,6 +184,10 @@ public:
 	/// <returns>状態</returns>
 	const STATE GetState() const { return state_; }
 
+	bool IsStateComponentActive(const STATE state) const;
+
+	void SetStateComponentActive(const STATE state, const bool isActive);
+
 protected:	
 	
 	// キャラクターの状態

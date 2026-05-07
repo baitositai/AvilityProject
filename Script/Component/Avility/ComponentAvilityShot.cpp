@@ -66,6 +66,7 @@ void ComponentAvilityShot::ProcessInputShot()
 
 	if (inputManager_.IsNew(InputManager::TYPE::PLAYER_AVILITY))
 	{
+		owner_.SetComponentActive("chargeShot", false);
 
 		shotTime_ = 2.0f;
 
@@ -80,6 +81,8 @@ void ComponentAvilityShot::ProcessMoveShot()
 
 	if (shotTime_ <= 0.0f)
 	{
+		owner_.SetComponentActive("chargeShot", true);
+
 		currentState_ = "shot";
 		currentStateFunction_ = stateFunctionMap_[currentState_];
 		return;
