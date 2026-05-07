@@ -109,6 +109,9 @@ void CharacterBase::Damage(const int damage)
 		// アニメーション開始
 		animation_->Play(Animation::TYPE::DEAD, false);
 		animation_->SetNextAnimationType(Animation::TYPE::MAX);
+
+		// ジャンプを更新しない
+		//componentMap_.at("jump")
 		return;
 	}
 

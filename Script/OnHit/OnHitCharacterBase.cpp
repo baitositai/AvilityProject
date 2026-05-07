@@ -165,7 +165,10 @@ void OnHitCharacterBase::OnHitAvilityBox(const std::weak_ptr<ColliderBase>& oppo
 void OnHitCharacterBase::OnHitAttack(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
     // 衝突者が無敵のときは無視
-    if (owner_.IsInvincible() || opponentCollider.lock()->GetPartnerTag() == CollisionTags::TAG::PLAYER_ATTACK_NORMAL) return;
+    if (owner_.IsInvincible() || opponentCollider.lock()->GetPartnerTag() == CollisionTags::TAG::PLAYER_ATTACK_NORMAL)
+    {
+        return;
+    }
 
     // 所有者情報の取得
     const auto& ownerRef = opponentCollider.lock()->GetOwner();
@@ -178,37 +181,29 @@ void OnHitCharacterBase::OnHitAttack(const std::weak_ptr<ColliderBase>& opponent
     // ゼロ除算防止のガード
     if (direction.Length() < 0.0001f)
     {
-        direction = Vector2F(0.0f, -0.5f);
+        direction = Vector2F(0.0f, -1.0f);
     }
 
-    // 基本となるノックバック方向を正規化して取得
-    Vector2F normalizedDir = direction.Normalize();
+    // 左右方向の決定 (自分と相手の座標差から符号だけ取る)
+    float knockBackDirX = (direction.x > 0) ? 1.0f : -1.0f;
 
-    float horizontalWeight = 1.5f;
-    normalizedDir.x *= horizontalWeight;
+    // パワーの決定
+    // 横方向は勢いよく、縦方向は「ぴょん」と跳ねるような固定値を加える
+    float HORIZONTAL_FORCE = 600.0f; // 横への吹き飛び力
+    float VERTICAL_LAUNCH = -500.0f; // 上への跳ね上げ力 (DXライブラリ等の座標系ならマイナスが上)
 
-    // 重力の影響を打ち消すための上向きベクトルを加算する
-    // 重力が常に下向き（0, 1）ならその逆方向（0, -1）を足す
-    Vector2F gravityResist = Vector2F(0.0f, -0.5f);
-    Vector2F finalDir = Vector2F::AddVector2F(normalizedDir, gravityResist);
-
-    // 加算によって長さが変わるため再度正規化する
-    finalDir = finalDir.Normalize();
-
-    // 最終的なノックバックパワーを決定する
-    float power = 450.0f;
-    Vector2F finalPower = Vector2F::MulVector2F(finalDir, Vector2F(power, power));
+    Vector2F finalPower = Vector2F(knockBackDirX * HORIZONTAL_FORCE, VERTICAL_LAUNCH);
 
     // パワーをセットする
     owner_.SetKnockBackPower(finalPower);
-    
-    // アニメション設定
+
+    // アニメーション設定
     owner_.GetAnimation().Play(Animation::TYPE::DAMAGE, false);
 
     // 次回アニメーション設定
     owner_.GetAnimation().SetNextAnimationType(Animation::TYPE::IDLE);
 
-    // ダメージ処理    
+    // ダメージ処理
     auto charaPtr = dynamic_cast<const CharacterBase*>(&ownerRef);
     if (charaPtr != nullptr)
     {

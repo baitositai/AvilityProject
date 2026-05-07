@@ -177,6 +177,12 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	const Vector2F& GeKnockBackPower() const { return characterParameterPtr_->knockBackPower; }
+	
+	/// <summary>
+	/// ó‘Ô‚ğ•Ô‚·
+	/// </summary>
+	/// <returns>ó‘Ô</returns>
+	const STATE GetState() const { return state_; }
 
 protected:	
 	
