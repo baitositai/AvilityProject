@@ -6,8 +6,9 @@
 #include "../Common/Animation.h"
 #include "AvilityBox.h"
 
-AvilityBox::AvilityBox(const Parameter& parameter,const Vector2F& _placePos,const std::vector<std::string>& componentNameList) :
+AvilityBox::AvilityBox(const Parameter& parameter, CharacterBase& _chara,const std::vector<std::string>& componentNameList) :
 	parameter_(parameter),
+	character_(_chara),
 	GimmickBase(&parameter_,componentNameList)
 {
 	//Ží—Þ‚ÌÝ’è
@@ -35,11 +36,17 @@ void AvilityBox::Init(void)
 
 void AvilityBox::Update(void)
 {
-	PushResult();
-	parameter_.moveAmount = Vector2F();
-	isPushPlayer_ = false;
+	//PushResult();
+	if (!Vector2F::IsSameVector2F(onHit_->GetMoveAmount(), Vector2F()))
+	{
+		int i = 0;
+	}
+	parameter_.moveAmount = onHit_->GetMoveAmount();
+	onHit_->ResetMoveAmount();
+	isHitWall_ = false;
 	GimmickBase::Update();
-
+	//parameter_.moveAmount = {};
+	//isPushPlayer_ = false;
 	//if (blastWaitCnt_ > 0.0f)
 	//{
 	//	blastWaitCnt_ -= scnMng_.GetDeltaTime();
@@ -96,10 +103,13 @@ void AvilityBox::PushResult(void)
 			return a.priority < b.priority;
 		});
 	Vector2F totalPush = {};
+	Vector2F moveAmount = {};
+	Vector2F prevPos = parameter_.pos;
+
 	for (auto& info : hitInfo_)
 	{
 		Vector2F push = {};
-
+		Vector2F prevPos = parameter_.pos;
 		//X•ûŒü‰Ÿ‚µo‚µ
 		//if (info.overlapX < info.overlapY)
 		{
@@ -107,10 +117,11 @@ void AvilityBox::PushResult(void)
 		}
 		//else
 		{
-			push.y = -(info.overlapY + 0.01f) * info.signY;
+			push.y = (info.overlapY + 0.01f) * info.signY;
 		}
 
 		totalPush = Vector2F::AddVector2F(totalPush, push);
+		parameter_.moveAmount = Vector2F::SubVector2F(parameter_.pos, prevPos);
 	}
 
 	parameter_.pos = Vector2F::AddVector2F(parameter_.pos, totalPush);

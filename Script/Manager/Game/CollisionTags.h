@@ -10,11 +10,11 @@ public:
 	enum class TAG
 	{
 		NONE,
-		PLAYER,					// プレイヤー
 		PLAYER_ATTACK_NORMAL,	// プレイヤーの通常攻撃			
 		STAGE,					// ステージ
-		ENEMY_CLONE,			// 敵:クローン
+		PLAYER,					// プレイヤー
 		AVILITY_BOX,			// アビリティ設置のボックス
+		ENEMY_CLONE,			// 敵:クローン
 		BLAST,
 		MAX
 	};
