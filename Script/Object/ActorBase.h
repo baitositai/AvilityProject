@@ -55,6 +55,12 @@ public:
 		float gravityPower = 0.0f;				// 重力
 		DIR gravityDir = DIR::DOWN;				// 重力方向
 		float weight = 0.0f;					// 物体の重み
+
+		// 衝突判定用
+		bool isGround = false;					// 地面判定
+		bool isFall = false;					// 落下判定
+		Vector2 hitSize = {};					// ヒットサイズ
+		float hitRadius = 0.0f;					// ヒット半径
 	};
 
 	/// <summary>
@@ -163,6 +169,18 @@ public:
 	void SetMoveAmount(const Vector2F moveAmount) { actorParameterPtr_->moveAmount = moveAmount; }
 
 	/// <summary>
+	/// 地面判定の設定
+	/// </summary>
+	/// <param name="isGround">地面判定</param>
+	void SetIsGround(const bool isGround) { actorParameterPtr_->isGround = isGround; }
+
+	/// <summary>
+	/// 落下判定の設定
+	/// </summary>
+	/// <param name="isFall">落下判定</param>
+	void SetIsFall(const bool isFall) { actorParameterPtr_->isFall = isFall; }
+
+	/// <summary>
 	/// 移動量の設定
 	/// </summary>
 	/// <param name="moveAmount">移動量</param>
@@ -191,6 +209,18 @@ public:
 	/// </summary>
 	/// <returns>削除判定</returns>
 	const bool IsDelete() const { return isDelete_; }
+
+	/// <summary>
+	/// 地面判定を返す
+	/// </summary>
+	/// <returns>地面判定</returns>
+	const bool IsGround() const { return actorParameterPtr_->isGround; }
+
+	/// <summary>
+	/// 落下判定を返す
+	/// </summary>
+	/// <returns>落下判定</returns>
+	const bool IsFall() const { return actorParameterPtr_->isFall; }
 
 	/// <summary>
 	/// 削除フラグをtrueにする

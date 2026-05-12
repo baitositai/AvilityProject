@@ -7,8 +7,6 @@
       "move",
       "spriteAnimation",
       "invincible",
-      "avilityBox",
-      "chargeShot",
       "avilityGravity"
     ],
     "componentStateNameList": {

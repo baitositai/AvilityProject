@@ -27,111 +27,6 @@ OnHitCharacterBase::~OnHitCharacterBase()
 
 void OnHitCharacterBase::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
-    auto collider = std::dynamic_pointer_cast<ColliderArray>(opponentCollider.lock());
-    if (!collider)
-    {
-        return;
-    }
-
-    const auto& indexes = collider->GetResult().indexes;
-    if (indexes.empty())
-    {
-        return;
-    }
-
-    Vector2F pos = owner_.GetParameter()->pos;
-    Vector2 boxSize = owner_.GetHitBoxSize();
-    Vector2 chipSize = collider->GetChipSize();
-    // 現在の重力方向を取得 (例としてVector2F。下なら(0, 1), 左なら(-1, 0)など)
-    Vector2F gravityDir = owner_.GetGravityDirectionVector();
-
-    for (const Vector2& index : indexes)
-    {
-        Vector2F moveAmount = owner_.GetParameter()->moveAmount;
-
-        if (moveAmount.x == 0.0f && moveAmount.y == 0.0f)
-        {
-            break;
-        }
-
-        float tLeft = index.x * chipSize.x;
-        float tRight = tLeft + chipSize.x;
-        float tTop = index.y * chipSize.y;
-        float tBottom = tTop + chipSize.y;
-
-        float pLeft = pos.x - boxSize.x / 2.0f;
-        float pRight = pos.x + boxSize.x / 2.0f;
-        float pTop = pos.y - boxSize.y / 2.0f;
-        float pBottom = pos.y + boxSize.y / 2.0f;
-
-        float overL = pRight - tLeft;
-        float overR = tRight - pLeft;
-        float overT = pBottom - tTop;
-        float overB = tBottom - pTop;
-
-        if (overL > 0 && overR > 0 && overT > 0 && overB > 0)
-        {
-            float minOverlap = 10000.0f;
-            ActorBase::DIR pushDir = ActorBase::DIR::MAX;
-            Vector2F normal(0.0f, 0.0f);
-
-            // X軸の押し戻し判定
-            if (moveAmount.x > 0 && overL < minOverlap)
-            {
-                minOverlap = overL;
-                pushDir = ActorBase::DIR::LEFT;
-                normal.x = -1.0f;
-            }
-            else if (moveAmount.x < 0 && overR < minOverlap)
-            {
-                minOverlap = overR;
-                pushDir = ActorBase::DIR::RIGHT;
-                normal.x = 1.0f;
-            }
-
-            // Y軸の押し戻し判定 (より浅いめり込みがあれば上書き)
-            if (moveAmount.y > 0 && overT < minOverlap)
-            {
-                minOverlap = overT;
-                pushDir = ActorBase::DIR::UP;
-                normal.x = 0.0f; // X軸の判定をリセット
-                normal.y = -1.0f;
-            }
-            else if (moveAmount.y < 0 && overB < minOverlap)
-            {
-                minOverlap = overB;
-                pushDir = ActorBase::DIR::DOWN;
-                normal.x = 0.0f;
-                normal.y = 1.0f;
-            }
-
-            // 位置補正と速度修正
-            if (pushDir != ActorBase::DIR::MAX)
-            {
-                const float epsilon = 0.01f;
-                if (normal.x != 0.0f)
-                {
-                    pos.x += (minOverlap + epsilon) * normal.x;
-                    moveAmount.x = 0.0f;
-                }
-                else if (normal.y != 0.0f)
-                {
-                    pos.y += (minOverlap + epsilon) * normal.y;
-                    moveAmount.y = 0.0f;
-                }
-
-                // 接地判定: 押し戻し方向(normal)が重力方向と逆なら接地とみなす
-                // 例: 重力が下(0, 1)で、押し戻しが上(0, -1)なら内積は-1
-                if (normal.x * gravityDir.x + normal.y * gravityDir.y < -0.5f)
-                {
-                    owner_.SetIsGround(true);
-                }
-
-                owner_.SetPosition(pos);
-                owner_.SetMoveAmount(moveAmount);
-            }
-        }
-    }
 }
 
 void OnHitCharacterBase::OnHitAvilityBox(const std::weak_ptr<ColliderBase>& opponentCollider)
@@ -157,9 +52,10 @@ void OnHitCharacterBase::OnHitAvilityBox(const std::weak_ptr<ColliderBase>& oppo
     int signY = UtilityCommon::GetSign(diff.y);
 
     //それぞれのめり込み量
-    float overlapX = static_cast<float>(owner_.GetHitBoxSize().x / 2)
+	Vector2 hitSize = Vector2(owner_.GetParameter()->hitSize);
+    float overlapX = static_cast<float>(hitSize.x / 2)
         + static_cast<float>(collider->GetBoxHalfSize().x) - fabsf(diff.x);
-    float overlapY = static_cast<float>(owner_.GetHitBoxSize().y / 2)
+    float overlapY = static_cast<float>(hitSize.y / 2)
         + static_cast<float>(collider->GetBoxHalfSize().y) - fabsf(diff.y);
 
     //移動量

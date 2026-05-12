@@ -17,24 +17,46 @@ ColliderBox::~ColliderBox()
 {
 }
 
-const Vector2& ColliderBox::GetAABBMin() const
+const Vector2F& ColliderBox::GetAABBMin() const
 {
-	auto v = GetRotatedVertices();
-	float minX = (std::min)({ v[0].x, v[1].x, v[2].x, v[3].x });
-	float minY = (std::min)({ v[0].y, v[1].y, v[2].y, v[3].y });
-	static Vector2 res;
-	res = Vector2(static_cast<int>(minX), static_cast<int>(minY));
-	return res;
+	auto vertices = GetRotatedVertices();
+
+	float minX = (std::min)({
+		vertices[0].x,
+		vertices[1].x,
+		vertices[2].x,
+		vertices[3].x
+		});
+
+	float minY = (std::min)({
+		vertices[0].y,
+		vertices[1].y,
+		vertices[2].y,
+		vertices[3].y
+		});
+
+	return Vector2F(minX, minY);
 }
 
-const Vector2& ColliderBox::GetAABBMax() const
+const Vector2F& ColliderBox::GetAABBMax() const
 {
-	auto v = GetRotatedVertices();
-	float maxX = (std::max)({ v[0].x, v[1].x, v[2].x, v[3].x });
-	float maxY = (std::max)({ v[0].y, v[1].y, v[2].y, v[3].y });
-	static Vector2 res;
-	res = Vector2(static_cast<int>(maxX), static_cast<int>(maxY));
-	return res;
+	auto vertices = GetRotatedVertices();
+
+	float maxX = (std::max)({
+		vertices[0].x,
+		vertices[1].x,
+		vertices[2].x,
+		vertices[3].x
+		});
+
+	float maxY = (std::max)({
+		vertices[0].y,
+		vertices[1].y,
+		vertices[2].y,
+		vertices[3].y
+		});
+
+	return Vector2F(maxX, maxY);
 }
 
 std::vector<Vector2F> ColliderBox::GetRotatedVertices() const

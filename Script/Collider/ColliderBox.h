@@ -50,13 +50,13 @@ public:
 	/// 右上座標の相対位置を返す
 	/// </summary>
 	/// <returns>右上座標の相対位置</returns>
-	const Vector2& GetAABBMin() const;
+	const Vector2F& GetAABBMin() const;
 
 	/// <summary>
 	/// 左下座標の相対位置を返す
 	/// </summary>
 	/// <returns>左下座標の相対位置</returns>
-	const Vector2& GetAABBMax() const;
+	const Vector2F& GetAABBMax() const;
 
 	/// <summary>
 	/// デバッグ描画

@@ -112,6 +112,20 @@ void CollisionManager::Add(std::shared_ptr<ColliderBase> collider)
 	colliders_.push_back(collider);
 }
 
+ColliderArray::Result CollisionManager::IsHitStage(const Vector2& checkPos)
+{
+	ColliderArray::Result result{};
+
+	// ステージのコライダーがない場合
+	if (!stageCollider_) { return result; }
+
+	// 判定
+	result = stageCollider_->CheckHitMapChip(checkPos);
+
+	// 判定結果を返す
+	return result;
+}
+
 void CollisionManager::Clear()
 {
 	// 中身の削除
@@ -263,11 +277,13 @@ bool CollisionManager::IsHitCheckArrayToBox(std::weak_ptr<ColliderBase> collider
 	// 判定結果
 	ColliderArray::Result result = {};
 
-	const Vector2 top = colliderBox.lock()->GetAABBMin();
-	const Vector2 bottom = colliderBox.lock()->GetAABBMax();
+	const Vector2F top = colliderBox.lock()->GetAABBMin();
+	const Vector2F bottom = colliderBox.lock()->GetAABBMax();
 	const auto arrayOfarray = colliderArray.lock()->GetArrayOfArrys();
 	const auto ids = colliderArray.lock()->GetHitIds();
 	const Vector2 size = colliderArray.lock()->GetChipSize();
+	const Vector2F movedAmount = colliderBox.lock()->GetOwner().GetParameter()->moveAmount;
+	ActorBase::DIR gravityDir = colliderBox.lock()->GetOwner().GetParameter()->gravityDir;
 
 	// 衝突判定
 	bool isHit = UtilityCollision::IsHitArrayToBox(
@@ -276,7 +292,9 @@ bool CollisionManager::IsHitCheckArrayToBox(std::weak_ptr<ColliderBase> collider
 		size, 
 		result,
 		top, 
-		bottom);
+		bottom,
+		movedAmount,
+		gravityDir);
 
 	// 判定結果を保存
 	colliderArray.lock()->SetResult(result);
@@ -306,8 +324,8 @@ bool CollisionManager::IsHitCheckCircleToBox(std::weak_ptr<ColliderBase> collide
 	// 判定結果
 	ColliderArray::Result result = {};
 
-	const Vector2 top = colliderBox.lock()->GetAABBMin();
-	const Vector2 bottom = colliderBox.lock()->GetAABBMax();
+	 Vector2F top = colliderBox.lock()->GetAABBMin();
+	 Vector2F bottom = colliderBox.lock()->GetAABBMax();
 	Vector2F centerF = colliderCircle.lock()->GetPos();
 	const Vector2 center = centerF.ToVector2();
 	const float radius = colliderCircle.lock()->GetRadius();
@@ -316,8 +334,8 @@ bool CollisionManager::IsHitCheckCircleToBox(std::weak_ptr<ColliderBase> collide
 	const bool isHit = UtilityCollision::IsHitCircleToBox(
 		center,
 		radius,
-		top,
-		bottom);
+		top.ToVector2(),
+		bottom.ToVector2());
 
 	// 衝突しているか返す
 	return isHit;

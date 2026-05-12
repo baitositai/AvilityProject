@@ -2,8 +2,11 @@
 #include <vector>
 #include <functional>
 #include "../../Template/Singleton.h"
+#include "../../Common/Vector2.h"
+#include "../../Collider/ColliderArray.h"
 
 class ColliderBase;
+class ColliderArray;
 
 class CollisionManager : public Singleton<CollisionManager>
 {
@@ -34,6 +37,19 @@ public:
 	void Add(std::shared_ptr<ColliderBase> collider);
 
 	/// <summary>
+	/// ステージのコライダーのセット
+	/// </summary>
+	/// <param name="stageCollider">ステージのコライダー</param>
+	void SetStageCollider(std::shared_ptr<ColliderArray> stageCollider) { stageCollider_ = stageCollider; }
+
+	/// <summary>
+	/// 指定した座標がステージと衝突しているか調べる
+	/// </summary>
+	/// <param name="checkPos">調べたい座標</param>
+	/// <returns>衝突している場合はtrue、それ以外はfalse</returns>
+	ColliderArray::Result IsHitStage(const Vector2& checkPos);
+
+	/// <summary>
 	/// 削除
 	/// </summary>
 	void Clear();
@@ -53,6 +69,9 @@ private:
 
 	// コライダー配列
 	std::vector<std::shared_ptr<ColliderBase>> colliders_;
+
+	// ステージのコライダー
+	std::shared_ptr<ColliderArray> stageCollider_;
 
 		// タグのマトリックスの設定設定
 	void InitTagMatrix();

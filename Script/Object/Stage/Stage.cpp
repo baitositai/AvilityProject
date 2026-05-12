@@ -3,6 +3,7 @@
 #include "../../Utility/UtilityLoad.h"
 #include "../../Manager/Common/SceneManager.h"
 #include "../../Manager/Common/Camera.h"
+#include "../../Manager/Game/CollisionManager.h"
 #include "../../Collider/ColliderArray.h"
 #include "../../OnHit/OnHitBase.h"
 #include "../Common/Animation.h"
@@ -24,7 +25,13 @@ Stage::~Stage()
 void Stage::Init()
 {
 	// コライダーの生成
-	collider_ = std::make_unique<ColliderArray>(*this, CollisionTags::TAG::STAGE, parameter_.pos, chipIndexs_, parameter_.hitIds, parameter_.chipSize);
+	auto collider = std::make_shared<ColliderArray>(*this, CollisionTags::TAG::STAGE, parameter_.pos, chipIndexs_, parameter_.hitIds, parameter_.chipSize);
+
+	// ステージ専用のコライダーの設定
+	CollisionManager::GetInstance().SetStageCollider(collider);	
+	
+	// 保持用に格納
+	collider_ = collider;
 
 	// 衝突後処理
 	onHit_ = nullptr;
