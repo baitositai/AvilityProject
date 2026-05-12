@@ -26,7 +26,7 @@ void EnemyManager::Init()
 	parameter.attackPower = jsonPparameter["attackPower"].get<int>();
 	parameter.defaultAttackRadius = jsonPparameter["defaultAttackRadius"].get<int>();
 	parameter.gravityPower = jsonPparameter["gravityPower"].get<float>();
-	parameter.hitBoxSize = Vector2(jsonPparameter["hitBoxSize"]["x"].get<int>(), jsonPparameter["hitBoxSize"]["y"].get<int>());
+	parameter.hitSize = Vector2(jsonPparameter["hitBoxSize"]["x"].get<int>(), jsonPparameter["hitBoxSize"]["y"].get<int>());
 	parameter.localPos = Vector2(jsonPparameter["localPos"]["x"].get<int>(), jsonPparameter["localPos"]["y"].get<int>());
 	parameter.defaultAttackLocalPos = Vector2F(jsonPparameter["defaultAttackLoaclPos"]["x"].get<float>(), jsonPparameter["defaultAttackLoaclPos"]["y"].get<float>());
 	parameter.weight = jsonPparameter["weight"].get<float>();
@@ -64,7 +64,7 @@ void EnemyManager::Init()
 	enemies.push_back(std::move(std::make_unique<EnemyClone>(parameter, componentStateNameMap, componentNameList, std::move(animation))));
 
 	// å^Ç™àÍívÇ∑ÇÈÇΩÇﬂÅAê≥èÌÇ… emplace Ç≈Ç´ÇÈ
-	enemiesMap_.emplace(TYPE::CLONE, std::move(enemies));
+	//enemiesMap_.emplace(TYPE::CLONE, std::move(enemies));
 
 	// èâä˙âª
 	for (const auto& enemiesList : enemiesMap_)

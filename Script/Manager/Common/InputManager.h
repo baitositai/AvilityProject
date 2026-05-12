@@ -57,6 +57,11 @@ public:
 		DEBUG_CAMERA_CHANGE,	// デバッグカメラビュー変更
 		CREATE_POSITION,		// 位置リストの生成
 		OPEN_FILE,				// ファイルを開く
+
+		AVILITY_GRAVITY_RIGHT,	// 重力制御:右
+		AVILITY_GRAVITY_LEFT,	// 重力制御:左
+		AVILITY_GRAVITY_UP,		// 重力制御:上
+		AVILITY_GRAVITY_DOWN,	// 重力制御:下
 	};
 
 	/// <summary>

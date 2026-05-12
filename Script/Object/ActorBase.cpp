@@ -44,16 +44,22 @@ void ActorBase::Init()
 
 void ActorBase::Update()
 {
-	// 空の場合無視
-	if (componentMap_.empty()) return;
+	if (componentList_.empty()) return;
 
-	// コンポーネントを回す
-	for (const auto& componet : componentMap_)
+	for (auto& component : componentList_)
 	{
-		if (componet.second == nullptr) continue;
-		if (!componet.second->IsActive()) continue;
-
-		componet.second->Update();
+		// unique_ptrが有効かチェック
+		if (component)
+		{
+			if (component->IsActive())
+			{
+				component->Update();
+			}
+		}
+		else
+		{
+			OutputDebugString(L"エラー: componentList_ の中に nullptr が存在します\n");
+		}
 	}
 }
 
@@ -96,8 +102,19 @@ void ActorBase::Delete()
 
 void ActorBase::AddComponent(const std::string& name, std::unique_ptr<ComponentBase> component)
 {
-	// 同名のコンポーネントが既に存在するか確認しながら挿入
-	auto result = componentMap_.try_emplace(name, std::move(component));
+	// 同名のコンポーネントが既に存在するかチェック
+	if (componentMap_.find(name) != componentMap_.end())
+	{
+		return; // 既に存在する場合は何もしない
+	}
+
+	// 実行順リストに追加（ここが所有権を持つ）
+	// 後でポインタを Map に登録するため、一旦生のポインタを控える
+	ComponentBase* ptr = component.get();
+	componentList_.push_back(std::move(component));
+
+	// 検索用マップに登録
+	componentMap_.emplace(name, ptr);
 
 	// 挿入に成功してるか確認
 	//assert(result.second && "コンポーネントの追加に失敗しています");
@@ -105,12 +122,22 @@ void ActorBase::AddComponent(const std::string& name, std::unique_ptr<ComponentB
 
 void ActorBase::RemoveComponent(const std::string& name)
 {
-	// 指定された名前の要素を検索する
 	auto it = componentMap_.find(name);
-
-	// 要素が見つかった場合は削除する
 	if (it != componentMap_.end())
 	{
+		// 1. vector側から実体を削除する
+		// mapに保存していたポインタ(it->second)を使って検索
+		auto listIt = std::find_if(componentList_.begin(), componentList_.end(),
+			[target = it->second](const std::unique_ptr<ComponentBase>& comp) {
+				return comp.get() == target;
+			});
+
+		if (listIt != componentList_.end())
+		{
+			componentList_.erase(listIt);
+		}
+
+		// 2. map側から登録を削除する
 		componentMap_.erase(it);
 	}
 }
@@ -132,27 +159,23 @@ void ActorBase::AddMoveAmount(const Vector2F moveAmount)
 
 bool ActorBase::IsComponentActive(const std::string& name) const
 {
-	// 指定された名前の要素を検索する
 	auto it = componentMap_.find(name);
-
-	// 要素が見つかった場合は削除する
 	if (it != componentMap_.end())
 	{
 		return it->second->IsActive();
 	}
+	return false; // 見つからない場合は基本 false
 }
 
 void ActorBase::SetComponentActive(const std::string& name, const bool isActive)
 {
-	// 指定された名前の要素を検索する
 	auto it = componentMap_.find(name);
-
-	// 要素が見つかった場合は削除する
 	if (it != componentMap_.end())
 	{
-		return it->second->SetActive(isActive);
+		it->second->SetActive(isActive);
 	}
 }
+
 void ActorBase::SetIsDelete(void)
 {
 	isActive_ = false;
@@ -160,6 +183,16 @@ void ActorBase::SetIsDelete(void)
 
 	//当たり判定の消去
 	collider_->SetDelete();
+}
+
+const Vector2F ActorBase::GetGravityDirectionVector() const
+{
+	Vector2F dir = {};
+	if (actorParameterPtr_->gravityDir == ActorBase::DIR::RIGHT) { dir = Vector2F(1.0f, 0.0f); }
+	else if(actorParameterPtr_->gravityDir == ActorBase::DIR::LEFT) { dir = Vector2F(-1.0f, 0.0f); }
+	else if (actorParameterPtr_->gravityDir == ActorBase::DIR::UP) { dir = Vector2F(0.0f, -1.0f); }
+	else if (actorParameterPtr_->gravityDir == ActorBase::DIR::DOWN) { dir = Vector2F(0.0f, 1.0f); }
+	return dir;
 }
 
 void ActorBase::RegisterCollider()

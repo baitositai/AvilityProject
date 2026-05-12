@@ -7,8 +7,7 @@
 
 class Player;
 
-class ComponentAvilityShot :
-    public ComponentAvilityBase
+class ComponentAvilityShot :  public ComponentAvilityBase
 {
 public:
 

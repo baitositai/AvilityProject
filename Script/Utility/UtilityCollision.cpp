@@ -1,3 +1,4 @@
+#include "../../Object/ActorBase.h"
 #include "UtilityCommon.h"
 #include "UtilityCollision.h"
 
@@ -6,42 +7,16 @@ bool UtilityCollision::IsHitArrayToCircle(const std::vector<std::vector<int>>& a
     return false;
 }
 
-bool UtilityCollision::IsHitArrayToBox(const std::vector<std::vector<int>>& arrayOfArrays, const std::vector<int>& hitIds, const Vector2& chipSize, ColliderArray::Result& result, const Vector2& boxTopPos, const Vector2& boxBottomPos)
+bool UtilityCollision::IsHitArrayToBox(const std::vector<std::vector<int>>& arrayOfArrays,
+    const std::vector<int>& hitIds,
+    const Vector2& chipSize,
+    ColliderArray::Result& result,
+    const Vector2F& boxTopPos,
+    const Vector2F& boxBottomPos,
+    const Vector2F& moveAmount,
+    ActorBase::DIR gravityDir)
 {
-    // 配列のサイズを確定
-    const int ROWS = static_cast<int>(arrayOfArrays.size());
-    if (ROWS == 0) return false;    // 中身がない場合終了
-    const int COLS = static_cast<int>(arrayOfArrays[0].size());
-
-    // 最大最小値を決定
-    int startX = (std::max)(0, static_cast<int>(boxTopPos.x / chipSize.x));
-    int endX = (std::min)(COLS - 1, static_cast<int>(boxBottomPos.x / chipSize.x));
-    int startY = (std::max)(0, static_cast<int>(boxTopPos.y / chipSize.y));
-    int endY = (std::min)(ROWS - 1, static_cast<int>(boxBottomPos.y / chipSize.y));
-
-    // 範囲チェック
-    if (startX > endX || startY > endY) return false;
-
-    // 前回の判定結果を削除
-    result.indexes.clear();
-    int area = (endX - startX + 1) * (endY - startY + 1);
-    result.indexes.reserve(area);
-
-    for (int ty = startY; ty <= endY; ++ty)
-    {
-        const auto& row = arrayOfArrays[ty];
-        for (int tx = startX; tx <= endX; ++tx)
-        {
-            // 衝突番号を探索する
-            if (UtilityCommon::FindIndex(hitIds, row[tx]))
-            {
-                // インデックスを格納
-                result.indexes.emplace_back(static_cast<float>(tx), static_cast<float>(ty));
-            }
-        }
-    }
-
-    return !result.indexes.empty();
+    return false;
 }
 
 bool UtilityCollision::IsHitCircleToCircle(const Vector2& circlePos1, const float radius1, const Vector2& circlePos2, const float radius2)

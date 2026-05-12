@@ -29,6 +29,4 @@ private:
 
 	// アビリティ別の衝突後処理
 	void AvilityShot(const std::weak_ptr<ColliderBase>& opponentCollider, const Vector2F& normal);
-
 };
-

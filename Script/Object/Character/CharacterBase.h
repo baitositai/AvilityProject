@@ -16,13 +16,10 @@ public:
 	{
 		int hp = -1;						// 体力
 		int attackPower = -1;				// 攻撃力
-		bool isGround = false;				// 地面判定
-		bool isFall = false;				// 落下判定
 		float invincibleTimeMax = 0.0f;		// 最大無敵時間
-		float invincibleTime = 0.0f;			// 無敵時間
+		float invincibleTime = 0.0f;		// 無敵時間
 		float jumpPow = 0.0f;				// ジャンプ力
 		float jumpPowMax = 0.0f;			// ジャンプ力の最大量
-		Vector2 hitBoxSize = {};			// 衝突判定用ボックスサイズ
 		Vector2F knockBackPower = {};		// ノックバックパワー
 		float knockBackDistance_;			// ノックバック距離
 		Vector2F defaultAttackLocalPos = {};// 通常攻撃の当たり判定調整座標	
@@ -99,18 +96,6 @@ public:
 	void Damage(const int damage);
 
 	/// <summary>
-	/// 地面判定の設定
-	/// </summary>
-	/// <param name="isGround">地面判定</param>
-	void SetIsGround(const bool isGround) { characterParameterPtr_->isGround = isGround; }
-
-	/// <summary>
-	/// 落下判定の設定
-	/// </summary>
-	/// <param name="isFall">落下判定</param>
-	void SetIsFall(const bool isFall) { characterParameterPtr_->isGround = isFall; }
-
-	/// <summary>
 	/// 状態別コンポーネントの活動状態を設定
 	/// </summary>
 	/// <param name="state">状態</param>
@@ -142,12 +127,6 @@ public:
 	void SetKnockBackPower(const Vector2F& knockBackPower) { characterParameterPtr_->knockBackPower = knockBackPower; }
 
 	/// <summary>
-	/// 衝突する範囲を返す
-	/// </summary>
-	/// <returns>衝突する範囲</returns>
-	const Vector2& GetHitBoxSize() const { return characterParameterPtr_->hitBoxSize; }
-
-	/// <summary>
 	/// 攻撃力を返す
 	/// </summary>
 	/// <returns>攻撃力</returns>
@@ -170,18 +149,6 @@ public:
 	/// </summary>
 	/// <returns>無敵時間</returns>
 	const float GetInvincibleTime() const { return characterParameterPtr_->invincibleTime; }
-
-	/// <summary>
-	/// 地面判定を返す
-	/// </summary>
-	/// <returns>地面判定</returns>
-	const bool IsGround() const { return characterParameterPtr_->isGround; }
-
-	/// <summary>
-	/// 落下判定を返す
-	/// </summary>
-	/// <returns>落下判定</returns>
-	const bool IsFall() const { return characterParameterPtr_->isFall; }
 	
 	/// <summary>
 	/// 無敵判定を返す

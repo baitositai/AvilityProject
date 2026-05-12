@@ -4,11 +4,10 @@
       "jump",
       "knockBack",
       "gravity",
-      "chargeShot",
       "move",
       "spriteAnimation",
       "invincible",
-      "avilityBox"
+      "avilityGravity"
     ],
     "componentStateNameList": {
       "alive": "playerProcess",

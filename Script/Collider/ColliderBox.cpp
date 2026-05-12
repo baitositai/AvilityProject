@@ -17,43 +17,101 @@ ColliderBox::~ColliderBox()
 {
 }
 
-const Vector2& ColliderBox::GetLocalTopPos() const
+const Vector2F& ColliderBox::GetAABBMin() const
 {
-	Vector2 pos = Vector2::AddVector2(followPos_.ToVector2(), Vector2::MultiVector2(boxHalfSize_, Vector2(-1, -1)));
-	return pos;
+	auto vertices = GetRotatedVertices();
+
+	float minX = (std::min)({
+		vertices[0].x,
+		vertices[1].x,
+		vertices[2].x,
+		vertices[3].x
+		});
+
+	float minY = (std::min)({
+		vertices[0].y,
+		vertices[1].y,
+		vertices[2].y,
+		vertices[3].y
+		});
+
+	return Vector2F(minX, minY);
 }
 
-const Vector2& ColliderBox::GetLocalBottomPos() const
+const Vector2F& ColliderBox::GetAABBMax() const
 {
-	Vector2 pos = Vector2::AddVector2(followPos_.ToVector2(), boxHalfSize_);
-	return pos;
+	auto vertices = GetRotatedVertices();
+
+	float maxX = (std::max)({
+		vertices[0].x,
+		vertices[1].x,
+		vertices[2].x,
+		vertices[3].x
+		});
+
+	float maxY = (std::max)({
+		vertices[0].y,
+		vertices[1].y,
+		vertices[2].y,
+		vertices[3].y
+		});
+
+	return Vector2F(maxX, maxY);
+}
+
+std::vector<Vector2F> ColliderBox::GetRotatedVertices() const
+{
+	std::vector<Vector2F> vertices(4);
+
+	// 現在の回転角に基づいた軸ベクトル（単位ベクトル）
+	Vector2F axisX = GetAxisX();
+	Vector2F axisY = GetAxisY();
+
+	float hW = static_cast<float>(boxHalfSize_.x);
+	float hH = static_cast<float>(boxHalfSize_.y);
+
+	// 各頂点（0:左上, 1:右上, 2:右下, 3:左下）を計算
+	// 計算式: 中心点 + (X軸方向 * ±横幅) + (Y軸方向 * ±縦幅)
+
+	// 0: 左上 (Top-Left)
+	vertices[0].x = followPos_.x + (axisX.x * -hW) + (axisY.x * -hH);
+	vertices[0].y = followPos_.y + (axisX.y * -hW) + (axisY.y * -hH);
+
+	// 1: 右上 (Top-Right)
+	vertices[1].x = followPos_.x + (axisX.x * hW) + (axisY.x * -hH);
+	vertices[1].y = followPos_.y + (axisX.y * hW) + (axisY.y * -hH);
+
+	// 2: 右下 (Bottom-Right)
+	vertices[2].x = followPos_.x + (axisX.x * hW) + (axisY.x * hH);
+	vertices[2].y = followPos_.y + (axisX.y * hW) + (axisY.y * hH);
+
+	// 3: 左下 (Bottom-Left)
+	vertices[3].x = followPos_.x + (axisX.x * -hW) + (axisY.x * hH);
+	vertices[3].y = followPos_.y + (axisX.y * -hW) + (axisY.y * hH);
+
+	return vertices;
 }
 
 void ColliderBox::DebugDraw()
 {
 	if (!isActive_ || !owner_.IsActive()) return;
 
-	Vector2 top = GetLocalTopPos();
-	Vector2 bottom = GetLocalBottomPos();
+	auto v = GetRotatedVertices();
 
-	DrawBox(
-		top.x,
-		top.y,
-		bottom.x,
-		bottom.y,
-		UtilityCommon::RED,
-		false
-	);
+	// DrawBoxは回転に対応していないため、DrawLineで4辺を描画する
+	unsigned int color = UtilityCommon::RED;
+	DrawLine(v[0].x, v[0].y, v[1].x, v[1].y, color);
+	DrawLine(v[1].x, v[1].y, v[2].x, v[2].y, color);
+	DrawLine(v[2].x, v[2].y, v[3].x, v[3].y, color);
+	DrawLine(v[3].x, v[3].y, v[0].x, v[0].y, color);
 
-	// 各頂点を円で描画
+	// デバッグ用情報の表示
+	DrawFormatString(80, 100, UtilityCommon::BLACK, L"角度(rad): %.2f", radAngle_);
+
+	// 各頂点を円で描画（回転後の位置が正しいか確認用）
 	constexpr float RADIUS = 5.0f;
-	DrawCircle(top.x, top.y, RADIUS, UtilityCommon::PURPLE, true);
-	DrawCircle(top.x, top.y + boxSize_.y, RADIUS, UtilityCommon::BLACK, true);
-	DrawCircle(top.x + boxSize_.x, top.y, RADIUS, UtilityCommon::BLACK, true);
-
-	DrawCircle(bottom.x, bottom.y, RADIUS, UtilityCommon::PINK, true);
-	DrawCircle(bottom.x, bottom.y - boxSize_.y, RADIUS, UtilityCommon::BLACK, true);
-	DrawCircle(bottom.x - boxSize_.x, bottom.y, RADIUS, UtilityCommon::BLACK, true);
+	DrawCircle(v[0].x, v[0].y, RADIUS, UtilityCommon::PURPLE, true); // 左上相当
+	DrawCircle(v[2].x, v[2].y, RADIUS, UtilityCommon::PINK, true);   // 右下相当
 }
 
 const Vector2F& ColliderBox::GetAxisX(void)const

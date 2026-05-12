@@ -8,10 +8,20 @@ class ColliderArray : public ColliderBase
 {
 public:
 
-	// 衝突判定の結果
+	// 接触種類
+	enum class HIT_TYPE
+	{
+		FLOOR,							// 床
+		WALL,							// 壁
+		CEILING							// 天井
+	};
+
+	// 判定結果
 	struct Result
 	{
-		std::vector<Vector2> indexes = {};		// インデックス番号
+		bool hit = false;				// 衝突したか
+		Vector2 hitChipIndex = {};		// 衝突したタイルのインデックス
+		Vector2 chipSize = {};			// チップサイズ
 	};
 
 	/// <summary>
@@ -35,6 +45,13 @@ public:
 	/// </summary>
 	/// <returns>複製したインスタンス</returns>
 	std::shared_ptr<ColliderBase> Clone() const override;
+
+	/// <summary>
+	/// 指定した座標が衝突しているか判定
+	/// </summary>
+	/// <param name="worldPos">座標</param>
+	/// <returns>判定結果</returns>
+	Result CheckHitMapChip(const Vector2& worldPos) const;
 
 	/// <summary>
 	/// 衝突判定を行う配列を設定
