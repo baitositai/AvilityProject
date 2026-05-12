@@ -89,21 +89,21 @@ void ComponentAvilityChargeShot::ProcessInputCharge()
 		moveAmount_.x = std::sin(chageTime_);
 
 		// 移動量の更新
-		owner_.SetMoveAmount(moveAmount_);
+		owner_.SetMoveAmount(moveAmount_);		
+
+	}
+	else{
 
 		if (shotTime_ > 2.0f)
 		{
 			chageTime_ = 0.0f;
 			shotTime_ = 2.0f;
 
-			currentState_ = "shot";
-			currentStateFunction_ = stateFunctionMap_[currentState_];
 		}
-
-	}
-	else{
-
-		chageTime_ = 0.0f;
+		else
+		{
+			chageTime_ = 0.0f;
+		}
 
 		currentState_ = "shot";
 		currentStateFunction_ = stateFunctionMap_[currentState_];

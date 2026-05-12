@@ -27,7 +27,7 @@ OnHitPlayer::~OnHitPlayer()
 void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
     auto collider = std::dynamic_pointer_cast<ColliderArray>(opponentCollider.lock());
-    if (!collider) return;              // コライダーが空の場合終了
+    if (!collider) return;             // コライダーが空の場合終了
 
     // 当たったすべてのタイルインデックスを取得
     const auto& indexes = collider->GetResult().indexes;
