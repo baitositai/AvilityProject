@@ -1,7 +1,9 @@
 #include "../../Manager/Common/SceneManager.h"
 #include "../../Manager/Common/InputManager.h"
+#include "../../Manager/Game/CollisionManager.h"
 #include "../../Object/Character/Player.h"
 #include "../../Object/Common/Animation.h"
+#include "../../Collider/ColliderBox.h"
 #include "ComponentAvilityStamp.h"
 
 ComponentAvilityStamp::ComponentAvilityStamp(Player& owner) :
@@ -15,10 +17,20 @@ ComponentAvilityStamp::ComponentAvilityStamp(Player& owner) :
 	stateChangeMap_.emplace(STATE::INPUT, std::bind(&ComponentAvilityStamp::ChangeStateInput, this));
 	stateChangeMap_.emplace(STATE::STOP, std::bind(&ComponentAvilityStamp::ChangeStateStop, this));
 	stateChangeMap_.emplace(STATE::ACTIVE, std::bind(&ComponentAvilityStamp::ChangeStateActive, this));
+
+	// コライダーの登録
+	attackCollider_ = owner_.CreateColliderClone();
+	attackCollider_->ChangeTag(CollisionTags::TAG::PLAYER_AVILITY_STAMP);
+	attackCollider_->SetIsActive(false);
+	CollisionManager::GetInstance().Add(attackCollider_);
 }
 
 ComponentAvilityStamp::~ComponentAvilityStamp()
 {
+	if(attackCollider_)
+	{
+		attackCollider_->SetDelete();
+	}
 }
 
 void ComponentAvilityStamp::Update()
@@ -49,6 +61,7 @@ void ComponentAvilityStamp::UpdateInput()
 void ComponentAvilityStamp::UpdateStop()
 {
 	stopTime_ -= sceneManager_.GetDeltaTime();
+	owner_.SetIsInvincibleTime(1.0f); // 処理中常に無敵
 	if (stopTime_ <= 0.0f)
 	{
 		ChangeState(STATE::ACTIVE);
@@ -57,6 +70,7 @@ void ComponentAvilityStamp::UpdateStop()
 
 void ComponentAvilityStamp::UpdateActive()
 {
+	owner_.SetIsInvincibleTime(1.0f); // 処理中常に無敵
 	if(owner_.IsGround())
 	{
 		// 地面に着地したら状態を入力待ちにする
@@ -85,6 +99,12 @@ void ComponentAvilityStamp::ChangeStateInput()
 
 	// 入力受付時間を指定
 	inputEnableTime_ = INPUT_ENABLE_TIME;
+
+	// 着地後も少し無敵時間を設ける
+	owner_.SetIsInvincibleTime(1.0f);
+
+	// 攻撃判定用コライダーを無効にする
+	attackCollider_->SetIsActive(false);
 }
 
 void ComponentAvilityStamp::ChangeStateStop()
@@ -106,6 +126,9 @@ void ComponentAvilityStamp::ChangeStateStop()
 	// アニメーション切り替えて停止
 	owner_.GetAnimation().Play(Animation::TYPE::IDLE);
 	owner_.GetAnimation().Stop();
+
+	// 攻撃判定用コライダーを有効にする
+	attackCollider_->SetIsActive(true);
 }
 
 void ComponentAvilityStamp::ChangeStateActive()

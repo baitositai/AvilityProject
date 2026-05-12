@@ -11,7 +11,8 @@ public:
 	{
 		NONE,
 		PLAYER,					// プレイヤー
-		PLAYER_ATTACK_NORMAL,	// プレイヤーの通常攻撃			
+		PLAYER_ATTACK_NORMAL,	// プレイヤーの通常攻撃	
+		PLAYER_AVILITY_STAMP,	// プレイヤーのアビリティ
 		STAGE,					// ステージ
 		ENEMY_CLONE,			// 敵:クローン
 		AVILITY_BOX,			// アビリティ設置のボックス

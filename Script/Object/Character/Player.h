@@ -2,6 +2,7 @@
 #include "CharacterBase.h"
 
 class ComponentAvilityBase;
+class ColliderBox;
 enum class ABILITY_SLOT;
 
 class Player : public CharacterBase
@@ -78,6 +79,12 @@ public:
 	/// 攻撃のリセット
 	/// </summary>
 	void AttackReset();
+
+	/// <summary>
+	/// 自身のコライダーのクローンを生成して返す
+	/// </summary>
+	/// <returns>自身のコライダーのクローン</returns>
+	std::shared_ptr<ColliderBox> CreateColliderClone();
 
 	/// <summary>
 	/// アビリティコンポーネントの設定

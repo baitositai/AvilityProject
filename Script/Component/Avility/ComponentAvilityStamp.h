@@ -3,6 +3,8 @@
 #include <unordered_map>
 #include "ComponentAvilityBase.h"
 
+class ColliderBox;
+
 class ComponentAvilityStamp : public ComponentAvilityBase
 {
 public:
@@ -52,6 +54,9 @@ private:
 
 	// 状態
 	STATE state_;
+
+	// 攻撃判定用コライダー
+	std::shared_ptr<ColliderBox> attackCollider_;
 
 	// 状態別更新
 	std::function<void()> update_;

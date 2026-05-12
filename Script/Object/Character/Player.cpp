@@ -47,6 +47,13 @@ void Player::AttackReset()
 	componentStateMap_.at(STATE::ATTACK)->Init();
 }
 
+std::shared_ptr<ColliderBox> Player::CreateColliderClone()
+{
+	std::shared_ptr<ColliderBase> collider = collider_->Clone();
+	std::shared_ptr<ColliderBox> colliderBox = std::dynamic_pointer_cast<ColliderBox>(collider);
+	return colliderBox;
+}
+
 void Player::SetAbilityComponent(std::unique_ptr<ComponentAvilityBase> component)
 {
 	// ’†g‚ª‚È‚¢ê‡
