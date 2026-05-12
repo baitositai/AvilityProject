@@ -1,5 +1,9 @@
 #pragma once
+#include <vector>
+#include <unordered_map>
 #include "../../Template/Singleton.h"
+
+class CharacterBase;
 
 class EnemyManager : public Singleton<EnemyManager>
 {
@@ -7,6 +11,13 @@ class EnemyManager : public Singleton<EnemyManager>
 	friend class Singleton<EnemyManager>;
 
 public:
+
+	// 種類
+	enum class TYPE
+	{
+		CLONE,
+		MAX,
+	};
 
 	/// <summary>
 	/// 初期化処理
@@ -29,6 +40,9 @@ public:
 	void DebugDraw();
 
 private:
+
+	// 敵を管理するマップ
+	std::unordered_map<TYPE, std::vector<std::unique_ptr<CharacterBase>>> enemiesMap_;
 
 	// コンストラクタ
 	EnemyManager();

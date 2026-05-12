@@ -10,12 +10,17 @@ class ComponentBase;
 class ComponentMove;
 class ComponentSpriteAnimation;
 class ComponentGravity;
+class ComponentKnockBack;
 class ComponentAvilityChargeShot;
-class ComponentStatePlayerAlive;
-class ComponentStatePlayerAttack;
-class ComponentStatePlayerDead;
-class ComponentStatePlayerHit;
-class ComponentStatePlayerRespawn;
+class ComponentStatePlayerProcess;
+class ComponentStateAttackDefault;
+class ComponentStateIdle;
+class ComponentStateDead;
+class ComponentStateDummy;
+class ComponentAvilityBox;
+class ComponentAvilityShot;
+class ComponentInvincible;
+class ComponentJump;
 
 class FactoryComponent : public Singleton<FactoryComponent>
 {
@@ -40,12 +45,17 @@ private:
 	std::unique_ptr<ComponentMove> CreateComponentMove(ActorBase& owner);
 	std::unique_ptr<ComponentSpriteAnimation> CreateComponentSpriteAnimation(ActorBase& owner);
 	std::unique_ptr<ComponentGravity> CreateComponentGravity(ActorBase& owner);
-	std::unique_ptr<ComponentAvilityChargeShot> CreateComponentAvilityChargeShot(ActorBase& owner);
-	std::unique_ptr<ComponentStatePlayerAlive> CreateComponentStatePlayerAlive(ActorBase& owner);
-	std::unique_ptr<ComponentStatePlayerAttack> CreateComponentStatePlayerAttack(ActorBase& owner);
-	std::unique_ptr<ComponentStatePlayerDead> CreateComponentStatePlayerDead(ActorBase& owner);
-	std::unique_ptr<ComponentStatePlayerHit> CreateComponentStatePlayerHit(ActorBase& owner);
-	std::unique_ptr<ComponentStatePlayerRespawn> CreateComponentStatePlayerRespawn(ActorBase& owner);	
+	//std::unique_ptr<ComponentAvilityChargeShot> CreateComponentAvilityChargeShot(ActorBase& owner);
+	std::unique_ptr<ComponentStatePlayerProcess> CreateComponentStatePlayerProcess(ActorBase& owner);
+	std::unique_ptr<ComponentStateAttackDefault> CreateComponentStateAttackDefault(ActorBase& owner);
+	std::unique_ptr<ComponentAvilityBox> CreateComponentAvilityBox(ActorBase& owner);
+	std::unique_ptr<ComponentAvilityShot> CreateComponentAvilityShot(ActorBase& owner);
+	std::unique_ptr<ComponentKnockBack> CreateComponentKnockBack(ActorBase& owner);
+	std::unique_ptr<ComponentStateIdle> CreateComponentStateIdle(ActorBase& owner);
+	std::unique_ptr<ComponentStateDead> CreateComponentStateDead(ActorBase& owner);
+	std::unique_ptr<ComponentStateDummy> CreateComponentStateDummy(ActorBase& owner);
+	std::unique_ptr<ComponentInvincible> CreateComponentInvincible(ActorBase& owner);
+	std::unique_ptr<ComponentJump> CreateComponentJump(ActorBase& owner);
 	
 	// コンストラクタ
 	FactoryComponent();

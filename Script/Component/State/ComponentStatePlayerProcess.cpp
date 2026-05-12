@@ -1,8 +1,10 @@
-#include "../../../Manager/Common/InputManager.h"
-#include "../../../Object/Character/Player.h"
-#include "ComponentStatePlayerAlive.h"
+#include "../../Manager/Common/InputManager.h"
+#include "../../Manager/Common/SceneManager.h"
+#include "../../Object/Character/Player.h"
+#include "../../Object/Common/Animation.h"
+#include "ComponentStatePlayerProcess.h"
 
-ComponentStatePlayerAlive::ComponentStatePlayerAlive(Player& owner) :
+ComponentStatePlayerProcess::ComponentStatePlayerProcess(Player& owner) :
 	ComponentCharacterStateBase(owner),
 	owner_(owner),
 	inputManager_(InputManager::GetInstance())
@@ -11,13 +13,12 @@ ComponentStatePlayerAlive::ComponentStatePlayerAlive(Player& owner) :
 	isGround_ = false;
 }
 
-ComponentStatePlayerAlive::~ComponentStatePlayerAlive()
+ComponentStatePlayerProcess::~ComponentStatePlayerProcess()
 {
 }
 
-void ComponentStatePlayerAlive::Update()
+void ComponentStatePlayerProcess::Update()
 {
-
 	// 移動量の初期化
 	moveAmount_ = {};
 
@@ -29,9 +30,6 @@ void ComponentStatePlayerAlive::Update()
 
 	// ジャンプの入力処理
 	ProcessInputJump();
-
-	// ジャンプ処理
-	Jump();	
 	
 	// 通常攻撃の入力処理
 	ProcessInputAttack();
@@ -39,10 +37,9 @@ void ComponentStatePlayerAlive::Update()
 	// 情報の更新
 	owner_.SetMoveAmount(moveAmount_);
 	owner_.SetIsGround(isGround_);
-
 }
 
-void ComponentStatePlayerAlive::ProcessInputMove()
+void ComponentStatePlayerProcess::ProcessInputMove()
 {
 	// ダッシュの入力判定に応じて速度を変更
 	const float moveSpeed = inputManager_.IsNew(InputManager::TYPE::PLAYER_DASH) ? owner_.GetDashSpeed() : owner_.GetParameter()->moveSpeed;
@@ -66,80 +63,49 @@ void ComponentStatePlayerAlive::ProcessInputMove()
 		if (moveAmount_.x > 0.0f || moveAmount_.x < 0.0f)
 		{
 			// 走るアニメーションの変更
-			owner_.ChangeAnimation(Player::ANIMATION::WALK);
+			owner_.GetAnimation().Play(Animation::TYPE::WALK);
 		}
 		else
 		{
 			// 待機のアニメーションに変更
-			owner_.ChangeAnimation(Player::ANIMATION::IDLE);
+			owner_.GetAnimation().Play(Animation::TYPE::IDLE);
 		}
 	}
 }
 
-void ComponentStatePlayerAlive::ProcessInputJump()
+void ComponentStatePlayerProcess::ProcessInputJump()
 {
-	// 地面にいる場合
 	if (isGround_)
 	{
-		// 初期化
-		velocityY_ = 0.0f;
-
-		// 入力判定
+		// Python: if キー入力があったら:
 		if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_JUMP))
 		{
-			// 地面判定を無効にする
 			isGround_ = false;
-			
-			// ジャンプ力設定
-			velocityY_ = -owner_.GetJumpPow();
 
-			// アニメーションを変更
-			owner_.ChangeAnimation(Player::ANIMATION::JUMP);
+			owner_.SetJumpPow(-owner_.GetJumpPowMax());
+
+			owner_.GetAnimation().Play(Animation::TYPE::JUMP);
 		}
 	}
 }
 
-void ComponentStatePlayerAlive::ProcessInputAttack()
+void ComponentStatePlayerProcess::ProcessInputAttack()
 {
 	if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_ATTACK))
 	{
-		// 攻撃のコライダーを生成
-
 		// 攻撃のアニメーションを開始（ループしない）
-		owner_.ChangeAnimation(Player::ANIMATION::ATTACK, false);
+		owner_.GetAnimation().Play(Animation::TYPE::ATTACK, false);
+
+		// 次回アニメーションを指定しない
+		owner_.GetAnimation().SetNextAnimationType(Animation::TYPE::MAX);
 
 		// 状態遷移
 		owner_.ChangeState(Player::STATE::ATTACK);
+
+		// 攻撃の初期化
+		owner_.AttackReset();
 		
 		// 横移動の値をなくす
 		moveAmount_.x = 0.0f;
-	}
-}
-
-void ComponentStatePlayerAlive::Jump()
-{
-	// 現在の縦の移動量
-	float currentY = owner_.GetParameter()->moveAmount.y;
-
-	// ジャンプ力がある場合
-	if (velocityY_ < 0.0f)
-	{
-		// 移動量に追加
-		moveAmount_.y = velocityY_;
-
-		// 初期化
-		velocityY_ = 0.0f;
-	}
-	else
-	{
-		// 現在の移動量を保持
-		moveAmount_.y = currentY;
-
-		// 移動量が下方向でかつ地面についてない場合
-		if (moveAmount_.y > 0.0f && !isGround_)
-		{
-			// アニメーションを落下に変更
-			owner_.ChangeAnimation(Player::ANIMATION::FALL);
-		}
 	}
 }

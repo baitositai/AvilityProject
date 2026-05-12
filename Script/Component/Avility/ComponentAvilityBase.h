@@ -2,7 +2,8 @@
 #include "../ComponentBase.h"
 
 class Player;
-
+class StageManager;
+class InputManager;
 class ComponentAvilityBase : public ComponentBase
 {
 public:
@@ -26,6 +27,12 @@ public:
 protected:
 
 	Player& owner_;
+
+	//ステージマネージャ
+	StageManager& stageManager_;
+
+	// 入力管理クラスの参照
+	InputManager& inputManager_;
 
 };
 

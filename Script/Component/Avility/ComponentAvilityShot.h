@@ -5,7 +5,6 @@
 #include "ComponentAvilityBase.h"
 #include "../../Common/Vector2F.h"
 
-class InputManager;
 class Player;
 
 class ComponentAvilityShot :
@@ -34,8 +33,6 @@ public:
 
 private:
 
-	// 入力管理クラスの参照
-	InputManager& inputManager_;
 
 	// 移動量
 	Vector2F moveAmount_;

@@ -17,12 +17,6 @@ public:
 	/// </summary>
 	virtual ~ComponentCharacterStateBase() override;
 
-	/// <summary>
-	/// ó‘Ô‘JˆÚ
-	/// </summary>
-	/// <param name="state">ó‘Ô</param>
-	void ChangeState(const CharacterBase::STATE state);
-
 private:
 
 };

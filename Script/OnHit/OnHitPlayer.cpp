@@ -1,22 +1,18 @@
+#include "../../Object/Common/Animation.h"
 #include "../Utility/UtilityCommon.h"
 #include "../Object/Character/Player.h"
 #include "../Collider/ColliderArray.h"
 #include "../Collider/ColliderBox.h"
-#include "../../Object/Gimmick/AvilityBox.h"
 #include "OnHitPlayer.h"
 
 
 OnHitPlayer::OnHitPlayer(Player& owner) :
-    OnHitBase(owner),
+    OnHitCharacterBase(owner),
     owner_(owner)
 {
-    onHitMap_.emplace(CollisionTags::TAG::STAGE , [this](const std::weak_ptr<ColliderBase>& opponentCollider)
+    onHitMap_.emplace(CollisionTags::TAG::ENEMY_CLONE, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
         {
-            return OnHitStage(opponentCollider);
-        });
-    onHitMap_.emplace(CollisionTags::TAG::AVILITY_BOX, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
-        {
-            return OnHitAvilityBox(opponentCollider);
+            return OnHitEnemy(opponentCollider);
         });
 }
 
@@ -135,65 +131,10 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
     AvilityShot(opponentCollider, bestNormal);
 }
 
-void OnHitPlayer::OnHitAvilityBox(const std::weak_ptr<ColliderBase>& opponentCollider)
+void OnHitPlayer::OnHitEnemy(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
-    auto collider = std::dynamic_pointer_cast<ColliderBox>(opponentCollider.lock());
-
-    const auto& opOwner = opponentCollider.lock()->GetOwner();
-
-    //お互いのパラメータ
-    const ActorBase::Parameter* myParam = owner_.GetParameter();
-    const ActorBase::Parameter* opParam = opOwner.GetParameter();
-
-
-    //互いの重さ
-    float myWeight = myParam->weight;
-    float opWeight = opParam->weight;
-    float weightDiff = myWeight - opWeight;
-
-    //お互いの距離
-    Vector2F diff = Vector2F::SubVector2F(opParam->pos, myParam->pos);
-    int signX = UtilityCommon::GetSign(diff.x);
-    int signY = UtilityCommon::GetSign(diff.y);
-
-    //それぞれのめり込み量
-    float overlapX = static_cast<float>(owner_.GetHitBoxSize().x/2 )
-        + static_cast<float>(collider->GetBoxHalfSize().x) - fabsf(diff.x);
-    float overlapY = static_cast<float>(owner_.GetHitBoxSize().y/2)
-        + static_cast<float>(collider->GetBoxHalfSize().y) - fabsf(diff.y);
-
-    //移動量
-    Vector2F moveAmount = myParam->moveAmount;
-
-
-    //ボックスの上に乗っているかを判断
-    Vector2F pos = myParam->pos;
-
-    //ボックスの上に乗っていたら地面判定を付与
-    if (overlapX>= overlapY)
-    {
-        //ジャンプ中(ジャンプアニメーション中)は吸いつきを防ぐため、処理を飛ばす
-        if (int anim = owner_.GetParameterAnimation().animationType == 4)
-        {
-            return;
-        }
-
-        pos.y -= (overlapY + 0.01f) * signY;
-        // 地面判定を設定
-        owner_.SetIsGround(true);
-
-        //落下を防止するためにYの移動量をゼロにする
-        moveAmount.y = 0;
-        owner_.SetMoveAmount(moveAmount);
-    }
-    else
-    {
-        //ボックスを押し出す
-        pos.x += overlapX * -opWeight * signX;
-    }
-
-    //座標更新
-    owner_.SetPosition(pos);
+    // 攻撃判定
+    OnHitAttack(opponentCollider);
 }
 
 void OnHitPlayer::AvilityShot(const std::weak_ptr<ColliderBase>& opponentCollider, const Vector2F& normal)

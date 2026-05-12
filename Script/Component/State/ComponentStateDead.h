@@ -1,9 +1,9 @@
 #pragma once
-#include "../ComponentCharacterStateBase.h"
+#include "../Component/State/ComponentCharacterStateBase.h"
 
-class Player;
+class CharacterBase;
 
-class ComponentStatePlayerAttack : public ComponentCharacterStateBase
+class ComponentStateDead :  public ComponentCharacterStateBase
 {
 public:
 
@@ -11,12 +11,12 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="owner">所有者</param>
-	ComponentStatePlayerAttack(Player& owner);
+	ComponentStateDead(CharacterBase& owner);
 
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~ComponentStatePlayerAttack() override;
+	~ComponentStateDead() override;
 
 	/// <summary>
 	/// 更新処理
@@ -26,6 +26,5 @@ public:
 private:
 
 	// 所有者
-	Player& owner_;
+	CharacterBase& owner_;
 };
-

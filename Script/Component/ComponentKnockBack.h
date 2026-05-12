@@ -1,9 +1,9 @@
 #pragma once
-#include "../ComponentCharacterStateBase.h"
+#include "ComponentBase.h"
 
-class Player;
+class CharacterBase;
 
-class ComponentStatePlayerHit : public ComponentCharacterStateBase
+class ComponentKnockBack : public ComponentBase
 {
 public:
 
@@ -11,12 +11,12 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="owner">所有者</param>
-	ComponentStatePlayerHit(Player& owner);
+	ComponentKnockBack(CharacterBase& owner);
 
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~ComponentStatePlayerHit() override;
+	~ComponentKnockBack() override;
 
 	/// <summary>
 	/// 更新処理
@@ -24,4 +24,7 @@ public:
 	void Update() override;
 
 private:
+
+	CharacterBase& owner_;
 };
+

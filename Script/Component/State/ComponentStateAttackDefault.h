@@ -1,0 +1,47 @@
+#pragma once
+#include "../Component/State/ComponentCharacterStateBase.h"
+
+class CharacterBase;
+class ColliderCircle;
+
+class ComponentStateAttackDefault : public ComponentCharacterStateBase
+{
+public:
+
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	/// <param name="owner">所有者</param>
+	ComponentStateAttackDefault(CharacterBase& owner);
+
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
+	~ComponentStateAttackDefault() override;
+
+	/// <summary>
+	/// 初期化処理
+	/// </summary>
+	void Init() override;
+
+	/// <summary>
+	/// 更新処理
+	/// </summary>
+	void Update() override;
+
+private:
+
+	// 通常攻撃の相対位置
+	const Vector2F DEFAULT_ATTACK_LOCAL_POS;
+
+	// 所有者
+	CharacterBase& owner_;
+
+	// 攻撃位置
+	Vector2F attackPos_;
+
+	// 攻撃開始
+	bool isAttack_;
+
+	std::shared_ptr<ColliderCircle> collider_;
+};

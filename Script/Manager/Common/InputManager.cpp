@@ -20,6 +20,7 @@ void InputManager::Init()
 	RegisterTrigger(TYPE::PLAYER_JUMP, { KEY_INPUT_SPACE }, { BTN::RB_RIGHT });
 	RegisterTrigger(TYPE::PLAYER_DASH, { KEY_INPUT_LSHIFT }, { BTN::RB_DOWN });
 	RegisterTrigger(TYPE::PLAYER_ATTACK, { KEY_INPUT_R }, { BTN::RB_TOP });
+	RegisterTrigger(TYPE::PLAYER_AVILITY, { KEY_INPUT_E }, { BTN::RB_LEFT });
 
 	RegisterTrigger(TYPE::CAMERA_MOVE_RIGHT, { KEY_INPUT_RIGHT }, { }, STICK::R_STICK_RIGHT);
 	RegisterTrigger(TYPE::CAMERA_MOVE_LEFT, { KEY_INPUT_LEFT }, { }, STICK::R_STICK_LEFT);

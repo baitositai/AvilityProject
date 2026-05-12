@@ -1,17 +1,21 @@
 {
   "player": {
     "componentNameList": [
+      "jump",
+      "knockBack",
       "gravity",
       "chargeShot",
       "move",
-      "spriteAnimation"
+      "spriteAnimation",
+      "invincible",
+      "avilityBox"
     ],
     "componentStateNameList": {
-      "alive": "playerAlive",
-      "attack": "playerAttack",
-      "hit": "playerHit",
-      "dead": "playereDead",
-      "resaown": "playerRespawn"
+      "alive": "playerProcess",
+      "attack": "attackDefault",
+      "hit": "dummy",
+      "dead": "dead",
+      "respawn": "dummy"
     },
     "scale": 1.0,
     "angle": 0.0,
@@ -21,11 +25,13 @@
     "dashSpeed": 4.0,
     "hp": 100,
     "attackPower": 10,
-    "jumpPower": 0.2,
-    "jumpPowerMax": 10.0,
-    "gravityPower": 0.5,
+    "jumpPowerMax": 20.0,
+    "gravityPower": 9.8,
     "jumpCount": 2,
-    "animationSpeed": 0.1,
+    "invincibleTimeMax": 2.0,
+    "defaultAttackRadius": 20.0,
+    "animationDefaultSpeed": 0.1,
+    "animationAttackSpeed": 0.2,
     "animationsIdle": 6,
     "animationsWalk": 8,
     "animationsBrake": 4,
@@ -35,6 +41,7 @@
     "animationsDie": 10,
     "animationsDamage": 4,
     "animationsPause": 6,
+    "weight": 0.9,
     "divisionNum": {
       "x": 10,
       "y": 9
@@ -47,6 +54,56 @@
       "x": 0,
       "y": 0
     },
-    "weight": 0.9
+    "defaultAttackLoaclPos": {
+      "x": 40,
+      "y": 8
+    },
+    "animation": {
+      "idle": {
+        "no": 0,
+        "speed": 0.1,
+        "num": 6
+      },
+      "walk": {
+        "no": 1,
+        "speed": 0.1,
+        "num": 8
+      },
+      "brake": {
+        "no": 2,
+        "speed": 0.1,
+        "num": 4
+      },
+      "attack": {
+        "no": 3,
+        "speed": 0.2,
+        "num": 7
+      },
+      "jump": {
+        "no": 4,
+        "speed": 0.1,
+        "num": 6
+      },
+      "fall": {
+        "no": 5,
+        "speed": 0.1,
+        "num": 6
+      },
+      "dead": {
+        "no": 6,
+        "speed": 0.1,
+        "num": 10
+      },
+      "damage": {
+        "no": 7,
+        "speed": 0.2,
+        "num": 4
+      },
+      "pause": {
+        "no": 8,
+        "speed": 0.1,
+        "num": 6
+      }
+    }
   }
 }

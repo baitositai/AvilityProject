@@ -145,14 +145,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Object\Item\ItemBase.cpp" />
+    <ClCompile Include="Script\Component\State\ComponentStateAttackDefault.cpp" />
+    <ClCompile Include="Script\Component\State\ComponentStateIdle.cpp" />
+    <ClCompile Include="Script\Component\State\ComponentStateDummy.cpp" />
+    <ClCompile Include="Script\Component\ComponentJump.cpp" />
+    <ClCompile Include="Script\Component\ComponentInvincible.cpp" />
+    <ClCompile Include="Script\Object\Common\Animation.cpp" />
+    <ClCompile Include="Script\Component\State\ComponentStateDead.cpp" />
+    <ClCompile Include="Script\Component\ComponentKnockBack.cpp" />
+    <ClCompile Include="Script\OnHit\OnHitCharacterBase.cpp" />
+    <ClCompile Include="Script\OnHit\OnHitEnemyClone.cpp" />
+    <ClCompile Include="Script\Object\Character\Enemy\EnemyClone.cpp" />
     <ClCompile Include="Script\Component\Avility\ComponentAvilityChargeShot.cpp" />
     <ClCompile Include="Script\Component\ComponentBlast.cpp" />
     <ClCompile Include="Script\Component\Avility\ComponentAvilityShot.cpp" />
-    <ClCompile Include="Script\Component\State\Player\ComponentStatePlayerRespawn.cpp" />
-    <ClCompile Include="Script\Component\State\Player\ComponentStatePlayerHit.cpp" />
-    <ClCompile Include="Script\Component\State\Player\ComponentStatePlayerDead.cpp" />
-    <ClCompile Include="Script\Component\State\Player\ComponentStatePlayerAttack.cpp" />
-    <ClCompile Include="Script\Component\State\Player\ComponentStatePlayerAlive.cpp" />
+    <ClCompile Include="Script\Component\State\ComponentStatePlayerProcess.cpp" />
     <ClCompile Include="Script\Component\State\ComponentCharacterStateBase.cpp" />
     <ClCompile Include="Script\OnHit\OnHitAvilityBox.cpp" />
     <ClCompile Include="Script\Object\Gimmick\AvilityBox.cpp" />
@@ -242,13 +250,21 @@
     <ClCompile Include="Script\Utility\UtilityCollision.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Object\Item\ItemBase.h" />
+    <ClInclude Include="Script\Component\State\ComponentStateAttackDefault.h" />
+    <ClInclude Include="Script\Component\State\ComponentStateIdle.h" />
+    <ClInclude Include="Script\Component\State\ComponentStateDummy.h" />
+    <ClInclude Include="Script\Component\ComponentJump.h" />
+    <ClInclude Include="Script\Component\ComponentInvincible.h" />
+    <ClInclude Include="Script\Object\Common\Animation.h" />
+    <ClInclude Include="Script\Component\State\ComponentStateDead.h" />
+    <ClInclude Include="Script\Component\ComponentKnockBack.h" />
+    <ClInclude Include="Script\OnHit\OnHitCharacterBase.h" />
+    <ClInclude Include="Script\OnHit\OnHitEnemyClone.h" />
+    <ClInclude Include="Script\Object\Character\Enemy\EnemyClone.h" />
     <ClInclude Include="Script\Component\Avility\ComponentAvilityChargeShot.h" />
     <ClInclude Include="Script\Component\ComponentBlast.h" />
-    <ClInclude Include="Script\Component\State\Player\ComponentStatePlayerRespawn.h" />
-    <ClInclude Include="Script\Component\State\Player\ComponentStatePlayerHit.h" />
-    <ClInclude Include="Script\Component\State\Player\ComponentStatePlayerDead.h" />
-    <ClInclude Include="Script\Component\State\Player\ComponentStatePlayerAttack.h" />
-    <ClInclude Include="Script\Component\State\Player\ComponentStatePlayerAlive.h" />
+    <ClInclude Include="Script\Component\State\ComponentStatePlayerProcess.h" />
     <ClInclude Include="Script\Component\State\ComponentCharacterStateBase.h" />
     <ClInclude Include="Script\Component\Avility\ComponentAvilityShot.h" />
     <ClInclude Include="Script\OnHit\OnHitAvilityBox.h" />

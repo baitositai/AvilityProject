@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "../../Collider/ColliderBase.h"
 #include "../../Collider/ColliderBox.h"
 #include "../../Collider/ColliderCircle.h"
@@ -19,10 +20,20 @@ void CollisionManager::Update()
 	// 配列サイズ
 	const int size = static_cast<int>(colliders_.size());
 
+	//コリジョンタグの順番に並べ、処理順を整える
+	std::sort(colliders_.begin(), colliders_.end(),
+		[this](const std::weak_ptr<ColliderBase>col1, const std::weak_ptr<ColliderBase>col2)
+		{
+			return col1.lock()->GetTag() < col2.lock()->GetTag();
+		});
+
 	for (int i = 0; i < size - 1; i++)
 	{
-		// 所有者が非活動状態の場合
-		if (!colliders_[i]->GetOwner().IsActive())
+		//衝突判定の初期化
+		colliders_[i]->SetIsHit(false);
+
+		// コライダーや所有者が非活動状態の場合
+		if (!colliders_[i]->GetOwner().IsActive() || !colliders_[i]->IsActive())
 		{
 			// 次へ
 			continue;
@@ -33,16 +44,23 @@ void CollisionManager::Update()
 			auto& collider = colliders_[i];
 			auto& collider2 = colliders_[j];
 
+			// 各コライダーからタグを取得
+			const auto& tag1 = colliders_[i]->GetTag();
+			const auto& tag2 = colliders_[j]->GetTag();
+
+			//衝突判定の初期化
+			colliders_[j]->SetIsHit(false);
+
 			// 所有者が非活動状態の場合
-			if (!colliders_[j]->GetOwner().IsActive())
+			if (!colliders_[j]->GetOwner().IsActive() || !colliders_[i]->IsActive())
 			{
 				// 次へ
 				continue;
 			}
 
-			// 各コライダーからタグを取得
-			const auto& tag1 = colliders_[i]->GetTag();
-			const auto& tag2 = colliders_[j]->GetTag();
+			//// 各コライダーからタグを取得
+			//const auto& tag1 = colliders_[i]->GetTag();
+			//const auto& tag2 = colliders_[j]->GetTag();
 
 			/*if (tag1 == CollisionTags::TAG::ANOMALY && tag2 == CollisionTags::TAG::REPORT ||
 				tag1 == CollisionTags::TAG::REPORT && tag2 == CollisionTags::TAG::ANOMALY)
@@ -74,6 +92,9 @@ void CollisionManager::Update()
 			// 衝突判定を実行
 			if (collisionFunction(colliders_[i], colliders_[j]))
 			{
+				colliders_[i]->SetIsHit(true);
+				colliders_[j]->SetIsHit(true);
+
 				// お互いに相手のタグを設定
 				colliders_[i]->SetPertnerTag(tag2);
 				colliders_[j]->SetPertnerTag(tag1);
@@ -132,17 +153,28 @@ void CollisionManager::InitTagMatrix()
 	// サイズの定義
 	collTagMatrix_.resize(CollisionTags::TAG_COUNT, std::vector<bool>(CollisionTags::TAG_COUNT, false));
 
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::STAGE)] = true;				// プレイヤーとステージ
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::STAGE)] = true;						// プレイヤーとステージ
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::STAGE)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
 
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;			//アビリティ設置ボックスとプレイヤー
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;					// アビリティ設置ボックスとプレイヤー
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;
 
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::STAGE)] = true;			//アビリティ設置ボックスとステージ
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::STAGE)] = true;					// アビリティ設置ボックスとステージ
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::STAGE)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;
 
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::ENEMY)] = true;			//アビリティ設置ボックスと敵
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;			// アビリティ設置ボックスと敵
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::STAGE)] = true;					// 敵とステージ
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::STAGE)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::PLAYER_ATTACK_NORMAL)] = true;	// 敵とプレイヤーの通常攻撃
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_ATTACK_NORMAL)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;					// プレイヤーと敵
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;			//アビリティ設置ボックス同士
 }
 
 void CollisionManager::InitColliderMatrix()
@@ -268,7 +300,35 @@ bool CollisionManager::IsHitCheckCircleToCircle(std::weak_ptr<ColliderBase> coll
 
 bool CollisionManager::IsHitCheckCircleToBox(std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2)
 {
-	return false;
+	std::weak_ptr<ColliderCircle> colliderCircle;
+	std::weak_ptr<ColliderBox> colliderBox;
+
+	// モデルコライダーの用意
+	if (collider1.lock()->GetType() == ColliderType::TYPE::CIRCLE) { colliderCircle = std::dynamic_pointer_cast<ColliderCircle>(collider1.lock()); }
+	else if (collider2.lock()->GetType() == ColliderType::TYPE::CIRCLE) { colliderCircle = std::dynamic_pointer_cast<ColliderCircle>(collider2.lock()); }
+
+	// カプセルコライダーの用意
+	if (collider1.lock()->GetType() == ColliderType::TYPE::BOX) { colliderBox = std::dynamic_pointer_cast<ColliderBox>(collider1.lock()); }
+	else if (collider2.lock()->GetType() == ColliderType::TYPE::BOX) { colliderBox = std::dynamic_pointer_cast<ColliderBox>(collider2.lock()); }
+
+	// 判定結果
+	ColliderArray::Result result = {};
+
+	const Vector2 top = colliderBox.lock()->GetLocalTopPos();
+	const Vector2 bottom = colliderBox.lock()->GetLocalBottomPos();
+	Vector2F centerF = colliderCircle.lock()->GetPos();
+	const Vector2 center = centerF.ToVector2();
+	const float radius = colliderCircle.lock()->GetRadius();
+
+	// 衝突判定
+	const bool isHit = UtilityCollision::IsHitCircleToBox(
+		center,
+		radius,
+		top,
+		bottom);
+
+	// 衝突しているか返す
+	return isHit;
 }
 
 bool CollisionManager::IsHitCheckCircleToLine(std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2)
@@ -281,7 +341,7 @@ bool CollisionManager::IsHitCheckBoxToBox(std::weak_ptr<ColliderBase> collider1,
 	std::weak_ptr<ColliderBox> colliderBox1;
 	std::weak_ptr<ColliderBox> colliderBox2;
 
-	// モデルコライダーの用意
+	// ボックスコライダーの用意
 	colliderBox1 = std::dynamic_pointer_cast<ColliderBox>(collider1.lock()); 
 	colliderBox2 = std::dynamic_pointer_cast<ColliderBox>(collider2.lock()); 
 

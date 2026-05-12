@@ -10,6 +10,10 @@ ComponentBase::~ComponentBase()
 {
 }
 
+void ComponentBase::Init()
+{
+}
+
 void ComponentBase::Update()
 {
 }

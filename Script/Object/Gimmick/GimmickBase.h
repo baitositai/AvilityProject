@@ -5,6 +5,11 @@ class GimmickBase :public ActorBase
 {
 public:
 
+	enum class TYPE
+	{
+		AVILITY_BOX,
+	};
+
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
@@ -40,8 +45,17 @@ public:
 	/// </summary>
 	/// <param name=""></param>
 	void DebugDraw(void)override;
-private:
 
+	/// <summary>
+	/// ギミック種類の取得
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns>ギミック種類</returns>
+	const TYPE GetGimmickType(void)const { return gimmickType_; }
+protected:
+	//ギミックの種類
+	TYPE gimmickType_;
+private:
 
 
 };

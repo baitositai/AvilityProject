@@ -31,6 +31,8 @@ const Vector2& ColliderBox::GetLocalBottomPos() const
 
 void ColliderBox::DebugDraw()
 {
+	if (!isActive_ || !owner_.IsActive()) return;
+
 	Vector2 top = GetLocalTopPos();
 	Vector2 bottom = GetLocalBottomPos();
 

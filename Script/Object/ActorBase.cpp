@@ -8,11 +8,13 @@
 #include "../../Manager/Common/Camera.h"
 #include "../OnHit/OnHitBase.h"
 #include "../Collider/ColliderBase.h"
+#include "Common/Animation.h"
 #include "ActorBase.h"
 
-ActorBase::ActorBase(Parameter* parameter, const std::vector<std::string>& componentNameList) :
+ActorBase::ActorBase(Parameter* parameter, const std::vector<std::string>& componentNameList, std::unique_ptr<Animation> animation) :
 	DEFAULT_COMPONENT_CREATE_LIST(componentNameList),
 	actorParameterPtr_(parameter),
+	animation_(std::move(animation)),
 	scnMng_(SceneManager::GetInstance()),
 	sndMng_(SoundManager::GetInstance()),
 	resMng_(ResourceManager::GetInstance()),
@@ -42,8 +44,10 @@ void ActorBase::Init()
 
 void ActorBase::Update()
 {
+	// 空の場合無視
 	if (componentMap_.empty()) return;
 
+	// コンポーネントを回す
 	for (const auto& componet : componentMap_)
 	{
 		if (componet.second == nullptr) continue;
@@ -65,7 +69,7 @@ void ActorBase::Draw()
 		actorParameterPtr_->drawPos.y,
 		actorParameterPtr_->scale,
 		actorParameterPtr_->angle,
-		actorParameterPtr_->texuresHandle[parameterAnimation_.animationIndex],
+		actorParameterPtr_->texuresHandle[animation_->GetAnimationIndex()],
 		actorParameterPtr_->transparent,
 		actorParameterPtr_->direction
 	);
@@ -77,6 +81,17 @@ void ActorBase::DebugDraw()
 
 void ActorBase::InitAnimation()
 {
+}
+
+void ActorBase::Delete()
+{
+	// コライダーがある場合削除
+	if (collider_ != nullptr)
+	{
+		collider_->SetDelete();
+	}
+	// 削除
+	isDelete_ = true;
 }
 
 void ActorBase::AddComponent(const std::string& name, std::unique_ptr<ComponentBase> component)
@@ -100,18 +115,6 @@ void ActorBase::RemoveComponent(const std::string& name)
 	}
 }
 
-bool ActorBase::IsComponentActive(const std::string& name) const
-{
-	// 指定された名前の要素を検索する
-	auto it = componentMap_.find(name);
-
-	// 要素が見つかった場合は削除する
-	if (it != componentMap_.end())
-	{
-		return it->second->IsActive();
-	}
-}
-
 void ActorBase::AddMoveAmount(const Vector2F moveAmount)
 {
 	if (actorParameterPtr_->moveAmount.x == 0.0f && actorParameterPtr_->moveAmount.y == 0.0f)
@@ -125,6 +128,38 @@ void ActorBase::AddMoveAmount(const Vector2F moveAmount)
 		actorParameterPtr_->moveAmount.x += moveAmount.x;
 		actorParameterPtr_->moveAmount.y += moveAmount.y;
 	}
+}
+
+bool ActorBase::IsComponentActive(const std::string& name) const
+{
+	// 指定された名前の要素を検索する
+	auto it = componentMap_.find(name);
+
+	// 要素が見つかった場合は削除する
+	if (it != componentMap_.end())
+	{
+		return it->second->IsActive();
+	}
+}
+
+void ActorBase::SetComponentActive(const std::string& name, const bool isActive)
+{
+	// 指定された名前の要素を検索する
+	auto it = componentMap_.find(name);
+
+	// 要素が見つかった場合は削除する
+	if (it != componentMap_.end())
+	{
+		return it->second->SetActive(isActive);
+	}
+}
+void ActorBase::SetIsDelete(void)
+{
+	isActive_ = false;
+	isDelete_ = true;
+
+	//当たり判定の消去
+	collider_->SetDelete();
 }
 
 void ActorBase::RegisterCollider()
@@ -145,18 +180,6 @@ void ActorBase::CreateComponents()
 	for (const std::string& name : DEFAULT_COMPONENT_CREATE_LIST)
 	{
 		AddComponent(name, std::move(facCom_.CreateComponent(name, *this)));
-	}
-}
-
-void ActorBase::SetComponentActive(const std::string& name, const bool isActive)
-{
-	// 指定された名前の要素を検索する
-	auto it = componentMap_.find(name);
-
-	// 要素が見つかった場合は削除する
-	if (it != componentMap_.end())
-	{
-		return it->second->SetActive(isActive);
 	}
 }
 

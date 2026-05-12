@@ -1,11 +1,11 @@
 #pragma once
-#include "../ComponentCharacterStateBase.h"
-#include "../../Common/Vector2F.h"
+#include "ComponentCharacterStateBase.h"
+#include "../Common/Vector2F.h"
 
 class InputManager;
 class Player;
 
-class ComponentStatePlayerAlive : public ComponentCharacterStateBase
+class ComponentStatePlayerProcess : public ComponentCharacterStateBase
 {
 public:
 
@@ -13,12 +13,12 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="owner">所有者</param>
-	ComponentStatePlayerAlive(Player& owner);
+	ComponentStatePlayerProcess(Player& owner);
 
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~ComponentStatePlayerAlive() override;
+	~ComponentStatePlayerProcess() override;
 
 	/// <summary>
 	/// 更新処理
@@ -50,7 +50,4 @@ private:
 
 	// 攻撃入力処理
 	void ProcessInputAttack();
-
-	// ジャンプによる移動量を計算
-	void Jump();
 };

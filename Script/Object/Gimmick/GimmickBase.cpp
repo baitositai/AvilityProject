@@ -1,3 +1,4 @@
+#include "../Common/Animation.h"
 #include "GimmickBase.h"
 
 GimmickBase::GimmickBase(Parameter* parameter, const std::vector<std::string>& componentNameList):

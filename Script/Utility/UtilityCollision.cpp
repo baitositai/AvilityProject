@@ -63,7 +63,17 @@ bool UtilityCollision::IsHitCircleToCircle(const Vector2& circlePos1, const floa
 
 bool UtilityCollision::IsHitCircleToBox(const Vector2& circlePos, const float radius, const Vector2& boxTopPos, const Vector2& boxBotmPos)
 {
-	return false;
+    // 四角形の範囲内で円の中心に最も近い座標を特定する
+    float closestX = (std::max)(boxTopPos.x, (std::min)(circlePos.x, boxBotmPos.x));
+    float closestY = (std::max)(boxTopPos.y, (std::min)(circlePos.y, boxBotmPos.y));
+
+    // 最短地点と円の中心との距離の2乗を計算する
+    float diffX = circlePos.x - closestX;
+    float diffY = circlePos.y - closestY;
+    float distanceSq = (diffX * diffX) + (diffY * diffY);
+
+    // 距離の2乗が半径の2乗以下なら衝突している
+    return distanceSq <= (radius * radius);
 }
 
 bool UtilityCollision::IsHitCircleToLine(const Vector2& circlePos, const float radius, const Vector2& lineTopPos, const Vector2& lineEndPos)

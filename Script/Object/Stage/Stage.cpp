@@ -5,6 +5,7 @@
 #include "../../Manager/Common/Camera.h"
 #include "../../Collider/ColliderArray.h"
 #include "../../OnHit/OnHitBase.h"
+#include "../Common/Animation.h"
 #include "Tile/TileBase.h"
 #include "Stage.h"
 
