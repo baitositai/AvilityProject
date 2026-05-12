@@ -163,11 +163,6 @@ void OnHitAvilityBox::OnHitStage(const std::weak_ptr<ColliderBase>& opponentColl
 
         if (overL > 0 && overR > 0 && overT > 0 && overB > 0)
         {
-
-            if (owner_.GetIsPlayerPush())
-            {
-                int i = 0;
-            } 
             float minOverlap = 10000.0f;
             ActorBase::DIR dir = ActorBase::DIR::MAX;
 
@@ -211,7 +206,7 @@ void OnHitAvilityBox::OnHitStage(const std::weak_ptr<ColliderBase>& opponentColl
                 moveAmount_ = Vector2F(0.0f, moveAmount_.y);
                 owner_.SetIsHitWall(true);
             }
-            else if (dir == ActorBase::DIR::RIGHT) 
+            else if (dir == ActorBase::DIR::RIGHT)
             {
                 pos.x += (overR + 0.01f); 
                 //owner_.SetMoveAmount(Vector2F(0.0f, moveAmount.y));
@@ -223,6 +218,9 @@ void OnHitAvilityBox::OnHitStage(const std::weak_ptr<ColliderBase>& opponentColl
                 pos.y -= (overT + 0.01f); 
                 //owner_.SetMoveAmount(Vector2F(moveAmount.x, 0.0f)); 
                 moveAmount_ = Vector2F(moveAmount_.x, 0.0f);
+
+                //ínñ îªíË
+                owner_.SetIsGround(true);
                 
             }
             else if (dir == ActorBase::DIR::DOWN) 
@@ -300,10 +298,11 @@ void OnHitAvilityBox::OnHitBox(const std::weak_ptr<ColliderBase>& opponentCollid
         {
             moveAmount_.x = 0.0f;
         }
+        HitWall();
     }
     else
     {
-        pos.y += -(overlapY)* signY;
+        pos.y += (overlapY)* -signY;
     }
 
     // ç¿ïWäiî[

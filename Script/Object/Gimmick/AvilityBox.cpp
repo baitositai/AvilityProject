@@ -83,8 +83,6 @@ void AvilityBox::DebugDraw(void)
 	constexpr float LOCAL = 15.0f;
 	parameter_.direction ? dirPos.x = -LOCAL : dirPos.x = LOCAL;
 	DrawCircle(parameter_.pos.x + dirPos.x, parameter_.pos.y, 3, UtilityCommon::LIME);
-
-
 }
 
 void AvilityBox::AddHitInfo(const HitInfo& _hitInfo)

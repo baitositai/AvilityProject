@@ -16,6 +16,9 @@ public:
 		Vector2F placePos;		//設置時のプレイヤーとのローカル座標
 		float blastTime;		//爆発するまでの時間
 		int boxNum;				//何個目のボックスか
+
+		bool isGround = false;				// 地面判定
+		bool isFall = false;				// 落下判定
 	};
 
 	struct HitInfo
@@ -101,6 +104,12 @@ public:
 	/// <returns>true：プレイヤー押し出し中　false:押し出していない</returns>
 	const bool& GetIsPlayerPush(void)const { return isPushPlayer_; }
 
+	/// <summary>
+	/// 地面判定
+	/// </summary>
+	/// <param name="_isGround"></param>
+	void SetIsGround(const bool _isGround) { parameter_.isGround = _isGround; }
+
 
 	const int GetBoxNum(void)const { return parameter_.boxNum; }
 
@@ -112,7 +121,6 @@ public:
 	void SetIsHitWall(const bool _isHit) { isHitWall_ = _isHit; }
 
 private:
-
 
 	//当たっている箱の情報
 	std::vector<HitInfo> hitInfo_;
@@ -132,6 +140,6 @@ private:
 	//壁に当たっているか
 	bool isHitWall_;
 
-
+	//最終的な押し出し処理
 	void PushResult(void);
 };
