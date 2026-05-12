@@ -11,6 +11,7 @@ ComponentAvilityBase::ComponentAvilityBase(Player& owner) :
 	inputManager_(InputManager::GetInstance()),
 	ComponentBase(&owner)
 {
+	abilitySlot_ = ABILITY_SLOT::MAX;
 }
 
 ComponentAvilityBase::~ComponentAvilityBase()

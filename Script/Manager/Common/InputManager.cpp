@@ -33,6 +33,9 @@ void InputManager::Init()
 	RegisterTrigger(TYPE::AVILITY_GRAVITY_UP, { KEY_INPUT_UP }, { }, STICK::R_STICK_DOWN);
 	RegisterTrigger(TYPE::AVILITY_GRAVITY_DOWN, { KEY_INPUT_DOWN }, { }, STICK::R_STICK_DOWN);
 
+	// アビリティ：スタンプ
+	RegisterTrigger(TYPE::AVILITY_STAMP, { KEY_INPUT_SPACE }, { BTN::RB_LEFT });
+
 	// メニュー操作
 	RegisterTrigger(TYPE::SELECT_RIGHT, { KEY_INPUT_D }, { }, STICK::L_STICK_RIGHT);
 	RegisterTrigger(TYPE::SELECT_LEFT, { KEY_INPUT_A }, { }, STICK::L_STICK_LEFT);

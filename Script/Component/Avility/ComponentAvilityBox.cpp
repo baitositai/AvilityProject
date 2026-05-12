@@ -8,6 +8,7 @@ ComponentAvilityBox::ComponentAvilityBox(Player& owner):
 	boxCnt_(),
 	coolCnt_()
 {
+	abilitySlot_ = ABILITY_SLOT::FIRST;
 }
 
 ComponentAvilityBox::~ComponentAvilityBox()

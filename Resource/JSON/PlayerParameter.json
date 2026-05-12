@@ -7,7 +7,8 @@
       "move",
       "spriteAnimation",
       "invincible",
-      "avilityGravity"
+      "avilityGravity",
+      "avilityStamp"
     ],
     "componentStateNameList": {
       "alive": "playerProcess",

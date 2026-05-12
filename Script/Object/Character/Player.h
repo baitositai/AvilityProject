@@ -1,6 +1,9 @@
 #pragma once
 #include "CharacterBase.h"
 
+class ComponentAvilityBase;
+enum class ABILITY_SLOT;
+
 class Player : public CharacterBase
 {
 public:
@@ -77,6 +80,18 @@ public:
 	void AttackReset();
 
 	/// <summary>
+	/// アビリティコンポーネントの設定
+	/// </summary>
+	/// <param name="component">コンポーネント</param>
+	void SetAbilityComponent(std::unique_ptr<ComponentAvilityBase> component);
+
+	/// <summary>
+	/// アビリティコンポーネントを外す
+	/// </summary>
+	/// <param name="abilitySlot">アビリティスロット</param>
+	void RemoveAbilityComponent(const ABILITY_SLOT abilitySlot);
+
+	/// <summary>
 	/// ショットベクトルの設定
 	/// </summary>
 	/// <param name="shotVec">ショットベクトル</param>
@@ -98,4 +113,7 @@ private:
 
 	// パラメータ情報
 	Parameter parameter_;
+
+	// アビリティコンポーネントのマップ
+	std::unordered_map<ABILITY_SLOT, std::unique_ptr<ComponentAvilityBase>> abilityComponents_;	
 };

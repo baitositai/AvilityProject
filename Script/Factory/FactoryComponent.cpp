@@ -9,6 +9,7 @@
 #include "../../Component/Avility/ComponentAvilityShot.h"
 #include "../../Component/Avility/ComponentAvilityChargeShot.h"
 #include "../../Component/Avility/ComponentAvilityGravity.h"
+#include "../../Component/Avility/ComponentAvilityStamp.h"
 #include "../../Component/State/ComponentStatePlayerProcess.h"
 #include "../../Component/State/ComponentStateAttackDefault.h"
 #include "../../Component/State/ComponentStateDead.h"
@@ -84,6 +85,18 @@ std::unique_ptr<ComponentAvilityBox> FactoryComponent::CreateComponentAvilityBox
         return nullptr;
     }
     return std::make_unique<ComponentAvilityBox>(*playerPtr);
+}
+
+std::unique_ptr<ComponentAvilityStamp> FactoryComponent::CreateComponentAvilityStamp(ActorBase& owner)
+{
+    auto* playerPtr = dynamic_cast<Player*>(&owner);
+
+    if (playerPtr == nullptr)
+    {
+        // ÉLÉÉÉXÉgÇ…é∏îsÇµÇΩèÍçánullptrÇï‘Ç∑
+        return nullptr;
+    }
+    return std::make_unique<ComponentAvilityStamp>(*playerPtr);
 }
 
 std::unique_ptr<ComponentAvilityShot> FactoryComponent::CreateComponentAvilityShot(ActorBase& owner)
@@ -212,6 +225,10 @@ FactoryComponent::FactoryComponent()
     componentCreateMap_.emplace("avilityBox", [this](ActorBase& owner)
         {
             return CreateComponentAvilityBox(owner);
+        });
+    componentCreateMap_.emplace("avilityStamp", [this](ActorBase& owner)
+        {
+            return CreateComponentAvilityStamp(owner);
         });
     componentCreateMap_.emplace("avilityGravity", [this](ActorBase& owner)
         {

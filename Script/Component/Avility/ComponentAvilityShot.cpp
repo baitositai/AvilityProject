@@ -11,6 +11,7 @@ ComponentAvilityShot::ComponentAvilityShot(Player& owner)
 	moveAmount_({}),
 	shotTime_(0.0f)
 {
+	abilitySlot_ = ABILITY_SLOT::FIRST;
 	stateFunctionMap_=
 	{
 		{"shot", [this]() { return ProcessInputShot(); }},

@@ -151,6 +151,12 @@ public:
 	void SetDirection(const bool direction) { actorParameterPtr_->direction = direction; }
 
 	/// <summary>
+	/// 重力量の設定
+	/// </summary>
+	/// <param name="gravityPower">重力量</param>
+	void SetGravityPower(const float gravityPower) { actorParameterPtr_->gravityPower = gravityPower; }
+
+	/// <summary>
 	/// 重力方向の設定
 	/// </summary>
 	/// <param name="gravityDir">重力方向</param>

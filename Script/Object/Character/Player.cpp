@@ -46,3 +46,31 @@ void Player::AttackReset()
 	// 初期化
 	componentStateMap_.at(STATE::ATTACK)->Init();
 }
+
+void Player::SetAbilityComponent(std::unique_ptr<ComponentAvilityBase> component)
+{
+	// 中身がない場合
+	if (!component)
+	{
+		return;
+	}
+
+	// 取得したアビリティスロットを確認
+	ABILITY_SLOT abilitySlot = component->GetAbilitySlot();
+	if(abilitySlot == ABILITY_SLOT::MAX)
+	{
+		return;
+	}
+
+	// 追加(もしくは入れ替え)
+	abilityComponents_.at(abilitySlot) = std::move(component);
+}
+
+void Player::RemoveAbilityComponent(const ABILITY_SLOT abilitySlot)
+{
+	auto it = abilityComponents_.find(abilitySlot);
+	if (it != abilityComponents_.end())
+	{
+		it->second.reset(); // 中身を消去
+	}
+}

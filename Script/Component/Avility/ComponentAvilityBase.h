@@ -5,6 +5,16 @@ class Player;
 class StageManager;
 class SceneManager;
 class InputManager;
+
+// アビリティ用スロット
+enum class ABILITY_SLOT
+{
+	FIRST = 0,
+	SECOND = 1,
+	THIRD = 2,
+	MAX
+};
+
 class ComponentAvilityBase : public ComponentBase
 {
 public:
@@ -25,8 +35,15 @@ public:
 	/// </summary>
 	virtual void Update() override;
 
+	/// <summary>
+	/// アビリティスロットの種類を返す
+	/// </summary>
+	/// <returns>アビリティスロットの種類</returns>
+	ABILITY_SLOT GetAbilitySlot() const { return abilitySlot_; }
+
 protected:
 
+	// 所有者
 	Player& owner_;
 
 	//ステージマネージャ
@@ -36,7 +53,8 @@ protected:
 	SceneManager& sceneManager_;
 
 	// 入力管理クラスの参照
-	InputManager& inputManager_;
-
+	InputManager& inputManager_;	
+	
+	// アビリティスロット
+	ABILITY_SLOT abilitySlot_;
 };
-

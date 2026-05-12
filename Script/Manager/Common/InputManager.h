@@ -62,6 +62,8 @@ public:
 		AVILITY_GRAVITY_LEFT,	// 重力制御:左
 		AVILITY_GRAVITY_UP,		// 重力制御:上
 		AVILITY_GRAVITY_DOWN,	// 重力制御:下
+
+		AVILITY_STAMP,			// スタンプ
 	};
 
 	/// <summary>
