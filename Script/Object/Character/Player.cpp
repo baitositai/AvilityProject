@@ -3,7 +3,7 @@
 #include "../../Component/Avility/ComponentAvilityChargeShot.h"
 #include "../../OnHit/OnHitPlayer.h"
 #include "../../Collider/ColliderBox.h"
-#include ".././Utility/UtilityCommon.h"
+#include "../../Utility/UtilityCommon.h"
 #include "../Common/Animation.h"
 #include "Player.h"
 
@@ -56,28 +56,31 @@ std::shared_ptr<ColliderBox> Player::CreateColliderClone()
 
 void Player::SetAbilityComponent(std::unique_ptr<ComponentAvilityBase> component)
 {
-	// 中身がない場合
-	if (!component)
-	{
-		return;
-	}
+	if (!component) return;
 
-	// 取得したアビリティスロットを確認
 	ABILITY_SLOT abilitySlot = component->GetAbilitySlot();
-	if(abilitySlot == ABILITY_SLOT::MAX)
+	if (abilitySlot == ABILITY_SLOT::MAX) return;
+
+	// 既にスロットに存在する場合
+	if (abilityComponents_[abilitySlot] != nullptr)
 	{
-		return;
+		// 取り外し時の処理
+		abilityComponents_[abilitySlot]->Remove();
 	}
 
-	// 追加(もしくは入れ替え)
-	abilityComponents_.at(abilitySlot) = std::move(component);
+	// 新しいアビリティを設定
+	abilityComponents_[abilitySlot] = std::move(component);
 }
 
 void Player::RemoveAbilityComponent(const ABILITY_SLOT abilitySlot)
 {
 	auto it = abilityComponents_.find(abilitySlot);
-	if (it != abilityComponents_.end())
+	if (it != abilityComponents_.end() && it->second != nullptr)
 	{
-		it->second.reset(); // 中身を消去
+		// 取り外し時の処理
+		it->second->Remove();
+
+		// 解放
+		it->second.reset();
 	}
 }

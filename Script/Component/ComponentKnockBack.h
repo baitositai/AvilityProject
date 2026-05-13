@@ -25,6 +25,10 @@ public:
 
 private:
 
+	// ノックバック速度が毎秒どれだけ減衰するか
+	static constexpr float KNOCK_BACK_DECELERATION = 1200.0f;
+
+	// 所有者
 	CharacterBase& owner_;
 };
 

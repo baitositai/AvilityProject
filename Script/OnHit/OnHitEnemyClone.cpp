@@ -10,6 +10,10 @@ OnHitEnemyClone::OnHitEnemyClone(EnemyClone& owner):
 		{
 			return OnHitPlayerAttack(opponentCollider);
 		});
+	onHitMap_.emplace(CollisionTags::TAG::PLAYER_AVILITY_STAMP, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
+		{
+			return OnHitPlayerAttack(opponentCollider);
+		});
 }
 
 OnHitEnemyClone::~OnHitEnemyClone()
@@ -18,8 +22,9 @@ OnHitEnemyClone::~OnHitEnemyClone()
 
 void OnHitEnemyClone::OnHitPlayerAttack(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
+	// 共通処理
 	OnHitAttack(opponentCollider);
 
-	// コライダーの判定を無効化
+	// 相手コライダーの判定を無効化
 	opponentCollider.lock()->SetIsActive(false);
 }

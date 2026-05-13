@@ -142,6 +142,14 @@ void ActorBase::RemoveComponent(const std::string& name)
 	}
 }
 
+void ActorBase::SetColliderActive(const bool isActive)
+{
+	if (collider_ != nullptr)
+	{
+		collider_->SetIsActive(isActive);
+	}
+}
+
 void ActorBase::AddMoveAmount(const Vector2F moveAmount)
 {
 	if (actorParameterPtr_->moveAmount.x == 0.0f && actorParameterPtr_->moveAmount.y == 0.0f)

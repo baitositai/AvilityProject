@@ -43,7 +43,7 @@ void CollisionManager::Update()
 			//衝突判定の初期化
 			colliders_[j]->SetIsHit(false);
 
-			// 所有者が非活動状態の場合
+			// コライダーや所有者が非活動状態の場合
 			if (!colliders_[j]->GetOwner().IsActive() || !colliders_[i]->IsActive())
 			{
 				// 次へ
@@ -54,11 +54,11 @@ void CollisionManager::Update()
 			//const auto& tag1 = colliders_[i]->GetTag();
 			//const auto& tag2 = colliders_[j]->GetTag();
 
-			/*if (tag1 == CollisionTags::TAG::ANOMALY && tag2 == CollisionTags::TAG::REPORT ||
-				tag1 == CollisionTags::TAG::REPORT && tag2 == CollisionTags::TAG::ANOMALY)
+			if (tag1 == CollisionTags::TAG::PLAYER && tag2 == CollisionTags::TAG::ENEMY_CLONE ||
+				tag1 == CollisionTags::TAG::ENEMY_CLONE && tag2 == CollisionTags::TAG::PLAYER)
 			{
 				int a = 0;
-			}*/
+			}
 
 			// 衝突判定が不要な組み合わせの場合
 			if (!collTagMatrix_[static_cast<int>(tag1)][static_cast<int>(tag2)])
@@ -181,6 +181,9 @@ void CollisionManager::InitTagMatrix()
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
 
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;			//アビリティ設置ボックス同士
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_STAMP)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;	// プレイヤースタンプと敵
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_STAMP)] = true;
 }
 
 void CollisionManager::InitColliderMatrix()

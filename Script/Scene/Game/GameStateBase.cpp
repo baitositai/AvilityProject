@@ -27,10 +27,15 @@ void GameStateBase::Init()
 
 void GameStateBase::Update()
 {
+	// XVˆ—
 	playerMng_.Update();
 	enemyMng_.Update();	
 	stageMng_.Update();
 	collisionMng_.Update();
+
+	// íœˆ—
+	enemyMng_.Sweep();
+	collisionMng_.Sweep();
 }
 
 void GameStateBase::Draw()

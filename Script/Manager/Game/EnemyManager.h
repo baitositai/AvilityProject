@@ -35,6 +35,11 @@ public:
 	void Draw();
 
 	/// <summary>
+	/// 削除処理
+	/// </summary>
+	void Sweep();
+
+	/// <summary>
 	/// デバッグ描画
 	/// </summary>
 	void DebugDraw();

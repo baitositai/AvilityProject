@@ -20,6 +20,11 @@ public:
 	/// </summary>
 	void Update() override;
 
+	/// <summary>
+	/// 取り外し時の処理
+	/// </summary>
+	void Remove() override;
+
 private:
 
 	// 入力のクールタイム

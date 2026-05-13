@@ -107,3 +107,10 @@ Vector2F Vector2F::DivVector2F(Vector2F value1, Vector2F value2)
 	ret.y = value1.y / value2.y;
 	return ret;
 }
+
+Vector2F Vector2F::MulVector2FFloat(Vector2F value1, float value2)
+{
+	value1.x = value1.x * value2;
+	value1.y = value1.y * value2;
+	return value1;
+}

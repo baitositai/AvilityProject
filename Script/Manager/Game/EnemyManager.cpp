@@ -100,6 +100,20 @@ void EnemyManager::Draw()
 	}
 }
 
+void EnemyManager::Sweep()
+{
+	// I—¹‚µ‚½“G‚ğ•À‚Ñ•Ï‚¦‚é
+	for (auto& enemiesList : enemiesMap_)
+	{
+		auto it = std::remove_if(enemiesList.second.begin(), enemiesList.second.end(),
+			[](const std::unique_ptr<CharacterBase>& enemy)
+			{
+				return enemy->IsDelete();
+			});
+		enemiesList.second.erase(it, enemiesList.second.end());
+	}
+}
+
 void EnemyManager::DebugDraw()
 {
 	// ‰Šú‰»

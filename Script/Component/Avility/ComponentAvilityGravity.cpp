@@ -29,6 +29,16 @@ void ComponentAvilityGravity::Update()
 	ProcessGravity();
 }
 
+void ComponentAvilityGravity::Remove()
+{
+	// d—Í•ûŒü‚ð‰º‚É–ß‚·
+	if (owner_.GetParameter()->gravityDir != ActorBase::DIR::DOWN)
+	{
+		owner_.SetGravityDir(ActorBase::DIR::DOWN);
+		owner_.SetIsGround(false);
+	}
+}
+
 void ComponentAvilityGravity::ProcessGravity()
 {
 	if (inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_GRAVITY_RIGHT))

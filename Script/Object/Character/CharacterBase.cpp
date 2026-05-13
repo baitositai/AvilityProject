@@ -107,8 +107,14 @@ void CharacterBase::Damage(const int damage)
 	// 体力が0以下の場合
 	if (characterParameterPtr_->hp <= 0)
 	{
+		// 体力を0にする
+		characterParameterPtr_->hp = 0;
+
 		// 状態変更
 		ChangeState(STATE::DEAD);
+
+		// コライダーの判定を無効にする
+		collider_->SetIsActive(false);
 
 		// アニメーション開始
 		animation_->Play(Animation::TYPE::DEAD, false);
@@ -138,9 +144,10 @@ void CharacterBase::SetJumpPow(const float jumpPow)
 	if (characterParameterPtr_->jumpPow > 0.0f) characterParameterPtr_->jumpPow = 0.0f;
 }
 
-const int CharacterBase::GetAttackPower() const
+const int CharacterBase::GetAttackPowerWithBoost() const
 {
-	return characterParameterPtr_->attackPower;
+	float boostAttackPower = static_cast<float>(characterParameterPtr_->attackPower) * (1.0f + characterParameterPtr_->attackBoostRate_);
+	return static_cast<int>(boostAttackPower);
 }
 
 void CharacterBase::CreateComponents()

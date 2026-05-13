@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\OnHit\OnHitPlayerStamp.cpp" />
     <ClCompile Include="Script\Component\Avility\ComponentAvilityStamp.cpp" />
     <ClCompile Include="Script\Component\Avility\ComponentAvilityGravity.cpp" />
     <ClCompile Include="Script\Object\Item\ItemBase.cpp" />
@@ -252,6 +253,7 @@
     <ClCompile Include="Script\Utility\UtilityCollision.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\OnHit\OnHitPlayerStamp.h" />
     <ClInclude Include="Script\Component\Avility\ComponentAvilityStamp.h" />
     <ClInclude Include="Script\Component\Avility\ComponentAvilityGravity.h" />
     <ClInclude Include="Script\Object\Item\ItemBase.h" />

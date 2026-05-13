@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include <functional>
 #include <unordered_map>
 #include "ComponentAvilityBase.h"
@@ -8,6 +9,9 @@ class ColliderBox;
 class ComponentAvilityStamp : public ComponentAvilityBase
 {
 public:
+
+	// 重力加速用
+	static constexpr float ACC_GRAVITY = 16.0f;
 
 	/// <summary>
 	/// コンストラクタ
@@ -25,6 +29,11 @@ public:
 	/// </summary>
 	void Update() override;
 
+	/// <summary>
+	/// 取り外し時の処理
+	/// </summary>
+	void Remove() override;
+
 private:
 
 	enum class STATE
@@ -34,14 +43,14 @@ private:
 		ACTIVE		// 落下
 	};
 
+	// 追加攻撃力
+	static constexpr int ADD_ATTACK_POWER = 50;
+
 	// 一時停止時間
 	static constexpr float STOP_TIME = 0.5f;	
 
 	// ジャンプ入力後から特定の時間後にスタンプを受け付ける
 	static constexpr float INPUT_ENABLE_TIME = 0.1f;
-
-	// 重力加速用
-	static constexpr float ACC_GRAVITY = 16.0f;
 
 	// 入力受付時間
 	float inputEnableTime_;

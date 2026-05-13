@@ -44,6 +44,9 @@ struct Vector2F
 	//Vector2F“¯m‚ÌœZ
 	static Vector2F DivVector2F(Vector2F value1, Vector2F value2);
 
+	// Vector2F‚Æfloat‚ÌæZ
+	static Vector2F MulVector2FFloat(Vector2F value1, float value2);
+
 	float x;
 	float y;
 };

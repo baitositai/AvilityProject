@@ -16,6 +16,7 @@ public:
 	{
 		int hp = -1;						// ‘Ì—Í
 		int attackPower = -1;				// UŒ‚—Í
+		float attackBoostRate_ = 0.0f;		// UŒ‚—Íã¸—¦
 		float invincibleTimeMax = 0.0f;		// Å‘å–³“GŠÔ
 		float invincibleTime = 0.0f;		// –³“GŠÔ
 		float jumpPow = 0.0f;				// ƒWƒƒƒ“ƒv—Í
@@ -127,10 +128,28 @@ public:
 	void SetKnockBackPower(const Vector2F& knockBackPower) { characterParameterPtr_->knockBackPower = knockBackPower; }
 
 	/// <summary>
+	/// UŒ‚—Í‚Ì’Ç‰Á
+	/// </summary>
+	/// <param name="addAttackPower">’Ç‰Á‚·‚éUŒ‚—Í</param>
+	void AddAttackPower(const int addAttackPower) const { characterParameterPtr_->attackPower += addAttackPower; }
+
+	/// <summary>
+	/// UŒ‚—Íã¸—¦‚Ì’Ç‰Á
+	/// </summary>
+	/// <param name="addAttackBoostRate">’Ç‰Á‚·‚éUŒ‚—Íã¸—¦</param>
+	void AddAttackBoostRate(const float addAttackBoostRate) const { characterParameterPtr_->attackBoostRate_ += addAttackBoostRate; }
+
+	/// <summary>
 	/// UŒ‚—Í‚ğ•Ô‚·
 	/// </summary>
 	/// <returns>UŒ‚—Í</returns>
-	const int GetAttackPower() const;
+	const int GetAttackPower() const { return characterParameterPtr_->attackPower; }
+
+	/// <summary>
+	/// ƒpƒt‚ğd‚Ë‚½UŒ‚—Í‚ğ•Ô‚·
+	/// </summary>
+	/// <returns>UŒ‚—Í</returns>
+	const int GetAttackPowerWithBoost() const;
 
 	/// <summary>
 	/// Å‘åƒWƒƒƒ“ƒv—Í‚ğ•Ô‚·

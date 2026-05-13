@@ -31,7 +31,7 @@ void ComponentKnockBack::Update()
     {
         int sign = knockBackPower.x / fabsf(knockBackPower.x);
 
-        knockBackPower.x += (-1.0f * sign) * 1200.0f * deltTime;
+        knockBackPower.x += (-1.0f * sign) * KNOCK_BACK_DECELERATION * deltTime;
 
         if (knockBackPower.x / fabsf(knockBackPower.x) != sign) 
         {
@@ -42,7 +42,7 @@ void ComponentKnockBack::Update()
     {
         int sign = knockBackPower.y / fabsf(knockBackPower.y);
 
-        knockBackPower.y += (-1.0f * sign) * 1200.0f * deltTime;
+        knockBackPower.y += (-1.0f * sign) * KNOCK_BACK_DECELERATION * deltTime;
 
         if (knockBackPower.y / fabsf(knockBackPower.y) != sign) 
         {

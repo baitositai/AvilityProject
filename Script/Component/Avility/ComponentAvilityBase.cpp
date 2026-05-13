@@ -21,3 +21,7 @@ ComponentAvilityBase::~ComponentAvilityBase()
 void ComponentAvilityBase::Update()
 {
 }
+
+void ComponentAvilityBase::Remove()
+{
+}

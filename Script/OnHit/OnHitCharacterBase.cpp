@@ -1,4 +1,6 @@
+#include <algorithm>
 #include "../Utility/UtilityCommon.h"
+#include "../Utility/Utility2D.h"
 #include "../Collider/ColliderArray.h"
 #include "../Collider/ColliderBox.h"
 #include "../Object/ActorBase.h"
@@ -94,41 +96,85 @@ void OnHitCharacterBase::OnHitAttack(const std::weak_ptr<ColliderBase>& opponent
         return;
     }
 
-    // 所有者情報の取得
-    const auto& ownerRef = opponentCollider.lock()->GetOwner();
+    // ノックバック処理
+    KnockBack(opponentCollider, KNOCK_BACK_FORCE);
 
-    // 攻撃者から自分へのベクトルを計算する
-    Vector2F attackerPos = opponentCollider.lock()->GetOwner().GetParameter()->pos;
-    Vector2F myPos = owner_.GetParameter()->pos;
-    Vector2F direction = Vector2F::SubVector2F(myPos, attackerPos);
+	// ダメージ処理
+	Damage(opponentCollider);
+}
 
-    // ゼロ除算防止のガード
-    if (direction.Length() < 0.0001f)
+bool OnHitCharacterBase::Damage(const std::weak_ptr<ColliderBase>& opponentCollider, int damage)
+{
+    // ダメージ量の指定がない場合
+    if(damage < 0)
     {
-        direction = Vector2F(0.0f, -1.0f);
+        // 攻撃者の攻撃力をダメージ量とする
+        const auto& opOwner = opponentCollider.lock()->GetOwner();
+		const auto& charaPtr = dynamic_cast<const CharacterBase*>(&opOwner);
+        damage = charaPtr->GetAttackPowerWithBoost();
+	}
+    // ダメージを与える
+    owner_.Damage(damage);
+
+	// ダメージを与えた結果、死亡しているか
+	return owner_.GetState() == CharacterBase::STATE::DEAD;
+}
+void OnHitCharacterBase::KnockBack(const std::weak_ptr<ColliderBase>& opponentCollider, const Vector2F& knockBackForce)
+{
+    // コライダー確認
+    auto opponent_ = opponentCollider.lock();
+    if (!opponent_)
+    {
+        return;
     }
 
-    // 左右方向の決定 (自分と相手の座標差から符号だけ取る)
-    float knockBackDirX = (direction.x > 0) ? 1.0f : -1.0f;
+    // 重力方向
+	ActorBase::DIR gravityDirEnum = owner_.GetParameter()->gravityDir;
+    Vector2F gravityDir = {};
+    if (gravityDirEnum == ActorBase::DIR::RIGHT) { gravityDir = Vector2F(1.0f, 0.0f); }
+    else if (gravityDirEnum == ActorBase::DIR::LEFT) { gravityDir = Vector2F(-1.0f, 0.0f); }
+    else if (gravityDirEnum == ActorBase::DIR::UP) { gravityDir = Vector2F(0.0f, -1.0f); }
+	else { gravityDir = Vector2F(0.0f, 1.0f); }
 
-    // パワーの決定
-    // 横方向は勢いよく、縦方向は「ぴょん」と跳ねるような固定値を加える
-    float HORIZONTAL_FORCE = 600.0f; // 横への吹き飛び力
-    float VERTICAL_LAUNCH = -500.0f; // 上への跳ね上げ力 (DXライブラリ等の座標系ならマイナスが上)
+    // 重力に対する横方向
+    Vector2F sideDir(-gravityDir.y, gravityDir.x);
 
-    Vector2F finalPower = Vector2F(knockBackDirX * HORIZONTAL_FORCE, VERTICAL_LAUNCH);
+    // 座標取得
+    const Vector2F myPos = owner_.GetParameter()->pos;
+    const Vector2F opponentPos = opponent_->GetOwner().GetParameter()->pos;
 
-    // パワーをセットする
+    // 相手から自分までの距離
+    Vector2F toMe = Vector2F::SubVector2F(myPos, opponentPos);
+
+    // 横方向距離
+    const float sideDistance = Utility2D::Dot(toMe, sideDir);
+
+    // コライダーサイズ
+    const Vector2F mySize = owner_.GetParameter()->hitSize.ToVector2F();
+    const Vector2F opponentSize = opponent_->GetOwner().GetParameter()->hitSize.ToVector2F();
+
+    // 横吹っ飛ばしが有効な最大距離
+    const float maxDistance = (mySize.y * 0.5f) + (opponentSize.y * 0.5f);
+
+    // 距離割合
+    float ratio = fabsf(sideDistance) / maxDistance;
+    ratio = std::clamp(ratio, 0.0f, 1.0f);
+
+    // 横方向符号
+    const float sideSign = sideDistance >= 0.0f ? 1.0f : -1.0f;
+
+    // 横吹っ飛ばし
+    Vector2F sideKnockBack = Vector2F::MulVector2FFloat(Vector2F::MulVector2FFloat(Vector2F::MulVector2FFloat(sideDir, knockBackForce.x), ratio), sideSign);
+
+    // 重力逆方向吹っ飛ばし
+    Vector2F verticalKnockBack =Vector2F::MulVector2FFloat(gravityDir, -knockBackForce.y);
+
+    // 合成
+	Vector2F finalPower = Vector2F::AddVector2F(sideKnockBack, verticalKnockBack);
+
+    // セット
     owner_.SetKnockBackPower(finalPower);
 
-    // ダメージ処理
-    auto charaPtr = dynamic_cast<const CharacterBase*>(&ownerRef);
-    if (charaPtr != nullptr)
-    {
-        int damage = charaPtr->GetAttackPower();
-        owner_.Damage(damage);
-    }
-
-    // 地面判定無効
+    // 接地解除
     owner_.SetIsGround(false);
 }

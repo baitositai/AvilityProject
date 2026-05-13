@@ -36,6 +36,11 @@ public:
 	virtual void Update() override;
 
 	/// <summary>
+	/// 取り外し時の処理
+	/// </summary>
+	virtual void Remove();
+
+	/// <summary>
 	/// アビリティスロットの種類を返す
 	/// </summary>
 	/// <returns>アビリティスロットの種類</returns>

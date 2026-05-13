@@ -9,6 +9,7 @@
 ComponentAvilityStamp::ComponentAvilityStamp(Player& owner) :
 	ComponentAvilityBase(owner)
 {
+	abilitySlot_ = ABILITY_SLOT::SECOND;
 	stopTime_ = 0.0f;
 	inputEnableTime_ = INPUT_ENABLE_TIME;
 	gravity_ = 0.0f;
@@ -23,19 +24,31 @@ ComponentAvilityStamp::ComponentAvilityStamp(Player& owner) :
 	attackCollider_->ChangeTag(CollisionTags::TAG::PLAYER_AVILITY_STAMP);
 	attackCollider_->SetIsActive(false);
 	CollisionManager::GetInstance().Add(attackCollider_);
+
+	// 攻撃力の加算
+	owner_.AddAttackPower(ADD_ATTACK_POWER);
 }
 
 ComponentAvilityStamp::~ComponentAvilityStamp()
 {
-	if(attackCollider_)
-	{
-		attackCollider_->SetDelete();
-	}
+
 }
 
 void ComponentAvilityStamp::Update()
 {
 	update_();
+}
+
+void ComponentAvilityStamp::Remove()
+{
+	// コライダーの削除 
+	if(attackCollider_)
+	{
+		attackCollider_->SetDelete();
+	}
+
+	// 攻撃力を戻す
+	owner_.AddAttackPower(-ADD_ATTACK_POWER);
 }
 
 void ComponentAvilityStamp::UpdateInput()
@@ -61,7 +74,7 @@ void ComponentAvilityStamp::UpdateInput()
 void ComponentAvilityStamp::UpdateStop()
 {
 	stopTime_ -= sceneManager_.GetDeltaTime();
-	owner_.SetIsInvincibleTime(1.0f); // 処理中常に無敵
+	//owner_.SetIsInvincibleTime(1.0f); // 処理中常に無敵
 	if (stopTime_ <= 0.0f)
 	{
 		ChangeState(STATE::ACTIVE);
@@ -70,7 +83,7 @@ void ComponentAvilityStamp::UpdateStop()
 
 void ComponentAvilityStamp::UpdateActive()
 {
-	owner_.SetIsInvincibleTime(1.0f); // 処理中常に無敵
+	//owner_.SetIsInvincibleTime(1.0f); // 処理中常に無敵
 	if(owner_.IsGround())
 	{
 		// 地面に着地したら状態を入力待ちにする
@@ -97,12 +110,6 @@ void ComponentAvilityStamp::ChangeStateInput()
 	// キャラクターの入力処理を有効にする
 	owner_.SetStateComponentActive(Player::STATE::ALIVE, true);
 
-	// 入力受付時間を指定
-	inputEnableTime_ = INPUT_ENABLE_TIME;
-
-	// 着地後も少し無敵時間を設ける
-	owner_.SetIsInvincibleTime(1.0f);
-
 	// 攻撃判定用コライダーを無効にする
 	attackCollider_->SetIsActive(false);
 }
@@ -127,8 +134,8 @@ void ComponentAvilityStamp::ChangeStateStop()
 	owner_.GetAnimation().Play(Animation::TYPE::IDLE);
 	owner_.GetAnimation().Stop();
 
-	// 攻撃判定用コライダーを有効にする
-	attackCollider_->SetIsActive(true);
+	// 自身のコライダーの判定を無効にする
+	owner_.SetColliderActive(false);
 }
 
 void ComponentAvilityStamp::ChangeStateActive()
@@ -141,4 +148,7 @@ void ComponentAvilityStamp::ChangeStateActive()
 
 	// キャラクターの重力を有効にする
 	owner_.SetComponentActive("gravity", true);
+
+	// 攻撃判定用コライダーを有効にする
+	attackCollider_->SetIsActive(true);
 }

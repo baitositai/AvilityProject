@@ -187,6 +187,12 @@ public:
 	void SetIsFall(const bool isFall) { actorParameterPtr_->isFall = isFall; }
 
 	/// <summary>
+	/// コライダーの活動状態の設定
+	/// </summary>
+	/// <param name="isActive">活動状態</param>
+	void SetColliderActive(const bool isActive);
+
+	/// <summary>
 	/// 移動量の設定
 	/// </summary>
 	/// <param name="moveAmount">移動量</param>
@@ -196,7 +202,7 @@ public:
 	/// パラメータ情報を返す
 	/// </summary>
 	/// <returns></returns>
-	const Parameter* GetParameter() const { return actorParameterPtr_; }
+	Parameter* GetParameter() const { return actorParameterPtr_; }
 
 	/// <summary>
 	/// アニメーションを返す

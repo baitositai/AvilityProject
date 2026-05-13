@@ -14,9 +14,14 @@ ComponentStateDead::~ComponentStateDead()
 
 void ComponentStateDead::Update()
 {
-	// 死亡アニメーション終了後かつ所有者がプレイヤー以外の場合
-	if (owner_.GetType() != CharacterBase::TYPE::PLAYER &&
-		owner_.GetAnimation().GetType() == Animation::TYPE::DEAD &&
+	// プレイヤーの場合は処理を無視
+	if(owner_.GetType() == CharacterBase::TYPE::PLAYER)
+	{
+		return;
+	}
+
+	// 死亡アニメーションが終了した場合
+	if (owner_.GetAnimation().GetType() == Animation::TYPE::DEAD &&
 		!owner_.GetAnimation().IsPlay())
 	{
 		// 所有者を消す
