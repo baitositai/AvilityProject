@@ -14,7 +14,6 @@ public:
 		PLAYER_ATTACK_NORMAL,	// プレイヤーの通常攻撃	
 		PLAYER_AVILITY_STAMP,	// プレイヤーのアビリティ
 		STAGE,					// ステージ
-		PLAYER,					// プレイヤー
 		AVILITY_BOX,			// アビリティ設置のボックス
 		ENEMY_CLONE,			// 敵:クローン
 		BLAST,
