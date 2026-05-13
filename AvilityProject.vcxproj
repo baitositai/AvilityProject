@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Component\ComponentDebugCreateItemAvility.cpp" />
     <ClCompile Include="Script\OnHit\OnHitItem.cpp" />
     <ClCompile Include="Script\Manager\Game\ItemManager.cpp" />
     <ClCompile Include="Script\Object\Item\ItemAvility.cpp" />
@@ -256,6 +257,7 @@
     <ClCompile Include="Script\Utility\UtilityCollision.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Component\ComponentDebugCreateItemAvility.h" />
     <ClInclude Include="Script\OnHit\OnHitItem.h" />
     <ClInclude Include="Script\Manager\Game\ItemManager.h" />
     <ClInclude Include="Script\Object\Item\ItemAvility.h" />
