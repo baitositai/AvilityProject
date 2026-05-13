@@ -109,5 +109,4 @@ PlayerManager::PlayerManager()
 
 PlayerManager::~PlayerManager()
 {
-	
 }

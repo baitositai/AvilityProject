@@ -3,6 +3,7 @@
 #include "../Collider/ColliderArray.h"
 #include "../Collider/ColliderBox.h"
 #include "./OnHitAvilityBox.h"
+#include "OnHitItem.h"
 
 OnHitAvilityBox::OnHitAvilityBox(AvilityBox& owner):
 	OnHitBase(owner),
