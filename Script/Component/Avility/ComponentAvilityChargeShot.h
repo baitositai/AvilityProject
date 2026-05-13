@@ -2,7 +2,9 @@
 #include <functional>
 #include "ComponentAvilityBase.h"
 #include "../../Common/Vector2F.h"
+#include "../../Object/ActorBase.h"
 
+class CollisionManager;
 class InputManager;
 class Player;
 
@@ -12,7 +14,7 @@ class ComponentAvilityChargeShot :
 public:
 
 	static constexpr float SHOT_INTERVAL = 0.5f;	// ショットのインターバル
-	static constexpr float SHOT_SPEED = 15.0f;		// ショットの速度
+	static constexpr float SHOT_SPEED = 25.0f;		// ショットの速度
 
 	static constexpr const char* STATE_SHOT = "Shot";		// ショット状態
 
@@ -34,16 +36,30 @@ public:
 
 private:
 
+	// 衝突管理クラス
+	CollisionManager& collisionManager_;
 	// 入力管理クラスの参照
 	InputManager& inputManager_;
 
 	// 移動量
 	Vector2F moveAmount_;
 
+	// 座標
+	Vector2F pos_;
+	// サイズ
+	Vector2 defaultSize_;	// 通常
+	Vector2 nowSize_;		// 現在
+	// 重力方向
+	ActorBase::DIR gravityDir_;
+
 	// 移動入力処理
 	void ProcessInputShot();
 	void ProcessInputCharge();
 	void ProcessMoveShot();
+
+	// 衝突処理
+	void ProcessCollision(bool isXAxis);
+	void CheckGroundStatus(float moveVal, bool isXAxis);
 
 	// 状態関数マップ
 	std::unordered_map<std::string, std::function<void(void)>> stateFunctionMap_;
@@ -51,10 +67,15 @@ private:
 	std::string currentState_;
 	std::function<void(void)> currentStateFunction_;
 
+	// 反射回数
+	bool isReflected_;
+	int reflectCount_;
+
 	// ショット変数
 	float chageTime_;
 	float shotTime_;
 	Vector2F shotVec_;
+	float shotAngle_;
 
 };
 

@@ -67,7 +67,7 @@ void OnHitCharacterBase::OnHitAvilityBox(const std::weak_ptr<ColliderBase>& oppo
     Vector2F pos = myParam->pos;
 
     //ボックスの上に乗っていたら地面判定を付与
-    if (overlapX >= overlapY)
+    if (overlapX > overlapY)
     {
         pos.y -= (overlapY + 0.01f) * signY;
         // 地面判定を設定
@@ -76,6 +76,7 @@ void OnHitCharacterBase::OnHitAvilityBox(const std::weak_ptr<ColliderBase>& oppo
         //落下を防止するためにYの移動量をゼロにする
         moveAmount.y = 0;
         owner_.SetMoveAmount(moveAmount);
+        owner_.SetJumpPow(0.0f);
     }
     else
     {

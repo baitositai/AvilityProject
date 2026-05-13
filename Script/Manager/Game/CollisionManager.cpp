@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "../../Collider/ColliderBase.h"
 #include "../../Collider/ColliderBox.h"
 #include "../../Collider/ColliderCircle.h"
@@ -18,6 +19,13 @@ void CollisionManager::Update()
 {
 	// 配列サイズ
 	const int size = static_cast<int>(colliders_.size());
+
+	//コリジョンタグの順番に並べ、処理順を整える
+	std::sort(colliders_.begin(), colliders_.end(),
+		[this](const std::weak_ptr<ColliderBase>col1, const std::weak_ptr<ColliderBase>col2)
+		{
+			return col1.lock()->GetTag() < col2.lock()->GetTag();
+		});
 
 	for (int i = 0; i < size - 1; i++)
 	{

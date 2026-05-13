@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "../Utility/UtilityCommon.h"
 #include "../Manager/Common/SceneManager.h"
 #include "../Collider/ColliderBox.h"
@@ -5,8 +6,9 @@
 #include "../Common/Animation.h"
 #include "AvilityBox.h"
 
-AvilityBox::AvilityBox(const Parameter& parameter,const Vector2F& _placePos,const std::vector<std::string>& componentNameList) :
+AvilityBox::AvilityBox(const Parameter& parameter, CharacterBase& _chara,const std::vector<std::string>& componentNameList) :
 	parameter_(parameter),
+	character_(_chara),
 	GimmickBase(&parameter_,componentNameList)
 {
 	//種類の設定
@@ -34,13 +36,17 @@ void AvilityBox::Init(void)
 
 void AvilityBox::Update(void)
 {
-	if (!collider_->IsHit())
+	//PushResult();
+	if (!Vector2F::IsSameVector2F(onHit_->GetMoveAmount(), Vector2F()))
 	{
-		parameter_.moveAmount = Vector2F();
+		int i = 0;
 	}
-	isPushPlayer_ = false;
+	parameter_.moveAmount = onHit_->GetMoveAmount();
+	onHit_->ResetMoveAmount();
+	isHitWall_ = false;
 	GimmickBase::Update();
-
+	//parameter_.moveAmount = {};
+	//isPushPlayer_ = false;
 	//if (blastWaitCnt_ > 0.0f)
 	//{
 	//	blastWaitCnt_ -= scnMng_.GetDeltaTime();
@@ -77,6 +83,47 @@ void AvilityBox::DebugDraw(void)
 	constexpr float LOCAL = 15.0f;
 	parameter_.direction ? dirPos.x = -LOCAL : dirPos.x = LOCAL;
 	DrawCircle(parameter_.pos.x + dirPos.x, parameter_.pos.y, 3, UtilityCommon::LIME);
+}
 
+void AvilityBox::AddHitInfo(const HitInfo& _hitInfo)
+{
+	hitInfo_.push_back(_hitInfo);
+}
 
+void AvilityBox::PushResult(void)
+{
+	if (hitInfo_.empty())return;
+
+	std::sort(hitInfo_.begin(), hitInfo_.end(),
+		[](const HitInfo& a, const HitInfo& b)
+		{
+			//優先度の値が低い順に並べる
+			return a.priority < b.priority;
+		});
+	Vector2F totalPush = {};
+	Vector2F moveAmount = {};
+	Vector2F prevPos = parameter_.pos;
+
+	for (auto& info : hitInfo_)
+	{
+		Vector2F push = {};
+		Vector2F prevPos = parameter_.pos;
+		//X方向押し出し
+		//if (info.overlapX < info.overlapY)
+		{
+			push.x = -(info.overlapX + 0.01f) * info.signX;
+		}
+		//else
+		{
+			push.y = (info.overlapY + 0.01f) * info.signY;
+		}
+
+		totalPush = Vector2F::AddVector2F(totalPush, push);
+		parameter_.moveAmount = Vector2F::SubVector2F(parameter_.pos, prevPos);
+	}
+
+	parameter_.pos = Vector2F::AddVector2F(parameter_.pos, totalPush);
+
+	//処理し終わったら破棄
+	hitInfo_.clear();
 }
