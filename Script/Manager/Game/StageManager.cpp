@@ -1,6 +1,7 @@
 #include <algorithm>
 #include "../../Application.h"
 #include "../../Utility/UtilityLoad.h"
+#include "../../Object/Character/CharacterBase.h"
 #include "../../Object/Stage/Stage.h"
 #include "../../Object/Gimmick/AvilityBox.h"
 #include "../Common/Camera.h"
@@ -77,7 +78,7 @@ void StageManager::DebugDraw()
 	}
 }
 
-void StageManager::AddGimmick(const Vector2F& _charaPos, const bool _direction, const int _boxNum)
+void StageManager::AddGimmick(CharacterBase& _chara, const int _boxNum)
 {
 	AvilityBox::Parameter avParam = {};
 	avParam.hitBoxSize = Vector2(48, 48);
@@ -88,11 +89,14 @@ void StageManager::AddGimmick(const Vector2F& _charaPos, const bool _direction, 
 
 	//ローカル座標をJsonで読み込み、プレイヤーの向きによって設置場所を変える
 	Vector2F localPos = { 50.0f,50.0f };
-	avParam.placePos= _direction? Vector2F::SubVector2F(_charaPos, localPos): Vector2F::AddVector2F(_charaPos, localPos);
+	const bool charaDir = _chara.GetParameter()->direction;
+	const Vector2F charaPos = _chara.GetParameter()->pos;
+
+	avParam.placePos= charaDir ? Vector2F::SubVector2F(charaPos, localPos) : Vector2F::AddVector2F(charaPos, localPos);
 	std::vector<std::string> componentNameList = { "gravity","move" };
 
 	//いったんアビリティボックスのみ対応
-	std::unique_ptr avBox = std::make_unique<AvilityBox>(avParam, _charaPos, componentNameList);
+	std::unique_ptr avBox = std::make_unique<AvilityBox>(avParam, _chara, componentNameList);
 	avBox->Init();
 	gimmick_.push_back(std::move(avBox));
 }

@@ -2,7 +2,8 @@
 #include "../Object/ActorBase.h"
 #include "OnHitBase.h"
 
-OnHitBase::OnHitBase(ActorBase& owner)
+OnHitBase::OnHitBase(ActorBase& owner):
+    moveAmount_()
 {
     // è’ìÀï®ï ä÷êîÇÃìoò^
     onHitMap_.emplace(CollisionTags::TAG::NONE, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
