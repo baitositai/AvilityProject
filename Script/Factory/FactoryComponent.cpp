@@ -85,6 +85,18 @@ std::unique_ptr<ComponentAvilityBox> FactoryComponent::CreateComponentAvilityBox
     return std::make_unique<ComponentAvilityBox>(*playerPtr);
 }
 
+std::unique_ptr<ComponentAvilityChargeShot> FactoryComponent::CreateComponentAvilityChargeShot(ActorBase& owner)
+{
+    auto* playerPtr = dynamic_cast<Player*>(&owner);
+
+    if (playerPtr == nullptr)
+    {
+        // ÉLÉÉÉXÉgÇ…é∏îsÇµÇΩèÍçánullptrÇï‘Ç∑
+        return nullptr;
+    }
+    return std::make_unique<ComponentAvilityChargeShot>(*playerPtr);
+}
+
 std::unique_ptr<ComponentAvilityShot> FactoryComponent::CreateComponentAvilityShot(ActorBase& owner)
 {
     auto* playerPtr = dynamic_cast<Player*>(&owner);
@@ -203,6 +215,10 @@ FactoryComponent::FactoryComponent()
     componentCreateMap_.emplace("avilityShot", [this](ActorBase& owner)
         {
             return CreateComponentAvilityShot(owner);
+        });
+    componentCreateMap_.emplace("avilityChargeShot", [this](ActorBase& owner)
+        {
+            return CreateComponentAvilityChargeShot(owner);
         });
     componentCreateMap_.emplace("knockBack", [this](ActorBase& owner)
         {

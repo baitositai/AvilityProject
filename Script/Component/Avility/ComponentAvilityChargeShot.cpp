@@ -49,7 +49,7 @@ void ComponentAvilityChargeShot::ProcessInputShot()
 	const float moveSpeed = owner_.GetParameter()->moveSpeed;
 
 	//　ショット入力があったらCharge開始(現在Qキー)
-	if (inputManager_.IsTrgDown(InputManager::TYPE::LIGHT_SWITCH))
+	if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_AVILITY))
 	{
 		owner_.SetComponentActive("AvilityShot", false);
 
@@ -81,7 +81,7 @@ void ComponentAvilityChargeShot::ProcessInputCharge()
 	owner_.SetShotVec(shotVec_);
 
 	//　kキーが離されたらショット開始
-	if (inputManager_.IsNew(InputManager::TYPE::LIGHT_SWITCH))
+	if (inputManager_.IsNew(InputManager::TYPE::PLAYER_AVILITY))
 	{
 		chageTime_ += 0.5f;
 		shotTime_ += 0.1f;
