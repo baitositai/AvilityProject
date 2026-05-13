@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include "../Manager/Game/CollisionTags.h"
+#include "../Common/Vector2F.h"
 
 class ActorBase;
 class ColliderBase;
