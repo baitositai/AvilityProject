@@ -18,7 +18,7 @@ EnemyClone::~EnemyClone()
 void EnemyClone::Init()
 {
 	// コライダー
-	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::ENEMY_CLONE, parameter_.pos, parameter_.hitBoxSize, parameter_.angle);
+	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::ENEMY_CLONE, parameter_.pos, parameter_.hitSize, parameter_.angle);
 
 	// 衝突後処理
 	onHit_ = std::make_unique<OnHitEnemyClone>(*this);

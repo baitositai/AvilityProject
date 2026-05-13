@@ -13,6 +13,7 @@ ComponentAvilityChargeShot::ComponentAvilityChargeShot(Player& owner)
 	chageTime_(0.0f),
 	shotTime_(0.0f)
 {
+	abilitySlot_ = ABILITY_SLOT::FIRST;
 	stateFunctionMap_ =
 	{
 		{"input", [this]() { return ProcessInputShot(); }},		// 入力待ち状態

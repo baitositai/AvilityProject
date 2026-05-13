@@ -1,5 +1,6 @@
 #pragma once
 #include <unordered_map>
+#include <map>
 #include <memory>
 #include <vector>
 #include <string>
@@ -54,6 +55,12 @@ public:
 		float gravityPower = 0.0f;				// 重力
 		DIR gravityDir = DIR::DOWN;				// 重力方向
 		float weight = 0.0f;					// 物体の重み
+
+		// 衝突判定用
+		bool isGround = false;					// 地面判定
+		bool isFall = false;					// 落下判定
+		Vector2 hitSize = {};					// ヒットサイズ
+		float hitRadius = 0.0f;					// ヒット半径
 	};
 
 	/// <summary>
@@ -144,6 +151,18 @@ public:
 	void SetDirection(const bool direction) { actorParameterPtr_->direction = direction; }
 
 	/// <summary>
+	/// 重力量の設定
+	/// </summary>
+	/// <param name="gravityPower">重力量</param>
+	void SetGravityPower(const float gravityPower) { actorParameterPtr_->gravityPower = gravityPower; }
+
+	/// <summary>
+	/// 重力方向の設定
+	/// </summary>
+	/// <param name="gravityDir">重力方向</param>
+	void SetGravityDir(const DIR gravityDir) { actorParameterPtr_->gravityDir = gravityDir; }
+
+	/// <summary>
 	/// 座標の設定
 	/// </summary>
 	/// <param name="pos">座標</param>
@@ -154,6 +173,18 @@ public:
 	/// </summary>
 	/// <param name="moveAmount">移動量</param>
 	void SetMoveAmount(const Vector2F moveAmount) { actorParameterPtr_->moveAmount = moveAmount; }
+
+	/// <summary>
+	/// 地面判定の設定
+	/// </summary>
+	/// <param name="isGround">地面判定</param>
+	void SetIsGround(const bool isGround) { actorParameterPtr_->isGround = isGround; }
+
+	/// <summary>
+	/// 落下判定の設定
+	/// </summary>
+	/// <param name="isFall">落下判定</param>
+	void SetIsFall(const bool isFall) { actorParameterPtr_->isFall = isFall; }
 
 	/// <summary>
 	/// 移動量の設定
@@ -186,10 +217,28 @@ public:
 	const bool IsDelete() const { return isDelete_; }
 
 	/// <summary>
+	/// 地面判定を返す
+	/// </summary>
+	/// <returns>地面判定</returns>
+	const bool IsGround() const { return actorParameterPtr_->isGround; }
+
+	/// <summary>
+	/// 落下判定を返す
+	/// </summary>
+	/// <returns>落下判定</returns>
+	const bool IsFall() const { return actorParameterPtr_->isFall; }
+
+	/// <summary>
 	/// 削除フラグをtrueにする
 	/// </summary>
 	/// <param name="_isDelete"></param>
 	void SetIsDelete(void);
+
+	/// <summary>
+	/// 重力方向をベクトル変換して返す
+	/// </summary>
+	/// <returns>重力方向のベクトル</returns>
+	const Vector2F GetGravityDirectionVector() const;
 
 protected:
 
@@ -204,7 +253,10 @@ protected:
 	std::unique_ptr<Animation> animation_;
 
 	// コンポーネントの管理マップ
-	std::unordered_map<std::string, std::unique_ptr<ComponentBase>> componentMap_;
+	std::unordered_map<std::string, ComponentBase*> componentMap_;
+
+	// 追加順を保持し、更新（Update等）で使用するリスト
+	std::vector<std::unique_ptr<ComponentBase>> componentList_;
 
 	// コライダー
 	std::shared_ptr<ColliderBase> collider_;

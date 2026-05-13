@@ -27,7 +27,7 @@ void PlayerManager::Init()
 	parameter.attackPower = jsonPparameter["attackPower"].get<int>();
 	parameter.defaultAttackRadius = jsonPparameter["defaultAttackRadius"].get<int>();
 	parameter.gravityPower = jsonPparameter["gravityPower"].get<float>();
-	parameter.hitBoxSize = Vector2(jsonPparameter["hitBoxSize"]["x"].get<int>(), jsonPparameter["hitBoxSize"]["y"].get<int>());
+	parameter.hitSize = Vector2(jsonPparameter["hitBoxSize"]["x"].get<int>(), jsonPparameter["hitBoxSize"]["y"].get<int>());
 	parameter.localPos = Vector2(jsonPparameter["localPos"]["x"].get<int>(), jsonPparameter["localPos"]["y"].get<int>());
 	parameter.defaultAttackLocalPos = Vector2F(jsonPparameter["defaultAttackLoaclPos"]["x"].get<float>(), jsonPparameter["defaultAttackLoaclPos"]["y"].get<float>());
 	parameter.weight = jsonPparameter["weight"].get<float>();

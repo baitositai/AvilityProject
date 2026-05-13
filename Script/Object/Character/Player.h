@@ -1,6 +1,10 @@
 #pragma once
 #include "CharacterBase.h"
 
+class ComponentAvilityBase;
+class ColliderBox;
+enum class ABILITY_SLOT;
+
 class Player : public CharacterBase
 {
 public:
@@ -77,6 +81,24 @@ public:
 	void AttackReset();
 
 	/// <summary>
+	/// 自身のコライダーのクローンを生成して返す
+	/// </summary>
+	/// <returns>自身のコライダーのクローン</returns>
+	std::shared_ptr<ColliderBox> CreateColliderClone();
+
+	/// <summary>
+	/// アビリティコンポーネントの設定
+	/// </summary>
+	/// <param name="component">コンポーネント</param>
+	void SetAbilityComponent(std::unique_ptr<ComponentAvilityBase> component);
+
+	/// <summary>
+	/// アビリティコンポーネントを外す
+	/// </summary>
+	/// <param name="abilitySlot">アビリティスロット</param>
+	void RemoveAbilityComponent(const ABILITY_SLOT abilitySlot);
+
+	/// <summary>
 	/// ショットベクトルの設定
 	/// </summary>
 	/// <param name="shotVec">ショットベクトル</param>
@@ -98,4 +120,7 @@ private:
 
 	// パラメータ情報
 	Parameter parameter_;
+
+	// アビリティコンポーネントのマップ
+	std::unordered_map<ABILITY_SLOT, std::unique_ptr<ComponentAvilityBase>> abilityComponents_;	
 };

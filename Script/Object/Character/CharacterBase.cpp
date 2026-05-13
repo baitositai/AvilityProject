@@ -11,6 +11,7 @@ CharacterBase::CharacterBase(Parameter* parameter, const std::unordered_map<std:
 	STATE_COMPONENT_CREATE_MAP(stateComponentNameMap),
 	characterParameterPtr_(parameter)
 {	
+	type_ = TYPE::MAX;
 	state_ = STATE::MAX;
 }
 
@@ -37,10 +38,13 @@ void CharacterBase::Update()
 	// 存在する場合
 	if (it != componentStateMap_.end() && it->second)
 	{
-		// 更新処理
-		it->second->Update();
+		// 状態別コンポーネントがアクティブな場合は更新する
+		if (it->second->IsActive())
+		{
+			// 更新処理
+			it->second->Update();
+		}
 	}
-
 	// 基底クラスの処理
 	ActorBase::Update();
 }
@@ -76,15 +80,15 @@ void CharacterBase::DebugDraw()
 {
 	// 自身の体力を描画
 	DrawFormatString(
-		characterParameterPtr_->pos.x - characterParameterPtr_->hitBoxSize.x / 2,
-		characterParameterPtr_->pos.y - characterParameterPtr_->hitBoxSize.y / 2 -20,
+		characterParameterPtr_->pos.x - characterParameterPtr_->hitSize.x / 2,
+		characterParameterPtr_->pos.y - characterParameterPtr_->hitSize.y / 2 -20,
 		UtilityCommon::RED,
 		L"AT:%d",
 		characterParameterPtr_->attackPower);
 
 	DrawFormatString(
-		characterParameterPtr_->pos.x - characterParameterPtr_->hitBoxSize.x / 2,
-		characterParameterPtr_->pos.y - characterParameterPtr_->hitBoxSize.y / 2 -40,
+		characterParameterPtr_->pos.x - characterParameterPtr_->hitSize.x / 2,
+		characterParameterPtr_->pos.y - characterParameterPtr_->hitSize.y / 2 -40,
 		UtilityCommon::RED,
 		L"HP:%d",
 		characterParameterPtr_->hp);

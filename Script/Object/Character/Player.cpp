@@ -20,7 +20,7 @@ Player::~Player()
 void Player::Init()
 {	
 	// コライダー
-	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::PLAYER, parameter_.pos, parameter_.hitBoxSize,parameter_.angle);
+	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::PLAYER, parameter_.pos, parameter_.hitSize,parameter_.angle);
 
 	// 衝突後処理
 	onHit_ = std::make_unique<OnHitPlayer>(*this);
@@ -45,4 +45,39 @@ void Player::AttackReset()
 {
 	// 初期化
 	componentStateMap_.at(STATE::ATTACK)->Init();
+}
+
+std::shared_ptr<ColliderBox> Player::CreateColliderClone()
+{
+	std::shared_ptr<ColliderBase> collider = collider_->Clone();
+	std::shared_ptr<ColliderBox> colliderBox = std::dynamic_pointer_cast<ColliderBox>(collider);
+	return colliderBox;
+}
+
+void Player::SetAbilityComponent(std::unique_ptr<ComponentAvilityBase> component)
+{
+	// 中身がない場合
+	if (!component)
+	{
+		return;
+	}
+
+	// 取得したアビリティスロットを確認
+	ABILITY_SLOT abilitySlot = component->GetAbilitySlot();
+	if(abilitySlot == ABILITY_SLOT::MAX)
+	{
+		return;
+	}
+
+	// 追加(もしくは入れ替え)
+	abilityComponents_.at(abilitySlot) = std::move(component);
+}
+
+void Player::RemoveAbilityComponent(const ABILITY_SLOT abilitySlot)
+{
+	auto it = abilityComponents_.find(abilitySlot);
+	if (it != abilityComponents_.end())
+	{
+		it->second.reset(); // 中身を消去
+	}
 }

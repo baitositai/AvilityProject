@@ -10,7 +10,9 @@ public:
 	enum class TAG
 	{
 		NONE,
-		PLAYER_ATTACK_NORMAL,	// プレイヤーの通常攻撃			
+		PLAYER,					// プレイヤー
+		PLAYER_ATTACK_NORMAL,	// プレイヤーの通常攻撃	
+		PLAYER_AVILITY_STAMP,	// プレイヤーのアビリティ
 		STAGE,					// ステージ
 		PLAYER,					// プレイヤー
 		AVILITY_BOX,			// アビリティ設置のボックス
