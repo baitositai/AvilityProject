@@ -1,10 +1,12 @@
 #pragma once
 #include <functional>
+#include <memory>
 #include "ComponentAvilityBase.h"
 #include "../../Common/Vector2F.h"
 #include "../../Object/ActorBase.h"
 
 class CollisionManager;
+class ColliderBox;
 class InputManager;
 class Player;
 
@@ -34,6 +36,11 @@ public:
 	/// </summary>
 	void Update() override;
 
+	/// <summary>
+	/// 取り外し時の処理
+	/// </summary>
+	void Remove() override;
+
 private:
 
 	// 衝突管理クラス
@@ -51,6 +58,9 @@ private:
 	Vector2 nowSize_;		// 現在
 	// 重力方向
 	ActorBase::DIR gravityDir_;
+
+	// 攻撃判定用コライダー
+	std::shared_ptr<ColliderBox> attackCollider_;
 
 	// 移動入力処理
 	void ProcessInputShot();
