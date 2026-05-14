@@ -26,6 +26,9 @@ public:
 private:
 
 	// 入力管理クラス
-	class InputManager& inputManager_;
+	InputManager& inputManager_;
+
+	// アビリティ種類
+	int type_;
 };
 

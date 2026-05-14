@@ -229,3 +229,34 @@ void ActorBase::OnHit(const std::weak_ptr<ColliderBase>& opponentCollider)
 	if (onHit_ == nullptr) return;
 	onHit_->Update(opponentCollider);
 }
+
+const Vector2F ActorBase::GetFront() const
+{
+	Vector2F vec = {};
+	if (actorParameterPtr_->gravityDir == ActorBase::DIR::RIGHT || actorParameterPtr_->gravityDir == ActorBase::DIR::LEFT)
+	{
+		vec = { 0.0f, 1.0f };
+		vec.y *= actorParameterPtr_->direction ? -1.0f : 1.0f;
+	}
+	else
+	{
+		vec = { 1.0f, 0.0f };
+	}
+
+	return vec;
+}
+
+const Vector2F ActorBase::GetBack() const
+{
+	return Vector2F();
+}
+
+const Vector2F ActorBase::GetUp() const
+{
+	return Vector2F();
+}
+
+const Vector2F ActorBase::GetDown() const
+{
+	return Vector2F();
+}

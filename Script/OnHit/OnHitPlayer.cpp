@@ -49,9 +49,6 @@ void OnHitPlayer::OnHitEnemy(const std::weak_ptr<ColliderBase>& opponentCollider
 {
     // 共通処理
 	OnHitAttack(opponentCollider);
-
-    // コライダーの判定を無効化
-    opponentCollider.lock()->SetIsActive(false);
 }
 
 void OnHitPlayer::AvilityShot(const std::weak_ptr<ColliderBase>& opponentCollider, const Vector2F& normal)

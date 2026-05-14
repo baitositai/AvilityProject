@@ -28,7 +28,11 @@ void OnHitPlayerStamp::Update(const std::weak_ptr<ColliderBase>& opponentCollide
 
     if (charaPtr)
     {
-        charaPtr->Damage(owner_.GetAttackPowerWithBoost());
+		// ダメージ処理
+        charaPtr->Damage(owner_.GetAttackPowerWithBoost());    
+        
+        // 無敵にする
+        owner_.SetIsInvincibleTime(INVINCIBLE_TIME);
 
         if (charaPtr->GetState() == CharacterBase::STATE::DEAD)
         {
@@ -44,9 +48,6 @@ void OnHitPlayerStamp::Update(const std::weak_ptr<ColliderBase>& opponentCollide
 
     // キャラクターの入力処理を有効にする
     owner_.SetStateComponentActive(Player::STATE::ALIVE, true);
-
-    // 無敵にする
-	owner_.SetIsInvincibleTime(INVINCIBLE_TIME);
 
     // 所有者のコライダーの判定を有効にする
     owner_.SetColliderActive(true);

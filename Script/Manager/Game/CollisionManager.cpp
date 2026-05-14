@@ -51,11 +51,32 @@ void CollisionManager::Update()
 			//衝突判定の初期化
 			colliders_[j]->SetIsHit(false);
 
+			if (collider->GetTag() == CollisionTags::TAG::ENEMY_CLONE)
+			{
+				if(!collider->IsActive())
+				{
+					int a = 0;
+				}
+			}
+			if (collider2->GetTag() == CollisionTags::TAG::ENEMY_CLONE)
+			{
+				if(!collider2->IsActive())
+				{
+					int a = 0;
+				}
+			}
+
 			// コライダーや所有者が非活動状態の場合
-			if (!colliders_[j]->GetOwner().IsActive() || !colliders_[i]->IsActive())
+			if (!colliders_[j]->GetOwner().IsActive() || !colliders_[j]->IsActive())
 			{
 				// 次へ
 				continue;
+			}	
+			
+			if(tag1 == CollisionTags::TAG::PLAYER && tag2 == CollisionTags::TAG::ENEMY_CLONE ||
+				tag1 == CollisionTags::TAG::ENEMY_CLONE && tag2 == CollisionTags::TAG::PLAYER)
+			{
+				int a = 0;
 			}
 
 			//// 各コライダーからタグを取得

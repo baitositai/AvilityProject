@@ -104,10 +104,16 @@ public:
 	void SetStateComponentActive(const STATE state, const bool isActive);
 
 	/// <summary>
-	/// –³“G”»’è
+	/// –³“GŠÔ‚Ìİ’è
 	/// </summary>
-	/// <param name="isInvicible">–³“G”»’è</param>
+	/// <param name="invincibleTime">–³“GŠÔ</param>
 	void SetIsInvincibleTime(const float invicibleTime) { characterParameterPtr_->invincibleTime = invicibleTime; }
+
+	/// <summary>
+	/// –³“GŠÔ‚Ì’Ç‰Á
+	/// </summary>
+	/// <param name="addInvincibleTime">’Ç‰Á‚·‚é–³“GŠÔ</param>
+	void AddInvincibleTime(const float addInvincibleTime) { characterParameterPtr_->invincibleTime += addInvincibleTime; }
 
 	/// <summary>
 	/// ƒWƒƒƒ“ƒv—Í‚ğİ’è

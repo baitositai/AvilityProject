@@ -1,4 +1,5 @@
 #pragma once
+#include <functional>
 #include "ComponentBase.h"
 
 class CharacterBase;
@@ -31,4 +32,13 @@ private:
 
 	// シーン管理クラス
 	SceneManager& sceneManager_;
+
+	// 更新処理
+	std::function<void()> updateFunc_;
+
+	// 待機処理
+	void Wait();
+
+	// 無敵時間処理
+	void SubInvincibleTime();
 };

@@ -63,6 +63,11 @@ void InputManager::Init()
 	RegisterTrigger(TYPE::DEBUG_CAMERA_CHANGE, { KEY_INPUT_TAB }, { });
 	RegisterTrigger(TYPE::CREATE_POSITION, { KEY_INPUT_C }, { });
 	RegisterTrigger(TYPE::OPEN_FILE, { KEY_INPUT_V }, { });
+
+	// デバッグ用アビリティアイテム生成
+	RegisterTrigger(TYPE::DEBUG_CREATE_ITEM_AVILITY, { KEY_INPUT_1 }, { });
+	RegisterTrigger(TYPE::DEBUG_SELECT_RIGHT_ITEM_AVILITY, { KEY_INPUT_2 }, { });
+	RegisterTrigger(TYPE::DEBUG_SELECT_LEFT_ITEM_AVILITY, { KEY_INPUT_3 }, { });
 }
 
 void InputManager::Update()

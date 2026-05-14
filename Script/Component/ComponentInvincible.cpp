@@ -7,6 +7,8 @@ ComponentInvincible::ComponentInvincible(CharacterBase& owner) :
 	sceneManager_(SceneManager::GetInstance()),
 	ComponentBase(&owner)
 {
+	// 待機状態に遷移
+	updateFunc_ = std::bind(&ComponentInvincible::Wait, this);
 }
 
 ComponentInvincible::~ComponentInvincible()
@@ -15,10 +17,36 @@ ComponentInvincible::~ComponentInvincible()
 
 void ComponentInvincible::Update()
 {
-	// 無敵中
+	updateFunc_();
+}
+
+void ComponentInvincible::Wait()
+{
+	if(owner_.IsInvincible())
+	{
+		// 無敵状態に遷移
+		updateFunc_ = std::bind(&ComponentInvincible::SubInvincibleTime, this);
+
+		// 所有者のコライダーの判定を無効化する
+		owner_.SetColliderActive(false);
+	}
+}
+
+void ComponentInvincible::SubInvincibleTime()
+{
+	// 無敵時間を減らす
+	owner_.AddInvincibleTime(-sceneManager_.GetDeltaTime());
+
+	// まだ無敵中の場合
 	if (owner_.IsInvincible())
 	{
-		// 無敵時間を減らす
-		owner_.SetIsInvincibleTime(owner_.GetInvincibleTime() - sceneManager_.GetDeltaTime());
+		// 終了
+		return;
 	}
+
+	// 待機状態に遷移
+	updateFunc_ = std::bind(&ComponentInvincible::Wait, this);
+	
+	// 所有者のコライダーの判定を有効化する
+	owner_.SetColliderActive(true);
 }

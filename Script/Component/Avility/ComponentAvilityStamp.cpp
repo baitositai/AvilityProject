@@ -49,6 +49,9 @@ void ComponentAvilityStamp::Remove()
 
 	// 攻撃力を戻す
 	owner_.AddAttackPower(-ADD_ATTACK_POWER);
+
+	// 所有者のコライダーの判定を有効にする
+	owner_.SetColliderActive(true);
 }
 
 void ComponentAvilityStamp::UpdateInput()
@@ -112,6 +115,9 @@ void ComponentAvilityStamp::ChangeStateInput()
 
 	// 攻撃判定用コライダーを無効にする
 	attackCollider_->SetIsActive(false);
+
+	// 所有者のコライダーの判定を有効にする
+	owner_.SetColliderActive(true);
 }
 
 void ComponentAvilityStamp::ChangeStateStop()
