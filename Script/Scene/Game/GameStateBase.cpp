@@ -4,13 +4,15 @@
 #include "../../Manager/Game/EnemyManager.h"
 #include "../../Manager/Game/PlayerManager.h"
 #include "../../Manager/Game/StageManager.h"
+#include "../../Manager/Game/ItemManager.h"
 #include "GameStateBase.h"
 
 GameStateBase::GameStateBase() :
 	playerMng_(PlayerManager::GetInstance()),
 	enemyMng_(EnemyManager::GetInstance()),
 	collisionMng_(CollisionManager::GetInstance()),
-	stageMng_(StageManager::GetInstance())
+	stageMng_(StageManager::GetInstance()),
+	itemMng_(ItemManager::GetInstance())
 {
 }
 
@@ -32,9 +34,11 @@ void GameStateBase::Update()
 	enemyMng_.Update();	
 	stageMng_.Update();
 	collisionMng_.Update();
+	itemMng_.Update();
 
 	// íœˆ—
 	enemyMng_.Sweep();
+	itemMng_.Sweep();
 	collisionMng_.Sweep();
 }
 
@@ -50,5 +54,6 @@ void GameStateBase::DebugDraw()
 	stageMng_.DebugDraw();
 	playerMng_.DebugDraw();
 	enemyMng_.DebugDraw();
+	itemMng_.DebugDraw();
 	collisionMng_.DebugDraw();
 }

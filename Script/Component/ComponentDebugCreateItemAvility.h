@@ -16,12 +16,17 @@ public:
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	virtual ~ComponentDebugCreateItemAvility() override;
+	~ComponentDebugCreateItemAvility() override;
 
 	/// <summary>
 	/// 更新処理
 	/// </summary>
-	virtual void Update() override;
+	void Update() override;
+
+	/// <summary>
+	/// デバッグ描画
+	/// </summary>
+	void DebugDraw() override;
 
 private:
 

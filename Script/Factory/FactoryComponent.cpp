@@ -5,6 +5,8 @@
 #include "../../Component/ComponentInvincible.h"
 #include "../../Component/ComponentKnockBack.h"
 #include "../../Component/ComponentJump.h"
+#include "../../Component/ComponentDebugCreateItemAvility.h"
+#include "../../Component/Avility/ComponentAvilityBase.h"
 #include "../../Component/Avility/ComponentAvilityBox.h"
 #include "../../Component/Avility/ComponentAvilityShot.h"
 #include "../../Component/Avility/ComponentAvilityChargeShot.h"
@@ -30,6 +32,27 @@ std::unique_ptr<ComponentBase> FactoryComponent::CreateComponent(const std::stri
     {
         // 生成したものを返す
         return it->second(owner);
+    }
+
+    // 見つからない場合空で返す
+    return nullptr;
+}
+
+std::unique_ptr<ComponentAvilityBase> FactoryComponent::CreateComponentAvility(const std::string& name, ActorBase& owner)
+{
+    // 必要とするものがあるか探索
+    auto it = componentCreateMap_.find(name);
+
+    // ある場合
+    if (it != componentCreateMap_.end())
+    {   
+		// 生成したものをアビリティ用の型にキャストして返す
+		auto avilityComponent = dynamic_cast<ComponentAvilityBase*>(it->second(owner).release());
+
+		if (avilityComponent)
+		{
+			return std::unique_ptr<ComponentAvilityBase>(avilityComponent);
+		}
     }
 
     // 見つからない場合空で返す
@@ -207,6 +230,11 @@ std::unique_ptr<ComponentJump> FactoryComponent::CreateComponentJump(ActorBase& 
     return std::make_unique<ComponentJump>(*charaPtr);
 }
 
+std::unique_ptr<ComponentDebugCreateItemAvility> FactoryComponent::CreateComponentDebugCreateItemAvility(ActorBase& owner)
+{
+    return std::make_unique<ComponentDebugCreateItemAvility>(owner);
+}
+
 FactoryComponent::FactoryComponent()
 {
     // 生成処理の登録
@@ -273,6 +301,10 @@ FactoryComponent::FactoryComponent()
     componentCreateMap_.emplace("jump", [this](ActorBase& owner)
         {
             return CreateComponentJump(owner);
+        });
+    componentCreateMap_.emplace("debugCreateItemAvility", [this](ActorBase& owner)
+        {
+            return CreateComponentDebugCreateItemAvility(owner);
         });
 }
 

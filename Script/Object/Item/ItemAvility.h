@@ -1,6 +1,6 @@
 #pragma once
 #include "ItemBase.h"
-#include "../../Component/Avility/AvilityList.h"
+#include "../../Component/Avility/AvilityTypes.h"
 
 class ItemAvility : public ItemBase
 {
@@ -8,7 +8,7 @@ public:
 
 	struct Parameter : public ItemBase::Parameter
 	{
-		AVILITY_TYPE type = AVILITY_TYPE::MAX;
+		AvilityTypes::TYPE type = AvilityTypes::TYPE::MAX;
 	};
 
 	/// <summary>
@@ -22,6 +22,12 @@ public:
 	/// デストラクタ
 	/// </summary>
 	~ItemAvility() override;
+
+	/// <summary>
+	/// 生成するコンポーネントの名前を返す
+	/// </summary>
+	/// <returns>コンポーネント名前</returns>
+	const std::string GetCreateAvilityName() const;
 
 private:
 

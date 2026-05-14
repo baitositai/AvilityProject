@@ -27,6 +27,7 @@ void Player::DebugDraw()
 	CharacterBase::DebugDraw();
 	DrawFormatString(0, 20, UtilityCommon::LIME, L"ジャンプ力    :%2f", parameter_.jumpPow);
 	DrawFormatString(0, 40, UtilityCommon::LIME, L"プレイヤー位置:%2f,%2f", parameter_.pos.x, parameter_.pos.y);
+	componentMap_["debugCreateItemAvility"]->DebugDraw();
 }
 
 void Player::AttackReset()

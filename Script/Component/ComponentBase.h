@@ -28,6 +28,11 @@ public:
 	virtual void Update();
 
 	/// <summary>
+	/// デバッグ用描画
+	/// </summary>
+	virtual void DebugDraw();
+
+	/// <summary>
 	/// 活動状態を設定する
 	/// </summary>
 	/// <param name="isActive">活動状態</param>

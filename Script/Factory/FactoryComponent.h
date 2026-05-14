@@ -11,18 +11,23 @@ class ComponentMove;
 class ComponentSpriteAnimation;
 class ComponentGravity;
 class ComponentKnockBack;
-class ComponentAvilityChargeShot;
+class ComponentInvincible;
+class ComponentJump;
+
 class ComponentStatePlayerProcess;
 class ComponentStateAttackDefault;
 class ComponentStateIdle;
 class ComponentStateDead;
 class ComponentStateDummy;
+
+class ComponentAvilityBase;
+class ComponentAvilityChargeShot;
 class ComponentAvilityBox;
 class ComponentAvilityShot;
 class ComponentAvilityGravity;
-class ComponentInvincible;
-class ComponentJump;
 class ComponentAvilityStamp;
+
+class ComponentDebugCreateItemAvility;
 
 class FactoryComponent : public Singleton<FactoryComponent>
 {
@@ -38,6 +43,14 @@ public:
 	/// <param name="owner">所有者</param>
 	std::unique_ptr<ComponentBase> CreateComponent(const std::string& name, ActorBase& owner);
 
+	/// <summary>
+	/// アビリティコンポーネントの生成
+	/// </summary>
+	/// <param name="name">名前</param>
+	/// <param name="owner">所有者</param>
+	/// <returns>生成されたアビリティコンポーネント</returns>
+	std::unique_ptr<ComponentAvilityBase> CreateComponentAvility(const std::string& name, ActorBase& owner);
+
 private:
 
 	// コンポーネント生成マップ
@@ -47,7 +60,6 @@ private:
 	std::unique_ptr<ComponentMove> CreateComponentMove(ActorBase& owner);
 	std::unique_ptr<ComponentSpriteAnimation> CreateComponentSpriteAnimation(ActorBase& owner);
 	std::unique_ptr<ComponentGravity> CreateComponentGravity(ActorBase& owner);
-	//std::unique_ptr<ComponentAvilityChargeShot> CreateComponentAvilityChargeShot(ActorBase& owner);
 	std::unique_ptr<ComponentStatePlayerProcess> CreateComponentStatePlayerProcess(ActorBase& owner);
 	std::unique_ptr<ComponentStateAttackDefault> CreateComponentStateAttackDefault(ActorBase& owner);
 	std::unique_ptr<ComponentAvilityBox> CreateComponentAvilityBox(ActorBase& owner);
@@ -61,6 +73,7 @@ private:
 	std::unique_ptr<ComponentStateDummy> CreateComponentStateDummy(ActorBase& owner);
 	std::unique_ptr<ComponentInvincible> CreateComponentInvincible(ActorBase& owner);
 	std::unique_ptr<ComponentJump> CreateComponentJump(ActorBase& owner);
+	std::unique_ptr<ComponentDebugCreateItemAvility> CreateComponentDebugCreateItemAvility(ActorBase& owner);
 	
 	// コンストラクタ
 	FactoryComponent();

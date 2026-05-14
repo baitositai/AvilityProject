@@ -233,30 +233,61 @@ void ActorBase::OnHit(const std::weak_ptr<ColliderBase>& opponentCollider)
 const Vector2F ActorBase::GetFront() const
 {
 	Vector2F vec = {};
-	if (actorParameterPtr_->gravityDir == ActorBase::DIR::RIGHT || actorParameterPtr_->gravityDir == ActorBase::DIR::LEFT)
-	{
-		vec = { 0.0f, 1.0f };
-		vec.y *= actorParameterPtr_->direction ? -1.0f : 1.0f;
-	}
-	else
-	{
-		vec = { 1.0f, 0.0f };
-	}
 
+	// 重力方向に応じて前方向を返す
+	if (actorParameterPtr_->gravityDir == ActorBase::DIR::RIGHT) { vec = { 0.0f, -1.0f }; }
+	else if (actorParameterPtr_->gravityDir == ActorBase::DIR::LEFT) { vec = { 0.0f, 1.0f }; }
+	else if (actorParameterPtr_->gravityDir == ActorBase::DIR::UP) { vec = { -1.0f, 0.0f }; }
+	else { vec = { 1.0f, 0.0f }; }
+
+	// キャラクターの向きで前方向を反転させる
+	if (actorParameterPtr_->direction) { Vector2F::MulVector2FFloat(vec, -1.0f); }
+
+	// 返す
 	return vec;
 }
 
 const Vector2F ActorBase::GetBack() const
 {
-	return Vector2F();
+	Vector2F vec = {};
+
+	// 重力方向に応じて後ろ方向を返す
+	if (actorParameterPtr_->gravityDir == ActorBase::DIR::RIGHT) { vec = { 0.0f, 1.0f }; }
+	else if (actorParameterPtr_->gravityDir == ActorBase::DIR::LEFT) { vec = { 0.0f, -1.0f }; }
+	else if (actorParameterPtr_->gravityDir == ActorBase::DIR::UP) { vec = { 1.0f, 0.0f }; }
+	else { vec = { -1.0f, 0.0f }; }
+
+	// キャラクターの向きで後ろ方向を反転させる
+	if (actorParameterPtr_->direction) { Vector2F::MulVector2FFloat(vec, -1.0f); }
+
+	// 返す
+	return vec;
 }
 
 const Vector2F ActorBase::GetUp() const
 {
-	return Vector2F();
+	Vector2F vec = {};
+	
+	// 重力方向に応じて上方向を返す
+	if (actorParameterPtr_->gravityDir == ActorBase::DIR::RIGHT) { vec = { -1.0f, 0.0f }; }
+	else if (actorParameterPtr_->gravityDir == ActorBase::DIR::LEFT) { vec = { 1.0f, 0.0f }; }
+	else if (actorParameterPtr_->gravityDir == ActorBase::DIR::UP) { vec = { 0.0f, 1.0f }; }
+	else { vec = { 0.0f, -1.0f }; }
+
+	// 返す
+	return vec;
 }
 
 const Vector2F ActorBase::GetDown() const
 {
-	return Vector2F();
+	Vector2F vec = {};
+	
+	// 重力方向に応じて下方向を返す
+	if (actorParameterPtr_->gravityDir == ActorBase::DIR::RIGHT) { vec = { 1.0f, 0.0f }; }
+	else if (actorParameterPtr_->gravityDir == ActorBase::DIR::LEFT) { vec = { -1.0f, 0.0f }; }
+	else if (actorParameterPtr_->gravityDir == ActorBase::DIR::UP) { vec = { 0.0f, -1.0f }; }
+	else { vec = { 0.0f, 1.0f }; }
+
+	// 返す
+	return vec;
 }

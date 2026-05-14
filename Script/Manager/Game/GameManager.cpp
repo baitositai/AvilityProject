@@ -5,6 +5,7 @@
 #include "StageManager.h"
 #include "PlayerManager.h"
 #include "EnemyManager.h"
+#include "ItemManager.h"
 #include "GameManager.h"
 
 void GameManager::Init()
@@ -14,7 +15,8 @@ void GameManager::Init()
 	PlayerManager::GetInstance().Init();
 	EnemyManager::GetInstance().Init();
 	CollisionManager::GetInstance().Init();	
-	
+	ItemManager::GetInstance().Init();
+
 	// ‰Šúó‘Ô‚Ìİ’è
 	ChangeState(STATE::ROAD);
 }
@@ -78,6 +80,7 @@ GameManager::GameManager()
 	PlayerManager::CreateInstance();
 	EnemyManager::CreateInstance();
 	CollisionManager::CreateInstance();
+	ItemManager::CreateInstance();
 
 	// ó‘Ô‘JˆÚ‚ÌŠÖ”ƒ}ƒbƒv‚Ì‰Šú‰»
 	changeStateMap_[STATE::ROAD] = std::bind(&GameManager::ChangeStateRoad, this);
@@ -91,4 +94,5 @@ GameManager::~GameManager()
 	PlayerManager::GetInstance().Destroy();
 	EnemyManager::GetInstance().Destroy();
 	CollisionManager::GetInstance().Destroy();
+	ItemManager::GetInstance().Destroy();
 }

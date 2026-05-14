@@ -7,7 +7,7 @@
       "move",
       "spriteAnimation",
       "invincible",
-      "avilityStamp"
+      "debugCreateItemAvility"
     ],
     "componentStateNameList": {
       "alive": "playerProcess",

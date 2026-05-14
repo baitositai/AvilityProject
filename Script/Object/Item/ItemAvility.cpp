@@ -17,3 +17,8 @@ ItemAvility::ItemAvility(Parameter& parameter, const std::vector<std::string>& c
 ItemAvility::~ItemAvility()
 {
 }
+
+const std::string ItemAvility::GetCreateAvilityName() const
+{
+	return AvilityTypes::AVILITY_NAME_MAP.at(parameter_.type);
+}

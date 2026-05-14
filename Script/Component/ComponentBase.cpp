@@ -17,3 +17,7 @@ void ComponentBase::Init()
 void ComponentBase::Update()
 {
 }
+
+void ComponentBase::DebugDraw()
+{
+}

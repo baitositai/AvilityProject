@@ -1,4 +1,5 @@
 #include <DxLib.h>
+#include "../Utility/UtilityCommon.h"
 #include "../Object/ActorBase.h"
 #include "ColliderCircle.h"
 
@@ -22,5 +23,5 @@ void ColliderCircle::DebugDraw()
 {
 	if (!isActive_ || !owner_.IsActive()) return;
 	Vector2 pos = followPos_.ToVector2();
-	DrawCircle(pos.x, pos.y, radius_,  0xff0000, false , 3);
+	DrawCircle(pos.x, pos.y, radius_,  UtilityCommon::YELLOW, false , 3);
 }
