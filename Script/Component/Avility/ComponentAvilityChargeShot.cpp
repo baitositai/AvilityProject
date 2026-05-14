@@ -2,6 +2,7 @@
 #include "../../Common/Vector2F.h"
 #include "../../Manager/Common/InputManager.h"
 #include "../../Manager/Game/CollisionManager.h"
+#include "../../Collider/ColliderBox.h"
 
 #include "../../Object/Character/CharacterBase.h"
 #include "../../Object/Character/Player.h"
@@ -21,6 +22,13 @@ ComponentAvilityChargeShot::ComponentAvilityChargeShot(Player& owner)
 	isReflected_(false),
 	reflectCount_(0)
 {
+
+	// コライダーの登録
+	attackCollider_ = owner_.CreateColliderClone();
+	attackCollider_->ChangeTag(CollisionTags::TAG::PLAYER_ATTACK_NORMAL);
+	attackCollider_->SetIsActive(false);
+	CollisionManager::GetInstance().Add(attackCollider_);
+
 	abilitySlot_ = ABILITY_SLOT::FIRST;
 	stateFunctionMap_ =
 	{
@@ -60,9 +68,21 @@ void ComponentAvilityChargeShot::Update()
 	nowSize_.x = isVerticalGravity ? defaultSize_.x : defaultSize_.y;
 	nowSize_.y = isVerticalGravity ? defaultSize_.y : defaultSize_.x;
 
-
+	// 状態関数の呼び出し
 	currentStateFunction_();
 
+}
+
+void ComponentAvilityChargeShot::Remove()
+{
+	// コライダーの削除 
+	if (attackCollider_)
+	{
+		attackCollider_->SetDelete();
+	}
+
+	// 攻撃力を戻す
+	//owner_.AddAttackPower(-ADD_ATTACK_POWER);
 }
 
 void ComponentAvilityChargeShot::ProcessInputShot()
@@ -85,7 +105,6 @@ void ComponentAvilityChargeShot::ProcessInputShot()
 
 void ComponentAvilityChargeShot::ProcessInputCharge()
 {
-
 	shotVec_ = {};
 	float angle = 0.0f;
 
@@ -108,12 +127,6 @@ void ComponentAvilityChargeShot::ProcessInputCharge()
 	{
 		shotAngle_ = 0.0f;
 	}
-
-	// =========================
-
-	// 仮
-	// 後で好きな入力方式に変更可能
-	//shotAngle_ += 0.05f;
 
 	// =========================
 	// 角度 → ベクトル
@@ -197,7 +210,15 @@ void ComponentAvilityChargeShot::ProcessInputCharge()
 
 		chageTime_ = 0.0f;
 
+		// 自身のコライダーの判定を無効にする
+		owner_.SetColliderActive(false);
+		owner_.SetComponentActive("knockBack", false);
+		owner_.SetComponentActive("jump", false);
 		owner_.SetIsGround(false);
+
+		// 攻撃判定用コライダーを有効にする
+		attackCollider_->SetIsActive(true);
+
 
 		isReflected_ = false;
 		reflectCount_ = 4;
@@ -205,7 +226,6 @@ void ComponentAvilityChargeShot::ProcessInputCharge()
 		currentState_ = "shot";
 		currentStateFunction_ = stateFunctionMap_[currentState_];
 	}
-
 }
 
 void ComponentAvilityChargeShot::ProcessMoveShot()
@@ -233,6 +253,17 @@ void ComponentAvilityChargeShot::ProcessMoveShot()
 		{
 			owner_.SetAngle(UtilityCommon::Deg2RadF(0.0f));
 		}
+
+
+		// 自身のコライダーの判定を有効にする
+		owner_.SetColliderActive(true);
+
+		// ほとんど意味がなくノックバックするので無敵化を目指す
+		owner_.SetComponentActive("knockBack", true);
+		owner_.SetComponentActive("jump", true);
+
+		// 攻撃判定用コライダーを無効にする
+		attackCollider_->SetIsActive(false);
 
 		currentState_ = "input";
 		currentStateFunction_ = stateFunctionMap_[currentState_];
