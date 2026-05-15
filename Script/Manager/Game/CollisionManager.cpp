@@ -83,8 +83,8 @@ void CollisionManager::Update()
 			//const auto& tag1 = colliders_[i]->GetTag();
 			//const auto& tag2 = colliders_[j]->GetTag();
 
-			if (tag1 == CollisionTags::TAG::PLAYER && tag2 == CollisionTags::TAG::ENEMY_CLONE ||
-				tag1 == CollisionTags::TAG::ENEMY_CLONE && tag2 == CollisionTags::TAG::PLAYER)
+			if (tag1 == CollisionTags::TAG::PLAYER && tag2 == CollisionTags::TAG::ITEM_AVILITY ||
+				tag1 == CollisionTags::TAG::ITEM_AVILITY && tag2 == CollisionTags::TAG::PLAYER)
 			{
 				int a = 0;
 			}
@@ -257,7 +257,7 @@ void CollisionManager::InitColliderMatrix()
 	collisionFunctionMatrix_[static_cast<int>(ColliderType::TYPE::BOX)][static_cast<int>(ColliderType::TYPE::CIRCLE)] =
 		[this](std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2) -> bool
 		{
-			return IsHitCheckCircleToCircle(collider1, collider2);
+			return IsHitCheckCircleToBox(collider1, collider2);
 		};
 
 	collisionFunctionMatrix_[static_cast<int>(ColliderType::TYPE::BOX)][static_cast<int>(ColliderType::TYPE::BOX)] =

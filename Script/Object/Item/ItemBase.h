@@ -22,6 +22,11 @@ public:
 	/// </summary>
 	virtual ~ItemBase() override;
 
+	/// <summary>
+	/// デバッグ描画
+	/// </summary>
+	virtual void DebugDraw() override;
+
 private:
 
 	// アイテムのパラメータ

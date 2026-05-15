@@ -32,19 +32,8 @@ void CharacterBase::Update()
 	// 移動後の値を初期化
 	characterParameterPtr_->moveAmount = {};
 
-	// マップから現在の状態のものがあるか探す
-	auto it = componentStateMap_.find(state_);
-
-	// 存在する場合
-	if (it != componentStateMap_.end() && it->second)
-	{
-		// 状態別コンポーネントがアクティブな場合は更新する
-		if (it->second->IsActive())
-		{
-			// 更新処理
-			it->second->Update();
-		}
-	}
+	UpdateComponentState();
+	
 	// 基底クラスの処理
 	ActorBase::Update();
 }
@@ -148,6 +137,23 @@ const int CharacterBase::GetAttackPowerWithBoost() const
 {
 	float boostAttackPower = static_cast<float>(characterParameterPtr_->attackPower) * (1.0f + characterParameterPtr_->attackBoostRate_);
 	return static_cast<int>(boostAttackPower);
+}
+
+void CharacterBase::UpdateComponentState()
+{
+	// マップから現在の状態のものがあるか探す
+	auto it = componentStateMap_.find(state_);
+
+	// 存在する場合
+	if (it != componentStateMap_.end() && it->second)
+	{
+		// 状態別コンポーネントがアクティブな場合は更新する
+		if (it->second->IsActive())
+		{
+			// 更新処理
+			it->second->Update();
+		}
+	}
 }
 
 void CharacterBase::CreateComponents()

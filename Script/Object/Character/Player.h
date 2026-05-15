@@ -61,6 +61,11 @@ public:
 	~Player() override;
 
 	/// <summary>
+	/// 更新処理
+	/// </summary>
+	void Update() override;
+
+	/// <summary>
 	/// デバッグ描画
 	/// </summary>
 	void DebugDraw() override;
@@ -113,4 +118,7 @@ private:
 
 	// アビリティコンポーネントのマップ
 	std::unordered_map<ABILITY_SLOT, std::unique_ptr<ComponentAvilityBase>> abilityComponents_;	
+
+	// アビリティ更新処理
+	void UpdateComponentAvility();
 };

@@ -229,6 +229,9 @@ protected:
 	// 状態別更新処理を管理するコンポーネントマップ
 	std::unordered_map<STATE, std::unique_ptr<ComponentBase>> componentStateMap_;
 
+	// 状態別コンポーネント処理の更新
+	void UpdateComponentState();
+
 private:	
 
 	// 状態をストリングで取得できる用

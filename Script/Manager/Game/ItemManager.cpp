@@ -42,6 +42,10 @@ void ItemManager::Add(std::unique_ptr<ItemBase> item)
 		// 終了
 		return;
 	}
+
+	// 初期化処理を実行
+	item->Init();
+
 	// アイテムを追加
 	itemList_.push_back(std::move(item));
 }

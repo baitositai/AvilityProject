@@ -5,6 +5,8 @@ OnHitItem::OnHitItem(ItemBase& owner) :
 	owner_(owner),
 	OnHitBase(owner)
 {
+
+	onHitMap_.emplace(CollisionTags::TAG::PLAYER, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitPlayer(opponentCollider); });
 }
 
 OnHitItem::~OnHitItem()

@@ -22,6 +22,21 @@ Player::~Player()
 {
 }
 
+void Player::Update()
+{
+	// 移動後の値を初期化
+	parameter_.moveAmount = {};
+
+	// 状態別処理
+	UpdateComponentState();
+
+	// アビリティ処理
+	UpdateComponentAvility();
+
+	// 基底クラスの処理
+	ActorBase::Update();
+}
+
 void Player::DebugDraw()
 {
 	CharacterBase::DebugDraw();
@@ -71,5 +86,28 @@ void Player::RemoveAbilityComponent(const ABILITY_SLOT abilitySlot)
 
 		// 解放
 		it->second.reset();
+	}
+}
+
+void Player::UpdateComponentAvility()
+{
+	if (abilityComponents_.empty())
+	{
+		return;
+	}
+
+	for (auto& avility : abilityComponents_)
+	{
+		auto& avilityPtr = avility.second;
+
+		// 中身が有効かチェック
+		if (avilityPtr)
+		{
+			if (avilityPtr->IsActive())
+			{
+				// 更新処理
+				avilityPtr->Update();
+			}
+		}
 	}
 }

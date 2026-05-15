@@ -20,12 +20,15 @@ ComponentDebugCreateItemAvility::~ComponentDebugCreateItemAvility()
 
 void ComponentDebugCreateItemAvility::Update()
 {
+	constexpr float RADIUS = 20.0f;
+
 	if (inputManager_.IsTrgDown(InputManager::TYPE::DEBUG_CREATE_ITEM_AVILITY))
 	{
 		ItemAvility::Parameter parameter = {};
 		parameter.type = static_cast<AvilityTypes::TYPE>(type_);
 		parameter.pos = Vector2F::AddVector2F(owner_->GetParameter()->pos, Vector2F::MulVector2FFloat(owner_->GetFront(), 50.0f));
-		parameter.hitRadius = 20.0f;
+		parameter.hitRadius = RADIUS;
+		parameter.hitSize = Vector2(RADIUS, RADIUS);
 		parameter.gravityPower = 9.8f;
 		parameter.gravityDir = ActorBase::DIR::DOWN;
 

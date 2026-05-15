@@ -1,3 +1,4 @@
+#include "../Manager/Game/CollisionManager.h"
 #include "../../Object/Common/Animation.h"
 #include "../../OnHit/OnHitItem.h"
 #include "../../Collider/ColliderCircle.h"
