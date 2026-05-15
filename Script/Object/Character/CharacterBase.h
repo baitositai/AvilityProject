@@ -16,6 +16,8 @@ public:
 	{
 		int hp = -1;						// 体力
 		int attackPower = -1;				// 攻撃力
+		int jumpCount = -1;					// ジャンプ回数
+		int jumpCountMax = -1;				// 最大ジャンプ回数
 		float attackBoostRate_ = 0.0f;		// 攻撃力上昇率
 		float invincibleTimeMax = 0.0f;		// 最大無敵時間
 		float invincibleTime = 0.0f;		// 無敵時間
@@ -82,7 +84,12 @@ public:
 	/// <summary>
 	/// デバッグ描画
 	/// </summary>
-	virtual void DebugDraw() override;
+	virtual void DebugDraw() override;	
+	
+	/// <summary>
+	/// 着地処理
+	/// </summary>
+	void Landing() override;
 
 	/// <summary>
 	/// 状態遷移処理
@@ -128,6 +135,12 @@ public:
 	void SetJumpPowMax(const float jumpPowMax) { characterParameterPtr_->jumpPowMax = jumpPowMax; }
 
 	/// <summary>
+	/// ジャンプ回数の追加
+	/// </summary>
+	/// <param name="addJumpCount">ジャンプ回数</param>
+	void AddJumpCount(const int addJumpCount) { characterParameterPtr_->jumpCount += addJumpCount; }
+
+	/// <summary>
 	/// ノックバックパワーの設定
 	/// </summary>
 	/// <param name="knockBackPower">ノックバックパワー</param>
@@ -168,6 +181,12 @@ public:
 	/// </summary>
 	/// <returns>最大ジャンプ力</returns>
 	const float GetJumpPowMax() const { return characterParameterPtr_->jumpPowMax; }
+
+	/// <summary>
+	/// ジャンプ回数を返す
+	/// </summary>
+	/// <returns>ジャンプ回数</returns>
+	const int GetJumpCount() const { return characterParameterPtr_->jumpCount; }
 
 	/// <summary>
 	/// 無敵時間を返す

@@ -23,6 +23,8 @@ void PlayerManager::Init()
 	parameter.divisionNum.y = jsonPparameter["divisionNum"]["y"].get<int>();
 	parameter.hp = jsonPparameter["hp"].get<int>();
 	parameter.jumpPowMax = jsonPparameter["jumpPowerMax"].get<float>();
+	parameter.jumpCount = jsonPparameter["jumpCount"].get<int>();
+	parameter.jumpCountMax = jsonPparameter["jumpCount"].get<int>();
 	parameter.dashSpeed = jsonPparameter["dashSpeed"].get<float>();
 	parameter.attackPower = jsonPparameter["attackPower"].get<int>();
 	parameter.defaultAttackRadius = jsonPparameter["defaultAttackRadius"].get<int>();

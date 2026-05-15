@@ -26,7 +26,7 @@
     "attackPower": 10,
     "jumpPowerMax": 20.0,
     "gravityPower": 9.8,
-    "jumpCount": 2,
+    "jumpCount": 1,
     "invincibleTimeMax": 2.0,
     "defaultAttackRadius": 20.0,
     "animationDefaultSpeed": 0.1,

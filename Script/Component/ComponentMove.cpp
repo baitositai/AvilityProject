@@ -127,5 +127,9 @@ void ComponentMove::CheckGroundStatus(float moveVal, bool isXAxis)
             (moveVal < 0.0f && gravityDir_ == ActorBase::DIR::UP)) isGround = true;
     }
 
-    if (isGround) owner_->SetIsGround(true);
+    if (isGround)
+    {
+        // ’…’nˆ—
+        owner_->Landing();
+    }
 }

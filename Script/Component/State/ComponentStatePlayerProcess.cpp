@@ -75,9 +75,9 @@ void ComponentStatePlayerProcess::ProcessInputMove()
 
 void ComponentStatePlayerProcess::ProcessInputJump()
 {
-	if (isGround_)
+	if (owner_.GetJumpCount() > 0)
 	{
-		// Python: if ƒL[“ü—Í‚ª‚ ‚Á‚½‚ç:
+		// “ü—Í‚ª‚ ‚éê‡
 		if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_JUMP))
 		{
 			isGround_ = false;
@@ -85,6 +85,8 @@ void ComponentStatePlayerProcess::ProcessInputJump()
 			owner_.SetJumpPow(-owner_.GetJumpPowMax());
 
 			owner_.GetAnimation().Play(Animation::TYPE::JUMP);
+
+			owner_.AddJumpCount(-1);
 		}
 	}
 }

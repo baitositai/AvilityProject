@@ -106,6 +106,11 @@ public:
 	void Delete();
 
 	/// <summary>
+	/// 着地処理
+	/// </summary>
+	virtual void Landing();
+
+	/// <summary>
 	/// コンポーネントの追加
 	/// </summary>
 	/// <param name="name">コンポーネントの名前</param>

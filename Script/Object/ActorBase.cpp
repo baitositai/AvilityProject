@@ -100,6 +100,12 @@ void ActorBase::Delete()
 	isDelete_ = true;
 }
 
+void ActorBase::Landing()
+{
+	// 着地判定
+	actorParameterPtr_->isGround = true;
+}
+
 void ActorBase::AddComponent(const std::string& name, std::unique_ptr<ComponentBase> component)
 {
 	// 同名のコンポーネントが既に存在するかチェック

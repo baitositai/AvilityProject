@@ -178,4 +178,8 @@ void OnHitCharacterBase::KnockBack(const std::weak_ptr<ColliderBase>& opponentCo
 
     // Ú’n‰ğœ
     owner_.SetIsGround(false);
+
+    // ƒWƒƒƒ“ƒv—Í–³Œø
+    owner_.AddJumpCount(-1);
+    owner_.SetJumpPow(0.0f);
 }

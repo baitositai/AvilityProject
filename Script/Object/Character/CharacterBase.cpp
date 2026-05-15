@@ -133,6 +133,15 @@ void CharacterBase::SetJumpPow(const float jumpPow)
 	if (characterParameterPtr_->jumpPow > 0.0f) characterParameterPtr_->jumpPow = 0.0f;
 }
 
+void CharacterBase::Landing()
+{
+	// ƒWƒƒƒ“ƒv‰ñ”‚ð–ß‚·
+	characterParameterPtr_->jumpCount = characterParameterPtr_->jumpCountMax;
+
+	// ’…’n”»’è
+	characterParameterPtr_->isGround = true;
+}
+
 const int CharacterBase::GetAttackPowerWithBoost() const
 {
 	float boostAttackPower = static_cast<float>(characterParameterPtr_->attackPower) * (1.0f + characterParameterPtr_->attackBoostRate_);
