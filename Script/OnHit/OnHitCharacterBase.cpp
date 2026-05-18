@@ -92,7 +92,10 @@ void OnHitCharacterBase::OnHitAvilityBox(const std::weak_ptr<ColliderBase>& oppo
 void OnHitCharacterBase::OnHitAttack(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
     // Õ“ËŽÒ‚ª–³“G‚Ì‚Æ‚«‚Í–³Ž‹
-    if (owner_.IsInvincible() || opponentCollider.lock()->GetPartnerTag() == CollisionTags::TAG::PLAYER_ATTACK_NORMAL)
+    if (owner_.IsInvincible() 
+        || opponentCollider.lock()->GetPartnerTag() == CollisionTags::TAG::PLAYER_ATTACK_NORMAL
+        || opponentCollider.lock()->GetPartnerTag() == CollisionTags::TAG::PLAYER_AVILITY_SHOT
+        )
     {
         return;
     }
