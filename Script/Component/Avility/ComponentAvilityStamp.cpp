@@ -10,9 +10,9 @@ ComponentAvilityStamp::ComponentAvilityStamp(Player& owner) :
 	ComponentAvilityBase(owner)
 {
 	abilitySlot_ = ABILITY_SLOT::SECOND;
+	type_ = AvilityTypes::TYPE::STAMP;
 	stopTime_ = 0.0f;
 	inputEnableTime_ = INPUT_ENABLE_TIME;
-	gravity_ = 0.0f;
 	state_ = STATE::INPUT;
 	update_ = std::bind(&ComponentAvilityStamp::UpdateInput, this);
 	stateChangeMap_.emplace(STATE::INPUT, std::bind(&ComponentAvilityStamp::ChangeStateInput, this));
@@ -77,7 +77,6 @@ void ComponentAvilityStamp::UpdateInput()
 void ComponentAvilityStamp::UpdateStop()
 {
 	stopTime_ -= sceneManager_.GetDeltaTime();
-	//owner_.SetIsInvincibleTime(1.0f); // 処理中常に無敵
 	if (stopTime_ <= 0.0f)
 	{
 		ChangeState(STATE::ACTIVE);
@@ -86,8 +85,8 @@ void ComponentAvilityStamp::UpdateStop()
 
 void ComponentAvilityStamp::UpdateActive()
 {
-	//owner_.SetIsInvincibleTime(1.0f); // 処理中常に無敵
-	if(owner_.IsGround())
+	// 地面に着地したか、もしくはキャラクターの入力処理が活動状態になったか
+	if(owner_.IsGround() || owner_.IsStateComponentActive(Player::STATE::ALIVE))
 	{
 		// 地面に着地したら状態を入力待ちにする
 		ChangeState(STATE::INPUT);
@@ -107,11 +106,11 @@ void ComponentAvilityStamp::ChangeStateInput()
 	// アニメーションを待機にする
 	owner_.GetAnimation().Play(Animation::TYPE::IDLE);
 
-	// 重力をもとに戻す
-	owner_.SetGravityPower(gravity_);
-
 	// キャラクターの入力処理を有効にする
 	owner_.SetStateComponentActive(Player::STATE::ALIVE, true);
+
+	// 重力をもとに戻す
+	owner_.AddGravityPower(-ComponentAvilityStamp::ACC_GRAVITY);
 
 	// 攻撃判定用コライダーを無効にする
 	attackCollider_->SetIsActive(false);
@@ -149,8 +148,7 @@ void ComponentAvilityStamp::ChangeStateActive()
 	update_ = std::bind(&ComponentAvilityStamp::UpdateActive, this);
 	
 	// 重力を加速
-	gravity_ = owner_.GetParameter()->gravityPower;
-	owner_.SetGravityPower(gravity_ + ACC_GRAVITY);
+	owner_.AddGravityPower(ACC_GRAVITY);
 
 	// キャラクターの重力を有効にする
 	owner_.SetComponentActive("gravity", true);

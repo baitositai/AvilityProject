@@ -12,7 +12,7 @@ ComponentGravity::~ComponentGravity()
 
 void ComponentGravity::Update()
 {
-    const float gravity = owner_->GetParameter()->gravityPower;
+    const float gravity = owner_->GetGravityPowerWithBoost();
     const ActorBase::DIR dir = owner_->GetParameter()->gravityDir;
     const Vector2F dirNor = GRAVITY_DIR_MAP.at(dir);
 

@@ -45,6 +45,7 @@ private:
 
 	// 衝突管理クラス
 	CollisionManager& collisionManager_;
+
 	// 入力管理クラスの参照
 	InputManager& inputManager_;
 
@@ -53,9 +54,11 @@ private:
 
 	// 座標
 	Vector2F pos_;
+
 	// サイズ
 	Vector2 defaultSize_;	// 通常
 	Vector2 nowSize_;		// 現在
+
 	// 重力方向
 	ActorBase::DIR gravityDir_;
 

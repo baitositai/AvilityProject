@@ -30,6 +30,7 @@ ComponentAvilityChargeShot::ComponentAvilityChargeShot(Player& owner)
 	CollisionManager::GetInstance().Add(attackCollider_);
 
 	abilitySlot_ = ABILITY_SLOT::FIRST;
+	type_ = AvilityTypes::TYPE::SHOT;
 	stateFunctionMap_ =
 	{
 		{"input", [this]() { return ProcessInputShot(); }},		// 入力待ち状態

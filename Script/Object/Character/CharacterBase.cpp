@@ -90,8 +90,8 @@ void CharacterBase::ChangeState(const STATE state)
 
 void CharacterBase::Damage(const int damage)
 {
-	// 体力を減らす
-	characterParameterPtr_->hp -= damage;
+	// 体力を減らす（ダメージ率だけダメージ量を変える）
+	characterParameterPtr_->hp -= damage * (1 + characterParameterPtr_->damageRate_);
 
 	// 体力が0以下の場合
 	if (characterParameterPtr_->hp <= 0)

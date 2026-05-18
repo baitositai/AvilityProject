@@ -145,6 +145,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Object\Effect\EffectBase.cpp" />
+    <ClCompile Include="Script\Component\Avility\ComponentAvilityAirslash.cpp" />
+    <ClCompile Include="Script\Component\Avility\ComponentAvilitySuperman.cpp" />
+    <ClCompile Include="Script\Component\Avility\ComponentAvilityMetal.cpp" />
     <ClCompile Include="Script\Component\Avility\ComponentAvilityAirwalk.cpp" />
     <ClCompile Include="Script\Component\Avility\AvilityTypes.cpp" />
     <ClCompile Include="Script\Component\ComponentDebugCreateItemAvility.cpp" />
@@ -257,8 +261,13 @@
     <ClCompile Include="Script\Utility\UtilityLoad.cpp" />
     <ClCompile Include="Script\Manager\Game\StageManager.cpp" />
     <ClCompile Include="Script\Utility\UtilityCollision.cpp" />
+    <ClCompile Include="Script\Manager\Common\SpriteEffectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Object\Effect\EffectBase.h" />
+    <ClInclude Include="Script\Component\Avility\ComponentAvilityAirslash.h" />
+    <ClInclude Include="Script\Component\Avility\ComponentAvilitySuperman.h" />
+    <ClInclude Include="Script\Component\Avility\ComponentAvilityMetal.h" />
     <ClInclude Include="Script\Component\Avility\ComponentAvilityAirwalk.h" />
     <ClInclude Include="Script\Component\Avility\AvilityTypes.h" />
     <ClInclude Include="Script\Component\ComponentDebugCreateItemAvility.h" />
@@ -431,6 +440,7 @@
     <ClInclude Include="Script\Utility\UtilityTemplates.h" />
     <ClInclude Include="Script\Manager\Game\StageManager.h" />
     <ClInclude Include="Script\Utility\UtilityCollision.h" />
+    <ClInclude Include="Script\Manager\Common\SpriteEffectManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

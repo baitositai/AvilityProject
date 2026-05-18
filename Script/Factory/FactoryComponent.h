@@ -27,6 +27,8 @@ class ComponentAvilityShot;
 class ComponentAvilityGravity;
 class ComponentAvilityStamp;
 class ComponentAvilityAirwalk;
+class ComponentAvilitySuperman;
+class ComponentAvilityMetal;
 
 class ComponentDebugCreateItemAvility;
 
@@ -69,6 +71,8 @@ private:
 	std::unique_ptr<ComponentAvilityAirwalk> CreateComponentAvilityAirwalk(ActorBase& owner);
 	std::unique_ptr<ComponentAvilityShot> CreateComponentAvilityShot(ActorBase& owner);
 	std::unique_ptr<ComponentAvilityGravity> CreateComponentAvilityGravity(ActorBase& owner);
+	std::unique_ptr<ComponentAvilityMetal> CreateComponentAvilityMetal(ActorBase& owner);
+	std::unique_ptr<ComponentAvilitySuperman> CreateComponentAvilitySuperman(ActorBase& owner);
 	std::unique_ptr<ComponentKnockBack> CreateComponentKnockBack(ActorBase& owner);
 	std::unique_ptr<ComponentStateIdle> CreateComponentStateIdle(ActorBase& owner);
 	std::unique_ptr<ComponentStateDead> CreateComponentStateDead(ActorBase& owner);

@@ -9,6 +9,7 @@ ComponentAvilityGravity::ComponentAvilityGravity(Player& owner) :
 {
 	coolTime_ = 0.0f;
 	abilitySlot_ = ABILITY_SLOT::FIRST;
+	type_ = AvilityTypes::TYPE::GRAVITY;
 }
 
 ComponentAvilityGravity::~ComponentAvilityGravity()

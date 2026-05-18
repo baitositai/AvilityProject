@@ -1,5 +1,6 @@
 #pragma once
 #include "../ComponentBase.h"
+#include "AvilityTypes.h"
 
 class Player;
 class StageManager;
@@ -46,6 +47,12 @@ public:
 	/// <returns>アビリティスロットの種類</returns>
 	ABILITY_SLOT GetAbilitySlot() const { return abilitySlot_; }
 
+	/// <summary>
+	/// 種類を返す
+	/// </summary>
+	/// <returns>種類</returns>
+	const AvilityTypes::TYPE GetType() const { return type_; }
+
 protected:
 
 	// 所有者
@@ -62,4 +69,7 @@ protected:
 	
 	// アビリティスロット
 	ABILITY_SLOT abilitySlot_;
+
+	// 種類
+	AvilityTypes::TYPE type_;
 };

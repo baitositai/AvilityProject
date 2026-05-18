@@ -58,9 +58,6 @@ private:
 	// ’â~ŠÔ
 	float stopTime_;
 
-	// d—Í•Û—p
-	float gravity_;
-
 	// ó‘Ô
 	STATE state_;
 

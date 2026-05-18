@@ -19,6 +19,7 @@ public:
 		int jumpCount = -1;					// ジャンプ回数
 		int jumpCountMax = -1;				// 最大ジャンプ回数
 		float attackBoostRate_ = 0.0f;		// 攻撃力上昇率
+		float damageRate_ = 0.0f;			// 防御率
 		float invincibleTimeMax = 0.0f;		// 最大無敵時間
 		float invincibleTime = 0.0f;		// 無敵時間
 		float jumpPow = 0.0f;				// ジャンプ力
@@ -135,6 +136,12 @@ public:
 	void SetJumpPowMax(const float jumpPowMax) { characterParameterPtr_->jumpPowMax = jumpPowMax; }
 
 	/// <summary>
+	/// 最大ジャンプ力を追加
+	/// </summary>
+	/// <param name="addJumpPowMax">最大ジャンプ力の追加量</param>
+	void AddJumpPowMax(const float addJumpPowMax) { characterParameterPtr_->jumpPowMax += addJumpPowMax; }
+
+	/// <summary>
 	/// ジャンプ回数の追加
 	/// </summary>
 	/// <param name="addJumpCount">ジャンプ回数</param>
@@ -157,6 +164,11 @@ public:
 	/// </summary>
 	/// <param name="addAttackBoostRate">追加する攻撃力上昇率</param>
 	void AddAttackBoostRate(const float addAttackBoostRate) const { characterParameterPtr_->attackBoostRate_ += addAttackBoostRate; }
+
+	/// <summary>
+	/// 防御率の追加
+	/// </summary>
+	void AddDamageRate(const float addDamageReate) const { characterParameterPtr_->damageRate_ += addDamageReate; }
 
 	/// <summary>
 	/// 攻撃力を返す

@@ -12,6 +12,7 @@ ComponentAvilityBase::ComponentAvilityBase(Player& owner) :
 	ComponentBase(&owner)
 {
 	abilitySlot_ = ABILITY_SLOT::MAX;
+	type_ = AvilityTypes::TYPE::MAX;
 }
 
 ComponentAvilityBase::~ComponentAvilityBase()

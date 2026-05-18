@@ -5,6 +5,7 @@
 #include "Manager/Common/InputManager.h"
 #include "Manager/Common/ResourceManager.h"
 #include "Manager/Common/FontManager.h"
+#include "Manager/Common/SpriteEffectManager.h"
 #include "FpsControl/FpsControl.h"
 #include "Application.h"
 
@@ -49,6 +50,9 @@ bool Application::Init()
 	// リソース管理初期化
 	ResourceManager::CreateInstance();
 	ResourceManager::GetInstance().Init();	
+
+	// エフェクト管理
+	SpriteEffectManager::CreateInstance();
 
 	// シーン管理初期化
 	SceneManager::CreateInstance();		
@@ -99,10 +103,11 @@ bool Application::Release()
 
 	//インスタンスの破棄
 	SceneManager::GetInstance().Destroy();
+	SpriteEffectManager::GetInstance().Destroy();
 	ResourceManager::GetInstance().Destroy();
 	InputManager::GetInstance().Destroy();
 	
-	// Effekseerを終了する。
+	// Effekseerを終了
 	Effkseer_End();
 
 	// DxLib終了

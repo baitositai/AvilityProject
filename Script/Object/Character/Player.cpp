@@ -1,6 +1,6 @@
 #include <DxLib.h>
-#include "../../Component/Avility/ComponentAvilityShot.h"
-#include "../../Component/Avility/ComponentAvilityChargeShot.h"
+#include "../../Component/Avility/ComponentAvilityBase.h"
+#include "../../Component/Avility/AvilityTypes.h"
 #include "../../OnHit/OnHitPlayer.h"
 #include "../../Collider/ColliderBox.h"
 #include "../../Utility/UtilityCommon.h"
@@ -39,10 +39,30 @@ void Player::Update()
 
 void Player::DebugDraw()
 {
+	constexpr int MARGIN = 20;
+	int posY = MARGIN;
 	CharacterBase::DebugDraw();
-	DrawFormatString(0, 20, UtilityCommon::LIME, L"ジャンプ回数  :%d", parameter_.jumpCount);
-	DrawFormatString(0, 40, UtilityCommon::LIME, L"プレイヤー位置:%2f,%2f", parameter_.pos.x, parameter_.pos.y);
+	posY += MARGIN;
+	DrawFormatString(0, posY, UtilityCommon::LIME, L"ジャンプ回数  :%d", parameter_.jumpCount);
+	posY += MARGIN;
+	DrawFormatString(0, posY, UtilityCommon::LIME, L"プレイヤー位置:%2f,%2f", parameter_.pos.x, parameter_.pos.y);
+	posY += MARGIN;
 	componentMap_["debugCreateItemAvility"]->DebugDraw();
+
+	for (auto& it : abilityComponents_)
+	{
+		posY += MARGIN;
+		AvilityTypes::TYPE type = it.second->GetType();
+		if (type == AvilityTypes::TYPE::MAX)
+		{
+			DrawFormatString(0, posY, UtilityCommon::LIME, L"none");
+		}
+		else
+		{
+			DrawFormatString(0, posY, UtilityCommon::LIME, L"%ls", AvilityTypes::AVILITY_NAME_MAP.at(type).c_str());
+		}
+	}
+	
 }
 
 void Player::AttackReset()

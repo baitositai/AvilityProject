@@ -48,11 +48,13 @@ public:
 
 		// 移動に必要な情報		
 		float moveSpeed = 0.0f;					// 移動速度
+		float moveSpeedBoostRate = 0.0f;		// 移動速度上昇率
 		Vector2F pos = {};						// 位置
 		Vector2F moveAmount = {};				// 移動量
 
 		// 重力関係
 		float gravityPower = 0.0f;				// 重力
+		float gravityBoostRate = 0.0f;			// 重力の上昇値
 		DIR gravityDir = DIR::DOWN;				// 重力方向
 		float weight = 0.0f;					// 物体の重み
 
@@ -162,6 +164,18 @@ public:
 	void SetGravityPower(const float gravityPower) { actorParameterPtr_->gravityPower = gravityPower; }
 
 	/// <summary>
+	/// 重力量の追加
+	/// </summary>
+	/// <param name="gravityPower">重力量</param>
+	void AddGravityPower(const float gravityPower) { actorParameterPtr_->gravityPower += gravityPower; }
+
+	/// <summary>
+	/// 重力の上昇率を追加
+	/// </summary>
+	/// <param name="gravityRate">重力の上昇率</param>
+	void AddGravityBoostRate(const float gravityRate) { actorParameterPtr_->gravityBoostRate += gravityRate; }
+
+	/// <summary>
 	/// 重力方向の設定
 	/// </summary>
 	/// <param name="gravityDir">重力方向</param>
@@ -204,6 +218,12 @@ public:
 	void AddMoveAmount(const Vector2F moveAmount);
 
 	/// <summary>
+	/// 移動速度の上昇率を追加
+	/// </summary>
+	/// <param name="moveSpeedBoostRate">移動速度の上昇率</param>
+	void AddMoveSpeedBoostRate(const float moveSpeedBoostRate) { actorParameterPtr_->moveSpeedBoostRate = moveSpeedBoostRate; }
+
+	/// <summary>
 	/// パラメータ情報を返す
 	/// </summary>
 	/// <returns></returns>
@@ -214,6 +234,12 @@ public:
 	/// </summary>
 	/// <returns>アニメーション</returns>
 	Animation& GetAnimation() const { return *animation_; }
+
+	/// <summary>
+	/// パフを重ねた重力を返す
+	/// </summary>
+	/// <returns>重力</returns>
+	const float GetGravityPowerWithBoost() const;
 
 	/// <summary>
 	/// 活動しているか返す

@@ -26,7 +26,7 @@ void ComponentJump::Update()
 	float currentJumpPow = owner_.GetJumpPow();
 
 	// ‰ÁŽZ
-	const float ATTENUATION = owner_.GetParameter()->gravityPower * scnMng_.GetDeltaTime() * 3.0f;
+	const float ATTENUATION = owner_.GetGravityPowerWithBoost() * scnMng_.GetDeltaTime() * 3.0f;
 	currentJumpPow += ATTENUATION;
 
 	if (currentJumpPow > 0.0f)

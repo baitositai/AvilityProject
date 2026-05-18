@@ -43,9 +43,6 @@ void OnHitPlayerStamp::Update(const std::weak_ptr<ColliderBase>& opponentCollide
     // ノックバック処理
     KnockBack(opponentCollider, Vector2F(0.0f,KNOCK_BACK_FORCE_STRONG.y));
 
-    // 重力をもとに戻す
-    owner_.SetGravityPower(owner_.GetParameter()->gravityPower - ComponentAvilityStamp::ACC_GRAVITY);
-
     // キャラクターの入力処理を有効にする
     owner_.SetStateComponentActive(Player::STATE::ALIVE, true);
 

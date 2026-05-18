@@ -12,6 +12,8 @@
 #include "../../Component/Avility/ComponentAvilityChargeShot.h"
 #include "../../Component/Avility/ComponentAvilityAirwalk.h"
 #include "../../Component/Avility/ComponentAvilityGravity.h"
+#include "../../Component/Avility/ComponentAvilityMetal.h"
+#include "../../Component/Avility/ComponentAvilitySuperman.h"
 #include "../../Component/Avility/ComponentAvilityStamp.h"
 #include "../../Component/State/ComponentStatePlayerProcess.h"
 #include "../../Component/State/ComponentStateAttackDefault.h"
@@ -171,6 +173,30 @@ std::unique_ptr<ComponentAvilityGravity> FactoryComponent::CreateComponentAvilit
     return std::make_unique<ComponentAvilityGravity>(*playerPtr);
 }
 
+std::unique_ptr<ComponentAvilityMetal> FactoryComponent::CreateComponentAvilityMetal(ActorBase& owner)
+{
+    auto* playerPtr = dynamic_cast<Player*>(&owner);
+
+    if (playerPtr == nullptr)
+    {
+        // キャストに失敗した場合nullptrを返す
+        return nullptr;
+    }
+    return std::make_unique<ComponentAvilityMetal>(*playerPtr);
+}
+
+std::unique_ptr<ComponentAvilitySuperman> FactoryComponent::CreateComponentAvilitySuperman(ActorBase& owner)
+{
+    auto* playerPtr = dynamic_cast<Player*>(&owner);
+
+    if (playerPtr == nullptr)
+    {
+        // キャストに失敗した場合nullptrを返す
+        return nullptr;
+    }
+    return std::make_unique<ComponentAvilitySuperman>(*playerPtr);
+}
+
 std::unique_ptr<ComponentKnockBack> FactoryComponent::CreateComponentKnockBack(ActorBase& owner)
 {
     auto* charaPtr = dynamic_cast<CharacterBase*>(&owner);
@@ -290,6 +316,14 @@ FactoryComponent::FactoryComponent()
     componentCreateMap_.emplace("avilityShot", [this](ActorBase& owner)
         {
             return CreateComponentAvilityShot(owner);
+        });
+    componentCreateMap_.emplace("avilityMetal", [this](ActorBase& owner)
+        {
+            return CreateComponentAvilityMetal(owner);
+        });
+    componentCreateMap_.emplace("avilitySuperman", [this](ActorBase& owner)
+        {
+            return CreateComponentAvilitySuperman(owner);
         });
     componentCreateMap_.emplace("avilityAirwalk", [this](ActorBase& owner)
         {

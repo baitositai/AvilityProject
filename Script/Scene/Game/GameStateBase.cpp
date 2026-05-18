@@ -1,5 +1,6 @@
 #include "../../Manager/Common/Camera.h"
 #include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/SpriteEffectManager.h"
 #include "../../Manager/Game/CollisionManager.h"
 #include "../../Manager/Game/EnemyManager.h"
 #include "../../Manager/Game/PlayerManager.h"
@@ -12,7 +13,8 @@ GameStateBase::GameStateBase() :
 	enemyMng_(EnemyManager::GetInstance()),
 	collisionMng_(CollisionManager::GetInstance()),
 	stageMng_(StageManager::GetInstance()),
-	itemMng_(ItemManager::GetInstance())
+	itemMng_(ItemManager::GetInstance()),
+	effectMng_(SpriteEffectManager::GetInstance())
 {
 }
 
@@ -35,11 +37,13 @@ void GameStateBase::Update()
 	stageMng_.Update();
 	collisionMng_.Update();
 	itemMng_.Update();
+	effectMng_.Update();
 
 	// íœˆ—
 	enemyMng_.Sweep();
 	itemMng_.Sweep();
 	collisionMng_.Sweep();
+	effectMng_.Sweep();
 }
 
 void GameStateBase::Draw()
@@ -47,6 +51,7 @@ void GameStateBase::Draw()
 	stageMng_.Draw();
 	playerMng_.Draw();
 	enemyMng_.Draw();
+	effectMng_.Draw();
 }
 
 void GameStateBase::DebugDraw()

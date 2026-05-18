@@ -171,6 +171,12 @@ void ActorBase::AddMoveAmount(const Vector2F moveAmount)
 	}
 }
 
+const float ActorBase::GetGravityPowerWithBoost() const
+{
+	float boostGravityPower = actorParameterPtr_->gravityPower * (1.0f + actorParameterPtr_->gravityBoostRate);
+	return boostGravityPower;
+}
+
 bool ActorBase::IsComponentActive(const std::string& name) const
 {
 	auto it = componentMap_.find(name);

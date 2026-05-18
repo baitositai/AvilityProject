@@ -42,7 +42,10 @@ void ComponentStatePlayerProcess::Update()
 void ComponentStatePlayerProcess::ProcessInputMove()
 {
 	// ダッシュの入力判定に応じて速度を変更
-	const float moveSpeed = inputManager_.IsNew(InputManager::TYPE::PLAYER_DASH) ? owner_.GetDashSpeed() : owner_.GetParameter()->moveSpeed;
+	float moveSpeed = inputManager_.IsNew(InputManager::TYPE::PLAYER_DASH) ? owner_.GetDashSpeed() : owner_.GetParameter()->moveSpeed;
+
+	// ダッシュ上昇率を乗算
+	moveSpeed *= 1 + owner_.GetParameter()->moveSpeedBoostRate;
 
 	// 左右移動
 	if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_RIGHT))
