@@ -25,7 +25,7 @@ ComponentAvilityChargeShot::ComponentAvilityChargeShot(Player& owner)
 
 	// コライダーの登録
 	attackCollider_ = owner_.CreateColliderClone();
-	attackCollider_->ChangeTag(CollisionTags::TAG::PLAYER_ATTACK_NORMAL);
+	attackCollider_->ChangeTag(CollisionTags::TAG::PLAYER_AVILITY_SHOT);
 	attackCollider_->SetIsActive(false);
 	CollisionManager::GetInstance().Add(attackCollider_);
 
@@ -143,37 +143,42 @@ void ComponentAvilityChargeShot::ProcessInputCharge()
 	// =========================
 	// 向き
 	// =========================
+	
 	// 現在の向きに応じて方向を設定
-	shotVec_.x > 0 ? owner_.SetDirection(false) : owner_.SetDirection(true);
-
-
-	// =========================
-	// 向き
-	// =========================
+	//shotVec_.x > 0 ? owner_.SetDirection(false) : owner_.SetDirection(true);
 
 	angle = shotAngle_;
+
 	// -PI ～ PI の範囲に正規化
-	while (angle <= -DX_PI_F) angle += DX_TWO_PI_F;
-	while (angle > DX_PI_F) angle -= DX_TWO_PI_F;
+	/*while (angle <= -DX_PI_F) angle += DX_TWO_PI_F;
+	while (angle > DX_PI_F) angle -= DX_TWO_PI_F;*/
 
 	// 左向き判定
-	if (std::abs(angle) > DX_PI_F / 2.0f)
-	{
-		owner_.SetDirection(true);
+	//if (std::abs(angle) > DX_PI_F / 2.0f)
+	//{
+	//	owner_.SetDirection(true);
 
-		// 左向き(PI)を基準(0)に変換
-		if (angle > 0) {
-			angle -= DX_PI_F;
-		}
-		else {
-			angle += DX_PI_F;
-		}
-	}
-	else
+	//	// 左向き(PI)を基準(0)に変換
+	//	if (angle > 0) {
+	//		angle -= DX_PI_F;
+	//	}
+	//	else {
+	//		angle += DX_PI_F;
+	//	}
+	//}
+	//else
+	//{
+	//	// 右向き状態
+	//	owner_.SetDirection(false);
+	//}
+
+	// プレイヤーが左向きなら
+	if(owner_.GetParameter()->direction)
 	{
-		// 右向き状態
-		owner_.SetDirection(false);
+		// 角度を180度回転させる
+		angle += UtilityCommon::Deg2RadF(180.0f);
 	}
+
 
 	// =========================
 	// モデル角度
