@@ -14,6 +14,10 @@ OnHitEnemyClone::OnHitEnemyClone(EnemyClone& owner):
 	onHitMap_.emplace(CollisionTags::TAG::PLAYER_AVILITY_STAMP, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
 		{
 			return OnHitPlayerAttack(opponentCollider);
+		});;
+	onHitMap_.emplace(CollisionTags::TAG::PLAYER_AVILITY_SHOT, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
+		{
+			return OnHitPlayerAttack(opponentCollider);
 		});
 }
 
