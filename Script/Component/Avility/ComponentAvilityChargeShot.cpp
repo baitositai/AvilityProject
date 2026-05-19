@@ -384,6 +384,13 @@ void ComponentAvilityChargeShot::ProcessCollision(bool isXAxis)
 			auto result =
 				collisionManager_.IsHitStage(checkPos);
 
+			//　衝突がない場合敵の衝突も試す
+			if (!result.hit)
+			{
+				result =
+					collisionManager_.IsHitStage(checkPos);
+			}
+
 			if (result.hit)
 			{
 				isHit = true;
