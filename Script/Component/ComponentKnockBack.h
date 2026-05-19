@@ -1,7 +1,7 @@
 #pragma once
 #include "ComponentBase.h"
 
-class CharacterBase;
+class ParameterCharacter;
 
 class ComponentKnockBack : public ComponentBase
 {
@@ -29,6 +29,6 @@ private:
 	static constexpr float KNOCK_BACK_DECELERATION = 1200.0f;
 
 	// èäóLé“
-	CharacterBase& owner_;
+	ParameterCharacter& parameter_;
 };
 

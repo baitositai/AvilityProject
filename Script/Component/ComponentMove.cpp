@@ -4,14 +4,16 @@
 #include "ComponentMove.h"
 
 ComponentMove::ComponentMove(ActorBase& owner) :
-    ComponentBase(&owner),
+    ComponentBase(owner),
+    owner_(owner),
+    parameter_(owner_.GetParameter()),
     collisionManager_(CollisionManager::GetInstance())
 {
     moveAmount_ = {};
     pos_ = {};
     defaultSize_ = {};
     nowSize_ = {};
-    gravityDir_ = ActorBase::DIR::MAX;
+    gravityDir_ = ParameterActor::DIR::MAX;
 }
 
 ComponentMove::~ComponentMove()
@@ -20,8 +22,7 @@ ComponentMove::~ComponentMove()
 
 void ComponentMove::Update()
 {
-    const auto& params = *owner_->GetParameter();
-    moveAmount_ = params.moveAmount;
+    moveAmount_ = parameter_.moveAmount_;
 
     // 移動がない場合は何もしない
     if (moveAmount_.x == 0.0f && moveAmount_.y == 0.0f)
@@ -30,12 +31,12 @@ void ComponentMove::Update()
     }
 
 	// パラメータの取得
-    pos_ = params.pos;
-    defaultSize_ = params.hitSize;
-    gravityDir_ = params.gravityDir;
+    pos_ = parameter_.pos_;
+    defaultSize_ = parameter_.hitSize_;
+    gravityDir_ = parameter_.gravityDir_;
 
     // 重力方向に合わせたサイズ調整
-    bool isVerticalGravity = (gravityDir_ == ActorBase::DIR::UP || gravityDir_ == ActorBase::DIR::DOWN);
+    bool isVerticalGravity = (gravityDir_ == ParameterActor::DIR::UP || gravityDir_ == ParameterActor::DIR::DOWN);
     nowSize_.x = isVerticalGravity ? defaultSize_.x : defaultSize_.y;
     nowSize_.y = isVerticalGravity ? defaultSize_.y : defaultSize_.x;
 
@@ -44,8 +45,8 @@ void ComponentMove::Update()
     ProcessCollision(false); // Y軸
 
 	// 座標と移動量の更新
-    owner_->SetPosition(pos_);
-    owner_->SetMoveAmount(moveAmount_);
+    parameter_.pos_ = pos_;
+    parameter_.moveAmount_ = moveAmount_;
 }
 
 void ComponentMove::ProcessCollision(bool isXAxis)
@@ -118,18 +119,18 @@ void ComponentMove::CheckGroundStatus(float moveVal, bool isXAxis)
     bool isGround = false;
     if (isXAxis)
     {
-        if ((moveVal > 0.0f && gravityDir_ == ActorBase::DIR::RIGHT) ||
-            (moveVal < 0.0f && gravityDir_ == ActorBase::DIR::LEFT)) isGround = true;
+        if ((moveVal > 0.0f && gravityDir_ == ParameterActor::DIR::RIGHT) ||
+            (moveVal < 0.0f && gravityDir_ == ParameterActor::DIR::LEFT)) isGround = true;
     }
     else
     {
-        if ((moveVal > 0.0f && gravityDir_ == ActorBase::DIR::DOWN) ||
-            (moveVal < 0.0f && gravityDir_ == ActorBase::DIR::UP)) isGround = true;
+        if ((moveVal > 0.0f && gravityDir_ == ParameterActor::DIR::DOWN) ||
+            (moveVal < 0.0f && gravityDir_ == ParameterActor::DIR::UP)) isGround = true;
     }
 
     if (isGround)
     {
         // 着地処理
-        owner_->Landing();
+        owner_.Landing();
     }
 }

@@ -9,6 +9,7 @@ ComponentAvilityBase::ComponentAvilityBase(Player& owner) :
 	stageManager_(StageManager::GetInstance()),
 	sceneManager_(SceneManager::GetInstance()),
 	inputManager_(InputManager::GetInstance()),
+	parameter_(parameter_),
 	ComponentBase(&owner)
 {
 	abilitySlot_ = ABILITY_SLOT::MAX;

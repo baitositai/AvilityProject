@@ -321,7 +321,7 @@ bool CollisionManager::IsHitCheckArrayToBox(std::weak_ptr<ColliderBase> collider
 	const auto ids = colliderArray.lock()->GetHitIds();
 	const Vector2 size = colliderArray.lock()->GetChipSize();
 	const Vector2F movedAmount = colliderBox.lock()->GetOwner().GetParameter()->moveAmount;
-	ActorBase::DIR gravityDir = colliderBox.lock()->GetOwner().GetParameter()->gravityDir;
+	ParameterActor::DIR gravityDir = colliderBox.lock()->GetOwner().GetParameter()->gravityDir;
 
 	// Õ“Ë”»’è
 	bool isHit = UtilityCollision::IsHitArrayToBox(

@@ -108,7 +108,7 @@ public:
 	/// ’n–Ê”»’è
 	/// </summary>
 	/// <param name="_isGround"></param>
-	void SetIsGround(const bool _isGround) { parameter_.isGround = _isGround; }
+	void isGround_(const bool _isGround) { parameter_.isGround = _isGround; }
 
 
 	const int GetBoxNum(void)const { return parameter_.boxNum; }

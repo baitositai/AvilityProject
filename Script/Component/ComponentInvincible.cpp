@@ -4,8 +4,9 @@
 
 ComponentInvincible::ComponentInvincible(CharacterBase& owner) :
 	owner_(owner),
+	parameter_(owner.GetParameter()),
 	sceneManager_(SceneManager::GetInstance()),
-	ComponentBase(&owner)
+	ComponentBase(owner)
 {
 	// ‘Ò‹@ó‘Ô‚É‘JˆÚ
 	updateFunc_ = std::bind(&ComponentInvincible::Wait, this);
@@ -35,7 +36,7 @@ void ComponentInvincible::Wait()
 void ComponentInvincible::SubInvincibleTime()
 {
 	// –³“GŠÔ‚ğŒ¸‚ç‚·
-	owner_.AddInvincibleTime(-sceneManager_.GetDeltaTime());
+	parameter_.invincibleTime_ -= sceneManager_.GetDeltaTime();
 
 	// ‚Ü‚¾–³“G’†‚Ìê‡
 	if (owner_.IsInvincible())

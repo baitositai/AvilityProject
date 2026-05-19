@@ -11,7 +11,7 @@ public:
 	/// <param name="parameter">パラメーター</param>
 	/// <param name="componentNameList">コンポーネントリスト</param>
 	/// <param name="animation"></param>
-	EffectBase(Parameter* parameter, const std::vector<std::string>& componentNameList = {}, std::unique_ptr<Animation> animation = nullptr);
+	EffectBase(Parameter* parameter = {}, const std::vector<std::string>& componentNameList = {}, std::unique_ptr<Animation> animation = nullptr);
 
 	/// <summary>
 	/// デストラクタ

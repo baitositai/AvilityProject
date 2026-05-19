@@ -1,27 +1,28 @@
+#include "../../Object/ActorBase.h"
 #include "../../Object/Effect/EffectBase.h"
 #include "SpriteEffectManager.h"
 
 void SpriteEffectManager::Init()
 {
-	for (EffectBase& effect : effectList_)
+	for (auto& effect : effectList_)
 	{
-		effect.Init();
+		effect->Init();
 	}
 }
 
 void SpriteEffectManager::Update()
 {
-	for (EffectBase& effect : effectList_)
+	for (auto& effect : effectList_)
 	{
-		effect.Update();
+		effect->Update();
 	}
 }
 
 void SpriteEffectManager::Draw()
 {
-	for (EffectBase& effect : effectList_)
+	for (auto& effect : effectList_)
 	{
-		effect.Draw();
+		effect->Draw();
 	}
 }
 
@@ -41,14 +42,12 @@ void SpriteEffectManager::Clear()
 
 void SpriteEffectManager::Sweep()
 {
-	// 終了したエフェクトを並び変える
 	auto it = std::remove_if(effectList_.begin(), effectList_.end(),
-		[](const EffectBase& effect)
+		[](const std::unique_ptr<EffectBase>& effect)
 		{
-			return effect.IsDelete();
+			return effect->IsDelete();
 		});
 
-	// 終了したエフェクトを削除する
 	effectList_.erase(it, effectList_.end());
 }
 

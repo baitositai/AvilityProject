@@ -7,6 +7,7 @@
 ComponentStatePlayerProcess::ComponentStatePlayerProcess(Player& owner) :
 	ComponentCharacterStateBase(owner),
 	owner_(owner),
+	parameter_(owner_.GetParameter()),
 	inputManager_(InputManager::GetInstance())
 {
 	velocityY_ = 0.0f;
@@ -23,7 +24,7 @@ void ComponentStatePlayerProcess::Update()
 	moveAmount_ = {};
 
 	// 現在の地面判定取得
-	isGround_ = owner_.IsGround();
+	isGround_ = parameter_.isGround_;
 
 	// 移動の入力処理
 	ProcessInputMove();
@@ -35,28 +36,28 @@ void ComponentStatePlayerProcess::Update()
 	ProcessInputAttack();
 
 	// 情報の更新
-	owner_.SetMoveAmount(moveAmount_);
-	owner_.SetIsGround(isGround_);
+	parameter_.moveAmount_ = moveAmount_;
+	parameter_.isGround_ = isGround_;
 }
 
 void ComponentStatePlayerProcess::ProcessInputMove()
 {
 	// ダッシュの入力判定に応じて速度を変更
-	float moveSpeed = inputManager_.IsNew(InputManager::TYPE::PLAYER_DASH) ? owner_.GetDashSpeed() : owner_.GetParameter()->moveSpeed;
+	float moveSpeed = inputManager_.IsNew(InputManager::TYPE::PLAYER_DASH) ? parameter_.dashSpeed_ : parameter_.moveSpeed_;
 
 	// ダッシュ上昇率を乗算
-	moveSpeed *= 1 + owner_.GetParameter()->moveSpeedBoostRate;
+	moveSpeed *= 1 + parameter_.moveSpeedBoostRate_;
 
 	// 左右移動
 	if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_RIGHT))
 	{
 		moveAmount_.x = moveSpeed;
-		owner_.SetDirection(false);
+		parameter_.direction_ = false;
 	}
 	else if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_LEFT))
 	{
 		moveAmount_.x = -moveSpeed;
-		owner_.SetDirection(true);
+		parameter_.direction_ = true;
 	}
 
 	// 地面にいる場合
@@ -78,18 +79,18 @@ void ComponentStatePlayerProcess::ProcessInputMove()
 
 void ComponentStatePlayerProcess::ProcessInputJump()
 {
-	if (owner_.GetJumpCount() > 0)
+	if (parameter_.jumpCount_ > 0)
 	{
 		// 入力がある場合
 		if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_JUMP))
 		{
 			isGround_ = false;
 
-			owner_.SetJumpPow(-owner_.GetJumpPowMax());
+			owner_.SetJumpPow(-parameter_.jumpPowMax_);
 
 			owner_.GetAnimation().Play(Animation::TYPE::JUMP);
 
-			owner_.AddJumpCount(-1);
+			parameter_.jumpCount_--;
 		}
 	}
 }

@@ -4,6 +4,8 @@
 #include "../Common/Vector2.h"
 #include "../../Object/ActorBase.h"
 
+class ActorBase;
+class ParameterActor;
 class CollisionManager;
 
 class ComponentMove : public ComponentBase
@@ -27,6 +29,12 @@ public:
 
 private:
 
+	// 所有者
+	ActorBase& owner_;
+
+	// 所有者のパラメータ
+	ParameterActor& parameter_;
+
 	// 衝突管理クラス
 	CollisionManager& collisionManager_;
 
@@ -41,7 +49,7 @@ private:
 	Vector2 nowSize_;		// 現在
 
 	// 重力方向
-	ActorBase::DIR gravityDir_;
+	ParameterActor::DIR gravityDir_;
 
 	// 衝突判定と押し出し処理の共通ロジック
 	void ProcessCollision(bool isXAxis);

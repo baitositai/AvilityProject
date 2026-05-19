@@ -39,7 +39,7 @@ void ComponentAvilityShot::Update()
 
 void ComponentAvilityShot::ProcessInputShot()
 {
-	const float moveSpeed = owner_.GetParameter()->moveSpeed;
+	const float moveSpeed = parameter_.moveSpeed_;
 
 	shotVec_ = {};
 	// 方向判定
@@ -62,9 +62,9 @@ void ComponentAvilityShot::ProcessInputShot()
 	// 横の移動量がゼロなら現在の向きを入れる
 	if (shotVec_.x == 0)
 	{
-		shotVec_.x = owner_.GetParameter()->direction ? -1 : 1;
+		shotVec_.x = parameter_.direction_ ? -1 : 1;
 	}
-	owner_.SetShotVec(shotVec_);
+	parameter_.shotVec_ = shotVec_;
 
 	if (inputManager_.IsNew(InputManager::TYPE::PLAYER_AVILITY))
 	{
@@ -99,7 +99,7 @@ void ComponentAvilityShot::ProcessMoveShot()
 		//	shotVec_.y = temp;
 		//}
 
-		Vector2F dir = owner_.GetShotVec();
+		Vector2F dir = parameter_.shotVec_;
 
 		moveAmount_.y = dir.y * shotTime_ * SHOT_SPEED;
 		moveAmount_.x = dir.x * shotTime_ * SHOT_SPEED;
@@ -107,5 +107,5 @@ void ComponentAvilityShot::ProcessMoveShot()
 	}
 
 	// 移動量の更新
-	owner_.SetMoveAmount(moveAmount_);
+	parameter_.moveAmount_ = moveAmount_;
 }

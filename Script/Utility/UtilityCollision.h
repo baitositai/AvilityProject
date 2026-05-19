@@ -43,7 +43,7 @@ public:
 		const Vector2F& boxTopPos,
 		const Vector2F& boxBottomPos,
 		const Vector2F& moveAmount,
-		ActorBase::DIR gravityDir);
+		ParameterActor::DIR gravityDir);
 
 	/// <summary>
 	/// ‰~“¯m‚ÌÕ“Ë”»’è

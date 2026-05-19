@@ -30,6 +30,9 @@ private:
 	// 所有者
 	CharacterBase& owner_;
 
+	// 所有者のパラメータ
+	ParameterCharacter& parameter_;
+
 	// シーン管理クラス
 	SceneManager& sceneManager_;
 

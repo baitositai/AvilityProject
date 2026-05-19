@@ -3,7 +3,7 @@
 #include <memory>
 #include "ComponentAvilityBase.h"
 #include "../../Common/Vector2F.h"
-#include "../../Object/ActorBase.h"
+#include "../../Parameter/ParameterActor.h"
 
 class CollisionManager;
 class ColliderBox;
@@ -60,7 +60,7 @@ private:
 	Vector2 nowSize_;		// 現在
 
 	// 重力方向
-	ActorBase::DIR gravityDir_;
+	ParameterActor::DIR gravityDir_;
 
 	// 攻撃判定用コライダー
 	std::shared_ptr<ColliderBox> attackCollider_;

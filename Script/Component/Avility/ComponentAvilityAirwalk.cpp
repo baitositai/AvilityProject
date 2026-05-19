@@ -1,4 +1,5 @@
 #include "../../Object/Character/Player.h"
+#include "../../Parameter/Character/Player/ParameterPlayer.h"
 #include "ComponentAvilityAirwalk.h"
 
 ComponentAvilityAirwalk::ComponentAvilityAirwalk(Player& owner) :
@@ -14,8 +15,8 @@ ComponentAvilityAirwalk::~ComponentAvilityAirwalk()
 
 void ComponentAvilityAirwalk::Update()
 {
-	if (owner_.GetJumpCount() < 1)
+	if (parameter_.jumpCount_ < 1)
 	{
-		owner_.AddJumpCount(1);
+		parameter_.jumpCount_++;
 	}
 }

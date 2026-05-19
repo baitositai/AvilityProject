@@ -27,8 +27,8 @@ void ComponentAvilityBox::Update()
 
 void ComponentAvilityBox::PlaceBox()
 {
-	const bool dir = owner_.GetParameter()->direction;
-	const Vector2F pos = owner_.GetParameter()->pos;
+	const bool dir = parameter_.direction_;
+	const Vector2F pos = parameter_.pos_;
 	//ボックスが３個までなら設置
 	if (boxCnt_ < SET_BLAST_NUM)
 	{

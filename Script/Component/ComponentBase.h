@@ -10,7 +10,7 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="owner">所有者</param>
-	ComponentBase(ActorBase* owner);
+	ComponentBase(ActorBase& owner);
 
 	/// <summary>
 	/// デストラクタ
@@ -46,7 +46,8 @@ public:
 
 protected:
 
-	ActorBase* owner_;
+	// 所有者
+	ActorBase& owner_;
 
 	// 活動状態
 	bool isActive_;

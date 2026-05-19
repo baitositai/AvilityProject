@@ -4,8 +4,9 @@
 #include "ComponentJump.h"
 
 ComponentJump::ComponentJump(CharacterBase& owner) :
-	ComponentBase(&owner),
+	ComponentBase(owner),
 	owner_(owner),
+	parameter_(owner_.GetParameter()),
 	scnMng_(SceneManager::GetInstance()),
 	animation_(owner_.GetAnimation())
 {
@@ -17,13 +18,13 @@ ComponentJump::~ComponentJump()
 
 void ComponentJump::Update()
 {
-	if (owner_.IsGround())
+	if (parameter_.isGround_)
 	{
 		return;
 	}
 
 	// ジャンプ量取得
-	float currentJumpPow = owner_.GetJumpPow();
+	float currentJumpPow = parameter_.jumpPow_;
 
 	// 加算
 	const float ATTENUATION = owner_.GetGravityPowerWithBoost() * scnMng_.GetDeltaTime() * 3.0f;
@@ -38,12 +39,12 @@ void ComponentJump::Update()
 	owner_.SetJumpPow(currentJumpPow);
 
 	// 移動量の更新
-	Vector2F moveAmount = owner_.GetParameter()->moveAmount;
+	Vector2F moveAmount = parameter_.moveAmount_;
 	moveAmount.y += currentJumpPow;
-	owner_.SetMoveAmount(moveAmount);
+	parameter_.moveAmount_ = moveAmount;
 
 	// アニメーション切り替え
-	const float HIGHEST = -owner_.GetJumpPowMax() / 2.0f + 2.0f;
+	const float HIGHEST = -parameter_.jumpPowMax_ / 2.0f + 2.0f;
 	if (currentJumpPow >= HIGHEST)
 	{
 		// アニメーションの種類を取得

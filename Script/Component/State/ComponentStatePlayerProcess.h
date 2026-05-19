@@ -4,6 +4,7 @@
 
 class InputManager;
 class Player;
+class ParameterPlayer;
 
 class ComponentStatePlayerProcess : public ComponentCharacterStateBase
 {
@@ -32,6 +33,9 @@ private:
 
 	// 所有者
 	Player& owner_;
+
+	// パラメータ
+	ParameterPlayer& parameter_;
 
 	// 移動量
 	Vector2F moveAmount_;

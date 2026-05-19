@@ -2,7 +2,7 @@
 #include "ComponentAvilityAirslash.h"
 
 ComponentAvilityAirslash::ComponentAvilityAirslash(Player& owner) :
-	ComponentAvilityAirslash(owner)
+	ComponentAvilityBase(owner)
 {
 }
 
@@ -12,5 +12,5 @@ ComponentAvilityAirslash::~ComponentAvilityAirslash()
 
 void ComponentAvilityAirslash::Update()
 {
-	//
+	// 
 }

@@ -33,10 +33,10 @@ void ComponentAvilityGravity::Update()
 void ComponentAvilityGravity::Remove()
 {
 	// d—Í•ûŒü‚ð‰º‚É–ß‚·
-	if (owner_.GetParameter()->gravityDir != ActorBase::DIR::DOWN)
+	if (parameter_.gravityDir_ != ParameterActor::DIR::DOWN)
 	{
-		owner_.SetGravityDir(ActorBase::DIR::DOWN);
-		owner_.SetIsGround(false);
+		parameter_.gravityDir_ = ParameterActor::DIR::DOWN;
+		parameter_.isGround_ = false;
 	}
 }
 
@@ -44,30 +44,30 @@ void ComponentAvilityGravity::ProcessGravity()
 {
 	if (inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_GRAVITY_RIGHT))
 	{
-		owner_.SetGravityDir(ActorBase::DIR::RIGHT);
-		owner_.SetAngle(UtilityCommon::Deg2RadF(270.0f));
+		parameter_.gravityDir_ = ParameterActor::DIR::RIGHT;
+		parameter_.angle_ = UtilityCommon::Deg2RadF(270.0f);
 		coolTime_ = COOL_TIME;
-		owner_.SetIsGround(false);
+		parameter_.isGround_ = false;
 	}
 	else if (inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_GRAVITY_LEFT))
 	{
-		owner_.SetGravityDir(ActorBase::DIR::LEFT);
-		owner_.SetAngle(UtilityCommon::Deg2RadF(90.0f));
+		parameter_.gravityDir_ = ParameterActor::DIR::LEFT;
+		parameter_.angle_ = UtilityCommon::Deg2RadF(90.0f);
 		coolTime_ = COOL_TIME;
-		owner_.SetIsGround(false);
+		parameter_.isGround_ = false;
 	}
 	else if (inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_GRAVITY_UP))
 	{
-		owner_.SetGravityDir(ActorBase::DIR::UP);
-		owner_.SetAngle(UtilityCommon::Deg2RadF(180.0f));
+		parameter_.gravityDir_ = ParameterActor::DIR::UP;
+		parameter_.angle_ = UtilityCommon::Deg2RadF(180.0f);
 		coolTime_ = COOL_TIME;
-		owner_.SetIsGround(false);
+		parameter_.isGround_ = false;
 	}
 	else if (inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_GRAVITY_DOWN))
 	{
-		owner_.SetGravityDir(ActorBase::DIR::DOWN);
-		owner_.SetAngle(UtilityCommon::Deg2RadF(0.0f));
+		parameter_.gravityDir_ = ParameterActor::DIR::DOWN;
+		parameter_.angle_ = UtilityCommon::Deg2RadF(0.0f);
 		coolTime_ = COOL_TIME;
-		owner_.SetIsGround(false);
+		parameter_.isGround_ = false;
 	}
 }

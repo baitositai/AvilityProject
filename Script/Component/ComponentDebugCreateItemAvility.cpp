@@ -30,7 +30,7 @@ void ComponentDebugCreateItemAvility::Update()
 		parameter.hitRadius = RADIUS;
 		parameter.hitSize = Vector2(RADIUS, RADIUS);
 		parameter.gravityPower = 9.8f;
-		parameter.gravityDir = ActorBase::DIR::DOWN;
+		parameter.gravityDir = ParameterActor::DIR::DOWN;
 
 		std::vector<std::string> componentNameList = { "gravity", "move" };
 		ItemManager::GetInstance().Add(std::make_unique<ItemAvility>(parameter, componentNameList));

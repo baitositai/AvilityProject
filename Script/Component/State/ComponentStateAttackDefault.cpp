@@ -7,12 +7,13 @@
 
 ComponentStateAttackDefault::ComponentStateAttackDefault(CharacterBase& owner) :
 	owner_(owner),
-	DEFAULT_ATTACK_LOCAL_POS(owner.GetDefaultAttackLocalPos()),
+	parameter_(owner_.GetParameter()),
+	DEFAULT_ATTACK_LOCAL_POS(parameter_.defaultAttackLocalPos_),
 	ComponentCharacterStateBase(owner)
 {
 	attackPos_ = {};
 	isAttack_ = false;
-	collider_ = std::make_shared<ColliderCircle>(owner_, CollisionTags::TAG::PLAYER_ATTACK_NORMAL, attackPos_, owner_.GetDefaultAttackRadius());
+	collider_ = std::make_shared<ColliderCircle>(owner_, CollisionTags::TAG::PLAYER_ATTACK_NORMAL, attackPos_, parameter_.defaultAttackRadius_);
 	collider_->SetIsActive(false);
 
 	CollisionManager::GetInstance().Add(collider_);
@@ -40,8 +41,8 @@ void ComponentStateAttackDefault::Update()
 	}
 
 	// çUåÇà íuÇÃí≤êÆ
-	float dir = owner_.GetParameter()->direction ? -1.0f : 1.0f;
-	attackPos_ = Vector2F::AddVector2F(owner_.GetParameter()->pos, Vector2F(DEFAULT_ATTACK_LOCAL_POS.x * dir, DEFAULT_ATTACK_LOCAL_POS.y));
+	float dir = parameter_.direction_ ? -1.0f : 1.0f;
+	attackPos_ = Vector2F::AddVector2F(parameter_.pos_, Vector2F(DEFAULT_ATTACK_LOCAL_POS.x * dir, DEFAULT_ATTACK_LOCAL_POS.y));
 
 	// çƒê∂íÜÇÃèÍçá
 	if (animation.IsPlay())

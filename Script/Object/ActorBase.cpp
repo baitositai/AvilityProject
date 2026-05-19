@@ -8,12 +8,12 @@
 #include "../../Manager/Common/Camera.h"
 #include "../OnHit/OnHitBase.h"
 #include "../Collider/ColliderBase.h"
+#include "../Parameter/ParameterActor.h"
 #include "Common/Animation.h"
 #include "ActorBase.h"
 
-ActorBase::ActorBase(Parameter* parameter, const std::vector<std::string>& componentNameList, std::unique_ptr<Animation> animation) :
-	DEFAULT_COMPONENT_CREATE_LIST(componentNameList),
-	actorParameterPtr_(parameter),
+ActorBase::ActorBase(std::unique_ptr<ParameterActor> parameter, std::unique_ptr<Animation> animation) :
+	parameter_(std::move(parameter)),
 	animation_(std::move(animation)),
 	scnMng_(SceneManager::GetInstance()),
 	sndMng_(SoundManager::GetInstance()),
@@ -21,6 +21,7 @@ ActorBase::ActorBase(Parameter* parameter, const std::vector<std::string>& compo
 	collMng_(CollisionManager::GetInstance()),
 	facCom_(FactoryComponent::GetInstance())
 {
+	if (!parameter_) { parameter_ = std::make_unique<ParameterActor>(); }	// 必ず実態を持つ
 	isActive_ = true;
 	isDelete_ = false;
 }
@@ -67,17 +68,17 @@ void ActorBase::Draw()
 {
 	// 描画位置を設定
 	Vector2F cameraPos = mainCamera.GetPos();
-	actorParameterPtr_->drawPos = Vector2::AddVector2(Vector2::AddVector2(actorParameterPtr_->pos.ToVector2(), actorParameterPtr_->localPos), cameraPos.ToVector2());
+	parameter_->drawPos_ = Vector2::AddVector2(Vector2::AddVector2(parameter_->pos_.ToVector2(), parameter_->localPos_), cameraPos.ToVector2());
 
 	// 描画
 	DrawRotaGraph(
-		actorParameterPtr_->drawPos.x,
-		actorParameterPtr_->drawPos.y,
-		actorParameterPtr_->scale,
-		actorParameterPtr_->angle,
-		actorParameterPtr_->texuresHandle[animation_->GetAnimationIndex()],
-		actorParameterPtr_->transparent,
-		actorParameterPtr_->direction
+		parameter_->drawPos_.x,
+		parameter_->drawPos_.y,
+		parameter_->scale_,
+		parameter_->angle_,
+		parameter_->spriteTexture_[animation_->GetAnimationIndex()],
+		parameter_->transparent_,
+		parameter_->direction_
 	);
 }
 
@@ -103,7 +104,7 @@ void ActorBase::Delete()
 void ActorBase::Landing()
 {
 	// 着地判定
-	actorParameterPtr_->isGround = true;
+	parameter_->isGround_ = true;
 }
 
 void ActorBase::AddComponent(const std::string& name, std::unique_ptr<ComponentBase> component)
@@ -114,16 +115,13 @@ void ActorBase::AddComponent(const std::string& name, std::unique_ptr<ComponentB
 		return; // 既に存在する場合は何もしない
 	}
 
-	// 実行順リストに追加（ここが所有権を持つ）
-	// 後でポインタを Map に登録するため、一旦生のポインタを控える
+	// 実行順リストに追加
 	ComponentBase* ptr = component.get();
 	componentList_.push_back(std::move(component));
 
 	// 検索用マップに登録
 	componentMap_.emplace(name, ptr);
 
-	// 挿入に成功してるか確認
-	//assert(result.second && "コンポーネントの追加に失敗しています");
 }
 
 void ActorBase::RemoveComponent(const std::string& name)
@@ -156,24 +154,9 @@ void ActorBase::SetColliderActive(const bool isActive)
 	}
 }
 
-void ActorBase::AddMoveAmount(const Vector2F moveAmount)
-{
-	if (actorParameterPtr_->moveAmount.x == 0.0f && actorParameterPtr_->moveAmount.y == 0.0f)
-	{
-		// 0ならリセット（上書き）
-		actorParameterPtr_->moveAmount = moveAmount;
-	}
-	else
-	{
-		// 0以外なら加算
-		actorParameterPtr_->moveAmount.x += moveAmount.x;
-		actorParameterPtr_->moveAmount.y += moveAmount.y;
-	}
-}
-
 const float ActorBase::GetGravityPowerWithBoost() const
 {
-	float boostGravityPower = actorParameterPtr_->gravityPower * (1.0f + actorParameterPtr_->gravityBoostRate);
+	float boostGravityPower = parameter_->gravityPower_ * (1.0f + parameter_->gravityBoostRate_);
 	return boostGravityPower;
 }
 
@@ -205,16 +188,6 @@ void ActorBase::SetIsDelete(void)
 	collider_->SetDelete();
 }
 
-const Vector2F ActorBase::GetGravityDirectionVector() const
-{
-	Vector2F dir = {};
-	if (actorParameterPtr_->gravityDir == ActorBase::DIR::RIGHT) { dir = Vector2F(1.0f, 0.0f); }
-	else if(actorParameterPtr_->gravityDir == ActorBase::DIR::LEFT) { dir = Vector2F(-1.0f, 0.0f); }
-	else if (actorParameterPtr_->gravityDir == ActorBase::DIR::UP) { dir = Vector2F(0.0f, -1.0f); }
-	else if (actorParameterPtr_->gravityDir == ActorBase::DIR::DOWN) { dir = Vector2F(0.0f, 1.0f); }
-	return dir;
-}
-
 void ActorBase::RegisterCollider()
 {
 	// 空の場合無視
@@ -230,7 +203,7 @@ void ActorBase::RegisterCollider()
 void ActorBase::CreateComponents()
 {
 	// 必要なコンポーネントの生成
-	for (const std::string& name : DEFAULT_COMPONENT_CREATE_LIST)
+	for (const std::string& name : parameter_->componentkeys_)
 	{
 		AddComponent(name, std::move(facCom_.CreateComponent(name, *this)));
 	}
@@ -240,66 +213,4 @@ void ActorBase::OnHit(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
 	if (onHit_ == nullptr) return;
 	onHit_->Update(opponentCollider);
-}
-
-const Vector2F ActorBase::GetFront() const
-{
-	Vector2F vec = {};
-
-	// 重力方向に応じて前方向を返す
-	if (actorParameterPtr_->gravityDir == ActorBase::DIR::RIGHT) { vec = { 0.0f, -1.0f }; }
-	else if (actorParameterPtr_->gravityDir == ActorBase::DIR::LEFT) { vec = { 0.0f, 1.0f }; }
-	else if (actorParameterPtr_->gravityDir == ActorBase::DIR::UP) { vec = { -1.0f, 0.0f }; }
-	else { vec = { 1.0f, 0.0f }; }
-
-	// キャラクターの向きで前方向を反転させる
-	if (actorParameterPtr_->direction) { Vector2F::MulVector2FFloat(vec, -1.0f); }
-
-	// 返す
-	return vec;
-}
-
-const Vector2F ActorBase::GetBack() const
-{
-	Vector2F vec = {};
-
-	// 重力方向に応じて後ろ方向を返す
-	if (actorParameterPtr_->gravityDir == ActorBase::DIR::RIGHT) { vec = { 0.0f, 1.0f }; }
-	else if (actorParameterPtr_->gravityDir == ActorBase::DIR::LEFT) { vec = { 0.0f, -1.0f }; }
-	else if (actorParameterPtr_->gravityDir == ActorBase::DIR::UP) { vec = { 1.0f, 0.0f }; }
-	else { vec = { -1.0f, 0.0f }; }
-
-	// キャラクターの向きで後ろ方向を反転させる
-	if (actorParameterPtr_->direction) { Vector2F::MulVector2FFloat(vec, -1.0f); }
-
-	// 返す
-	return vec;
-}
-
-const Vector2F ActorBase::GetUp() const
-{
-	Vector2F vec = {};
-	
-	// 重力方向に応じて上方向を返す
-	if (actorParameterPtr_->gravityDir == ActorBase::DIR::RIGHT) { vec = { -1.0f, 0.0f }; }
-	else if (actorParameterPtr_->gravityDir == ActorBase::DIR::LEFT) { vec = { 1.0f, 0.0f }; }
-	else if (actorParameterPtr_->gravityDir == ActorBase::DIR::UP) { vec = { 0.0f, 1.0f }; }
-	else { vec = { 0.0f, -1.0f }; }
-
-	// 返す
-	return vec;
-}
-
-const Vector2F ActorBase::GetDown() const
-{
-	Vector2F vec = {};
-	
-	// 重力方向に応じて下方向を返す
-	if (actorParameterPtr_->gravityDir == ActorBase::DIR::RIGHT) { vec = { 1.0f, 0.0f }; }
-	else if (actorParameterPtr_->gravityDir == ActorBase::DIR::LEFT) { vec = { -1.0f, 0.0f }; }
-	else if (actorParameterPtr_->gravityDir == ActorBase::DIR::UP) { vec = { 0.0f, -1.0f }; }
-	else { vec = { 0.0f, 1.0f }; }
-
-	// 返す
-	return vec;
 }

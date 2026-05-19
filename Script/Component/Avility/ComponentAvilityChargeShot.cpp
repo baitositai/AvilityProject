@@ -55,17 +55,15 @@ void ComponentAvilityChargeShot::Update()
 
 	// 移動量の初期化
 	moveAmount_ = {};
-
-	const auto& params = *owner_.GetParameter();
-	moveAmount_ = params.moveAmount;
+	moveAmount_ = parameter_.moveAmount_;
 
 	// パラメータの取得
-	pos_ = params.pos;
-	defaultSize_ = params.hitSize;
-	gravityDir_ = params.gravityDir;
+	pos_ = parameter_.pos_;
+	defaultSize_ = parameter_.hitSize_;
+	gravityDir_ = parameter_.gravityDir_;
 
 	// 重力方向に合わせたサイズ調整
-	bool isVerticalGravity = (gravityDir_ == ActorBase::DIR::UP || gravityDir_ == ActorBase::DIR::DOWN);
+	bool isVerticalGravity = (gravityDir_ == ParameterActor::DIR::UP || gravityDir_ == ParameterActor::DIR::DOWN);
 	nowSize_.x = isVerticalGravity ? defaultSize_.x : defaultSize_.y;
 	nowSize_.y = isVerticalGravity ? defaultSize_.y : defaultSize_.x;
 
@@ -89,14 +87,14 @@ void ComponentAvilityChargeShot::Remove()
 void ComponentAvilityChargeShot::ProcessInputShot()
 {
 	// 横向きにしか撃てないようにするため、縦の入力は無視する
-	const float moveSpeed = owner_.GetParameter()->moveSpeed;
+	const float moveSpeed = parameter_.moveSpeed_;
 
 	//　ショット入力があったらCharge開始(現在Qキー)
 	if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_AVILITY))
 	{
 		owner_.SetComponentActive("AvilityShot", false);
 
-		!owner_.GetParameter()->direction ? shotAngle_ = UtilityCommon::Deg2RadF(0.0f) : shotAngle_ = UtilityCommon::Deg2RadF(180.0f);
+		!parameter_.direction_ ? shotAngle_ = UtilityCommon::Deg2RadF(0.0f) : shotAngle_ = UtilityCommon::Deg2RadF(180.0f);
 
 		shotTime_ = 0.0f;
 		currentState_ = "charge";
@@ -110,7 +108,7 @@ void ComponentAvilityChargeShot::ProcessInputCharge()
 	float angle = 0.0f;
 
 	// 現在の向きを入れる
-	shotVec_.x = owner_.GetParameter()->direction ? -1 : 1;
+	shotVec_.x = parameter_.direction_ ? -1 : 1;
 
 	// =========================
 	// ここで角度を決定
@@ -139,7 +137,7 @@ void ComponentAvilityChargeShot::ProcessInputCharge()
 	// 正規化不要
 	// cos/sinは長さ1
 
-	owner_.SetShotVec(shotVec_);
+	parameter_.shotVec_ = shotVec_;
 
 	// =========================
 	// 向き
@@ -174,7 +172,7 @@ void ComponentAvilityChargeShot::ProcessInputCharge()
 	//}
 
 	// プレイヤーが左向きなら
-	if(owner_.GetParameter()->direction)
+	if(parameter_.direction_)
 	{
 		// 角度を180度回転させる
 		angle += UtilityCommon::Deg2RadF(180.0f);
@@ -185,13 +183,7 @@ void ComponentAvilityChargeShot::ProcessInputCharge()
 	// モデル角度
 	// =========================
 
-	owner_.SetAngle(angle);
-
-	// =========================
-	// モデル角度
-	// =========================
-
-	owner_.SetAngle(angle);
+	parameter_.angle_ = angle;
 
 	// =========================
 	// チャージ
@@ -205,7 +197,7 @@ void ComponentAvilityChargeShot::ProcessInputCharge()
 		moveAmount_.x = std::sin(chageTime_);
 		moveAmount_.y = 0.0f;
 
-		owner_.SetMoveAmount(moveAmount_);
+		parameter_.moveAmount_ = moveAmount_;
 	}
 	else
 	{
@@ -220,7 +212,7 @@ void ComponentAvilityChargeShot::ProcessInputCharge()
 		owner_.SetColliderActive(false);
 		owner_.SetComponentActive("knockBack", false);
 		owner_.SetComponentActive("jump", false);
-		owner_.SetIsGround(false);
+		parameter_.isGround_ = false;
 
 		// 攻撃判定用コライダーを有効にする
 		attackCollider_->SetIsActive(true);
@@ -243,21 +235,21 @@ void ComponentAvilityChargeShot::ProcessMoveShot()
 	{
 		owner_.SetComponentActive("AvilityShot", true);
 
-		if (gravityDir_ == ActorBase::DIR::RIGHT)
+		if (gravityDir_ == ParameterActor::DIR::RIGHT)
 		{
-			owner_.SetAngle(UtilityCommon::Deg2RadF(0.0f));
+			parameter_.angle_ =UtilityCommon::Deg2RadF(0.0f);
 		}
-		else if (gravityDir_ == ActorBase::DIR::LEFT)
+		else if (gravityDir_ == ParameterActor::DIR::LEFT)
 		{
-			owner_.SetAngle(UtilityCommon::Deg2RadF(90.0f));
+			parameter_.angle_ =UtilityCommon::Deg2RadF(90.0f);
 		}
-		else if (gravityDir_ == ActorBase::DIR::UP)
+		else if (gravityDir_ == ParameterActor::DIR::UP)
 		{
-			owner_.SetAngle(UtilityCommon::Deg2RadF(180.0f));
+			parameter_.angle_ =UtilityCommon::Deg2RadF(180.0f);
 		}
-		else if (gravityDir_ == ActorBase::DIR::DOWN)
+		else if (gravityDir_ == ParameterActor::DIR::DOWN)
 		{
-			owner_.SetAngle(UtilityCommon::Deg2RadF(0.0f));
+			parameter_.angle_ =UtilityCommon::Deg2RadF(0.0f);
 		}
 
 
@@ -277,7 +269,7 @@ void ComponentAvilityChargeShot::ProcessMoveShot()
 	}
 	else
 	{
-		Vector2F dir = owner_.GetShotVec();
+		Vector2F dir = parameter_.shotVec_;
 
 		moveAmount_.y = dir.y * shotTime_ * SHOT_SPEED;
 		moveAmount_.x = dir.x * shotTime_ * SHOT_SPEED;
@@ -289,7 +281,7 @@ void ComponentAvilityChargeShot::ProcessMoveShot()
 	ProcessCollision(false); // Y軸
 
 	// 座標と移動量の更新
-	owner_.SetMoveAmount(moveAmount_);
+	parameter_.moveAmount_= moveAmount_;
 }
 
 void ComponentAvilityChargeShot::ProcessCollision(bool isXAxis)
@@ -408,10 +400,10 @@ void ComponentAvilityChargeShot::ProcessCollision(bool isXAxis)
 
 			Vector2F reflectDir =
 				UtilityCommon::Reflect(
-					owner_.GetShotVec(),
+					parameter_.shotVec_,
 					normal);
 
-			owner_.SetShotVec(reflectDir);
+			parameter_.shotVec_ = reflectDir;
 
 			// =========================
 			// 反射回数
@@ -445,14 +437,14 @@ void ComponentAvilityChargeShot::CheckGroundStatus(float moveVal, bool isXAxis)
 	bool isGround = false;
 	if (isXAxis)
 	{
-		if ((moveVal > 0.0f && gravityDir_ == ActorBase::DIR::RIGHT) ||
-			(moveVal < 0.0f && gravityDir_ == ActorBase::DIR::LEFT)) isGround = true;
+		if ((moveVal > 0.0f && gravityDir_ == ParameterActor::DIR::RIGHT) ||
+			(moveVal < 0.0f && gravityDir_ == ParameterActor::DIR::LEFT)) isGround = true;
 	}
 	else
 	{
-		if ((moveVal > 0.0f && gravityDir_ == ActorBase::DIR::DOWN) ||
-			(moveVal < 0.0f && gravityDir_ == ActorBase::DIR::UP)) isGround = true;
+		if ((moveVal > 0.0f && gravityDir_ == ParameterActor::DIR::DOWN) ||
+			(moveVal < 0.0f && gravityDir_ == ParameterActor::DIR::UP)) isGround = true;
 	}
 
-	if (isGround) owner_.SetIsGround(true);
+	if (isGround) parameter_.isGround_ = true;
 }

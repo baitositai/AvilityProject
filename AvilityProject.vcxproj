@@ -145,6 +145,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Parameter\Character\Enemy\ParameterEnemyClone.cpp" />
+    <ClCompile Include="Script\Parameter\Character\Player\ParameterPlayer.cpp" />
+    <ClCompile Include="Script\Parameter\Character\ParameterCharacter.cpp" />
+    <ClCompile Include="Script\Parameter\ParameterActor.cpp" />
+    <ClCompile Include="Script\Object\Effect\EffectAirslash.cpp" />
     <ClCompile Include="Script\Object\Effect\EffectBase.cpp" />
     <ClCompile Include="Script\Component\Avility\ComponentAvilityAirslash.cpp" />
     <ClCompile Include="Script\Component\Avility\ComponentAvilitySuperman.cpp" />
@@ -264,6 +269,11 @@
     <ClCompile Include="Script\Manager\Common\SpriteEffectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Parameter\Character\Enemy\ParameterEnemyClone.h" />
+    <ClInclude Include="Script\Parameter\Character\Player\ParameterPlayer.h" />
+    <ClInclude Include="Script\Parameter\Character\ParameterCharacter.h" />
+    <ClInclude Include="Script\Parameter\ParameterActor.h" />
+    <ClInclude Include="Script\Object\Effect\EffectAirslash.h" />
     <ClInclude Include="Script\Object\Effect\EffectBase.h" />
     <ClInclude Include="Script\Component\Avility\ComponentAvilityAirslash.h" />
     <ClInclude Include="Script\Component\Avility\ComponentAvilitySuperman.h" />

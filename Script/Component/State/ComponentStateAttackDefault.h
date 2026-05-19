@@ -2,6 +2,7 @@
 #include "../Component/State/ComponentCharacterStateBase.h"
 
 class CharacterBase;
+class ParameterCharacter;
 class ColliderCircle;
 
 class ComponentStateAttackDefault : public ComponentCharacterStateBase
@@ -36,6 +37,9 @@ private:
 
 	// 所有者
 	CharacterBase& owner_;
+
+	// パラメータ
+	ParameterCharacter& parameter_;
 
 	// 攻撃位置
 	Vector2F attackPos_;

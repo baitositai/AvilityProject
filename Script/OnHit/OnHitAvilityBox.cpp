@@ -43,7 +43,7 @@ void OnHitAvilityBox::OnHitPlayer(const std::weak_ptr<ColliderBase>& opponentCol
     const auto& opOwner = opponentCollider.lock()->GetOwner();    
 
     //お互いのパラメータ
-    const ActorBase::Parameter* myParam = owner_.GetParameter();
+    const ActorBase::Parameter* myParam = parameter_;
     const ActorBase::Parameter* opParam = opOwner.GetParameter();
 
     //プレイヤーが動いてなければ飛ばす
@@ -124,14 +124,14 @@ void OnHitAvilityBox::OnHitStage(const std::weak_ptr<ColliderBase>& opponentColl
     //const auto& contacts = collider->GetResult().contacts;
     //if (indexes.empty()) return;       // インデックスリストが空の場合終了
 
-    //Vector2F pos = owner_.GetParameter()->pos;          // 座標取得
+    //Vector2F pos = parameter_->pos;          // 座標取得
     //Vector2 boxSize = owner_.GetHitBoxSize();           // ボックスサイズ          
     //Vector2 chipSize = collider->GetChipSize();         // チップサイズ
 
     //for (const Vector2& index : indexes)
     //{
     //    // 移動量取得
-    //    Vector2F moveAmount = owner_.GetParameter()->moveAmount;
+    //    Vector2F moveAmount = parameter_->moveAmount;
 
     //    // 移動量が0の場合
     //    if (moveAmount.x == 0.0f && moveAmount.y == 0.0f)
@@ -161,21 +161,21 @@ void OnHitAvilityBox::OnHitStage(const std::weak_ptr<ColliderBase>& opponentColl
     //    if (overL > 0 && overR > 0 && overT > 0 && overB > 0)
     //    {
     //        float minOverlap = 10000.0f;
-    //        ActorBase::DIR dir = ActorBase::DIR::MAX;
+    //        ParameterActor::DIR dir = ParameterActor::DIR::MAX;
 
     //        // 右に移動中の場合
     //        if (moveAmount.x > 0 && overL < minOverlap)
     //        {
     //            // 左へ押し戻す判定を有効にする
     //            minOverlap = overL;
-    //            dir = ActorBase::DIR::LEFT;
+    //            dir = ParameterActor::DIR::LEFT;
     //        }
     //        // 左に移動中の場合
     //        if (moveAmount.x < 0 && overR < minOverlap && pBottom >= tBottom)
     //        {
     //            // 右へ押し戻す判定を有効にする
     //            minOverlap = overR;
-    //            dir = ActorBase::DIR::RIGHT;
+    //            dir = ParameterActor::DIR::RIGHT;
     //        }
 
     //        // 落下中の場合　
@@ -183,22 +183,22 @@ void OnHitAvilityBox::OnHitStage(const std::weak_ptr<ColliderBase>& opponentColl
     //        {
     //            // 上へ押し戻す判定を有効にする
     //            minOverlap = overT;
-    //            dir = ActorBase::DIR::UP;
+    //            dir = ParameterActor::DIR::UP;
     //        }
     //        // 上に移動中の場合　
     //        if (moveAmount.y < 0 && overB < minOverlap)
     //        {
     //            // 下へ押し戻す判定を有効にする
     //            minOverlap = overB;
-    //            dir = ActorBase::DIR::DOWN;
+    //            dir = ParameterActor::DIR::DOWN;
     //        }
 
     //        // 決定した方向にのみ補正
     //        Vector2F MoveAmount = Vector2F(0.0f, 0.0f);
-    //        if (dir == ActorBase::DIR::LEFT) { pos.x -= (overL + 0.01f); owner_.SetMoveAmount(Vector2F(0.0f, moveAmount.y)); }
-    //        else if (dir == ActorBase::DIR::RIGHT) { pos.x += (overR + 0.01f); owner_.SetMoveAmount(Vector2F(0.0f, moveAmount.y)); }
-    //        else if (dir == ActorBase::DIR::UP) { pos.y -= (overT + 0.01f); owner_.SetMoveAmount(Vector2F(moveAmount.x, 0.0f)); }
-    //        else if (dir == ActorBase::DIR::DOWN) { pos.y += (overB + 0.01f); owner_.SetMoveAmount(Vector2F(moveAmount.x, 0.0f)); }
+    //        if (dir == ParameterActor::DIR::LEFT) { pos.x -= (overL + 0.01f); owner_.SetMoveAmount(Vector2F(0.0f, moveAmount.y)); }
+    //        else if (dir == ParameterActor::DIR::RIGHT) { pos.x += (overR + 0.01f); owner_.SetMoveAmount(Vector2F(0.0f, moveAmount.y)); }
+    //        else if (dir == ParameterActor::DIR::UP) { pos.y -= (overT + 0.01f); owner_.SetMoveAmount(Vector2F(moveAmount.x, 0.0f)); }
+    //        else if (dir == ParameterActor::DIR::DOWN) { pos.y += (overB + 0.01f); owner_.SetMoveAmount(Vector2F(moveAmount.x, 0.0f)); }
 
     //        // 座標格納
     //        owner_.SetPosition(pos);
@@ -224,7 +224,7 @@ void OnHitAvilityBox::OnHitBox(const std::weak_ptr<ColliderBase>& opponentCollid
     bool opPlayerPush = opOwner->GetIsPlayerPush();
 
     //お互いのパラメータ
-    const ActorBase::Parameter* myParam = owner_.GetParameter();
+    const ActorBase::Parameter* myParam = parameter_;
     const ActorBase::Parameter* opParam = opOwner->GetParameter();
 
     //お互いの距離

@@ -46,7 +46,7 @@ public:
 private:
 
 	// エフェクトリスト
-	std::vector<EffectBase> effectList_;
+	std::vector<std::unique_ptr<EffectBase>> effectList_;
 
 	// コンストラクタ
 	SpriteEffectManager();

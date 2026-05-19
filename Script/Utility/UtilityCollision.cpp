@@ -14,7 +14,7 @@ bool UtilityCollision::IsHitArrayToBox(const std::vector<std::vector<int>>& arra
     const Vector2F& boxTopPos,
     const Vector2F& boxBottomPos,
     const Vector2F& moveAmount,
-    ActorBase::DIR gravityDir)
+    ParameterActor::DIR gravityDir)
 {
     return false;
 }

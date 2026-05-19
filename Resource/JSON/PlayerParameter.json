@@ -1,6 +1,6 @@
 {
   "player": {
-    "componentNameList": [
+    "componentKeys": [
       "jump",
       "knockBack",
       "gravity",

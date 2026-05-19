@@ -1,6 +1,6 @@
 #include "ComponentBase.h"
 
-ComponentBase::ComponentBase(ActorBase* owner) :
+ComponentBase::ComponentBase(ActorBase& owner) :
 	owner_(owner)
 {
 	isActive_ = true;

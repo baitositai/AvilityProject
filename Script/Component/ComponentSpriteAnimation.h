@@ -1,11 +1,10 @@
 #pragma once
 #include "ComponentBase.h"
 
-class ActorBase;
+class Animation;
 
 class ComponentSpriteAnimation : public ComponentBase
 {
-
 public:
 
 	/// <summary>
@@ -24,6 +23,9 @@ public:
 	void Update() override;
 
 private:
+
+	// 所有者のアニメーション
+	Animation& animation_;
 
 	//アニメーションステップ
 	float animStep_;

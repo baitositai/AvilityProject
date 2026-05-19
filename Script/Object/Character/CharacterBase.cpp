@@ -3,14 +3,18 @@
 #include "../../Utility/UtilityCommon.h"
 #include "../../Component/ComponentBase.h"
 #include "../../Collider/ColliderBase.h"
+#include "../../Parameter/Character/ParameterCharacter.h"
 #include "../Common/Animation.h"
 #include "CharacterBase.h"
 
-CharacterBase::CharacterBase(Parameter* parameter, const std::unordered_map<std::string, std::string> stateComponentNameMap, const std::vector<std::string> defaultComponentNameList, std::unique_ptr<Animation> animation)	:
-	ActorBase(parameter, defaultComponentNameList, std::move(animation)),
-	STATE_COMPONENT_CREATE_MAP(stateComponentNameMap),
-	characterParameterPtr_(parameter)
-{	
+CharacterBase::CharacterBase(std::unique_ptr<ParameterCharacter> parameter, std::unique_ptr<Animation> animation) :
+	ActorBase(std::move(parameter), std::move(animation))
+{
+	// パラメータ情報
+	parameterCharacter_ =dynamic_cast<ParameterCharacter*>(GetParameterActorPtr());
+	assert(parameterCharacter_ != nullptr);
+
+	// 変数の初期化
 	type_ = TYPE::MAX;
 	state_ = STATE::MAX;
 }
@@ -30,7 +34,7 @@ void CharacterBase::Init()
 void CharacterBase::Update()
 {
 	// 移動後の値を初期化
-	characterParameterPtr_->moveAmount = {};
+	parameterCharacter_->moveAmount_ = {};
 
 	UpdateComponentState();
 	
@@ -69,18 +73,18 @@ void CharacterBase::DebugDraw()
 {
 	// 自身の体力を描画
 	DrawFormatString(
-		characterParameterPtr_->pos.x - characterParameterPtr_->hitSize.x / 2,
-		characterParameterPtr_->pos.y - characterParameterPtr_->hitSize.y / 2 -20,
+		parameterCharacter_->pos_.x - parameterCharacter_->hitSize_.x / 2,
+		parameterCharacter_->pos_.y - parameterCharacter_->hitSize_.y / 2 -20,
 		UtilityCommon::RED,
 		L"AT:%d",
-		characterParameterPtr_->attackPower);
+		parameterCharacter_->attackPower_);
 
 	DrawFormatString(
-		characterParameterPtr_->pos.x - characterParameterPtr_->hitSize.x / 2,
-		characterParameterPtr_->pos.y - characterParameterPtr_->hitSize.y / 2 -40,
+		parameterCharacter_->pos_.x - parameterCharacter_->hitSize_.x / 2,
+		parameterCharacter_->pos_.y - parameterCharacter_->hitSize_.y / 2 -40,
 		UtilityCommon::RED,
 		L"HP:%d",
-		characterParameterPtr_->hp);
+		parameterCharacter_->hp_);
 }
 
 void CharacterBase::ChangeState(const STATE state)
@@ -91,13 +95,13 @@ void CharacterBase::ChangeState(const STATE state)
 void CharacterBase::Damage(const int damage)
 {
 	// 体力を減らす（ダメージ率だけダメージ量を変える）
-	characterParameterPtr_->hp -= damage * (1 + characterParameterPtr_->damageRate_);
+	parameterCharacter_->hp_ -= damage * (1 + parameterCharacter_->damageRate_);
 
 	// 体力が0以下の場合
-	if (characterParameterPtr_->hp <= 0)
+	if (parameterCharacter_->hp_ <= 0)
 	{
 		// 体力を0にする
-		characterParameterPtr_->hp = 0;
+		parameterCharacter_->hp_ = 0;
 
 		// 状態変更
 		ChangeState(STATE::DEAD);
@@ -115,7 +119,7 @@ void CharacterBase::Damage(const int damage)
 	}
 
 	// 無敵時間の設定
-	characterParameterPtr_->invincibleTime = characterParameterPtr_->invincibleTimeMax;
+	parameterCharacter_->invincibleTime_ = parameterCharacter_->invincibleTimeMax_;
 
 	// アニメーション設定
 	animation_->Play(Animation::TYPE::DAMAGE, false);
@@ -129,23 +133,28 @@ void CharacterBase::Damage(const int damage)
 
 void CharacterBase::SetJumpPow(const float jumpPow)
 {
-	characterParameterPtr_->jumpPow = jumpPow; 
-	if (characterParameterPtr_->jumpPow > 0.0f) characterParameterPtr_->jumpPow = 0.0f;
+	parameterCharacter_->jumpPow_ = jumpPow;
+	if (parameterCharacter_->jumpPow_ > 0.0f) parameterCharacter_->jumpPow_ = 0.0f;
 }
 
 void CharacterBase::Landing()
 {
 	// ジャンプ回数を戻す
-	characterParameterPtr_->jumpCount = characterParameterPtr_->jumpCountMax;
+	parameterCharacter_->jumpCount_ = parameterCharacter_->jumpCountMax_;
 
 	// 着地判定
-	characterParameterPtr_->isGround = true;
+	parameterCharacter_->isGround_ = true;
 }
 
 const int CharacterBase::GetAttackPowerWithBoost() const
 {
-	float boostAttackPower = static_cast<float>(characterParameterPtr_->attackPower) * (1.0f + characterParameterPtr_->attackBoostRate_);
+	float boostAttackPower = static_cast<float>(parameterCharacter_->attackPower_) * (1.0f + parameterCharacter_->attackBoostRate_);
 	return static_cast<int>(boostAttackPower);
+}
+
+const bool CharacterBase::IsInvincible() const
+{
+	return parameterCharacter_->invincibleTime_ > 0.0f;
 }
 
 void CharacterBase::UpdateComponentState()

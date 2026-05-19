@@ -4,18 +4,22 @@
 #include "../../OnHit/OnHitPlayer.h"
 #include "../../Collider/ColliderBox.h"
 #include "../../Utility/UtilityCommon.h"
+#include "../../Parameter/Character/Player/ParameterPlayer.h"
 #include "../Common/Animation.h"
 #include "Player.h"
 
-Player::Player(const Parameter& parameter, const std::unordered_map<std::string, std::string> stateComponentNameList, const std::vector<std::string> defaultComponentNameList, std::unique_ptr<Animation> animation) :
-	parameter_(parameter),
-	CharacterBase(&parameter_, stateComponentNameList, defaultComponentNameList, std::move(animation))
-{
+Player::Player(std::unique_ptr<ParameterPlayer> parameter, std::unique_ptr<Animation> animation) :
+	CharacterBase(std::move(parameter), std::move(animation))
+{	
 	// コライダー
-	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::PLAYER, parameter_.pos, parameter_.hitSize,parameter_.angle);
+	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::PLAYER, parameterPlayer_->pos_, parameterPlayer_->hitSize_, parameterPlayer_->angle_);
 
 	// 衝突後処理
 	onHit_ = std::make_unique<OnHitPlayer>(*this);
+
+	// プレイヤー用のパラメータ
+	parameterPlayer_ = dynamic_cast<ParameterPlayer*>(GetParameterCharacterPtr());
+	assert(parameterPlayer_ != nullptr);
 }
 
 Player::~Player()
@@ -25,7 +29,7 @@ Player::~Player()
 void Player::Update()
 {
 	// 移動後の値を初期化
-	parameter_.moveAmount = {};
+	parameterPlayer_->moveAmount_ = {};
 
 	// 状態別処理
 	UpdateComponentState();
@@ -43,9 +47,9 @@ void Player::DebugDraw()
 	int posY = MARGIN;
 	CharacterBase::DebugDraw();
 	posY += MARGIN;
-	DrawFormatString(0, posY, UtilityCommon::LIME, L"ジャンプ回数  :%d", parameter_.jumpCount);
+	DrawFormatString(0, posY, UtilityCommon::LIME, L"ジャンプ回数  :%d", parameterPlayer_->jumpCount_);
 	posY += MARGIN;
-	DrawFormatString(0, posY, UtilityCommon::LIME, L"プレイヤー位置:%2f,%2f", parameter_.pos.x, parameter_.pos.y);
+	DrawFormatString(0, posY, UtilityCommon::LIME, L"プレイヤー位置:%2f,%2f", parameterPlayer_->pos_.x, parameterPlayer_->pos_.y);
 	posY += MARGIN;
 	componentMap_["debugCreateItemAvility"]->DebugDraw();
 

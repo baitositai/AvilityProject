@@ -38,7 +38,7 @@ void OnHitCharacterBase::OnHitAvilityBox(const std::weak_ptr<ColliderBase>& oppo
     const auto& opOwner = opponentCollider.lock()->GetOwner();
 
     //お互いのパラメータ
-    const ActorBase::Parameter* myParam = owner_.GetParameter();
+    const ActorBase::Parameter* myParam = parameter_;
     const ActorBase::Parameter* opParam = opOwner.GetParameter();
 
 
@@ -54,7 +54,7 @@ void OnHitCharacterBase::OnHitAvilityBox(const std::weak_ptr<ColliderBase>& oppo
     int signY = UtilityCommon::GetSign(diff.y);
 
     //それぞれのめり込み量
-	Vector2 hitSize = Vector2(owner_.GetParameter()->hitSize);
+	Vector2 hitSize = Vector2(parameter_->hitSize);
     float overlapX = static_cast<float>(hitSize.x / 2)
         + static_cast<float>(collider->GetBoxHalfSize().x) - fabsf(diff.x);
     float overlapY = static_cast<float>(hitSize.y / 2)
@@ -71,7 +71,7 @@ void OnHitCharacterBase::OnHitAvilityBox(const std::weak_ptr<ColliderBase>& oppo
     {
         pos.y -= (overlapY + 0.01f) * signY;
         // 地面判定を設定
-        owner_.SetIsGround(true);
+        owner_.isGround_(true);
 
         //落下を防止するためにYの移動量をゼロにする
         moveAmount.y = 0;
@@ -133,18 +133,18 @@ void OnHitCharacterBase::KnockBack(const std::weak_ptr<ColliderBase>& opponentCo
     }
 
     // 重力方向
-	ActorBase::DIR gravityDirEnum = owner_.GetParameter()->gravityDir;
+	ParameterActor::DIR gravityDirEnum = parameter_->gravityDir;
     Vector2F gravityDir = {};
-    if (gravityDirEnum == ActorBase::DIR::RIGHT) { gravityDir = Vector2F(1.0f, 0.0f); }
-    else if (gravityDirEnum == ActorBase::DIR::LEFT) { gravityDir = Vector2F(-1.0f, 0.0f); }
-    else if (gravityDirEnum == ActorBase::DIR::UP) { gravityDir = Vector2F(0.0f, -1.0f); }
+    if (gravityDirEnum == ParameterActor::DIR::RIGHT) { gravityDir = Vector2F(1.0f, 0.0f); }
+    else if (gravityDirEnum == ParameterActor::DIR::LEFT) { gravityDir = Vector2F(-1.0f, 0.0f); }
+    else if (gravityDirEnum == ParameterActor::DIR::UP) { gravityDir = Vector2F(0.0f, -1.0f); }
 	else { gravityDir = Vector2F(0.0f, 1.0f); }
 
     // 重力に対する横方向
     Vector2F sideDir(-gravityDir.y, gravityDir.x);
 
     // 座標取得
-    const Vector2F myPos = owner_.GetParameter()->pos;
+    const Vector2F myPos = parameter_->pos;
     const Vector2F opponentPos = opponent_->GetOwner().GetParameter()->pos;
 
     // 相手から自分までの距離
@@ -154,7 +154,7 @@ void OnHitCharacterBase::KnockBack(const std::weak_ptr<ColliderBase>& opponentCo
     const float sideDistance = Utility2D::Dot(toMe, sideDir);
 
     // コライダーサイズ
-    const Vector2F mySize = owner_.GetParameter()->hitSize.ToVector2F();
+    const Vector2F mySize = parameter_->hitSize.ToVector2F();
     const Vector2F opponentSize = opponent_->GetOwner().GetParameter()->hitSize.ToVector2F();
 
     // 横吹っ飛ばしが有効な最大距離
@@ -180,7 +180,7 @@ void OnHitCharacterBase::KnockBack(const std::weak_ptr<ColliderBase>& opponentCo
     owner_.SetKnockBackPower(finalPower);
 
     // 接地解除
-    owner_.SetIsGround(false);
+    owner_.isGround_(false);
 
     // ジャンプ力無効
     owner_.AddJumpCount(-1);

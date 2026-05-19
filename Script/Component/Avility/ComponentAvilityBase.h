@@ -3,6 +3,7 @@
 #include "AvilityTypes.h"
 
 class Player;
+class ParameterPlayer;
 class StageManager;
 class SceneManager;
 class InputManager;
@@ -57,6 +58,9 @@ protected:
 
 	// 所有者
 	Player& owner_;
+
+	// パラメーター
+	ParameterPlayer& parameter_;
 
 	//ステージマネージャ
 	StageManager& stageManager_;

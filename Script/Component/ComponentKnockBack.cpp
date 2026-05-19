@@ -3,8 +3,8 @@
 #include "ComponentKnockBack.h"
 
 ComponentKnockBack::ComponentKnockBack(CharacterBase& owner) :
-	ComponentBase(&owner),
-	owner_(owner)
+	ComponentBase(owner),
+    parameter_(owner.GetParameter())
 {
 }
 
@@ -15,7 +15,7 @@ ComponentKnockBack::~ComponentKnockBack()
 void ComponentKnockBack::Update()
 {
     //// 現在のノックバックパワーを取得
-    Vector2F knockBackPower = owner_.GeKnockBackPower();
+    Vector2F knockBackPower = parameter_.knockBackPower_;
 
     // 0なら処理を抜ける
     if (knockBackPower.Length() < 0.1f)
@@ -24,7 +24,7 @@ void ComponentKnockBack::Update()
     }
 
     float deltTime = SceneManager::GetInstance().GetDeltaTime();
-    owner_.AddMoveAmount(Vector2F::MulVector2F(knockBackPower, Vector2F(deltTime, deltTime)));
+    parameter_.knockBackPower_ = Vector2F::AddVector2F(parameter_.knockBackPower_, Vector2F::MulVector2F(knockBackPower, Vector2F(deltTime, deltTime)));
 
     // ノックバックの減衰
     if (knockBackPower.x != 0.0f) 
@@ -50,5 +50,5 @@ void ComponentKnockBack::Update()
         }
     }
 
-    owner_.SetKnockBackPower(knockBackPower);
+    parameter_.knockBackPower_ = knockBackPower;
 }

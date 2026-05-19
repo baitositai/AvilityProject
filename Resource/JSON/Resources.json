@@ -93,6 +93,12 @@
       "path": "Resource/Image/BackGround/TitleLogo.png",
       "sceneId": 1,
       "type": "texture"
+    },
+    {
+      "key": "airslash",
+      "path": "Resource/Image/Effect/Airslash.png",
+      "sceneId": 2,
+      "type": "texture"
     }
   ]
 }
