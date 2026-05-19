@@ -135,6 +135,7 @@ void ComponentAvilityChargeShot::ProcessInputCharge()
 	shotVec_.x = std::cos(shotAngle_);
 	shotVec_.y = std::sin(shotAngle_);
 
+
 	// 正規化不要
 	// cos/sinは長さ1
 
@@ -177,7 +178,21 @@ void ComponentAvilityChargeShot::ProcessInputCharge()
 	{
 		// 角度を180度回転させる
 		angle += UtilityCommon::Deg2RadF(180.0f);
+
+		// 【修正】左向きの時は「反時計回り（-90度）」に回転
+		// (x, y) -> (-y, x)
+		float tempX = shotVec_.x;
+		shotVec_.x = -shotVec_.y; // ここにマイナスがつきます
+		shotVec_.y = tempX;
 	}
+	else
+	{
+		// 追加】時計回りに90度回転
+		float tempX = shotVec_.x;
+		shotVec_.x = shotVec_.y;
+		shotVec_.y = -tempX;
+	}
+	owner_.SetShotVec(shotVec_);
 
 
 	// =========================
@@ -238,6 +253,8 @@ void ComponentAvilityChargeShot::ProcessMoveShot()
 
 	shotTime_ -= 0.01f;
 
+
+
 	if (shotTime_ <= 0.0f || reflectCount_ <= 0)
 	{
 		owner_.SetComponentActive("AvilityShot", true);
@@ -280,6 +297,12 @@ void ComponentAvilityChargeShot::ProcessMoveShot()
 
 		moveAmount_.y = dir.y * shotTime_ * SHOT_SPEED;
 		moveAmount_.x = dir.x * shotTime_ * SHOT_SPEED;
+
+		// std::atan2(y, x) は右向きを0度（基準）として角度を返します。
+		// 頭が上の素材を進行方向（右＝0度）に合わせるため、90度（PI / 2）引き算します。
+		float currentAngle = std::atan2(dir.y, dir.x) - UtilityCommon::Deg2RadF(-90.0f);
+
+		owner_.SetAngle(currentAngle);
 	}
 
 
