@@ -100,6 +100,15 @@ void Player::SetAbilityComponent(std::unique_ptr<ComponentAvilityBase> component
 	abilityComponents_[abilitySlot] = std::move(component);
 }
 
+void Player::SetAbilityActive(const ABILITY_SLOT abilitySlot, const bool isActive)
+{
+	auto it = abilityComponents_.find(abilitySlot);
+	if (it != abilityComponents_.end() && it->second != nullptr)
+	{
+		it->second->SetActive(isActive);
+	}
+}
+
 void Player::RemoveAbilityComponent(const ABILITY_SLOT abilitySlot)
 {
 	auto it = abilityComponents_.find(abilitySlot);
@@ -110,6 +119,15 @@ void Player::RemoveAbilityComponent(const ABILITY_SLOT abilitySlot)
 
 		// ‰ð•ú
 		it->second.reset();
+	}
+}
+
+void Player::ResetAbilityComponent(const ABILITY_SLOT abilitySlot)
+{
+	auto it = abilityComponents_.find(abilitySlot);
+	if (it != abilityComponents_.end() && it->second != nullptr)
+	{
+		it->second->Init();
 	}
 }
 

@@ -45,6 +45,50 @@ ComponentAvilityShot::~ComponentAvilityShot()
 {
 }
 
+void ComponentAvilityShot::Init()
+{
+	// 状態の初期化
+	currentState_ = "input";
+	currentStateFunction_ = stateFunctionMap_[currentState_];
+
+	if (gravityDir_ == ParameterActor::DIR::RIGHT)
+	{
+		parameter_.angle_ = UtilityCommon::Deg2RadF(0.0f);
+	}
+	else if (gravityDir_ == ParameterActor::DIR::LEFT)
+	{
+		parameter_.angle_ = UtilityCommon::Deg2RadF(90.0f);
+	}
+	else if (gravityDir_ == ParameterActor::DIR::UP)
+	{
+		parameter_.angle_ = UtilityCommon::Deg2RadF(180.0f);
+	}
+	else if (gravityDir_ == ParameterActor::DIR::DOWN)
+	{
+		parameter_.angle_ = UtilityCommon::Deg2RadF(0.0f);
+	}
+
+	// 自身のコライダーの判定を有効にする
+	owner_.SetColliderActive(true);
+
+	// コンポーネントの活動状態を戻す
+	owner_.SetComponentActive("gravity", true);
+	owner_.SetStateComponentActive(Player::STATE::ALIVE, true);
+
+	// 攻撃判定用コライダーを無効にする
+	attackCollider_->SetIsActive(false);
+
+
+
+	// 攻撃判定用コライダーを無効にする
+	attackCollider_->SetIsActive(false);
+
+	shotVec_ = {};
+	shotAngle_ = 0.0f;
+
+	parameter_.shotVec_ = {};
+}
+
 void ComponentAvilityShot::Update()
 {
 	// バウンドで停止したよう
@@ -92,7 +136,12 @@ void ComponentAvilityShot::ProcessInputShot()
 	//　ショット入力があったらCharge開始(現在Qキー)
 	if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_AVILITY))
 	{
-		owner_.SetComponentActive("AvilityShot", false);
+		// 影響を与えるコンポーネントを無効にする
+		owner_.SetStateComponentActive(Player::STATE::ALIVE, false);
+		owner_.SetComponentActive("gravity", false);
+
+		// ジャンプ力をなくす
+		parameter_.jumpPow_ = 0.0f;
 
 		!parameter_.direction_ ? shotAngle_ = UtilityCommon::Deg2RadF(0.0f) : shotAngle_ = UtilityCommon::Deg2RadF(180.0f);
 
@@ -216,6 +265,7 @@ void ComponentAvilityShot::ProcessInputCharge()
 	}
 	else
 	{
+
 		if (shotTime_ > 2.0f)
 		{
 			shotTime_ = 2.0f;
@@ -225,20 +275,23 @@ void ComponentAvilityShot::ProcessInputCharge()
 
 		// 自身のコライダーの判定を無効にする
 		owner_.SetColliderActive(false);
-		owner_.SetComponentActive("knockBack", false);
-		owner_.SetComponentActive("jump", false);
-		parameter_.isGround_ = false;
 
 		// 攻撃判定用コライダーを有効にする
 		attackCollider_->SetIsActive(true);
-
-
+		
+		// 影響を与えそうなパラメータを初期化
+		parameter_.jumpPow_ = 0.0f;
+		parameter_.knockBackPower_ = Vector2F();
+		parameter_.isGround_ = false;
+		
 		isReflected_ = false;
 		reflectCount_ = 4;
 
+		// 状態遷移
 		currentState_ = "shot";
 		currentStateFunction_ = stateFunctionMap_[currentState_];
 	}
+
 }
 
 void ComponentAvilityShot::ProcessMoveShot()
@@ -248,9 +301,11 @@ void ComponentAvilityShot::ProcessMoveShot()
 
 
 
-	if (shotTime_ <= 0.0f || reflectCount_ <= 0)
+	if (shotTime_ <= 0.0f
+		|| reflectCount_ <= 0
+		|| (parameter_.shotVec_.x == 0.0f && parameter_.shotVec_.y == 0.0f))
 	{
-		owner_.SetComponentActive("AvilityShot", true);
+ 		owner_.SetComponentActive("AvilityShot", true);
 
 		if (gravityDir_ == ParameterActor::DIR::RIGHT)
 		{
@@ -273,9 +328,9 @@ void ComponentAvilityShot::ProcessMoveShot()
 		// 自身のコライダーの判定を有効にする
 		owner_.SetColliderActive(true);
 
-		// ほとんど意味がなくノックバックするので無敵化を目指す
-		owner_.SetComponentActive("knockBack", true);
-		owner_.SetComponentActive("jump", true);
+		// コンポーネントの活動状態を戻す
+		owner_.SetComponentActive("gravity", true);
+		owner_.SetStateComponentActive(Player::STATE::ALIVE, true);
 
 		// 攻撃判定用コライダーを無効にする
 		attackCollider_->SetIsActive(false);

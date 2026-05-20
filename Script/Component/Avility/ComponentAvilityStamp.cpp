@@ -115,6 +115,12 @@ void ComponentAvilityStamp::ChangeStateInput()
 	// 攻撃判定用コライダーを無効にする
 	attackCollider_->SetIsActive(false);
 
+	// スロット1のアビリティを有効にする
+	owner_.SetAbilityActive(ABILITY_SLOT::FIRST, true);
+
+	// スロット1の初期化
+	owner_.ResetAbilityComponent(ABILITY_SLOT::FIRST);
+
 	// 所有者のコライダーの判定を有効にする
 	owner_.SetColliderActive(true);
 }
@@ -135,12 +141,18 @@ void ComponentAvilityStamp::ChangeStateStop()
 	// キャラクターの重力を無効にする
 	owner_.SetComponentActive("gravity", false);
 
+	// スロット1のアビリティを無効にする
+	owner_.SetAbilityActive(ABILITY_SLOT::FIRST, false);
+
 	// アニメーション切り替えて停止
 	owner_.GetAnimation().Play(Animation::TYPE::IDLE);
 	owner_.GetAnimation().Stop();
 
 	// 自身のコライダーの判定を無効にする
 	owner_.SetColliderActive(false);
+
+	parameter_.shotVec_ = Vector2F(0.0f, 0.0f);
+	parameter_.angle_ = 0.0f;
 }
 
 void ComponentAvilityStamp::ChangeStateActive()

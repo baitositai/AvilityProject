@@ -50,10 +50,23 @@ public:
 	void SetAbilityComponent(std::unique_ptr<ComponentAvilityBase> component);
 
 	/// <summary>
+	/// 各スロットのアビリティの活動状態を設定
+	/// </summary>
+	/// <param name="abilitySlot">アビリティスロット</param>
+	/// <param name="isActive">活動状態</param>
+	void SetAbilityActive(const ABILITY_SLOT abilitySlot, const bool isActive);
+
+	/// <summary>
 	/// アビリティコンポーネントを外す
 	/// </summary>
 	/// <param name="abilitySlot">アビリティスロット</param>
 	void RemoveAbilityComponent(const ABILITY_SLOT abilitySlot);
+
+	/// <summary>
+	/// 指定したスロットのアビリティコンポーネントをリセットする
+	/// </summary>
+	/// <param name="abilitySlot">アビリティスロット</param>
+	void ResetAbilityComponent(const ABILITY_SLOT abilitySlot);
 
 	/// <summary>
 	/// パラメーターを返す(変更可)
