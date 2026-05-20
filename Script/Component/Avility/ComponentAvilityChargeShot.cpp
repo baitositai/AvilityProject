@@ -191,7 +191,7 @@ void ComponentAvilityChargeShot::ProcessInputCharge()
 		shotVec_.x = shotVec_.y;
 		shotVec_.y = -tempX;
 	}
-	owner_.SetShotVec(shotVec_);
+	parameter_.shotVec_ = shotVec_;
 
 
 	// =========================
@@ -295,7 +295,7 @@ void ComponentAvilityChargeShot::ProcessMoveShot()
 		// 頭が上の素材を進行方向（右＝0度）に合わせるため、90度（PI / 2）引き算します。
 		float currentAngle = std::atan2(dir.y, dir.x) - UtilityCommon::Deg2RadF(-90.0f);
 
-		owner_.SetAngle(currentAngle);
+		parameter_.angle_ = currentAngle;
 	}
 
 
