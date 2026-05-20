@@ -3,7 +3,6 @@
     "componentKeys": [
       "jump",
       "knockBack",
-      "avilityShot",
       "gravity",
       "move",
       "spriteAnimation",
