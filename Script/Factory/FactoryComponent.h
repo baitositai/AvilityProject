@@ -21,7 +21,6 @@ class ComponentStateDead;
 class ComponentStateDummy;
 
 class ComponentAvilityBase;
-class ComponentAvilityChargeShot;
 class ComponentAvilityBox;
 class ComponentAvilityShot;
 class ComponentAvilityGravity;
@@ -66,7 +65,6 @@ private:
 	std::unique_ptr<ComponentStatePlayerProcess> CreateComponentStatePlayerProcess(ActorBase& owner);
 	std::unique_ptr<ComponentStateAttackDefault> CreateComponentStateAttackDefault(ActorBase& owner);
 	std::unique_ptr<ComponentAvilityBox> CreateComponentAvilityBox(ActorBase& owner);
-	std::unique_ptr<ComponentAvilityChargeShot> CreateComponentAvilityChargeShot(ActorBase& owner);
 	std::unique_ptr<ComponentAvilityStamp> CreateComponentAvilityStamp(ActorBase& owner);
 	std::unique_ptr<ComponentAvilityAirwalk> CreateComponentAvilityAirwalk(ActorBase& owner);
 	std::unique_ptr<ComponentAvilityShot> CreateComponentAvilityShot(ActorBase& owner);

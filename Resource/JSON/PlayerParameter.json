@@ -3,8 +3,8 @@
     "componentKeys": [
       "jump",
       "knockBack",
+      "avilityShot",
       "gravity",
-      "avilityChargeShot",
       "move",
       "spriteAnimation",
       "invincible",
