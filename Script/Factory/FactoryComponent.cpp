@@ -321,6 +321,10 @@ FactoryComponent::FactoryComponent()
         {
             return CreateComponentAvilityMetal(owner);
         });
+    componentCreateMap_.emplace("avilityAirslash", [this](ActorBase& owner)
+        {
+            return CreateComponentAvilityAirslash(owner);
+        });
     componentCreateMap_.emplace("avilitySuperman", [this](ActorBase& owner)
         {
             return CreateComponentAvilitySuperman(owner);
