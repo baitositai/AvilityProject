@@ -14,6 +14,7 @@
 #include "../../Component/Avility/ComponentAvilityMetal.h"
 #include "../../Component/Avility/ComponentAvilitySuperman.h"
 #include "../../Component/Avility/ComponentAvilityStamp.h"
+#include "../../Component/Avility/ComponentAvilityAirslash.h"
 #include "../../Component/State/ComponentStatePlayerProcess.h"
 #include "../../Component/State/ComponentStateAttackDefault.h"
 #include "../../Component/State/ComponentStateDead.h"
@@ -182,6 +183,18 @@ std::unique_ptr<ComponentAvilitySuperman> FactoryComponent::CreateComponentAvili
         return nullptr;
     }
     return std::make_unique<ComponentAvilitySuperman>(*playerPtr);
+}
+
+std::unique_ptr<ComponentAvilityAirslash> FactoryComponent::CreateComponentAvilityAirslash(ActorBase& owner)
+{
+    auto* playerPtr = dynamic_cast<Player*>(&owner);
+
+    if (playerPtr == nullptr)
+    {
+        // ÉLÉÉÉXÉgÇ…é∏îsÇµÇΩèÍçánullptrÇï‘Ç∑
+        return nullptr;
+    }
+    return std::make_unique<ComponentAvilityAirslash>(*playerPtr);
 }
 
 std::unique_ptr<ComponentKnockBack> FactoryComponent::CreateComponentKnockBack(ActorBase& owner)

@@ -20,4 +20,9 @@ public:
 	/// XVˆ—
 	/// </summary>
 	void Update() override;
+
+private:
+
+	// ¶¬ˆ—
+	void CreateAirslash();
 };
