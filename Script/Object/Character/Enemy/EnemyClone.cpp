@@ -5,10 +5,12 @@
 #include "../../Common/Animation.h"
 #include "EnemyClone.h"
 
-EnemyClone::EnemyClone(const Parameter& parameter, const std::unordered_map<std::string, std::string> stateComponentNameList, const std::vector<std::string> defaultComponentNameList, std::unique_ptr<Animation> animation) :
-	parameter_(parameter),
-	CharacterBase(&parameter_, stateComponentNameList, defaultComponentNameList, std::move(animation))
+EnemyClone::EnemyClone(std::unique_ptr<ParameterEnemyClone> parameter) :
+	CharacterBase(std::move(parameter))
 {
+	// プレイヤー用のパラメータ
+	parameterEnemy_ = dynamic_cast<ParameterEnemyClone*>(GetParameterCharacterPtr());
+	assert(parameterEnemy_ != nullptr);
 }
 
 EnemyClone::~EnemyClone()
@@ -18,7 +20,7 @@ EnemyClone::~EnemyClone()
 void EnemyClone::Init()
 {
 	// コライダー
-	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::ENEMY_CLONE, parameter_.pos, parameter_.hitSize, parameter_.angle);
+	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::ENEMY_CLONE, parameterEnemy_->pos_, parameterEnemy_->hitSize_, parameterEnemy_->angle_);
 
 	// 衝突後処理
 	onHit_ = std::make_unique<OnHitEnemyClone>(*this);
@@ -32,6 +34,6 @@ void EnemyClone::Init()
 void EnemyClone::DebugDraw()
 {
 	CharacterBase::DebugDraw();
-	Vector2 k = parameter_.knockBackPower.ToVector2();
+	Vector2 k = parameterEnemy_->knockBackPower_.ToVector2();
 	DrawFormatString(0, 80, UtilityCommon::BLACK, L"敵kb:%d,%d", k.x, k.y);
 }

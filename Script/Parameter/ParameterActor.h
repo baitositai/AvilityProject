@@ -1,9 +1,11 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <unordered_map>
 #include <nlohmann/json.hpp>
 #include "../Common/Vector2.h"
 #include "../Common/Vector2F.h"
+#include "../Object/Common/Animation.h"
 
 // JSON名前空間
 using Json = nlohmann::json;
@@ -136,4 +138,12 @@ public:
 
 	// コンポーネント用のキー配列
 	std::vector<std::string> componentkeys_;
+
+	// アニメーション用のマップ
+	std::unordered_map<std::string, Animation::Data> animationDataMap_;
+
+protected:
+	
+	// アニメーション情報の読み込み
+	void LoadParameterAnimation(const Json& jsonParameter);
 };

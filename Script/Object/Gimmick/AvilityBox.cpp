@@ -6,20 +6,22 @@
 #include "../Common/Animation.h"
 #include "AvilityBox.h"
 
-AvilityBox::AvilityBox(const Parameter& parameter, CharacterBase& _chara,const std::vector<std::string>& componentNameList) :
-	parameter_(parameter),
-	character_(_chara),
-	GimmickBase(&parameter_,componentNameList)
-{
+AvilityBox::AvilityBox(std::unique_ptr<ParameterAvilityBox> parameter, CharacterBase& owner) :
+	owner_(owner),
+	GimmickBase(std::move(parameter))
+{	
+	// 箱用のパラメータ
+	parameterAvilityBox_ = dynamic_cast<ParameterAvilityBox*>(GetParameterGimmickPtr());
+	assert(parameterAvilityBox_ != nullptr);
+
 	//種類の設定
 	gimmickType_ = TYPE::AVILITY_BOX;
 
 	// コライダー
-	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::AVILITY_BOX, parameter_.pos, parameter_.hitBoxSize, parameter_.angle);
+	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::AVILITY_BOX, parameterAvilityBox_->pos_, parameterAvilityBox_->hitSize_, parameterAvilityBox_->angle_);
 
 	// 衝突後処理
 	onHit_ = std::make_unique<OnHitAvilityBox>(*this);
-
 }
 
 AvilityBox::~AvilityBox()
@@ -31,7 +33,7 @@ void AvilityBox::Init(void)
 	GimmickBase::Init();
 
 	//座標をプレイヤーとローカル座標分離れている座標にする
-	parameter_.pos = parameter_.placePos;
+	parameterAvilityBox_->pos_ = parameterAvilityBox_->placePos_;
 }
 
 void AvilityBox::Update(void)
@@ -41,21 +43,10 @@ void AvilityBox::Update(void)
 	{
 		int i = 0;
 	}
-	parameter_.moveAmount = onHit_->GetMoveAmount();
+	parameterAvilityBox_->moveAmount_ = onHit_->GetMoveAmount();
 	onHit_->ResetMoveAmount();
 	isHitWall_ = false;
 	GimmickBase::Update();
-	//parameter_.moveAmount = {};
-	//isPushPlayer_ = false;
-	//if (blastWaitCnt_ > 0.0f)
-	//{
-	//	blastWaitCnt_ -= scnMng_.GetDeltaTime();
-	//}
-	//else
-	//{
-	//	collider_->SetDelete();
-	//	return;
-	//}
 
 }
 
@@ -70,19 +61,19 @@ void AvilityBox::DebugDraw(void)
 	collider_->DebugDraw();
 
 	unsigned int color = UtilityCommon::RED;
-	if (parameter_.boxNum == 1) { color = UtilityCommon::GREEN; }
-	else if (parameter_.boxNum == 2) { color = UtilityCommon::BLUE; }
+	if (parameterAvilityBox_->boxNum_ == 1) { color = UtilityCommon::GREEN; }
+	else if (parameterAvilityBox_->boxNum_ == 2) { color = UtilityCommon::BLUE; }
 
-	DrawCircle(parameter_.pos.x, parameter_.pos.y,10, color);
+	DrawCircle(parameterAvilityBox_->pos_.x, parameterAvilityBox_->pos_.y,10, color);
 
 	//プレイヤーが押し出している最中のみ描画
-	if(isPushPlayer_){ DrawCircle(parameter_.pos.x, parameter_.pos.y, 3, UtilityCommon::CYAN); }
+	if(isPushPlayer_){ DrawCircle(parameterAvilityBox_->pos_.x, parameterAvilityBox_->pos_.y, 3, UtilityCommon::CYAN); }
 
 
 	Vector2F dirPos = Vector2F();
 	constexpr float LOCAL = 15.0f;
-	parameter_.direction ? dirPos.x = -LOCAL : dirPos.x = LOCAL;
-	DrawCircle(parameter_.pos.x + dirPos.x, parameter_.pos.y, 3, UtilityCommon::LIME);
+	parameterAvilityBox_->direction_ ? dirPos.x = -LOCAL : dirPos.x = LOCAL;
+	DrawCircle(parameterAvilityBox_->pos_.x + dirPos.x, parameterAvilityBox_->pos_.y, 3, UtilityCommon::LIME);
 }
 
 void AvilityBox::AddHitInfo(const HitInfo& _hitInfo)
@@ -102,12 +93,12 @@ void AvilityBox::PushResult(void)
 		});
 	Vector2F totalPush = {};
 	Vector2F moveAmount = {};
-	Vector2F prevPos = parameter_.pos;
+	Vector2F prevPos = parameterAvilityBox_->pos_;
 
 	for (auto& info : hitInfo_)
 	{
 		Vector2F push = {};
-		Vector2F prevPos = parameter_.pos;
+		Vector2F prevPos = parameterAvilityBox_->pos_;
 		//X方向押し出し
 		//if (info.overlapX < info.overlapY)
 		{
@@ -119,10 +110,10 @@ void AvilityBox::PushResult(void)
 		}
 
 		totalPush = Vector2F::AddVector2F(totalPush, push);
-		parameter_.moveAmount = Vector2F::SubVector2F(parameter_.pos, prevPos);
+		parameterAvilityBox_->moveAmount_ = Vector2F::SubVector2F(parameterAvilityBox_->pos_, prevPos);
 	}
 
-	parameter_.pos = Vector2F::AddVector2F(parameter_.pos, totalPush);
+	parameterAvilityBox_->pos_ = Vector2F::AddVector2F(parameterAvilityBox_->pos_, totalPush);
 
 	//処理し終わったら破棄
 	hitInfo_.clear();

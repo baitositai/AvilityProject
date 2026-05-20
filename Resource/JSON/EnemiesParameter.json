@@ -1,19 +1,20 @@
 {
   "clone": {
-    "componentNameList": [
+    "componentKeys": [
       "knockBack",
       "gravity",
       "invincible",
       "move",
       "spriteAnimation"
     ],
-    "componentStateNameList": {
+    "stateComponentKeys": {
       "alive": "idle",
       "attack": "dummy",
       "hit": "dummy",
       "dead": "dead",
       "respawn": "dummy"
     },
+    "resourceKey": "clone",
     "scale": 1.0,
     "angle": 0.0,
     "direction": true,

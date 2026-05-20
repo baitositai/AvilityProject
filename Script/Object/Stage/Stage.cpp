@@ -10,12 +10,15 @@
 #include "Tile/TileBase.h"
 #include "Stage.h"
 
-Stage::Stage(StageParameter& parameter) :
-	 parameter_(parameter),
-	ActorBase(&parameter_)
-{
+Stage::Stage(std::unique_ptr<ParameterStage> parameter) :
+	ActorBase(std::move(parameter))
+{	
 	stageSize_ = {};
-	tileNums_ = {};	
+	tileNums_ = {};
+
+	// パラメータ
+	parameterStage_ = dynamic_cast<ParameterStage*>(GetParameterActorPtr());
+	assert(parameterStage_ != nullptr);
 }
 
 Stage::~Stage()
@@ -25,7 +28,7 @@ Stage::~Stage()
 void Stage::Init()
 {
 	// コライダーの生成
-	auto collider = std::make_shared<ColliderArray>(*this, CollisionTags::TAG::STAGE, parameter_.pos, chipIndexs_, parameter_.hitIds, parameter_.chipSize);
+	auto collider = std::make_shared<ColliderArray>(*this, CollisionTags::TAG::STAGE, parameterStage_->pos_, chipIndexs_, parameterStage_->hitIds_, parameterStage_->chipSize_);
 
 	// ステージ専用のコライダーの設定
 	CollisionManager::GetInstance().SetStageCollider(collider);	
@@ -71,7 +74,7 @@ void Stage::Draw()
 void Stage::ChageStage(const std::string& stagePath)
 {
 	// 種類の定義
-	parameter_.path = stagePath;
+	parameterStage_->path_ = stagePath;
 
 	// ステージの設定
 	SetStage();
@@ -92,7 +95,7 @@ void Stage::DebugDraw()
 void Stage::SetStage()
 {
 	// タイルの読み込み
-	chipIndexs_ = UtilityLoad::LoadCSVData(Application::PATH_CSV + parameter_.path);
+	chipIndexs_ = UtilityLoad::LoadCSVData(Application::PATH_CSV + parameterStage_->path_);
 
 	// ステージの初期化
 	ClearStage();

@@ -3,6 +3,7 @@
 #include "ComponentBase.h"
 
 class CharacterBase;
+class ParameterCharacter;
 class SceneManager;
 
 class ComponentInvincible : public ComponentBase

@@ -9,7 +9,7 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="direction">方向</param>
-	EffectAirslash(const Vector2F& direction);
+	EffectAirslash(std::unique_ptr<ParameterEffect> parameter ,const Vector2F& direction);
 
 	/// <summary>
 	/// デストラクタ
@@ -33,6 +33,9 @@ private:
 
 	// 方向
 	const Vector2F& direction_;
+
+	// パラメータ情報
+	ParameterEffect* parameterEffect_;
 
 	// 時間
 	float time_;

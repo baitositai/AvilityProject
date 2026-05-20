@@ -35,10 +35,7 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="parameter">パラメータ情報</param>
-	/// <param name="animation">アニメーション</param>
-	explicit CharacterBase(
-		std::unique_ptr<ParameterCharacter> parameter = nullptr,
-		std::unique_ptr<Animation> animation = nullptr);
+	explicit CharacterBase(std::unique_ptr<ParameterCharacter> parameter = nullptr);
 
 	/// <summary>
 	/// デストラクタ
@@ -148,7 +145,7 @@ protected:
 	
 	// 状態別更新処理を管理するコンポーネントマップ
 	std::unordered_map<STATE, std::unique_ptr<ComponentBase>> componentStateMap_;
-
+	
 	// 状態別コンポーネント処理の更新
 	void UpdateComponentState();
 
@@ -166,9 +163,6 @@ private:
 		{ "hit", STATE::HIT },
 		{ "respawn", STATE::RESPAWN },
 	};	
-	
-	// 生成するコンポーネントのマップ
-	const std::unordered_map<std::string, std::string> STATE_COMPONENT_CREATE_MAP;
 
 	// 状態遷移管理マップ
 	std::unordered_map<STATE, std::function<void()>> stateChangeMap_;

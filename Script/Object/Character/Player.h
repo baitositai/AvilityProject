@@ -15,10 +15,7 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="parameter">パラメータ情報</param>
-	/// <param name="animation">アニメーション</param>
-	explicit Player(
-		std::unique_ptr<ParameterPlayer> parameter, 
-		std::unique_ptr<Animation> animation);
+	explicit Player(std::unique_ptr<ParameterPlayer> parameter);
 
 	/// <summary>
 	/// デストラクタ
@@ -70,7 +67,6 @@ public:
 	/// <returns>パラメータ</returns>
 	const ParameterPlayer& GetParameter() const { return *parameterPlayer_; }
 
-	
 private:
 
 	// パラメータ情報

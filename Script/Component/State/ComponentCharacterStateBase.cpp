@@ -3,7 +3,7 @@
 
 
 ComponentCharacterStateBase::ComponentCharacterStateBase(CharacterBase& owner) :
-	ComponentBase(&owner)
+	ComponentBase(owner)
 {
 }
 

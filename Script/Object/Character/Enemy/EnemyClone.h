@@ -2,7 +2,7 @@
 #include "../CharacterBase.h"
 #include "../../Parameter/Character/Enemy/ParameterEnemyClone.h"
 
-class ParameterEnemy;
+class ParameterEnemyClone;
 
 class EnemyClone : public CharacterBase
 {
@@ -12,12 +12,7 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="parameter">パラメータ情報</param>
-	/// <param name="stateComponentNameList">状態別コンポーネントリスト</param>
-	/// <param name="defaultComponentNameList">通常のコンポーネントリスト</param>
-	/// <param name="animation">アニメーション</param>
-	EnemyClone(
-		std::unique_ptr<ParameterEnemyClone> parameter = nullptr,
-		std::unique_ptr<Animation> animation = nullptr);
+	explicit EnemyClone(std::unique_ptr<ParameterEnemyClone> parameter);
 
 	/// <summary>
 	/// デストラクタ
@@ -34,10 +29,20 @@ public:
 	/// </summary>
 	void DebugDraw() override;
 
+	/// <summary>
+	/// パラメーターを返す(変更可)
+	/// </summary>
+	/// <returns>パラメータ</returns>
+	ParameterEnemyClone& GetParameter() { return *parameterEnemy_; }
+
+	/// <summary>
+	/// パラメータを返す
+	/// </summary>
+	/// <returns>パラメータ</returns>
+	const ParameterEnemyClone& GetParameter() const { return *parameterEnemy_; }
+
 private:
 
 	// パラメータ情報
-	Parameter parameter_;
-
+	ParameterEnemyClone* parameterEnemy_;
 };
-

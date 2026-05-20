@@ -1,4 +1,5 @@
 #include <DxLib.h>
+#include "../../Manager/Common/ResourceManager.h"
 #include "../../Factory/FactoryComponent.h"
 #include "../../Utility/UtilityCommon.h"
 #include "../../Component/ComponentBase.h"
@@ -7,11 +8,11 @@
 #include "../Common/Animation.h"
 #include "CharacterBase.h"
 
-CharacterBase::CharacterBase(std::unique_ptr<ParameterCharacter> parameter, std::unique_ptr<Animation> animation) :
-	ActorBase(std::move(parameter), std::move(animation))
+CharacterBase::CharacterBase(std::unique_ptr<ParameterCharacter> parameter) :
+	ActorBase(std::move(parameter))
 {
 	// パラメータ情報
-	parameterCharacter_ =dynamic_cast<ParameterCharacter*>(GetParameterActorPtr());
+	parameterCharacter_ = dynamic_cast<ParameterCharacter*>(GetParameterActorPtr());
 	assert(parameterCharacter_ != nullptr);
 
 	// 変数の初期化
@@ -177,7 +178,7 @@ void CharacterBase::UpdateComponentState()
 void CharacterBase::CreateComponents()
 {
 	// 状態別コンポーネントの取得
-	for (const auto & name : STATE_COMPONENT_CREATE_MAP)
+	for (const auto & name : parameterCharacter_->stateComponentKeys_)
 	{
 		// 状態の名前が取得できているか確認
 		auto it = NAME_TO_STATE_MAP.find(name.first);

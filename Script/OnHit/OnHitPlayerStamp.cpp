@@ -32,7 +32,7 @@ void OnHitPlayerStamp::Update(const std::weak_ptr<ColliderBase>& opponentCollide
         charaPtr->Damage(owner_.GetAttackPowerWithBoost());    
         
         // –³“G‚É‚·‚é
-        owner_.SetIsInvincibleTime(INVINCIBLE_TIME);
+        owner_.GetParameter().invincibleTime_ = INVINCIBLE_TIME;
 
         if (charaPtr->GetState() == CharacterBase::STATE::DEAD)
         {

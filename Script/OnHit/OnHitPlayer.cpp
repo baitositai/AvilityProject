@@ -67,8 +67,9 @@ void OnHitPlayer::OnHitItemAvility(const std::weak_ptr<ColliderBase>& opponentCo
 
 void OnHitPlayer::AvilityShot(const std::weak_ptr<ColliderBase>& opponentCollider, const Vector2F& normal)
 {
-	// ショットベクトルを法線ベクトルで反射させる
-    Vector2F dir = UtilityCommon::Reflect( owner_.GetShotVec(), normal);
+    // パラメータ取得
+    ParameterPlayer& parameter = owner_.GetParameter();
 
-	owner_.SetShotVec(dir);
+	// ショットベクトルを法線ベクトルで反射させる
+    parameter.shotVec_ = UtilityCommon::Reflect(parameter.shotVec_, normal);
 }

@@ -28,7 +28,7 @@ public:
 	int animationsAttack_ = -1;			// 攻撃アニメーション
 	int animationsJump_ = -1;			// ジャンプアニメーション
 	int animationsFall_ = -1;			// 落下アニメーション
-	int animationsDie_ = -1;				// 死亡アニメーション
+	int animationsDie_ = -1;			// 死亡アニメーション
 	int animationsDamage_ = -1;			// ダメージアニメーション
 	int animationsPause_ = -1;			// ポーズアニメーション
 	float animationAttackSpeed_ = 0.0f;	// 攻撃アニメーション速度

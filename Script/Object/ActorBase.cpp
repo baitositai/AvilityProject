@@ -12,9 +12,8 @@
 #include "Common/Animation.h"
 #include "ActorBase.h"
 
-ActorBase::ActorBase(std::unique_ptr<ParameterActor> parameter, std::unique_ptr<Animation> animation) :
+ActorBase::ActorBase(std::unique_ptr<ParameterActor> parameter) :
 	parameter_(std::move(parameter)),
-	animation_(std::move(animation)),
 	scnMng_(SceneManager::GetInstance()),
 	sndMng_(SoundManager::GetInstance()),
 	resMng_(ResourceManager::GetInstance()),
@@ -32,15 +31,18 @@ ActorBase::~ActorBase()
 }
 
 void ActorBase::Init()
-{
+{	
+	// アニメーション初期化
+	InitAnimation();
+
+	// リソースの初期化
+	InitResource();
+	
 	// コンポーネント生成
 	CreateComponents();
 
 	// コライダーの登録
 	RegisterCollider();
-
-	// アニメーション初期化
-	InitAnimation();
 }
 
 void ActorBase::Update()
@@ -88,6 +90,37 @@ void ActorBase::DebugDraw()
 
 void ActorBase::InitAnimation()
 {
+	// パラメーターにアニメーション情報が空の場合
+	if (parameter_->animationDataMap_.empty())
+	{
+		// 中身を空にしとく
+		animation_ = nullptr;
+
+		// 終了
+		return;
+	}
+
+	// アニメーション生成
+	animation_ = std::make_unique<Animation>();
+
+	// アニメーション情報の格納
+	for (auto& animation : parameter_->animationDataMap_)
+	{
+		Animation::Data& animatioData = animation.second;
+		animation_->Add(animation.first, animatioData.startIndex, animatioData.endIndex, animatioData.animationSpeed);
+	}
+}
+
+void ActorBase::InitResource()
+{	
+	// リソースに指定がない場合無視
+	if (parameter_->resourceKey_ == "") 
+	{
+		return;
+	}
+
+	// リソース取得
+	parameter_->spriteTexture_ = resMng_.GetHandles(parameter_->resourceKey_);
 }
 
 void ActorBase::Delete()

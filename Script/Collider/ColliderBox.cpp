@@ -136,7 +136,7 @@ bool ColliderBox::OverlapOnAxis(const std::weak_ptr<ColliderBox>& opponent, cons
 	
 	//’†S‚Ì“Š‰e
 	float aCenter = Utility2D::Dot(followPos_, axis);
-	float bCenter = Utility2D::Dot(opponent.lock()->GetOwner().GetParameter()->pos, axis);
+	float bCenter = Utility2D::Dot(opponent.lock()->GetOwner().GetParameter().pos_, axis);
 
 	//“Š‰e‚ÌL‚ª‚è
 	float aRadius = static_cast<float>(boxHalfSize_.x) * std::fabs(Utility2D::Dot(axA, axis)) +

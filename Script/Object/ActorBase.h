@@ -38,10 +38,7 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="parameter">パラメータ情報</param>
-	/// <param name="animation">アニメーション情報</param>
-	ActorBase(
-		std::unique_ptr<ParameterActor> parameter = nullptr, 
-		std::unique_ptr<Animation> animation = nullptr);
+	ActorBase(std::unique_ptr<ParameterActor> parameter = nullptr);
 
 	/// <summary>
 	/// デストラクタ
@@ -67,11 +64,6 @@ public:
 	/// デバッグ描画
 	/// </summary>
 	virtual void DebugDraw();
-
-	/// <summary>
-	/// アニメーションの初期化
-	/// </summary>
-	virtual void InitAnimation();
 
 	/// <summary>
 	/// 削除処理
@@ -193,6 +185,12 @@ protected:
 
 	// 削除判定
 	bool isDelete_;
+
+	// アニメーションの初期化
+	virtual void InitAnimation();
+
+	// リソースの初期化
+	virtual void InitResource();
 
 	// コライダーの登録
 	void RegisterCollider();	

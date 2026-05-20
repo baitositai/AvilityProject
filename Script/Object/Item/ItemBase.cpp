@@ -2,10 +2,12 @@
 #include "../../Object/Common/Animation.h"
 #include "ItemBase.h"
 
-ItemBase::ItemBase(Parameter* parameter, const std::vector<std::string>& componentNameList, std::unique_ptr<Animation> animation) :
-	ActorBase(parameter, componentNameList, std::move(animation)),
-	itemParameterPtr_(parameter)
+ItemBase::ItemBase(std::unique_ptr<ParameterItem> parameter) :
+	ActorBase(std::move(parameter))
 {
+	// プレイヤー用のパラメータ
+	parameterItem_ = dynamic_cast<ParameterItem*>(GetParameterActorPtr());
+	assert(parameterItem_ != nullptr);
 }
 
 ItemBase::~ItemBase()

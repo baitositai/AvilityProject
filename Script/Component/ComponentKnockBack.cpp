@@ -24,7 +24,7 @@ void ComponentKnockBack::Update()
     }
 
     float deltTime = SceneManager::GetInstance().GetDeltaTime();
-    parameter_.knockBackPower_ = Vector2F::AddVector2F(parameter_.knockBackPower_, Vector2F::MulVector2F(knockBackPower, Vector2F(deltTime, deltTime)));
+    parameter_.moveAmount_ = Vector2F::AddVector2F(parameter_.moveAmount_, Vector2F::MulVector2F(knockBackPower, Vector2F(deltTime, deltTime)));
 
     // ノックバックの減衰
     if (knockBackPower.x != 0.0f) 

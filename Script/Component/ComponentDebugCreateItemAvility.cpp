@@ -8,7 +8,7 @@
 #include "ComponentDebugCreateItemAvility.h"
 
 ComponentDebugCreateItemAvility::ComponentDebugCreateItemAvility(ActorBase& owner) :
-	ComponentBase(&owner),
+	ComponentBase(owner),
 	inputManager_(InputManager::GetInstance())
 {
 	type_ = 0;
@@ -24,16 +24,15 @@ void ComponentDebugCreateItemAvility::Update()
 
 	if (inputManager_.IsTrgDown(InputManager::TYPE::DEBUG_CREATE_ITEM_AVILITY))
 	{
-		ItemAvility::Parameter parameter = {};
-		parameter.type = static_cast<AvilityTypes::TYPE>(type_);
-		parameter.pos = Vector2F::AddVector2F(owner_->GetParameter()->pos, Vector2F::MulVector2FFloat(owner_->GetFront(), 50.0f));
-		parameter.hitRadius = RADIUS;
-		parameter.hitSize = Vector2(RADIUS, RADIUS);
-		parameter.gravityPower = 9.8f;
-		parameter.gravityDir = ParameterActor::DIR::DOWN;
-
-		std::vector<std::string> componentNameList = { "gravity", "move" };
-		ItemManager::GetInstance().Add(std::make_unique<ItemAvility>(parameter, componentNameList));
+		std::unique_ptr<ParameterItemAvility> parameter = std::make_unique<ParameterItemAvility>();
+		parameter->type_ = static_cast<AvilityTypes::TYPE>(type_);
+		parameter->pos_ = Vector2F::AddVector2F(owner_.GetParameter().pos_, Vector2F::MulVector2FFloat(owner_.GetParameter().GetFront(), 50.0f));
+		parameter->hitRadius_ = RADIUS;
+		parameter->hitSize_ = Vector2(RADIUS, RADIUS);
+		parameter->gravityPower_ = 9.8f;
+		parameter->gravityDir_ = ParameterActor::DIR::DOWN;
+		parameter->componentkeys_ = { "gravity", "move" };
+		ItemManager::GetInstance().Add(std::make_unique<ItemAvility>(std::move(parameter)));
 	}
 	else if (inputManager_.IsTrgDown(InputManager::TYPE::DEBUG_SELECT_RIGHT_ITEM_AVILITY))
 	{
@@ -47,9 +46,9 @@ void ComponentDebugCreateItemAvility::Update()
 
 void ComponentDebugCreateItemAvility::DebugDraw()
 {
-	Vector2F posF = owner_->GetParameter()->pos;
+	Vector2F posF = owner_.GetParameter().pos_;
 	Vector2 pos = posF.ToVector2();
-	Vector2 hitSize = owner_->GetParameter()->hitSize;
+	Vector2 hitSize = owner_.GetParameter().hitSize_;
 
 	const std::wstring abilityName =
 		UtilityCommon::GetWStringFromString(

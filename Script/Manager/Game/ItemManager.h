@@ -52,5 +52,4 @@ private:
 
 	// デストラクタ
 	~ItemManager();
-
 };

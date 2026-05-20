@@ -7,8 +7,8 @@
 
 ComponentStateAttackDefault::ComponentStateAttackDefault(CharacterBase& owner) :
 	owner_(owner),
-	parameter_(owner_.GetParameter()),
-	DEFAULT_ATTACK_LOCAL_POS(parameter_.defaultAttackLocalPos_),
+	parameter_(owner.GetParameter()),
+	DEFAULT_ATTACK_LOCAL_POS(owner.GetParameter().defaultAttackLocalPos_),
 	ComponentCharacterStateBase(owner)
 {
 	attackPos_ = {};

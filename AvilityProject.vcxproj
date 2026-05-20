@@ -145,6 +145,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Parameter\Item\ParameterItemAvility.cpp" />
+    <ClCompile Include="Script\Parameter\Item\ParameterItem.cpp" />
+    <ClCompile Include="Script\Parameter\Effect\ParameterEffectAirslash.cpp" />
+    <ClCompile Include="Script\Parameter\Effect\ParameterEffect.cpp" />
+    <ClCompile Include="Script\Parameter\Stage\ParameterStage.cpp" />
+    <ClCompile Include="Script\Parameter\Gimmick\ParameterAvilityBox.cpp" />
+    <ClCompile Include="Script\Parameter\Gimmick\ParameterGimmick.cpp" />
     <ClCompile Include="Script\Parameter\Character\Enemy\ParameterEnemyClone.cpp" />
     <ClCompile Include="Script\Parameter\Character\Player\ParameterPlayer.cpp" />
     <ClCompile Include="Script\Parameter\Character\ParameterCharacter.cpp" />
@@ -269,6 +276,13 @@
     <ClCompile Include="Script\Manager\Common\SpriteEffectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Parameter\Item\ParameterItemAvility.h" />
+    <ClInclude Include="Script\Parameter\Item\ParameterItem.h" />
+    <ClInclude Include="Script\Parameter\Effect\ParameterEffectAirslash.h" />
+    <ClInclude Include="Script\Parameter\Effect\ParameterEffect.h" />
+    <ClInclude Include="Script\Parameter\Stage\ParameterStage.h" />
+    <ClInclude Include="Script\Parameter\Gimmick\ParameterAvilityBox.h" />
+    <ClInclude Include="Script\Parameter\Gimmick\ParameterGimmick.h" />
     <ClInclude Include="Script\Parameter\Character\Enemy\ParameterEnemyClone.h" />
     <ClInclude Include="Script\Parameter\Character\Player\ParameterPlayer.h" />
     <ClInclude Include="Script\Parameter\Character\ParameterCharacter.h" />

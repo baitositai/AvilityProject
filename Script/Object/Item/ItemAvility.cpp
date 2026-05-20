@@ -4,12 +4,15 @@
 #include "../../Collider/ColliderCircle.h"
 #include "ItemAvility.h"
 
-ItemAvility::ItemAvility(Parameter& parameter, const std::vector<std::string>& componentNameList) :
-	parameter_(parameter),
-	ItemBase(&parameter_, componentNameList)
+ItemAvility::ItemAvility(std::unique_ptr<ParameterItemAvility> parameter) :
+	ItemBase(std::move(parameter))
 {
+	// パラメータ
+	parameterItemAvility_ = dynamic_cast<ParameterItemAvility*>(GetParameterCharacterPtr());
+	assert(parameterItemAvility_ != nullptr);
+
 	// コライダー
-	collider_ = std::make_shared<ColliderCircle>(*this, CollisionTags::TAG::ITEM_AVILITY, parameter_.pos, parameter_.hitRadius);
+	collider_ = std::make_shared<ColliderCircle>(*this, CollisionTags::TAG::ITEM_AVILITY, parameterItemAvility_->pos_, parameterItemAvility_->hitRadius_);
 
 	// 衝突後処理
 	onHit_ = std::make_unique<OnHitItem>(*this);
@@ -21,5 +24,5 @@ ItemAvility::~ItemAvility()
 
 const std::string ItemAvility::GetCreateAvilityName() const
 {
-	return AvilityTypes::AVILITY_NAME_MAP.at(parameter_.type);
+	return AvilityTypes::AVILITY_NAME_MAP.at(parameterItemAvility_->type_);
 }

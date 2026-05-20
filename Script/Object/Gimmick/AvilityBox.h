@@ -1,5 +1,6 @@
 #pragma once
 #include "../Common/Vector2.h"
+#include "../../Parameter/Gimmick/ParameterAvilityBox.h"
 #include "GimmickBase.h"
 
 class OnHitAvilityBox;
@@ -8,18 +9,6 @@ class CharacterBase;
 class AvilityBox :public GimmickBase
 {
 public:
-
-	struct Parameter :public ActorBase::Parameter
-	{
-		Vector2 hitBoxSize;		//サイズ
-		Vector2 hitLocalPos;	//ボックスの当たり判定のローカル座標
-		Vector2F placePos;		//設置時のプレイヤーとのローカル座標
-		float blastTime;		//爆発するまでの時間
-		int boxNum;				//何個目のボックスか
-
-		bool isGround = false;				// 地面判定
-		bool isFall = false;				// 落下判定
-	};
 
 	struct HitInfo
 	{
@@ -45,80 +34,74 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="parameter">パラメータ</param>
-	/// <param name="componentNameList">付与コンポーネント</param>
-	AvilityBox(const Parameter& parameter, CharacterBase& _chara, const std::vector<std::string>& componentNameList = {});
+	/// <param name="owner">所有者</param>
+	explicit AvilityBox(std::unique_ptr<ParameterAvilityBox> paramter, CharacterBase& owner);
 
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~AvilityBox();
+	~AvilityBox() override;
 
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	/// <param name=""></param>
-	void Init(void)override;
+	void Init()override;
 
 	/// <summary>
 	/// 更新
 	/// </summary>
-	/// <param name=""></param>
-	void Update(void)override;
+	void Update()override;
 
 	/// <summary>
 	/// 更新
 	/// </summary>
-	/// <param name=""></param>
-	void Draw(void)override;
+	void Draw()override;
 
 	/// <summary>
 	/// デバッグ表示
 	/// </summary>
-	/// <param name=""></param>
-	void DebugDraw(void)override;
+	void DebugDraw()override;
 
 	/// <summary>
-	/// パラメーターの取得
+	/// パラメーターを返す(変更可)
 	/// </summary>
-	/// <param name=""></param>
-	/// <returns></returns>
-	const Vector2& GetHitBoxSize(void)const { return parameter_.hitBoxSize; }
+	/// <returns>パラメータ</returns>
+	ParameterAvilityBox& GetParameter() { return *parameterAvilityBox_; }
 
 	/// <summary>
-	/// ボックスの重みを取得
+	/// パラメータを返す
 	/// </summary>
-	/// <param name=""></param>
-	/// <returns></returns>
-	const float GetWeight(void)const { return parameter_.weight; }
+	/// <returns>パラメータ</returns>
+	const ParameterAvilityBox& GetParameter() const { return *parameterAvilityBox_; }
 
 	/// <summary>
 	/// プレイヤーが押している状態のセット
 	/// </summary>
-	/// <param name=""></param>
-	void SetPlayerPush(void) { isPushPlayer_ = true; }
+	void SetPlayerPush() { isPushPlayer_ = true; }
 
 	/// <summary>
 	/// プレイヤー押し出し状態の取得
 	/// </summary>
-	/// <param name=""></param>
 	/// <returns>true：プレイヤー押し出し中　false:押し出していない</returns>
-	const bool& GetIsPlayerPush(void)const { return isPushPlayer_; }
+	const bool& GetIsPlayerPush()const { return isPushPlayer_; }
 
 	/// <summary>
-	/// 地面判定
+	/// 衝突情報の格納
 	/// </summary>
-	/// <param name="_isGround"></param>
-	void isGround_(const bool _isGround) { parameter_.isGround = _isGround; }
+	/// <param name="hitInfo">衝突情報</param>
+	void AddHitInfo(const HitInfo& hitInfo);
 
+	/// <summary>
+	/// 壁に衝突しているか返す
+	/// </summary>
+	/// <returns></returns>
+	const bool GetIsHitWall()const { return isHitWall_; }
 
-	const int GetBoxNum(void)const { return parameter_.boxNum; }
-
-
-	void AddHitInfo(const HitInfo& _hitInfo);
-
-	const bool GetIsHitWall(void)const { return isHitWall_; }
-
-	void SetIsHitWall(const bool _isHit) { isHitWall_ = _isHit; }
+	/// <summary>
+	/// 壁との衝突設定
+	/// </summary>
+	/// <param name="isHit">衝突判定</param>
+	void SetIsHitWall(const bool isHit) { isHitWall_ = isHit; }
 
 private:
 
@@ -126,10 +109,10 @@ private:
 	std::vector<HitInfo> hitInfo_;
 
 	// パラメータ情報
-	Parameter parameter_;
+	ParameterAvilityBox* parameterAvilityBox_;
 
-	//キャラクター情報
-	CharacterBase& character_;
+	// 管理者
+	CharacterBase& owner_;
 
 	//爆発までのカウント
 	float blastWaitCnt_;
@@ -141,5 +124,5 @@ private:
 	bool isHitWall_;
 
 	//最終的な押し出し処理
-	void PushResult(void);
+	void PushResult();
 };

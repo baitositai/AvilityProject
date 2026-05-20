@@ -19,7 +19,9 @@ ParameterActor::ParameterActor() :
 	isGround_(false), 
 	isFall_(false), 
 	hitSize_({ 0, 0 }), 
-	hitRadius_(0.0f)
+	hitRadius_(0.0f),
+    texture_(-1),
+    spriteTexture_(nullptr)
 {
 }
 
@@ -126,4 +128,20 @@ const Vector2F ParameterActor::GetDown() const
 {
     // 下方向は重力ベクトルそのもの
     return GetGravityDirectionVector();
+}
+
+void ParameterActor::LoadParameterAnimation(const Json& jsonParameter)
+{
+    for (auto it = jsonParameter["animation"].begin(); it != jsonParameter["animation"].end(); ++it)
+    {
+        std::string animationName = it.key();
+        Animation::Data animationData = {};
+        auto& data = it.value();
+        animationData.startIndex = data["no"].get<int>() * divisionNum_.x;
+        animationData.endIndex = data["num"].get<int>() + animationData.startIndex - 1;
+        animationData.animationSpeed = data["speed"].get<float>();
+
+        // アニメーション情報を格納
+        animationDataMap_.emplace(animationName, animationData);
+    }
 }

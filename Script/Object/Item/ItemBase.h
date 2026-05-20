@@ -1,21 +1,16 @@
 #pragma once
 #include "../ActorBase.h"
+#include "../../Parameter/Item/ParameterItem.h"
 
 class ItemBase : public ActorBase
 {
 public:
 
-	struct Parameter : public ActorBase::Parameter
-	{
-	};
-
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="parameter">パラメータ情報</param>
-	/// <param name="componentNameList">コンポーネントリスト</param>
-	/// <param name="animation">アニメーション情報</param>
-	ItemBase(Parameter* parameter, const std::vector<std::string>& componentNameList = {}, std::unique_ptr<Animation> animation = nullptr);
+	explicit ItemBase(std::unique_ptr<ParameterItem> parameter);
 
 	/// <summary>
 	/// デストラクタ
@@ -27,9 +22,11 @@ public:
 	/// </summary>
 	virtual void DebugDraw() override;
 
-private:
+protected:
+
+	// 型変換用のパラメータを返す関数
+	ParameterItem* GetParameterCharacterPtr() { return parameterItem_; }
 
 	// アイテムのパラメータ
-	Parameter* itemParameterPtr_;
-
+	ParameterItem* parameterItem_;
 };

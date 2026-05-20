@@ -9,13 +9,14 @@
       "invincible",
       "debugCreateItemAvility"
     ],
-    "componentStateNameList": {
+    "stateComponentKeys": {
       "alive": "playerProcess",
       "attack": "attackDefault",
       "hit": "dummy",
       "dead": "dead",
       "respawn": "dummy"
     },
+    "resourceKey": "player",
     "scale": 1.0,
     "angle": 0.0,
     "direction": false,
@@ -27,6 +28,7 @@
     "jumpPowerMax": 20.0,
     "gravityPower": 9.8,
     "jumpCount": 1,
+    "jumpCountMax": 1,
     "invincibleTimeMax": 2.0,
     "defaultAttackRadius": 20.0,
     "animationDefaultSpeed": 0.1,

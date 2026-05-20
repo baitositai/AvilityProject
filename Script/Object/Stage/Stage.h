@@ -1,5 +1,6 @@
 #pragma once
 #include "../ActorBase.h"
+#include "../../Parameter/Stage/ParameterStage.h"
 
 class TileBase;
 
@@ -8,38 +9,31 @@ class Stage : public ActorBase
 
 public:
 
-	struct StageParameter : public Parameter
-	{
-		Vector2 chipSize = {};				// チップサイズ
-		std::string path = "";				// ステージパス
-		std::vector<int> hitIds = {};		// 判定を行うID
-	};
-
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="parameter">パラメータ情報</param>
-	Stage(StageParameter& parameter);
+	explicit Stage(std::unique_ptr<ParameterStage> parameter);
 
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~Stage();
+	~Stage() override;
 
 	/// <summary>
 	/// 初期化処理
 	/// </summary>
-	void Init();
+	void Init() override;
 
 	/// <summary>
 	/// 更新処理
 	/// </summary>
-	void Update();
+	void Update() override;
 
 	/// <summary>
 	/// 描画処理
 	/// </summary>
-	void Draw();
+	void Draw() override;
 
 	/// <summary>
 	/// ステージの変更
@@ -50,7 +44,7 @@ public:
 	/// <summary>
 	/// デバッグ描画
 	/// </summary>
-	void DebugDraw();
+	void DebugDraw() override;
 
 	/// <summary>
 	/// ステージのサイズを返す
@@ -72,8 +66,8 @@ private:
 	// タイル数
 	Vector2 tileNums_;
 
-	// ステージパラメーター
-	StageParameter parameter_;
+	// パラメータ情報
+	ParameterStage* parameterStage_;
 
 	// タイルの配列
 	std::vector<std::vector<std::unique_ptr<TileBase>>> tiles_;

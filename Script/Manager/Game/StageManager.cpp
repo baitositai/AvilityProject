@@ -10,12 +10,14 @@
 
 void StageManager::Init()
 {
-	// メインステージ
-	Stage::StageParameter parameter = {};
-	parameter.path = STAGE_PATH_MAP.at(type_);
-	parameter.chipSize = Vector2(32, 32);
-	parameter.hitIds = { 1 };
-	stage_ = std::make_unique<Stage>(parameter);
+	// ステージパラメータ
+	std::unique_ptr<ParameterStage> parameter = std::make_unique<ParameterStage>();
+	parameter->path_ = STAGE_PATH_MAP.at(type_);
+	parameter->chipSize_ = Vector2(32, 32);
+	parameter->hitIds_ = { 1 };
+
+	// ステージ生成
+	stage_ = std::make_unique<Stage>(std::move(parameter));
 	stage_->Init();
 
 	//AvilityBox::Parameter avParam = {};
@@ -80,25 +82,25 @@ void StageManager::DebugDraw()
 
 void StageManager::AddGimmick(CharacterBase& _chara, const int _boxNum)
 {
-	AvilityBox::Parameter avParam = {};
-	avParam.hitBoxSize = Vector2(48, 48);
-	avParam.gravityPower = 0.5f;
-	avParam.weight = 1.0f;
-	avParam.blastTime = 3.0f;
-	avParam.boxNum = _boxNum;
+	//AvilityBox::Parameter avParam = {};
+	//avParam.hitBoxSize = Vector2(48, 48);
+	//avParam.gravityPower = 0.5f;
+	//avParam.weight = 1.0f;
+	//avParam.blastTime = 3.0f;
+	//avParam.boxNum = _boxNum;
 
-	//ローカル座標をJsonで読み込み、プレイヤーの向きによって設置場所を変える
-	Vector2F localPos = { 50.0f,50.0f };
-	const bool charaDir = _chara.GetParameter()->direction;
-	const Vector2F charaPos = _chara.GetParameter()->pos;
+	////ローカル座標をJsonで読み込み、プレイヤーの向きによって設置場所を変える
+	//Vector2F localPos = { 50.0f,50.0f };
+	//const bool charaDir = _chara.GetParameter()->direction;
+	//const Vector2F charaPos = _chara.GetParameter()->pos;
 
-	avParam.placePos= charaDir ? Vector2F::SubVector2F(charaPos, localPos) : Vector2F::AddVector2F(charaPos, localPos);
-	std::vector<std::string> componentNameList = { "gravity","move" };
+	//avParam.placePos= charaDir ? Vector2F::SubVector2F(charaPos, localPos) : Vector2F::AddVector2F(charaPos, localPos);
+	//std::vector<std::string> componentNameList = { "gravity","move" };
 
-	//いったんアビリティボックスのみ対応
-	std::unique_ptr avBox = std::make_unique<AvilityBox>(avParam, _chara, componentNameList);
-	avBox->Init();
-	gimmick_.push_back(std::move(avBox));
+	////いったんアビリティボックスのみ対応
+	//std::unique_ptr avBox = std::make_unique<AvilityBox>(avParam, _chara, componentNameList);
+	//avBox->Init();
+	//gimmick_.push_back(std::move(avBox));
 }
 
 void StageManager::DeleteGimmick(void)

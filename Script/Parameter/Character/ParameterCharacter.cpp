@@ -55,4 +55,7 @@ void ParameterCharacter::LoadParameter(const Json& parameter)
         defaultAttackLocalPos_.x = parameter["defaultAttackLocalPos"].value("x", 0.0f);
         defaultAttackLocalPos_.y = parameter["defaultAttackLocalPos"].value("y", 0.0f);
     }
+
+    // アニメーションデータの取得
+    LoadParameterAnimation(parameter);
 }

@@ -1,22 +1,17 @@
 #pragma once
 #include "ItemBase.h"
+#include "../../Parameter/Item/ParameterItemAvility.h"
 #include "../../Component/Avility/AvilityTypes.h"
 
 class ItemAvility : public ItemBase
 {
 public:
 
-	struct Parameter : public ItemBase::Parameter
-	{
-		AvilityTypes::TYPE type = AvilityTypes::TYPE::MAX;
-	};
-
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="parameter">パラメータ情報</param>
-	/// <param name="componentNameList">コンポーネント名リスト</param>
-	ItemAvility(Parameter& parameter, const std::vector<std::string>& componentNameList = {});
+	explicit ItemAvility(std::unique_ptr<ParameterItemAvility> parameter);
 
 	/// <summary>
 	/// デストラクタ
@@ -32,6 +27,6 @@ public:
 private:
 
 	// パラメータ
-	Parameter parameter_;
+	ParameterItemAvility* parameterItemAvility_;
 };
 

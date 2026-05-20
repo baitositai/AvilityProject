@@ -8,18 +8,18 @@
 #include "../Common/Animation.h"
 #include "Player.h"
 
-Player::Player(std::unique_ptr<ParameterPlayer> parameter, std::unique_ptr<Animation> animation) :
-	CharacterBase(std::move(parameter), std::move(animation))
-{	
+Player::Player(std::unique_ptr<ParameterPlayer> parameter) :
+	CharacterBase(std::move(parameter))
+{		
+	// プレイヤー用のパラメータ
+	parameterPlayer_ = dynamic_cast<ParameterPlayer*>(GetParameterCharacterPtr());
+	assert(parameterPlayer_ != nullptr);
+	
 	// コライダー
 	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::PLAYER, parameterPlayer_->pos_, parameterPlayer_->hitSize_, parameterPlayer_->angle_);
 
 	// 衝突後処理
 	onHit_ = std::make_unique<OnHitPlayer>(*this);
-
-	// プレイヤー用のパラメータ
-	parameterPlayer_ = dynamic_cast<ParameterPlayer*>(GetParameterCharacterPtr());
-	assert(parameterPlayer_ != nullptr);
 }
 
 Player::~Player()

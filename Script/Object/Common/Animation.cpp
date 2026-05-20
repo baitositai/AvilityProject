@@ -15,7 +15,7 @@ Animation::~Animation()
 
 void Animation::Add(const std::string stringType, const int startIndex, const int endIndex, const float animationSpeed)
 {
-    // 1. 対応表から TYPE を検索する
+    // 対応表から検索
     auto it = animationNameMap_.find(stringType);
 
     // 対応する名前が見つからなかったら処理を抜ける
@@ -26,13 +26,13 @@ void Animation::Add(const std::string stringType, const int startIndex, const in
 
     TYPE type = it->second;
 
-    // 2. データの作成
+    // データの作成
     Data animationData = {};
     animationData.animationSpeed = animationSpeed;
     animationData.startIndex = startIndex;
     animationData.endIndex = endIndex;
 
-    // 3. unordered_map に格納 (std::move を忘れずに)
+    // 格納
     animationMap_.emplace(type, std::move(animationData));
 }
 
