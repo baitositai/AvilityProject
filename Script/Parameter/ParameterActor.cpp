@@ -102,7 +102,7 @@ const Vector2F ParameterActor::GetFront() const
     // キャラクターの向きが左（true）なら前方向を反転させる
     if (direction_)
     {
-        Vector2F::MulVector2FFloat(vec, -1.0f);
+        vec = Vector2F::MulVector2FFloat(vec, -1.0f);
     }
 
     return vec;
@@ -112,7 +112,7 @@ const Vector2F ParameterActor::GetBack() const
 {
     // 後ろ方向は前方向を完全に反転させたもの
     Vector2F vec = GetFront();
-    Vector2F::MulVector2FFloat(vec, -1.0f);
+    vec = Vector2F::MulVector2FFloat(vec, -1.0f);
     return vec;
 }
 
@@ -120,7 +120,7 @@ const Vector2F ParameterActor::GetUp() const
 {
     // 上方向は重力ベクトルを完全に反転させたもの
     Vector2F vec = GetGravityDirectionVector();
-    Vector2F::MulVector2FFloat(vec, -1.0f);
+    vec = Vector2F::MulVector2FFloat(vec, -1.0f);
     return vec;
 }
 
