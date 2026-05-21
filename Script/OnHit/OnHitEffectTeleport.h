@@ -1,9 +1,6 @@
 #pragma once
-#include "OnHitBase.h"
-
-class EffectBase;
-
-class OnHitEffect : public OnHitBase
+#include "OnHitEffect.h"
+class OnHitEffectTeleport : public OnHitEffect
 {
 public:
 
@@ -11,12 +8,12 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="owner">所有者</param>
-	OnHitEffect(EffectBase& owner);
+	OnHitEffectTeleport(EffectBase& owner);
 
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	virtual ~OnHitEffect() override;
+	~OnHitEffectTeleport() override;
 
 private:
 
@@ -24,7 +21,6 @@ private:
 	EffectBase& owner_;
 
 	// タグ別衝突後処理
-	virtual void OnHitEnemy(const std::weak_ptr<ColliderBase>& opponentCollider);
-
+	//void OnHitEnemy(const std::weak_ptr<ColliderBase>& opponentCollider) override;
 };
 

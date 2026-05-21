@@ -220,8 +220,11 @@ void CollisionManager::InitTagMatrix()
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_SHOT)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;	// プレイヤーショットと敵
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_SHOT)] = true;
 
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AIRSLASH)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;	// エアースラッシュと敵
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AIRSLASH)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;				// エアースラッシュと敵
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::AIRSLASH)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TELEPORT_EXIT)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;			// テレポートと敵
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::TELEPORT_EXIT)] = true;
 }
 
 void CollisionManager::InitColliderMatrix()

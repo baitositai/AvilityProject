@@ -15,6 +15,7 @@
 #include "../../Component/Avility/ComponentAvilitySuperman.h"
 #include "../../Component/Avility/ComponentAvilityStamp.h"
 #include "../../Component/Avility/ComponentAvilityAirslash.h"
+#include "../../Component/Avility/ComponentAvilityTeleport.h"
 #include "../../Component/State/ComponentStatePlayerProcess.h"
 #include "../../Component/State/ComponentStateAttackDefault.h"
 #include "../../Component/State/ComponentStateDead.h"
@@ -197,6 +198,18 @@ std::unique_ptr<ComponentAvilityAirslash> FactoryComponent::CreateComponentAvili
     return std::make_unique<ComponentAvilityAirslash>(*playerPtr);
 }
 
+std::unique_ptr<ComponentAvilityTeleport> FactoryComponent::CreateComponentAvilityTeleport(ActorBase& owner)
+{
+    auto* playerPtr = dynamic_cast<Player*>(&owner);
+
+    if (playerPtr == nullptr)
+    {
+        // ÉLÉÉÉXÉgÇ…é∏îsÇµÇΩèÍçánullptrÇï‘Ç∑
+        return nullptr;
+    }
+    return std::make_unique<ComponentAvilityTeleport>(*playerPtr);
+}
+
 std::unique_ptr<ComponentKnockBack> FactoryComponent::CreateComponentKnockBack(ActorBase& owner)
 {
     auto* charaPtr = dynamic_cast<CharacterBase*>(&owner);
@@ -328,6 +341,10 @@ FactoryComponent::FactoryComponent()
     componentCreateMap_.emplace("avilitySuperman", [this](ActorBase& owner)
         {
             return CreateComponentAvilitySuperman(owner);
+        });
+    componentCreateMap_.emplace("avilityTeleport", [this](ActorBase& owner)
+        {
+            return CreateComponentAvilityTeleport(owner);
         });
     componentCreateMap_.emplace("avilityAirwalk", [this](ActorBase& owner)
         {

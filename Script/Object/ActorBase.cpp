@@ -23,6 +23,7 @@ ActorBase::ActorBase(std::unique_ptr<ParameterActor> parameter) :
 	if (!parameter_) { parameter_ = std::make_unique<ParameterActor>(); }	// •K‚¸ŽÀ‘Ô‚ðŽ‚Â
 	isActive_ = true;
 	isDelete_ = false;
+	isDraw_ = true;
 }
 
 ActorBase::~ActorBase()
@@ -68,6 +69,8 @@ void ActorBase::Update()
 
 void ActorBase::Draw()
 {
+	if (!isDraw_) return;
+
 	// •`‰æˆÊ’u‚ðÝ’è
 	Vector2F cameraPos = mainCamera.GetPos();
 	parameter_->drawPos_ = Vector2::AddVector2(Vector2::AddVector2(parameter_->pos_.ToVector2(), parameter_->localPos_), cameraPos.ToVector2());

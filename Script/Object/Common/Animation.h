@@ -62,6 +62,11 @@ public:
 	void Stop();
 
 	/// <summary>
+	/// リスタート
+	/// </summary>
+	void Restart() { isPlay_ = true; }
+
+	/// <summary>
 	/// 次に再生するアニメーションを確認
 	/// </summary>
 	void CheckNextAnimation();

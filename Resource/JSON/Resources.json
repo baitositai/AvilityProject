@@ -97,12 +97,32 @@
     {
       "key": "airslash",
       "type": "sprite",
+      "path": "Resource/Image/Effect/Airslash.png",
       "divX": 4,
       "divY": 1,
       "sceneId": 2,
       "sizeX": 64,
-      "sizeY": 64,
-      "path": "Resource/Image/Effect/Airslash.png"
+      "sizeY": 64
+    },
+    {
+      "key": "teleportEnter",
+      "type": "sprite",
+      "path": "Resource/Image/Effect/TeleportEnter.png",
+      "divX": 9,
+      "divY": 1,
+      "sceneId": 2,
+      "sizeX": 96,
+      "sizeY": 96
+    },
+    {
+      "key": "teleportExit",
+      "type": "sprite",
+      "path": "Resource/Image/Effect/TeleportExit.png",
+      "divX": 11,
+      "divY": 1,
+      "sceneId": 2,
+      "sizeX": 96,
+      "sizeY": 96
     }
   ]
 }

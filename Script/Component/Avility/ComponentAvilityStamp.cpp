@@ -5,6 +5,7 @@
 #include "../../Object/Common/Animation.h"
 #include "../../Collider/ColliderBox.h"
 #include "ComponentAvilityStamp.h"
+#include "ComponentAvilityTeleport.h"
 
 ComponentAvilityStamp::ComponentAvilityStamp(Player& owner) :
 	ComponentAvilityBase(owner)

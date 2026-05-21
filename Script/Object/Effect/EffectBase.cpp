@@ -20,10 +20,13 @@ void EffectBase::Init()
 	ActorBase::Init();
 
 	// Ä¶
-	animation_->Play(Animation::TYPE::EFFECT);
+	animation_->Play(Animation::TYPE::EFFECT, false);
 }
 
 void EffectBase::DebugDraw()
 {
-	collider_->DebugDraw();
+	if (collider_)
+	{
+		collider_->DebugDraw();
+	}
 }

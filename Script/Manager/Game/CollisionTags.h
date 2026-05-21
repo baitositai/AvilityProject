@@ -20,6 +20,7 @@ public:
 		BLAST,						// 爆風
 		AIRSLASH,					// エアースラッシュ
 		ITEM_AVILITY,				// アイテム:アビリティ
+		TELEPORT_EXIT,				// テレポート
 		MAX
 	};
 

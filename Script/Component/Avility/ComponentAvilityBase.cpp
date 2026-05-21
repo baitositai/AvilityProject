@@ -1,5 +1,6 @@
 #include "../../Manager/Common/InputManager.h"
 #include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/SpriteEffectManager.h"
 #include "../../Manager/Game/StageManager.h"
 #include "../../Object/Character/Player.h"
 #include "ComponentAvilityBase.h"
@@ -9,6 +10,7 @@ ComponentAvilityBase::ComponentAvilityBase(Player& owner) :
 	stageManager_(StageManager::GetInstance()),
 	sceneManager_(SceneManager::GetInstance()),
 	inputManager_(InputManager::GetInstance()),
+	effectManager_(SpriteEffectManager::GetInstance()),
 	parameter_(owner.GetParameter()),
 	ComponentBase(owner)
 {

@@ -65,6 +65,8 @@ public:
 
 		AVILITY_STAMP,			// スタンプ
 
+		AVILITY_TELEPORT,		// テレポート
+
 		DEBUG_CREATE_ITEM_AVILITY,	// デバッグ用アビリティアイテム生成
 		DEBUG_SELECT_RIGHT_ITEM_AVILITY,	// デバッグ用アビリティアイテム選択
 		DEBUG_SELECT_LEFT_ITEM_AVILITY,	// デバッグ用アビリティアイテム選択
