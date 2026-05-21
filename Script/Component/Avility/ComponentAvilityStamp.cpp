@@ -44,7 +44,7 @@ void ComponentAvilityStamp::Remove()
 	// コライダーの削除 
 	if(attackCollider_)
 	{
-		attackCollider_->SetDelete();
+		attackCollider_->Delete();
 	}
 
 	// 攻撃力を戻す

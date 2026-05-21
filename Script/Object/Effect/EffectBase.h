@@ -18,6 +18,16 @@ public:
 	virtual ~EffectBase() override;
 
 	/// <summary>
+	/// 初期化処理
+	/// </summary>
+	virtual void Init() override;
+
+	/// <summary>
+	/// デバッグ描画
+	/// </summary>
+	virtual void DebugDraw() override;
+
+	/// <summary>
 	/// パラメーターを返す(変更可)
 	/// </summary>
 	/// <returns>パラメータ</returns>

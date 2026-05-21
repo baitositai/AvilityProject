@@ -147,12 +147,6 @@ void CharacterBase::Landing()
 	parameterCharacter_->isGround_ = true;
 }
 
-const int CharacterBase::GetAttackPowerWithBoost() const
-{
-	float boostAttackPower = static_cast<float>(parameterCharacter_->attackPower_) * (1.0f + parameterCharacter_->attackBoostRate_);
-	return static_cast<int>(boostAttackPower);
-}
-
 const bool CharacterBase::IsInvincible() const
 {
 	return parameterCharacter_->invincibleTime_ > 0.0f;

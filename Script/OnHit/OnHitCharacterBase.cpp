@@ -20,6 +20,10 @@ OnHitCharacterBase::OnHitCharacterBase(CharacterBase& owner) :
         {
             return OnHitAvilityBox(opponentCollider);
         });
+    onHitMap_.emplace(CollisionTags::TAG::AIRSLASH, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
+        {
+            return OnHitAttack(opponentCollider);
+        });
 }
 
 
@@ -112,9 +116,7 @@ bool OnHitCharacterBase::Damage(const std::weak_ptr<ColliderBase>& opponentColli
     if(damage < 0)
     {
         // 攻撃者の攻撃力をダメージ量とする
-        const auto& opOwner = opponentCollider.lock()->GetOwner();
-		const auto& charaPtr = dynamic_cast<const CharacterBase*>(&opOwner);
-        damage = charaPtr->GetAttackPowerWithBoost();
+        damage = opponentCollider.lock()->GetOwner().GetAttackPowerWithBoost();
 	}
     // ダメージを与える
     owner_.Damage(damage);

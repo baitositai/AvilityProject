@@ -91,12 +91,6 @@ public:
 	/// </summary>
 	/// <param name="jumpPowMax">ジャンプ力</param>
 	void SetJumpPow(const float jumpPow);
-
-	/// <summary>
-	/// パフを重ねた攻撃力を返す
-	/// </summary>
-	/// <returns>攻撃力</returns>
-	const int GetAttackPowerWithBoost() const;
 	
 	/// <summary>
 	/// 無敵判定を返す

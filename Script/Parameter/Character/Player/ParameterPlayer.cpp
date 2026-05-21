@@ -23,7 +23,7 @@ ParameterPlayer::~ParameterPlayer()
 void ParameterPlayer::LoadParameter(const Json& parameter)
 {
     // 親クラスであるキャラクター共通パラメータの読み込み
-    ParameterCharacter::LoadParameter(parameter);
+     ParameterCharacter::LoadParameter(parameter);
 
     // プレイヤー固有パラメータの読み込み
     dashSpeed_ = parameter.value("dashSpeed", 0.0f);

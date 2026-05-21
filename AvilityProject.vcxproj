@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\OnHit\OnHitEffect.cpp" />
     <ClCompile Include="Script\Parameter\Item\ParameterItemAvility.cpp" />
     <ClCompile Include="Script\Parameter\Item\ParameterItem.cpp" />
     <ClCompile Include="Script\Parameter\Effect\ParameterEffectAirslash.cpp" />
@@ -275,6 +276,7 @@
     <ClCompile Include="Script\Manager\Common\SpriteEffectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\OnHit\OnHitEffect.h" />
     <ClInclude Include="Script\Parameter\Item\ParameterItemAvility.h" />
     <ClInclude Include="Script\Parameter\Item\ParameterItem.h" />
     <ClInclude Include="Script\Parameter\Effect\ParameterEffectAirslash.h" />

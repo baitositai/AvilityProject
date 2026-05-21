@@ -34,10 +34,10 @@ void GameStateBase::Update()
 	// XVˆ—
 	playerMng_.Update();
 	enemyMng_.Update();	
-	stageMng_.Update();
-	collisionMng_.Update();
+	stageMng_.Update();	
 	itemMng_.Update();
 	effectMng_.Update();
+	collisionMng_.Update();
 
 	// íœˆ—
 	enemyMng_.Sweep();
@@ -60,5 +60,6 @@ void GameStateBase::DebugDraw()
 	playerMng_.DebugDraw();
 	enemyMng_.DebugDraw();
 	itemMng_.DebugDraw();
+	effectMng_.DebugDraw();
 	collisionMng_.DebugDraw();
 }

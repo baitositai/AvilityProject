@@ -23,6 +23,12 @@ void ColliderBase::OnHit(const std::weak_ptr<ColliderBase>& opponentCollider)
 	owner_.OnHit(opponentCollider);
 }
 
+void ColliderBase::Delete()
+{
+	isActive_ = false;
+	isDelete_ = false;
+}
+
 void ColliderBase::DebugDraw()
 {
 }

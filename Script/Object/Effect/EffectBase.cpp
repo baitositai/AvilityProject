@@ -1,3 +1,4 @@
+#include "../Collider/ColliderBase.h"
 #include "../Common/Animation.h"
 #include "EffectBase.h"
 
@@ -11,4 +12,18 @@ EffectBase::EffectBase(std::unique_ptr<ParameterEffect> parameter) :
 
 EffectBase::~EffectBase()
 {
+}
+
+void EffectBase::Init()
+{
+	// Šî’êƒNƒ‰ƒX‚Ì‰Šú‰»
+	ActorBase::Init();
+
+	// Ä¶
+	animation_->Play(Animation::TYPE::EFFECT);
+}
+
+void EffectBase::DebugDraw()
+{
+	collider_->DebugDraw();
 }

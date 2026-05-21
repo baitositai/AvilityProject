@@ -57,7 +57,7 @@ public:
 	/// <summary>
 	/// íœİ’è
 	/// </summary>
-	void SetDelete() { isDelete_ = true; }
+	void Delete();
 
 	/// <summary>
 	/// Šˆ“®”»’è‚ğŠi”[

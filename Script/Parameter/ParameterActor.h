@@ -133,6 +133,15 @@ public:
 	// ヒット半径
 	float hitRadius_;
 
+	// 体力
+	int hp_;
+
+	// 攻撃力
+	int attackPower_;
+
+	// 攻撃力上昇率
+	float attackBoostRate_;
+
 	// リソース取得用のキー
 	std::string resourceKey_;
 

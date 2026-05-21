@@ -18,6 +18,7 @@ public:
 		DEAD = 6,
 		DAMAGE = 7,
 		PAUSE = 8,
+		EFFECT = 9, 
 		MAX,
 	};
 
@@ -121,6 +122,7 @@ private:
 		{ "dead", TYPE::DEAD },
 		{ "damage", TYPE::DAMAGE },
 		{ "pause", TYPE::PAUSE },
+		{ "effect", TYPE::EFFECT },
 	};
 
 	// アニメーション種類

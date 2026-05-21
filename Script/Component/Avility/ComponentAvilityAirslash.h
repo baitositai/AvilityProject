@@ -21,7 +21,15 @@ public:
 	/// </summary>
 	void Update() override;
 
+	/// <summary>
+	/// æ‚èŠO‚µˆ—
+	/// </summary>
+	void Remove() override;
+
 private:
+
+	// ƒWƒƒƒ“ƒv‰ñ”‚Ì•Û
+	int preJumpCount_;
 
 	// ¶¬ˆ—
 	void CreateAirslash();

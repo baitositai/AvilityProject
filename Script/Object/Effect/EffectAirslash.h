@@ -17,11 +17,6 @@ public:
 	~EffectAirslash() override;
 
 	/// <summary>
-	/// 初期化
-	/// </summary>
-	void Init() override;
-
-	/// <summary>
 	/// 更新処理
 	/// </summary>
 	void Update() override;
@@ -32,7 +27,7 @@ private:
 	static constexpr float ALIVE_TIME = 2.0f;
 
 	// 方向
-	const Vector2F& direction_;
+	const Vector2F DIRECTION;
 
 	// パラメータ情報
 	ParameterEffect* parameterEffect_;

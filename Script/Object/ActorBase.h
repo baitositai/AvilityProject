@@ -156,6 +156,12 @@ public:
 	/// <returns>パラメータ</returns>
 	const ParameterActor& GetParameter() const { return *parameter_.get(); }
 
+	/// <summary>
+	/// パフを重ねた攻撃力を返す
+	/// </summary>
+	/// <returns>攻撃力</returns>
+	const int GetAttackPowerWithBoost() const;
+
 protected:
 
 	// 管理クラスの参照

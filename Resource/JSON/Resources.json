@@ -96,9 +96,13 @@
     },
     {
       "key": "airslash",
-      "path": "Resource/Image/Effect/Airslash.png",
+      "type": "sprite",
+      "divX": 4,
+      "divY": 1,
       "sceneId": 2,
-      "type": "texture"
+      "sizeX": 64,
+      "sizeY": 64,
+      "path": "Resource/Image/Effect/Airslash.png"
     }
   ]
 }

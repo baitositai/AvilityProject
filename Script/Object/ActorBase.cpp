@@ -128,7 +128,8 @@ void ActorBase::Delete()
 	// コライダーがある場合削除
 	if (collider_ != nullptr)
 	{
-		collider_->SetDelete();
+		collider_->Delete();
+		collider_ = nullptr;
 	}
 	// 削除
 	isDelete_ = true;
@@ -218,7 +219,7 @@ void ActorBase::SetIsDelete(void)
 	isDelete_ = true;
 
 	//当たり判定の消去
-	collider_->SetDelete();
+	collider_->Delete();
 }
 
 void ActorBase::RegisterCollider()
@@ -246,4 +247,10 @@ void ActorBase::OnHit(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
 	if (onHit_ == nullptr) return;
 	onHit_->Update(opponentCollider);
+}
+
+const int ActorBase::GetAttackPowerWithBoost() const
+{
+	float boostAttackPower = static_cast<float>(parameter_->attackPower_) * (1.0f + parameter_->attackBoostRate_);
+	return static_cast<int>(boostAttackPower);
 }
