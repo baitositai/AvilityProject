@@ -1,6 +1,6 @@
 #pragma once
 #include "../Common/Vector2.h"
-#include "../../Parameter/Gimmick/ParameterAvilityBox.h"
+#include "../../Parameter/ParameterActor.h"
 #include "GimmickBase.h"
 
 class OnHitAvilityBox;
@@ -35,7 +35,7 @@ public:
 	/// </summary>
 	/// <param name="parameter">パラメータ</param>
 	/// <param name="owner">所有者</param>
-	explicit AvilityBox(std::unique_ptr<ParameterAvilityBox> paramter, CharacterBase& owner);
+	explicit AvilityBox(std::unique_ptr<ParameterActor> parameter,CharacterBase& owner);
 
 	/// <summary>
 	/// デストラクタ
@@ -62,17 +62,6 @@ public:
 	/// </summary>
 	void DebugDraw()override;
 
-	/// <summary>
-	/// パラメーターを返す(変更可)
-	/// </summary>
-	/// <returns>パラメータ</returns>
-	ParameterAvilityBox& GetParameter() { return *parameterAvilityBox_; }
-
-	/// <summary>
-	/// パラメータを返す
-	/// </summary>
-	/// <returns>パラメータ</returns>
-	const ParameterAvilityBox& GetParameter() const { return *parameterAvilityBox_; }
 
 	/// <summary>
 	/// プレイヤーが押している状態のセット
@@ -107,9 +96,6 @@ private:
 
 	//当たっている箱の情報
 	std::vector<HitInfo> hitInfo_;
-
-	// パラメータ情報
-	ParameterAvilityBox* parameterAvilityBox_;
 
 	// 管理者
 	CharacterBase& owner_;

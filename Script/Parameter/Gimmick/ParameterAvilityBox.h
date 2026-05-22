@@ -21,6 +21,8 @@ public:
 	/// <param name="parameter">パラメータ</param>
 	void LoadParameter(const Json& parameter) override;
 
+	void Init();
+
 	//ボックスの当たり判定のローカル座標
 	Vector2 hitLocalPos_;	
 

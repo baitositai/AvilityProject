@@ -16,7 +16,53 @@ bool UtilityCollision::IsHitArrayToBox(const std::vector<std::vector<int>>& arra
     const Vector2F& moveAmount,
     ParameterActor::DIR gravityDir)
 {
-    return false;
+    // 初期化（念のため最初に結果をクリアしておく）
+    result.hit = false;
+    result.chipSize = chipSize;
+
+    if (arrayOfArrays.empty() || arrayOfArrays[0].empty()) return false;
+    if (chipSize.x <= 0 || chipSize.y <= 0) return false;
+
+    int mapWidthChips = static_cast<int>(arrayOfArrays[0].size());
+    int mapHeightChips = static_cast<int>(arrayOfArrays.size());
+
+    int startX = static_cast<int>(boxTopPos.x) / chipSize.x;
+    int endX = static_cast<int>(boxBottomPos.x) / chipSize.x;
+    int startY = static_cast<int>(boxTopPos.y) / chipSize.y;
+    int endY = static_cast<int>(boxBottomPos.y) / chipSize.y;
+
+    startX = (std::max)(0, (std::min)(startX, mapWidthChips - 1));
+    endX = (std::max)(0, (std::min)(endX, mapWidthChips - 1));
+    startY = (std::max)(0, (std::min)(startY, mapHeightChips - 1));
+    endY = (std::max)(0, (std::min)(endY, mapHeightChips - 1));
+
+    bool isHitAny = false;
+
+    // めり込みが最も深いタイルを特定するために、中心に近いタイルを優先するなどの処理用
+    // 今回は最初に見つかった「衝突タイル」のインデックスを記録します
+    for (int y = startY; y <= endY; ++y)
+    {
+        for (int x = startX; x <= endX; ++x)
+        {
+            int chipId = arrayOfArrays[y][x];
+
+            auto it = std::find(hitIds.begin(), hitIds.end(), chipId);
+            if (it != hitIds.end())
+            {
+                // 衝突検知！
+                isHitAny = true;
+
+                // 【ここが重要！】OnHitStageが必要としているデータをresultに格納
+                result.hit = true;
+                result.hitChipIndex = Vector2(x, y);
+
+                // 1つ見つかれば押し戻し処理の基準にできるため、ここでループを抜けてもOKです
+                return true;
+            }
+        }
+    }
+
+    return isHitAny;
 }
 
 bool UtilityCollision::IsHitCircleToCircle(const Vector2& circlePos1, const float radius1, const Vector2& circlePos2, const float radius2)
