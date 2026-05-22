@@ -27,7 +27,6 @@ public:
 		PLAYER_ATTACK,			// 攻撃
 		PLAYER_JUMP,			// ジャンプ
 		PLAYER_DASH,			// ダッシュ
-		PLAYER_AVILITY,			//アビリティ使用
 
 		CAMERA_MOVE_RIGHT,		// カメラ右移動
 		CAMERA_MOVE_LEFT,		// カメラ左移動
@@ -64,6 +63,12 @@ public:
 		AVILITY_GRAVITY_DOWN,	// 重力制御:下
 
 		AVILITY_STAMP,			// スタンプ
+
+		PLAYER_AVILITY_SHOT,		// ショット使用
+		PLAYER_AVILITY_SHOT_RIGHT,	// ショット方向決め右
+		PLAYER_AVILITY_SHOT_LEFT,	// ショット方向決め左
+		PLAYER_AVILITY_SHOT_UP,		// ショット方向決め上
+		PLAYER_AVILITY_SHOT_DOWN,	// ショット方向決め下
 
 		AVILITY_TELEPORT,		// テレポート
 

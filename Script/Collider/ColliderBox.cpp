@@ -126,6 +126,9 @@ const Vector2F& ColliderBox::GetAxisY(void)const
 
 bool ColliderBox::OverlapOnAxis(const std::weak_ptr<ColliderBox>& opponent, const Vector2F& axis)
 {
+	boxHalfSize_.x = boxSize_.x / 2;
+	boxHalfSize_.y = boxSize_.y / 2;
+
 	//Ž©•ª‚ÌŽ²
 	Vector2F axA = GetAxisX();
 	Vector2F ayA = GetAxisY();
@@ -143,7 +146,6 @@ bool ColliderBox::OverlapOnAxis(const std::weak_ptr<ColliderBox>& opponent, cons
 					static_cast<float>(boxHalfSize_.y) * std::fabs(Utility2D::Dot(ayA, axis));
 	float bRadius = static_cast<float>(opponent.lock()->GetBoxHalfSize().x) * std::fabs(Utility2D::Dot(axB, axis))+
 					static_cast<float>(opponent.lock()->GetBoxHalfSize().y) * std::fabs(Utility2D::Dot(ayB, axis));
-
 
 	return std::fabs(aCenter - bCenter) <= (aRadius + bRadius);
 }

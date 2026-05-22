@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Component\Avility\ComponentAvilityGiant.cpp" />
     <ClCompile Include="Script\OnHit\OnHitEffectTeleport.cpp" />
     <ClCompile Include="Script\Parameter\Effect\ParameterEffectTeleportExit.cpp" />
     <ClCompile Include="Script\Object\Effect\EffectTeleportEnter.cpp" />
@@ -281,6 +282,7 @@
     <ClCompile Include="Script\Manager\Common\SpriteEffectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Component\Avility\ComponentAvilityGiant.h" />
     <ClInclude Include="Script\OnHit\OnHitEffectTeleport.h" />
     <ClInclude Include="Script\Parameter\Effect\ParameterEffectTeleportExit.h" />
     <ClInclude Include="Script\Object\Effect\EffectTeleportEnter.h" />

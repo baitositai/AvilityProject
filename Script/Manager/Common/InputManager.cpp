@@ -17,27 +17,38 @@ void InputManager::Init()
 	RegisterTrigger(TYPE::PLAYER_MOVE_LEFT, { KEY_INPUT_A }, { }, STICK::L_STICK_LEFT);
 	RegisterTrigger(TYPE::PLAYER_MOVE_UP, { KEY_INPUT_W }, { }, STICK::L_STICK_UP);
 	RegisterTrigger(TYPE::PLAYER_MOVE_DOWN, { KEY_INPUT_S }, { }, STICK::L_STICK_DOWN);
-	RegisterTrigger(TYPE::PLAYER_JUMP, { KEY_INPUT_SPACE }, { BTN::RB_RIGHT });
-	RegisterTrigger(TYPE::PLAYER_DASH, { KEY_INPUT_LSHIFT }, { BTN::RB_DOWN });
-	RegisterTrigger(TYPE::PLAYER_ATTACK, { KEY_INPUT_R }, { BTN::RB_TOP });
-	RegisterTrigger(TYPE::PLAYER_AVILITY, { KEY_INPUT_E }, { BTN::RB_LEFT });
 
+	// ジャンプ
+	RegisterTrigger(TYPE::PLAYER_JUMP, { KEY_INPUT_SPACE }, { BTN::RB_RIGHT });
+
+	// ダッシュ
+	RegisterTrigger(TYPE::PLAYER_DASH, { KEY_INPUT_LSHIFT }, { BTN::RB_DOWN });
+
+	// 通常攻撃
+	RegisterTrigger(TYPE::PLAYER_ATTACK, { KEY_INPUT_R }, { BTN::RB_TOP });
+
+	// アビリティ：重力方向の切り替え
+	RegisterTrigger(TYPE::AVILITY_GRAVITY_RIGHT, { KEY_INPUT_RIGHT }, { }, STICK::R_STICK_RIGHT);
+	RegisterTrigger(TYPE::AVILITY_GRAVITY_LEFT, { KEY_INPUT_LEFT }, { }, STICK::R_STICK_LEFT);
+	RegisterTrigger(TYPE::AVILITY_GRAVITY_UP, { KEY_INPUT_UP }, { }, STICK::R_STICK_UP);
+	RegisterTrigger(TYPE::AVILITY_GRAVITY_DOWN, { KEY_INPUT_DOWN }, { }, STICK::R_STICK_DOWN);
+	
+	// アビリティ：ショット
+	RegisterTrigger(TYPE::PLAYER_AVILITY_SHOT, { KEY_INPUT_E }, { BTN::RB_LEFT });
+	RegisterTrigger(TYPE::PLAYER_AVILITY_SHOT_RIGHT, { KEY_INPUT_RIGHT }, {});
+	RegisterTrigger(TYPE::PLAYER_AVILITY_SHOT_LEFT, { KEY_INPUT_LEFT }, {});
+	
+	// アビリティ：スタンプ
+	RegisterTrigger(TYPE::AVILITY_STAMP, { KEY_INPUT_SPACE }, { BTN::RB_RIGHT });
+
+	// アビリティ：テレポート
+	RegisterTrigger(TYPE::AVILITY_TELEPORT, { KEY_INPUT_E }, { BTN::RB_LEFT });
+
+	// カメラ制御
 	RegisterTrigger(TYPE::CAMERA_MOVE_RIGHT, { KEY_INPUT_RIGHT }, { }, STICK::R_STICK_RIGHT);
 	RegisterTrigger(TYPE::CAMERA_MOVE_LEFT, { KEY_INPUT_LEFT }, { }, STICK::R_STICK_LEFT);
 	RegisterTrigger(TYPE::CAMERA_MOVE_UP, { KEY_INPUT_UP }, { }, STICK::R_STICK_UP);
 	RegisterTrigger(TYPE::CAMERA_MOVE_DOWN, { KEY_INPUT_DOWN }, { }, STICK::R_STICK_DOWN);
-
-	// アビリティ：重力方向の切り替え
-	RegisterTrigger(TYPE::AVILITY_GRAVITY_RIGHT, { KEY_INPUT_RIGHT }, { }, STICK::R_STICK_DOWN);
-	RegisterTrigger(TYPE::AVILITY_GRAVITY_LEFT, { KEY_INPUT_LEFT }, { }, STICK::R_STICK_DOWN);
-	RegisterTrigger(TYPE::AVILITY_GRAVITY_UP, { KEY_INPUT_UP }, { }, STICK::R_STICK_DOWN);
-	RegisterTrigger(TYPE::AVILITY_GRAVITY_DOWN, { KEY_INPUT_DOWN }, { }, STICK::R_STICK_DOWN);
-
-	// アビリティ：スタンプ
-	RegisterTrigger(TYPE::AVILITY_STAMP, { KEY_INPUT_SPACE }, { BTN::RB_LEFT });
-
-	// アビリティ：テレポート
-	RegisterTrigger(TYPE::AVILITY_TELEPORT, { KEY_INPUT_E }, { BTN::RB_TOP });
 
 	// メニュー操作
 	RegisterTrigger(TYPE::SELECT_RIGHT, { KEY_INPUT_D }, { }, STICK::L_STICK_RIGHT);
@@ -48,19 +59,6 @@ void InputManager::Init()
 	RegisterTrigger(TYPE::SELECT_CANCEL, { KEY_INPUT_BACK }, { BTN::RB_DOWN });
 	RegisterTrigger(TYPE::PAUSE, { KEY_INPUT_BACK }, { BTN::SELECT });
 
-	// タイトル説明
-	RegisterTrigger(TYPE::EXPLANTION_SKIP, { KEY_INPUT_RETURN }, { BTN::RB_TOP });
-
-	// 報告処理
-	RegisterTrigger(TYPE::ANOMARY_REPORT, { KEY_INPUT_R }, { BTN::R_BUTTON, BTN::R_TRIGGER }, STICK::MAX, MOUSE::CLICK_LEFT);
-	RegisterTrigger(TYPE::CAMERA_MODE_CHANGE, { KEY_INPUT_E }, { BTN::RB_TOP });
-
-	// ライトの電源切り替え処理
-	RegisterTrigger(TYPE::LIGHT_SWITCH, { KEY_INPUT_Q }, { BTN::RB_LEFT });
-
-	// 操作説明を開く
-	RegisterTrigger(TYPE::INPUT_EXPLANTION_OPEN, { KEY_INPUT_TAB }, { BTN::LB_DOWN });
-
 	// デバッグ操作
 	RegisterTrigger(TYPE::DEBUG_SCENE_CHANGE, { KEY_INPUT_RSHIFT }, { });
 	RegisterTrigger(TYPE::DEBUG_CAMERA_CHANGE, { KEY_INPUT_TAB }, { });
@@ -68,9 +66,9 @@ void InputManager::Init()
 	RegisterTrigger(TYPE::OPEN_FILE, { KEY_INPUT_V }, { });
 
 	// デバッグ用アビリティアイテム生成
-	RegisterTrigger(TYPE::DEBUG_CREATE_ITEM_AVILITY, { KEY_INPUT_1 }, { });
-	RegisterTrigger(TYPE::DEBUG_SELECT_RIGHT_ITEM_AVILITY, { KEY_INPUT_2 }, { });
-	RegisterTrigger(TYPE::DEBUG_SELECT_LEFT_ITEM_AVILITY, { KEY_INPUT_3 }, { });
+	RegisterTrigger(TYPE::DEBUG_CREATE_ITEM_AVILITY, { KEY_INPUT_1 }, { BTN::LB_DOWN });
+	RegisterTrigger(TYPE::DEBUG_SELECT_LEFT_ITEM_AVILITY, { KEY_INPUT_2 }, { BTN::LB_LEFT });
+	RegisterTrigger(TYPE::DEBUG_SELECT_RIGHT_ITEM_AVILITY, { KEY_INPUT_3 }, { BTN::LB_RIGHT });
 }
 
 void InputManager::Update()

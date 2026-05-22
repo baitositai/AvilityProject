@@ -45,10 +45,10 @@ void ParameterCharacter::LoadParameter(const Json& parameter)
     }
 
     // 通常攻撃の当たり判定調整座標の読み込み
-    if (parameter.contains("defaultAttackLocalPos"))
+    if (parameter.contains("defaultAttackLoaclPos"))
     {
-        defaultAttackLocalPos_.x = parameter["defaultAttackLocalPos"].value("x", 0.0f);
-        defaultAttackLocalPos_.y = parameter["defaultAttackLocalPos"].value("y", 0.0f);
+        defaultAttackLocalPos_.x = parameter["defaultAttackLoaclPos"].value("x", 0.0f);
+        defaultAttackLocalPos_.y = parameter["defaultAttackLoaclPos"].value("y", 0.0f);
     }
 
     // アニメーションデータの取得
