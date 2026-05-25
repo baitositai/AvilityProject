@@ -10,11 +10,29 @@ class ComponentBase;
 class ComponentMove;
 class ComponentSpriteAnimation;
 class ComponentGravity;
-class ComponentStatePlayerAlive;
-class ComponentStatePlayerAttack;
-class ComponentStatePlayerDead;
-class ComponentStatePlayerHit;
-class ComponentStatePlayerRespawn;
+class ComponentKnockBack;
+class ComponentInvincible;
+class ComponentJump;
+
+class ComponentStatePlayerProcess;
+class ComponentStateAttackDefault;
+class ComponentStateIdle;
+class ComponentStateDead;
+class ComponentStateDummy;
+
+class ComponentAvilityBase;
+class ComponentAvilityBox;
+class ComponentAvilityShot;
+class ComponentAvilityGravity;
+class ComponentAvilityStamp;
+class ComponentAvilityAirwalk;
+class ComponentAvilitySuperman;
+class ComponentAvilityMetal;
+class ComponentAvilityAirslash;
+class ComponentAvilityTeleport;
+class ComponentAvilityGiant;
+
+class ComponentDebugCreateItemAvility;
 
 class FactoryComponent : public Singleton<FactoryComponent>
 {
@@ -30,6 +48,14 @@ public:
 	/// <param name="owner">所有者</param>
 	std::unique_ptr<ComponentBase> CreateComponent(const std::string& name, ActorBase& owner);
 
+	/// <summary>
+	/// アビリティコンポーネントの生成
+	/// </summary>
+	/// <param name="name">名前</param>
+	/// <param name="owner">所有者</param>
+	/// <returns>生成されたアビリティコンポーネント</returns>
+	std::unique_ptr<ComponentAvilityBase> CreateComponentAvility(const std::string& name, ActorBase& owner);
+
 private:
 
 	// コンポーネント生成マップ
@@ -39,11 +65,25 @@ private:
 	std::unique_ptr<ComponentMove> CreateComponentMove(ActorBase& owner);
 	std::unique_ptr<ComponentSpriteAnimation> CreateComponentSpriteAnimation(ActorBase& owner);
 	std::unique_ptr<ComponentGravity> CreateComponentGravity(ActorBase& owner);
-	std::unique_ptr<ComponentStatePlayerAlive> CreateComponentStatePlayerAlive(ActorBase& owner);
-	std::unique_ptr<ComponentStatePlayerAttack> CreateComponentStatePlayerAttack(ActorBase& owner);
-	std::unique_ptr<ComponentStatePlayerDead> CreateComponentStatePlayerDead(ActorBase& owner);
-	std::unique_ptr<ComponentStatePlayerHit> CreateComponentStatePlayerHit(ActorBase& owner);
-	std::unique_ptr<ComponentStatePlayerRespawn> CreateComponentStatePlayerRespawn(ActorBase& owner);	
+	std::unique_ptr<ComponentStatePlayerProcess> CreateComponentStatePlayerProcess(ActorBase& owner);
+	std::unique_ptr<ComponentStateAttackDefault> CreateComponentStateAttackDefault(ActorBase& owner);
+	std::unique_ptr<ComponentAvilityBox> CreateComponentAvilityBox(ActorBase& owner);
+	std::unique_ptr<ComponentAvilityStamp> CreateComponentAvilityStamp(ActorBase& owner);
+	std::unique_ptr<ComponentAvilityAirwalk> CreateComponentAvilityAirwalk(ActorBase& owner);
+	std::unique_ptr<ComponentAvilityShot> CreateComponentAvilityShot(ActorBase& owner);
+	std::unique_ptr<ComponentAvilityGravity> CreateComponentAvilityGravity(ActorBase& owner);
+	std::unique_ptr<ComponentAvilityMetal> CreateComponentAvilityMetal(ActorBase& owner);
+	std::unique_ptr<ComponentAvilitySuperman> CreateComponentAvilitySuperman(ActorBase& owner);
+	std::unique_ptr<ComponentAvilityAirslash> CreateComponentAvilityAirslash(ActorBase& owner);
+	std::unique_ptr<ComponentAvilityTeleport> CreateComponentAvilityTeleport(ActorBase& owner);
+	std::unique_ptr<ComponentAvilityGiant> CreateComponentAvilityGiant(ActorBase& owner);
+	std::unique_ptr<ComponentKnockBack> CreateComponentKnockBack(ActorBase& owner);
+	std::unique_ptr<ComponentStateIdle> CreateComponentStateIdle(ActorBase& owner);
+	std::unique_ptr<ComponentStateDead> CreateComponentStateDead(ActorBase& owner);
+	std::unique_ptr<ComponentStateDummy> CreateComponentStateDummy(ActorBase& owner);
+	std::unique_ptr<ComponentInvincible> CreateComponentInvincible(ActorBase& owner);
+	std::unique_ptr<ComponentJump> CreateComponentJump(ActorBase& owner);
+	std::unique_ptr<ComponentDebugCreateItemAvility> CreateComponentDebugCreateItemAvility(ActorBase& owner);
 	
 	// コンストラクタ
 	FactoryComponent();

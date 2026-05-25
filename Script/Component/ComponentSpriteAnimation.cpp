@@ -1,8 +1,10 @@
 #include "../Object/ActorBase.h"
+#include "../Object/Common/Animation.h"
 #include "ComponentSpriteAnimation.h"
 
 ComponentSpriteAnimation::ComponentSpriteAnimation(ActorBase& owner) :
-	ComponentBase(&owner)
+	ComponentBase(owner),
+	animation_(owner_.GetAnimation())
 {
 	animStep_ = 0.0f;
 	animationPreType_ = -1;
@@ -14,39 +16,37 @@ ComponentSpriteAnimation::~ComponentSpriteAnimation()
 
 void ComponentSpriteAnimation::Update()
 {
-	// アニメーション情報の取得
-	ActorBase::ParameterAnimation parameterAnimation = owner_->GetParameterAnimation();
-
 	// アニメーションが非再生の場合
-	if (!parameterAnimation.isPlay) { return; }
+	if (!animation_.IsPlay()) { return; }
+
+	// アニメーション情報の取得
+	const Animation::Data& data = animation_.GetAnimationData();
 
 	// アニメーション終了かつループを行わない場合
-	if (parameterAnimation.animationIndex == parameterAnimation.animationFinishIndex && !parameterAnimation.isLoop)
+	if (animation_.GetAnimationIndex() == data.endIndex && !animation_.IsLoop())
 	{
 		animStep_ = 0.0f;					// 初期化
-		owner_->SetAnimationIsPlay(false);	// 再生判定を下げる
+		animation_.Stop();					// 停止
+		animation_.CheckNextAnimation();		// 次回アニメーションの確認
 		return;								// 処理終了
 	}
 
 	// 前回のアニメーションと現在のアニメーションが異なる場合
-	if (parameterAnimation.animationType != animationPreType_)
+	if (static_cast<int>(animation_.GetType()) != animationPreType_)
 	{
 		// アニメーションステップ初期化
 		animStep_ = 0.0f;
 	}
 
 	// バックアップを取得
-	animationPreType_ = parameterAnimation.animationType;
+	animationPreType_ = static_cast<int>(animation_.GetType());
 
 	//ステップ更新
-	animStep_ += parameterAnimation.animationSpeed;
+	animStep_ += data.animationSpeed;
 
 	//アニメーション最大値を入手
-	int animMax = parameterAnimation.animationFinishIndex + 1 - parameterAnimation.animationStartIndex;
+	int animMax = data.endIndex - data.startIndex + 1;
 
 	//アニメーション番号の割り当て
-	parameterAnimation.animationIndex = parameterAnimation.animationStartIndex + static_cast<int>(animStep_) % animMax;
-
-	// アニメーション情報の更新
-	owner_->SetAnimationIndex(parameterAnimation.animationIndex);
+	animation_.SetAnimationIndex(data.startIndex + static_cast<int>(animStep_) % animMax);
 }

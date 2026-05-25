@@ -25,8 +25,8 @@ SceneGame::SceneGame()
 SceneGame::~SceneGame()
 {
 	// ŠÇ—ƒNƒ‰ƒX‚Ì‰ğ•ú
-	GameManager::GetInstance().Destroy();
 	FactoryComponent::GetInstance().Destroy();
+	GameManager::GetInstance().Destroy();
 }
 
 void SceneGame::Init()

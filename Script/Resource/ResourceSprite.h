@@ -36,7 +36,7 @@ public:
 	/// ハンドルIDを返す
 	/// </summary>
 	/// <returns>ハンドルID</returns>
-	const int* GetHandleIds() const { return handleIds_; }
+	int* GetHandleIds() const { return handleIds_; }
 
 private:
 

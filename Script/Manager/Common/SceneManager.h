@@ -12,6 +12,7 @@
 class SceneBase;
 class Fader;
 class Camera;
+class SpriteEffectManager;
 
 class SceneManager : public Singleton<SceneManager>
 {
@@ -128,6 +129,9 @@ private:
 
 	SCENE_ID sceneId_;
 	SCENE_ID waitSceneId_;
+
+	// エフェクト管理
+	SpriteEffectManager& spriteEffectManager_;
 
 	// 各種シーン
 	std::list<std::shared_ptr<SceneBase>> scenes_;

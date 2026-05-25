@@ -42,20 +42,37 @@ public:
 
 		PAUSE,					// ポーズ(開閉)
 
-		INPUT_EXPLANTION_OPEN,	// 操作説明を開く
-
-		ANOMARY_REPORT,			// 異変の報告
-
-		CAMERA_MODE_CHANGE,		// カメラモード切替
-
-		LIGHT_SWITCH,			// ライトのON/OFF
-
-		EXPLANTION_SKIP,		// 説明のスキップ
-
 		DEBUG_SCENE_CHANGE,		// デバッグシーン遷移
 		DEBUG_CAMERA_CHANGE,	// デバッグカメラビュー変更
 		CREATE_POSITION,		// 位置リストの生成
 		OPEN_FILE,				// ファイルを開く
+
+		AVILITY_GRAVITY_RIGHT,	// 重力制御:右
+		AVILITY_GRAVITY_LEFT,	// 重力制御:左
+		AVILITY_GRAVITY_UP,		// 重力制御:上
+		AVILITY_GRAVITY_DOWN,	// 重力制御:下
+
+		AVILITY_STAMP,			// スタンプ
+
+		AVILITY_SHOT,			// ショット使用
+		AVILITY_SHOT_SUB,		// ショットのサブ条件(使わない)
+		AVILITY_SHOT_CHARGE,	// ショットチャージ
+		AVILITY_SHOT_RIGHT,		// ショット方向決め右
+		AVILITY_SHOT_LEFT,		// ショット方向決め左
+
+		AVILITY_LASER,			// レーザー
+
+		AVILITY_TELEPORT,		// テレポート
+		AVILITY_TELEPORT_SUB,	// テレポートのサブ条件
+		AVILITY_TELEPORT_HOLD,	// テレポートの保持
+
+		SELECT_AVILITY_FIRST,	// アビリティの選択：１個目
+		SELECT_AVILITY_SECOND,	// アビリティの選択：２個目
+		SELECT_AVILITY_THIRD,	// アビリティの選択：３個目
+
+		DEBUG_CREATE_ITEM_AVILITY,	// デバッグ用アビリティアイテム生成
+		DEBUG_SELECT_RIGHT_ITEM_AVILITY,	// デバッグ用アビリティアイテム選択
+		DEBUG_SELECT_LEFT_ITEM_AVILITY,	// デバッグ用アビリティアイテム選択
 	};
 
 	/// <summary>
@@ -135,10 +152,12 @@ private:
 	// 入力トリガーの情報
 	struct TriggerInfo
 	{
-		std::vector<int> keys;
-		std::vector<Input::JOYPAD_BTN> padButtons;
-		Input::JOYPAD_STICK padStick = Input::JOYPAD_STICK::MAX;
-		Input::MOUSE mouse = Input::MOUSE::MAX;
+		std::vector<int> keys;										// 入力に必要なキー(複数対応可能)
+		std::vector<Input::JOYPAD_BTN> padButtons;					// 入力に必要なパッドボタン(複数対応可能)
+		Input::JOYPAD_STICK padStick = Input::JOYPAD_STICK::MAX;	// 入力に必要なスティックの情報
+		Input::MOUSE mouse = Input::MOUSE::MAX;						// 入力に必要なマウスの情報
+		std::vector<TYPE> requiredTypes;							// 同時入力が必要な入力のもう一つの条件
+		std::vector<TYPE> forbiddenTypes;							// 同時に入力の際に入力されてはならない条件
 	};
 
 	// 入力判定クラス
@@ -158,7 +177,9 @@ private:
 		const std::vector<int> keys,
 		const std::vector<Input::JOYPAD_BTN> padButtons,
 		const Input::JOYPAD_STICK padStick = Input::JOYPAD_STICK::MAX,
-		const Input::MOUSE mouse = Input::MOUSE::MAX);
+		const Input::MOUSE mouse = Input::MOUSE::MAX,
+		const std::vector<TYPE> requiredTypes = {}, 
+		const std::vector<TYPE> forbiddenTypes = {});
 
 	// 処理の登録
 	void RegisterTriggerFunction(
@@ -186,6 +207,12 @@ private:
 	bool IsNewMouse(const TYPE type);
 	bool IsTrgDownMouse(const TYPE type);
 	bool IsTrgUpMouse(const TYPE type);
+
+	// フィルター内の確認
+	bool CheckFilter(const TYPE type, const Input::JOYPAD_NO padNo);
+
+	// 長押し確認
+	bool IsNewRaw(const TYPE type, const Input::JOYPAD_NO padNo);
 
 	// コンストラクタ
 	InputManager();

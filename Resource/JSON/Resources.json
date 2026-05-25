@@ -51,6 +51,16 @@
       "path": "Resource/Image/Player/Player.png"
     },
     {
+      "key": "clone",
+      "sceneId": 2,
+      "type": "sprite",
+      "divX": 10,
+      "divY": 9,
+      "sizeX": 96,
+      "sizeY": 96,
+      "path": "Resource/Image/Enemy/Clone.png"
+    },
+    {
       "key": "bgmTitle",
       "path": "Resource/Sound/BGM/BgmTitle.mp3",
       "sceneId": 1,
@@ -83,6 +93,46 @@
       "path": "Resource/Image/BackGround/TitleLogo.png",
       "sceneId": 1,
       "type": "texture"
+    },
+    {
+      "key": "airslash",
+      "type": "sprite",
+      "path": "Resource/Image/Effect/Airslash.png",
+      "divX": 4,
+      "divY": 1,
+      "sceneId": 2,
+      "sizeX": 64,
+      "sizeY": 64
+    },
+    {
+      "key": "teleportEnter",
+      "type": "sprite",
+      "path": "Resource/Image/Effect/TeleportEnter.png",
+      "divX": 9,
+      "divY": 1,
+      "sceneId": 2,
+      "sizeX": 96,
+      "sizeY": 96
+    },
+    {
+      "key": "teleportExit",
+      "type": "sprite",
+      "path": "Resource/Image/Effect/TeleportExit.png",
+      "divX": 11,
+      "divY": 1,
+      "sceneId": 2,
+      "sizeX": 96,
+      "sizeY": 96
+    },
+    {
+      "key": "groundChips",
+      "type": "sprite",
+      "path": "Resource/Image/Stage/GroundChips.png",
+      "divX": 8,
+      "divY": 8,
+      "sceneId": 2,
+      "sizeX": 32,
+      "sizeY": 32
     }
   ]
 }

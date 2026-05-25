@@ -1,0 +1,44 @@
+#pragma once
+#include "ComponentAvilityBase.h"
+
+class ComponentAvilityAirslash : public ComponentAvilityBase
+{
+public:
+
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	/// <param name="owner">所有者</param>
+	ComponentAvilityAirslash(Player& owner);
+
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
+	~ComponentAvilityAirslash();
+
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	void Init() override;
+
+	/// <summary>
+	/// 更新処理
+	/// </summary>
+	void Update() override;
+
+	/// <summary>
+	/// 取り外し処理
+	/// </summary>
+	void Remove() override;
+
+private:
+
+	// 追加攻撃値
+	static constexpr int ADD_ATTACK_POWER = 50;
+
+	// ジャンプ回数の保持
+	int preJumpCount_;
+
+	// 生成処理
+	void CreateAirslash();
+};

@@ -1,7 +1,7 @@
 #include "../Object/ActorBase.h"
 #include "ColliderBase.h"
 
-ColliderBase::ColliderBase(ActorBase& owner, const CollisionTags::TAG tag, const Vector2& followPos) :
+ColliderBase::ColliderBase(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos) :
 	owner_(owner),
 	tag_(tag),
 	followPos_(followPos)
@@ -10,6 +10,7 @@ ColliderBase::ColliderBase(ActorBase& owner, const CollisionTags::TAG tag, const
 	type_ = ColliderType::TYPE::MAX;
 	isHit_ = false;
 	isDelete_ = false;
+	isActive_ = true;
 }
 
 ColliderBase::~ColliderBase()
@@ -20,6 +21,12 @@ void ColliderBase::OnHit(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
 	// 所有者のインスタンスを渡す
 	owner_.OnHit(opponentCollider);
+}
+
+void ColliderBase::Delete()
+{
+	isActive_ = false;
+	isDelete_ = false;
 }
 
 void ColliderBase::DebugDraw()

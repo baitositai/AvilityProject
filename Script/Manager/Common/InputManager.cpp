@@ -17,10 +17,46 @@ void InputManager::Init()
 	RegisterTrigger(TYPE::PLAYER_MOVE_LEFT, { KEY_INPUT_A }, { }, STICK::L_STICK_LEFT);
 	RegisterTrigger(TYPE::PLAYER_MOVE_UP, { KEY_INPUT_W }, { }, STICK::L_STICK_UP);
 	RegisterTrigger(TYPE::PLAYER_MOVE_DOWN, { KEY_INPUT_S }, { }, STICK::L_STICK_DOWN);
+
+	// ジャンプ
 	RegisterTrigger(TYPE::PLAYER_JUMP, { KEY_INPUT_SPACE }, { BTN::RB_RIGHT });
+
+	// ダッシュ
 	RegisterTrigger(TYPE::PLAYER_DASH, { KEY_INPUT_LSHIFT }, { BTN::RB_DOWN });
+
+	// 通常攻撃
 	RegisterTrigger(TYPE::PLAYER_ATTACK, { KEY_INPUT_R }, { BTN::RB_TOP });
 
+	// アビリティ：重力方向の切り替え
+	RegisterTrigger(TYPE::AVILITY_GRAVITY_RIGHT, { KEY_INPUT_RIGHT }, { }, STICK::R_STICK_RIGHT);
+	RegisterTrigger(TYPE::AVILITY_GRAVITY_LEFT, { KEY_INPUT_LEFT }, { }, STICK::R_STICK_LEFT);
+	RegisterTrigger(TYPE::AVILITY_GRAVITY_UP, { KEY_INPUT_UP }, { }, STICK::R_STICK_UP);
+	RegisterTrigger(TYPE::AVILITY_GRAVITY_DOWN, { KEY_INPUT_DOWN }, { }, STICK::R_STICK_DOWN);
+	
+	// アビリティ：ショット
+	RegisterTrigger(TYPE::AVILITY_SHOT, { KEY_INPUT_E }, { BTN::RB_LEFT }, STICK::MAX, MOUSE::MAX, { TYPE::AVILITY_SHOT_SUB });
+	RegisterTrigger(TYPE::AVILITY_SHOT_SUB, { KEY_INPUT_S }, { }, STICK::L_STICK_DOWN);
+	RegisterTrigger(TYPE::AVILITY_SHOT_CHARGE, { KEY_INPUT_E }, { BTN::RB_LEFT });
+	RegisterTrigger(TYPE::AVILITY_SHOT_RIGHT, { KEY_INPUT_RIGHT }, {});
+	RegisterTrigger(TYPE::AVILITY_SHOT_LEFT, { KEY_INPUT_LEFT }, {});
+	
+	// アビリティ：スタンプ
+	RegisterTrigger(TYPE::AVILITY_STAMP, { KEY_INPUT_SPACE }, { BTN::RB_RIGHT });
+
+	// アビリティ：レーザー
+	RegisterTrigger(TYPE::AVILITY_LASER, { KEY_INPUT_E }, { BTN::RB_LEFT }, STICK::MAX, MOUSE::MAX, {}, { TYPE::AVILITY_SHOT_SUB, TYPE::AVILITY_TELEPORT_SUB });
+
+	// アビリティ：テレポート
+	RegisterTrigger(TYPE::AVILITY_TELEPORT, { KEY_INPUT_E }, { BTN::RB_LEFT }, STICK::MAX, MOUSE::MAX, { TYPE::AVILITY_TELEPORT_SUB });
+	RegisterTrigger(TYPE::AVILITY_TELEPORT_SUB, { KEY_INPUT_W }, { }, STICK::L_STICK_UP);
+	RegisterTrigger(TYPE::AVILITY_TELEPORT_HOLD, { KEY_INPUT_E }, { BTN::RB_LEFT });
+
+	// アビリティの選択
+	RegisterTrigger(TYPE::SELECT_AVILITY_FIRST, { KEY_INPUT_LEFT }, { BTN::LB_LEFT }, STICK::R_STICK_LEFT );
+	RegisterTrigger(TYPE::SELECT_AVILITY_SECOND, { KEY_INPUT_UP }, { BTN::LB_TOP }, STICK::R_STICK_UP);
+	RegisterTrigger(TYPE::SELECT_AVILITY_THIRD, { KEY_INPUT_RIGHT }, { BTN::LB_RIGHT }, STICK::R_STICK_RIGHT);
+
+	// カメラ制御
 	RegisterTrigger(TYPE::CAMERA_MOVE_RIGHT, { KEY_INPUT_RIGHT }, { }, STICK::R_STICK_RIGHT);
 	RegisterTrigger(TYPE::CAMERA_MOVE_LEFT, { KEY_INPUT_LEFT }, { }, STICK::R_STICK_LEFT);
 	RegisterTrigger(TYPE::CAMERA_MOVE_UP, { KEY_INPUT_UP }, { }, STICK::R_STICK_UP);
@@ -35,24 +71,16 @@ void InputManager::Init()
 	RegisterTrigger(TYPE::SELECT_CANCEL, { KEY_INPUT_BACK }, { BTN::RB_DOWN });
 	RegisterTrigger(TYPE::PAUSE, { KEY_INPUT_BACK }, { BTN::SELECT });
 
-	// タイトル説明
-	RegisterTrigger(TYPE::EXPLANTION_SKIP, { KEY_INPUT_RETURN }, { BTN::RB_TOP });
-
-	// 報告処理
-	RegisterTrigger(TYPE::ANOMARY_REPORT, { KEY_INPUT_R }, { BTN::R_BUTTON, BTN::R_TRIGGER }, STICK::MAX, MOUSE::CLICK_LEFT);
-	RegisterTrigger(TYPE::CAMERA_MODE_CHANGE, { KEY_INPUT_E }, { BTN::RB_TOP });
-
-	// ライトの電源切り替え処理
-	RegisterTrigger(TYPE::LIGHT_SWITCH, { KEY_INPUT_Q }, { BTN::RB_LEFT });
-
-	// 操作説明を開く
-	RegisterTrigger(TYPE::INPUT_EXPLANTION_OPEN, { KEY_INPUT_TAB }, { BTN::LB_DOWN });
-
 	// デバッグ操作
 	RegisterTrigger(TYPE::DEBUG_SCENE_CHANGE, { KEY_INPUT_RSHIFT }, { });
 	RegisterTrigger(TYPE::DEBUG_CAMERA_CHANGE, { KEY_INPUT_TAB }, { });
 	RegisterTrigger(TYPE::CREATE_POSITION, { KEY_INPUT_C }, { });
 	RegisterTrigger(TYPE::OPEN_FILE, { KEY_INPUT_V }, { });
+
+	// デバッグ用アビリティアイテム生成
+	RegisterTrigger(TYPE::DEBUG_CREATE_ITEM_AVILITY, { KEY_INPUT_1 }, { BTN::LB_DOWN });
+	RegisterTrigger(TYPE::DEBUG_SELECT_LEFT_ITEM_AVILITY, { KEY_INPUT_2 }, { BTN::LB_LEFT });
+	RegisterTrigger(TYPE::DEBUG_SELECT_RIGHT_ITEM_AVILITY, { KEY_INPUT_3 }, { BTN::LB_RIGHT });
 }
 
 void InputManager::Update()
@@ -71,38 +99,62 @@ void InputManager::Release()
 
 bool InputManager::IsNew(const TYPE type, const Input::JOYPAD_NO padNo)
 {
+	bool isBaseActive = false;
 	for (auto& func : funcNewMap_[type])
 	{
 		if (func(type, padNo))
 		{
-			return true;
+			isBaseActive = true;
+			break;
 		}
 	}
-	return false;
+
+	if (!isBaseActive)
+	{
+		return false;
+	}
+
+	return CheckFilter(type, padNo);
 }
 
 bool InputManager::IsTrgDown(const TYPE type, const Input::JOYPAD_NO padNo)
 {
+	bool isBaseActive = false;
 	for (auto& func : funcTrgDownMap_[type])
 	{
 		if (func(type, padNo))
 		{
-			return true;
+			isBaseActive = true;
+			break;
 		}
 	}
-	return false;
+
+	if (!isBaseActive)
+	{
+		return false;
+	}
+
+	return CheckFilter(type, padNo);
 }
 
 bool InputManager::IsTrgUp(const TYPE type, const Input::JOYPAD_NO padNo)
 {
+	bool isBaseActive = false;
 	for (auto& func : funcTrgUpMap_[type])
 	{
 		if (func(type, padNo))
 		{
-			return true;
+			isBaseActive = true;
+			break;
 		}
 	}
-	return false;
+
+	if (!isBaseActive)
+	{
+		return false;
+	}
+
+	return CheckFilter(type, padNo);
 }
 
 void InputManager::SetMousePos(const Vector2& pos)
@@ -132,10 +184,10 @@ Vector2 InputManager::GetKnockRStickSize(Input::JOYPAD_NO no) const
 	return Vector2(padInfo.AKeyRX, padInfo.AKeyRY);
 }
 
-void InputManager::RegisterTrigger(const TYPE type, const std::vector<int> keys, const std::vector<Input::JOYPAD_BTN> padButtons, const Input::JOYPAD_STICK padStick, const Input::MOUSE mouse)
+void InputManager::RegisterTrigger(const TYPE type, const std::vector<int> keys, const std::vector<Input::JOYPAD_BTN> padButtons, const Input::JOYPAD_STICK padStick, const Input::MOUSE mouse, const std::vector<TYPE> requiredTypes, const std::vector<TYPE> forbiddenTypes)
 {
 	// トリガーの情報を設定
-	TriggerInfo info = { keys, padButtons, padStick,mouse };
+	TriggerInfo info = { keys, padButtons, padStick, mouse, requiredTypes, forbiddenTypes };
 
 	// 情報の格納
 	triggerMap_[type] = info;
@@ -286,6 +338,43 @@ bool InputManager::IsTrgDownMouse(const TYPE type)
 bool InputManager::IsTrgUpMouse(const TYPE type)
 {
 	return input_->IsMouseTrgUp(triggerMap_[type].mouse);
+}
+
+bool InputManager::CheckFilter(const TYPE type, const Input::JOYPAD_NO padNo)
+{
+	const auto& info = triggerMap_[type];
+
+	// 同時に押されていなければならないTYPEのチェック
+	for (const auto& reqType : info.requiredTypes)
+	{
+		if (!IsNewRaw(reqType, padNo))
+		{
+			return false;
+		}
+	}
+
+	// 同時に押されていてはならないTYPEのチェック
+	for (const auto& forbType : info.forbiddenTypes)
+	{
+		if (IsNewRaw(forbType, padNo))
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool InputManager::IsNewRaw(const TYPE type, const Input::JOYPAD_NO padNo)
+{
+	for (auto& func : funcNewMap_[type])
+	{
+		if (func(type, padNo))
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 InputManager::InputManager()

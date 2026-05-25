@@ -12,6 +12,7 @@
 #include "../Common/ScoreManager.h"
 #include "../Common/EffectManager.h"
 #include "Camera.h"
+#include "SpriteEffectManager.h"
 #include "SceneManager.h"
 
 void SceneManager::Init()
@@ -225,7 +226,8 @@ void SceneManager::StartFadeIn(const Fader::STATE fadeState)
 	isSceneChanging_ = false;
 }
 
-SceneManager::SceneManager()
+SceneManager::SceneManager() :
+	spriteEffectManager_(SpriteEffectManager::GetInstance())
 {
 	mainScreen_ = -1;
 	sceneId_ = SCENE_ID::NONE;
@@ -256,6 +258,9 @@ void SceneManager::DoChangeScene(SCENE_ID sceneId)
 		scenes_.back().reset();
 		scenes_.pop_back(); // シーンを使い終わったのでリストからも削除
 	}
+
+	// エフェクトを削除
+	spriteEffectManager_.Clear();
 
 	// シーン生成
 	switch (sceneId_)

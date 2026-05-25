@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include "../Manager/Game/CollisionTags.h"
+#include "../Common/Vector2F.h"
 #include "ColliderType.h"
 
 class ActorBase;
@@ -15,7 +16,7 @@ public:
 	/// <param name="owner">所有者</param>
 	/// <param name="tag">衝突判定タグ</param>
 	/// <param name="followPos">追従対象</param>
-	ColliderBase(ActorBase& owner, const CollisionTags::TAG tag, const Vector2& followPos);
+	ColliderBase(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos);
 
 	/// <summary>
 	/// デストラクタ
@@ -35,15 +36,34 @@ public:
 	const bool IsHit() const { return isHit_; }
 
 	/// <summary>
+	/// 衝突判定のセット
+	/// </summary>
+	/// <param name="_isHit"></param>
+	/// <returns></returns>
+	const void SetIsHit(const bool _isHit) { isHit_ = _isHit; }
+
+	/// <summary>
 	/// 削除判定
 	/// </summary>
 	/// <returns>削除する場合true,そうでない場合false</returns>
 	const bool IsDelete() const { return isDelete_; }
 
 	/// <summary>
+	/// 活動判定を返す
+	/// </summary>
+	/// <returns>活動判定</returns>
+	const bool IsActive() const { return isActive_; }
+
+	/// <summary>
 	/// 削除設定
 	/// </summary>
-	void SetDelete() { isDelete_ = true; }
+	void Delete();
+
+	/// <summary>
+	/// 活動判定を格納
+	/// </summary>
+	/// <param name="isActive">活動判定</param>
+	void SetIsActive(const bool isActive) { isActive_ = isActive; }
 
 	/// <summary>
 	/// 自身のコライダー種類を返す
@@ -68,6 +88,12 @@ public:
 	/// </summary>
 	/// <returns>所有者のインスタンス</returns>
 	const ActorBase& GetOwner() const { return owner_; }
+
+	/// <summary>
+	/// 追従対象の座標を渡す
+	/// </summary>
+	/// <returns>追従対象の座標</returns>
+	const Vector2F& GetPos() const { return followPos_; }
 
 	/// <summary>
 	/// 衝突相手の種類を設定
@@ -99,6 +125,9 @@ protected:
 	// オーナー
 	ActorBase& owner_;
 
+	// 追従対象
+	Vector2F& followPos_;
+	
 	// タグ
 	CollisionTags::TAG tag_;
 
@@ -113,4 +142,7 @@ protected:
 
 	// 削除判定
 	bool isDelete_;
+
+	// 活動判定
+	bool isActive_;
 };

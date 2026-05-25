@@ -1,3 +1,4 @@
+#include "../../Object/ActorBase.h"
 #include "UtilityCommon.h"
 #include "UtilityCollision.h"
 
@@ -6,42 +7,16 @@ bool UtilityCollision::IsHitArrayToCircle(const std::vector<std::vector<int>>& a
     return false;
 }
 
-bool UtilityCollision::IsHitArrayToBox(const std::vector<std::vector<int>>& arrayOfArrays, const std::vector<int>& hitIds, const Vector2& chipSize, ColliderArray::Result& result, const Vector2& boxTopPos, const Vector2& boxBottomPos)
+bool UtilityCollision::IsHitArrayToBox(const std::vector<std::vector<int>>& arrayOfArrays,
+    const std::vector<int>& hitIds,
+    const Vector2& chipSize,
+    ColliderArray::Result& result,
+    const Vector2F& boxTopPos,
+    const Vector2F& boxBottomPos,
+    const Vector2F& moveAmount,
+    ParameterActor::DIR gravityDir)
 {
-    // 配列のサイズを確定
-    const int ROWS = static_cast<int>(arrayOfArrays.size());
-    if (ROWS == 0) return false;    // 中身がない場合終了
-    const int COLS = static_cast<int>(arrayOfArrays[0].size());
-
-    // 最大最小値を決定
-    int startX = (std::max)(0, static_cast<int>(boxTopPos.x / chipSize.x));
-    int endX = (std::min)(COLS - 1, static_cast<int>(boxBottomPos.x / chipSize.x));
-    int startY = (std::max)(0, static_cast<int>(boxTopPos.y / chipSize.y));
-    int endY = (std::min)(ROWS - 1, static_cast<int>(boxBottomPos.y / chipSize.y));
-
-    // 範囲チェック
-    if (startX > endX || startY > endY) return false;
-
-    // 前回の判定結果を削除
-    result.indexes.clear();
-    int area = (endX - startX + 1) * (endY - startY + 1);
-    result.indexes.reserve(area);
-
-    for (int ty = startY; ty <= endY; ++ty)
-    {
-        const auto& row = arrayOfArrays[ty];
-        for (int tx = startX; tx <= endX; ++tx)
-        {
-            // 衝突番号を探索する
-            if (UtilityCommon::FindIndex(hitIds, row[tx]))
-            {
-                // インデックスを格納
-                result.indexes.emplace_back(static_cast<float>(tx), static_cast<float>(ty));
-            }
-        }
-    }
-
-    return !result.indexes.empty();
+    return false;
 }
 
 bool UtilityCollision::IsHitCircleToCircle(const Vector2& circlePos1, const float radius1, const Vector2& circlePos2, const float radius2)
@@ -63,7 +38,17 @@ bool UtilityCollision::IsHitCircleToCircle(const Vector2& circlePos1, const floa
 
 bool UtilityCollision::IsHitCircleToBox(const Vector2& circlePos, const float radius, const Vector2& boxTopPos, const Vector2& boxBotmPos)
 {
-	return false;
+    // 四角形の範囲内で円の中心に最も近い座標を特定する
+    float closestX = (std::max)(boxTopPos.x, (std::min)(circlePos.x, boxBotmPos.x));
+    float closestY = (std::max)(boxTopPos.y, (std::min)(circlePos.y, boxBotmPos.y));
+
+    // 最短地点と円の中心との距離の2乗を計算する
+    float diffX = circlePos.x - closestX;
+    float diffY = circlePos.y - closestY;
+    float distanceSq = (diffX * diffX) + (diffY * diffY);
+
+    // 距離の2乗が半径の2乗以下なら衝突している
+    return distanceSq <= (radius * radius);
 }
 
 bool UtilityCollision::IsHitCircleToLine(const Vector2& circlePos, const float radius, const Vector2& lineTopPos, const Vector2& lineEndPos)

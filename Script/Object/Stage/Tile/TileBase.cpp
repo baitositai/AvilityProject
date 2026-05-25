@@ -38,14 +38,16 @@ void TileBase::Draw()
 		true
 	);
 
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
 	DrawBox(
 		rendererPos.x,
 		rendererPos.y,
 		rendererPos.x + SIZE_TILE,
 		rendererPos.y + SIZE_TILE,
-		UtilityCommon::RED,
+		UtilityCommon::BLACK,
 		false
 	);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 void TileBase::DebugDraw()

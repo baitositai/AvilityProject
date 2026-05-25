@@ -1,16 +1,20 @@
 #include "../../Manager/Common/Camera.h"
 #include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/SpriteEffectManager.h"
 #include "../../Manager/Game/CollisionManager.h"
 #include "../../Manager/Game/EnemyManager.h"
 #include "../../Manager/Game/PlayerManager.h"
 #include "../../Manager/Game/StageManager.h"
+#include "../../Manager/Game/ItemManager.h"
 #include "GameStateBase.h"
 
 GameStateBase::GameStateBase() :
 	playerMng_(PlayerManager::GetInstance()),
 	enemyMng_(EnemyManager::GetInstance()),
 	collisionMng_(CollisionManager::GetInstance()),
-	stageMng_(StageManager::GetInstance())
+	stageMng_(StageManager::GetInstance()),
+	itemMng_(ItemManager::GetInstance()),
+	effectMng_(SpriteEffectManager::GetInstance())
 {
 }
 
@@ -27,10 +31,19 @@ void GameStateBase::Init()
 
 void GameStateBase::Update()
 {
+	// XVˆ—
 	playerMng_.Update();
 	enemyMng_.Update();	
-	stageMng_.Update();
+	stageMng_.Update();	
+	itemMng_.Update();
+	effectMng_.Update();
 	collisionMng_.Update();
+
+	// íœˆ—
+	enemyMng_.Sweep();
+	itemMng_.Sweep();
+	collisionMng_.Sweep();
+	effectMng_.Sweep();
 }
 
 void GameStateBase::Draw()
@@ -38,6 +51,7 @@ void GameStateBase::Draw()
 	stageMng_.Draw();
 	playerMng_.Draw();
 	enemyMng_.Draw();
+	effectMng_.Draw();
 }
 
 void GameStateBase::DebugDraw()
@@ -45,5 +59,7 @@ void GameStateBase::DebugDraw()
 	stageMng_.DebugDraw();
 	playerMng_.DebugDraw();
 	enemyMng_.DebugDraw();
+	itemMng_.DebugDraw();
+	effectMng_.DebugDraw();
 	collisionMng_.DebugDraw();
 }

@@ -2,21 +2,22 @@
 #include <functional>
 #include <unordered_map>
 #include "../ActorBase.h"
+#include "../../Parameter/Character/ParameterCharacter.h"
 #include "../../Common/Vector2.h"
 #include "../../Common/Vector2F.h"
 
-class ComponentBase;
-//class ComponentCharacterStateBase;
+class ParameterCharacter;
 
 class CharacterBase : public ActorBase
 {
 public:
-	
-	// キャラクターの共通パラメータ
-	struct Parameter : public ActorBase::Parameter
+
+	// 種類
+	enum class TYPE
 	{
-		int hp = -1;				// 体力
-		int attackPower = -1;		// 攻撃力
+		PLAYER,								// プレイヤー
+		ENEMY_CLONE,						// 敵:クローン
+		MAX
 	};
 
 	// キャラクター共通の状態
@@ -34,9 +35,7 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="parameter">パラメータ情報</param>
-	/// <param name="stateComponentNameList">状態別コンポーネント生成リスト</param>
-	/// <param name="defaultComponentNameList">通常コンポーネント生成リスト</param>
-	CharacterBase(Parameter* parameter, const std::unordered_map<std::string, std::string> stateComponentNameList, const std::vector<std::string> defaultComponentNameList = {});
+	explicit CharacterBase(std::unique_ptr<ParameterCharacter> parameter = nullptr);
 
 	/// <summary>
 	/// デストラクタ
@@ -54,9 +53,19 @@ public:
 	virtual void Update() override;
 
 	/// <summary>
+	/// 描画処理
+	/// </summary>
+	virtual void Draw() override;
+
+	/// <summary>
 	/// デバッグ描画
 	/// </summary>
-	virtual void DebugDraw() override;
+	virtual void DebugDraw() override;	
+	
+	/// <summary>
+	/// 着地処理
+	/// </summary>
+	void Landing() override;
 
 	/// <summary>
 	/// 状態遷移処理
@@ -64,15 +73,80 @@ public:
 	/// <param name="state">状態</param>
 	void ChangeState(const STATE state);
 
-protected:	
+	/// <summary>
+	/// ダメージ設定
+	/// </summary>
+	/// <param name="damage">ダメージ</param>
+	void Damage(const int damage);
+
+	/// <summary>
+	/// 状態別コンポーネントの活動状態を設定
+	/// </summary>
+	/// <param name="state">状態</param>
+	/// <param name="isActive">活動状態</param>
+	void SetStateComponentActive(const STATE state, const bool isActive);
+
+	/// <summary>
+	/// ジャンプ力を設定
+	/// </summary>
+	/// <param name="jumpPowMax">ジャンプ力</param>
+	void SetJumpPow(const float jumpPow);
 	
+	/// <summary>
+	/// 無敵判定を返す
+	/// </summary>
+	/// <returns>無敵判定</returns>
+	const bool IsInvincible() const;
+	
+	/// <summary>
+	/// 種類を返す
+	/// </summary>
+	/// <returns>種類</returns>
+	const TYPE GetType() const { return type_; }
+
+	/// <summary>
+	/// 状態を返す
+	/// </summary>
+	/// <returns>状態</returns>
+	const STATE GetState() const { return state_; }
+
+	/// <summary>
+	/// 状態別コンポーネントの活動状態を返す
+	/// </summary>
+	/// <param name="state">状態</param>
+	/// <returns>活動状態</returns>
+	bool IsStateComponentActive(const STATE state) const;
+
+	/// <summary>
+	/// パラメーターを返す(変更可)
+	/// </summary>
+	/// <returns>パラメータ</returns>
+	ParameterCharacter& GetParameter() { return *parameterCharacter_; }
+
+	/// <summary>
+	/// パラメータを返す
+	/// </summary>
+	/// <returns>パラメータ</returns>
+	const ParameterCharacter& GetParameter() const { return *parameterCharacter_; }
+
+protected:		
+	
+	// 種類
+	TYPE type_;
+
 	// キャラクターの状態
 	STATE state_;	
 	
 	// 状態別更新処理を管理するコンポーネントマップ
 	std::unordered_map<STATE, std::unique_ptr<ComponentBase>> componentStateMap_;
+	
+	// 状態別コンポーネント処理の更新
+	void UpdateComponentState();
 
-private:	
+	// 型変換用のパラメータを返す関数
+	ParameterCharacter* GetParameterCharacterPtr() { return parameterCharacter_; }
+
+private:
 
 	// 状態をストリングで取得できる用
 	const std::unordered_map<std::string, STATE> NAME_TO_STATE_MAP =
@@ -83,24 +157,13 @@ private:
 		{ "hit", STATE::HIT },
 		{ "respawn", STATE::RESPAWN },
 	};	
-	
-	// 生成するコンポーネントのマップ
-	const std::unordered_map<std::string, std::string> STATE_COMPONENT_CREATE_MAP;
-	
-	// キャラクターのパラメータ
-	Parameter* characterParameterPtr_;	
 
 	// 状態遷移管理マップ
 	std::unordered_map<STATE, std::function<void()>> stateChangeMap_;
 
-	// 状態別遷移処理
-	//virtual void ChangeStateRespawn();
-	//virtual void ChangeStateAlive();
-	//virtual void ChangeStateAttack();
-	//virtual void ChangeStateHit();
-	//virtual void ChangeStateDead();
-
 	// コンポーネントの生成処理
-	void CreateComponents() override;
+	void CreateComponents() override;	
+	
+	// キャラクターのパラメータ
+	ParameterCharacter* parameterCharacter_;
 };
-

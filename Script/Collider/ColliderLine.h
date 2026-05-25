@@ -11,9 +11,10 @@ public:
 	/// </summary>
 	/// <param name="owner">所有者</param>
 	/// <param name="tag">タグ</param>
+	/// <param name="followPos">追従対象</param>
 	/// <param name="topPos">先端座標</param>
 	/// <param name="endPos">末端座標</param>
-	ColliderLine(ActorBase& owner, const CollisionTags::TAG tag, const Vector2& topPos, const Vector2& endPos);
+	ColliderLine(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos, const Vector2& topPos, const Vector2& endPos);
 
 	/// <summary>
 	/// デストラクタ

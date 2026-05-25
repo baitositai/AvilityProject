@@ -1,86 +1,249 @@
 #include <DxLib.h>
-#include "../../Component/Avility/ComponentAvilityShot.h"
+#include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/InputManager.h"
+#include "../../Component/Avility/ComponentAvilityBase.h"
+#include "../../Component/Avility/AvilityTypes.h"
 #include "../../OnHit/OnHitPlayer.h"
-#include "../Collider/ColliderBox.h"
+#include "../../Collider/ColliderBox.h"
+#include "../../Utility/UtilityCommon.h"
+#include "../../Parameter/Character/Player/ParameterPlayer.h"
+#include "../Common/Animation.h"
 #include "Player.h"
 
-Player::Player(const Parameter& parameter, const std::unordered_map<std::string, std::string> stateComponentNameList, const std::vector<std::string> defaultComponentNameList) :
-	parameter_(parameter),
-	CharacterBase(&parameter_, stateComponentNameList, defaultComponentNameList)
-{
+Player::Player(std::unique_ptr<ParameterPlayer> parameter) :
+	CharacterBase(std::move(parameter))
+{		
+	// プレイヤー用のパラメータ
+	parameterPlayer_ = dynamic_cast<ParameterPlayer*>(GetParameterCharacterPtr());
+	assert(parameterPlayer_ != nullptr);
+	
+	// コライダー
+	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::PLAYER, parameterPlayer_->pos_, parameterPlayer_->hitSize_, parameterPlayer_->angle_);
+
+	// 衝突後処理
+	onHit_ = std::make_unique<OnHitPlayer>(*this);
+
+	// 変数初期化
+	selectAvilityTime_ = 0.0f;
 }
 
 Player::~Player()
 {
 }
 
-void Player::Init()
-{	
-	// コライダー
-	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::PLAYER, parameter_.hitBoxSize,parameter_.angle);
-
-	// 衝突後処理
-	onHit_ = std::make_unique<OnHitPlayer>(*this);
-	
-	// 基底クラスの初期化
-	CharacterBase::Init();
-
-	// デバッグ用
-	componentMap_.try_emplace(std::string("AvilityShot"), std::make_unique<ComponentAvilityShot>(*this));
-}
-
 void Player::Update()
 {
-	CharacterBase::Update();
+	// 移動後の値を初期化
+	parameterPlayer_->moveAmount_ = {};
+
+	// 状態別処理
+	UpdateComponentState();
+
+	// アビリティ処理
+	UpdateComponentAvility();
+
+	// 基底クラスの処理
+	ActorBase::Update();
 }
 
 void Player::DebugDraw()
 {
+	// 基底クラスのデバッグ描画
 	CharacterBase::DebugDraw();
-	DrawFormatString(0, 20, 0x000000, L"プレイヤー位置:%2f,%2f", parameter_.pos.x, parameter_.pos.y);
-	DrawFormatString(0, 40, 0x000000, L"アニメーション種類:%d", parameterAnimation_.animationType);
+
+	// 選ぶやつのデバッグ描画
+	componentMap_["debugCreateItemAvility"]->DebugDraw();
+
+	// メッセージ
+	std::vector<std::wstring> mess(AVILITY_MAX, L"none");
+
+	// 種類取得
+	int index = 0;
+	for (auto& avility : avilityComponents_)
+	{
+		mess[index] = UtilityCommon::GetWStringFromString(AvilityTypes::AVILITY_NAME_MAP.at(avility->GetType()).c_str());
+		index++;
+	}
+
+	// 描画
+	DrawFormatString(
+		parameterPlayer_->pos_.x - parameterPlayer_->hitSize_.x / 2,
+		parameterPlayer_->pos_.y - parameterPlayer_->hitSize_.y / 2 - 80,
+		UtilityCommon::RED, 
+		L"1.%ls  2.%ls  3.%ls",
+		mess[0].c_str(),
+		mess[1].c_str(),
+		mess[2].c_str());
+
+	if (spareAvilityComponent_)
+	{
+		DrawFormatString(
+			parameterPlayer_->pos_.x - parameterPlayer_->hitSize_.x / 2,
+			parameterPlayer_->pos_.y - parameterPlayer_->hitSize_.y / 2 - 100,
+			UtilityCommon::RED,
+			L"交代するアビリティを選んでください");
+	}
 }
 
-void Player::InitAnimation()
+void Player::AttackReset()
 {
-	// アニメーションの登録
-	parameterAnimation_.animationsMap.emplace(static_cast<int>(ANIMATION::IDLE), parameter_.animationsIdle);
-	parameterAnimation_.animationsMap.emplace(static_cast<int>(ANIMATION::WALK), parameter_.animationsWalk);
-	parameterAnimation_.animationsMap.emplace(static_cast<int>(ANIMATION::BRAKE), parameter_.animationsBrake);
-	parameterAnimation_.animationsMap.emplace(static_cast<int>(ANIMATION::ATTACK), parameter_.animationsAttack);
-	parameterAnimation_.animationsMap.emplace(static_cast<int>(ANIMATION::JUMP), parameter_.animationsJump);
-	parameterAnimation_.animationsMap.emplace(static_cast<int>(ANIMATION::FALL), parameter_.animationsFall);
-	parameterAnimation_.animationsMap.emplace(static_cast<int>(ANIMATION::DIE), parameter_.animationsDie);
-	parameterAnimation_.animationsMap.emplace(static_cast<int>(ANIMATION::DAMAGE), parameter_.animationsDamage);
-	parameterAnimation_.animationsMap.emplace(static_cast<int>(ANIMATION::PAUSE), parameter_.animationsPause);
-
-	// 初期アニメーション速度の登録
-	parameterAnimation_.animationSpeed = parameter_.animationSpeed;
-
-	// 初期アニメーション
-	ChangeAnimation(ANIMATION::IDLE);
+	// 初期化
+	componentStateMap_.at(STATE::ATTACK)->Init();
 }
 
-void Player::ChangeAnimation(const ANIMATION type, const bool isLoop)
+std::shared_ptr<ColliderBox> Player::CreateColliderClone()
 {
-	// 型変換
-	int intType = static_cast<int>(type);
+	std::shared_ptr<ColliderBase> collider = collider_->Clone();
+	std::shared_ptr<ColliderBox> colliderBox = std::dynamic_pointer_cast<ColliderBox>(collider);
+	return colliderBox;
+}
 
-	// 同じアニメーション種類の場合無視
-	if (intType == parameterAnimation_.animationType) return;
+void Player::SetAvilityComponent(std::unique_ptr<ComponentAvilityBase> component)
+{
+	// 中身が空の場合
+	if (!component)
+	{
+		// 終了
+		return;
+	}
 
-	// 種類格納
-	parameterAnimation_.animationType = intType;
+	// 既に所持しているか探索
+	auto it = std::find_if(avilityComponents_.begin(), avilityComponents_.end(), [&component](const auto& avility)
+		{
+			return avility->GetType() == component->GetType();
+		});
 
-	// 開始インデックス格納
-	parameterAnimation_.animationStartIndex = parameterAnimation_.animationType * parameter_.divisionNum.x;
+	// ある場合
+	if (it != avilityComponents_.end())
+	{
+		// 終了
+		return;
+	}
 
-	// 終了インデックス格納
-	parameterAnimation_.animationFinishIndex = parameterAnimation_.animationStartIndex + parameterAnimation_.animationsMap.at(parameterAnimation_.animationType) - 1;
+	// 最大数所持してた場合
+	if (static_cast<int>(avilityComponents_.size()) == AVILITY_MAX)
+	{
+		// スペアで所持
+		spareAvilityComponent_ = std::move(component);
 
-	// ループ判定
-	parameterAnimation_.isLoop = isLoop;
+		// 操作が被るため一時的にアビリティ重力を無効にする
+		SetAvilityActive(AvilityTypes::TYPE::GRAVITY, false);
 
-	// 再生判定
-	parameterAnimation_.isPlay = true;
+		// 選択時間の設定
+		selectAvilityTime_ = AVILITY_SELECT_TIME;
+
+		// 終了
+		return;
+	}
+
+	// 格納
+	component->Init();
+	avilityComponents_.push_back(std::move(component));
+}
+
+void Player::SetAvilityActive(const AvilityTypes::TYPE avilityType, const bool isActive)
+{
+	auto it = std::find_if(avilityComponents_.begin(), avilityComponents_.end(), [avilityType](const auto& avility)
+		{
+			return avility->GetType() == avilityType;
+		});
+
+	if (it != avilityComponents_.end())
+	{
+		(*it)->SetActive(isActive);
+	}
+}
+
+void Player::SetAllAvilityComponentActive(const bool isActive)
+{
+	for (auto& avility : avilityComponents_)
+	{
+		avility->SetActive(isActive);
+	}
+}
+
+void Player::RemoveAvilityComponent(const AvilityTypes::TYPE avilityType)
+{
+	auto it = std::remove_if(avilityComponents_.begin(), avilityComponents_.end(), [avilityType](const auto& avility)
+		{
+			if (avility->GetType() == avilityType)
+			{
+				avility->Remove();
+				return true;
+			}
+			return false;
+		});
+
+	avilityComponents_.erase(it, avilityComponents_.end());
+}
+
+void Player::ResetAvilityComponent(const AvilityTypes::TYPE avilityType)
+{
+	auto it = std::find_if(avilityComponents_.begin(), avilityComponents_.end(), [avilityType](const auto& avility)
+		{
+			return avility->GetType() == avilityType;
+		});
+
+	if (it != avilityComponents_.end())
+	{
+		(*it)->Init();
+	}
+}
+
+void Player::UpdateComponentAvility()
+{
+	if (avilityComponents_.empty())
+	{
+		return;
+	}
+
+	// アビリティの選択処理
+	SelectAvility();
+
+	// アビリティの処理
+	for (auto& avility : avilityComponents_)
+	{
+		// 中身が有効かチェック
+		if (avility)
+		{
+			if (avility->IsActive())
+			{
+				// 更新処理
+				avility->Update();
+			}
+		}
+	}
+}
+
+void Player::SelectAvility()
+{
+	// 予備の中身がある場合
+	if (spareAvilityComponent_)
+	{
+		// 時間を減らす
+		selectAvilityTime_ -= scnMng_.GetDeltaTime();
+
+		// 選択処理
+		int index = -1;
+		InputManager& input = InputManager::GetInstance();
+		if (input.IsTrgDown(InputManager::TYPE::SELECT_AVILITY_FIRST)) { index = 0; }
+		else if (input.IsTrgDown(InputManager::TYPE::SELECT_AVILITY_SECOND)) { index = 1; }
+		else if(input.IsTrgDown(InputManager::TYPE::SELECT_AVILITY_THIRD)) { index = 2; }
+
+		// 選択した場合
+		if (index > -1)
+		{
+			avilityComponents_[index]->Remove();
+			spareAvilityComponent_->Init();
+			avilityComponents_[index] = std::move(spareAvilityComponent_);
+			selectAvilityTime_ = 0.0f;
+		}
+
+		// 時間に達した場合
+		if (selectAvilityTime_ <= 0.0f)
+		{
+			spareAvilityComponent_ = nullptr;
+			SetAvilityActive(AvilityTypes::TYPE::GRAVITY, true);
+		}
+	}
 }

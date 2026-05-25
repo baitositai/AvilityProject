@@ -1,11 +1,15 @@
 #pragma once
 #include <unordered_map>
+#include <map>
 #include <memory>
 #include <vector>
 #include <string>
+#include "../Parameter/ParameterActor.h"
 #include "../Common/Vector2.h"
 #include "../Common/Vector2F.h"
 
+class ParameterActor;
+class Animation;
 class ColliderBase;
 class OnHitBase;
 class ComponentBase;
@@ -30,52 +34,11 @@ public:
 		MAX
 	};
 
-	// 共通パラメータ
-	struct Parameter
-	{	
-		// 描画に必要な情報
-		int texureHandle = -1;					// テクスチャハンドル
-		const int* texuresHandle = nullptr;		// テクスチャハンドル(スプライト用)
-		float scale = 1.0f;						// 拡大率
-		float angle = 0.0f;						// 角度
-		bool direction = false;					// 向き(false:右,true:左)
-		bool transparent = true;				// 透過判定
-		Vector2 localPos = {};					// 相対位置
-		Vector2 drawPos = {};					// 描画位置
-		Vector2 divisionNum = {};				// 分割数
-
-		// 移動に必要な情報		
-		float moveSpeed = 0.0f;					// 移動速度
-		Vector2F pos = {};						// 位置
-		Vector2F moveAmount = {};				// 移動量
-
-		// 重力関係
-		float gravityPower = 0.0f;				// 重力
-		DIR gravityDir = DIR::DOWN;				// 重力方向
-		float weight = 0.0f;					//物体の重み
-
-		float animationSpeed = 0.0f;			// アニメーション速度の格納
-	};
-	
-	// アニメーション用の情報
-	struct ParameterAnimation
-	{
-		int animationType = -1;						// アニメーションの種類		
-		int animationIndex = 0;						// アニメーションインデックス
-		int animationStartIndex = 0;				// アニメーション開始インデックス
-		int animationFinishIndex = 0;				// アニメーション終了インデックス
-		float animationSpeed = 0.0f;				// アニメーションスピード
-		bool isPlay = false;						// アニメーション再生判定 
-		bool isStop = false;						// アニメーション停止判定
-		bool isLoop = false;						// アニメーションループ判定
-		std::unordered_map<int, int> animationsMap;	// 種類別アニメーション数管理マップ
-	};
-
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="parameter">パラメータ情報</param>
-	ActorBase(Parameter* parameter, const std::vector<std::string>& componentNameList = {});
+	ActorBase(std::unique_ptr<ParameterActor> parameter = nullptr);
 
 	/// <summary>
 	/// デストラクタ
@@ -103,9 +66,14 @@ public:
 	virtual void DebugDraw();
 
 	/// <summary>
-	/// アニメーションの初期化
+	/// 削除処理
 	/// </summary>
-	virtual void InitAnimation();
+	void Delete();
+
+	/// <summary>
+	/// 着地処理
+	/// </summary>
+	virtual void Landing();
 
 	/// <summary>
 	/// コンポーネントの追加
@@ -119,72 +87,44 @@ public:
 	/// </summary>
 	/// <param name="name">コンポーネントの名前</param>
 	void RemoveComponent(const std::string& name);	
+
+	/// <summary>
+	/// 指定したコンポーネントの活動状態を返す
+	/// </summary>
+	/// <param name="name">コンポーネント名</param>
+	/// <returns>コンポーネント名前</returns>
+	bool IsComponentActive(const std::string& name) const;
+
+	/// <summary>
+	/// 指定したコンポーネントの活動状態を設定
+	/// </summary>
+	/// <param name="name">コンポーネント名</param>
+	/// <param name="isActive">活動状態</param>
+	void SetComponentActive(const std::string& name, const bool isActive);
 	
 	/// <summary>
 	/// 衝突後の処理
 	/// </summary>
 	/// <param name="opponentCollider">衝突した相手のコライダー</param>
 	void OnHit(const std::weak_ptr<ColliderBase>& opponentCollider);
-	
-	/// <summary>
-	/// アニメーションインデックスの設定
-	/// </summary>
-	/// <param name="animationIndex">アニメーションインデックス</param>
-	void SetAnimationIndex(const int animationIndex) { parameterAnimation_.animationIndex = animationIndex; }
 
 	/// <summary>
-	/// アニメーション速度の設定
+	/// コライダーの活動状態の設定
 	/// </summary>
-	/// <param name="animationSpeed">アニメーション速度</param>
-	void SetAnimationSpeed(const int animationSpeed) { parameterAnimation_.animationSpeed = animationSpeed; }
+	/// <param name="isActive">活動状態</param>
+	void SetColliderActive(const bool isActive);
 
 	/// <summary>
-	/// アニメーションの再生判定を設定
+	/// アニメーションを返す
 	/// </summary>
-	/// <param name="isPlay">再生判定</param>
-	void SetAnimationIsPlay(const bool isPlay) { parameterAnimation_.isPlay = isPlay; } 
-	
-	/// <summary>
-	/// 角度の設定
-	/// </summary>
-	/// <param name="angle">角度</param>
-	void SetAngle(const float angle) { actorParameterPtr_->angle = angle; }
+	/// <returns>アニメーション</returns>
+	Animation& GetAnimation() const { return *animation_; }
 
 	/// <summary>
-	/// 方向の設定
+	/// パフを重ねた重力を返す
 	/// </summary>
-	/// <param name="direction">方向</param>
-	void SetDirection(const bool direction) { actorParameterPtr_->direction = direction; }
-
-	/// <summary>
-	/// 座標の設定
-	/// </summary>
-	/// <param name="pos">座標</param>
-	void SetPosition(const Vector2F pos) { actorParameterPtr_->pos = pos; }
-
-	/// <summary>
-	/// 移動量の設定
-	/// </summary>
-	/// <param name="moveAmount">移動量</param>
-	void SetMoveAmount(const Vector2F moveAmount) { actorParameterPtr_->moveAmount = moveAmount; }
-
-	/// <summary>
-	/// 移動量の設定
-	/// </summary>
-	/// <param name="moveAmount">移動量</param>
-	void AddMoveAmount(const Vector2F moveAmount);
-
-	/// <summary>
-	/// パラメータ情報を返す
-	/// </summary>
-	/// <returns></returns>
-	const Parameter* GetParameter() const { return actorParameterPtr_; }
-
-	/// <summary>
-	/// アニメーション情報を返す
-	/// </summary>
-	/// <returns>アニメーション情報</returns>
-	const ParameterAnimation& GetParameterAnimation() const { return parameterAnimation_; }
+	/// <returns>重力</returns>
+	const float GetGravityPowerWithBoost() const;
 
 	/// <summary>
 	/// 活動しているか返す
@@ -198,6 +138,32 @@ public:
 	/// <returns>削除判定</returns>
 	const bool IsDelete() const { return isDelete_; }
 
+	/// <summary>
+	/// 削除フラグをtrueにする
+	/// </summary>
+	/// <param name="_isDelete"></param>
+	void SetIsDelete(void);
+
+	/// <summary>
+	/// パラメーターを返す(変更可)
+	/// </summary>
+	/// <returns>パラメータ</returns>
+	ParameterActor& GetParameter() { return *parameter_.get(); }
+
+	/// <summary>
+	/// パラメータを返す
+	/// </summary>
+	/// <returns>パラメータ</returns>
+	const ParameterActor& GetParameter() const { return *parameter_.get(); }
+
+	/// <summary>
+	/// パフを重ねた攻撃力を返す
+	/// </summary>
+	/// <returns>攻撃力</returns>
+	const int GetAttackPowerWithBoost() const;
+
+	void SetIsDraw(const bool isDraw) { isDraw_ = isDraw; }
+
 protected:
 
 	// 管理クラスの参照
@@ -207,11 +173,14 @@ protected:
 	CollisionManager& collMng_;
 	FactoryComponent& facCom_;
 
-	// アニメーション用のパラメータ
-	ParameterAnimation parameterAnimation_;
+	// アニメーション
+	std::unique_ptr<Animation> animation_;
 
 	// コンポーネントの管理マップ
-	std::unordered_map<std::string, std::unique_ptr<ComponentBase>> componentMap_;
+	std::unordered_map<std::string, ComponentBase*> componentMap_;
+
+	// 追加順を保持し、更新（Update等）で使用するリスト
+	std::vector<std::unique_ptr<ComponentBase>> componentList_;
 
 	// コライダー
 	std::shared_ptr<ColliderBase> collider_;
@@ -225,17 +194,26 @@ protected:
 	// 削除判定
 	bool isDelete_;
 
+	// 描画判定
+	bool isDraw_;
+
+	// アニメーションの初期化
+	virtual void InitAnimation();
+
+	// リソースの初期化
+	virtual void InitResource();
+
 	// コライダーの登録
 	void RegisterCollider();	
 	
 	// コンポーネントの生成
 	virtual void CreateComponents();
 
+	// 型変換用のパラメータを返す関数
+	ParameterActor* GetParameterActorPtr() { return parameter_.get(); }
+
 private:
-
-	// 生成するコンポーネントのリスト
-	const std::vector<std::string> DEFAULT_COMPONENT_CREATE_LIST;
-
-	// 共通パラメータ(ポインタで所持)
-	Parameter* actorParameterPtr_;
+	
+	// パラメータ
+	std::unique_ptr<ParameterActor> parameter_;
 };

@@ -23,11 +23,17 @@ public:
 	void Update() override;
 private:
 
+	//設置可能なボックス上限
+	static constexpr int SET_BLAST_NUM = 3;
+
 	//設置ボックスの数
 	int boxCnt_;
 
 	//クールタイム
 	float coolCnt_;
+
+	//ボックスの設置
+	void PlaceBox();
 
 
 };

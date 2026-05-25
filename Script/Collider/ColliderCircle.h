@@ -10,8 +10,9 @@ public:
 	/// </summary>
 	/// <param name="owner">Š—LÒ</param>
 	/// <param name="tag">ƒ^ƒO</param>
+	/// <param name="followPos">’Ç]‘ÎÛ‚ÌÀ•W</param>
 	/// <param name="radius">”¼Œa</param>
-	ColliderCircle(ActorBase& owner, const CollisionTags::TAG tag, const float radius);
+	ColliderCircle(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos, float& radius);
 	
 	/// <summary>
 	/// ƒfƒXƒgƒ‰ƒNƒ^
@@ -25,14 +26,19 @@ public:
 	std::shared_ptr<ColliderBase> Clone() const override;
 
 	/// <summary>
-	/// ”¼Œa‚Ìİ’è
+	/// ”¼Œa‚ğ•Ô‚·
 	/// </summary>
-	/// <param name="radius">”¼Œa</param>
-	void SetRadius(const float radius) { radius_ = radius; }
+	/// <returns>”¼Œa</returns>
+	const float GetRadius() const { return radius_; }
+
+	/// <summary>
+	/// ƒfƒoƒbƒO•`‰æ
+	/// </summary>
+	void DebugDraw() override;
 
 private:
 
 	// ”¼Œa
-	float radius_;
+	float& radius_;
 };
 

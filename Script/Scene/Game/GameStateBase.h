@@ -4,6 +4,8 @@ class PlayerManager;
 class EnemyManager;
 class CollisionManager;
 class StageManager;
+class ItemManager;
+class SpriteEffectManager;
 
 class GameStateBase
 {
@@ -52,4 +54,10 @@ protected:
 	
 	// ステージ管理
 	StageManager& stageMng_;
+
+	// アイテム管理クラス
+	ItemManager& itemMng_;
+
+	// エフェクト管理クラス
+	SpriteEffectManager& effectMng_;
 };

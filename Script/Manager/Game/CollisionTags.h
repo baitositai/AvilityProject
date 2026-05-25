@@ -10,10 +10,17 @@ public:
 	enum class TAG
 	{
 		NONE,
-		PLAYER,					// プレイヤー
-		STAGE,					// ステージ
-		ENEMY,					// 敵
-		AVILITY_BOX,			//アビリティ設置のボックス
+		PLAYER,						// プレイヤー
+		PLAYER_ATTACK_NORMAL,		// プレイヤーの通常攻撃	
+		PLAYER_AVILITY_STAMP,		// プレイヤーのアビリティ
+		PLAYER_AVILITY_SHOT,		// プレイヤーのアビリティ
+		STAGE,						// ステージ
+		ENEMY_CLONE,				// 敵:クローン
+		AVILITY_BOX,				// アビリティ設置のボックス
+		BLAST,						// 爆風
+		AIRSLASH,					// エアースラッシュ
+		ITEM_AVILITY,				// アイテム:アビリティ
+		TELEPORT_EXIT,				// テレポート
 		MAX
 	};
 

@@ -17,7 +17,13 @@ public:
 	/// <param name="circlePos">円の座標</param>
 	/// <param name="radius">半径</param>
 	/// <returns>判定結果</returns>
-	static bool IsHitArrayToCircle(const std::vector<std::vector<int>>& arrayOfArrays, const std::vector<int>& hitIds, const Vector2& chipSize, ColliderArray::Result& result, const Vector2& circlePos, const float radius);
+	static bool IsHitArrayToCircle(
+		const std::vector<std::vector<int>>& arrayOfArrays, 
+		const std::vector<int>& hitIds, 
+		const Vector2& chipSize, 
+		ColliderArray::Result& result,
+		const Vector2& circlePos, 
+		const float radius);
 
 	/// <summary>
 	/// 配列とボックスの衝突判定
@@ -29,7 +35,15 @@ public:
 	/// <param name="boxTopPos">ボックストップ</param>
 	/// <param name="boxBottomPos">ボックスボトム</param>
 	/// <returns>判定結果</returns>
-	static bool IsHitArrayToBox(const std::vector<std::vector<int>>& arrayOfArrays, const std::vector<int>& hitIds, const Vector2& chipSize, ColliderArray::Result& result, const Vector2& boxTopPos, const Vector2& boxBottomPos);
+	static bool IsHitArrayToBox(
+		const std::vector<std::vector<int>>& arrayOfArrays,
+		const std::vector<int>& hitIds,
+		const Vector2& chipSize,
+		ColliderArray::Result& result,
+		const Vector2F& boxTopPos,
+		const Vector2F& boxBottomPos,
+		const Vector2F& moveAmount,
+		ParameterActor::DIR gravityDir);
 
 	/// <summary>
 	/// 円同士の衝突判定
@@ -39,7 +53,11 @@ public:
 	/// <param name="circlePos2">円2の座標</param>
 	/// <param name="radius2">円2の半径</param>
 	/// <returns>判定結果</returns>
-	static bool IsHitCircleToCircle(const Vector2& circlePos1, const float radius1, const Vector2& circlePos2, const float radius2);
+	static bool IsHitCircleToCircle(
+		const Vector2& circlePos1, 
+		const float radius1, 
+		const Vector2& circlePos2, 
+		const float radius2);
 
 	/// <summary>
 	/// 円とボックスの衝突判定

@@ -1,8 +1,12 @@
+#include "../Common/Animation.h"
 #include "GimmickBase.h"
 
-GimmickBase::GimmickBase(Parameter* parameter, const std::vector<std::string>& componentNameList):
-	ActorBase(parameter,componentNameList)
+GimmickBase::GimmickBase(std::unique_ptr<ParameterGimmick> parameter) :
+	ActorBase(std::move(parameter))
 {
+	// ƒpƒ‰ƒ[ƒ^
+	parameterGimmick_ = dynamic_cast<ParameterGimmick*>(GetParameterGimmickPtr());
+	assert(parameterGimmick_ != nullptr);
 }
 
 GimmickBase::~GimmickBase()

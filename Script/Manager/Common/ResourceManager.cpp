@@ -264,7 +264,7 @@ std::unordered_map<std::string, ResourceEffect*>& ResourceManager::GetSceneEffec
 	return sceneEffects;
 }
 
-const int ResourceManager::GetHandle(const std::string& key) const
+int ResourceManager::GetHandle(const std::string& key) const
 {
 	//リソースを探す
 	const auto& res = loadedMap_.find(key);
@@ -276,7 +276,7 @@ const int ResourceManager::GetHandle(const std::string& key) const
 	return res->second->GetHandle();
 }
 
-const int* ResourceManager::GetHandles(const std::string& key) const
+int* ResourceManager::GetHandles(const std::string& key) const
 {
 	// リソースを探す
 	auto it = loadedMap_.find(key);
