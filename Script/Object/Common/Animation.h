@@ -18,6 +18,7 @@ public:
 		DEAD = 6,
 		DAMAGE = 7,
 		PAUSE = 8,
+		EFFECT = 9, 
 		MAX,
 	};
 
@@ -59,6 +60,11 @@ public:
 	/// 停止
 	/// </summary>
 	void Stop();
+
+	/// <summary>
+	/// リスタート
+	/// </summary>
+	void Restart() { isPlay_ = true; }
 
 	/// <summary>
 	/// 次に再生するアニメーションを確認
@@ -121,6 +127,7 @@ private:
 		{ "dead", TYPE::DEAD },
 		{ "damage", TYPE::DAMAGE },
 		{ "pause", TYPE::PAUSE },
+		{ "effect", TYPE::EFFECT },
 	};
 
 	// アニメーション種類

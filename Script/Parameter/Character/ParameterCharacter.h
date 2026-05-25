@@ -22,20 +22,11 @@ public:
     /// <param name="parameter">読み込むJSONデータ</param>
     virtual void LoadParameter(const Json& parameter) override;
 
-    // 体力
-    int hp_;
-
-    // 攻撃力
-    int attackPower_;
-
     // ジャンプ回数
     int jumpCount_;
 
     // 最大ジャンプ回数
     int jumpCountMax_;
-
-    // 攻撃力上昇率
-    float attackBoostRate_;
 
     // 防御率
     float damageRate_;

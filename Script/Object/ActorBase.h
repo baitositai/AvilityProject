@@ -156,6 +156,14 @@ public:
 	/// <returns>パラメータ</returns>
 	const ParameterActor& GetParameter() const { return *parameter_.get(); }
 
+	/// <summary>
+	/// パフを重ねた攻撃力を返す
+	/// </summary>
+	/// <returns>攻撃力</returns>
+	const int GetAttackPowerWithBoost() const;
+
+	void SetIsDraw(const bool isDraw) { isDraw_ = isDraw; }
+
 protected:
 
 	// 管理クラスの参照
@@ -185,6 +193,9 @@ protected:
 
 	// 削除判定
 	bool isDelete_;
+
+	// 描画判定
+	bool isDraw_;
 
 	// アニメーションの初期化
 	virtual void InitAnimation();

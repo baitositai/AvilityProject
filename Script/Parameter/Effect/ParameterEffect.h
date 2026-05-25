@@ -19,7 +19,7 @@ public:
 	/// パラメータの読み込み
 	/// </summary>
 	/// <param name="parameter">パラメータ情報</param>
-	void LoadParameter(const Json& parameter) override;
+	virtual void LoadParameter(const Json& parameter) override;
 
 private:
 

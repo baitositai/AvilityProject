@@ -1,20 +1,19 @@
 #pragma once
 #include "ComponentAvilityBase.h"
 
-class ComponentAvilityAirslash : public ComponentAvilityBase
+class ComponentAvilityGiant : public ComponentAvilityBase
 {
 public:
 
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	/// <param name="owner">所有者</param>
-	ComponentAvilityAirslash(Player& owner);
+	ComponentAvilityGiant(Player& owner);
 
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~ComponentAvilityAirslash();
+	~ComponentAvilityGiant() override;
 
 	/// <summary>
 	/// 更新処理
@@ -22,15 +21,17 @@ public:
 	void Update() override;
 
 	/// <summary>
-	/// 取り外し処理
+	/// 取り外し時の処理
 	/// </summary>
 	void Remove() override;
 
 private:
 
-	// ジャンプ回数の保持
-	int preJumpCount_;
+	// 拡大率
+	static constexpr float SCALE = 2.0f;
 
-	// 生成処理
-	void CreateAirslash();
+	// 重力制御処理
+	void ProcessGravity();
+
 };
+

@@ -1,3 +1,4 @@
+#include <tgmath.h>
 #include "../../Utility/UtilityCommon.h"
 #include "../../Common/Vector2F.h"
 #include "../../Manager/Common/InputManager.h"
@@ -121,7 +122,7 @@ void ComponentAvilityShot::Remove()
 	// コライダーの削除 
 	if (attackCollider_)
 	{
-		attackCollider_->SetDelete();
+		attackCollider_->Delete();
 	}
 
 	// 攻撃力を戻す
@@ -134,7 +135,7 @@ void ComponentAvilityShot::ProcessInputShot()
 	const float moveSpeed = parameter_.moveSpeed_;
 
 	//　ショット入力があったらCharge開始(現在Qキー)
-	if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_AVILITY))
+	if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_AVILITY_SHOT))
 	{
 		// 影響を与えるコンポーネントを無効にする
 		owner_.SetStateComponentActive(Player::STATE::ALIVE, false);
@@ -162,18 +163,33 @@ void ComponentAvilityShot::ProcessInputCharge()
 	// =========================
 	// ここで角度を決定
 	// 方向判定
+	bool isInput = false;
 	if (inputManager_.IsNew(InputManager::TYPE::AVILITY_GRAVITY_RIGHT))
 	{
 		shotAngle_ += 0.1f;
+		isInput = true;
 	}
 	if (inputManager_.IsNew(InputManager::TYPE::AVILITY_GRAVITY_LEFT))
 	{
 		shotAngle_ -= 0.1f;
+		isInput = true;
 	}
-
 	if (shotAngle_ > UtilityCommon::Deg2RadF(360.0f))
 	{
 		shotAngle_ = 0.0f;
+	}
+
+	// 入力されていない場合
+	if (!isInput)
+	{
+		// パッドの確認
+		Vector2 overSize = inputManager_.GetKnockLStickSize();
+
+		// 正規化
+		overSize.Normalize();
+
+		// 角度決定
+		shotAngle_ = std::atan2f(overSize.x, -overSize.y);
 	}
 
 	// =========================
@@ -193,33 +209,7 @@ void ComponentAvilityShot::ProcessInputCharge()
 	// 向き
 	// =========================
 
-	// 現在の向きに応じて方向を設定
-	//shotVec_.x > 0 ? owner_.SetDirection(false) : owner_.SetDirection(true);
-
 	angle = shotAngle_;
-
-	// -PI ～ PI の範囲に正規化
-	/*while (angle <= -DX_PI_F) angle += DX_TWO_PI_F;
-	while (angle > DX_PI_F) angle -= DX_TWO_PI_F;*/
-
-	// 左向き判定
-	//if (std::abs(angle) > DX_PI_F / 2.0f)
-	//{
-	//	owner_.SetDirection(true);
-
-	//	// 左向き(PI)を基準(0)に変換
-	//	if (angle > 0) {
-	//		angle -= DX_PI_F;
-	//	}
-	//	else {
-	//		angle += DX_PI_F;
-	//	}
-	//}
-	//else
-	//{
-	//	// 右向き状態
-	//	owner_.SetDirection(false);
-	//}
 
 	// プレイヤーが左向きなら
 	if (parameter_.direction_)
@@ -253,7 +243,7 @@ void ComponentAvilityShot::ProcessInputCharge()
 	// チャージ
 	// =========================
 
-	if (inputManager_.IsNew(InputManager::TYPE::PLAYER_AVILITY))
+	if (inputManager_.IsNew(InputManager::TYPE::PLAYER_AVILITY_SHOT))
 	{
 		chageTime_ += 0.5f;
 		shotTime_ += 0.1f;

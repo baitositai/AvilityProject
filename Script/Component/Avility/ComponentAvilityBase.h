@@ -7,6 +7,7 @@ class ParameterPlayer;
 class StageManager;
 class SceneManager;
 class InputManager;
+class SpriteEffectManager;
 
 // アビリティ用スロット
 enum class ABILITY_SLOT
@@ -70,6 +71,9 @@ protected:
 
 	// 入力管理クラスの参照
 	InputManager& inputManager_;	
+
+	// エフェクト管理クラスの参照
+	SpriteEffectManager& effectManager_;
 	
 	// アビリティスロット
 	ABILITY_SLOT abilitySlot_;

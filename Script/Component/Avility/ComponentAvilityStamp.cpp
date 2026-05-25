@@ -1,3 +1,4 @@
+#include <tgmath.h>
 #include "../../Manager/Common/SceneManager.h"
 #include "../../Manager/Common/InputManager.h"
 #include "../../Manager/Game/CollisionManager.h"
@@ -5,6 +6,7 @@
 #include "../../Object/Common/Animation.h"
 #include "../../Collider/ColliderBox.h"
 #include "ComponentAvilityStamp.h"
+#include "ComponentAvilityTeleport.h"
 
 ComponentAvilityStamp::ComponentAvilityStamp(Player& owner) :
 	ComponentAvilityBase(owner)
@@ -44,7 +46,7 @@ void ComponentAvilityStamp::Remove()
 	// コライダーの削除 
 	if(attackCollider_)
 	{
-		attackCollider_->SetDelete();
+		attackCollider_->Delete();
 	}
 
 	// 攻撃力を戻す
@@ -152,7 +154,8 @@ void ComponentAvilityStamp::ChangeStateStop()
 	owner_.SetColliderActive(false);
 
 	parameter_.shotVec_ = Vector2F(0.0f, 0.0f);
-	parameter_.angle_ = 0.0f;
+	Vector2F gravityDir = parameter_.GetDown();
+	parameter_.angle_ = std::atan2f(-gravityDir.x, gravityDir.y);
 }
 
 void ComponentAvilityStamp::ChangeStateActive()

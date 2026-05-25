@@ -28,6 +28,11 @@ public:
 	void Draw();
 
 	/// <summary>
+	/// デバッグ描画
+	/// </summary>
+	void DebugDraw();
+
+	/// <summary>
 	/// 追加処理
 	/// </summary>
 	/// <param name="effect">エフェクト</param>

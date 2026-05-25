@@ -7,7 +7,7 @@
 ComponentStatePlayerProcess::ComponentStatePlayerProcess(Player& owner) :
 	ComponentCharacterStateBase(owner),
 	owner_(owner),
-	parameter_(owner_.GetParameter()),
+	parameter_(owner.GetParameter()),
 	inputManager_(InputManager::GetInstance())
 {
 	velocityY_ = 0.0f;

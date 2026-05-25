@@ -17,7 +17,7 @@ public:
 	~EffectAirslash() override;
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// ‰Šú‰»ˆ—
 	/// </summary>
 	void Init() override;
 
@@ -32,7 +32,7 @@ private:
 	static constexpr float ALIVE_TIME = 2.0f;
 
 	// •ûŒü
-	const Vector2F& direction_;
+	const Vector2F DIRECTION;
 
 	// ƒpƒ‰ƒ[ƒ^î•ñ
 	ParameterEffect* parameterEffect_;

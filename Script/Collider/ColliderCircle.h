@@ -12,7 +12,7 @@ public:
 	/// <param name="tag">タグ</param>
 	/// <param name="followPos">追従対象の座標</param>
 	/// <param name="radius">半径</param>
-	ColliderCircle(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos, const float radius);
+	ColliderCircle(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos, const float& radius);
 	
 	/// <summary>
 	/// デストラクタ
@@ -24,12 +24,6 @@ public:
 	/// </summary>
 	/// <returns>複製したインスタンス</returns>
 	std::shared_ptr<ColliderBase> Clone() const override;
-
-	/// <summary>
-	/// 半径の設定
-	/// </summary>
-	/// <param name="radius">半径</param>
-	void SetRadius(const float radius) { radius_ = radius; }
 
 	/// <summary>
 	/// 半径を返す
@@ -45,6 +39,6 @@ public:
 private:
 
 	// 半径
-	float radius_;
+	const float& radius_;
 };
 

@@ -23,6 +23,7 @@ ActorBase::ActorBase(std::unique_ptr<ParameterActor> parameter) :
 	if (!parameter_) { parameter_ = std::make_unique<ParameterActor>(); }	// 必ず実態を持つ
 	isActive_ = true;
 	isDelete_ = false;
+	isDraw_ = true;
 }
 
 ActorBase::~ActorBase()
@@ -68,6 +69,8 @@ void ActorBase::Update()
 
 void ActorBase::Draw()
 {
+	if (!isDraw_) return;
+
 	// 描画位置を設定
 	Vector2F cameraPos = mainCamera.GetPos();
 	parameter_->drawPos_ = Vector2::AddVector2(Vector2::AddVector2(parameter_->pos_.ToVector2(), parameter_->localPos_), cameraPos.ToVector2());
@@ -128,7 +131,8 @@ void ActorBase::Delete()
 	// コライダーがある場合削除
 	if (collider_ != nullptr)
 	{
-		collider_->SetDelete();
+		collider_->Delete();
+		collider_ = nullptr;
 	}
 	// 削除
 	isDelete_ = true;
@@ -218,7 +222,7 @@ void ActorBase::SetIsDelete(void)
 	isDelete_ = true;
 
 	//当たり判定の消去
-	collider_->SetDelete();
+	collider_->Delete();
 }
 
 void ActorBase::RegisterCollider()
@@ -246,4 +250,10 @@ void ActorBase::OnHit(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
 	if (onHit_ == nullptr) return;
 	onHit_->Update(opponentCollider);
+}
+
+const int ActorBase::GetAttackPowerWithBoost() const
+{
+	float boostAttackPower = static_cast<float>(parameter_->attackPower_) * (1.0f + parameter_->attackBoostRate_);
+	return static_cast<int>(boostAttackPower);
 }

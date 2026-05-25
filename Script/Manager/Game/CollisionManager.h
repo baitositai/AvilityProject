@@ -94,5 +94,4 @@ private:
 
 	// デストラクタ
 	~CollisionManager();
-
 };

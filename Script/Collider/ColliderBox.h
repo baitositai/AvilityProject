@@ -29,12 +29,6 @@ public:
 	std::shared_ptr<ColliderBase> Clone() const override;
 
 	/// <summary>
-	/// ボックスサイズの設定
-	/// </summary>
-	/// <param name="topPos">ボックスサイズ</param>
-	void SetBoxSize(const Vector2& topPos) { boxSize_ = topPos; }
-
-	/// <summary>
 	/// ボックスサイズを返す
 	/// </summary>
 	/// <returns>ボックスサイズ</returns>
@@ -83,7 +77,7 @@ public:
 private:
 
 	// ボックスサイズ
-	Vector2 boxSize_;
+	const Vector2& boxSize_;
 
 	// ハーフサイズ
 	Vector2 boxHalfSize_;

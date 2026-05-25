@@ -21,7 +21,10 @@ ParameterActor::ParameterActor() :
 	hitSize_({ 0, 0 }), 
 	hitRadius_(0.0f),
     texture_(-1),
-    spriteTexture_(nullptr)
+    spriteTexture_(nullptr),    
+    hp_(-1),
+    attackPower_(-1),
+    attackBoostRate_(0.0f)
 {
 }
 
@@ -32,6 +35,8 @@ ParameterActor::~ParameterActor()
 void ParameterActor::LoadParameter(const Json& parameter)
 {
     // JSON‚©‚ç’l‚ğ’Šo‚µ‚Äƒƒ“ƒo•Ï”‚Ö‘ã“ü
+    hp_ = parameter.value("hp", -1);
+    attackPower_ = parameter.value("attackPower", -1);
     scale_ = parameter.value("scale", 1.0f);
     angle_ = parameter.value("angle", 0.0f);
     direction_ = parameter.value("direction", false);

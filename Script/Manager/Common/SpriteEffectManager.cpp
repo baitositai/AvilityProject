@@ -26,6 +26,14 @@ void SpriteEffectManager::Draw()
 	}
 }
 
+void SpriteEffectManager::DebugDraw()
+{
+	for (auto& effect : effectList_)
+	{
+		effect->DebugDraw();
+	}
+}
+
 void SpriteEffectManager::Add(std::unique_ptr<EffectBase> effect)
 {
 	// ‰Šú‰»

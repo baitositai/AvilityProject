@@ -1,11 +1,8 @@
 #include "ParameterCharacter.h"
 
 ParameterCharacter::ParameterCharacter() :
-    hp_(-1),
-    attackPower_(-1),
     jumpCount_(-1),
     jumpCountMax_(-1),
-    attackBoostRate_(0.0f),
     damageRate_(0.0f),
     invincibleTimeMax_(0.0f),
     invincibleTime_(0.0f),
@@ -28,8 +25,6 @@ void ParameterCharacter::LoadParameter(const Json& parameter)
     ParameterActor::LoadParameter(parameter);
 
     // キャラクター固有パラメータの読み込み
-    hp_ = parameter.value("hp", -1);
-    attackPower_ = parameter.value("attackPower", -1);
     jumpCount_ = parameter.value("jumpCount", -1);
     jumpCountMax_ = parameter.value("jumpCountMax", -1);
     attackBoostRate_ = parameter.value("attackBoostRate", 0.0f);
@@ -50,10 +45,10 @@ void ParameterCharacter::LoadParameter(const Json& parameter)
     }
 
     // 通常攻撃の当たり判定調整座標の読み込み
-    if (parameter.contains("defaultAttackLocalPos"))
+    if (parameter.contains("defaultAttackLoaclPos"))
     {
-        defaultAttackLocalPos_.x = parameter["defaultAttackLocalPos"].value("x", 0.0f);
-        defaultAttackLocalPos_.y = parameter["defaultAttackLocalPos"].value("y", 0.0f);
+        defaultAttackLocalPos_.x = parameter["defaultAttackLoaclPos"].value("x", 0.0f);
+        defaultAttackLocalPos_.y = parameter["defaultAttackLoaclPos"].value("y", 0.0f);
     }
 
     // アニメーションデータの取得
