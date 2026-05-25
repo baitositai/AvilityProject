@@ -14,7 +14,8 @@ void StageManager::Init()
 	std::unique_ptr<ParameterStage> parameter = std::make_unique<ParameterStage>();
 	parameter->path_ = STAGE_PATH_MAP.at(type_);
 	parameter->chipSize_ = Vector2(32, 32);
-	parameter->hitIds_ = { 1 };
+	parameter->resourceKey_ = "groundChips";
+	parameter->hitIds_ = { 16, 17, 56, 57 };
 
 	// ステージ生成
 	stage_ = std::make_unique<Stage>(std::move(parameter));

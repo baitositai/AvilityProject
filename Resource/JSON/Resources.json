@@ -123,6 +123,16 @@
       "sceneId": 2,
       "sizeX": 96,
       "sizeY": 96
+    },
+    {
+      "key": "groundChips",
+      "type": "sprite",
+      "path": "Resource/Image/Stage/GroundChips.png",
+      "divX": 8,
+      "divY": 8,
+      "sceneId": 2,
+      "sizeX": 32,
+      "sizeY": 32
     }
   ]
 }
