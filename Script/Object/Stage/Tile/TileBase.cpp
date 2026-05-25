@@ -18,26 +18,20 @@ void TileBase::Init()
 
 void TileBase::Draw()
 {	
-	// タイルの仮描画
-	int color = UtilityCommon::WHITE;	// 白色
-
-	if (parameter_.type == TYPE::BLOCK)
-	{
-		color = UtilityCommon::BLUE;	// 青色
-	}
-
 	Vector2F cameraPos = mainCamera.GetPos();
 	Vector2 rendererPos = Vector2::AddVector2(parameter_.position, cameraPos.ToVector2());
-
-	DrawBox(
-		rendererPos.x,
+	DrawGraph(
+		rendererPos.x,	
 		rendererPos.y,
-		rendererPos.x + SIZE_TILE,
-		rendererPos.y + SIZE_TILE,
-		color,
+		parameter_.handle,
 		true
 	);
+}
 
+void TileBase::DebugDraw()
+{	
+	Vector2F cameraPos = mainCamera.GetPos();
+	Vector2 rendererPos = Vector2::AddVector2(parameter_.position, cameraPos.ToVector2());
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
 	DrawBox(
 		rendererPos.x,
@@ -48,9 +42,4 @@ void TileBase::Draw()
 		false
 	);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-}
-
-void TileBase::DebugDraw()
-{
-
 }

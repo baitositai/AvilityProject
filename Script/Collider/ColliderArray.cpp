@@ -46,7 +46,7 @@ ColliderArray::Result ColliderArray::CheckHitMapChip(const Vector2& worldPos) co
 	}
 
 	// Œ‹‰Ê
-	result.hit = UtilityCommon::FindIndex(hitIds_ ,arrayOfArrays_[mapY][mapX]);
+	result.hit = -1 < arrayOfArrays_[mapY][mapX];
 
 	// Õ“Ë‚µ‚Ä‚¢‚éê‡
 	if (result.hit)

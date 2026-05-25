@@ -133,6 +133,22 @@
       "sceneId": 2,
       "sizeX": 32,
       "sizeY": 32
+    },
+    {
+      "key": "groundChipsFacility",
+      "type": "sprite",
+      "path": "Resource/Image/Stage/GroundChipsFacility.png",
+      "divX": 10,
+      "divY": 10,
+      "sceneId": 2,
+      "sizeX": 32,
+      "sizeY": 32
+    },
+    {
+      "key": "backGround01",
+      "path": "Resource/Image/BackGround/BackGround01.png",
+      "sceneId": 2,
+      "type": "texture"
     }
   ]
 }

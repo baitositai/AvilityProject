@@ -11,6 +11,7 @@ Camera::Camera() :
 	pos_ = Vector2F();
 	limitMax_ = Vector2F();
 	limitMin_ = Vector2F();
+	followPos_ = {};
 
 	// ƒ‚[ƒh•Êó‘Ô‘JˆÚˆ—
 	changeStateMap_.emplace(MODE::FREE, std::bind(&Camera::ChangeModeFree, this));
@@ -61,6 +62,8 @@ void Camera::UpdateModeFixedPoint()
 
 void Camera::UpdateModePlayerFollow()
 {
+	pos_.x = followPos_->x - (float)Application::SCREEN_HALF_X;
+	pos_.y = followPos_->y - (float)Application::SCREEN_HALF_Y;
 }
 
 void Camera::ChangeModeFree()

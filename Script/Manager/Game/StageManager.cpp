@@ -2,6 +2,7 @@
 #include "../../Application.h"
 #include "../../Utility/UtilityLoad.h"
 #include "../../Object/Character/CharacterBase.h"
+#include "../../Object/Stage/BackGround.h"
 #include "../../Object/Stage/Stage.h"
 #include "../../Object/Gimmick/AvilityBox.h"
 #include "../Common/Camera.h"
@@ -14,12 +15,17 @@ void StageManager::Init()
 	std::unique_ptr<ParameterStage> parameter = std::make_unique<ParameterStage>();
 	parameter->path_ = STAGE_PATH_MAP.at(type_);
 	parameter->chipSize_ = Vector2(32, 32);
-	parameter->resourceKey_ = "groundChips";
+	parameter->resourceKey_ = "groundChipsFacility";
 	parameter->hitIds_ = { 16, 17, 56, 57 };
 
 	// ÉXÉeÅ[ÉWê∂ê¨
 	stage_ = std::make_unique<Stage>(std::move(parameter));
 	stage_->Init();
+
+	// îwåiê∂ê¨
+	backGround_ = std::make_unique<BackGround>();
+	backGround_->Init();
+	backGround_->SetResource("backGround01");
 
 	//AvilityBox::Parameter avParam = {};
 	//avParam.hitBoxSize = Vector2(48, 48);
@@ -50,6 +56,7 @@ void StageManager::Update()
 
 void StageManager::Draw()
 {
+	backGround_->Draw();
 	stage_->Draw();
 	//gimmick_->Draw();
 	for (const auto& gim : gimmick_)

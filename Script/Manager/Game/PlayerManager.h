@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "../../Template/Singleton.h"
+#include "../../Common/Vector2F.h"
 
 class Player;
 
@@ -30,6 +31,12 @@ public:
 	/// デバッグ描画
 	/// </summary>
 	void DebugDraw();
+
+	/// <summary>
+	/// カメラの追従を行う座標を返す
+	/// </summary>
+	/// <returns>追従対象の座標</returns>
+	const Vector2F& GetCameraFollowPos() const;
 
 private:
 

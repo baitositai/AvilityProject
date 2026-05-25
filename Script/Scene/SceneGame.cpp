@@ -30,10 +30,7 @@ SceneGame::~SceneGame()
 }
 
 void SceneGame::Init()
-{
-	// ƒJƒƒ‰İ’è
-	mainCamera.ChangeMode(Camera::MODE::FIXED_POINT); 
-
+{	
 	// ŠÇ—ƒNƒ‰ƒX‚Ì‰Šú‰»
 	GameManager::GetInstance().Init();
 }

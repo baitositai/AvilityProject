@@ -15,7 +15,7 @@ void PlayerManager::Init()
 	// プレイヤーのパラメータ
 	auto parameter = std::make_unique<ParameterPlayer>();
 	parameter->LoadParameter(jsonParameter);
-	parameter->pos_ = { 200, 400 };
+	parameter->pos_ = { 200, 1800 };
 
 	// プレイヤーの生成
 	playerList_.emplace_back(std::make_unique<Player>(std::move(parameter)));
@@ -49,6 +49,12 @@ void PlayerManager::DebugDraw()
 	{
 		player->DebugDraw();
 	}
+}
+
+const Vector2F& PlayerManager::GetCameraFollowPos() const
+{
+	// 1Pの座標を返す
+	return playerList_.front()->GetParameter().pos_;
 }
 
 PlayerManager::PlayerManager()

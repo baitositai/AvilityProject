@@ -51,6 +51,12 @@ public:
 	void SetCameraPos(const Vector2F& pos) { pos_ = pos; }
 
 	/// <summary>
+	/// 追従対象の座標を設定
+	/// </summary>
+	/// <param name="followPos">追従対象</param>
+	void SetFollowPos(const Vector2F* followPos) { followPos_ = followPos; }
+
+	/// <summary>
 	/// カメラの移動制限を設定
 	/// </summary>
 	/// <param name="limitMin">移動最小値</param>
@@ -76,6 +82,9 @@ private:
 
 	// 入力管理クラス
 	InputManager& inputMng_;
+
+	// 追従対象
+	const Vector2F* followPos_;
 
 	// カメラの座標
 	Vector2F pos_;

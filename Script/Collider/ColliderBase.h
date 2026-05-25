@@ -120,13 +120,10 @@ public:
 protected:		
 	
 	// 追従対象
-	const Vector2& followPos_;	
+	Vector2F& followPos_;	
 	
 	// オーナー
 	ActorBase& owner_;
-
-	// 追従対象
-	Vector2F& followPos_;
 	
 	// タグ
 	CollisionTags::TAG tag_;

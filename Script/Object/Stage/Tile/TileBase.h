@@ -15,6 +15,7 @@ public:
 	// ƒpƒ‰ƒ[ƒ^
 	struct Parameter
 	{
+		int handle = -1;
 		int id = -1;
 		TYPE type = TYPE::NONE;
 		Vector2	position = Vector2(0, 0);

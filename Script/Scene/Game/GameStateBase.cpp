@@ -24,6 +24,10 @@ GameStateBase::~GameStateBase()
 
 void GameStateBase::Init()
 {
+	// ƒJƒƒ‰İ’è
+	mainCamera.ChangeMode(Camera::MODE::FREE);
+	mainCamera.SetFollowPos(&playerMng_.GetCameraFollowPos());
+
 	// ƒJƒƒ‰‚ÌˆÚ“®§ŒÀ‚ğİ’è
 	Vector2 stageSize = stageMng_.GetStageSize();
 	mainCamera.SetCameraLimit(Vector2F{0.0f, 0.0f}, stageSize.ToVector2F());

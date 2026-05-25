@@ -3,6 +3,7 @@
 #include "../../Utility/UtilityLoad.h"
 #include "../../Manager/Common/SceneManager.h"
 #include "../../Manager/Common/Camera.h"
+#include "../../Manager/Common/ResourceManager.h"
 #include "../../Manager/Game/CollisionManager.h"
 #include "../../Collider/ColliderArray.h"
 #include "../../OnHit/OnHitBase.h"
@@ -100,6 +101,9 @@ void Stage::SetStage()
 	// ステージの初期化
 	ClearStage();
 
+	// テクスチャ取得
+	int* handles = resMng_.GetHandles(parameterStage_->resourceKey_);
+
 	// タイルの生成
 	for (size_t y = 0; y < chipIndexs_.size(); y++)
 	{
@@ -108,6 +112,7 @@ void Stage::SetStage()
 		{
 			// タイルのパラメータを設定
 			TileBase::Parameter parameter;
+			parameter.handle = handles[chipIndexs_[y][x]];
 			parameter.id = chipIndexs_[y][x];
 			parameter.type = static_cast<TileBase::TYPE>(chipIndexs_[y][x]);
 			parameter.position = Vector2(static_cast<int>(x * TileBase::SIZE_TILE), static_cast<int>(y * TileBase::SIZE_TILE));

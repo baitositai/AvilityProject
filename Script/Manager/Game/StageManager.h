@@ -10,6 +10,8 @@
 class Stage;
 class GimmickBase;
 class CharacterBase;
+class BackGround;
+
 class StageManager : public Singleton<StageManager>
 {
 	//シングルトンにだけ共有する
@@ -93,9 +95,11 @@ private:
 	// メインステージ
 	std::unique_ptr<Stage> stage_;
 
+	// 背景
+	std::unique_ptr<BackGround> backGround_;
+
 	//ギミック(後々に複数置きたい)
 	std::vector<std::unique_ptr<GimmickBase>>gimmick_;
-	//std::unique_ptr<GimmickBase>gimmick_;
 
 	// コンストラクタ
 	StageManager();

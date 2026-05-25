@@ -15,7 +15,7 @@ void EnemyManager::Init()
 	// パラメータの取得
 	auto parameter = std::make_unique<ParameterEnemyClone>();
 	parameter->LoadParameter(jsonParameter);
-	parameter->pos_ = { 600, 400 };
+	parameter->pos_ = { 600, 1800 };
 
 	// 配列に格納
 	std::vector<std::unique_ptr<CharacterBase>> enemies;
