@@ -12,7 +12,7 @@ public:
 	/// <param name="owner">所有者</param>
 	/// <param name="tag">衝突判定タグ</param>
 	/// <param name="topPos">ボックスサイズ</param>
-	ColliderBox(ActorBase& owner, const CollisionTags::TAG tag, const Vector2& boxSize,float& radAngle);
+	ColliderBox(ActorBase& owner, const CollisionTags::TAG tag, const Vector2 const Vector2& boxSize,float& radAngle);
 	
 	/// <summary>
 	/// デストラクタ

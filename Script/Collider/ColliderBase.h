@@ -14,7 +14,8 @@ public:
 	/// </summary>
 	/// <param name="owner">所有者</param>
 	/// <param name="tag">衝突判定タグ</param>
-	ColliderBase(ActorBase& owner, const CollisionTags::TAG tag);
+	/// <param name="followPos">追従対象</param>
+	ColliderBase(ActorBase& owner, const CollisionTags::TAG tag, const Vector2& followPos);
 
 	/// <summary>
 	/// デストラクタ
@@ -92,9 +93,12 @@ public:
 
 protected:		
 	
+	// 追従対象
+	const Vector2& followPos_;	
+	
 	// オーナー
 	ActorBase& owner_;
-	
+
 	// タグ
 	CollisionTags::TAG tag_;
 
