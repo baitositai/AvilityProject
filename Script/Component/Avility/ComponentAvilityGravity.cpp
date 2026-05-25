@@ -8,7 +8,6 @@ ComponentAvilityGravity::ComponentAvilityGravity(Player& owner) :
 	ComponentAvilityBase(owner)
 {
 	coolTime_ = 0.0f;
-	abilitySlot_ = ABILITY_SLOT::FIRST;
 	type_ = AvilityTypes::TYPE::GRAVITY;
 }
 
@@ -17,9 +16,14 @@ ComponentAvilityGravity::~ComponentAvilityGravity()
 
 }
 
+void ComponentAvilityGravity::Init()
+{
+	coolTime_ = 0.0f;
+}
+
 void ComponentAvilityGravity::Update()
 {
-	// クールタイムが0以下の場合
+	// クールタイムが0より大きい場合
 	if (coolTime_ > 0.0f)
 	{
 		coolTime_ -= sceneManager_.GetDeltaTime();

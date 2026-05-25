@@ -5,7 +5,6 @@
 ComponentAvilityAirwalk::ComponentAvilityAirwalk(Player& owner) :
 	ComponentAvilityBase(owner)
 {
-	abilitySlot_ = ABILITY_SLOT::SECOND;
 	type_ = AvilityTypes::TYPE::AIRWALK;
 }
 

@@ -31,6 +31,7 @@
     "jumpCountMax": 1,
     "invincibleTimeMax": 2.0,
     "defaultAttackRadius": 20.0,
+    "defaultAttackDistance": 40.0,
     "animationDefaultSpeed": 0.1,
     "animationAttackSpeed": 0.2,
     "animationsIdle": 6,
@@ -54,10 +55,6 @@
     "localPos": {
       "x": 0,
       "y": 0
-    },
-    "defaultAttackLoaclPos": {
-      "x": 40,
-      "y": 8
     },
     "animation": {
       "idle": {

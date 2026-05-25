@@ -11,7 +11,6 @@
 ComponentAvilityStamp::ComponentAvilityStamp(Player& owner) :
 	ComponentAvilityBase(owner)
 {
-	abilitySlot_ = ABILITY_SLOT::SECOND;
 	type_ = AvilityTypes::TYPE::STAMP;
 	stopTime_ = 0.0f;
 	inputEnableTime_ = INPUT_ENABLE_TIME;
@@ -20,7 +19,15 @@ ComponentAvilityStamp::ComponentAvilityStamp(Player& owner) :
 	stateChangeMap_.emplace(STATE::INPUT, std::bind(&ComponentAvilityStamp::ChangeStateInput, this));
 	stateChangeMap_.emplace(STATE::STOP, std::bind(&ComponentAvilityStamp::ChangeStateStop, this));
 	stateChangeMap_.emplace(STATE::ACTIVE, std::bind(&ComponentAvilityStamp::ChangeStateActive, this));
+}
 
+ComponentAvilityStamp::~ComponentAvilityStamp()
+{
+
+}
+
+void ComponentAvilityStamp::Init()
+{	
 	// コライダーの登録
 	attackCollider_ = owner_.CreateColliderClone();
 	attackCollider_->ChangeTag(CollisionTags::TAG::PLAYER_AVILITY_STAMP);
@@ -29,11 +36,6 @@ ComponentAvilityStamp::ComponentAvilityStamp(Player& owner) :
 
 	// 攻撃力の加算
 	parameter_.attackPower_ +=ADD_ATTACK_POWER;
-}
-
-ComponentAvilityStamp::~ComponentAvilityStamp()
-{
-
 }
 
 void ComponentAvilityStamp::Update()
@@ -117,11 +119,12 @@ void ComponentAvilityStamp::ChangeStateInput()
 	// 攻撃判定用コライダーを無効にする
 	attackCollider_->SetIsActive(false);
 
-	// スロット1のアビリティを有効にする
-	owner_.SetAbilityActive(ABILITY_SLOT::FIRST, true);
+	// 全てのアビリティを有効にする
+	owner_.SetAllAvilityComponentActive(true);
 
-	// スロット1の初期化
-	owner_.ResetAbilityComponent(ABILITY_SLOT::FIRST);
+	// 一部アビリティの初期化
+	owner_.ResetAvilityComponent(AvilityTypes::TYPE::GRAVITY);
+	owner_.ResetAvilityComponent(AvilityTypes::TYPE::SHOT);
 
 	// 所有者のコライダーの判定を有効にする
 	owner_.SetColliderActive(true);
@@ -143,8 +146,9 @@ void ComponentAvilityStamp::ChangeStateStop()
 	// キャラクターの重力を無効にする
 	owner_.SetComponentActive("gravity", false);
 
-	// スロット1のアビリティを無効にする
-	owner_.SetAbilityActive(ABILITY_SLOT::FIRST, false);
+	// 全てのアビリティを無効にする
+	owner_.SetAllAvilityComponentActive(false);
+	isActive_ = true;
 
 	// アニメーション切り替えて停止
 	owner_.GetAnimation().Play(Animation::TYPE::IDLE);

@@ -16,6 +16,11 @@ public:
 	~ComponentAvilityGiant() override;
 
 	/// <summary>
+	/// ‰Šú‰»ˆ—
+	/// </summary>
+	void Init() override;
+
+	/// <summary>
 	/// XVˆ—
 	/// </summary>
 	void Update() override;

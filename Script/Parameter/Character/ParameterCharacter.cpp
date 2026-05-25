@@ -10,7 +10,7 @@ ParameterCharacter::ParameterCharacter() :
     jumpPowMax_(0.0f),
     knockBackPower_({ 0.0f, 0.0f }),
     knockBackDistance_(0.0f),
-    defaultAttackLocalPos_({ 0.0f, 0.0f }),
+    defaultAttackDistance_(0.0f),
     defaultAttackRadius_(0.0f)
 {
 }
@@ -35,6 +35,7 @@ void ParameterCharacter::LoadParameter(const Json& parameter)
     jumpPowMax_ = parameter.value("jumpPowerMax", 0.0f);
     knockBackDistance_ = parameter.value("knockBackDistance", 0.0f);
     defaultAttackRadius_ = parameter.value("defaultAttackRadius", 0.0f);
+    defaultAttackDistance_ = parameter.value("defaultAttackDistance", 0.0f);
     stateComponentKeys_ = parameter.value("stateComponentKeys", std::unordered_map<std::string, std::string>());
 
     // ノックバックパワーの読み込み
@@ -42,13 +43,6 @@ void ParameterCharacter::LoadParameter(const Json& parameter)
     {
         knockBackPower_.x = parameter["knockBackPower"].value("x", 0.0f);
         knockBackPower_.y = parameter["knockBackPower"].value("y", 0.0f);
-    }
-
-    // 通常攻撃の当たり判定調整座標の読み込み
-    if (parameter.contains("defaultAttackLoaclPos"))
-    {
-        defaultAttackLocalPos_.x = parameter["defaultAttackLoaclPos"].value("x", 0.0f);
-        defaultAttackLocalPos_.y = parameter["defaultAttackLoaclPos"].value("y", 0.0f);
     }
 
     // アニメーションデータの取得

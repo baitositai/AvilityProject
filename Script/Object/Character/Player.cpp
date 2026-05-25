@@ -1,4 +1,6 @@
 #include <DxLib.h>
+#include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/InputManager.h"
 #include "../../Component/Avility/ComponentAvilityBase.h"
 #include "../../Component/Avility/AvilityTypes.h"
 #include "../../OnHit/OnHitPlayer.h"
@@ -20,6 +22,9 @@ Player::Player(std::unique_ptr<ParameterPlayer> parameter) :
 
 	// 衝突後処理
 	onHit_ = std::make_unique<OnHitPlayer>(*this);
+
+	// 変数初期化
+	selectAvilityTime_ = 0.0f;
 }
 
 Player::~Player()
@@ -43,30 +48,41 @@ void Player::Update()
 
 void Player::DebugDraw()
 {
-	constexpr int MARGIN = 20;
-	int posY = MARGIN;
+	// 基底クラスのデバッグ描画
 	CharacterBase::DebugDraw();
-	posY += MARGIN;
-	DrawFormatString(0, posY, UtilityCommon::LIME, L"ジャンプ回数  :%d", parameterPlayer_->jumpCount_);
-	posY += MARGIN;
-	DrawFormatString(0, posY, UtilityCommon::LIME, L"プレイヤー位置:%2f,%2f", parameterPlayer_->pos_.x, parameterPlayer_->pos_.y);
-	posY += MARGIN;
+
+	// 選ぶやつのデバッグ描画
 	componentMap_["debugCreateItemAvility"]->DebugDraw();
 
-	for (auto& it : abilityComponents_)
+	// メッセージ
+	std::vector<std::wstring> mess(AVILITY_MAX, L"none");
+
+	// 種類取得
+	int index = 0;
+	for (auto& avility : avilityComponents_)
 	{
-		posY += MARGIN;
-		AvilityTypes::TYPE type = it.second->GetType();
-		if (type == AvilityTypes::TYPE::MAX)
-		{
-			DrawFormatString(0, posY, UtilityCommon::LIME, L"none");
-		}
-		else
-		{
-			DrawFormatString(0, posY, UtilityCommon::LIME, L"%ls", AvilityTypes::AVILITY_NAME_MAP.at(type).c_str());
-		}
+		mess[index] = UtilityCommon::GetWStringFromString(AvilityTypes::AVILITY_NAME_MAP.at(avility->GetType()).c_str());
+		index++;
 	}
-	
+
+	// 描画
+	DrawFormatString(
+		parameterPlayer_->pos_.x - parameterPlayer_->hitSize_.x / 2,
+		parameterPlayer_->pos_.y - parameterPlayer_->hitSize_.y / 2 - 80,
+		UtilityCommon::RED, 
+		L"1.%ls  2.%ls  3.%ls",
+		mess[0].c_str(),
+		mess[1].c_str(),
+		mess[2].c_str());
+
+	if (spareAvilityComponent_)
+	{
+		DrawFormatString(
+			parameterPlayer_->pos_.x - parameterPlayer_->hitSize_.x / 2,
+			parameterPlayer_->pos_.y - parameterPlayer_->hitSize_.y / 2 - 100,
+			UtilityCommon::RED,
+			L"交代するアビリティを選んでください");
+	}
 }
 
 void Player::AttackReset()
@@ -82,74 +98,152 @@ std::shared_ptr<ColliderBox> Player::CreateColliderClone()
 	return colliderBox;
 }
 
-void Player::SetAbilityComponent(std::unique_ptr<ComponentAvilityBase> component)
+void Player::SetAvilityComponent(std::unique_ptr<ComponentAvilityBase> component)
 {
-	if (!component) return;
-
-	ABILITY_SLOT abilitySlot = component->GetAbilitySlot();
-	if (abilitySlot == ABILITY_SLOT::MAX) return;
-
-	// 既にスロットに存在する場合
-	if (abilityComponents_[abilitySlot] != nullptr)
+	// 中身が空の場合
+	if (!component)
 	{
-		// 取り外し時の処理
-		abilityComponents_[abilitySlot]->Remove();
+		// 終了
+		return;
 	}
 
-	// 新しいアビリティを設定
-	abilityComponents_[abilitySlot] = std::move(component);
+	// 既に所持しているか探索
+	auto it = std::find_if(avilityComponents_.begin(), avilityComponents_.end(), [&component](const auto& avility)
+		{
+			return avility->GetType() == component->GetType();
+		});
+
+	// ある場合
+	if (it != avilityComponents_.end())
+	{
+		// 終了
+		return;
+	}
+
+	// 最大数所持してた場合
+	if (static_cast<int>(avilityComponents_.size()) == AVILITY_MAX)
+	{
+		// スペアで所持
+		spareAvilityComponent_ = std::move(component);
+
+		// 操作が被るため一時的にアビリティ重力を無効にする
+		SetAvilityActive(AvilityTypes::TYPE::GRAVITY, false);
+
+		// 選択時間の設定
+		selectAvilityTime_ = AVILITY_SELECT_TIME;
+
+		// 終了
+		return;
+	}
+
+	// 格納
+	component->Init();
+	avilityComponents_.push_back(std::move(component));
 }
 
-void Player::SetAbilityActive(const ABILITY_SLOT abilitySlot, const bool isActive)
+void Player::SetAvilityActive(const AvilityTypes::TYPE avilityType, const bool isActive)
 {
-	auto it = abilityComponents_.find(abilitySlot);
-	if (it != abilityComponents_.end() && it->second != nullptr)
+	auto it = std::find_if(avilityComponents_.begin(), avilityComponents_.end(), [avilityType](const auto& avility)
+		{
+			return avility->GetType() == avilityType;
+		});
+
+	if (it != avilityComponents_.end())
 	{
-		it->second->SetActive(isActive);
+		(*it)->SetActive(isActive);
 	}
 }
 
-void Player::RemoveAbilityComponent(const ABILITY_SLOT abilitySlot)
+void Player::SetAllAvilityComponentActive(const bool isActive)
 {
-	auto it = abilityComponents_.find(abilitySlot);
-	if (it != abilityComponents_.end() && it->second != nullptr)
+	for (auto& avility : avilityComponents_)
 	{
-		// 取り外し時の処理
-		it->second->Remove();
-
-		// 解放
-		it->second.reset();
+		avility->SetActive(isActive);
 	}
 }
 
-void Player::ResetAbilityComponent(const ABILITY_SLOT abilitySlot)
+void Player::RemoveAvilityComponent(const AvilityTypes::TYPE avilityType)
 {
-	auto it = abilityComponents_.find(abilitySlot);
-	if (it != abilityComponents_.end() && it->second != nullptr)
+	auto it = std::remove_if(avilityComponents_.begin(), avilityComponents_.end(), [avilityType](const auto& avility)
+		{
+			if (avility->GetType() == avilityType)
+			{
+				avility->Remove();
+				return true;
+			}
+			return false;
+		});
+
+	avilityComponents_.erase(it, avilityComponents_.end());
+}
+
+void Player::ResetAvilityComponent(const AvilityTypes::TYPE avilityType)
+{
+	auto it = std::find_if(avilityComponents_.begin(), avilityComponents_.end(), [avilityType](const auto& avility)
+		{
+			return avility->GetType() == avilityType;
+		});
+
+	if (it != avilityComponents_.end())
 	{
-		it->second->Init();
+		(*it)->Init();
 	}
 }
 
 void Player::UpdateComponentAvility()
 {
-	if (abilityComponents_.empty())
+	if (avilityComponents_.empty())
 	{
 		return;
 	}
 
-	for (auto& avility : abilityComponents_)
-	{
-		auto& avilityPtr = avility.second;
+	// アビリティの選択処理
+	SelectAvility();
 
+	// アビリティの処理
+	for (auto& avility : avilityComponents_)
+	{
 		// 中身が有効かチェック
-		if (avilityPtr)
+		if (avility)
 		{
-			if (avilityPtr->IsActive())
+			if (avility->IsActive())
 			{
 				// 更新処理
-				avilityPtr->Update();
+				avility->Update();
 			}
+		}
+	}
+}
+
+void Player::SelectAvility()
+{
+	// 予備の中身がある場合
+	if (spareAvilityComponent_)
+	{
+		// 時間を減らす
+		selectAvilityTime_ -= scnMng_.GetDeltaTime();
+
+		// 選択処理
+		int index = -1;
+		InputManager& input = InputManager::GetInstance();
+		if (input.IsTrgDown(InputManager::TYPE::SELECT_AVILITY_FIRST)) { index = 0; }
+		else if (input.IsTrgDown(InputManager::TYPE::SELECT_AVILITY_SECOND)) { index = 1; }
+		else if(input.IsTrgDown(InputManager::TYPE::SELECT_AVILITY_THIRD)) { index = 2; }
+
+		// 選択した場合
+		if (index > -1)
+		{
+			avilityComponents_[index]->Remove();
+			spareAvilityComponent_->Init();
+			avilityComponents_[index] = std::move(spareAvilityComponent_);
+			selectAvilityTime_ = 0.0f;
+		}
+
+		// 時間に達した場合
+		if (selectAvilityTime_ <= 0.0f)
+		{
+			spareAvilityComponent_ = nullptr;
+			SetAvilityActive(AvilityTypes::TYPE::GRAVITY, true);
 		}
 	}
 }

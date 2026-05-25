@@ -9,14 +9,18 @@
 ComponentAvilityAirslash::ComponentAvilityAirslash(Player& owner) :
 	ComponentAvilityBase(owner)
 {
-	abilitySlot_ = ABILITY_SLOT::SECOND;
 	type_ = AvilityTypes::TYPE::AIRSLASH;
-	preJumpCount_ = parameter_.jumpCount_;
-	parameter_.attackPower_ += 0;
+	preJumpCount_ = -1;
 }
 
 ComponentAvilityAirslash::~ComponentAvilityAirslash()
 {
+}
+
+void ComponentAvilityAirslash::Init()
+{	
+	preJumpCount_ = parameter_.jumpCount_;
+	parameter_.attackPower_ += ADD_ATTACK_POWER;
 }
 
 void ComponentAvilityAirslash::Update()
@@ -34,7 +38,7 @@ void ComponentAvilityAirslash::Update()
 
 void ComponentAvilityAirslash::Remove()
 {
-	parameter_.attackPower_ -= 50;
+	parameter_.attackPower_ -= ADD_ATTACK_POWER;
 }
 
 void ComponentAvilityAirslash::CreateAirslash()
@@ -66,9 +70,9 @@ void ComponentAvilityAirslash::CreateAirslash()
 		parameter->pos_ = parameter_.pos_;
 		parameter->gravityDir_ = parameter_.gravityDir_;
 		parameter->angle_ = std::atan2f(DIR[i].y, DIR[i].x);
-		parameter->hitRadius_ = 16.0f;
+		parameter->hitRadius_ = 16.0f * parameter_.scale_;
 		parameter->resourceKey_ = "airslash";
-		parameter->scale_ = 1.0f;
+		parameter->scale_ = parameter_.scale_;
 		parameter->divisionNum_ = { 4, 1 };
 		parameter->transparent_ = true;
 		parameter->moveSpeed_ = 3.0f;

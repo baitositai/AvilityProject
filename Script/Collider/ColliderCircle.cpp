@@ -3,7 +3,7 @@
 #include "../Object/ActorBase.h"
 #include "ColliderCircle.h"
 
-ColliderCircle::ColliderCircle(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos, const float& radius) :
+ColliderCircle::ColliderCircle(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos, float& radius) :
 	ColliderBase(owner, tag, followPos),
 	radius_(radius)
 {

@@ -62,7 +62,7 @@ void OnHitPlayer::OnHitItemAvility(const std::weak_ptr<ColliderBase>& opponentCo
 	const auto& itemAvility = dynamic_cast<const ItemAvility*>(item);
 
     // ƒAƒCƒeƒ€‚ÌŽí—Þ‚ðŠl“¾
-    owner_.SetAbilityComponent(std::move(factoryComponent_.CreateComponentAvility(itemAvility->GetCreateAvilityName(), owner_)));
+    owner_.SetAvilityComponent(std::move(factoryComponent_.CreateComponentAvility(itemAvility->GetCreateAvilityName(), owner_)));
 }
 
 void OnHitPlayer::AvilityShot(const std::weak_ptr<ColliderBase>& opponentCollider, const Vector2F& normal)

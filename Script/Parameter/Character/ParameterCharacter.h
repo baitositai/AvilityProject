@@ -49,8 +49,8 @@ public:
     // ノックバック距離
     float knockBackDistance_;
 
-    // 通常攻撃の当たり判定調整座標
-    Vector2F defaultAttackLocalPos_;
+    // 通常攻撃の当たり判定距離
+    float defaultAttackDistance_;
 
     // 通常攻撃の範囲半径
     float defaultAttackRadius_;

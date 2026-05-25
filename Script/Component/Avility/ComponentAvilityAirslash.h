@@ -17,6 +17,11 @@ public:
 	~ComponentAvilityAirslash();
 
 	/// <summary>
+	/// 初期化
+	/// </summary>
+	void Init() override;
+
+	/// <summary>
 	/// 更新処理
 	/// </summary>
 	void Update() override;
@@ -27,6 +32,9 @@ public:
 	void Remove() override;
 
 private:
+
+	// 追加攻撃値
+	static constexpr int ADD_ATTACK_POWER = 50;
 
 	// ジャンプ回数の保持
 	int preJumpCount_;

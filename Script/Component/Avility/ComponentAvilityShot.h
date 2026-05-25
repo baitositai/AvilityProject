@@ -13,7 +13,7 @@ class ComponentAvilityShot :  public ComponentAvilityBase
 public:
 
 	static constexpr float SHOT_INTERVAL = 0.5f;	// ショットのインターバル
-	static constexpr float SHOT_SPEED = 15.0f;		// ショットの速度
+	static constexpr float SHOT_SPEED = 20.0f;		// ショットの速度
 
 	/// <summary>
 	/// コンストラクタ
@@ -42,6 +42,9 @@ public:
 	void Remove() override;
 
 private:
+
+	// ショット時間
+	static constexpr float SHOT_TIME = 3.5f;
 
 	// 衝突管理クラス
 	CollisionManager& collisionManager_;
@@ -82,7 +85,6 @@ private:
 
 	// 反射回数
 	bool isReflected_;
-	int reflectCount_;
 
 	// ショット変数
 	float chageTime_;

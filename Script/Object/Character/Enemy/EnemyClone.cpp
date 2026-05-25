@@ -34,6 +34,6 @@ void EnemyClone::Init()
 void EnemyClone::DebugDraw()
 {
 	CharacterBase::DebugDraw();
-	Vector2 k = parameterEnemy_->knockBackPower_.ToVector2();
-	DrawFormatString(0, 80, UtilityCommon::BLACK, L"“Gkb:%d,%d", k.x, k.y);
+	//Vector2 k = parameterEnemy_->knockBackPower_.ToVector2();
+	//DrawFormatString(0, 80, UtilityCommon::BLACK, L"“Gkb:%d,%d", k.x, k.y);
 }

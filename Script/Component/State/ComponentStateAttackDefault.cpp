@@ -8,7 +8,7 @@
 ComponentStateAttackDefault::ComponentStateAttackDefault(CharacterBase& owner) :
 	owner_(owner),
 	parameter_(owner.GetParameter()),
-	DEFAULT_ATTACK_LOCAL_POS(owner.GetParameter().defaultAttackLocalPos_),
+	ATTACK_DISTANCE(owner.GetParameter().defaultAttackDistance_),
 	ComponentCharacterStateBase(owner)
 {
 	attackPos_ = {};
@@ -40,9 +40,9 @@ void ComponentStateAttackDefault::Update()
 		isAttack_ = true;
 	}
 
-	// UŒ‚ˆÊ’u‚Ì’²®
-	float dir = parameter_.direction_ ? -1.0f : 1.0f;
-	attackPos_ = Vector2F::AddVector2F(parameter_.pos_, Vector2F(DEFAULT_ATTACK_LOCAL_POS.x * dir, DEFAULT_ATTACK_LOCAL_POS.y));
+	// UŒ‚Ò‚Ì‘O•ûŒü‚ğæ“¾
+	Vector2F dir = Vector2F::MulVector2FFloat(parameter_.GetFront(), parameter_.scale_);
+	attackPos_ = Vector2F::AddVector2F(parameter_.pos_, Vector2F::MulVector2FFloat(dir, ATTACK_DISTANCE));
 
 	// Ä¶’†‚Ìê‡
 	if (animation.IsPlay())

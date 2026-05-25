@@ -15,7 +15,7 @@ public:
 	/// <param name="followPos">追従対象の座標</param>
 	/// <param name="boxSize">ボックスサイズ</param>
 	/// <param name="radAngle">追従対象の角度</param>
-	ColliderBox(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos, const Vector2& boxSize, float& radAngle);
+	ColliderBox(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos, Vector2& boxSize, float& radAngle);
 	
 	/// <summary>
 	/// デストラクタ
@@ -38,7 +38,7 @@ public:
 	/// ハーフサイズを返す
 	/// </summary>
 	/// <returns></returns>
-	const Vector2& GetBoxHalfSize()const { return boxHalfSize_; }
+	const Vector2& GetBoxHalfSize()const;
 
 	/// <summary>
 	/// 右上座標の相対位置を返す
@@ -77,13 +77,10 @@ public:
 private:
 
 	// ボックスサイズ
-	const Vector2& boxSize_;
-
-	// ハーフサイズ
-	Vector2 boxHalfSize_;
+	Vector2& boxSize_;
 
 	//角度(デグリー)
-	const float& radAngle_;
+	float& radAngle_;
 
 	std::vector<Vector2F> GetRotatedVertices() const;
 };

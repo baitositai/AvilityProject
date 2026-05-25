@@ -1,11 +1,11 @@
 #pragma once
 #include "CharacterBase.h"
 #include "../../Parameter/Character/Player/ParameterPlayer.h"
+#include "../../Component/Avility/AvilityTypes.h"
 
 class ParameterPlayer;
 class ComponentAvilityBase;
 class ColliderBox;
-enum class ABILITY_SLOT;
 
 class Player : public CharacterBase
 {
@@ -47,26 +47,32 @@ public:
 	/// アビリティコンポーネントの設定
 	/// </summary>
 	/// <param name="component">コンポーネント</param>
-	void SetAbilityComponent(std::unique_ptr<ComponentAvilityBase> component);
+	void SetAvilityComponent(std::unique_ptr<ComponentAvilityBase> component);
 
 	/// <summary>
 	/// 各スロットのアビリティの活動状態を設定
 	/// </summary>
-	/// <param name="abilitySlot">アビリティスロット</param>
+	/// <param name="avilityType">アビリティ種類</param>
 	/// <param name="isActive">活動状態</param>
-	void SetAbilityActive(const ABILITY_SLOT abilitySlot, const bool isActive);
+	void SetAvilityActive(const AvilityTypes::TYPE avilityType, const bool isActive);
+
+	/// <summary>
+	/// 全てのアビリティの活動状態を設定
+	/// </summary>
+	/// <param name="isActive">活動状態</param>
+	void SetAllAvilityComponentActive(const bool isActive);
 
 	/// <summary>
 	/// アビリティコンポーネントを外す
 	/// </summary>
-	/// <param name="abilitySlot">アビリティスロット</param>
-	void RemoveAbilityComponent(const ABILITY_SLOT abilitySlot);
+	/// <param name="avilityType">アビリティ種類</param>
+	void RemoveAvilityComponent(const AvilityTypes::TYPE avilityType);
 
 	/// <summary>
-	/// 指定したスロットのアビリティコンポーネントをリセットする
+	/// アビリティコンポーネントをリセットする
 	/// </summary>
-	/// <param name="abilitySlot">アビリティスロット</param>
-	void ResetAbilityComponent(const ABILITY_SLOT abilitySlot);
+	/// <param name="avilityType">アビリティ種類</param>
+	void ResetAvilityComponent(const AvilityTypes::TYPE avilityType);
 
 	/// <summary>
 	/// パラメーターを返す(変更可)
@@ -82,12 +88,27 @@ public:
 
 private:
 
+	// 持てるアビリティの上限
+	static constexpr int AVILITY_MAX = 3;	
+	
+	// アビリティ選択時間
+	static constexpr float AVILITY_SELECT_TIME = 3.0f;
+
+	// 選択時間
+	float selectAvilityTime_;
+
 	// パラメータ情報
 	ParameterPlayer* parameterPlayer_;
 
-	// アビリティコンポーネントのマップ
-	std::unordered_map<ABILITY_SLOT, std::unique_ptr<ComponentAvilityBase>> abilityComponents_;	
+	// アビリティコンポーネント
+	std::vector<std::unique_ptr<ComponentAvilityBase>> avilityComponents_;	
+
+	// 選択用で保持する予備
+	std::unique_ptr<ComponentAvilityBase> spareAvilityComponent_;
 
 	// アビリティ更新処理
 	void UpdateComponentAvility();
+
+	// アビリティの選択
+	void SelectAvility();
 };

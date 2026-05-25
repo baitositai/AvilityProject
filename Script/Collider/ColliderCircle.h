@@ -12,7 +12,7 @@ public:
 	/// <param name="tag">タグ</param>
 	/// <param name="followPos">追従対象の座標</param>
 	/// <param name="radius">半径</param>
-	ColliderCircle(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos, const float& radius);
+	ColliderCircle(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos, float& radius);
 	
 	/// <summary>
 	/// デストラクタ
@@ -39,6 +39,6 @@ public:
 private:
 
 	// 半径
-	const float& radius_;
+	float& radius_;
 };
 

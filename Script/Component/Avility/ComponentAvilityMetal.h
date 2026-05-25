@@ -18,6 +18,11 @@ public:
 	~ComponentAvilityMetal() override;
 
 	/// <summary>
+	/// ‰Šú‰»ˆ—
+	/// </summary>
+	void Init() override;
+
+	/// <summary>
 	/// æ‚èŠO‚µ‚Ìˆ—
 	/// </summary>
 	void Remove() override;

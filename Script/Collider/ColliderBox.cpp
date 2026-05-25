@@ -4,17 +4,21 @@
 #include "../Object/ActorBase.h"
 #include "ColliderBox.h"
 
-ColliderBox::ColliderBox(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos, const Vector2& boxSize, float& radAngle) :
+ColliderBox::ColliderBox(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos, Vector2& boxSize, float& radAngle) :
 	ColliderBase(owner, tag, followPos),
 	boxSize_(boxSize),
-	radAngle_(radAngle),
-	boxHalfSize_(Vector2(boxSize_.x / 2, boxSize_.y / 2))
+	radAngle_(radAngle)
 {	
 	type_ = ColliderType::TYPE::BOX;
 }
 
 ColliderBox::~ColliderBox()
 {
+}
+
+const Vector2& ColliderBox::GetBoxHalfSize() const
+{
+	return Vector2(boxSize_.x / 2, boxSize_.y / 2);
 }
 
 const Vector2F& ColliderBox::GetAABBMin() const
@@ -67,8 +71,8 @@ std::vector<Vector2F> ColliderBox::GetRotatedVertices() const
 	Vector2F axisX = GetAxisX();
 	Vector2F axisY = GetAxisY();
 
-	float hW = static_cast<float>(boxHalfSize_.x);
-	float hH = static_cast<float>(boxHalfSize_.y);
+	float hW = static_cast<float>(boxSize_.x / 2);
+	float hH = static_cast<float>(boxSize_.y / 2);
 
 	// 各頂点（0:左上, 1:右上, 2:右下, 3:左下）を計算
 	// 計算式: 中心点 + (X軸方向 * ±横幅) + (Y軸方向 * ±縦幅)
@@ -105,9 +109,6 @@ void ColliderBox::DebugDraw()
 	DrawLine(v[2].x, v[2].y, v[3].x, v[3].y, color);
 	DrawLine(v[3].x, v[3].y, v[0].x, v[0].y, color);
 
-	// デバッグ用情報の表示
-	DrawFormatString(80, 100, UtilityCommon::BLACK, L"角度(rad): %.2f", radAngle_);
-
 	// 各頂点を円で描画（回転後の位置が正しいか確認用）
 	constexpr float RADIUS = 5.0f;
 	DrawCircle(v[0].x, v[0].y, RADIUS, UtilityCommon::PURPLE, true); // 左上相当
@@ -126,8 +127,7 @@ const Vector2F& ColliderBox::GetAxisY(void)const
 
 bool ColliderBox::OverlapOnAxis(const std::weak_ptr<ColliderBox>& opponent, const Vector2F& axis)
 {
-	boxHalfSize_.x = boxSize_.x / 2;
-	boxHalfSize_.y = boxSize_.y / 2;
+	Vector2 boxHalfSize = GetBoxHalfSize();
 
 	//自分の軸
 	Vector2F axA = GetAxisX();
@@ -142,8 +142,8 @@ bool ColliderBox::OverlapOnAxis(const std::weak_ptr<ColliderBox>& opponent, cons
 	float bCenter = Utility2D::Dot(opponent.lock()->GetOwner().GetParameter().pos_, axis);
 
 	//投影の広がり
-	float aRadius = static_cast<float>(boxHalfSize_.x) * std::fabs(Utility2D::Dot(axA, axis)) +
-					static_cast<float>(boxHalfSize_.y) * std::fabs(Utility2D::Dot(ayA, axis));
+	float aRadius = static_cast<float>(boxHalfSize.x) * std::fabs(Utility2D::Dot(axA, axis)) +
+					static_cast<float>(boxHalfSize.y) * std::fabs(Utility2D::Dot(ayA, axis));
 	float bRadius = static_cast<float>(opponent.lock()->GetBoxHalfSize().x) * std::fabs(Utility2D::Dot(axB, axis))+
 					static_cast<float>(opponent.lock()->GetBoxHalfSize().y) * std::fabs(Utility2D::Dot(ayB, axis));
 

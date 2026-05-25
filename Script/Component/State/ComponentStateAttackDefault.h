@@ -33,7 +33,7 @@ public:
 private:
 
 	// ’ÊíUŒ‚‚Ì‘Š‘ÎˆÊ’u
-	const Vector2F DEFAULT_ATTACK_LOCAL_POS;
+	const float ATTACK_DISTANCE;
 
 	// Š—LÒ
 	CharacterBase& owner_;

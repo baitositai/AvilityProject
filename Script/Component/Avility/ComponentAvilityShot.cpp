@@ -2,6 +2,7 @@
 #include "../../Utility/UtilityCommon.h"
 #include "../../Common/Vector2F.h"
 #include "../../Manager/Common/InputManager.h"
+#include "../../Manager/Common/SceneManager.h"
 #include "../../Manager/Game/CollisionManager.h"
 #include "../../Collider/ColliderBox.h"
 
@@ -21,16 +22,8 @@ ComponentAvilityShot::ComponentAvilityShot(Player& owner)
 	shotVec_({}),
 	shotAngle_(0.0f),
 	isReflected_(false),
-	reflectCount_(0)
+	gravityDir_(ParameterActor::DIR::MAX)
 {
-
-	// コライダーの登録
-	attackCollider_ = owner_.CreateColliderClone();
-	attackCollider_->ChangeTag(CollisionTags::TAG::PLAYER_AVILITY_SHOT);
-	attackCollider_->SetIsActive(false);
-	CollisionManager::GetInstance().Add(attackCollider_);
-
-	abilitySlot_ = ABILITY_SLOT::FIRST;
 	type_ = AvilityTypes::TYPE::SHOT;
 	stateFunctionMap_ =
 	{
@@ -48,6 +41,12 @@ ComponentAvilityShot::~ComponentAvilityShot()
 
 void ComponentAvilityShot::Init()
 {
+	// コライダーの登録
+	attackCollider_ = owner_.CreateColliderClone();
+	attackCollider_->ChangeTag(CollisionTags::TAG::PLAYER_AVILITY_SHOT);
+	attackCollider_->SetIsActive(false);
+	CollisionManager::GetInstance().Add(attackCollider_);
+
 	// 状態の初期化
 	currentState_ = "input";
 	currentStateFunction_ = stateFunctionMap_[currentState_];
@@ -135,7 +134,7 @@ void ComponentAvilityShot::ProcessInputShot()
 	const float moveSpeed = parameter_.moveSpeed_;
 
 	//　ショット入力があったらCharge開始(現在Qキー)
-	if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_AVILITY_SHOT))
+	if (inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_SHOT))
 	{
 		// 影響を与えるコンポーネントを無効にする
 		owner_.SetStateComponentActive(Player::STATE::ALIVE, false);
@@ -144,18 +143,21 @@ void ComponentAvilityShot::ProcessInputShot()
 		// ジャンプ力をなくす
 		parameter_.jumpPow_ = 0.0f;
 
-		!parameter_.direction_ ? shotAngle_ = UtilityCommon::Deg2RadF(0.0f) : shotAngle_ = UtilityCommon::Deg2RadF(180.0f);
+		//!parameter_.direction_ ? shotAngle_ = UtilityCommon::Deg2RadF(0.0f) : shotAngle_ = UtilityCommon::Deg2RadF(180.0f);
 
 		shotTime_ = 0.0f;
 		currentState_ = "charge";
 		currentStateFunction_ = stateFunctionMap_[currentState_];
+
+		// 初期化
+		shotVec_ = {};
+		shotAngle_ = 0.0f;
 	}
 }
 
 void ComponentAvilityShot::ProcessInputCharge()
 {
-	shotVec_ = {};
-	float angle = 0.0f;
+	//shotVec_ = {};
 
 	// 現在の向きを入れる
 	shotVec_.x = parameter_.direction_ ? -1 : 1;
@@ -174,10 +176,10 @@ void ComponentAvilityShot::ProcessInputCharge()
 		shotAngle_ -= 0.1f;
 		isInput = true;
 	}
-	if (shotAngle_ > UtilityCommon::Deg2RadF(360.0f))
-	{
-		shotAngle_ = 0.0f;
-	}
+	//if (shotAngle_ > UtilityCommon::Deg2RadF(360.0f))
+	//{
+	//	shotAngle_ = 0.0f;
+	//}
 
 	// 入力されていない場合
 	if (!isInput)
@@ -187,9 +189,13 @@ void ComponentAvilityShot::ProcessInputCharge()
 
 		// 正規化
 		overSize.Normalize();
-
-		// 角度決定
-		shotAngle_ = std::atan2f(overSize.x, -overSize.y);
+		
+		// スティックを傾けている場合
+		if (overSize.Length() != 0.0f)
+		{
+			// 角度決定
+			shotAngle_ = std::atan2f(overSize.x, -overSize.y);
+		}
 	}
 
 	// =========================
@@ -198,52 +204,26 @@ void ComponentAvilityShot::ProcessInputCharge()
 
 	shotVec_.x = std::cos(shotAngle_);
 	shotVec_.y = std::sin(shotAngle_);
-
-
-	// 正規化不要
-	// cos/sinは長さ1
-
 	parameter_.shotVec_ = shotVec_;
 
-	// =========================
-	// 向き
-	// =========================
-
-	angle = shotAngle_;
-
-	// プレイヤーが左向きなら
-	if (parameter_.direction_)
-	{
-		// 角度を180度回転させる
-		angle += UtilityCommon::Deg2RadF(180.0f);
-
-		// 【修正】左向きの時は「反時計回り（-90度）」に回転
-		// (x, y) -> (-y, x)
-		float tempX = shotVec_.x;
-		shotVec_.x = -shotVec_.y; // ここにマイナスがつきます
-		shotVec_.y = tempX;
-	}
-	else
-	{
-		// 追加】時計回りに90度回転
-		float tempX = shotVec_.x;
-		shotVec_.x = shotVec_.y;
-		shotVec_.y = -tempX;
-	}
+	// 値の入れ替え
+	float tempX = shotVec_.x;
+	shotVec_.x = shotVec_.y;
+	shotVec_.y = -tempX;
 	parameter_.shotVec_ = shotVec_;
 
 
 	// =========================
-	// モデル角度
+	 //モデル角度
 	// =========================
 
-	parameter_.angle_ = angle;
+	parameter_.angle_ = shotAngle_;
 
 	// =========================
 	// チャージ
 	// =========================
 
-	if (inputManager_.IsNew(InputManager::TYPE::PLAYER_AVILITY_SHOT))
+	if (inputManager_.IsNew(InputManager::TYPE::AVILITY_SHOT_CHARGE))
 	{
 		chageTime_ += 0.5f;
 		shotTime_ += 0.1f;
@@ -256,11 +236,13 @@ void ComponentAvilityShot::ProcessInputCharge()
 	else
 	{
 
-		if (shotTime_ > 2.0f)
+		// 時間の割り当て
+		if (shotTime_ > SHOT_TIME)
 		{
-			shotTime_ = 2.0f;
+			shotTime_ = SHOT_TIME;
 		}
 
+		// チャージ時間初期化
 		chageTime_ = 0.0f;
 
 		// 自身のコライダーの判定を無効にする
@@ -274,8 +256,8 @@ void ComponentAvilityShot::ProcessInputCharge()
 		parameter_.knockBackPower_ = Vector2F();
 		parameter_.isGround_ = false;
 		
+		// 反射処理の初期化
 		isReflected_ = false;
-		reflectCount_ = 4;
 
 		// 状態遷移
 		currentState_ = "shot";
@@ -286,20 +268,16 @@ void ComponentAvilityShot::ProcessInputCharge()
 
 void ComponentAvilityShot::ProcessMoveShot()
 {
+	// ショット時間を減らす
+	shotTime_ -= sceneManager_.GetDeltaTime();
 
-	shotTime_ -= 0.01f;
-
-
-
-	if (shotTime_ <= 0.0f
-		|| reflectCount_ <= 0
-		|| (parameter_.shotVec_.x == 0.0f && parameter_.shotVec_.y == 0.0f))
-	{
- 		owner_.SetComponentActive("AvilityShot", true);
-
+	// 終了条件に当てはまる場合
+	if (shotTime_ <= 0.0f || (parameter_.shotVec_.x == 0.0f && parameter_.shotVec_.y == 0.0f))
+	{ 		
+		// 重力別角度初期化
 		if (gravityDir_ == ParameterActor::DIR::RIGHT)
 		{
-			parameter_.angle_ = UtilityCommon::Deg2RadF(0.0f);
+			parameter_.angle_ = UtilityCommon::Deg2RadF(270.0f);
 		}
 		else if (gravityDir_ == ParameterActor::DIR::LEFT)
 		{
@@ -313,7 +291,6 @@ void ComponentAvilityShot::ProcessMoveShot()
 		{
 			parameter_.angle_ = UtilityCommon::Deg2RadF(0.0f);
 		}
-
 
 		// 自身のコライダーの判定を有効にする
 		owner_.SetColliderActive(true);
@@ -336,13 +313,10 @@ void ComponentAvilityShot::ProcessMoveShot()
 		moveAmount_.y = dir.y * shotTime_ * SHOT_SPEED;
 		moveAmount_.x = dir.x * shotTime_ * SHOT_SPEED;
 
-		// std::atan2(y, x) は右向きを0度（基準）として角度を返します。
-		// 頭が上の素材を進行方向（右＝0度）に合わせるため、90度（PI / 2）引き算します。
 		float currentAngle = std::atan2(dir.y, dir.x) - UtilityCommon::Deg2RadF(-90.0f);
 
 		parameter_.angle_ = currentAngle;
 	}
-
 
 	// 各軸の衝突判定
 	ProcessCollision(true);  // X軸
@@ -487,8 +461,6 @@ void ComponentAvilityShot::ProcessCollision(bool isXAxis)
 			if (!isReflected_)
 			{
 				isReflected_ = true;
-
-				reflectCount_--;
 
 				if (shotTime_ > 0.5f)
 				{

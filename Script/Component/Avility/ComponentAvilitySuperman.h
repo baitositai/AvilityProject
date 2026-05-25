@@ -16,6 +16,11 @@ public:
 	~ComponentAvilitySuperman() override;
 
 	/// <summary>
+	/// ‰Šú‰»
+	/// </summary>
+	void Init() override;
+
+	/// <summary>
 	/// æ‚èŠO‚µˆ—
 	/// </summary>
 	void Remove() override;

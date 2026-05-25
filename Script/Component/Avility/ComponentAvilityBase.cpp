@@ -14,7 +14,6 @@ ComponentAvilityBase::ComponentAvilityBase(Player& owner) :
 	parameter_(owner.GetParameter()),
 	ComponentBase(owner)
 {
-	abilitySlot_ = ABILITY_SLOT::MAX;
 	type_ = AvilityTypes::TYPE::MAX;
 }
 

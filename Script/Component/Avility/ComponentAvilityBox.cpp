@@ -8,7 +8,6 @@ ComponentAvilityBox::ComponentAvilityBox(Player& owner):
 	boxCnt_(),
 	coolCnt_()
 {
-	abilitySlot_ = ABILITY_SLOT::FIRST;
 	type_ = AvilityTypes::TYPE::BOX;
 }
 
@@ -18,7 +17,7 @@ ComponentAvilityBox::~ComponentAvilityBox()
 
 void ComponentAvilityBox::Update()
 {
-	if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_AVILITY_SHOT))
+	if (inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_SHOT))
 	{
 		//ボックスを置く
 		PlaceBox();

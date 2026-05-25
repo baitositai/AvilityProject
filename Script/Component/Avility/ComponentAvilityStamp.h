@@ -25,6 +25,11 @@ public:
 	~ComponentAvilityStamp() override;
 
 	/// <summary>
+	/// ‰Šú‰»
+	/// </summary>
+	void Init() override;
+
+	/// <summary>
 	/// XVˆ—
 	/// </summary>
 	void Update() override;

@@ -12,7 +12,6 @@ ComponentAvilityTeleport::ComponentAvilityTeleport(Player& owner) :
 {
 	moveTimer_ = 0.0f;
 	changeTimer_ = 0.0f;
-	abilitySlot_ = ABILITY_SLOT::SECOND;
 	type_ = AvilityTypes::TYPE::TELEPORT;
 	state_ = STATE::INPUT;
 	update_ = std::bind(&ComponentAvilityTeleport::UpdateInput, this);
@@ -22,6 +21,10 @@ ComponentAvilityTeleport::ComponentAvilityTeleport(Player& owner) :
 }
 
 ComponentAvilityTeleport::~ComponentAvilityTeleport()
+{
+}
+
+void ComponentAvilityTeleport::Init()
 {
 }
 
@@ -47,7 +50,7 @@ void ComponentAvilityTeleport::UpdateMove()
 {
 	// キーを押し続けていない・もしくは時間制限に達した場合
 	moveTimer_ += sceneManager_.GetDeltaTime();
-	if (!inputManager_.IsNew(InputManager::TYPE::AVILITY_TELEPORT) || moveTimer_ >= MOVE_TIME)
+	if (!inputManager_.IsNew(InputManager::TYPE::AVILITY_TELEPORT_HOLD) || moveTimer_ >= MOVE_TIME)
 	{
 		// 状態遷移
 		ChangeState(STATE::APPEAR);
@@ -107,7 +110,7 @@ void ComponentAvilityTeleport::ChangeStateInput()
 	// コンポーネントを有効にする
 	owner_.SetComponentActive("gravity", true);
 	owner_.SetStateComponentActive(Player::STATE::ATTACK, true);
-	owner_.SetAbilityActive(ABILITY_SLOT::FIRST, true);
+	owner_.SetAllAvilityComponentActive(true);
 
 	// アニメーションリスタート
 	owner_.GetAnimation().Restart();
@@ -120,7 +123,8 @@ void ComponentAvilityTeleport::ChangeStateMove()
 	// 不要なコンポーネントを無効にする
 	owner_.SetComponentActive("gravity", false);
 	owner_.SetStateComponentActive(Player::STATE::ATTACK, false);
-	owner_.SetAbilityActive(ABILITY_SLOT::FIRST, false);	
+	owner_.SetAllAvilityComponentActive(false);
+	isActive_ = true;
 	
 	// 不要なパラメータの値を初期化
 	parameter_.jumpPow_ = 0.0f;
@@ -139,7 +143,7 @@ void ComponentAvilityTeleport::ChangeStateMove()
 	parameter->angle_ = parameter_.angle_;
 	parameter->hitSize_ = { 96, 96 };
 	parameter->resourceKey_ = "teleportEnter";
-	parameter->scale_ = 1.0f;
+	parameter->scale_ = parameter_.scale_;
 	parameter->divisionNum_ = { 9, 1 };
 	parameter->transparent_ = true;
 	parameter->moveSpeed_ = 3.0f;
@@ -166,9 +170,9 @@ void ComponentAvilityTeleport::ChangeStateAppear()
 	std::unique_ptr<ParameterEffectTeleportExit> parameter = std::make_unique<ParameterEffectTeleportExit>();
 	parameter->pos_ = parameter_.pos_;
 	parameter->angle_ = parameter_.angle_;
-	parameter->hitSize_ = { 96, 96 };
+	parameter->hitSize_ = Vector2F(96.0f * parameter_.scale_, 96.0f * parameter_.scale_).ToVector2();
 	parameter->resourceKey_ = "teleportExit";
-	parameter->scale_ = 1.0f;
+	parameter->scale_ = parameter_.scale_;
 	parameter->divisionNum_ = { 11, 1 };
 	parameter->transparent_ = true;
 	parameter->moveSpeed_ = 3.0f;

@@ -9,15 +9,6 @@ class SceneManager;
 class InputManager;
 class SpriteEffectManager;
 
-// アビリティ用スロット
-enum class ABILITY_SLOT
-{
-	FIRST = 0,
-	SECOND = 1,
-	THIRD = 2,
-	MAX
-};
-
 class ComponentAvilityBase : public ComponentBase
 {
 public:
@@ -44,12 +35,6 @@ public:
 	virtual void Remove();
 
 	/// <summary>
-	/// アビリティスロットの種類を返す
-	/// </summary>
-	/// <returns>アビリティスロットの種類</returns>
-	ABILITY_SLOT GetAbilitySlot() const { return abilitySlot_; }
-
-	/// <summary>
 	/// 種類を返す
 	/// </summary>
 	/// <returns>種類</returns>
@@ -74,9 +59,6 @@ protected:
 
 	// エフェクト管理クラスの参照
 	SpriteEffectManager& effectManager_;
-	
-	// アビリティスロット
-	ABILITY_SLOT abilitySlot_;
 
 	// 種類
 	AvilityTypes::TYPE type_;
