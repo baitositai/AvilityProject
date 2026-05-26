@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <random>
 #include "../../Application.h"
+#include "../../Common/Vector2F.h"
 #include "../../Utility/UtilityLoad.h"
 #include "StageGenerator.h"
 
@@ -175,4 +176,23 @@ std::vector<std::vector<int>> StageGenerator::CombineMatrixList
 	}
 
 	return combinedResult;
+}
+
+void StageGenerator::SetCameraScroll(const std::vector<std::string>& paths)
+{
+	static constexpr float MOVE_X = Application::SCREEN_SIZE_X;
+	static constexpr float MOVE_Y = Application::SCREEN_SIZE_Y;
+
+	std::vector<Vector2F> moveList = {};
+	for (auto& path : paths)
+	{
+		if (path == "SU" || path == "SC" || path == "SD")
+		{
+			moveList.push_back(Vector2F((float)Application::SCREEN_SIZE_X, 0.0f));
+		}
+		else if (path == "DC")
+		{
+			std::vector<Vector2F> moves = { Vector2F((float)Application::SCREEN_SIZE_X * 1.5f, 0.0f),Vector2F(0.0f, Application::)
+		}
+	}
 }

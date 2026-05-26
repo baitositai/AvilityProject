@@ -31,17 +31,17 @@ public:
 
 private:
 
-	// 接続する文字列
-	const std::vector<std::string> CANDIDATES = {
-		"SD", "SC", "SU", "DD", "DC", "DU", "CC", "CD", "CU", "UU", "UC", "UD", "GD", "GC", "GU"
-	};
-
+	// 接続するパスを探す
 	bool FindConnectPath(
 		const std::vector<std::string>& candidates, 
 		const int targetCount, 
 		std::vector<std::string>& currentPath, 
 		std::vector<std::string>& outResult);
 
+	// 配列をつなげる
 	std::vector<std::vector<int>> CombineMatrixList(const std::vector<std::vector<std::vector<int>>>& sourceLists);
+
+	// カメラスクロールの設定
+	void SetCameraScroll(const std::vector<std::string>& path);
 };
 
