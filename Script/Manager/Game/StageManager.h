@@ -57,6 +57,13 @@ public:
 	const Vector2& GetStageSize() const;
 
 	/// <summary>
+	/// 指定したマップチップインデックスの位置情報らを返す
+	/// </summary>
+	/// <param name="index">インデックス</param>
+	/// <returns></returns>
+	const std::vector<Vector2F> GetMapChipIndexPositions(const int index);
+
+	/// <summary>
 	/// デバッグ描画
 	/// </summary>
 	void DebugDraw();

@@ -5,18 +5,25 @@
 #include "../../Object/Stage/BackGround.h"
 #include "../../Object/Stage/Stage.h"
 #include "../../Object/Gimmick/AvilityBox.h"
+#include "../../System/StageGenerator.h"
 #include "../Common/Camera.h"
 #include "../Common/SceneManager.h"
 #include "StageManager.h"
 
 void StageManager::Init()
 {
+	// ステージジェネレーター用のパラメータ
+	StageGenerator::Parameter generatorParameter = {};
+	generatorParameter.connectNum = 5;
+	generatorParameter.candidates = { "SD", "SC", "SU", "DD", "DC", "DU", "CC", "CD", "CU", "UU", "UC", "UD", "DG", "CG", "UG" };
+	auto stageGenerator = std::unique_ptr<StageGenerator>();
+
 	// ステージパラメータ
 	std::unique_ptr<ParameterStage> parameter = std::make_unique<ParameterStage>();
 	parameter->path_ = STAGE_PATH_MAP.at(type_);
 	parameter->chipSize_ = Vector2(32, 32);
-	parameter->resourceKey_ = "groundChipsFacility";
-	parameter->hitIds_ = { 16, 17, 56, 57 };
+	parameter->tileIndexs_ = stageGenerator->CreateStageData(generatorParameter);
+	parameter->resourceKey_ = "groundChipsDungeon";
 
 	// ステージ生成
 	stage_ = std::make_unique<Stage>(std::move(parameter));
@@ -26,21 +33,6 @@ void StageManager::Init()
 	backGround_ = std::make_unique<BackGround>();
 	backGround_->Init();
 	backGround_->SetResource("backGround01");
-
-	//AvilityBox::Parameter avParam = {};
-	//avParam.hitBoxSize = Vector2(48, 48);
-	//avParam.pos = Vector2F(300, 400);
-	//avParam.gravityPower = 0.5f;
-	//avParam.weight = 0.8f;
-	//avParam.blastTime = 3.0f;
-	//std::vector<std::string> componentNameList = { "gravity","move"};
-	//std::unique_ptr avBox = std::make_unique<AvilityBox>(avParam);
-	//gimmick_=std::make_unique<AvilityBox>(avParam, componentNameList);
-	//gimmick_->Init();
-	//for (const auto& gim : gimmick_)
-	//{
-	//	gim->Init();
-	//}
 }
 
 void StageManager::Update()
@@ -58,7 +50,6 @@ void StageManager::Draw()
 {
 	backGround_->Draw();
 	stage_->Draw();
-	//gimmick_->Draw();
 	for (const auto& gim : gimmick_)
 	{
 		gim->Draw();
@@ -71,17 +62,14 @@ void StageManager::ChageStage(const TYPE type)
 	stage_->ChageStage(STAGE_PATH_MAP.at(type_));
 }
 
+const std::vector<Vector2F> StageManager::GetMapChipIndexPositions(const int index)
+{
+	return stage_->GetMapChipIndexPositions(index);
+}
+
 void StageManager::DebugDraw()
 {
-	// タイルの仮描画
-	/*for (int i = 0; i < tileNums_.x; i++)
-	{
-		for (int j = 0; j < tileNums_.y; j++)
-		{
-			tiles_[j][i]->DebugDraw();
-		}
-	}*/
-	//gimmick_->DebugDraw();
+	stage_->DebugDraw();
 	for (const auto& gim : gimmick_)
 	{
 		gim->DebugDraw();

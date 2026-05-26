@@ -58,6 +58,14 @@ public:
 	/// <returns>タイルの列数と行数</returns>
 	const Vector2& GetTileNums() const { return tileNums_; }
 
+	/// <summary>
+	/// 指定したマップチップインデックスの位置情報らを返す
+	/// </summary>
+	/// <param name="index">インデックス</param>
+	/// <returns>位置情報のリスト</returns>
+	const std::vector<Vector2F> GetMapChipIndexPositions(const int index);
+
+
 private:
 
 	// ステージサイズ
@@ -71,9 +79,6 @@ private:
 
 	// タイルの配列
 	std::vector<std::vector<std::unique_ptr<TileBase>>> tiles_;
-
-	// タイル番号の配列(コライダー用)
-	std::vector<std::vector<int>> chipIndexs_;
 
 	// ステージの設定
 	void SetStage();

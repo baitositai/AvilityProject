@@ -1,6 +1,5 @@
 #include <algorithm>
 #include "../../Application.h"
-#include "../../Utility/UtilityLoad.h"
 #include "../../Manager/Common/SceneManager.h"
 #include "../../Manager/Common/Camera.h"
 #include "../../Manager/Common/ResourceManager.h"
@@ -29,7 +28,12 @@ Stage::~Stage()
 void Stage::Init()
 {
 	// コライダーの生成
-	auto collider = std::make_shared<ColliderArray>(*this, CollisionTags::TAG::STAGE, parameterStage_->pos_, chipIndexs_, parameterStage_->hitIds_, parameterStage_->chipSize_);
+	auto collider = std::make_shared<ColliderArray>(
+		*this, 
+		CollisionTags::TAG::STAGE,
+		parameterStage_->pos_, 
+		parameterStage_->tileIndexs_,
+		parameterStage_->chipSize_);
 
 	// ステージ専用のコライダーの設定
 	CollisionManager::GetInstance().SetStageCollider(collider);	
@@ -83,21 +87,20 @@ void Stage::ChageStage(const std::string& stagePath)
 
 void Stage::DebugDraw()
 {
-	// タイルの仮描画
-	/*for (int i = 0; i < tileNums_.x; i++)
+	Vector2 rangeMin, rangeMax;
+	GetDrawRange(rangeMin, rangeMax);
+
+	for (int i = rangeMin.x; i < rangeMax.x; i++)
 	{
-		for (int j = 0; j < tileNums_.y; j++)
+		for (int j = rangeMin.y; j < rangeMax.y; j++)
 		{
 			tiles_[j][i]->DebugDraw();
 		}
-	}*/
+	}
 }
 
 void Stage::SetStage()
 {
-	// タイルの読み込み
-	chipIndexs_ = UtilityLoad::LoadCSVData(Application::PATH_CSV + parameterStage_->path_);
-
 	// ステージの初期化
 	ClearStage();
 
@@ -105,16 +108,16 @@ void Stage::SetStage()
 	int* handles = resMng_.GetHandles(parameterStage_->resourceKey_);
 
 	// タイルの生成
-	for (size_t y = 0; y < chipIndexs_.size(); y++)
+	for (size_t y = 0; y < parameterStage_->tileIndexs_.size(); y++)
 	{
 		std::vector<std::unique_ptr<TileBase>> tileRow;
-		for (size_t x = 0; x < chipIndexs_[y].size(); x++)
+		for (size_t x = 0; x < parameterStage_->tileIndexs_[y].size(); x++)
 		{
 			// タイルのパラメータを設定
 			TileBase::Parameter parameter;
-			parameter.handle = handles[chipIndexs_[y][x]];
-			parameter.id = chipIndexs_[y][x];
-			parameter.type = static_cast<TileBase::TYPE>(chipIndexs_[y][x]);
+			parameter.handle = -1 < parameterStage_->tileIndexs_[y][x] ? handles[parameterStage_->tileIndexs_[y][x]] : -1;
+			parameter.id = parameterStage_->tileIndexs_[y][x];
+			parameter.type = static_cast<TileBase::TYPE>(parameterStage_->tileIndexs_[y][x]);
 			parameter.position = Vector2(static_cast<int>(x * TileBase::SIZE_TILE), static_cast<int>(y * TileBase::SIZE_TILE));
 			tileRow.push_back(std::make_unique<TileBase>(parameter));
 		}
@@ -122,8 +125,8 @@ void Stage::SetStage()
 	}
 
 	// タイル数の設定
-	tileNums_.x = static_cast<int>(chipIndexs_[0].size());
-	tileNums_.y = static_cast<int>(chipIndexs_.size());
+	tileNums_.x = static_cast<int>(parameterStage_->tileIndexs_[0].size());
+	tileNums_.y = static_cast<int>(parameterStage_->tileIndexs_.size());
 
 	// ステージの幅と高さの設定
 	stageSize_.x = tileNums_.x * TileBase::SIZE_TILE;
@@ -132,7 +135,7 @@ void Stage::SetStage()
 	// コライダーの情報も再登録
 	auto colliderArray = std::dynamic_pointer_cast<ColliderArray>(collider_);
 	if (colliderArray == nullptr) return;
-	colliderArray->SetArrayOfArrays(chipIndexs_);
+	colliderArray->SetArrayOfArrays(parameterStage_->tileIndexs_);
 }
 
 void Stage::ClearStage()
@@ -169,4 +172,20 @@ void Stage::GetDrawRange(Vector2& rangeMin, Vector2& rangeMax)
 	rangeMin.y = std::clamp(rangeMin.y, 0, tileNums_.y);
 	rangeMax.x = std::clamp(rangeMax.x, 0, tileNums_.x);
 	rangeMax.y = std::clamp(rangeMax.y, 0, tileNums_.y);
+}
+
+const std::vector<Vector2F> Stage::GetMapChipIndexPositions(const int index)
+{
+	std::vector<Vector2F> list = {};
+	for (int y = 0; y < tileNums_.y; y++)
+	{
+		for (int x = 0; x < tileNums_.x; x++)
+		{
+			if (index == parameterStage_->tileIndexs_[y][x])
+			{
+				list.push_back(Vector2(x * parameterStage_->chipSize_.x, y * parameterStage_->chipSize_.y).ToVector2F());
+			}
+		}
+	}
+	return list;
 }

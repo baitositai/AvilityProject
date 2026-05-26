@@ -281,6 +281,7 @@
     <ClCompile Include="Script\Manager\Game\StageManager.cpp" />
     <ClCompile Include="Script\Utility\UtilityCollision.cpp" />
     <ClCompile Include="Script\Manager\Common\SpriteEffectManager.cpp" />
+    <ClCompile Include="Script\System\StageGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\Object\Stage\BackGround.h" />
@@ -479,6 +480,7 @@
     <ClInclude Include="Script\Manager\Game\StageManager.h" />
     <ClInclude Include="Script\Utility\UtilityCollision.h" />
     <ClInclude Include="Script\Manager\Common\SpriteEffectManager.h" />
+    <ClInclude Include="Script\System\StageGenerator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

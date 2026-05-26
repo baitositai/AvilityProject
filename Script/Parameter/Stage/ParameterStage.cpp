@@ -3,7 +3,7 @@
 ParameterStage::ParameterStage() :
 	chipSize_(Vector2()),
 	path_(""),
-	hitIds_(std::vector<int>())
+    tileIndexs_(std::vector<std::vector<int>>())
 {
 }
 
@@ -15,7 +15,6 @@ void ParameterStage::LoadParameter(const Json& parameter)
 {
     // ƒpƒ‰ƒ[ƒ^‚Ì“Ç‚İ‚İ
     path_ = parameter.value("path", "");
-    hitIds_ = parameter.value("hitIds", std::vector<int>());
 
     if (parameter.contains("chipSize"))
     {

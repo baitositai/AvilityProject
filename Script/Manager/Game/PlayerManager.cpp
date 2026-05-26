@@ -57,6 +57,18 @@ const Vector2F& PlayerManager::GetCameraFollowPos() const
 	return playerList_.front()->GetParameter().pos_;
 }
 
+void PlayerManager::SetFirstPositions(const std::vector<Vector2F>& positions)
+{
+	// プレイヤー人数が初期位置の数より多い場合終了
+	if (playerList_.size() > positions.size()) { return; }
+
+	int playerNum = static_cast<int>(playerList_.size());
+	for (int i = 0; i < playerNum; i++)
+	{
+		playerList_[i]->GetParameter().pos_ = positions[i];
+	}
+}
+
 PlayerManager::PlayerManager()
 {
 }

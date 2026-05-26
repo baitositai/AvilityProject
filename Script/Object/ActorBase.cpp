@@ -69,11 +69,11 @@ void ActorBase::Update()
 
 void ActorBase::Draw()
 {
-	if (!isDraw_) return;
-
 	// •`‰æˆÊ’u‚ðÝ’è
 	Vector2F cameraPos = mainCamera.GetPos();
 	parameter_->drawPos_ = Vector2::AddVector2(Vector2::AddVector2(parameter_->pos_.ToVector2(), parameter_->localPos_), cameraPos.ToVector2());
+	
+	if (!isDraw_) return;
 
 	// •`‰æ
 	DrawRotaGraph(

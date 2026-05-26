@@ -324,27 +324,26 @@ bool CollisionManager::IsHitCheckArrayToBox(std::weak_ptr<ColliderBase> collider
 	const Vector2F top = colliderBox.lock()->GetAABBMin();
 	const Vector2F bottom = colliderBox.lock()->GetAABBMax();
 	const auto arrayOfarray = colliderArray.lock()->GetArrayOfArrys();
-	const auto ids = colliderArray.lock()->GetHitIds();
 	const Vector2 size = colliderArray.lock()->GetChipSize();
 	const Vector2F movedAmount = colliderBox.lock()->GetOwner().GetParameter().moveAmount_;
 	ParameterActor::DIR gravityDir = colliderBox.lock()->GetOwner().GetParameter().gravityDir_;
 
 	// Õ“Ë”»’è
-	bool isHit = UtilityCollision::IsHitArrayToBox(
-		arrayOfarray,
-		ids,
-		size, 
-		result,
-		top, 
-		bottom,
-		movedAmount,
-		gravityDir);
+	//bool isHit = UtilityCollision::IsHitArrayToBox(
+	//	arrayOfarray,
+	//	ids,
+	//	size, 
+	//	result,
+	//	top, 
+	//	bottom,
+	//	movedAmount,
+	//	gravityDir);
 
 	// ”»’èŒ‹‰Ê‚ğ•Û‘¶
 	colliderArray.lock()->SetResult(result);
 
 	// Õ“Ë‚µ‚Ä‚¢‚é‚©•Ô‚·
-	return isHit;
+	return false;
 }
 
 bool CollisionManager::IsHitCheckCircleToCircle(std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2)

@@ -18,14 +18,18 @@ void TileBase::Init()
 
 void TileBase::Draw()
 {	
-	Vector2F cameraPos = mainCamera.GetPos();
-	Vector2 rendererPos = Vector2::AddVector2(parameter_.position, cameraPos.ToVector2());
-	DrawGraph(
-		rendererPos.x,	
-		rendererPos.y,
-		parameter_.handle,
-		true
-	);
+	if (parameter_.handle > -1)
+	{
+
+		Vector2F cameraPos = mainCamera.GetPos();
+		Vector2 rendererPos = Vector2::AddVector2(parameter_.position, cameraPos.ToVector2());
+		DrawGraph(
+			rendererPos.x,
+			rendererPos.y,
+			parameter_.handle,
+			true
+		);
+	}
 }
 
 void TileBase::DebugDraw()

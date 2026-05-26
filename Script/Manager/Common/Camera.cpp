@@ -62,8 +62,8 @@ void Camera::UpdateModeFixedPoint()
 
 void Camera::UpdateModePlayerFollow()
 {
-	pos_.x = followPos_->x - (float)Application::SCREEN_HALF_X;
-	pos_.y = followPos_->y - (float)Application::SCREEN_HALF_Y;
+	pos_.x = (float)Application::SCREEN_HALF_X - followPos_->x;
+	pos_.y = (float)Application::SCREEN_HALF_Y - followPos_->y;
 }
 
 void Camera::ChangeModeFree()
@@ -83,9 +83,23 @@ void Camera::ChangeModePlayerFollow()
 
 void Camera::LimitCameraMove()
 {
-	// カメラの移動制限X
-	float limitMin = (std::min)(static_cast<float>(Application::SCREEN_SIZE_X - limitMax_.x), 0.0f);
-	pos_.x = std::clamp(pos_.x, limitMin, 0.0f);
-	limitMin = (std::min)(static_cast<float>(Application::SCREEN_SIZE_Y - limitMax_.y), 0.0f);
-	pos_.y = std::clamp(pos_.y, limitMin, 0.0f);
+	// カメラがマイナス方向に動ける最大の限界値（正の数として計算）
+	// limitMax_ はステージの総サイズと仮定
+	float maxMoveX = limitMax_.x - static_cast<float>(Application::SCREEN_SIZE_X);
+	float maxMoveY = limitMax_.y - static_cast<float>(Application::SCREEN_SIZE_Y);
+
+	// ステージが画面サイズより小さい場合は 0 固定にする安全対策
+	if (maxMoveX < 0.0f)
+	{
+		maxMoveX = 0.0f;
+	}
+	if (maxMoveY < 0.0f)
+	{
+		maxMoveY = 0.0f;
+	}
+
+	// カメラの座標は 0 から -maxMove の範囲に収まる必要がある
+	// std::clamp の引数は必ず [小さい値, 大きい値] にする
+	pos_.x = std::clamp(pos_.x, -maxMoveX, 0.0f);
+	pos_.y = std::clamp(pos_.y, -maxMoveY, 0.0f);
 }

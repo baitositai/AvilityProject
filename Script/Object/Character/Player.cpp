@@ -67,8 +67,8 @@ void Player::DebugDraw()
 
 	// 描画
 	DrawFormatString(
-		parameterPlayer_->pos_.x - parameterPlayer_->hitSize_.x / 2,
-		parameterPlayer_->pos_.y - parameterPlayer_->hitSize_.y / 2 - 80,
+		parameterPlayer_->drawPos_.x - parameterPlayer_->hitSize_.x / 2,
+		parameterPlayer_->drawPos_.y - parameterPlayer_->hitSize_.y / 2 - 80,
 		UtilityCommon::RED, 
 		L"1.%ls  2.%ls  3.%ls",
 		mess[0].c_str(),
@@ -78,8 +78,8 @@ void Player::DebugDraw()
 	if (spareAvilityComponent_)
 	{
 		DrawFormatString(
-			parameterPlayer_->pos_.x - parameterPlayer_->hitSize_.x / 2,
-			parameterPlayer_->pos_.y - parameterPlayer_->hitSize_.y / 2 - 100,
+			parameterPlayer_->drawPos_.x - parameterPlayer_->hitSize_.x / 2,
+			parameterPlayer_->drawPos_.y - parameterPlayer_->hitSize_.y / 2 - 100,
 			UtilityCommon::RED,
 			L"交代するアビリティを選んでください");
 	}

@@ -25,8 +25,8 @@ public:
 	
 	// ステージパス
 	std::string path_;				
-	
-	// 判定を行うID
-	std::vector<int> hitIds_;
+
+	// タイル番号の配列
+	std::vector<std::vector<int>> tileIndexs_;
 };
 

@@ -46,8 +46,7 @@ void ComponentDebugCreateItemAvility::Update()
 
 void ComponentDebugCreateItemAvility::DebugDraw()
 {
-	Vector2F posF = owner_.GetParameter().pos_;
-	Vector2 pos = posF.ToVector2();
+	Vector2 pos = owner_.GetParameter().drawPos_;
 	Vector2 hitSize = owner_.GetParameter().hitSize_;
 
 	const std::wstring abilityName =

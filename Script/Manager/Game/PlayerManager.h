@@ -38,6 +38,12 @@ public:
 	/// <returns>追従対象の座標</returns>
 	const Vector2F& GetCameraFollowPos() const;
 
+	/// <summary>
+	/// 初期位置を設定
+	/// </summary>
+	/// <param name="positions">位置情報</param>
+	void SetFirstPositions(const std::vector<Vector2F>& positions);
+
 private:
 
 	// プレイヤーのリスト

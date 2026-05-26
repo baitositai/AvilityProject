@@ -145,6 +145,16 @@
       "sizeY": 32
     },
     {
+      "key": "groundChipsDungeon",
+      "type": "sprite",
+      "path": "Resource/Image/Stage/GroundChipsDungeon.png",
+      "divX": 15,
+      "divY": 18,
+      "sceneId": 2,
+      "sizeX": 32,
+      "sizeY": 32
+    },
+    {
       "key": "backGround01",
       "path": "Resource/Image/BackGround/BackGround01.png",
       "sceneId": 2,

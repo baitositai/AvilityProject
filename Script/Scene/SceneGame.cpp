@@ -4,6 +4,7 @@
 #include "../Manager/Common/Camera.h"
 #include "../Manager/Common/InputManager.h"
 #include "../Manager/Game/GameManager.h"
+#include "../Manager/Game/PlayerManager.h"
 #include "../Factory/FactoryComponent.h"
 #include "../Utility/UtilityCommon.h"
 #include "ScenePause.h"
@@ -125,8 +126,11 @@ void SceneGame::DebugDraw()
 	
 	// カメラ位置
 	Vector2F cPos = mainCamera.GetPos();
+	Vector2F pPos = PlayerManager::GetInstance().GetCameraFollowPos();
 
 	// 描画
 	DrawFormatString(0, posY, UtilityCommon::RED, L"カメラ位置：%2f,%2f", cPos.x, cPos.y);
+	posY += OFFSET_Y;
+	DrawFormatString(0, posY, UtilityCommon::RED, L"プレイヤー位置：%2f,%2f", pPos.x, pPos.y);
 	posY += OFFSET_Y;
 }

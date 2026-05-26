@@ -74,15 +74,15 @@ void CharacterBase::DebugDraw()
 {
 	// Ž©g‚Ì‘Ì—Í‚ð•`‰æ
 	DrawFormatString(
-		parameterCharacter_->pos_.x - parameterCharacter_->hitSize_.x / 2,
-		parameterCharacter_->pos_.y - parameterCharacter_->hitSize_.y / 2 -20,
+		parameterCharacter_->drawPos_.x - parameterCharacter_->hitSize_.x / 2,
+		parameterCharacter_->drawPos_.y - parameterCharacter_->hitSize_.y / 2 -20,
 		UtilityCommon::RED,
 		L"AT:%d",
 		parameterCharacter_->attackPower_);
 
 	DrawFormatString(
-		parameterCharacter_->pos_.x - parameterCharacter_->hitSize_.x / 2,
-		parameterCharacter_->pos_.y - parameterCharacter_->hitSize_.y / 2 -40,
+		parameterCharacter_->drawPos_.x - parameterCharacter_->hitSize_.x / 2,
+		parameterCharacter_->drawPos_.y - parameterCharacter_->hitSize_.y / 2 -40,
 		UtilityCommon::RED,
 		L"HP:%d",
 		parameterCharacter_->hp_);

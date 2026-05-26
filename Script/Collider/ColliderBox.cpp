@@ -1,4 +1,6 @@
 #include <DxLib.h>
+#include "../Manager/Common/SceneManager.h"
+#include "../Manager/Common/Camera.h"
 #include "../Utility/UtilityCommon.h"
 #include "../Utility/Utility2D.h"
 #include "../Object/ActorBase.h"
@@ -101,18 +103,21 @@ void ColliderBox::DebugDraw()
 	if (!isActive_ || !owner_.IsActive()) return;
 
 	auto v = GetRotatedVertices();
+	Vector2F cameraPos = mainCamera.GetPos();
+	int offsetX = static_cast<int>(cameraPos.x);
+	int offsetY = static_cast<int>(cameraPos.y);
 
 	// DrawBoxは回転に対応していないため、DrawLineで4辺を描画する
 	unsigned int color = UtilityCommon::RED;
-	DrawLine(v[0].x, v[0].y, v[1].x, v[1].y, color);
-	DrawLine(v[1].x, v[1].y, v[2].x, v[2].y, color);
-	DrawLine(v[2].x, v[2].y, v[3].x, v[3].y, color);
-	DrawLine(v[3].x, v[3].y, v[0].x, v[0].y, color);
+	DrawLine(v[0].x + offsetX, v[0].y + offsetY, v[1].x + offsetX, v[1].y + offsetY, color);
+	DrawLine(v[1].x + offsetX, v[1].y + offsetY, v[2].x + offsetX, v[2].y + offsetY, color);
+	DrawLine(v[2].x + offsetX, v[2].y + offsetY, v[3].x + offsetX, v[3].y + offsetY, color);
+	DrawLine(v[3].x + offsetX, v[3].y + offsetY, v[0].x + offsetX, v[0].y + offsetY, color);
 
 	// 各頂点を円で描画（回転後の位置が正しいか確認用）
 	constexpr float RADIUS = 5.0f;
-	DrawCircle(v[0].x, v[0].y, RADIUS, UtilityCommon::PURPLE, true); // 左上相当
-	DrawCircle(v[2].x, v[2].y, RADIUS, UtilityCommon::PINK, true);   // 右下相当
+	DrawCircle(v[0].x + offsetX, v[0].y + offsetY, RADIUS, UtilityCommon::PURPLE, true); // 左上相当
+	DrawCircle(v[2].x + offsetX, v[2].y + offsetY, RADIUS, UtilityCommon::PINK, true);   // 右下相当
 }
 
 const Vector2F& ColliderBox::GetAxisX(void)const
@@ -128,6 +133,10 @@ const Vector2F& ColliderBox::GetAxisY(void)const
 bool ColliderBox::OverlapOnAxis(const std::weak_ptr<ColliderBox>& opponent, const Vector2F& axis)
 {
 	Vector2 boxHalfSize = GetBoxHalfSize();
+
+
+	Vector2F cameraPos = mainCamera.GetPos();
+	Vector2 pos = Vector2::AddVector2(followPos_.ToVector2(), cameraPos.ToVector2());
 
 	//自分の軸
 	Vector2F axA = GetAxisX();

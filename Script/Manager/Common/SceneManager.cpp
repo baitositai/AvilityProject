@@ -113,12 +113,12 @@ void SceneManager::Update()
 		// フェード処理
 		Fade();
 	}
-		
-	// カメラ更新
-	camera_->Update();
 	
 	// シーンごとの更新
-	scenes_.back()->Update();
+	scenes_.back()->Update();	
+	
+	// カメラ更新
+	camera_->Update();
 
 	// サウンドの更新
 	SoundManager::GetInstance().Update();

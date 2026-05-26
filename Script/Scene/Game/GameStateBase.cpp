@@ -25,12 +25,15 @@ GameStateBase::~GameStateBase()
 void GameStateBase::Init()
 {
 	// カメラ設定
-	mainCamera.ChangeMode(Camera::MODE::FREE);
+	mainCamera.ChangeMode(Camera::MODE::PLAYER_FOLLOW);
 	mainCamera.SetFollowPos(&playerMng_.GetCameraFollowPos());
 
 	// カメラの移動制限を設定
 	Vector2 stageSize = stageMng_.GetStageSize();
 	mainCamera.SetCameraLimit(Vector2F{0.0f, 0.0f}, stageSize.ToVector2F());
+
+	// プレイヤーの初期位置を決定
+	playerMng_.SetFirstPositions(stageMng_.GetMapChipIndexPositions(-10001));
 }
 
 void GameStateBase::Update()
