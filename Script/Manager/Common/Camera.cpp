@@ -17,6 +17,7 @@ Camera::Camera() :
 	changeStateMap_.emplace(MODE::FREE, std::bind(&Camera::ChangeModeFree, this));
 	changeStateMap_.emplace(MODE::FIXED_POINT, std::bind(&Camera::ChangeModeFixedPoint, this));
 	changeStateMap_.emplace(MODE::PLAYER_FOLLOW, std::bind(&Camera::ChangeModePlayerFollow, this));
+	changeStateMap_.emplace(MODE::CAMERA_SCROLL, std::bind(&Camera::ChangeModeScroll, this));
 }
 
 Camera::~Camera()
@@ -63,7 +64,57 @@ void Camera::UpdateModeFixedPoint()
 void Camera::UpdateModePlayerFollow()
 {
 	pos_.x = (float)Application::SCREEN_HALF_X - followPos_->x;
-	pos_.y = (float)Application::SCREEN_HALF_Y - followPos_->y;
+	pos_.y = (float)Application::SCREEN_SIZE_Y - 128 - followPos_->y;
+}
+
+void Camera::UpdateModeScroll()
+{
+	// リストの中が空の場合
+	if (scrollMoves_.empty())
+	{
+		// 何もしない
+		return;
+	}
+
+	// 現在目指すべき移動量を取得
+	Vector2F& targetMove = scrollMoves_.front();
+
+	// X軸の移動処理
+	float moveX = 0.0f;
+	if (targetMove.x > 0.0f)
+	{
+		moveX = (std::min)(SCROLL_SPEED, targetMove.x);
+	}
+	else if (targetMove.x < 0.0f)
+	{
+		moveX = (std::max)(-SCROLL_SPEED, targetMove.x);
+	}
+
+	// Y軸の移動処理
+	float moveY = 0.0f;
+	if (targetMove.y > 0.0f)
+	{
+		moveY = (std::min)(SCROLL_SPEED, targetMove.y);
+	}
+	else if (targetMove.y < 0.0f)
+	{
+		moveY = (std::max)(-SCROLL_SPEED, targetMove.y);
+	}
+
+	// カメラの座標に加算
+	pos_.x -= moveX;
+	pos_.y -= moveY;
+
+	// 残りの移動量を減算
+	targetMove.x -= moveX;
+	targetMove.y -= moveY;
+
+	// 移動し終えた場合
+	if (targetMove.x == 0.0f && targetMove.y == 0.0f)
+	{
+		// 次の移動へ
+		scrollMoves_.erase(scrollMoves_.begin());
+	}
 }
 
 void Camera::ChangeModeFree()
@@ -79,6 +130,11 @@ void Camera::ChangeModeFixedPoint()
 void Camera::ChangeModePlayerFollow()
 {
 	updateFunction_ = std::bind(&Camera::UpdateModePlayerFollow, this);
+}
+
+void Camera::ChangeModeScroll()
+{
+	updateFunction_ = std::bind(&Camera::UpdateModeScroll, this);
 }
 
 void Camera::LimitCameraMove()

@@ -44,7 +44,16 @@ public:
 	/// <param name="positions">位置情報</param>
 	void SetFirstPositions(const std::vector<Vector2F>& positions);
 
+	/// <summary>
+	/// プレイヤーの残機追加
+	/// </summary>
+	/// <param name="addLeft">追加残機</param>
+	void AddPlayersLeft(const int addLeft);
+
 private:
+
+	// プレイヤー残機
+	int playersLeft_;
 
 	// プレイヤーのリスト
 	std::vector<std::unique_ptr<Player>> playerList_;

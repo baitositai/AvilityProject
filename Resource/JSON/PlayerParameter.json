@@ -1,61 +1,6 @@
 {
   "player": {
-    "componentKeys": [
-      "jump",
-      "knockBack",
-      "gravity",
-      "move",
-      "spriteAnimation",
-      "invincible",
-      "debugCreateItemAvility"
-    ],
-    "stateComponentKeys": {
-      "alive": "playerProcess",
-      "attack": "attackDefault",
-      "hit": "dummy",
-      "dead": "dead",
-      "respawn": "dummy"
-    },
-    "resourceKey": "player",
-    "scale": 1.0,
     "angle": 0.0,
-    "direction": false,
-    "transparent": true,
-    "moveSpeed": 2.0,
-    "dashSpeed": 4.0,
-    "hp": 100,
-    "attackPower": 10,
-    "jumpPowerMax": 20.0,
-    "gravityPower": 9.8,
-    "jumpCount": 1,
-    "jumpCountMax": 1,
-    "invincibleTimeMax": 2.0,
-    "defaultAttackRadius": 20.0,
-    "defaultAttackDistance": 40.0,
-    "animationDefaultSpeed": 0.1,
-    "animationAttackSpeed": 0.2,
-    "animationsIdle": 6,
-    "animationsWalk": 8,
-    "animationsBrake": 4,
-    "animationsAttack": 7,
-    "animationsJump": 6,
-    "animationsFall": 6,
-    "animationsDie": 10,
-    "animationsDamage": 4,
-    "animationsPause": 6,
-    "weight": 0.9,
-    "divisionNum": {
-      "x": 10,
-      "y": 9
-    },
-    "hitBoxSize": {
-      "x": 48,
-      "y": 64
-    },
-    "localPos": {
-      "x": 0,
-      "y": 0
-    },
     "animation": {
       "idle": {
         "no": 0,
@@ -102,6 +47,62 @@
         "speed": 0.1,
         "num": 6
       }
-    }
+    },
+    "animationAttackSpeed": 0.2,
+    "animationDefaultSpeed": 0.1,
+    "animationsAttack": 7,
+    "animationsBrake": 4,
+    "animationsDamage": 4,
+    "animationsDie": 10,
+    "animationsFall": 6,
+    "animationsIdle": 6,
+    "animationsJump": 6,
+    "animationsPause": 6,
+    "animationsWalk": 8,
+    "attackPower": 10,
+    "componentKeys": [
+      "jump",
+      "knockBack",
+      "gravity",
+      "move",
+      "spriteAnimation",
+      "invincible",
+      "cameraRangeCheck",
+      "debugCreateItemAvility"
+    ],
+    "dashSpeed": 4.0,
+    "defaultAttackDistance": 40.0,
+    "defaultAttackRadius": 20.0,
+    "direction": false,
+    "divisionNum": {
+      "x": 10,
+      "y": 9
+    },
+    "gravityPower": 9.8,
+    "hitBoxSize": {
+      "x": 48,
+      "y": 64
+    },
+    "hp": 100,
+    "invincibleTimeMax": 2.0,
+    "jumpCount": 1,
+    "jumpCountMax": 1,
+    "jumpPowerMax": 20.0,
+    "localPos": {
+      "x": 0,
+      "y": 0
+    },
+    "moveSpeed": 2.0,
+    "resourceKey": "player",
+    "scale": 1.0,
+    "stateComponentKeys": {
+      "alive": "playerProcess",
+      "attack": "attackDefault",
+      "hit": "dummy",
+      "dead": "dead",
+      "respawn": "dummy"
+    },
+    "transparent": true,
+    "weight": 0.9
   }
 }

@@ -1,22 +1,19 @@
 #pragma once
-#include <memory>
 #include "SceneBase.h"
 
-class ScenePause;
-
-class SceneGame : public SceneBase
+class SceneGameOver : public SceneBase
 {
 public:
 
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	SceneGame();
+	SceneGameOver();
 
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~SceneGame() override;
+	~SceneGameOver() override;
 
 	/// <summary>
 	/// 初期化処理
@@ -24,9 +21,6 @@ public:
 	void Init() override;
 
 private:
-
-	//ポーズ画面
-	std::shared_ptr<ScenePause> ScenePause_;
 
 	// 更新関数
 	void NormalUpdate() override;
@@ -36,8 +30,5 @@ private:
 
 	// 処理の変更
 	void ChangeNormal() override;
-
-	//デバッグ処理
-	void DebugUpdate();
-	void DebugDraw();
 };
+

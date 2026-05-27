@@ -25,7 +25,7 @@ GameStateBase::~GameStateBase()
 void GameStateBase::Init()
 {
 	// ƒJƒƒ‰İ’è
-	mainCamera.ChangeMode(Camera::MODE::PLAYER_FOLLOW);
+	mainCamera.ChangeMode(Camera::MODE::CAMERA_SCROLL);
 	mainCamera.SetFollowPos(&playerMng_.GetCameraFollowPos());
 
 	// ƒJƒƒ‰‚ÌˆÚ“®§ŒÀ‚ğİ’è

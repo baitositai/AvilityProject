@@ -145,6 +145,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Scene\SceneGameOver.cpp" />
+    <ClCompile Include="Script\Component\ComponentCameraRangeCheck.cpp" />
     <ClCompile Include="Script\Object\Stage\BackGround.cpp" />
     <ClCompile Include="Script\Component\Avility\ComponentAvilityGiant.cpp" />
     <ClCompile Include="Script\OnHit\OnHitEffectTeleport.cpp" />
@@ -284,6 +286,8 @@
     <ClCompile Include="Script\System\StageGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Scene\SceneGameOver.h" />
+    <ClInclude Include="Script\Component\ComponentCameraRangeCheck.h" />
     <ClInclude Include="Script\Object\Stage\BackGround.h" />
     <ClInclude Include="Script\Component\Avility\ComponentAvilityGiant.h" />
     <ClInclude Include="Script\OnHit\OnHitEffectTeleport.h" />

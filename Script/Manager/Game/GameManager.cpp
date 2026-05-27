@@ -1,6 +1,7 @@
 #include "../../Scene/Game/GameStateBoss.h"
 #include "../../Scene/Game/GameStateRoad.h"
 #include "../../Scene/Game/GameStateEvent.h"
+#include "../Common/SceneManager.h"
 #include "CollisionManager.h"
 #include "StageManager.h"
 #include "PlayerManager.h"
@@ -49,6 +50,12 @@ void GameManager::DebugDraw()
 {
 	// 各種ゲーム状態のデバッグ描画
 	game_->DebugDraw();
+}
+
+void GameManager::GameOver()
+{
+	// シーン遷移	
+	SceneManager::GetInstance().ChangeScene(SceneManager::SCENE_ID::GAMEOVER);
 }
 
 void GameManager::ChangeStateRoad()

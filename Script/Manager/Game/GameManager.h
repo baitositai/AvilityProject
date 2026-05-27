@@ -48,6 +48,11 @@ public:
 	/// </summary>
 	void DebugDraw();
 
+	/// <summary>
+	/// ゲームオーバー処理
+	/// </summary>
+	void GameOver();
+
 private:
 
 	// 現在の状態

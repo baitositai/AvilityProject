@@ -5,6 +5,7 @@
 #include "../../Component/ComponentInvincible.h"
 #include "../../Component/ComponentKnockBack.h"
 #include "../../Component/ComponentJump.h"
+#include "../../Component/ComponentCameraRangeCheck.h"
 #include "../../Component/ComponentDebugCreateItemAvility.h"
 #include "../../Component/Avility/ComponentAvilityBase.h"
 #include "../../Component/Avility/ComponentAvilityBox.h"
@@ -283,6 +284,18 @@ std::unique_ptr<ComponentInvincible> FactoryComponent::CreateComponentInvincible
     return std::make_unique<ComponentInvincible>(*charaPtr);
 }
 
+std::unique_ptr<ComponentCameraRangeCheck> FactoryComponent::CreateComponentCameraRangeCheck(ActorBase& owner)
+{
+    auto* playerPtr = dynamic_cast<Player*>(&owner);
+
+    if (playerPtr == nullptr)
+    {
+        // ÉLÉÉÉXÉgÇ…é∏îsÇµÇΩèÍçánullptrÇï‘Ç∑
+        return nullptr;
+    }
+    return std::make_unique<ComponentCameraRangeCheck>(*playerPtr);
+}
+
 std::unique_ptr<ComponentJump> FactoryComponent::CreateComponentJump(ActorBase& owner)
 {
     auto* charaPtr = dynamic_cast<CharacterBase*>(&owner);
@@ -390,6 +403,10 @@ FactoryComponent::FactoryComponent()
     componentCreateMap_.emplace("debugCreateItemAvility", [this](ActorBase& owner)
         {
             return CreateComponentDebugCreateItemAvility(owner);
+        });
+    componentCreateMap_.emplace("cameraRangeCheck", [this](ActorBase& owner)
+        {
+            return CreateComponentCameraRangeCheck(owner);
         });
 }
 

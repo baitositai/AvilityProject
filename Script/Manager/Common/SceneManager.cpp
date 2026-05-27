@@ -5,6 +5,7 @@
 #include "../../Scene/SceneTitle.h"
 #include "../../Scene/SceneGame.h"
 #include "../../Scene/SceneResult.h"
+#include "../../Scene/SceneGameOver.h"
 #include "../../Common/Loading.h"
 #include "../Common/ResourceManager.h"
 #include "../Common/SoundManager.h"
@@ -273,6 +274,9 @@ void SceneManager::DoChangeScene(SCENE_ID sceneId)
 		break;
 	case SCENE_ID::RESULT:
 		CreateScene(std::make_shared<SceneResult>());
+		break;
+	case SCENE_ID::GAMEOVER:
+		CreateScene(std::make_shared<SceneGameOver>());
 		break;
 	}
 

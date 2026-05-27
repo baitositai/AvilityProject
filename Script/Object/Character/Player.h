@@ -38,6 +38,11 @@ public:
 	void AttackReset();
 
 	/// <summary>
+	/// 死亡処理
+	/// </summary>
+	void Dead();
+
+	/// <summary>
 	/// 自身のコライダーのクローンを生成して返す
 	/// </summary>
 	/// <returns>自身のコライダーのクローン</returns>

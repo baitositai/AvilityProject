@@ -16,6 +16,7 @@ public:
 		FREE,			// 自由移動
 		FIXED_POINT,	// 固定点
 		PLAYER_FOLLOW,	// プレイヤー追従
+		CAMERA_SCROLL	// カメラスクロール
 	};
 
 	/// <summary>
@@ -51,6 +52,12 @@ public:
 	void SetCameraPos(const Vector2F& pos) { pos_ = pos; }
 
 	/// <summary>
+	/// カメラスクロールの移動量を格納
+	/// </summary>
+	/// <param name="scrollMoves">スクロール移動量</param>
+	void SetCameraScrollMove(const std::vector<Vector2F> scrollMoves) { scrollMoves_ = scrollMoves; }
+
+	/// <summary>
 	/// 追従対象の座標を設定
 	/// </summary>
 	/// <param name="followPos">追従対象</param>
@@ -80,6 +87,9 @@ private:
 	// カメラの移動速度
 	static constexpr float CAMERA_MOVE_SPEED = 5.0f;
 
+	// スクロール速度
+	static constexpr float SCROLL_SPEED = 0.8f;
+
 	// 入力管理クラス
 	InputManager& inputMng_;
 
@@ -99,6 +109,9 @@ private:
 	// 状態遷移処理
 	std::function<void()> updateFunction_;
 
+	// スクロール量の保持
+	std::vector<Vector2F> scrollMoves_;
+
 	// モード別更新処理
 	std::unordered_map<MODE, std::function<void()>> changeStateMap_;
 
@@ -106,11 +119,13 @@ private:
 	void UpdateModeFree();
 	void UpdateModeFixedPoint();
 	void UpdateModePlayerFollow();
+	void UpdateModeScroll();
 
 	// モード別遷移処理
 	void ChangeModeFree();
 	void ChangeModeFixedPoint();
 	void ChangeModePlayerFollow();
+	void ChangeModeScroll();
 
 	// カメラの移動制限
 	void LimitCameraMove();

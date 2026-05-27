@@ -162,6 +162,10 @@ public:
 	/// <returns>UŒ‚—Í</returns>
 	const int GetAttackPowerWithBoost() const;
 
+	/// <summary>
+	/// •`‰æ”»’è‚ğİ’è
+	/// </summary>
+	/// <param name="isDraw">•`‰æ”»’è</param>
 	void SetIsDraw(const bool isDraw) { isDraw_ = isDraw; }
 
 protected:

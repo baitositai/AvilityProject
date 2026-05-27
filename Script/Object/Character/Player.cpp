@@ -91,6 +91,11 @@ void Player::AttackReset()
 	componentStateMap_.at(STATE::ATTACK)->Init();
 }
 
+void Player::Dead()
+{
+	ChangeState(STATE::DEAD);
+}
+
 std::shared_ptr<ColliderBox> Player::CreateColliderClone()
 {
 	std::shared_ptr<ColliderBase> collider = collider_->Clone();

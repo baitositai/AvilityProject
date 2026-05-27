@@ -32,6 +32,7 @@ public:
 		TITLE	= 1,
 		GAME	= 2, 
 		RESULT	= 3,
+		GAMEOVER= 4
 	};
 
 	/// <summary>

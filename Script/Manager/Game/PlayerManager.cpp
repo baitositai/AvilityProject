@@ -4,6 +4,7 @@
 #include "../../Object/Common/Animation.h"
 #include "../../Parameter/Character/Player/ParameterPlayer.h"
 #include "../Common/ResourceManager.h"
+#include "../Game/GameManager.h"
 #include "PlayerManager.h"
 
 void PlayerManager::Init()
@@ -66,6 +67,19 @@ void PlayerManager::SetFirstPositions(const std::vector<Vector2F>& positions)
 	for (int i = 0; i < playerNum; i++)
 	{
 		playerList_[i]->GetParameter().pos_ = positions[i];
+	}
+}
+
+void PlayerManager::AddPlayersLeft(const int addLeft)
+{
+	// プレイヤー残機追加
+	playersLeft_ += addLeft;
+
+	// 0未満となった場合
+	if (playersLeft_ < 0)
+	{
+		// ゲームオーバー
+		GameManager::GetInstance().GameOver();
 	}
 }
 

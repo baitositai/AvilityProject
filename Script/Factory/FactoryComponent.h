@@ -13,6 +13,7 @@ class ComponentGravity;
 class ComponentKnockBack;
 class ComponentInvincible;
 class ComponentJump;
+class ComponentCameraRangeCheck;
 
 class ComponentStatePlayerProcess;
 class ComponentStateAttackDefault;
@@ -82,6 +83,7 @@ private:
 	std::unique_ptr<ComponentStateDead> CreateComponentStateDead(ActorBase& owner);
 	std::unique_ptr<ComponentStateDummy> CreateComponentStateDummy(ActorBase& owner);
 	std::unique_ptr<ComponentInvincible> CreateComponentInvincible(ActorBase& owner);
+	std::unique_ptr<ComponentCameraRangeCheck> CreateComponentCameraRangeCheck(ActorBase& owner);
 	std::unique_ptr<ComponentJump> CreateComponentJump(ActorBase& owner);
 	std::unique_ptr<ComponentDebugCreateItemAvility> CreateComponentDebugCreateItemAvility(ActorBase& owner);
 	

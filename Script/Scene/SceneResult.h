@@ -13,7 +13,7 @@ public:
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~SceneResult();
+	~SceneResult() override;
 
 	/// <summary>
 	/// 初期化処理

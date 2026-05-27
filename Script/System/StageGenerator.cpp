@@ -1,6 +1,9 @@
 #include <algorithm>
 #include <random>
+#include <fstream>
 #include "../../Application.h"
+#include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/Camera.h"
 #include "../../Common/Vector2F.h"
 #include "../../Utility/UtilityLoad.h"
 #include "StageGenerator.h"
@@ -42,6 +45,9 @@ std::vector<std::vector<int>> StageGenerator::CreateStageData(const Parameter& p
 	}
 
 	std::vector<std::vector<std::vector<int>>> selectedMatrices;
+
+	// カメラのスクロール設定
+	SetCameraScroll(selectedNames);
 
 	// 確定した接続ルートの名前からCSVデータを順番に読み込みます
 	for (const auto& name : selectedNames)
@@ -180,19 +186,60 @@ std::vector<std::vector<int>> StageGenerator::CombineMatrixList
 
 void StageGenerator::SetCameraScroll(const std::vector<std::string>& paths)
 {
-	static constexpr float MOVE_X = Application::SCREEN_SIZE_X;
-	static constexpr float MOVE_Y = Application::SCREEN_SIZE_Y;
+	// ファイルを直接ストリームとして開く
+	std::ifstream file(Application::PATH_JSON + "StageChips.json");
+	if (!file.is_open())
+	{
+		return;
+	}
+
+	// jsonオブジェクトにパース
+	nlohmann::json stageChipsJson;
+	file >> stageChipsJson;
 
 	std::vector<Vector2F> moveList = {};
 	for (auto& path : paths)
 	{
-		if (path == "SU" || path == "SC" || path == "SD")
+		// ルートオブジェクトに指定のステージチップのキーが存在するかチェック
+		if (stageChipsJson.find(path) == stageChipsJson.end())
 		{
-			moveList.push_back(Vector2F((float)Application::SCREEN_SIZE_X, 0.0f));
+			continue;
 		}
-		else if (path == "DC")
+
+		auto& chipDataJson = stageChipsJson[path];
+
+		// チップデータの中に cameraMove が存在するかチェック
+		if (chipDataJson.find("cameraMove") == chipDataJson.end())
 		{
-			std::vector<Vector2F> moves = { Vector2F((float)Application::SCREEN_SIZE_X * 1.5f, 0.0f),Vector2F(0.0f, Application::)
+			continue;
 		}
+
+		auto& cameraMovesJson = chipDataJson["cameraMove"];
+
+		// 配列であることを確認してループ処理
+		if (cameraMovesJson.is_array())
+		{
+			for (auto& moveData : cameraMovesJson)
+			{
+				float x = moveData["x"].get<float>();
+				float y = moveData["y"].get<float>();
+
+				moveList.push_back(Vector2F(x, y));
+			}
+		}
+
+		// チップデータの中に firstPosYOffset が存在するかチェック
+		if (chipDataJson.find("firstPosYOffset") == chipDataJson.end())
+		{
+			continue;
+		}
+
+		// カメラ初期位置の格納
+		Vector2F pos = {};
+		pos.y = chipDataJson["firstPosYOffset"].get<float>();
+		mainCamera.SetCameraPos(pos);
 	}
+	
+	// 移動量の設定
+	mainCamera.SetCameraScrollMove(moveList);
 }

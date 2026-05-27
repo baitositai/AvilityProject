@@ -12,7 +12,7 @@ public:
 	SceneTitle();
 
 	// デストラクタ
-	~SceneTitle();
+	~SceneTitle() override;
 
 	// 初期化処理
 	void Init() override;
