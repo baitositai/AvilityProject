@@ -138,7 +138,9 @@ void ComponentAvilityShot::ProcessInputShot()
 	{
 		// 影響を与えるコンポーネントを無効にする
 		owner_.SetStateComponentActive(Player::STATE::ALIVE, false);
-		owner_.SetComponentActive("gravity", false);
+		owner_.SetComponentActive("gravity", false);	
+		owner_.SetAllAvilityComponentActive(false);
+		isActive_ = true;
 
 		// ジャンプ力をなくす
 		parameter_.jumpPow_ = 0.0f;
@@ -301,6 +303,9 @@ void ComponentAvilityShot::ProcessMoveShot()
 
 		// 攻撃判定用コライダーを無効にする
 		attackCollider_->SetIsActive(false);
+
+		// 全てのアビリティコンポーネントを有効にする
+		owner_.SetAllAvilityComponentActive(true);
 
 		currentState_ = "input";
 		currentStateFunction_ = stateFunctionMap_[currentState_];
