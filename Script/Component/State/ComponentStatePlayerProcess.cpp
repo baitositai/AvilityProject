@@ -43,18 +43,18 @@ void ComponentStatePlayerProcess::Update()
 void ComponentStatePlayerProcess::ProcessInputMove()
 {
 	// ダッシュの入力判定に応じて速度を変更
-	float moveSpeed = inputManager_.IsNew(InputManager::TYPE::PLAYER_DASH) ? parameter_.dashSpeed_ : parameter_.moveSpeed_;
+	float moveSpeed = inputManager_.IsNew(InputManager::TYPE::PLAYER_DASH, parameter_.padNo_) ? parameter_.dashSpeed_ : parameter_.moveSpeed_;
 
 	// ダッシュ上昇率を乗算
 	moveSpeed *= 1 + parameter_.moveSpeedBoostRate_;
 
 	// 左右移動
-	if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_RIGHT))
+	if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_RIGHT, parameter_.padNo_))
 	{
 		moveAmount_.x = moveSpeed;
 		parameter_.direction_ = false;
 	}
-	else if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_LEFT))
+	else if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_LEFT, parameter_.padNo_))
 	{
 		moveAmount_.x = -moveSpeed;
 		parameter_.direction_ = true;
@@ -82,7 +82,7 @@ void ComponentStatePlayerProcess::ProcessInputJump()
 	if (parameter_.jumpCount_ > 0)
 	{
 		// 入力がある場合
-		if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_JUMP))
+		if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_JUMP, parameter_.padNo_))
 		{
 			isGround_ = false;
 
@@ -97,7 +97,7 @@ void ComponentStatePlayerProcess::ProcessInputJump()
 
 void ComponentStatePlayerProcess::ProcessInputAttack()
 {
-	if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_ATTACK))
+	if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_ATTACK, parameter_.padNo_))
 	{
 		// 攻撃のアニメーションを開始（ループしない）
 		owner_.GetAnimation().Play(Animation::TYPE::ATTACK, false);

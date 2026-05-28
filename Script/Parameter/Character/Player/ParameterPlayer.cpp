@@ -12,7 +12,8 @@ ParameterPlayer::ParameterPlayer() :
     animationsDie_(-1),
     animationsDamage_(-1),
     animationsPause_(-1),
-    animationAttackSpeed_(0.0f)
+    animationAttackSpeed_(0.0f),
+    padNo_(Input::JOYPAD_NO::PAD1)
 {
 }
 

@@ -40,7 +40,7 @@ void ComponentAvilityTeleport::Remove()
 
 void ComponentAvilityTeleport::UpdateInput()
 {
-	if (inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_TELEPORT))
+	if (inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_TELEPORT, parameter_.padNo_))
 	{
 		ChangeState(STATE::MOVE);
 	}
@@ -50,7 +50,7 @@ void ComponentAvilityTeleport::UpdateMove()
 {
 	// キーを押し続けていない・もしくは時間制限に達した場合
 	moveTimer_ += sceneManager_.GetDeltaTime();
-	if (!inputManager_.IsNew(InputManager::TYPE::AVILITY_TELEPORT_HOLD) || moveTimer_ >= MOVE_TIME)
+	if (!inputManager_.IsNew(InputManager::TYPE::AVILITY_TELEPORT_HOLD, parameter_.padNo_) || moveTimer_ >= MOVE_TIME)
 	{
 		// 状態遷移
 		ChangeState(STATE::APPEAR);
@@ -59,19 +59,19 @@ void ComponentAvilityTeleport::UpdateMove()
 	Vector2F moveAmount = {};
 
 	// 上下左右移動処理
-	if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_RIGHT))
+	if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_RIGHT, parameter_.padNo_))
 	{
 		moveAmount.x += parameter_.moveSpeed_;
 	}
-	if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_LEFT))
+	if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_LEFT, parameter_.padNo_))
 	{
 		moveAmount.x -= parameter_.moveSpeed_;
 	}
-	if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_UP))
+	if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_UP, parameter_.padNo_))
 	{
 		moveAmount.y -= parameter_.moveSpeed_;
 	}
-	if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_DOWN))
+	if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_DOWN, parameter_.padNo_))
 	{
 		moveAmount.y += parameter_.moveSpeed_;
 	}

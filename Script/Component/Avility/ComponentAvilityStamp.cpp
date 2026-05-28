@@ -71,7 +71,7 @@ void ComponentAvilityStamp::UpdateInput()
 	inputEnableTime_ -= sceneManager_.GetDeltaTime();
 
 	// “ü—ÍŽó•t
-	if(inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_STAMP) && inputEnableTime_ <= 0.0f)
+	if(inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_STAMP, parameter_.padNo_) && inputEnableTime_ <= 0.0f)
 	{
 		// ó‘Ô•ÏX
 		ChangeState(STATE::STOP);

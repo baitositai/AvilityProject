@@ -61,6 +61,11 @@ public:
 	/// デバッグ描画
 	/// </summary>
 	virtual void DebugDraw() override;	
+
+	/// <summary>
+	/// 死亡処理
+	/// </summary>	
+	virtual void Dead();
 	
 	/// <summary>
 	/// 着地処理

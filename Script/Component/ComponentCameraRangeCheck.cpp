@@ -1,3 +1,5 @@
+#include <DxLib.h>
+#include "../../Utility/UtilityCommon.h"
 #include "../../Application.h"
 #include "../../Manager/Common/SceneManager.h"
 #include "../../Manager/Common/Camera.h"
@@ -20,32 +22,20 @@ void ComponentCameraRangeCheck::Init()
 
 void ComponentCameraRangeCheck::Update()
 {
+	constexpr float OFFSET_SIDE = 32;
+	constexpr float OFFSET_BOTTOM = 128;
+
 	// パラメータ取得
 	ParameterActor& parameter = owner_.GetParameter();
 
-	// カメラの左上座標を取得
-	Vector2F cameraTopLeft = mainCamera.GetPos();
-	cameraTopLeft = Vector2F::MulVector2FFloat(cameraTopLeft, -1.0f);
+	// セーフエリアの定義
+	safeAreaTop_ = { -OFFSET_SIDE, 0 };
+	safeAreaBottom_ = { Application::SCREEN_SIZE_X + OFFSET_SIDE, Application::SCREEN_SIZE_Y + OFFSET_BOTTOM };
 
-	// 画面の右下座標を計算
-	Vector2F cameraBottomRight = Vector2F(
-		cameraTopLeft.x + (float)Application::SCREEN_SIZE_X,
-		cameraTopLeft.y + (float)Application::SCREEN_SIZE_Y
-	);
-
-	cameraBottomRight = Vector2F::MulVector2FFloat(cameraBottomRight, -1.0f);
-
-	// セーフエリアとして広げるサイズ
-	// 画面サイズに応じて調整してください
-	const float SAFE_AREA_X = 0.0;
-	const float SAFE_AREA_Y = 0.0f;
-
-	// 生存範囲用にセーフエリアを広げる
-	// 左上はさらに左上（Xマイナス、Yマイナス）へ広げる
-	Vector2F top = Vector2F(cameraTopLeft.x - SAFE_AREA_X, cameraTopLeft.y - SAFE_AREA_Y);
-
-	// 右下はさらに右下（Xプラス、Yプラス）へ広げる
-	Vector2F bottom = Vector2F(cameraBottomRight.x + SAFE_AREA_X, cameraBottomRight.y + SAFE_AREA_Y);
+	// カメラ座標を足す
+	Vector2F cameraPos = mainCamera.GetPos();
+	safeAreaTop_ = Vector2F::SubVector2F(safeAreaTop_, cameraPos);
+	safeAreaBottom_ = Vector2F::SubVector2F(safeAreaBottom_, cameraPos);
 
 	// アクターの各部位位置を取得
 	Vector2F ownerPos = parameter.pos_;
@@ -63,19 +53,19 @@ void ComponentCameraRangeCheck::Update()
 	float halfHeight = ownerHitSize.y / 2.0f;
 
 	// 左右のセーフエリア外に出ないようにする補正
-	if (actorLeft.x < top.x)
+	if (actorLeft.x < safeAreaTop_.x)
 	{
-		correctedPos.x = top.x + halfWidth;
+		correctedPos.x = safeAreaTop_.x + halfWidth;
 	}
-	else if (actorRight.x > bottom.x)
+	else if (actorRight.x > safeAreaBottom_.x)
 	{
-		correctedPos.x = bottom.x - halfWidth;
+		correctedPos.x = safeAreaBottom_.x - halfWidth;
 	}
 
 	// 上のセーフエリア外に出ないようにする補正
-	if (actorTop.y < top.y)
+	if (actorTop.y < safeAreaTop_.y)
 	{
-		correctedPos.y = top.y + halfHeight;
+		correctedPos.y = safeAreaTop_.y + halfHeight;
 	}
 
 	// 左右や上に押し戻された座標を反映する
@@ -86,9 +76,30 @@ void ComponentCameraRangeCheck::Update()
 
 	// 下のみ
 	// アクターの頭頂部も含めて完全に下のセーフエリアを越えたら死亡とする
-	if (actorTop.y > bottom.y)
+	if (actorTop.y > safeAreaBottom_.y)
 	{
-		// 死亡
+		// 死亡処理
 		owner_.Dead();
 	}
+}
+
+void ComponentCameraRangeCheck::DebugDraw()
+{
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 64);
+
+	// 描画用のスクリーン座標を計算（ワールド座標からカメラ座標を引く）
+	// cameraTopLeft_自体がワールド座標なので、そこからカメラ位置を引きます
+	Vector2F cameraPos = mainCamera.GetPos();
+	float screenLeft = safeAreaTop_.x + cameraPos.x;
+	float screenTop = safeAreaTop_.y + cameraPos.y;
+	float screenRight = safeAreaBottom_.x + cameraPos.x;
+	float screenBottom = safeAreaBottom_.y + cameraPos.y;
+
+	DrawBox((int)screenLeft, (int)screenTop, (int)screenRight, (int)screenBottom, UtilityCommon::BLUE, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+	// 文字列表示用の座標もスクリーン座標に合わせるか、ワールド座標をそのまま出すか
+	// ここでは描画された枠のスクリーン座標を表示するようにします
+	DrawFormatString(0, Application::SCREEN_SIZE_Y - 40, UtilityCommon::RED, L"TOP %d,%d", (int)screenLeft, (int)screenTop);
+	DrawFormatString(0, Application::SCREEN_SIZE_Y - 20, UtilityCommon::RED, L"BOT %d,%d", (int)screenRight, (int)screenBottom);
 }

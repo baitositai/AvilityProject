@@ -310,7 +310,14 @@ std::unique_ptr<ComponentJump> FactoryComponent::CreateComponentJump(ActorBase& 
 
 std::unique_ptr<ComponentDebugCreateItemAvility> FactoryComponent::CreateComponentDebugCreateItemAvility(ActorBase& owner)
 {
-    return std::make_unique<ComponentDebugCreateItemAvility>(owner);
+    auto* playerPtr = dynamic_cast<Player*>(&owner);
+
+    if (playerPtr == nullptr)
+    {
+        // ƒLƒƒƒXƒg‚É¸”s‚µ‚½ê‡nullptr‚ğ•Ô‚·
+        return nullptr;
+    }
+    return std::make_unique<ComponentDebugCreateItemAvility>(*playerPtr);
 }
 
 FactoryComponent::FactoryComponent()

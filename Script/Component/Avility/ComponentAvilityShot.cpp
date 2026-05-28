@@ -134,7 +134,7 @@ void ComponentAvilityShot::ProcessInputShot()
 	const float moveSpeed = parameter_.moveSpeed_;
 
 	//　ショット入力があったらCharge開始(現在Qキー)
-	if (inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_SHOT))
+	if (inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_SHOT, parameter_.padNo_))
 	{
 		// 影響を与えるコンポーネントを無効にする
 		owner_.SetStateComponentActive(Player::STATE::ALIVE, false);
@@ -166,12 +166,12 @@ void ComponentAvilityShot::ProcessInputCharge()
 	// ここで角度を決定
 	// 方向判定
 	bool isInput = false;
-	if (inputManager_.IsNew(InputManager::TYPE::AVILITY_GRAVITY_RIGHT))
+	if (inputManager_.IsNew(InputManager::TYPE::AVILITY_GRAVITY_RIGHT, parameter_.padNo_))
 	{
 		shotAngle_ += 0.1f;
 		isInput = true;
 	}
-	if (inputManager_.IsNew(InputManager::TYPE::AVILITY_GRAVITY_LEFT))
+	if (inputManager_.IsNew(InputManager::TYPE::AVILITY_GRAVITY_LEFT, parameter_.padNo_))
 	{
 		shotAngle_ -= 0.1f;
 		isInput = true;
@@ -185,7 +185,7 @@ void ComponentAvilityShot::ProcessInputCharge()
 	if (!isInput)
 	{
 		// パッドの確認
-		Vector2 overSize = inputManager_.GetKnockLStickSize();
+		Vector2 overSize = inputManager_.GetKnockLStickSize(parameter_.padNo_);
 
 		// 正規化
 		overSize.Normalize();
@@ -223,7 +223,7 @@ void ComponentAvilityShot::ProcessInputCharge()
 	// チャージ
 	// =========================
 
-	if (inputManager_.IsNew(InputManager::TYPE::AVILITY_SHOT_CHARGE))
+	if (inputManager_.IsNew(InputManager::TYPE::AVILITY_SHOT_CHARGE, parameter_.padNo_))
 	{
 		chageTime_ += 0.5f;
 		shotTime_ += 0.1f;

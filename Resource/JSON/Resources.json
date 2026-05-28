@@ -41,14 +41,44 @@
       "path": "Resource/Shader/StandardModelPS.cso"
     },
     {
-      "key": "player",
+      "key": "player1",
       "sceneId": 2,
       "type": "sprite",
       "divX": 10,
       "divY": 9,
       "sizeX": 96,
       "sizeY": 96,
-      "path": "Resource/Image/Player/Player.png"
+      "path": "Resource/Image/Player/Player1.png"
+    },
+    {
+      "key": "player2",
+      "sceneId": 2,
+      "type": "sprite",
+      "divX": 10,
+      "divY": 9,
+      "sizeX": 96,
+      "sizeY": 96,
+      "path": "Resource/Image/Player/Player2.png"
+    },
+    {
+      "key": "player3",
+      "sceneId": 2,
+      "type": "sprite",
+      "divX": 10,
+      "divY": 9,
+      "sizeX": 96,
+      "sizeY": 96,
+      "path": "Resource/Image/Player/Player3.png"
+    },
+    {
+      "key": "player4",
+      "sceneId": 2,
+      "type": "sprite",
+      "divX": 10,
+      "divY": 9,
+      "sizeX": 96,
+      "sizeY": 96,
+      "path": "Resource/Image/Player/Player4.png"
     },
     {
       "key": "clone",
@@ -155,8 +185,8 @@
       "sizeY": 32
     },
     {
-      "key": "backGround01",
-      "path": "Resource/Image/BackGround/BackGround01.png",
+      "key": "backGround02",
+      "path": "Resource/Image/BackGround/BackGround02.png",
       "sceneId": 2,
       "type": "texture"
     }

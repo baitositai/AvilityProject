@@ -101,21 +101,8 @@ void CharacterBase::Damage(const int damage)
 	// 体力が0以下の場合
 	if (parameterCharacter_->hp_ <= 0)
 	{
-		// 体力を0にする
-		parameterCharacter_->hp_ = 0;
-
-		// 状態変更
-		ChangeState(STATE::DEAD);
-
-		// コライダーの判定を無効にする
-		collider_->SetIsActive(false);
-
-		// アニメーション開始
-		animation_->Play(Animation::TYPE::DEAD, false);
-		animation_->SetNextAnimationType(Animation::TYPE::MAX);
-
-		// ジャンプを更新しない
-		SetComponentActive("jump", false);
+		// 死亡処理
+		Dead();
 		return;
 	}
 
@@ -130,6 +117,25 @@ void CharacterBase::Damage(const int damage)
 
 	// 状態遷移
 	ChangeState(STATE::ALIVE);
+}
+
+void CharacterBase::Dead()
+{
+	// 体力を0にする
+	parameterCharacter_->hp_ = 0;
+
+	// 状態変更
+	ChangeState(STATE::DEAD);
+
+	// コライダーの判定を無効にする
+	collider_->SetIsActive(false);
+
+	// アニメーション開始
+	animation_->Play(Animation::TYPE::DEAD, false);
+	animation_->SetNextAnimationType(Animation::TYPE::MAX);
+
+	// ジャンプを更新しない
+	SetComponentActive("jump", false);
 }
 
 void CharacterBase::SetJumpPow(const float jumpPow)

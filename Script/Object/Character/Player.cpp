@@ -44,10 +44,15 @@ void Player::Update()
 
 	// 基底クラスの処理
 	ActorBase::Update();
+
+	GameLeave();
 }
 
 void Player::DebugDraw()
 {
+	// カメラ範囲のデバッグ描画
+	//componentMap_["cameraRangeCheck"]->DebugDraw();
+
 	// 基底クラスのデバッグ描画
 	CharacterBase::DebugDraw();
 
@@ -85,15 +90,16 @@ void Player::DebugDraw()
 	}
 }
 
+void Player::Dead()
+{
+	CharacterBase::Dead();
+	SetAllAvilityComponentActive(false);
+}
+
 void Player::AttackReset()
 {
 	// 初期化
 	componentStateMap_.at(STATE::ATTACK)->Init();
-}
-
-void Player::Dead()
-{
-	ChangeState(STATE::DEAD);
 }
 
 std::shared_ptr<ColliderBox> Player::CreateColliderClone()
@@ -250,5 +256,29 @@ void Player::SelectAvility()
 			spareAvilityComponent_ = nullptr;
 			SetAvilityActive(AvilityTypes::TYPE::GRAVITY, true);
 		}
+	}
+}
+
+void Player::GameLeave()
+{
+	// 1Pのみ処理無効
+	if (parameterPlayer_->padNo_ == Input::JOYPAD_NO::PAD1) { return; }
+
+	// 一定以上長押しで退出
+	InputManager& input = InputManager::GetInstance();
+	if (input.IsNew(InputManager::TYPE::PLAYER_GAME_LEAVE, parameterPlayer_->padNo_))
+	{
+		if (LEAVE_INPUT_TIME > leaveInputTime_)
+		{
+			leaveInputTime_ += scnMng_.GetDeltaTime();
+		}
+		else
+		{
+			isDelete_ = true;
+		}
+	}
+	else
+	{
+		leaveInputTime_ = 0.0f;
 	}
 }

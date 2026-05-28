@@ -2,6 +2,7 @@
 #include "ComponentBase.h"
 
 class InputManager;
+class Player;
 
 class ComponentDebugCreateItemAvility : public ComponentBase
 {
@@ -11,7 +12,7 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="owner">所有者</param>
-	ComponentDebugCreateItemAvility(ActorBase& owner);
+	ComponentDebugCreateItemAvility(Player& owner);
 
 	/// <summary>
 	/// デストラクタ
@@ -32,6 +33,8 @@ private:
 
 	// 入力管理クラス
 	InputManager& inputManager_;
+
+	Player& playerOwner_;
 
 	// アビリティ種類
 	int type_;

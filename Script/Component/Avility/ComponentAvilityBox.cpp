@@ -17,7 +17,7 @@ ComponentAvilityBox::~ComponentAvilityBox()
 
 void ComponentAvilityBox::Update()
 {
-	if (inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_SHOT))
+	if (inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_SHOT, parameter_.padNo_))
 	{
 		//ボックスを置く
 		PlaceBox();

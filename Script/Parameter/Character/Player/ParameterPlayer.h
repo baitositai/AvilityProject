@@ -1,5 +1,6 @@
 #pragma once
 #include "../ParameterCharacter.h"
+#include "../../Manager/Common/Input.h"
 
 class ParameterPlayer : public ParameterCharacter
 {
@@ -56,5 +57,8 @@ public:
 
     // 攻撃アニメーション速度
     float animationAttackSpeed_;
+
+    // 入力パッド
+    Input::JOYPAD_NO padNo_;
 };
 

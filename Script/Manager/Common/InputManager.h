@@ -70,6 +70,11 @@ public:
 		SELECT_AVILITY_SECOND,	// アビリティの選択：２個目
 		SELECT_AVILITY_THIRD,	// アビリティの選択：３個目
 
+		ACCEPT_NEW_PLAYER,		// 新規プレイヤー参加の受付
+		ACCEPT_NEW_PLAYER_SUB,	// 新規プレイヤー参加の受付
+
+		PLAYER_GAME_LEAVE,		// プレイヤーゲーム退出
+
 		DEBUG_CREATE_ITEM_AVILITY,	// デバッグ用アビリティアイテム生成
 		DEBUG_SELECT_RIGHT_ITEM_AVILITY,	// デバッグ用アビリティアイテム選択
 		DEBUG_SELECT_LEFT_ITEM_AVILITY,	// デバッグ用アビリティアイテム選択

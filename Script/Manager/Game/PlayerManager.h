@@ -4,6 +4,8 @@
 #include "../../Common/Vector2F.h"
 
 class Player;
+class ParameterPlayer;
+class PlayerNewAccept;
 
 class PlayerManager : public Singleton<PlayerManager>
 {
@@ -11,6 +13,8 @@ class PlayerManager : public Singleton<PlayerManager>
 	friend class Singleton<PlayerManager>;
 
 public:
+
+	static constexpr int PLAYER_MAX = 4;
 
 	/// <summary>
 	/// 初期化処理
@@ -55,8 +59,20 @@ private:
 	// プレイヤー残機
 	int playersLeft_;
 
+	// 入力受付用の処理クラス
+	std::unique_ptr<PlayerNewAccept> playerNewAccept_;
+
+	// テンプレートとなるパラメータ
+	std::unique_ptr<ParameterPlayer> templateParameter_;
+
 	// プレイヤーのリスト
 	std::vector<std::unique_ptr<Player>> playerList_;
+
+	// 新規プレイヤーの受付
+	void AcceptNewPlayer();
+
+	// ゲームの退出
+	void LeavePlayer();
 
 	// コンストラクタ
 	PlayerManager();

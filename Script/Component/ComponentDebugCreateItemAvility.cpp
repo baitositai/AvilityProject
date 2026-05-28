@@ -3,13 +3,14 @@
 #include "../../Manager/Common/InputManager.h"
 #include "../../Manager/Game/ItemManager.h"
 #include "../../Object/Item/ItemAvility.h"
-#include "../../Object/ActorBase.h"
+#include "../../Object/Character/Player.h"
 #include "Avility/AvilityTypes.h"
 #include "ComponentDebugCreateItemAvility.h"
 
-ComponentDebugCreateItemAvility::ComponentDebugCreateItemAvility(ActorBase& owner) :
+ComponentDebugCreateItemAvility::ComponentDebugCreateItemAvility(Player& owner) :
 	ComponentBase(owner),
-	inputManager_(InputManager::GetInstance())
+	inputManager_(InputManager::GetInstance()),
+	playerOwner_(owner)
 {
 	type_ = 0;
 }
@@ -22,11 +23,14 @@ void ComponentDebugCreateItemAvility::Update()
 {
 	constexpr float RADIUS = 20.0f;
 
-	if (inputManager_.IsTrgDown(InputManager::TYPE::DEBUG_CREATE_ITEM_AVILITY))
+	Input::JOYPAD_NO padNo = playerOwner_.GetParameter().padNo_;
+
+	if (inputManager_.IsTrgDown(InputManager::TYPE::DEBUG_CREATE_ITEM_AVILITY, padNo))
 	{
 		std::unique_ptr<ParameterItemAvility> parameter = std::make_unique<ParameterItemAvility>();
 		parameter->type_ = static_cast<AvilityTypes::TYPE>(type_);
 		parameter->pos_ = Vector2F::AddVector2F(owner_.GetParameter().pos_, Vector2F::MulVector2FFloat(owner_.GetParameter().GetFront(), 50.0f));
+		parameter->hitSize_ = Vector2(static_cast<int>(RADIUS * 2.0f), static_cast<int>(RADIUS * 2.0f));
 		parameter->hitRadius_ = RADIUS;
 		parameter->hitSize_ = Vector2(RADIUS, RADIUS);
 		parameter->gravityPower_ = 9.8f;
@@ -34,11 +38,11 @@ void ComponentDebugCreateItemAvility::Update()
 		parameter->componentkeys_ = { "gravity", "move" };
 		ItemManager::GetInstance().Add(std::make_unique<ItemAvility>(std::move(parameter)));
 	}
-	else if (inputManager_.IsTrgDown(InputManager::TYPE::DEBUG_SELECT_RIGHT_ITEM_AVILITY))
+	else if (inputManager_.IsTrgDown(InputManager::TYPE::DEBUG_SELECT_RIGHT_ITEM_AVILITY, padNo))
 	{
 		type_ = UtilityCommon::WrapStepIndex(type_, 1, 0, static_cast<int>(AvilityTypes::TYPE::MAX));
 	}
-	else if (inputManager_.IsTrgDown(InputManager::TYPE::DEBUG_SELECT_LEFT_ITEM_AVILITY))
+	else if (inputManager_.IsTrgDown(InputManager::TYPE::DEBUG_SELECT_LEFT_ITEM_AVILITY, padNo))
 	{
 		type_ = UtilityCommon::WrapStepIndex(type_, -1, 0, static_cast<int>(AvilityTypes::TYPE::MAX));
 	}

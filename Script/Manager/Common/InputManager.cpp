@@ -37,8 +37,8 @@ void InputManager::Init()
 	RegisterTrigger(TYPE::AVILITY_SHOT, { KEY_INPUT_E }, { BTN::RB_LEFT }, STICK::MAX, MOUSE::MAX, { TYPE::AVILITY_SHOT_SUB });
 	RegisterTrigger(TYPE::AVILITY_SHOT_SUB, { KEY_INPUT_S }, { }, STICK::L_STICK_DOWN);
 	RegisterTrigger(TYPE::AVILITY_SHOT_CHARGE, { KEY_INPUT_E }, { BTN::RB_LEFT });
-	RegisterTrigger(TYPE::AVILITY_SHOT_RIGHT, { KEY_INPUT_RIGHT }, {});
-	RegisterTrigger(TYPE::AVILITY_SHOT_LEFT, { KEY_INPUT_LEFT }, {});
+	RegisterTrigger(TYPE::AVILITY_SHOT_RIGHT, { KEY_INPUT_RIGHT }, {}, STICK::MAX);
+	RegisterTrigger(TYPE::AVILITY_SHOT_LEFT, { KEY_INPUT_LEFT }, {}, STICK::MAX);
 	
 	// アビリティ：スタンプ
 	RegisterTrigger(TYPE::AVILITY_STAMP, { KEY_INPUT_SPACE }, { BTN::RB_RIGHT });
@@ -70,6 +70,13 @@ void InputManager::Init()
 	RegisterTrigger(TYPE::SELECT_DECISION, { KEY_INPUT_SPACE }, { BTN::RB_RIGHT }, STICK::MAX, MOUSE::CLICK_LEFT);
 	RegisterTrigger(TYPE::SELECT_CANCEL, { KEY_INPUT_BACK }, { BTN::RB_DOWN });
 	RegisterTrigger(TYPE::PAUSE, { KEY_INPUT_BACK }, { BTN::SELECT });
+
+	// 新規プレイヤー参加
+	RegisterTrigger(TYPE::ACCEPT_NEW_PLAYER, { }, { BTN::RB_RIGHT }, STICK::MAX, MOUSE::MAX, { TYPE::ACCEPT_NEW_PLAYER_SUB });
+	RegisterTrigger(TYPE::ACCEPT_NEW_PLAYER_SUB, { }, { BTN::RB_DOWN });
+
+	// 追加プレイヤーの途中離脱機能
+	RegisterTrigger(TYPE::PLAYER_GAME_LEAVE, { }, { BTN::START });
 
 	// デバッグ操作
 	RegisterTrigger(TYPE::DEBUG_SCENE_CHANGE, { KEY_INPUT_RSHIFT }, { });

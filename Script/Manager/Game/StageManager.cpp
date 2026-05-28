@@ -32,7 +32,7 @@ void StageManager::Init()
 	// îwåiê∂ê¨
 	backGround_ = std::make_unique<BackGround>();
 	backGround_->Init();
-	backGround_->SetResource("backGround01");
+	backGround_->SetResource("backGround02");
 }
 
 void StageManager::Update()

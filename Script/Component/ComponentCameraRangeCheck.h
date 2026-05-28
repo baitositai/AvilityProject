@@ -11,9 +11,13 @@ public:
 	~ComponentCameraRangeCheck() override;
 	void Init() override;
 	void Update() override;
+	void DebugDraw() override;
 
 private:
 
 	Player& owner_;
+
+	Vector2F safeAreaTop_;
+	Vector2F safeAreaBottom_;
 };
 

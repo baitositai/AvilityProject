@@ -33,14 +33,14 @@ public:
 	void DebugDraw() override;
 
 	/// <summary>
+	/// 死亡処理
+	/// </summary>	
+	void Dead() override;
+
+	/// <summary>
 	/// 攻撃のリセット
 	/// </summary>
 	void AttackReset();
-
-	/// <summary>
-	/// 死亡処理
-	/// </summary>
-	void Dead();
 
 	/// <summary>
 	/// 自身のコライダーのクローンを生成して返す
@@ -97,7 +97,13 @@ private:
 	static constexpr int AVILITY_MAX = 3;	
 	
 	// アビリティ選択時間
-	static constexpr float AVILITY_SELECT_TIME = 3.0f;
+	static constexpr float AVILITY_SELECT_TIME = 2.5f;
+
+	// 退出用入力時間
+	static constexpr float LEAVE_INPUT_TIME = 3.0f;
+
+	// 退出用入力時間
+	float leaveInputTime_;
 
 	// 選択時間
 	float selectAvilityTime_;
@@ -116,4 +122,7 @@ private:
 
 	// アビリティの選択
 	void SelectAvility();
+
+	// 途中退出用処理
+	void GameLeave();
 };
