@@ -105,6 +105,16 @@
       "sizeY": 64
     },
     {
+      "key": "Leaser3",
+      "type": "sprite",
+      "path": "Resource/Image/Effect/EffectsBlue.png",
+      "divX": 9,
+      "divY": 30,
+      "sceneId": 2,
+      "sizeX": 64,
+      "sizeY": 64
+    },
+    {
       "key": "teleportEnter",
       "type": "sprite",
       "path": "Resource/Image/Effect/TeleportEnter.png",

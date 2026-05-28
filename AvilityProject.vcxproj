@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Object\Effect\EffectLaser.cpp" />
     <ClCompile Include="Script\Component\Avility\ComponentAvilityLaser.cpp" />
     <ClCompile Include="Script\Component\Avility\ComponentAvilityGiant.cpp" />
     <ClCompile Include="Script\OnHit\OnHitEffectTeleport.cpp" />
@@ -283,6 +284,7 @@
     <ClCompile Include="Script\Manager\Common\SpriteEffectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Object\Effect\EffectLaser.h" />
     <ClInclude Include="Script\Component\Avility\ComponentAvilityLaser.h" />
     <ClInclude Include="Script\Component\Avility\ComponentAvilityGiant.h" />
     <ClInclude Include="Script\OnHit\OnHitEffectTeleport.h" />

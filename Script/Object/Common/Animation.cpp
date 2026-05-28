@@ -33,7 +33,8 @@ void Animation::Add(const std::string stringType, const int startIndex, const in
     animationData.endIndex = endIndex;
 
     // 格納
-    animationMap_.emplace(type, std::move(animationData));
+    // emplace から operator[] に変更（既存のキーなら上書きされる）
+    animationMap_[type] = std::move(animationData);
 }
 
 void Animation::Play(const TYPE type, const bool isLoop)

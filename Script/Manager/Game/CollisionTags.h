@@ -19,6 +19,7 @@ public:
 		AVILITY_BOX,				// アビリティ設置のボックス
 		BLAST,						// 爆風
 		AIRSLASH,					// エアースラッシュ
+		LASER,					// レーザー
 		ITEM_AVILITY,				// アイテム:アビリティ
 		TELEPORT_EXIT,				// テレポート
 		MAX

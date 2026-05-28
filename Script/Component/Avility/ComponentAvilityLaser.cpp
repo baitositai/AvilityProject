@@ -12,7 +12,7 @@
 #include "ComponentAvilityLaser.h"
 
 #include "../../Parameter/Effect/ParameterEffect.h"
-#include "../../Object/Effect/EffectAirslash.h"
+#include "../../Object/Effect/EffectLaser.h"
 #include "../../Manager/Common/SpriteEffectManager.h"
 
 ComponentAvilityLaser::ComponentAvilityLaser(Player& owner)
@@ -158,18 +158,16 @@ void ComponentAvilityLaser::ProcessInputCharge()
 		CreateLaser(chageTime_);
 		chageTime_ = 0.0f;
 
-		// 自身のコライダーの判定を無効にする
-		owner_.SetColliderActive(false);
+		// 自身のコライダーの判定を有効にする
+		owner_.SetColliderActive(true);
 
-		// 攻撃判定用コライダーを有効にする
-		attackCollider_->SetIsActive(true);
+		// コンポーネントの活動状態を戻す
+		owner_.SetComponentActive("gravity", true);
+		owner_.SetStateComponentActive(Player::STATE::ALIVE, true);
 
-		// 影響を与えそうなパラメータを初期化
-		parameter_.jumpPow_ = 0.0f;
-		parameter_.knockBackPower_ = Vector2F();
-		parameter_.isGround_ = false;
+		// 攻撃判定用コライダーを無効にする
+		attackCollider_->SetIsActive(false);
 
-		// 状態遷移
 		currentState_ = "input";
 		currentStateFunction_ = stateFunctionMap_[currentState_];
 	}
@@ -197,8 +195,13 @@ void ComponentAvilityLaser::CreateLaser(float _ChageTime)
 	const Vector2F dirRightSlash = Vector2F::MulVector2FFloat(rightDir, SPREAD_WIDTH);
 	const Vector2F dirLeftSlash =Vector2F::MulVector2FFloat(rightDir, -SPREAD_WIDTH);
 
-	const Vector2F dir = parameter_.direction_ ? dirLeftSlash : dirRightSlash;
+	const Vector2F dir = parameter_.direction_ ? dirRightSlash : dirLeftSlash;
 
+	// 描画角度の計算
+	float angle = std::atan2f(dir.y, dir.x);
+	// 補正値
+	//float correctionAngle = UtilityCommon::Deg2RadF(-90.0f); // 必要に応じて調整
+	parameter_.direction_ ? angle += UtilityCommon::Deg2RadF(90.0f) : angle -= UtilityCommon::Deg2RadF(-90.0f);
 
 	for (int i = 0; i < CREATE_NUM; i++)
 	{
@@ -206,19 +209,19 @@ void ComponentAvilityLaser::CreateLaser(float _ChageTime)
 		std::unique_ptr<ParameterEffect> parameter = std::make_unique<ParameterEffect>();
 		parameter->pos_ = parameter_.pos_;
 		parameter->gravityDir_ = parameter_.gravityDir_;
-		parameter->angle_ = std::atan2f(dir.y, dir.x);
+		parameter->angle_ = angle;
 		parameter->hitRadius_ = 16.0f;
-		parameter->resourceKey_ = "airslash";
+		parameter->resourceKey_ = "Leaser3";
 		parameter->scale_ = 1.0f;
-		parameter->divisionNum_ = { 4, 1 };
+		parameter->divisionNum_ = { 9, 30 };
 		parameter->transparent_ = true;
-		parameter->moveSpeed_ = 3.0f;
+		parameter->moveSpeed_ = 0.0f;
 		parameter->attackPower_ = parameter_.attackPower_;
 		parameter->attackBoostRate_ = parameter_.attackBoostRate_;
 		parameter->componentkeys_ = { "spriteAnimation" };
-		parameter->animationDataMap_.emplace("effect", Animation::Data(0, 3, 0.3));
+		parameter->animationDataMap_.emplace("effect", Animation::Data(9 * 20, 9 * 20 + 8, 0.1));
 		// エフェクトの生成と追加
-		std::unique_ptr<EffectAirslash> effect = std::make_unique<EffectAirslash>(std::move(parameter), dir);
+		std::unique_ptr<EffectLaser> effect = std::make_unique<EffectLaser>(std::move(parameter), dir, 20);
 		SpriteEffectManager::GetInstance().Add(std::move(effect));
 	}
 }

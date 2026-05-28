@@ -223,6 +223,9 @@ void CollisionManager::InitTagMatrix()
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AIRSLASH)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;				// エアースラッシュと敵
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::AIRSLASH)] = true;
 
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::LASER)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;				// レーザーと敵
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::LASER)] = true;
+
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TELEPORT_EXIT)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;			// テレポートと敵
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::TELEPORT_EXIT)] = true;
 }
