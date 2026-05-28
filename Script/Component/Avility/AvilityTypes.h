@@ -14,6 +14,7 @@ public:
 		GRAVITY,		// 重力変化
 		TELEPORT,		// テレポート
 		GIANT,			// 巨大化
+		LASER,			// レーザー
 		METAL,			// メタル
 		AIRWALK,		// 空中歩行
 		AIRSLASH,		// 空中斬り

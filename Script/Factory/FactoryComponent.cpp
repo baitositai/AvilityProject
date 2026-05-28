@@ -11,6 +11,7 @@
 #include "../../Component/Avility/ComponentAvilityShot.h"
 #include "../../Component/Avility/ComponentAvilityAirwalk.h"
 #include "../../Component/Avility/ComponentAvilityGravity.h"
+#include "../../Component/Avility/ComponentAvilityLaser.h"
 #include "../../Component/Avility/ComponentAvilityMetal.h"
 #include "../../Component/Avility/ComponentAvilitySuperman.h"
 #include "../../Component/Avility/ComponentAvilityStamp.h"
@@ -161,6 +162,18 @@ std::unique_ptr<ComponentAvilityGravity> FactoryComponent::CreateComponentAvilit
         return nullptr;
     }
     return std::make_unique<ComponentAvilityGravity>(*playerPtr);
+}
+
+std::unique_ptr<ComponentAvilityLaser> FactoryComponent::CreateComponentAvilityLaser(ActorBase& owner)
+{
+    auto* playerPtr = dynamic_cast<Player*>(&owner);
+
+    if (playerPtr == nullptr)
+    {
+        // ÉLÉÉÉXÉgÇ…é∏îsÇµÇΩèÍçánullptrÇï‘Ç∑
+        return nullptr;
+    }
+    return std::make_unique<ComponentAvilityLaser>(*playerPtr);
 }
 
 std::unique_ptr<ComponentAvilityMetal> FactoryComponent::CreateComponentAvilityMetal(ActorBase& owner)
@@ -342,6 +355,10 @@ FactoryComponent::FactoryComponent()
     componentCreateMap_.emplace("avilityShot", [this](ActorBase& owner)
         {
             return CreateComponentAvilityShot(owner);
+        });
+    componentCreateMap_.emplace("avilityLaser", [this](ActorBase& owner)
+        {
+            return CreateComponentAvilityLaser(owner);
         });
     componentCreateMap_.emplace("avilityMetal", [this](ActorBase& owner)
         {

@@ -8,6 +8,7 @@ const std::unordered_map<AvilityTypes::TYPE, std::string> AvilityTypes::AVILITY_
 	{AvilityTypes::TYPE::GRAVITY, "avilityGravity"},
 	{AvilityTypes::TYPE::TELEPORT, "avilityTeleport"},
 	{AvilityTypes::TYPE::GIANT, "avilityGiant"},
+	{AvilityTypes::TYPE::LASER, "avilityLaser"},
 	{AvilityTypes::TYPE::METAL, "avilityMetal"},
 	{AvilityTypes::TYPE::AIRWALK, "avilityAirwalk"},
 	{AvilityTypes::TYPE::AIRSLASH, "avilityAirslash"},
