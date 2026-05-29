@@ -38,7 +38,6 @@ ComponentAvilityLaser::ComponentAvilityLaser(Player& owner)
 	{
 		{"input", [this]() { return ProcessInputShot(); }},		// 入力待ち状態
 		{"charge", [this]() { return ProcessInputCharge(); }},	// チャージ状態
-		{"shot", [this]() { return ProcessMoveShot(); }}		// ショット移動状態
 	};
 	currentState_ = "input";
 	currentStateFunction_ = stateFunctionMap_[currentState_];
@@ -151,12 +150,11 @@ void ComponentAvilityLaser::ProcessInputCharge()
 	else
 	{
 
-		if (shotTime_ > 2.0f)
+		// チャージが終了したときの処理
+		if (shotTime_ > HI_LASER_COUNT)
 		{
-			shotTime_ = 2.0f;
+			CreateHiLaser();
 		}
-		CreateLaser(chageTime_);
-		chageTime_ = 0.0f;
 
 		// 自身のコライダーの判定を有効にする
 		owner_.SetColliderActive(true);
@@ -170,17 +168,12 @@ void ComponentAvilityLaser::ProcessInputCharge()
 
 		currentState_ = "input";
 		currentStateFunction_ = stateFunctionMap_[currentState_];
+
 	}
 
 }
 
-void ComponentAvilityLaser::ProcessMoveShot()
-{
-
-	
-}
-
-void ComponentAvilityLaser::CreateLaser(float _ChageTime)
+void ComponentAvilityLaser::CreateHiLaser()
 {
 	constexpr int CREATE_NUM = 1;		// 生成するエフェクトの数
 	constexpr float SPREAD_WIDTH = 0.5f;// エフェクトの広がり具合を調整する定数
@@ -193,7 +186,7 @@ void ComponentAvilityLaser::CreateLaser(float _ChageTime)
 
 	// 方向を調整
 	const Vector2F dirRightSlash = Vector2F::MulVector2FFloat(rightDir, SPREAD_WIDTH);
-	const Vector2F dirLeftSlash =Vector2F::MulVector2FFloat(rightDir, -SPREAD_WIDTH);
+	const Vector2F dirLeftSlash = Vector2F::MulVector2FFloat(rightDir, -SPREAD_WIDTH);
 
 	const Vector2F dir = parameter_.direction_ ? dirRightSlash : dirLeftSlash;
 
@@ -224,5 +217,11 @@ void ComponentAvilityLaser::CreateLaser(float _ChageTime)
 		std::unique_ptr<EffectLaser> effect = std::make_unique<EffectLaser>(std::move(parameter), dir, 20);
 		SpriteEffectManager::GetInstance().Add(std::move(effect));
 	}
+	chageTime_ = 0.0f;
+}
+
+void ComponentAvilityLaser::CreateLaser(float _ChageTime)
+{
+	chageTime_ = 0.0f;
 }
 

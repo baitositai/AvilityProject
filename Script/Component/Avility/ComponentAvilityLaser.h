@@ -17,6 +17,10 @@ public:
 	static constexpr float SHOT_INTERVAL = 0.5f;	// ショットのインターバル
 	static constexpr float SHOT_SPEED = 15.0f;		// ショットの速度
 
+	static constexpr float LOW_LASER_COUNT = 0.3f;	
+	static constexpr float HI_LASER_COUNT = 2.0f;	
+
+
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
@@ -70,7 +74,8 @@ private:
 	// 移動入力処理
 	void ProcessInputShot();
 	void ProcessInputCharge();
-	void ProcessMoveShot();
+
+	void CreateHiLaser();
 
 	void CreateLaser(float _ChageTime);
 
