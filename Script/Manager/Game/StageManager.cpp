@@ -4,6 +4,7 @@
 #include "../../Object/Character/CharacterBase.h"
 #include "../../Object/Stage/BackGround.h"
 #include "../../Object/Stage/Stage.h"
+#include "../../Object/Gimmick/GimmickDoor.h"
 #include "../../Object/Gimmick/AvilityBox.h"
 #include "../../System/StageGenerator.h"
 #include "../Common/Camera.h"
@@ -12,9 +13,11 @@
 
 void StageManager::Init()
 {
+	Vector2 chipSize = {};
+
 	// ステージジェネレーター用のパラメータ
 	StageGenerator::Parameter generatorParameter = {};
-	generatorParameter.connectNum = 4;
+	generatorParameter.connectNum = 2;
 	generatorParameter.candidates = { "SD", "SC", "SU", "DD", "DC", "DU", "CC", "CD", "CU", "UU", "UC", "UD", "DG", "CG", "UG" };
 	auto stageGenerator = std::unique_ptr<StageGenerator>();
 
@@ -25,6 +28,8 @@ void StageManager::Init()
 	parameter->tileIndexs_ = stageGenerator->CreateStageData(generatorParameter);
 	parameter->resourceKey_ = "groundChipsDungeon";
 
+	chipSize = parameter->chipSize_;
+
 	// ステージ生成
 	stage_ = std::make_unique<Stage>(std::move(parameter));
 	stage_->Init();
@@ -33,6 +38,17 @@ void StageManager::Init()
 	backGround_ = std::make_unique<BackGround>();
 	backGround_->Init();
 	backGround_->SetResource("backGround02");
+
+	// ドア
+	auto doorParameter = std::make_unique<ParameterGimmick>();
+	doorParameter->hitSize_ = { 160, 240 };
+	doorParameter->pos_ = GetMapChipIndexPositions(-10002).front();
+	doorParameter->pos_.y -= doorParameter->hitSize_.y / 2 - chipSize.y;
+	doorParameter->resourceKey_ = "door";
+	
+	auto door = std::make_unique<GimmickDoor>(std::move(doorParameter));
+	door->Init();
+	gimmick_.push_back(std::move(door));
 }
 
 void StageManager::Update()
@@ -59,6 +75,7 @@ void StageManager::Draw()
 void StageManager::ChageStage(const TYPE type)
 {
 	type_ = type;
+	DeleteGimmick();
 	stage_->ChageStage(STAGE_PATH_MAP.at(type_));
 }
 
@@ -101,8 +118,11 @@ void StageManager::AddGimmick(CharacterBase& _chara, const int _boxNum)
 
 void StageManager::DeleteGimmick(void)
 {
-	//一番古いギミックを消す
-	gimmick_.back()->SetIsDelete();
+	for (auto& gimmick : gimmick_)
+	{
+		gimmick->Delete();
+	}
+	gimmick_.clear();
 }
 
 void StageManager::GimmickSweep()

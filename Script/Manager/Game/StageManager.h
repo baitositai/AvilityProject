@@ -23,10 +23,9 @@ public:
 	enum class TYPE
 	{
 		NONE,
-		STAGE_FIRST,
-		STAGE_SECOND,
-		STAGE_THIRD,
-		STAGE_BOSS,
+		BOSS,
+		ROAD,
+		MAX,
 	};
 
 	/// <summary>
@@ -90,10 +89,7 @@ private:
 	const std::unordered_map<TYPE, std::string> STAGE_PATH_MAP =
 	{
 		{ TYPE::NONE, "none" },
-		{ TYPE::STAGE_FIRST, "StageFirst.csv" },
-		{ TYPE::STAGE_SECOND, "StageSecond.csv" },
-		{ TYPE::STAGE_THIRD, "StageThird.csv" },
-		{ TYPE::STAGE_BOSS, "StageBoss.csv" },
+		{ TYPE::BOSS, "StageBoss.csv" },
 	};
 
 	// Ží—Þ

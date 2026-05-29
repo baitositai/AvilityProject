@@ -28,6 +28,7 @@ public:
 		ATTACK,		// UŒ‚
 		HIT,		// ƒqƒbƒg
 		DEAD,		// Ž€–S
+		ENTER,		// “üŽº
 		MAX
 	};
 	

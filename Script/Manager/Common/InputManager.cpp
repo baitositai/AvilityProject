@@ -78,6 +78,9 @@ void InputManager::Init()
 	// 追加プレイヤーの途中離脱機能
 	RegisterTrigger(TYPE::PLAYER_GAME_LEAVE, { }, { BTN::START });
 
+	// 入室
+	RegisterTrigger(TYPE::PLAYER_ENTER_DOOR, { }, { }, STICK::L_STICK_UP);
+
 	// デバッグ操作
 	RegisterTrigger(TYPE::DEBUG_SCENE_CHANGE, { KEY_INPUT_RSHIFT }, { });
 	RegisterTrigger(TYPE::DEBUG_CAMERA_CHANGE, { KEY_INPUT_TAB }, { });

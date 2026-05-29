@@ -21,6 +21,7 @@ public:
 		AIRSLASH,					// エアースラッシュ
 		ITEM_AVILITY,				// アイテム:アビリティ
 		TELEPORT_EXIT,				// テレポート
+		DOOR,						// ドア
 		MAX
 	};
 

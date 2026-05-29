@@ -214,7 +214,12 @@ protected:
 	virtual void CreateComponents();
 
 	// 型変換用のパラメータを返す関数
-	ParameterActor* GetParameterActorPtr() { return parameter_.get(); }
+	ParameterActor* GetParameterActorPtr() { return parameter_.get(); }	
+	
+protected:
+
+	// 描画位置を返す
+	const Vector2 GetDrawPos() const;
 
 private:
 	

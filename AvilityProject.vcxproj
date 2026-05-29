@@ -145,6 +145,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Component\State\ComponentStateEnter.cpp" />
+    <ClCompile Include="Script\Object\Gimmick\GimmickDoor.cpp" />
     <ClCompile Include="Script\System\PlayerNewAccept.cpp" />
     <ClCompile Include="Script\Scene\SceneGameOver.cpp" />
     <ClCompile Include="Script\Component\ComponentCameraRangeCheck.cpp" />
@@ -287,6 +289,8 @@
     <ClCompile Include="Script\System\StageGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Component\State\ComponentStateEnter.h" />
+    <ClInclude Include="Script\Object\Gimmick\GimmickDoor.h" />
     <ClInclude Include="Script\System\PlayerNewAccept.h" />
     <ClInclude Include="Script\Scene\SceneGameOver.h" />
     <ClInclude Include="Script\Component\ComponentCameraRangeCheck.h" />

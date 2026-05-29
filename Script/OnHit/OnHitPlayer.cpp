@@ -2,6 +2,7 @@
 #include "../../Object/Item/ItemAvility.h"
 #include "../../Factory/FactoryComponent.h"
 #include "../../Component/Avility/ComponentAvilityBase.h"
+#include "../../Manager/Common/InputManager.h"
 #include "../Utility/UtilityCommon.h"
 #include "../Object/Character/Player.h"
 #include "../Collider/ColliderArray.h"
@@ -17,6 +18,7 @@ OnHitPlayer::OnHitPlayer(Player& owner) :
 {
     onHitMap_.emplace(CollisionTags::TAG::ENEMY_CLONE, [this](const std::weak_ptr<ColliderBase>& opponentCollider){ return OnHitEnemy(opponentCollider); });
 	onHitMap_.emplace(CollisionTags::TAG::ITEM_AVILITY, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitItemAvility(opponentCollider); });
+	onHitMap_.emplace(CollisionTags::TAG::DOOR, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitDoor(opponentCollider); });
 
     onHitPlayerStamp_ = std::make_unique<OnHitPlayerStamp>(owner_);
 }
@@ -63,6 +65,18 @@ void OnHitPlayer::OnHitItemAvility(const std::weak_ptr<ColliderBase>& opponentCo
 
     // アイテムの種類を獲得
     owner_.SetAvilityComponent(std::move(factoryComponent_.CreateComponentAvility(itemAvility->GetCreateAvilityName(), owner_)));
+}
+
+void OnHitPlayer::OnHitDoor(const std::weak_ptr<ColliderBase>& opponentCollider)
+{
+    if (InputManager::GetInstance().IsTrgDown(InputManager::TYPE::PLAYER_ENTER_DOOR))
+    {
+        // 入室状態へ遷移
+        owner_.ChangeState(Player::STATE::ENTER);
+
+        // 全てのアビリティ処理を無効
+        owner_.SetAllAvilityComponentActive(false);
+    }
 }
 
 void OnHitPlayer::AvilityShot(const std::weak_ptr<ColliderBase>& opponentCollider, const Vector2F& normal)

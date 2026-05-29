@@ -19,6 +19,7 @@ class ComponentStatePlayerProcess;
 class ComponentStateAttackDefault;
 class ComponentStateIdle;
 class ComponentStateDead;
+class ComponentStateEnter;
 class ComponentStateDummy;
 
 class ComponentAvilityBase;
@@ -80,6 +81,7 @@ private:
 	std::unique_ptr<ComponentAvilityGiant> CreateComponentAvilityGiant(ActorBase& owner);
 	std::unique_ptr<ComponentKnockBack> CreateComponentKnockBack(ActorBase& owner);
 	std::unique_ptr<ComponentStateIdle> CreateComponentStateIdle(ActorBase& owner);
+	std::unique_ptr<ComponentStateEnter> CreateComponentStateEnter(ActorBase& owner);
 	std::unique_ptr<ComponentStateDead> CreateComponentStateDead(ActorBase& owner);
 	std::unique_ptr<ComponentStateDummy> CreateComponentStateDummy(ActorBase& owner);
 	std::unique_ptr<ComponentInvincible> CreateComponentInvincible(ActorBase& owner);

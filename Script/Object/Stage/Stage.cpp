@@ -44,6 +44,9 @@ void Stage::Init()
 	// 衝突後処理
 	onHit_ = nullptr;
 
+	// ステージ設定
+	SetStage();
+
 	// タイルの初期化
 	for (const auto& tileRow : tiles_)
 	{

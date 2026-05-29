@@ -14,5 +14,10 @@ public:
 	/// </summary>
 	~GameStateBoss() override;
 
+	/// <summary>
+	/// ‰Šú‰»ˆ—
+	/// </summary>
+	void Init() override;
+
 };
 

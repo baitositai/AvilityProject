@@ -10,6 +10,8 @@ public:
 	enum class TYPE
 	{
 		AVILITY_BOX,
+		DOOR,
+		MAX,
 	};
 
 	/// <summary>
@@ -26,33 +28,33 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	/// <param name=""></param>
-	void Init(void)override;
+	void Init()override;
 
 	/// <summary>
 	/// 更新
 	/// </summary>
-	/// <param name=""></param>
-	void Update(void)override;
+	void Update()override;
 
 	/// <summary>
 	/// 描画
 	/// </summary>
-	/// <param name=""></param>
-	void Draw(void)override;
+	void Draw()override;
 
 	/// <summary>
 	/// デバッグ表示
 	/// </summary>
-	/// <param name=""></param>
-	void DebugDraw(void)override;
+	void DebugDraw()override;
+
+	/// <summary>
+	/// リソース取得
+	/// </summary>
+	void InitResource() override;
 
 	/// <summary>
 	/// ギミック種類の取得
 	/// </summary>
-	/// <param name=""></param>
 	/// <returns>ギミック種類</returns>
-	const TYPE GetGimmickType(void)const { return gimmickType_; }
+	const TYPE GetGimmickType()const { return gimmickType_; }
 
 	/// <summary>
 	/// パラメーターを返す(変更可)

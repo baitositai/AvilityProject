@@ -22,6 +22,7 @@
 #include "../../Component/State/ComponentStateAttackDefault.h"
 #include "../../Component/State/ComponentStateDead.h"
 #include "../../Component/State/ComponentStateIdle.h"
+#include "../../Component/State/ComponentStateEnter.h"
 #include "../../Component/State/ComponentStateDummy.h"
 #include "../../Object/Character/CharacterBase.h" 
 #include "../../Object/Character/Player.h" 
@@ -248,6 +249,18 @@ std::unique_ptr<ComponentStateIdle> FactoryComponent::CreateComponentStateIdle(A
     return std::make_unique<ComponentStateIdle>(*charaPtr);
 }
 
+std::unique_ptr<ComponentStateEnter> FactoryComponent::CreateComponentStateEnter(ActorBase& owner)
+{
+    auto* charaPtr = dynamic_cast<CharacterBase*>(&owner);
+
+    if (charaPtr == nullptr)
+    {
+        // ÉLÉÉÉXÉgÇ…é∏îsÇµÇΩèÍçánullptrÇï‘Ç∑
+        return nullptr;
+    }
+    return std::make_unique<ComponentStateEnter>(*charaPtr);
+}
+
 std::unique_ptr<ComponentStateDead> FactoryComponent::CreateComponentStateDead(ActorBase& owner)
 {
     auto* charaPtr = dynamic_cast<CharacterBase*>(&owner);
@@ -394,6 +407,10 @@ FactoryComponent::FactoryComponent()
     componentCreateMap_.emplace("idle", [this](ActorBase& owner)
         {
             return CreateComponentStateIdle(owner);
+        });
+    componentCreateMap_.emplace("enter", [this](ActorBase& owner)
+        {
+            return CreateComponentStateEnter(owner);
         });
     componentCreateMap_.emplace("dead", [this](ActorBase& owner)
         {

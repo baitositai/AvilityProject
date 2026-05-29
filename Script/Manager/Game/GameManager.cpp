@@ -61,14 +61,11 @@ void GameManager::GameOver()
 void GameManager::ChangeStateRoad()
 {
 	game_ = std::make_unique<GameStateRoad>();
-
-	// ステージの変更
-	StageManager::GetInstance().ChageStage(StageManager::TYPE::STAGE_FIRST);
 }
 
 void GameManager::ChangeStateBoss()
 {
-	game_ = std::make_unique<GameStateRoad>();
+	game_ = std::make_unique<GameStateRoad>();	
 }
 
 void GameManager::ChangeStateEvent()

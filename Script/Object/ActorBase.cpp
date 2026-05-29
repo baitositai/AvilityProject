@@ -246,6 +246,12 @@ void ActorBase::CreateComponents()
 	}
 }
 
+const Vector2 ActorBase::GetDrawPos() const
+{
+	Vector2F cameraPos = mainCamera.GetPos();
+	return Vector2::AddVector2(Vector2::AddVector2(parameter_->pos_.ToVector2(), parameter_->localPos_), cameraPos.ToVector2());
+}
+
 void ActorBase::OnHit(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
 	if (onHit_ == nullptr) return;

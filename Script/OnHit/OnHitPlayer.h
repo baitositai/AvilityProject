@@ -42,6 +42,7 @@ private:
 	void OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider) override;
 	void OnHitEnemy(const std::weak_ptr<ColliderBase>& opponentCollider);
 	void OnHitItemAvility(const std::weak_ptr<ColliderBase>& opponentCollider);
+	void OnHitDoor(const std::weak_ptr<ColliderBase>& opponentCollider);
 
 	// アビリティ別の衝突後処理
 	void AvilityShot(const std::weak_ptr<ColliderBase>& opponentCollider, const Vector2F& normal);

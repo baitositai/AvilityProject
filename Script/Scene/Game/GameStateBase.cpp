@@ -26,7 +26,7 @@ void GameStateBase::Init()
 {
 	// ƒJƒƒ‰İ’è
 	mainCamera.ChangeMode(Camera::MODE::CAMERA_SCROLL);
-	mainCamera.SetFollowPos(&playerMng_.GetCameraFollowPos());
+	//mainCamera.SetFollowPos(&playerMng_.GetCameraFollowPos());
 
 	// ƒJƒƒ‰‚ÌˆÚ“®§ŒÀ‚ğİ’è
 	Vector2 stageSize = stageMng_.GetStageSize();

@@ -225,6 +225,9 @@ void CollisionManager::InitTagMatrix()
 
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TELEPORT_EXIT)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;			// テレポートと敵
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::TELEPORT_EXIT)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::DOOR)] = true;						// プレイヤーとドア
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::DOOR)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
 }
 
 void CollisionManager::InitColliderMatrix()
