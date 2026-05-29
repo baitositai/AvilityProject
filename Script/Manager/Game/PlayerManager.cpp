@@ -1,7 +1,10 @@
 #include <string>
+#include <DxLib.h>
 #include "../../Application.h"
 #include "../../Utility/UtilityLoad.h"
+#include "../../Utility/UtilityCommon.h"
 #include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/FontManager.h"
 #include "../../Manager/Common/Camera.h"
 #include "../../Object/Character/Player.h"
 #include "../../Object/Common/Animation.h"
@@ -39,6 +42,12 @@ void PlayerManager::Init()
 	// プレイ中の新規受付処理
 	playerNewAccept_ = std::make_unique<PlayerNewAccept>();
 	playerNewAccept_->Init(static_cast<int>(playerList_.size()));
+
+	// プレイヤー残機
+	playersLeft_ = PLAYER_LEFT;
+
+	// フォント
+	font_ = FontManager::GetInstance().CreateMyFont(L"ベストテンDOT", 48, 3);
 }
 
 void PlayerManager::Update()
@@ -66,6 +75,7 @@ void PlayerManager::Draw()
 
 void PlayerManager::DebugDraw()
 {
+	DrawFormatStringToHandle(0, 0, UtilityCommon::WHITE, font_, L"YOUR LIFE %d", playersLeft_);
 	for (const auto& player : playerList_)
 	{
 		player->DebugDraw();
@@ -95,10 +105,11 @@ void PlayerManager::AddPlayersLeft(const int addLeft)
 	// プレイヤー残機追加
 	playersLeft_ += addLeft;
 
-	// 0未満となった場合
-	if (playersLeft_ < 0)
+	// 1Pが死亡したかつ残機が0未満の場合
+	if (playerList_.front()->GetState() == Player::STATE::DEAD &&
+		playersLeft_ < 0)
 	{
-		// ゲームオーバー
+		// ゲームオーバーへ遷移
 		GameManager::GetInstance().GameOver();
 	}
 }
@@ -115,6 +126,9 @@ void PlayerManager::AcceptNewPlayer()
 		// 個別パラメータの設定
 		parameter->padNo_ = static_cast<Input::JOYPAD_NO>(padNo);
 		parameter->resourceKey_ = "player" + std::to_string(padNo);
+
+		// 残機がない場合HPを5分の1にする
+		if (playersLeft_ < 1) { parameter->hp_ /= 5; }
 		
 		// 初期位置を画面真ん中に生成
 		parameter->pos_ = Vector2F::SubVector2F(Vector2F((float)Application::SCREEN_HALF_X, (float)Application::SCREEN_HALF_Y), mainCamera.GetPos());
@@ -161,6 +175,7 @@ void PlayerManager::LeavePlayer()
 
 PlayerManager::PlayerManager()
 {
+	font_ = -1;
 	playersLeft_ = -1;
 }
 

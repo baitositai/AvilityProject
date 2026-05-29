@@ -1,6 +1,7 @@
 #include <DxLib.h>
 #include "../../Manager/Common/SceneManager.h"
 #include "../../Manager/Common/InputManager.h"
+#include "../../Manager/Game/PlayerManager.h"
 #include "../../Component/Avility/ComponentAvilityBase.h"
 #include "../../Component/Avility/AvilityTypes.h"
 #include "../../OnHit/OnHitPlayer.h"
@@ -92,8 +93,14 @@ void Player::DebugDraw()
 
 void Player::Dead()
 {
+	// 基底クラスの死亡処理
 	CharacterBase::Dead();
+
+	// 全てのアビリティを無効にする
 	SetAllAvilityComponentActive(false);
+
+	// 残機を減らす
+	PlayerManager::GetInstance().AddPlayersLeft();
 }
 
 void Player::AttackReset()

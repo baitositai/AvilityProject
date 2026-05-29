@@ -13,6 +13,11 @@
 
 SceneGameOver::SceneGameOver()
 {
+	// 更新関数のセット
+	updataFunc_ = std::bind(&SceneGameOver::LoadingUpdate, this);
+
+	// 描画関数のセット
+	drawFunc_ = std::bind(&SceneGameOver::LoadingDraw, this);
 }
 
 SceneGameOver::~SceneGameOver()
@@ -41,4 +46,9 @@ void SceneGameOver::NormalDraw()
 
 void SceneGameOver::ChangeNormal()
 {
+	// 更新関数のセット
+	updataFunc_ = std::bind(&SceneGameOver::NormalUpdate, this);
+
+	// 描画関数のセット
+	drawFunc_ = std::bind(&SceneGameOver::NormalDraw, this);
 }

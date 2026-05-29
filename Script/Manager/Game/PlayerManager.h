@@ -14,7 +14,14 @@ class PlayerManager : public Singleton<PlayerManager>
 
 public:
 
+	// プレイヤー最大人数
 	static constexpr int PLAYER_MAX = 4;
+
+	// プレイヤー残機最大数
+	static constexpr int PLAYER_LEFT = 5;
+
+	// プレイヤー残機加算数
+	static constexpr int DEFAULT_ADD_PLAYER_LEFT = -1;
 
 	/// <summary>
 	/// 初期化処理
@@ -52,9 +59,11 @@ public:
 	/// プレイヤーの残機追加
 	/// </summary>
 	/// <param name="addLeft">追加残機</param>
-	void AddPlayersLeft(const int addLeft);
+	void AddPlayersLeft(const int addLeft = DEFAULT_ADD_PLAYER_LEFT);
 
 private:
+
+	int font_;
 
 	// プレイヤー残機
 	int playersLeft_;
@@ -73,6 +82,9 @@ private:
 
 	// ゲームの退出
 	void LeavePlayer();
+
+	// ゲームオーバーか調べる
+	void CheckGameOver();
 
 	// コンストラクタ
 	PlayerManager();
