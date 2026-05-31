@@ -29,6 +29,13 @@ public:
 	/// <returns>ステージデータを返す</returns>
 	std::vector<std::vector<int>> CreateStageData(const Parameter& parameter);
 
+	/// <summary>
+	/// 直接読み込んでステージデータを作成する
+	/// </summary>
+	/// <param name="stagePath">ステージパス</param>
+	/// <returns>ステージデータを返す</returns>
+	std::vector<std::vector<int>> LoadCreateStageData(const std::string& stagePath);
+
 private:
 
 	// 接続するパスを探す

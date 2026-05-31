@@ -36,6 +36,8 @@ void EnemyManager::Init()
 
 void EnemyManager::Update()
 {
+	if (enemiesMap_.empty()) { return; }
+
 	// XVˆ—
 	for (auto& enemiesList : enemiesMap_)
 	{
@@ -48,6 +50,8 @@ void EnemyManager::Update()
 
 void EnemyManager::Draw()
 {
+	if (enemiesMap_.empty()) { return; }
+
 	// •`‰æˆ—
 	for (auto& enemiesList : enemiesMap_)
 	{
@@ -60,12 +64,15 @@ void EnemyManager::Draw()
 
 void EnemyManager::Sweep()
 {
-	// I—¹‚µ‚½“G‚ğ•À‚Ñ•Ï‚¦‚é
 	for (auto& enemiesList : enemiesMap_)
 	{
 		auto it = std::remove_if(enemiesList.second.begin(), enemiesList.second.end(),
 			[](const std::unique_ptr<CharacterBase>& enemy)
 			{
+				if (enemy == nullptr)
+				{
+					return true;
+				}
 				return enemy->IsDelete();
 			});
 		enemiesList.second.erase(it, enemiesList.second.end());
@@ -74,6 +81,8 @@ void EnemyManager::Sweep()
 
 void EnemyManager::DebugDraw()
 {
+	if (enemiesMap_.empty()) { return; }
+
 	// ‰Šú‰»
 	for (auto& enemiesList : enemiesMap_)
 	{
@@ -82,6 +91,29 @@ void EnemyManager::DebugDraw()
 			enemy->DebugDraw();
 		}
 	}
+}
+
+void EnemyManager::Clear()
+{
+	if (enemiesMap_.empty())
+	{
+		return;
+	}
+
+	for (auto& enemiesList : enemiesMap_)
+	{
+		for (auto& enemy : enemiesList.second)
+		{
+			if (enemy == nullptr)
+			{
+				continue;
+			}
+			enemy->Delete();
+			enemy.reset();
+		}
+		enemiesList.second.clear();
+	}
+	enemiesMap_.clear();
 }
 
 EnemyManager::EnemyManager()

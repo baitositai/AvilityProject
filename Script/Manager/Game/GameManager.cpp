@@ -18,6 +18,10 @@ void GameManager::Init()
 	CollisionManager::GetInstance().Init();	
 	ItemManager::GetInstance().Init();
 
+	// 各種状態別処理の作成
+	gameStateMap_.emplace(STATE::ROAD, std::move(std::make_unique<GameStateRoad>()));
+	gameStateMap_.emplace(STATE::BOSS, std::move(std::make_unique<GameStateBoss>()));
+
 	// 初期状態の設定
 	ChangeState(STATE::ROAD);
 }
@@ -25,13 +29,13 @@ void GameManager::Init()
 void GameManager::Update()
 {
 	// 各種ゲーム状態の更新
-	game_->Update();
+	gameStateMap_.at(state_)->Update();
 }
 
 void GameManager::Draw()
 {
 	// 各種ゲーム状態の描画
-	game_->Draw();
+	gameStateMap_.at(state_)->Draw();
 }
 
 void GameManager::ChangeState(const STATE state)
@@ -43,13 +47,13 @@ void GameManager::ChangeState(const STATE state)
 	changeStateMap_[state]();
 
 	// 状態遷移後の初期化
-	game_->Init();
+	gameStateMap_.at(state_)->Init();
 }
 
 void GameManager::DebugDraw()
 {
 	// 各種ゲーム状態のデバッグ描画
-	game_->DebugDraw();
+	gameStateMap_.at(state_)->DebugDraw();
 }
 
 void GameManager::GameOver()
@@ -60,23 +64,19 @@ void GameManager::GameOver()
 
 void GameManager::ChangeStateRoad()
 {
-	game_ = std::make_unique<GameStateRoad>();
 }
 
 void GameManager::ChangeStateBoss()
 {
-	game_ = std::make_unique<GameStateRoad>();	
 }
 
 void GameManager::ChangeStateEvent()
 {
-	game_ = std::make_unique<GameStateRoad>();
 }
 
 GameManager::GameManager()
 {
 	// 初期化
-	game_ = nullptr;
 	state_ = STATE::MAX;
 
 	// 各種オブジェクトらの生成

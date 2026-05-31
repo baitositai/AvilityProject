@@ -162,6 +162,7 @@ private:
 		{ "attack", STATE::ATTACK },
 		{ "hit", STATE::HIT },
 		{ "respawn", STATE::RESPAWN },
+		{ "enter", STATE::ENTER },
 	};	
 
 	// ó‘Ô‘JˆÚŠÇ—ƒ}ƒbƒv

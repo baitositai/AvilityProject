@@ -61,6 +61,11 @@ std::vector<std::vector<int>> StageGenerator::CreateStageData(const Parameter& p
 	return CombineMatrixList(selectedMatrices);
 }
 
+std::vector<std::vector<int>> StageGenerator::LoadCreateStageData(const std::string& stagePath)
+{
+	return UtilityLoad::LoadCSVData(stagePath);
+}
+
 bool StageGenerator::FindConnectPath(const std::vector<std::string>& candidates, const int targetCount, std::vector<std::string>& currentPath, std::vector<std::string>& outResult)
 {
 	// w’è‚³‚ê‚½Ú‘±”‚É’B‚µ‚½ê‡‚Ì”»’èˆ—‚Å‚·

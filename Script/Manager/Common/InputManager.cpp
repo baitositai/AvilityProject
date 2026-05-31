@@ -79,7 +79,7 @@ void InputManager::Init()
 	RegisterTrigger(TYPE::PLAYER_GAME_LEAVE, { }, { BTN::START });
 
 	// 入室
-	RegisterTrigger(TYPE::PLAYER_ENTER_DOOR, { }, { }, STICK::L_STICK_UP);
+	RegisterTrigger(TYPE::PLAYER_ENTER_DOOR, { KEY_INPUT_W }, { }, STICK::L_STICK_UP);
 
 	// デバッグ操作
 	RegisterTrigger(TYPE::DEBUG_SCENE_CHANGE, { KEY_INPUT_RSHIFT }, { });

@@ -39,10 +39,10 @@ void StageManager::Init()
 	backGround_->Init();
 	backGround_->SetResource("backGround02");
 
-	// ドア
+	// ボスドア
 	auto doorParameter = std::make_unique<ParameterGimmick>();
 	doorParameter->hitSize_ = { 160, 240 };
-	doorParameter->pos_ = GetMapChipIndexPositions(-10002).front();
+	doorParameter->pos_ = stage_->GetAreaListMap(Stage::LIST_TYPE::BOSS_DOOR).front();
 	doorParameter->pos_.y -= doorParameter->hitSize_.y / 2 - chipSize.y;
 	doorParameter->resourceKey_ = "door";
 	
@@ -77,11 +77,6 @@ void StageManager::ChageStage(const TYPE type)
 	type_ = type;
 	DeleteGimmick();
 	stage_->ChageStage(STAGE_PATH_MAP.at(type_));
-}
-
-const std::vector<Vector2F> StageManager::GetMapChipIndexPositions(const int index)
-{
-	return stage_->GetMapChipIndexPositions(index);
 }
 
 void StageManager::DebugDraw()
@@ -132,6 +127,16 @@ void StageManager::GimmickSweep()
 			return _gim->IsDelete();
 		});
 	gimmick_.erase(removeGim, gimmick_.end());
+}
+
+const std::vector<Vector2F>& StageManager::GetPlayerFirstPositions() const
+{
+	return stage_->GetAreaListMap(Stage::LIST_TYPE::PLAYER_FIRST_POS);
+}
+
+const std::vector<Vector2F>& StageManager::GetEnemyAreaPositions() const
+{
+	return stage_->GetAreaListMap(Stage::LIST_TYPE::ENEMY_CREATE_AREA);
 }
 
 const Vector2& StageManager::GetStageSize() const

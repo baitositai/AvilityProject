@@ -26,7 +26,7 @@ void ColliderBase::OnHit(const std::weak_ptr<ColliderBase>& opponentCollider)
 void ColliderBase::Delete()
 {
 	isActive_ = false;
-	isDelete_ = false;
+	isDelete_ = true;
 }
 
 void ColliderBase::DebugDraw()

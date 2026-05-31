@@ -13,6 +13,7 @@ ComponentStateEnter::ComponentStateEnter(CharacterBase& owner) :
 	stateChangeMap_.emplace(STATE::START, std::bind(&ComponentStateEnter::ChangeStateStart, this));
 	stateChangeMap_.emplace(STATE::WAIT, std::bind(&ComponentStateEnter::ChangeStateWait, this));
 	stateChangeMap_.emplace(STATE::END, std::bind(&ComponentStateEnter::ChangeStateEnd, this));
+	ChangeState(STATE::START);
 }
 
 ComponentStateEnter::~ComponentStateEnter()
@@ -21,7 +22,7 @@ ComponentStateEnter::~ComponentStateEnter()
 
 void ComponentStateEnter::Init()
 {
-
+	ChangeState(STATE::START);
 }
 
 void ComponentStateEnter::Update()
@@ -31,7 +32,7 @@ void ComponentStateEnter::Update()
 
 void ComponentStateEnter::UpdateStart()
 {
-	ChangeState(STATE::START);
+	ChangeState(STATE::WAIT);
 }
 
 void ComponentStateEnter::UpdateWait()

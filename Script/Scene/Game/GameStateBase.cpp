@@ -33,7 +33,7 @@ void GameStateBase::Init()
 	mainCamera.SetCameraLimit(Vector2F{0.0f, 0.0f}, stageSize.ToVector2F());
 
 	// プレイヤーの初期位置を決定
-	playerMng_.SetFirstPositions(stageMng_.GetMapChipIndexPositions(-10001));
+	playerMng_.SetFirstPositions(stageMng_.GetPlayerFirstPositions());
 }
 
 void GameStateBase::Update()

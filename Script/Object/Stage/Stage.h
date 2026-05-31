@@ -9,6 +9,17 @@ class Stage : public ActorBase
 
 public:
 
+	// リスト種類
+	enum class LIST_TYPE
+	{
+		PLAYER_FIRST_POS,	// 初期位置
+		BOSS_DOOR,			// ボス部屋ドア
+		ENEMY_CREATE_AREA,	// 敵生成エリア
+		ITEM_CREATE_AREA,	// アイテム生成エリア
+		EVENT_DOOR,			// イベントドア
+		MAX
+	};
+
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
@@ -39,7 +50,7 @@ public:
 	/// ステージの変更
 	/// </summary>
 	/// <param name="stagePath">ステージパス</param>
-	void ChageStage(const std::string& path);
+	void ChageStage(const std::string& path = "");
 
 	/// <summary>
 	/// デバッグ描画
@@ -59,14 +70,19 @@ public:
 	const Vector2& GetTileNums() const { return tileNums_; }
 
 	/// <summary>
-	/// 指定したマップチップインデックスの位置情報らを返す
+	/// 指定したエリアリストを返す
 	/// </summary>
-	/// <param name="index">インデックス</param>
-	/// <returns>位置情報のリスト</returns>
-	const std::vector<Vector2F> GetMapChipIndexPositions(const int index);
-
+	/// <param name="type">リスト種類</param>
+	/// <returns>エリアリスト</returns>
+	const std::vector<Vector2F>& GetAreaListMap(const LIST_TYPE type) const;
 
 private:
+
+	// リスト種類数
+	static constexpr int LIST_TYPE_MAX = static_cast<int>(LIST_TYPE::MAX);
+
+	// 生成位置インデックス
+	static constexpr int LIST_TYPE_INDEXS[LIST_TYPE_MAX] = { -10001, -10002, -10003, -10004, -10005 };
 
 	// ステージサイズ
 	Vector2 stageSize_;
@@ -79,6 +95,9 @@ private:
 
 	// タイルの配列
 	std::vector<std::vector<std::unique_ptr<TileBase>>> tiles_;
+
+	// 各種リストマップ
+	std::unordered_map<LIST_TYPE, std::vector<Vector2F>> areaListMap_;
 
 	// ステージの設定
 	void SetStage();

@@ -20,10 +20,14 @@ void GameStateBoss::Init()
 {
 	// カメラ設定
 	mainCamera.ChangeMode(Camera::MODE::FIXED_POINT);
+	mainCamera.SetCameraPos(Vector2F(0.0f, 0.0f));
 
 	// ステージの変更
 	stageMng_.ChageStage(StageManager::TYPE::BOSS);
 
 	// プレイヤーの初期位置を決定
-	playerMng_.SetFirstPositions(stageMng_.GetMapChipIndexPositions(-10001));
+	playerMng_.SetFirstPositions(stageMng_.GetPlayerFirstPositions());
+
+	// 敵を削除
+	enemyMng_.Clear();
 }

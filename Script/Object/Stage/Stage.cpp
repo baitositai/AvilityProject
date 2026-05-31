@@ -4,6 +4,7 @@
 #include "../../Manager/Common/Camera.h"
 #include "../../Manager/Common/ResourceManager.h"
 #include "../../Manager/Game/CollisionManager.h"
+#include "../../Utility/UtilityLoad.h"
 #include "../../Collider/ColliderArray.h"
 #include "../../OnHit/OnHitBase.h"
 #include "../Common/Animation.h"
@@ -82,7 +83,11 @@ void Stage::Draw()
 void Stage::ChageStage(const std::string& stagePath)
 {
 	// 種類の定義
-	parameterStage_->path_ = stagePath;
+	if(!stagePath.empty())
+	{
+		parameterStage_->tileIndexs_.clear();
+		parameterStage_->tileIndexs_ = UtilityLoad::LoadCSVData(Application::PATH_CSV + stagePath);
+	}
 
 	// ステージの設定
 	SetStage();
@@ -139,6 +144,36 @@ void Stage::SetStage()
 	auto colliderArray = std::dynamic_pointer_cast<ColliderArray>(collider_);
 	if (colliderArray == nullptr) return;
 	colliderArray->SetArrayOfArrays(parameterStage_->tileIndexs_);
+
+	if (!areaListMap_.empty())
+	{
+		areaListMap_.clear();
+	}
+
+	// 生成リストの登録
+	for (int y = 0; y < tileNums_.y; y++)
+	{
+		for (int x = 0; x < tileNums_.x; x++)
+		{
+			// 指定外のインデックスの場合
+			if (-1 <= parameterStage_->tileIndexs_[y][x])
+			{
+				// 次へ
+				continue;
+			}
+			for (int i = 0; i < LIST_TYPE_MAX; i++)
+			{
+				// 指定のインデックスと一致してる場合
+				if (LIST_TYPE_INDEXS[i] == parameterStage_->tileIndexs_[y][x])
+				{
+					// 登録
+					areaListMap_[static_cast<LIST_TYPE>(i)].push_back(
+						Vector2(x * parameterStage_->chipSize_.x, y * parameterStage_->chipSize_.y).ToVector2F());
+					break;
+				}
+			}
+		}
+	}
 }
 
 void Stage::ClearStage()
@@ -177,18 +212,7 @@ void Stage::GetDrawRange(Vector2& rangeMin, Vector2& rangeMax)
 	rangeMax.y = std::clamp(rangeMax.y, 0, tileNums_.y);
 }
 
-const std::vector<Vector2F> Stage::GetMapChipIndexPositions(const int index)
+const std::vector<Vector2F>& Stage::GetAreaListMap(const LIST_TYPE type) const
 {
-	std::vector<Vector2F> list = {};
-	for (int y = 0; y < tileNums_.y; y++)
-	{
-		for (int x = 0; x < tileNums_.x; x++)
-		{
-			if (index == parameterStage_->tileIndexs_[y][x])
-			{
-				list.push_back(Vector2(x * parameterStage_->chipSize_.x, y * parameterStage_->chipSize_.y).ToVector2F());
-			}
-		}
-	}
-	return list;
+	return areaListMap_.at(type);
 }

@@ -44,6 +44,11 @@ public:
 	/// </summary>
 	void DebugDraw();
 
+	/// <summary>
+	/// íœ
+	/// </summary>
+	void Clear();
+
 private:
 
 	// “G‚ğŠÇ—‚·‚éƒ}ƒbƒv

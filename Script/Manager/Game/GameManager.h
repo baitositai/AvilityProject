@@ -62,7 +62,7 @@ private:
 	std::unordered_map<STATE, std::function<void()>> changeStateMap_;
 
 	// ƒQ[ƒ€ó‘Ô•Êˆ—
-	std::unique_ptr<GameStateBase> game_;
+	std::unordered_map<STATE, std::unique_ptr<GameStateBase>> gameStateMap_;
 
 	// Šeíó‘Ô‘JˆÚŠÖ”
 	void ChangeStateRoad();
