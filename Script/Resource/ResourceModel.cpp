@@ -2,8 +2,8 @@
 #include "ResourceModel.h"
 
 
-ResourceModel::ResourceModel(const RESOURCE_TYPE type, const std::wstring& path, const int sceneId) :
-	ResourceBase(type, path, sceneId)
+ResourceModel::ResourceModel(const RESOURCE_TYPE type, const std::wstring& path, const std::vector<int>& sceneIds) :
+	ResourceBase(type, path, sceneIds)
 {
 	duplicateModels_.clear();
 }

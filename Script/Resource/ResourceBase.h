@@ -27,8 +27,8 @@ public:
 	/// </summary>
 	/// <param name="type">種類</param>
 	/// <param name="path">パス名</param>
-	/// <param name="sceneId">シーンID</param>
-	ResourceBase(const RESOURCE_TYPE type, const std::wstring& path, const int sceneId);
+	/// <param name="sceneIds">シーンID</param>
+	ResourceBase(const RESOURCE_TYPE type, const std::wstring& path, const std::vector<int>& sceneIds);
 
 	/// <summary>
 	/// デストラクタ
@@ -61,7 +61,7 @@ public:
 	/// シーンIDを返す
 	/// </summary>
 	/// <returns></returns>
-	const int GetSceneId() const { return sceneId_; }
+	const std::vector<int> GetSceneIds() const { return sceneIds_; }
 
 protected:
 
@@ -72,7 +72,7 @@ protected:
 	std::wstring path_;
 
 	//シーンID
-	int sceneId_;
+	std::vector<int> sceneIds_;
 
 	//ハンドル
 	int handleId_;

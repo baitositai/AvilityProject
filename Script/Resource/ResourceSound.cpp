@@ -1,8 +1,8 @@
 #include <DxLib.h>
 #include "ResourceSound.h"
 
-ResourceSound::ResourceSound(const RESOURCE_TYPE type, const std::wstring& path, const std::string& soundType, const int sceneId):
-	ResourceBase(type,path,sceneId),
+ResourceSound::ResourceSound(const RESOURCE_TYPE type, const std::wstring& path, const std::string& soundType, const std::vector<int>& sceneIds):
+	ResourceBase(type,path,sceneIds),
 	soundType_(GetSoundTypeEnum(soundType))
 {
 }

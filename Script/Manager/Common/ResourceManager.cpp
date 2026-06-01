@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include <cassert>
 #include "../../Application.h"
 #include "../../Utility/UtilityCommon.h"
@@ -40,7 +41,7 @@ void ResourceManager::Init(void)
 	int divY = -1;
 	int sizeX = -1;
 	int sizeY = -1;
-	int sceneId = -1;
+	std::vector<int> sceneIds = {};
 	std::string key = "";
 	std::string soundType = "";
 	std::string stringType = "";
@@ -64,7 +65,7 @@ void ResourceManager::Init(void)
 		key = res["key"].get<std::string>();
 		stringType = res["type"].get<std::string>();
 		path = UtilityCommon::GetWStringFromString(res["path"].get<std::string>());
-		sceneId = res["sceneId"].get<int>();
+		sceneIds = res["sceneIds"].get<std::vector<int>>();
 
 		//列挙型へ変換
 		auto it = RESOURCE_TYPE_MAP.find(stringType);
@@ -76,11 +77,11 @@ void ResourceManager::Init(void)
 		switch (type)
 		{
 		case ResourceBase::RESOURCE_TYPE::MODEL:
-			resource = make_unique<ResourceModel>(type, path, sceneId);
+			resource = make_unique<ResourceModel>(type, path, sceneIds);
 			break;
 
 		case ResourceBase::RESOURCE_TYPE::TEXTUR:
-			resource = make_unique<ResourceTexture>(type, path, sceneId);
+			resource = make_unique<ResourceTexture>(type, path, sceneIds);
 			break;
 
 		case ResourceBase::RESOURCE_TYPE::SPRITE:
@@ -88,29 +89,29 @@ void ResourceManager::Init(void)
 			divY = res["divY"].get<int>();
 			sizeX = res["sizeX"].get<int>();
 			sizeY= res["sizeY"].get<int>();
-			resource = make_unique<ResourceSprite>(type, path, sceneId, divX, divY, sizeX, sizeY);
+			resource = make_unique<ResourceSprite>(type, path, sceneIds, divX, divY, sizeX, sizeY);
 			break;
 
 		case ResourceBase::RESOURCE_TYPE::EFFECT:
-			resource = make_unique<ResourceEffect>(type, path, sceneId);
+			resource = make_unique<ResourceEffect>(type, path, sceneIds);
 			break;
 
 		case ResourceBase::RESOURCE_TYPE::SOUND:
 			soundType = res["soundType"].get<std::string>();
-			resource = make_unique<ResourceSound>(type, path, soundType, sceneId);
+			resource = make_unique<ResourceSound>(type, path, soundType, sceneIds);
 			break;
 
 		case ResourceBase::RESOURCE_TYPE::FONT:
 			fontName = UtilityCommon::ConvertUtf8ToSjis((res["fontName"].get<std::string>().c_str()));
-			resource = make_unique<ResourceFont>(type, path, sceneId, UtilityCommon::GetWStringFromString(fontName));
+			resource = make_unique<ResourceFont>(type, path, sceneIds, UtilityCommon::GetWStringFromString(fontName));
 			break;
 
 		case ResourceBase::RESOURCE_TYPE::PIXEL_SHADER:
-			resource = make_unique<ResourcePixelShader>(type, path, sceneId);
+			resource = make_unique<ResourcePixelShader>(type, path, sceneIds);
 			break;
 
 		case ResourceBase::RESOURCE_TYPE::VERTEX_SHADER:
-			resource = make_unique<ResourceVertexShader>(type, path, sceneId);
+			resource = make_unique<ResourceVertexShader>(type, path, sceneIds);
 			break;
 
 		default:
@@ -121,16 +122,18 @@ void ResourceManager::Init(void)
 		resourcesMap_.emplace(key, std::move(resource));
 	}
 
-	//共通項目のリソースを読み込む
+	// 全シーン共通のリソースを読み込む
 	for (auto& p : resourcesMap_)
 	{
-		//共通項目のリソースを読み込む
-		if (p.second->GetSceneId() == 0)
+		const auto& ids = p.second->GetSceneIds();
+
+		// 共通リソースが含まれているか判定
+		if (std::ranges::contains(ids, 0))
 		{
-			//読み込み処理
-			p.second->Load();		
-			
-			//コピーコンストラクタ
+			// 読み込み処理
+			p.second->Load();
+
+			// コピーコンストラクタ
 			loadedMap_.emplace(p.first, p.second.get());
 		}
 	}
@@ -152,8 +155,10 @@ void ResourceManager::SceneChangeResource(const int nextSceneId)
 	// 現在読み込んだリソースを解放
 	for (auto it = loadedMap_.begin(); it != loadedMap_.end(); )
 	{
-		// 共通リソース以外を破棄する
-		if (it->second->GetSceneId() != 0)
+		const auto& ids = it->second->GetSceneIds();
+
+		// 共通リソースが含まれているか判定
+		if (!std::ranges::contains(ids, 0))
 		{
 			it->second->Release();
 			it = loadedMap_.erase(it); // eraseして次へ
@@ -167,8 +172,10 @@ void ResourceManager::SceneChangeResource(const int nextSceneId)
 	// 次のシーンのリソースを読み込む
 	for (auto& p : resourcesMap_)
 	{
+		const auto& ids = p.second->GetSceneIds();
+
 		// 指定したシーンのリソースだけロード
-		if (p.second->GetSceneId() == nextSceneId)
+		if (std::ranges::contains(ids, nextSceneId))
 		{
 			p.second->Load();
 			loadedMap_.emplace(p.first, p.second.get());

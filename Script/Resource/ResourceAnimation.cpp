@@ -1,8 +1,8 @@
 #include <DxLib.h>
 #include "ResourceAnimation.h"
 
-ResourceAnimation::ResourceAnimation(const RESOURCE_TYPE type, const std::wstring& path, const int sceneId) : 
-	ResourceBase(type, path, sceneId)
+ResourceAnimation::ResourceAnimation(const RESOURCE_TYPE type, const std::wstring& path, const std::vector<int>& sceneIds) :
+	ResourceBase(type, path, sceneIds)
 {
 }
 

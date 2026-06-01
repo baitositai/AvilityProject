@@ -1,10 +1,10 @@
 #pragma once
-#include "../CharacterBase.h"
+#include "EnemyBase.h"
 #include "../../Parameter/Character/Enemy/ParameterEnemyClone.h"
 
 class ParameterEnemyClone;
 
-class EnemyClone : public CharacterBase
+class EnemyClone : public EnemyBase
 {
 public:
 
@@ -18,16 +18,6 @@ public:
 	/// デストラクタ
 	/// </summary>
 	~EnemyClone() override;
-
-	/// <summary>
-	/// 初期化
-	/// </summary>
-	void Init() override;
-
-	/// <summary>
-	/// デバッグ描画
-	/// </summary>
-	void DebugDraw() override;
 
 	/// <summary>
 	/// パラメーターを返す(変更可)

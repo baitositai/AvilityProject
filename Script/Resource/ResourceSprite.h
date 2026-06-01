@@ -10,12 +10,12 @@ public:
 	/// </summary>
 	/// <param name="type">種類</param>
 	/// <param name="path">パス名</param>
-	/// <param name="sceneId">シーンID</param>
+	/// <param name="sceneIds">シーンID</param>
 	/// <param name="divX">分割数X</param>
 	/// <param name="divY">分割数Y</param>
 	/// <param name="sizeX">サイズX</param>
 	/// <param name="sizeY">サイズY</param>
-	ResourceSprite(const RESOURCE_TYPE type, const std::wstring& path, const int sceneId, const int divX, const int divY, const int sizeX, const int sizeY);
+	ResourceSprite(const RESOURCE_TYPE type, const std::wstring& path, const std::vector<int>& sceneIds, const int divX, const int divY, const int sizeX, const int sizeY);
 
 	/// <summary>
 	/// デストラクタ

@@ -117,7 +117,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)Script/Lib/DxLib/;$(ProjectDir)Script/Lib/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp23</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -136,7 +136,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)Script/Lib/DxLib/;$(ProjectDir)Script/Lib/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp23</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -145,6 +145,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Object\Character\Enemy\EnemySamurai.cpp" />
+    <ClCompile Include="Script\Object\Character\Enemy\EnemyHat.cpp" />
+    <ClCompile Include="Script\Object\Character\Enemy\EnemyMushroom.cpp" />
+    <ClCompile Include="Script\Object\Character\Enemy\EnemySnake.cpp" />
+    <ClCompile Include="Script\OnHit\OnHitEnemy.cpp" />
+    <ClCompile Include="Script\Parameter\Character\Enemy\ParameterEnemy.cpp" />
+    <ClCompile Include="Script\Object\Character\Enemy\EnemyBase.cpp" />
+    <ClCompile Include="Script\Object\Character\Enemy\EnemySlime.cpp" />
     <ClCompile Include="Script\Component\State\ComponentStateEnter.cpp" />
     <ClCompile Include="Script\Object\Gimmick\GimmickDoor.cpp" />
     <ClCompile Include="Script\System\PlayerNewAccept.cpp" />
@@ -289,6 +297,14 @@
     <ClCompile Include="Script\System\StageGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Object\Character\Enemy\EnemySamurai.h" />
+    <ClInclude Include="Script\Object\Character\Enemy\EnemyHat.h" />
+    <ClInclude Include="Script\Object\Character\Enemy\EnemyMushroom.h" />
+    <ClInclude Include="Script\Object\Character\Enemy\EnemySnake.h" />
+    <ClInclude Include="Script\OnHit\OnHitEnemy.h" />
+    <ClInclude Include="Script\Parameter\Character\Enemy\ParameterEnemy.h" />
+    <ClInclude Include="Script\Object\Character\Enemy\EnemyBase.h" />
+    <ClInclude Include="Script\Object\Character\Enemy\EnemySlime.h" />
     <ClInclude Include="Script\Component\State\ComponentStateEnter.h" />
     <ClInclude Include="Script\Object\Gimmick\GimmickDoor.h" />
     <ClInclude Include="Script\System\PlayerNewAccept.h" />

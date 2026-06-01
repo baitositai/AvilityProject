@@ -1,8 +1,8 @@
 #include <windows.h>
 #include "ResourceFont.h"
 
-ResourceFont::ResourceFont(const RESOURCE_TYPE type, const std::wstring& path, const int sceneId, const std::wstring& fontName) :
-	ResourceBase(type, path, sceneId),
+ResourceFont::ResourceFont(const RESOURCE_TYPE type, const std::wstring& path, const std::vector<int>& sceneIds, const std::wstring& fontName) :
+	ResourceBase(type, path, sceneIds),
 	fontName_(fontName)
 {
 }

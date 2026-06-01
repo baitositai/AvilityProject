@@ -21,7 +21,7 @@ ParameterEnemyClone::~ParameterEnemyClone()
 void ParameterEnemyClone::LoadParameter(const Json& parameter)
 {
     // 親クラスであるキャラクター共通パラメータの読み込み
-    ParameterCharacter::LoadParameter(parameter);
+    ParameterEnemy::LoadParameter(parameter);
 
     // 敵固有パラメータの読み込み
     animationsIdle_ = parameter.value("animationsIdle", -1);
