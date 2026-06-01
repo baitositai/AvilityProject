@@ -83,9 +83,6 @@ private:
 	// ゲームの退出
 	void LeavePlayer();
 
-	// ゲームオーバーか調べる
-	void CheckGameOver();
-
 	// コンストラクタ
 	PlayerManager();
 

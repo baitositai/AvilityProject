@@ -11,7 +11,7 @@ public:
 	/// <param name="type">種類</param>
 	/// <param name="path">パス名</param>
 	/// <param name="sceneId">シーンID</param>
-	ResourceAnimation(const RESOURCE_TYPE type, const std::wstring& path, const int sceneId);
+	ResourceAnimation(const RESOURCE_TYPE type, const std::wstring& path, const std::vector<int>& sceneIds);
 
 	/// <summary>
 	/// デストラクタ

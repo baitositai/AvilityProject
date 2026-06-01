@@ -13,8 +13,8 @@ public:
 	/// <param name="type">種類</param>
 	/// <param name="path">パス名</param>
 	/// <param name="soundType">サウンドの種類</param>
-	/// <param name="sceneId">シーンID</param>
-	ResourceSound(const RESOURCE_TYPE type, const std::wstring& path, const std::string& soundType, const int sceneId);
+	/// <param name="sceneIds">シーンID</param>
+	ResourceSound(const RESOURCE_TYPE type, const std::wstring& path, const std::string& soundType, const std::vector<int>& sceneIds);
 
 	/// <summary>
 	/// デストラクタ

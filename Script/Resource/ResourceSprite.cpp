@@ -1,8 +1,8 @@
 #include <DxLib.h>
 #include "ResourceSprite.h"
 
-ResourceSprite::ResourceSprite(const RESOURCE_TYPE type, const std::wstring& path, const int sceneId, const int divX, const int divY, const int sizeX, const int sizeY):
-	ResourceBase(type, path, sceneId),
+ResourceSprite::ResourceSprite(const RESOURCE_TYPE type, const std::wstring& path, const std::vector<int>& sceneIds, const int divX, const int divY, const int sizeX, const int sizeY):
+	ResourceBase(type, path, sceneIds),
 	divX_(divX),
 	divY_(divY),
 	sizeX_(sizeX),

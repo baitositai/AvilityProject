@@ -11,9 +11,9 @@ public:
 	/// </summary>
 	/// <param name="type">種類</param>
 	/// <param name="path">パス名</param>
-	/// <param name="sceneId">シーンID</param>
+	/// <param name="sceneIds">シーンID</param>
 	/// <param name="fontName">フォント名前</param>
-	ResourceFont(const RESOURCE_TYPE type, const std::wstring& path, const int sceneId, const std::wstring& fontName);
+	ResourceFont(const RESOURCE_TYPE type, const std::wstring& path, const std::vector<int>& sceneIds, const std::wstring& fontName);
 
 	/// <summary>
 	/// デストラクタ

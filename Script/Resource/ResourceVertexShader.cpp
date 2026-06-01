@@ -1,8 +1,8 @@
 #include <DxLib.h>
 #include "ResourceVertexShader.h"
 
-ResourceVertexShader::ResourceVertexShader(const RESOURCE_TYPE type, const std::wstring& path, const int sceneId):
-	ResourceBase(type, path, sceneId)
+ResourceVertexShader::ResourceVertexShader(const RESOURCE_TYPE type, const std::wstring& path, const std::vector<int>& sceneIds):
+	ResourceBase(type, path, sceneIds)
 {
 }
 
