@@ -7,6 +7,7 @@
 #include "../Manager/Common/ResourceManager.h"
 #include "../Manager/Common/SoundManager.h"
 #include "../Manager/Common/FontManager.h"
+#include "../Utility/UtilityCommon.h"
 #include "SceneTitle.h"
 
 SceneTitle::SceneTitle()
@@ -46,7 +47,7 @@ void SceneTitle::NormalUpdate()
 void SceneTitle::NormalDraw()
 {
 	titleLogo_.DrawExtend();
-	DrawString(0, 0, L"RSHIFTでシーン遷移", 0xffffff);
+	DrawString(0, 0, L"RSHIFTでシーン遷移", UtilityCommon::WHITE);
 }
 
 void SceneTitle::ChangeNormal()
