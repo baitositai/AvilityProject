@@ -16,7 +16,7 @@
       "enter": "dummy"
     },
     "resourceKey": "clone",
-    "scale": 1.0,
+    "scale": 2.0,
     "angle": 0.0,
     "direction": true,
     "transparent": true,
@@ -140,7 +140,7 @@
     },
     "localPos": {
       "x": 0,
-      "y": 0
+      "y": -60
     },
     "defaultAttackLoaclPos": {
       "x": 40,
@@ -207,7 +207,7 @@
     },
     "localPos": {
       "x": 0,
-      "y": 0
+      "y": -12
     },
     "defaultAttackLoaclPos": {
       "x": 40,
@@ -314,7 +314,7 @@
       "enter": "dummy"
     },
     "resourceKey": "snake",
-    "scale": 2.0,
+    "scale": 3.0,
     "angle": 0.0,
     "direction": true,
     "transparent": true,
@@ -335,7 +335,7 @@
     },
     "localPos": {
       "x": 0,
-      "y": 0
+      "y": 25tek
     },
     "defaultAttackLoaclPos": {
       "x": 40,

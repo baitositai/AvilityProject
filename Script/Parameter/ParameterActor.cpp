@@ -76,6 +76,11 @@ void ParameterActor::LoadParameter(const Json& parameter)
     }
 }
 
+Vector2 ParameterActor::GetScaleToHitSize()
+{
+    return Vector2F::MulVector2FFloat(hitSize_.ToVector2F(), scale_).ToVector2();
+}
+
 const Vector2F ParameterActor::GetGravityDirectionVector() const
 {
     Vector2F dir = {};

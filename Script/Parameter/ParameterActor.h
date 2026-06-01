@@ -41,6 +41,12 @@ public:
 	virtual void LoadParameter(const Json& parameter);
 
 	/// <summary>
+	/// ヒットサイズ合わせたスケールを返す
+	/// </summary>
+	/// <returns>当たり判定サイズに合わせたスケール</returns>
+	Vector2 GetScaleToHitSize();
+
+	/// <summary>
 	/// 重力方向をベクトル変換して返す
 	/// </summary>
 	/// <returns>重力方向のベクトル</returns>

@@ -17,7 +17,7 @@ void StageManager::Init()
 
 	// ステージジェネレーター用のパラメータ
 	StageGenerator::Parameter generatorParameter = {};
-	generatorParameter.connectNum = 2;
+	generatorParameter.connectNum = 4;
 	generatorParameter.candidates = { "SD", "SC", "SU", "DD", "DC", "DU", "CC", "CD", "CU", "UU", "UC", "UD", "DG", "CG", "UG" };
 	auto stageGenerator = std::unique_ptr<StageGenerator>();
 

@@ -53,7 +53,10 @@ public:
 	/// <summary>
 	/// íœ
 	/// </summary>
-	void Clear();
+	void Clear();	
+	
+	// “G‚Ì¶¬ˆ—
+	void GenerateEnemy();
 
 private:
 

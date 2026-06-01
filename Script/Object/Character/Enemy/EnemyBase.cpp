@@ -18,6 +18,9 @@ EnemyBase::~EnemyBase()
 
 void EnemyBase::Init()
 {
+	// 敵のヒットサイズ拡大
+	parameterEnemy_->hitSize_ = parameterEnemy_->GetScaleToHitSize();
+
 	// コライダー
 	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::ENEMY_CLONE, parameterEnemy_->pos_, parameterEnemy_->hitSize_, parameterEnemy_->angle_);
 

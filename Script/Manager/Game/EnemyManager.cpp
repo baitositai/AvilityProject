@@ -9,6 +9,7 @@
 #include "../../Object/Character/Enemy/EnemySamurai.h"
 #include "../../Object/Common/Animation.h"
 #include "../Common/ResourceManager.h"
+#include "../Manager/Game/StageManager.h"
 #include "EnemyManager.h"
 
 void EnemyManager::Init()
@@ -181,6 +182,21 @@ void EnemyManager::InitParameter()
 	auto parameterSamurai = std::make_unique<ParameterEnemy>();
 	parameterSamurai->LoadParameter(jsonSamuraiParameter);
 	templateParameterMap_.emplace(TYPE::SAMURAI, std::move(parameterSamurai));
+}
+
+void EnemyManager::GenerateEnemy()
+{
+	std::vector<Vector2F> enemyAreaPositions = StageManager::GetInstance().GetEnemyAreaPositions();
+
+	// ƒ‰ƒ“ƒ_ƒ€‚ÅˆÊ’u‚ðŒˆ’è
+	for (auto& enemiesList : enemiesMap_)
+	{
+		for (auto& enemy : enemiesList.second)
+		{
+			int randomIndex = rand() % enemyAreaPositions.size();
+			enemy->GetParameter().pos_ = enemyAreaPositions[randomIndex];
+		}
+	}
 }
 
 EnemyManager::EnemyManager()

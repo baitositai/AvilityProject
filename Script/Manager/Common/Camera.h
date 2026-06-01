@@ -88,7 +88,7 @@ private:
 	static constexpr float CAMERA_MOVE_SPEED = 5.0f;
 
 	// スクロール速度
-	static constexpr float SCROLL_SPEED = 10.8f;
+	static constexpr float SCROLL_SPEED = 0.8f;
 
 	// 入力管理クラス
 	InputManager& inputMng_;
