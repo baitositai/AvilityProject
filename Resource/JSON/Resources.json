@@ -245,6 +245,26 @@
       "path": "Resource/Image/Gimmick/Door.png",
       "sceneIds": [ 2 ],
       "type": "texture"
+    },
+    {
+      "key": "train",
+      "type": "sprite",
+      "path": "Resource/Image/Stage/Train.png",
+      "divX": 16,
+      "divY": 1,
+      "sceneIds": [ 0 ],
+      "sizeX": 256,
+      "sizeY": 64
+    },
+    {
+      "key": "carriage",
+      "type": "sprite",
+      "path": "Resource/Image/Stage/Carriage.png",
+      "divX": 16,
+      "divY": 1,
+      "sceneIds": [ 0 ],
+      "sizeX": 256,
+      "sizeY": 64
     }
   ]
 }

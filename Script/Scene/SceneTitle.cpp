@@ -8,6 +8,7 @@
 #include "../Manager/Common/SoundManager.h"
 #include "../Manager/Common/FontManager.h"
 #include "../Utility/UtilityCommon.h"
+#include "../Object/Stage/Train.h"
 #include "SceneTitle.h"
 
 SceneTitle::SceneTitle()
@@ -30,6 +31,24 @@ void SceneTitle::Init()
 
 	sndMng_.PlayBgm(SoundType::BGM::TITLE);
 
+	// パラメータ設定
+	auto parameterTrain = std::make_unique<ParameterActor>();
+	parameterTrain->pos_ = { (float)Application::SCREEN_HALF_X, 800.0f };
+	parameterTrain->scale_ = 5.0f;
+	parameterTrain->hitSize_ = { 4096, 64 };
+	parameterTrain->resourceKey_ = "train";
+	parameterTrain->divisionNum_ = { 16, 1 };
+
+	auto parameterCarriage = std::make_unique<ParameterActor>(*parameterTrain);
+	parameterCarriage->pos_.x += (float)parameterTrain->hitSize_.x * parameterTrain->scale_;
+	parameterCarriage->resourceKey_ = "carriage";
+
+	// オブジェクト定義
+	//train_ = std::make_unique<Train>(std::move(parameterTrain));
+	//train_->Init();
+
+	//carriage_ = std::make_unique<Train>(std::move(parameterCarriage));
+	//carriage_->Init();
 }
 
 void SceneTitle::NormalUpdate()

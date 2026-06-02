@@ -297,6 +297,7 @@
     <ClCompile Include="Script\Utility\UtilityCollision.cpp" />
     <ClCompile Include="Script\Manager\Common\SpriteEffectManager.cpp" />
     <ClCompile Include="Script\System\StageGenerator.cpp" />
+    <ClCompile Include="Script\Object\Stage\Train.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\Collider\ColliderFan.h" />
@@ -511,6 +512,7 @@
     <ClInclude Include="Script\Utility\UtilityCollision.h" />
     <ClInclude Include="Script\Manager\Common\SpriteEffectManager.h" />
     <ClInclude Include="Script\System\StageGenerator.h" />
+    <ClInclude Include="Script\Object\Stage\Train.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
