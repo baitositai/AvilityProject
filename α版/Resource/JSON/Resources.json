@@ -2,47 +2,47 @@
   "resources": [
     {
       "key": "fontBokutachi",
-      "sceneId": 0,
+      "sceneIds": [ 0 ],
       "type": "font",
       "path": "Resource/Font/Bokutachi.otf",
       "fontName": "ぼくたちのゴシック"
     },
     {
       "key": "fontDot",
-      "sceneId": 0,
+      "sceneIds": [ 0 ],
       "type": "font",
       "path": "Resource/Font/Dot.otf",
       "fontName": "ベストテンDOT"
     },
     {
       "key": "fontHanazome",
-      "sceneId": 0,
+      "sceneIds": [ 0 ],
       "type": "font",
       "path": "Resource/Font/Hanazome.ttf",
       "fontName": "はなぞめフォント"
     },
     {
       "key": "fontKazuki",
-      "sceneId": 0,
+      "sceneIds": [ 0 ],
       "type": "font",
       "path": "Resource/Font/KazukiReiwa.ttf",
       "fontName": "KazukiReiwa"
     },
     {
       "key": "standardVs",
-      "sceneId": 0,
+      "sceneIds": [ 0 ],
       "type": "vertexShader",
       "path": "Resource/Shader/StandardModelVS.cso"
     },
     {
       "key": "standardPs",
-      "sceneId": 0,
+      "sceneIds": [ 0 ],
       "type": "pixelShader",
       "path": "Resource/Shader/StandardModelPS.cso"
     },
     {
       "key": "player1",
-      "sceneId": 2,
+      "sceneIds": [ 2 ],
       "type": "sprite",
       "divX": 10,
       "divY": 9,
@@ -52,7 +52,7 @@
     },
     {
       "key": "player2",
-      "sceneId": 2,
+      "sceneIds": [ 2 ],
       "type": "sprite",
       "divX": 10,
       "divY": 9,
@@ -62,7 +62,7 @@
     },
     {
       "key": "player3",
-      "sceneId": 2,
+      "sceneIds": [ 2 ],
       "type": "sprite",
       "divX": 10,
       "divY": 9,
@@ -72,7 +72,7 @@
     },
     {
       "key": "player4",
-      "sceneId": 2,
+      "sceneIds": [ 2 ],
       "type": "sprite",
       "divX": 10,
       "divY": 9,
@@ -82,7 +82,7 @@
     },
     {
       "key": "clone",
-      "sceneId": 2,
+      "sceneIds": [ 2 ],
       "type": "sprite",
       "divX": 10,
       "divY": 9,
@@ -91,37 +91,87 @@
       "path": "Resource/Image/Enemy/Clone.png"
     },
     {
+      "key": "slime",
+      "sceneIds": [ 2 ],
+      "type": "sprite",
+      "divX": 19,
+      "divY": 4,
+      "sizeX": 156,
+      "sizeY": 96,
+      "path": "Resource/Image/Enemy/Slime.png"
+    },
+    {
+      "key": "mushroom",
+      "sceneIds": [ 2 ],
+      "type": "sprite",
+      "divX": 11,
+      "divY": 6,
+      "sizeX": 150,
+      "sizeY": 150,
+      "path": "Resource/Image/Enemy/Mushroom.png"
+    },
+    {
+      "key": "hat",
+      "sceneIds": [ 2 ],
+      "type": "sprite",
+      "divX": 8,
+      "divY": 5,
+      "sizeX": 38,
+      "sizeY": 30,
+      "path": "Resource/Image/Enemy/Hat.png"
+    },
+    {
+      "key": "snake",
+      "sceneIds": [ 2 ],
+      "type": "sprite",
+      "divX": 11,
+      "divY": 5,
+      "sizeX": 64,
+      "sizeY": 64,
+      "path": "Resource/Image/Enemy/Snake.png"
+    },
+    {
+      "key": "samurai",
+      "sceneIds": [ 2 ],
+      "type": "sprite",
+      "divX": 5,
+      "divY": 5,
+      "sizeX": 128,
+      "sizeY": 64,
+      "path": "Resource/Image/Enemy/Samurai.png"
+    },
+    {
       "key": "bgmTitle",
       "path": "Resource/Sound/BGM/BgmTitle.mp3",
-      "sceneId": 1,
+      "sceneIds": [ 1 ],
       "soundType": "bgm",
       "type": "sound"
     },
     {
       "key": "bgmResult",
       "path": "Resource/Sound/BGM/BgmResult.mp3",
-      "sceneId": 3,
+      "sceneIds": [ 3 ],
       "soundType": "bgm",
       "type": "sound"
     },
     {
       "key": "seSelect",
       "path": "Resource/Sound/SE/SeSelect.mp3",
-      "sceneId": 1,
+      "sceneIds": [ 1 ],
       "soundType": "se",
       "type": "sound"
     },
     {
       "key": "seGameStart",
       "path": "Resource/Sound/SE/SeGameStart.mp3",
-      "sceneId": 1,
+      "sceneIds": [ 1 ],
       "soundType": "se",
       "type": "sound"
     },
     {
       "key": "titleLogo",
       "path": "Resource/Image/BackGround/TitleLogo.png",
-      "sceneId": 1,
+      "sceneIds": [ 1 ],
       "type": "texture"
     },
     {
@@ -130,7 +180,7 @@
       "path": "Resource/Image/Effect/Airslash.png",
       "divX": 4,
       "divY": 1,
-      "sceneId": 2,
+      "sceneIds": [ 2 ],
       "sizeX": 64,
       "sizeY": 64
     },
@@ -140,7 +190,7 @@
       "path": "Resource/Image/Effect/TeleportEnter.png",
       "divX": 9,
       "divY": 1,
-      "sceneId": 2,
+      "sceneIds": [ 2 ],
       "sizeX": 96,
       "sizeY": 96
     },
@@ -150,7 +200,7 @@
       "path": "Resource/Image/Effect/TeleportExit.png",
       "divX": 11,
       "divY": 1,
-      "sceneId": 2,
+      "sceneIds": [ 2 ],
       "sizeX": 96,
       "sizeY": 96
     },
@@ -160,7 +210,7 @@
       "path": "Resource/Image/Stage/GroundChips.png",
       "divX": 8,
       "divY": 8,
-      "sceneId": 2,
+      "sceneIds": [ 2 ],
       "sizeX": 32,
       "sizeY": 32
     },
@@ -170,7 +220,7 @@
       "path": "Resource/Image/Stage/GroundChipsFacility.png",
       "divX": 10,
       "divY": 10,
-      "sceneId": 2,
+      "sceneIds": [ 2 ],
       "sizeX": 32,
       "sizeY": 32
     },
@@ -180,20 +230,20 @@
       "path": "Resource/Image/Stage/GroundChipsDungeon.png",
       "divX": 15,
       "divY": 18,
-      "sceneId": 2,
+      "sceneIds": [ 2 ],
       "sizeX": 32,
       "sizeY": 32
     },
     {
       "key": "backGround02",
       "path": "Resource/Image/BackGround/BackGround02.png",
-      "sceneId": 2,
+      "sceneIds": [ 2 ],
       "type": "texture"
     },
     {
       "key": "door",
       "path": "Resource/Image/Gimmick/Door.png",
-      "sceneId": 2,
+      "sceneIds": [ 2 ],
       "type": "texture"
     }
   ]

@@ -25,6 +25,17 @@ public:
 	virtual void Init() override;
 
 	/// <summary>
+	/// 敵の描画
+	/// </summary>
+	virtual void Draw() override;
+
+	/// <summary>
+	/// ダメージ処理
+	/// </summary>
+	/// <param name="damage"></param>
+	void Damage(const int damage) override;
+
+	/// <summary>
 	/// パラメーターを返す(変更可)
 	/// </summary>
 	/// <returns>パラメータ</returns>
@@ -37,6 +48,12 @@ public:
 	const ParameterEnemy& GetParameter() const { return *parameterEnemy_; }
 
 protected:
+
+	// ダメージ描画のステップの最大値
+	static constexpr float DAMAGE_DRAW_STEP_MAX = 0.3f;
+
+	// ダメージ時の描画用ステップ
+	float damageDrawStep_;
 
 	// 型変換用のパラメータを返す関数
 	ParameterEnemy* GetParameterEnemyPtr() { return parameterEnemy_; }

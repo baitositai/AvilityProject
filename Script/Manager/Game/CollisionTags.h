@@ -16,6 +16,7 @@ public:
 		PLAYER_AVILITY_SHOT,		// プレイヤーのアビリティ
 		STAGE,						// ステージ
 		ENEMY_CLONE,				// 敵:クローン
+		ENEMY_VIEW,					// 敵:視界
 		AVILITY_BOX,				// アビリティ設置のボックス
 		BLAST,						// 爆風
 		AIRSLASH,					// エアースラッシュ

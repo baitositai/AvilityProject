@@ -17,6 +17,7 @@ class ComponentCameraRangeCheck;
 
 class ComponentStatePlayerProcess;
 class ComponentStateAttackDefault;
+class ComponentStateEnemyAlive;
 class ComponentStateIdle;
 class ComponentStateDead;
 class ComponentStateEnter;
@@ -83,6 +84,7 @@ private:
 	std::unique_ptr<ComponentStateIdle> CreateComponentStateIdle(ActorBase& owner);
 	std::unique_ptr<ComponentStateEnter> CreateComponentStateEnter(ActorBase& owner);
 	std::unique_ptr<ComponentStateDead> CreateComponentStateDead(ActorBase& owner);
+	std::unique_ptr<ComponentStateEnemyAlive> CreateComponentStateEnemyAlive(ActorBase& owner);
 	std::unique_ptr<ComponentStateDummy> CreateComponentStateDummy(ActorBase& owner);
 	std::unique_ptr<ComponentInvincible> CreateComponentInvincible(ActorBase& owner);
 	std::unique_ptr<ComponentCameraRangeCheck> CreateComponentCameraRangeCheck(ActorBase& owner);

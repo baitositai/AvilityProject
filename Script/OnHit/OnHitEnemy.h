@@ -26,4 +26,5 @@ private:
 	// ŠeíÕ“ËŒãˆ—
 	void OnHitPlayerAttack(const std::weak_ptr<ColliderBase>& opponentCollider);
 	void OnHitPlayerAvilityStamp(const std::weak_ptr<ColliderBase>& opponentCollider);
+	void OnHitOtherEnemy(const std::weak_ptr<ColliderBase>& opponentCollider);
 };

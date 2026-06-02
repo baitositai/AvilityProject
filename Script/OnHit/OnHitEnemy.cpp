@@ -18,6 +18,10 @@ OnHitEnemy::OnHitEnemy(EnemyBase& owner):
 		{
 			return OnHitPlayerAttack(opponentCollider);
 		});
+	onHitMap_.emplace(CollisionTags::TAG::ENEMY_CLONE, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
+		{
+			return OnHitOtherEnemy(opponentCollider);
+		});
 }
 
 OnHitEnemy::~OnHitEnemy()
@@ -40,4 +44,71 @@ void OnHitEnemy::OnHitPlayerAvilityStamp(const std::weak_ptr<ColliderBase>& oppo
 
 	// 相手コライダーの判定を無効化
 	opponentCollider.lock()->SetIsActive(false);
+}
+
+void OnHitEnemy::OnHitOtherEnemy(const std::weak_ptr<ColliderBase>& opponentCollider)
+{
+    auto pinOpponent = opponentCollider.lock();
+    if (pinOpponent == nullptr)
+    {
+        return;
+    }
+
+    // 自身のパラメータを参照で取得
+    auto& myParam = owner_.GetParameter();
+
+    // 自身の中心座標と、コライダーのサイズ（幅・高さ）を取得
+    Vector2F myPos = myParam.pos_;
+    Vector2F mySize = myParam.hitSize_.ToVector2F();
+    float myHalfW = mySize.x * 0.5f;
+    float myHalfH = mySize.y * 0.5f;
+
+    // 相手の中心座標とサイズを取得
+    // ※もし相手の位置もColliderBaseから取れる場合はそこから、
+    // あるいは相手のOwnerから取得してください。ここでは仮にColliderから取得とします。
+    Vector2F opponentPos = pinOpponent->GetPos();
+    Vector2 temp = pinOpponent->GetOwner().GetParameter().hitSize_;
+	Vector2F opponentSize = temp.ToVector2F();
+    float opponentHalfW = opponentSize.x * 0.5f;
+    float opponentHalfH = opponentSize.y * 0.5f;
+
+    // 2つの四角形の中心点間の距離（差分）
+    float dx = opponentPos.x - myPos.x;
+    float dy = opponentPos.y - myPos.y;
+
+    // 衝突（重なり）しているとみなされる基準距離（お互いの半分の長さの和）
+    float minDistanceX = myHalfW + opponentHalfW;
+    float minDistanceY = myHalfH + opponentHalfH;
+
+    // 各軸の「重なり（侵入深度）」を計算（絶対値から引く）
+    float overlapX = minDistanceX - fabsf(dx);
+    float overlapY = minDistanceY - fabsf(dy);
+
+    // 両方の軸で重なりが正（プラス）であれば衝突している
+    if (overlapX > 0.0f && overlapY > 0.0f)
+    {
+        // 重なりが少ない方の軸で押し戻す（その方が移動量が少なく済むため）
+        if (overlapX < overlapY)
+        {
+            // X軸方向の押し戻し
+            // 相手が右にいれば自分は左に、相手が左にいれば自分は右に退く
+            float signX = (dx > 0.0f) ? 1.0f : -1.0f;
+
+            // 互いに半分ずつ押し戻し合う（自分は相手と逆方向へ）
+            float separateX = signX * overlapX * 0.5f;
+
+            myParam.pos_.x -= separateX;
+        }
+        else
+        {
+            // Y軸方向の押し戻し
+            // 相手が下にいれば自分は上に、相手が上にいれば自分は下に退く
+            float signY = (dy > 0.0f) ? 1.0f : -1.0f;
+
+            // 互いに半分ずつ押し戻し合う
+            float separateY = signY * overlapY * 0.5f;
+
+            myParam.pos_.y -= separateY;
+        }
+    }
 }

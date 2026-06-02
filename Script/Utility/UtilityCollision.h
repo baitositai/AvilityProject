@@ -100,10 +100,28 @@ public:
 	/// <returns>判定結果</returns>
 	static bool IsHitBoxToLine(const Vector2& boxTopPos, const Vector2& boxBotmPos, const Vector2& lineTopPos, const Vector2& lineEndPos);
 
+	/// <summary>
+	/// ボックスと扇形の衝突判定
+	/// </summary>
+	/// <param name="boxTopPos">ボックスのトップ座標</param>
+	/// <param name="boxBotmPos">ボックスのボトム座標</param>
+	/// <param name="fanPos">扇形の中心座標</param>
+	/// <param name="radius">扇形の半径</param>
+	/// <param name="baseAngleRad">扇形の基準角度（ラジアン）</param>
+	/// <param name="viewAngleRad">扇形の視野角（ラジアン）</param>
+	/// <returns>判定結果</returns>
+	static bool IsHitBoxToFan(const Vector2& boxTopPos, const Vector2& boxBotmPos, const Vector2& fanPos, float radius, float baseAngleRad, float viewAngleRad);
 
-private:
+	/// <summary>
+	/// 円と扇形の衝突判定
+	/// </summary>
+	/// <param name="circlePos">円の中心座標</param>
+	/// <param name="radius">円の半径</param>
+	/// <param name="fanPos">扇形の中心座標</param>
+	/// <param name="fanRadius">扇形の半径</param>
+	/// <param name="baseAngleRad">扇形の基準角度（ラジアン）</param>
+	/// <param name="viewAngleRad">扇形の視野角（ラジアン）</param>
+	/// <returns>判定結果</returns>
+	static bool IsHitCircleToFan(const Vector2& circlePos, const float radius, const Vector2& fanPos, float fanRadius, float baseAngleRad, float viewAngleRad);
 
-	// マップチップ番号を取得
-	int GetMapChipData(const int x, const int y, const std::vector<int>& hitIds);
 };
-

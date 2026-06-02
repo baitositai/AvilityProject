@@ -83,7 +83,7 @@ public:
 	/// ダメージ設定
 	/// </summary>
 	/// <param name="damage">ダメージ</param>
-	void Damage(const int damage);
+	virtual void Damage(const int damage);
 
 	/// <summary>
 	/// 状態別コンポーネントの活動状態を設定
