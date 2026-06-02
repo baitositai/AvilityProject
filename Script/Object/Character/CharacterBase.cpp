@@ -26,7 +26,14 @@ CharacterBase::~CharacterBase()
 
 void CharacterBase::Init()
 {
+	// 基底クラスの処理
 	ActorBase::Init();
+
+	// 状態別コンポーネントの初期化
+	for(auto& component : componentStateMap_)
+	{
+		component.second->Init();
+	}
 
 	// 初期状態を設定
 	ChangeState(STATE::ALIVE);

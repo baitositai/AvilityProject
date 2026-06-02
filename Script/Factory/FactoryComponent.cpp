@@ -19,6 +19,7 @@
 #include "../../Component/Avility/ComponentAvilityTeleport.h"
 #include "../../Component/Avility/ComponentAvilityGiant.h"
 #include "../../Component/State/ComponentStatePlayerProcess.h"
+#include "../../Component/State/ComponentStateEnemyAlive.h"
 #include "../../Component/State/ComponentStateAttackDefault.h"
 #include "../../Component/State/ComponentStateDead.h"
 #include "../../Component/State/ComponentStateIdle.h"
@@ -26,6 +27,7 @@
 #include "../../Component/State/ComponentStateDummy.h"
 #include "../../Object/Character/CharacterBase.h" 
 #include "../../Object/Character/Player.h" 
+#include "../../Object/Character/Enemy/EnemyBase.h" 
 #include "../../Object/ActorBase.h" 
 #include "FactoryComponent.h"
 
@@ -273,6 +275,18 @@ std::unique_ptr<ComponentStateDead> FactoryComponent::CreateComponentStateDead(A
     return std::make_unique<ComponentStateDead>(*charaPtr);
 }
 
+std::unique_ptr<ComponentStateEnemyAlive> FactoryComponent::CreateComponentStateEnemyAlive(ActorBase& owner)
+{
+    auto* enemyPtr = dynamic_cast<EnemyBase*>(&owner);
+
+    if (enemyPtr == nullptr)
+    {
+        // ÉLÉÉÉXÉgÇ…é∏îsÇµÇΩèÍçánullptrÇï‘Ç∑
+        return nullptr;
+    }
+    return std::make_unique<ComponentStateEnemyAlive>(*enemyPtr);
+}
+
 std::unique_ptr<ComponentStateDummy> FactoryComponent::CreateComponentStateDummy(ActorBase& owner)
 {
     auto* charaPtr = dynamic_cast<CharacterBase*>(&owner);
@@ -415,6 +429,10 @@ FactoryComponent::FactoryComponent()
     componentCreateMap_.emplace("dead", [this](ActorBase& owner)
         {
             return CreateComponentStateDead(owner);
+        });
+    componentCreateMap_.emplace("enemyAlive", [this](ActorBase& owner)
+        {
+            return CreateComponentStateEnemyAlive(owner);
         });
     componentCreateMap_.emplace("dummy", [this](ActorBase& owner)
         {

@@ -68,4 +68,84 @@ bool UtilityCollision::IsHitBoxToLine(const Vector2& boxTopPos, const Vector2& b
 	return false;
 }
 
+bool UtilityCollision::IsHitBoxToFan(const Vector2& boxTopPos, const Vector2& boxBotmPos, const Vector2& fanPos, float radius, float baseAngleRad, float viewAngleRad)
+{
+    // 矩形の4頂点を配列に格納する
+    Vector2 boxVertices[4];
+    boxVertices[0] = { boxTopPos.x, boxTopPos.y }; // 左上
+    boxVertices[1] = { boxBotmPos.x, boxTopPos.y }; // 右上
+    boxVertices[2] = { boxTopPos.x, boxBotmPos.y }; // 左下
+    boxVertices[3] = { boxBotmPos.x, boxBotmPos.y }; // 右下
 
+    // 視野角をラジアンの半分に変換
+    float halfAngleRad = viewAngleRad * 0.5f;
+
+    // 矩形の各頂点に対して判定を行う
+    for (int i = 0; i < 4; ++i)
+    {
+        // 扇形の中心から頂点へのベクトルを計算する
+        float diffX = boxVertices[i].x - fanPos.x;
+        float diffY = boxVertices[i].y - fanPos.y;
+
+        // 距離の判定（円形判定と同じ）
+        float distanceSq = (diffX * diffX) + (diffY * diffY);
+        if (distanceSq > (radius * radius))
+        {
+            continue; // この頂点は射程外なので次の頂点へ
+        }
+
+        // 角度の判定
+        // atan2fで頂点への角度を求め、敵の正面角度との差分を計算する
+        float angleToTarget = atan2f(diffY, diffX);
+        float angleDiff = angleToTarget - baseAngleRad;
+
+        // 角度差を -PI から PI の範囲に正規化する
+        while (angleDiff > DX_PI_F) angleDiff -= DX_PI_F * 2.0f;
+        while (angleDiff < -DX_PI_F) angleDiff += DX_PI_F * 2.0f;
+
+        // 角度差の絶対値が視野角の半分以内なら視界内とみなす
+        if (fabsf(angleDiff) <= halfAngleRad)
+        {
+            return true; // 1点でも入っていればヒット
+        }
+    }
+
+    return false;
+}
+
+bool UtilityCollision::IsHitCircleToFan(const Vector2& circlePos, float circleRadius, const Vector2& fanPos, float radius, float baseAngleRad, float viewAngleRad)
+{
+    // 扇形の中心から円の中心へのベクトルを計算する
+    float diffX = circlePos.x - fanPos.x;
+    float diffY = circlePos.y - fanPos.y;
+
+    // 距離の判定
+    // 円の半径分だけ、あらかじめ判定の射程（半径）を広げて計算する
+    float totalRadius = radius + circleRadius;
+    float distanceSq = (diffX * diffX) + (diffY * diffY);
+
+    if (distanceSq > (totalRadius * totalRadius))
+    {
+        return false; // 射程外
+    }
+
+    // 角度の判定
+    // 視野角をラジアンの半分に変換
+    float halfAngleRad = viewAngleRad * 0.5f;
+
+    // atan2fで円の中心への角度を求め、正面角度との差分を計算
+    float angleToTarget = atan2f(diffY, diffX);
+    float angleDiff = angleToTarget - baseAngleRad;
+
+    // 角度差を -PI から PI の範囲に正規化
+    while (angleDiff > DX_PI_F) angleDiff -= DX_PI_F * 2.0f;
+    while (angleDiff < -DX_PI_F) angleDiff += DX_PI_F * 2.0f;
+
+    // 角度差の絶対値が視野角の半分以内の場合
+    if (fabsf(angleDiff) <= halfAngleRad)
+    {
+        return true;
+    }
+
+    return false;
+}

@@ -85,8 +85,10 @@ private:
 	bool IsHitCheckCircleToCircle(std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2);
 	bool IsHitCheckCircleToBox(std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2);
 	bool IsHitCheckCircleToLine(std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2);
+	bool IsHitCheckCircleToFan(std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2);
 	bool IsHitCheckBoxToBox(std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2);
 	bool IsHitCheckBoxToLine(std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2);
+	bool IsHitCheckBoxToFan(std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2);
 	bool IsHitCheckLineToLine(std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2);
 
 	// コンストラクタ

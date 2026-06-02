@@ -47,6 +47,9 @@ struct Vector2F
 	// Vector2F‚Æfloat‚ÌæZ
 	static Vector2F MulVector2FFloat(Vector2F value1, float value2);
 
+	// ‹——£‚ğ‹‚ß‚é
+	static Vector2F Distance(const Vector2F& value1, const Vector2F& value2);
+
 	float x;
 	float y;
 };

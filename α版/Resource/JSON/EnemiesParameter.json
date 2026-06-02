@@ -1,0 +1,429 @@
+{
+  "clone": {
+    "componentKeys": [
+      "knockBack",
+      "gravity",
+      "invincible",
+      "move",
+      "spriteAnimation"
+    ],
+    "stateComponentKeys": {
+      "alive": "idle",
+      "attack": "dummy",
+      "hit": "dummy",
+      "dead": "dead",
+      "respawn": "dummy",
+      "enter": "dummy"
+    },
+    "resourceKey": "clone",
+    "scale": 2.0,
+    "angle": 0.0,
+    "direction": true,
+    "transparent": true,
+    "moveSpeed": 2.0,
+    "hp": 100,
+    "attackPower": 10,
+    "gravityPower": 9.8,
+    "defaultAttackRadius": 20.0,
+    "animationDefaultSpeed": 0.1,
+    "animationAttackSpeed": 0.3,
+    "animationsIdle": 6,
+    "animationsWalk": 8,
+    "animationsBrake": 4,
+    "animationsAttack": 7,
+    "animationsJump": 6,
+    "animationsFall": 6,
+    "animationsDie": 10,
+    "animationsDamage": 4,
+    "animationsPause": 6,
+    "weight": 0.9,
+    "invincibleTimeMax": 2.0,
+    "divisionNum": {
+      "x": 10,
+      "y": 9
+    },
+    "hitBoxSize": {
+      "x": 48,
+      "y": 64
+    },
+    "localPos": {
+      "x": 0,
+      "y": 0
+    },
+    "defaultAttackLoaclPos": {
+      "x": 40,
+      "y": 8
+    },
+    "animation": {
+      "idle": {
+        "no": 0,
+        "speed": 0.1,
+        "num": 6
+      },
+      "walk": {
+        "no": 1,
+        "speed": 0.1,
+        "num": 8
+      },
+      "brake": {
+        "no": 2,
+        "speed": 0.1,
+        "num": 4
+      },
+      "attack": {
+        "no": 3,
+        "speed": 0.2,
+        "num": 7
+      },
+      "jump": {
+        "no": 4,
+        "speed": 0.1,
+        "num": 6
+      },
+      "fall": {
+        "no": 5,
+        "speed": 0.1,
+        "num": 6
+      },
+      "dead": {
+        "no": 6,
+        "speed": 0.1,
+        "num": 10
+      },
+      "damage": {
+        "no": 7,
+        "speed": 0.2,
+        "num": 4
+      },
+      "pause": {
+        "no": 8,
+        "speed": 0.1,
+        "num": 6
+      }
+    }
+  },
+  "slime": {
+    "componentKeys": [
+      "knockBack",
+      "gravity",
+      "invincible",
+      "move",
+      "spriteAnimation"
+    ],
+    "stateComponentKeys": {
+      "alive": "idle",
+      "attack": "dummy",
+      "hit": "dummy",
+      "dead": "dead",
+      "respawn": "dummy",
+      "enter": "dummy"
+    },
+    "resourceKey": "slime",
+    "scale": 2.0,
+    "angle": 0.0,
+    "direction": true,
+    "transparent": true,
+    "moveSpeed": 2.0,
+    "hp": 100,
+    "attackPower": 10,
+    "gravityPower": 9.8,
+    "defaultAttackRadius": 20.0,
+    "weight": 0.9,
+    "invincibleTimeMax": 2.0,
+    "divisionNum": {
+      "x": 19,
+      "y": 4
+    },
+    "hitBoxSize": {
+      "x": 48,
+      "y": 18
+    },
+    "localPos": {
+      "x": 0,
+      "y": -60
+    },
+    "defaultAttackLoaclPos": {
+      "x": 40,
+      "y": 8
+    },
+    "animation": {
+      "idle": {
+        "no": 0,
+        "speed": 0.1,
+        "num": 14
+      },
+      "walk": {
+        "no": 1,
+        "speed": 0.1,
+        "num": 6
+      },
+      "attack": {
+        "no": 2,
+        "speed": 0.2,
+        "num": 19
+      },
+      "dead": {
+        "no": 3,
+        "speed": 0.1,
+        "num": 11
+      }
+    }
+  },
+  "mushroom": {
+    "componentKeys": [
+      "knockBack",
+      "gravity",
+      "invincible",
+      "move",
+      "spriteAnimation"
+    ],
+    "stateComponentKeys": {
+      "alive": "idle",
+      "attack": "dummy",
+      "hit": "dummy",
+      "dead": "dead",
+      "respawn": "dummy",
+      "enter": "dummy"
+    },
+    "resourceKey": "mushroom",
+    "scale": 2.0,
+    "angle": 0.0,
+    "direction": true,
+    "transparent": true,
+    "moveSpeed": 2.0,
+    "hp": 100,
+    "attackPower": 10,
+    "gravityPower": 9.8,
+    "defaultAttackRadius": 20.0,
+    "weight": 0.9,
+    "invincibleTimeMax": 2.0,
+    "divisionNum": {
+      "x": 11,
+      "y": 6
+    },
+    "hitBoxSize": {
+      "x": 25,
+      "y": 38
+    },
+    "localPos": {
+      "x": 0,
+      "y": -12
+    },
+    "defaultAttackLoaclPos": {
+      "x": 40,
+      "y": 8
+    },
+    "animation": {
+      "idle": {
+        "no": 0,
+        "speed": 0.1,
+        "num": 4
+      },
+      "walk": {
+        "no": 1,
+        "speed": 0.1,
+        "num": 8
+      },
+      "dead": {
+        "no": 2,
+        "speed": 0.1,
+        "num": 4
+      }
+    }
+  },
+  "hat": {
+    "componentKeys": [
+      "knockBack",
+      "invincible",
+      "move",
+      "spriteAnimation"
+    ],
+    "stateComponentKeys": {
+      "alive": "idle",
+      "attack": "dummy",
+      "hit": "dummy",
+      "dead": "dead",
+      "respawn": "dummy",
+      "enter": "dummy"
+    },
+    "resourceKey": "hat",
+    "scale": 2.0,
+    "angle": 0.0,
+    "direction": true,
+    "transparent": true,
+    "moveSpeed": 2.0,
+    "hp": 100,
+    "attackPower": 10,
+    "gravityPower": 9.8,
+    "defaultAttackRadius": 20.0,
+    "weight": 0.9,
+    "invincibleTimeMax": 2.0,
+    "divisionNum": {
+      "x": 11,
+      "y": 6
+    },
+    "hitBoxSize": {
+      "x": 25,
+      "y": 28
+    },
+    "localPos": {
+      "x": 0,
+      "y": 0
+    },
+    "defaultAttackLoaclPos": {
+      "x": 40,
+      "y": 8
+    },
+    "animation": {
+      "idle": {
+        "no": 0,
+        "speed": 0.1,
+        "num": 8
+      },
+      "walk": {
+        "no": 1,
+        "speed": 0.1,
+        "num": 4
+      },
+      "attack": {
+        "no": 2,
+        "speed": 0.1,
+        "num": 8
+      },
+      "dead": {
+        "no": 4,
+        "speed": 0.1,
+        "num": 8
+      }
+    }
+  },
+  "snake": {
+    "componentKeys": [
+      "knockBack",
+      "invincible",
+      "gravity",
+      "move",
+      "spriteAnimation"
+    ],
+    "stateComponentKeys": {
+      "alive": "idle",
+      "attack": "dummy",
+      "hit": "dummy",
+      "dead": "dead",
+      "respawn": "dummy",
+      "enter": "dummy"
+    },
+    "resourceKey": "snake",
+    "scale": 3.0,
+    "angle": 0.0,
+    "direction": true,
+    "transparent": true,
+    "moveSpeed": 2.0,
+    "hp": 100,
+    "attackPower": 10,
+    "gravityPower": 9.8,
+    "defaultAttackRadius": 20.0,
+    "weight": 0.9,
+    "invincibleTimeMax": 2.0,
+    "divisionNum": {
+      "x": 11,
+      "y": 6
+    },
+    "hitBoxSize": {
+      "x": 40,
+      "y": 48
+    },
+    "localPos": {
+      "x": 0,
+      "y": 5
+    },
+    "defaultAttackLoaclPos": {
+      "x": 40,
+      "y": 8
+    },
+    "animation": {
+      "idle": {
+        "no": 0,
+        "speed": 0.1,
+        "num": 9
+      },
+      "walk": {
+        "no": 1,
+        "speed": 0.1,
+        "num": 4
+      },
+      "attack": {
+        "no": 3,
+        "speed": 0.1,
+        "num": 11
+      },
+      "dead": {
+        "no": 4,
+        "speed": 0.1,
+        "num": 10
+      }
+    }
+  },
+  "samurai": {
+    "componentKeys": [
+      "knockBack",
+      "invincible",
+      "gravity",
+      "move",
+      "spriteAnimation"
+    ],
+    "stateComponentKeys": {
+      "alive": "idle",
+      "attack": "dummy",
+      "hit": "dummy",
+      "dead": "dead",
+      "respawn": "dummy",
+      "enter": "dummy"
+    },
+    "resourceKey": "samurai",
+    "scale": 3.0,
+    "angle": 0.0,
+    "direction": true,
+    "transparent": true,
+    "moveSpeed": 2.0,
+    "hp": 100,
+    "attackPower": 10,
+    "gravityPower": 9.8,
+    "defaultAttackRadius": 20.0,
+    "weight": 0.9,
+    "invincibleTimeMax": 2.0,
+    "divisionNum": {
+      "x": 5,
+      "y": 5
+    },
+    "hitBoxSize": {
+      "x": 24,
+      "y": 32
+    },
+    "localPos": {
+      "x": 0,
+      "y": 0
+    },
+    "defaultAttackLoaclPos": {
+      "x": 40,
+      "y": 8
+    },
+    "animation": {
+      "idle": {
+        "no": 4,
+        "speed": 0.1,
+        "num": 4
+      },
+      "walk": {
+        "no": 0,
+        "speed": 0.1,
+        "num": 5
+      },
+      "attack": {
+        "no": 2,
+        "speed": 0.1,
+        "num": 4
+      }
+    }
+  }
+}

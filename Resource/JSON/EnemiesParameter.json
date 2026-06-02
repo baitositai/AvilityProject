@@ -8,7 +8,7 @@
       "spriteAnimation"
     ],
     "stateComponentKeys": {
-      "alive": "idle",
+      "alive": "enemyAlive",
       "attack": "dummy",
       "hit": "dummy",
       "dead": "dead",
@@ -25,19 +25,13 @@
     "attackPower": 10,
     "gravityPower": 9.8,
     "defaultAttackRadius": 20.0,
-    "animationDefaultSpeed": 0.1,
-    "animationAttackSpeed": 0.3,
-    "animationsIdle": 6,
-    "animationsWalk": 8,
-    "animationsBrake": 4,
-    "animationsAttack": 7,
-    "animationsJump": 6,
-    "animationsFall": 6,
-    "animationsDie": 10,
-    "animationsDamage": 4,
-    "animationsPause": 6,
+    "loseSightDistance": 200.0,
+    "attackStartDistance": 50.0,
+    "permissibleDistance": 10.0,
     "weight": 0.9,
     "invincibleTimeMax": 2.0,
+    "eyeAngle": 50.0,
+    "eyeDistance": 60.0,
     "divisionNum": {
       "x": 10,
       "y": 9
@@ -111,7 +105,7 @@
       "spriteAnimation"
     ],
     "stateComponentKeys": {
-      "alive": "idle",
+      "alive": "enemyAlive",
       "attack": "dummy",
       "hit": "dummy",
       "dead": "dead",
@@ -130,6 +124,11 @@
     "defaultAttackRadius": 20.0,
     "weight": 0.9,
     "invincibleTimeMax": 2.0,
+    "loseSightDistance": 200.0,
+    "attackStartDistance": 50.0,
+    "permissibleDistance": 10.0,
+    "eyeAngle": 50.0,
+    "eyeDistance": 60.0,
     "divisionNum": {
       "x": 19,
       "y": 4
@@ -178,7 +177,7 @@
       "spriteAnimation"
     ],
     "stateComponentKeys": {
-      "alive": "idle",
+      "alive": "enemyAlive",
       "attack": "dummy",
       "hit": "dummy",
       "dead": "dead",
@@ -197,6 +196,11 @@
     "defaultAttackRadius": 20.0,
     "weight": 0.9,
     "invincibleTimeMax": 2.0,
+    "loseSightDistance": 200.0,
+    "attackStartDistance": 50.0,
+    "permissibleDistance": 10.0,
+    "eyeAngle": 50.0,
+    "eyeDistance": 60.0,
     "divisionNum": {
       "x": 11,
       "y": 6
@@ -239,7 +243,7 @@
       "spriteAnimation"
     ],
     "stateComponentKeys": {
-      "alive": "idle",
+      "alive": "enemyAlive",
       "attack": "dummy",
       "hit": "dummy",
       "dead": "dead",
@@ -258,13 +262,18 @@
     "defaultAttackRadius": 20.0,
     "weight": 0.9,
     "invincibleTimeMax": 2.0,
+    "loseSightDistance": 200.0,
+    "attackStartDistance": 50.0,
+    "permissibleDistance": 10.0,
+    "eyeAngle": 50.0,
+    "eyeDistance": 60.0,
     "divisionNum": {
       "x": 11,
       "y": 6
     },
     "hitBoxSize": {
       "x": 25,
-      "y": 38
+      "y": 28
     },
     "localPos": {
       "x": 0,
@@ -306,7 +315,7 @@
       "spriteAnimation"
     ],
     "stateComponentKeys": {
-      "alive": "idle",
+      "alive": "enemyAlive",
       "attack": "dummy",
       "hit": "dummy",
       "dead": "dead",
@@ -325,17 +334,22 @@
     "defaultAttackRadius": 20.0,
     "weight": 0.9,
     "invincibleTimeMax": 2.0,
+    "loseSightDistance": 200.0,
+    "attackStartDistance": 50.0,
+    "permissibleDistance": 10.0,
+    "eyeAngle": 50.0,
+    "eyeDistance": 60.0,
     "divisionNum": {
       "x": 11,
       "y": 6
     },
     "hitBoxSize": {
-      "x": 64,
-      "y": 64
+      "x": 40,
+      "y": 48
     },
     "localPos": {
       "x": 0,
-      "y": 25
+      "y": 5
     },
     "defaultAttackLoaclPos": {
       "x": 40,
@@ -373,7 +387,7 @@
       "spriteAnimation"
     ],
     "stateComponentKeys": {
-      "alive": "idle",
+      "alive": "enemyAlive",
       "attack": "dummy",
       "hit": "dummy",
       "dead": "dead",
@@ -392,6 +406,11 @@
     "defaultAttackRadius": 20.0,
     "weight": 0.9,
     "invincibleTimeMax": 2.0,
+    "loseSightDistance": 200.0,
+    "attackStartDistance": 50.0,
+    "permissibleDistance": 10.0,
+    "eyeAngle": 50.0,
+    "eyeDistance": 60.0,
     "divisionNum": {
       "x": 5,
       "y": 5

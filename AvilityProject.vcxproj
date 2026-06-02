@@ -145,6 +145,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Collider\ColliderFan.cpp" />
+    <ClCompile Include="Script\Component\State\ComponentStateEnemyAlive.cpp" />
     <ClCompile Include="Script\Object\Character\Enemy\EnemySamurai.cpp" />
     <ClCompile Include="Script\Object\Character\Enemy\EnemyHat.cpp" />
     <ClCompile Include="Script\Object\Character\Enemy\EnemyMushroom.cpp" />
@@ -297,6 +299,8 @@
     <ClCompile Include="Script\System\StageGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Collider\ColliderFan.h" />
+    <ClInclude Include="Script\Component\State\ComponentStateEnemyAlive.h" />
     <ClInclude Include="Script\Object\Character\Enemy\EnemySamurai.h" />
     <ClInclude Include="Script\Object\Character\Enemy\EnemyHat.h" />
     <ClInclude Include="Script\Object\Character\Enemy\EnemyMushroom.h" />

@@ -13,6 +13,7 @@ public:
 		BOX,		// ボックス
 		CIRCLE,		// サークル
 		LINE,		// ライン
+		FAN,		// 扇形
 		ARRAY,		// 配列
 		MAX
 	};

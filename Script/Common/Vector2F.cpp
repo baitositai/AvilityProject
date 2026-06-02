@@ -114,3 +114,11 @@ Vector2F Vector2F::MulVector2FFloat(Vector2F value1, float value2)
 	value1.y *= value2;
 	return value1;
 }
+
+Vector2F Vector2F::Distance(const Vector2F& value1, const Vector2F& value2)
+{
+	Vector2F distance;
+	distance.x = abs(value1.x - value2.x);
+	distance.y = abs(value1.y - value2.y);
+	return distance;
+}

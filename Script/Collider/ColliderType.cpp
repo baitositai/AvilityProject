@@ -6,5 +6,6 @@ const std::map<ColliderType::TYPE, std::string> ColliderType::TYPE_NAME_MAP =
 	{TYPE::BOX, "box"},
 	{TYPE::LINE, "line"},
 	{TYPE::CIRCLE, "circle"},
+	{TYPE::FAN, "fan"},
 	{TYPE::ARRAY, "array"},
 };
