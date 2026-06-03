@@ -19,6 +19,7 @@ OnHitPlayer::OnHitPlayer(Player& owner) :
     onHitMap_.emplace(CollisionTags::TAG::ENEMY_CLONE, [this](const std::weak_ptr<ColliderBase>& opponentCollider){ return OnHitEnemy(opponentCollider); });
 	onHitMap_.emplace(CollisionTags::TAG::ITEM_AVILITY, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitItemAvility(opponentCollider); });
 	onHitMap_.emplace(CollisionTags::TAG::DOOR, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitDoor(opponentCollider); });
+	onHitMap_.emplace(CollisionTags::TAG::ENEMY_ATTACK_NORMAL, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitAttack(opponentCollider); });
 
     onHitPlayerStamp_ = std::make_unique<OnHitPlayerStamp>(owner_);
 }
@@ -32,7 +33,7 @@ void OnHitPlayer::Update(const std::weak_ptr<ColliderBase>& opponentCollider)
     switch(opponentCollider.lock()->GetPartnerTag())
     {
         case CollisionTags::TAG::PLAYER:
-            OnHitBase::Update(opponentCollider);
+            OnHitCharacterBase::Update(opponentCollider);
             break;
 
         case CollisionTags::TAG::PLAYER_AVILITY_STAMP:

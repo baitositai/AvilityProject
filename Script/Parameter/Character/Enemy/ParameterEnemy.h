@@ -39,9 +39,6 @@ public:
 	// ‹–ì‹——£
 	float eyeDistance_;
 
-	// Œ©¸‚¤‹——£
-	float loseSightDistance_;
-
 	// UŒ‚‚ğŠJn‚·‚é‹——£
 	float attackStartDistance_;
 

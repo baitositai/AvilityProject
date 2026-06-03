@@ -18,6 +18,14 @@ OnHitEnemy::OnHitEnemy(EnemyBase& owner):
 		{
 			return OnHitPlayerAttack(opponentCollider);
 		});
+	onHitMap_.emplace(CollisionTags::TAG::AIRSLASH, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
+		{
+			return OnHitPlayerAttack(opponentCollider);
+		});
+	onHitMap_.emplace(CollisionTags::TAG::TELEPORT_EXIT, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
+		{
+			return OnHitPlayerAttack(opponentCollider);
+		});
 	onHitMap_.emplace(CollisionTags::TAG::ENEMY_CLONE, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
 		{
 			return OnHitOtherEnemy(opponentCollider);
@@ -28,9 +36,32 @@ OnHitEnemy::~OnHitEnemy()
 {
 }
 
-void OnHitEnemy::OnHitPlayerAttack(const std::weak_ptr<ColliderBase>& opponentCollider)
+void OnHitEnemy::Update(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
-	// 共通処理
+	// 自身のタグ別に処理を呼び分ける
+    switch (opponentCollider.lock()->GetPartnerTag())
+    {
+    case CollisionTags::TAG::ENEMY_CLONE:
+		// 基底クラスの共通処理
+        OnHitCharacterBase::Update(opponentCollider);
+        break;
+
+    case CollisionTags::TAG::ENEMY_VIEW:
+        // 現状プレイヤーだけ
+        OnHitEnemyViewToPlayer(opponentCollider);
+        break;
+
+    default:
+        break;
+    }
+}
+
+void OnHitEnemy::OnHitPlayerAttack(const std::weak_ptr<ColliderBase>& opponentCollider)
+{    
+    // 生存状態遷移(ダメージを受ける前に変更)
+	owner_.ChangeState(EnemyBase::STATE::ALIVE);
+	
+    // 共通処理
 	OnHitAttack(opponentCollider);
 
 	// 相手コライダーの判定を無効化
@@ -111,4 +142,13 @@ void OnHitEnemy::OnHitOtherEnemy(const std::weak_ptr<ColliderBase>& opponentColl
             myParam.pos_.y -= separateY;
         }
     }
+}
+
+void OnHitEnemy::OnHitEnemyViewToPlayer(const std::weak_ptr<ColliderBase>& opponentCollider)
+{
+    // ターゲットを発見
+	owner_.GetParameter().isDiscover_ = true;
+
+    // ターゲットの座標を設定
+	owner_.GetParameter().targetPos_ = &opponentCollider.lock()->GetPos();
 }

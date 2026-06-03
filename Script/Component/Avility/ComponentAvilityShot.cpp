@@ -37,6 +37,11 @@ ComponentAvilityShot::ComponentAvilityShot(Player& owner)
 
 ComponentAvilityShot::~ComponentAvilityShot()
 {
+	if (attackCollider_)
+	{
+		attackCollider_->Delete();
+		attackCollider_ = nullptr;
+	}
 }
 
 void ComponentAvilityShot::Init()

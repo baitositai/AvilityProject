@@ -2,6 +2,7 @@
 #include <vector>
 #include <unordered_map>
 #include "../../Template/Singleton.h"
+#include "EnemyTypes.h"
 
 class EnemyBase;
 class ParameterEnemy;
@@ -12,18 +13,6 @@ class EnemyManager : public Singleton<EnemyManager>
 	friend class Singleton<EnemyManager>;
 
 public:
-
-	// 種類
-	enum class TYPE
-	{
-		CLONE,
-		SLIME,
-		MUSHROOM,
-		HAT,
-		SNAKE,
-		SAMURAI,
-		MAX,
-	};
 
 	/// <summary>
 	/// 初期化処理
@@ -61,10 +50,10 @@ public:
 private:
 
 	// 敵を管理するマップ
-	std::unordered_map<TYPE, std::vector<std::unique_ptr<EnemyBase>>> enemiesMap_;
+	std::unordered_map<EnemyTypes::TYPE, std::vector<std::unique_ptr<EnemyBase>>> enemiesMap_;
 
 	// テンプレートとなるパラメータマップ
-	std::unordered_map<TYPE, std::unique_ptr<ParameterEnemy>> templateParameterMap_;
+	std::unordered_map<EnemyTypes::TYPE, std::unique_ptr<ParameterEnemy>> templateParameterMap_;
 
 	// パラメータの初期化処理
 	void InitParameter();

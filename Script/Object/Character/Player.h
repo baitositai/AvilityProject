@@ -38,11 +38,6 @@ public:
 	void Dead() override;
 
 	/// <summary>
-	/// 攻撃のリセット
-	/// </summary>
-	void AttackReset();
-
-	/// <summary>
 	/// 自身のコライダーのクローンを生成して返す
 	/// </summary>
 	/// <returns>自身のコライダーのクローン</returns>

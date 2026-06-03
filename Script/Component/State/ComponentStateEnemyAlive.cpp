@@ -12,6 +12,8 @@ ComponentStateEnemyAlive::ComponentStateEnemyAlive(EnemyBase& owner) :
 	parameter_(owner.GetParameter()),
 	sceneManager_(SceneManager::GetInstance())
 {
+	moveDirection_ = 0.0f;
+	eyeBaseAngle_ = 0.0f;
 	moveTimer_ = 0.0f;
 	isMove_ = false;
 	state_ = STATE::PATROL;
@@ -23,12 +25,21 @@ ComponentStateEnemyAlive::ComponentStateEnemyAlive(EnemyBase& owner) :
 
 ComponentStateEnemyAlive::~ComponentStateEnemyAlive()
 {
+	// コライダーの削除
+	if (colliderFan_)
+	{
+		colliderFan_->Delete();
+		colliderFan_ = nullptr;
+	}
 }
 
 void ComponentStateEnemyAlive::Init()
 {
+	// 視野角の初期化
+	UpdateEyeAngle();
+
 	// 視野角用のコライダーを生成
-	colliderFan_ = std::make_shared<ColliderFan>(owner_, CollisionTags::TAG::ENEMY_VIEW, owner_.GetParameter().pos_, parameter_.eyeDistance_, parameter_.eyeAngleRad_);
+	colliderFan_ = std::make_shared<ColliderFan>(owner_, CollisionTags::TAG::ENEMY_VIEW, owner_.GetParameter().pos_, parameter_.eyeDistance_, eyeBaseAngle_, parameter_.eyeAngleRad_);
 
 	// コライダーの登録
 	CollisionManager::GetInstance().Add(colliderFan_);
@@ -40,6 +51,16 @@ void ComponentStateEnemyAlive::Init()
 void ComponentStateEnemyAlive::Update()
 {
 	update_();
+
+	// 状態が生存の場合
+	if(owner_.GetState() == CharacterBase::STATE::ALIVE)
+	{
+		// 視野角の更新
+		UpdateEyeAngle();
+
+		// アニメーションの更新
+		UpdateAnimation();
+	}
 }
 
 void ComponentStateEnemyAlive::UpdatePatrol()
@@ -63,19 +84,16 @@ void ComponentStateEnemyAlive::UpdatePatrol()
 
 		if (isMove_)
 		{
-			// 移動時間の決定 1.0秒から3.0秒の間でランダム
+			// 移動時間ランダム決定
 			moveTimer_ = static_cast<float>(GetRand(200)) / 100.0f + 1.0f;
-			
-			// 移動アニメーションを開始
-			owner_.GetAnimation().Play(Animation::TYPE::WALK);
+
+			// 移動方向を決定
+			moveDirection_ = (GetRand(2) == 0) ? -1.0f : 1.0f;
 		}
 		else
 		{
-			// 待機時間の決定 0.5秒から2.0秒の間でランダム
+			// 待機時間ランダム決定
 			moveTimer_ = static_cast<float>(GetRand(150)) / 100.0f + 0.5f;
-
-			// 待機アニメーションを開始
-			owner_.GetAnimation().Play(Animation::TYPE::IDLE);
 		}
 	}
 
@@ -83,7 +101,7 @@ void ComponentStateEnemyAlive::UpdatePatrol()
 	if (isMove_)
 	{
 		// 左に進む デルタタイムを掛けて移動距離を均一化
-		parameter_.moveAmount_.x -= parameter_.moveSpeed_;
+		parameter_.moveAmount_.x += parameter_.moveSpeed_ * moveDirection_;
 	}
 }
 
@@ -103,23 +121,38 @@ void ComponentStateEnemyAlive::UpdateChase()
 	// ベクトルの長さを計算して距離を求める
 	float distance = direction.Length();
 
-	// ターゲットに向かって移動 向きを正規化して速度とデルタタイムを掛ける
+	// ターゲットに向かって移動
 	if (distance > 0.0f)
 	{
 		direction = Vector2F(direction.x / distance, direction.y / distance);
 		Vector2F velocity = Vector2F::MulVector2FFloat(direction, parameter_.moveSpeed_);
-		parameter_.moveAmount_ = Vector2F::AddVector2F(parameter_.pos_, velocity);
+		parameter_.moveAmount_ = velocity;
 	}
 
 	// ターゲットに近づいた場合 攻撃間合いに入ったか
 	if (distance <= parameter_.attackStartDistance_)
 	{
+		// 攻撃に変更
 		owner_.ChangeState(EnemyBase::STATE::ATTACK);
+
+		// 攻撃に関する初期化
+		owner_.AttackReset();
+
+		// 攻撃のアニメーションを開始（ループしない）
+		owner_.GetAnimation().Play(Animation::TYPE::ATTACK, false);
+
+		// 次回アニメーションを指定しない
+		owner_.GetAnimation().SetNextAnimationType(Animation::TYPE::MAX);
 	}
+
 	// ターゲットから離れた場合 見失う距離まで離れたか
-	else if (distance >= parameter_.loseSightDistance_)
+	else if (distance >= parameter_.eyeDistance_)
 	{
+		// パトロールに変更
 		ChangeState(STATE::PATROL);
+
+		// ターゲット座標を空にする
+		parameter_.targetPos_ = nullptr;
 	}
 }
 
@@ -139,9 +172,49 @@ void ComponentStateEnemyAlive::ChangeStatePatrol()
 	// 初期化処理
 	moveTimer_ = 0.0f;
 	isMove_ = true;
+	parameter_.isDiscover_ = false;
 }
 
 void ComponentStateEnemyAlive::ChangeStateChase()
 {
 	update_ = std::bind(&ComponentStateEnemyAlive::UpdateChase, this);
+}
+
+void ComponentStateEnemyAlive::UpdateEyeAngle()
+{
+	// キャラクターの向きに応じてコライダーの角度を更新
+	eyeBaseAngle_ = parameter_.angle_;
+	eyeBaseAngle_ = parameter_.direction_ ? DX_PI_F : 0.0f;
+}
+
+void ComponentStateEnemyAlive::UpdateAnimation()
+{
+	Animation& animation = owner_.GetAnimation();
+	Animation::TYPE type = Animation::TYPE::MAX;
+
+	// 移動量がある場合
+	if (parameter_.moveAmount_.x > 0.0f)
+	{
+		type = Animation::TYPE::WALK;
+		parameter_.direction_ = false;
+	}
+	else if (parameter_.moveAmount_.x < 0.0f)
+	{
+		type = Animation::TYPE::WALK;
+		parameter_.direction_ = true;
+	}
+	// ない場合
+	else
+	{
+		type = Animation::TYPE::IDLE;
+	}
+	
+	// 既にアニメーションが再生されてる場合
+	if (owner_.GetAnimation().GetType() == type)
+	{
+		return;
+	}
+
+	// 待機のアニメーションに変更
+	owner_.GetAnimation().Play(type);
 }

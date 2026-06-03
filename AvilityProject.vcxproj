@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\System\EnemyGenerator.cpp" />
     <ClCompile Include="Script\Collider\ColliderFan.cpp" />
     <ClCompile Include="Script\Component\State\ComponentStateEnemyAlive.cpp" />
     <ClCompile Include="Script\Object\Character\Enemy\EnemySamurai.cpp" />
@@ -175,7 +176,6 @@
     <ClCompile Include="Script\Parameter\Stage\ParameterStage.cpp" />
     <ClCompile Include="Script\Parameter\Gimmick\ParameterAvilityBox.cpp" />
     <ClCompile Include="Script\Parameter\Gimmick\ParameterGimmick.cpp" />
-    <ClCompile Include="Script\Parameter\Character\Enemy\ParameterEnemyClone.cpp" />
     <ClCompile Include="Script\Parameter\Character\Player\ParameterPlayer.cpp" />
     <ClCompile Include="Script\Parameter\Character\ParameterCharacter.cpp" />
     <ClCompile Include="Script\Parameter\ParameterActor.cpp" />
@@ -300,6 +300,8 @@
     <ClCompile Include="Script\Object\Stage\Train.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Manager\Game\EnemyTypes.h" />
+    <ClInclude Include="Script\System\EnemyGenerator.h" />
     <ClInclude Include="Script\Collider\ColliderFan.h" />
     <ClInclude Include="Script\Component\State\ComponentStateEnemyAlive.h" />
     <ClInclude Include="Script\Object\Character\Enemy\EnemySamurai.h" />
@@ -330,7 +332,6 @@
     <ClInclude Include="Script\Parameter\Stage\ParameterStage.h" />
     <ClInclude Include="Script\Parameter\Gimmick\ParameterAvilityBox.h" />
     <ClInclude Include="Script\Parameter\Gimmick\ParameterGimmick.h" />
-    <ClInclude Include="Script\Parameter\Character\Enemy\ParameterEnemyClone.h" />
     <ClInclude Include="Script\Parameter\Character\Player\ParameterPlayer.h" />
     <ClInclude Include="Script\Parameter\Character\ParameterCharacter.h" />
     <ClInclude Include="Script\Parameter\ParameterActor.h" />

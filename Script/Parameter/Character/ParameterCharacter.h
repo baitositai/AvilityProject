@@ -1,5 +1,6 @@
 #pragma once
 #include <unordered_map>
+#include "../../Manager/Game/CollisionTags.h"
 #include "../ParameterActor.h"
 
 class ParameterCharacter : public ParameterActor
@@ -49,11 +50,17 @@ public:
     // ノックバック距離
     float knockBackDistance_;
 
+    // 通常攻撃開始フレーム
+	int defaultAttackStartFrame_;
+
     // 通常攻撃の当たり判定距離
     float defaultAttackDistance_;
 
     // 通常攻撃の範囲半径
     float defaultAttackRadius_;
+
+    // 攻撃用の衝突タグ
+	CollisionTags::TAG attackCollisionTag_;
 
     // 状態別コンポーネント配列
     std::unordered_map<std::string, std::string> stateComponentKeys_;

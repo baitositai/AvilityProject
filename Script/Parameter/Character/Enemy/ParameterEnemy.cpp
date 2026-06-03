@@ -8,8 +8,7 @@ ParameterEnemy::ParameterEnemy() :
 	eyeAngleRad_(0.0f),
 	eyeDistance_(0.0f),
 	attackStartDistance_(0.0f),
-	permissibleDistance_(0.0f),
-	loseSightDistance_(0.0f)
+	permissibleDistance_(0.0f)
 {
 	targetPos_ = nullptr;
 }
@@ -26,7 +25,6 @@ void ParameterEnemy::LoadParameter(const Json& parameter)
 	// 敵固有のパラメータの読み込み
 	eyeAngle_ = parameter.value("eyeAngle", 0.0f);
 	eyeDistance_ = parameter.value("eyeDistance", 0.0f);
-	loseSightDistance_ = parameter.value("loseSightDistance", 0.0f);
     attackStartDistance_ = parameter.value("attackStartDistance", 0.0f);
 	permissibleDistance_ = parameter.value("permissibleDistance", 0.0f);
 

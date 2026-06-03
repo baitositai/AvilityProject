@@ -30,6 +30,9 @@ void EnemyBase::Init()
 	// 衝突後処理
 	onHit_ = std::make_unique<OnHitEnemy>(*this);
 
+	// 攻撃用のタグの設定
+	parameterEnemy_->attackCollisionTag_ = CollisionTags::TAG::ENEMY_ATTACK_NORMAL;
+
 	// 基底クラスの初期化
 	CharacterBase::Init();
 
@@ -39,16 +42,6 @@ void EnemyBase::Init()
 
 void EnemyBase::Draw()
 {
-	// 移動量に応じて反転
-	if (parameterEnemy_->moveAmount_.x > 0)
-	{
-		parameterEnemy_->direction_ = false;
-	}
-	else if (parameterEnemy_->moveAmount_.x < 0)
-	{
-		parameterEnemy_->direction_ = true;
-	}
-
 	// ダメージを受けている場合
 	if (damageDrawStep_ > 0)
 	{

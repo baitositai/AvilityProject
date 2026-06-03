@@ -12,8 +12,9 @@ public:
 	/// <param name="tag">タグ</param>
 	/// <param name="followPos">追従座標</param>
 	/// <param name="radius">視野角半径</param>
+	/// <param name="baseAngle">基本角</param>
 	/// <param name="viewAngle">視野角</param>
-	ColliderFan(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos, float& radius, float& viewAngle);
+	ColliderFan(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos, float& baseAngle, float& radius, float& viewAngle);
 
 	/// <summary>
 	/// デストラクタ
@@ -38,18 +39,21 @@ public:
 	const float GetRadius() const { return radius_; }
 
 	/// <summary>
-	/// 角度を返す
+	/// 視野角度を返す
 	/// </summary>
-	/// <returns>角度</returns>
+	/// <returns>視野角度</returns>
 	const float GetViewAngle() const { return viewAngle_; }
 
 	/// <summary>
 	/// ベース角度を返す	
 	/// </summary>
-	/// <returns></returns>
-	const float GetBaseAngle() const;
+	/// <returns>ベース角度</returns>
+	const float GetBaseAngle() const { return baseAngle_; }
 
 private:
+
+	// ベース角度
+	float& baseAngle_;
 
 	// 視野角半径
 	float& radius_;

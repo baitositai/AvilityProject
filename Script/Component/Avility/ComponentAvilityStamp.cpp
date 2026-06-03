@@ -23,7 +23,11 @@ ComponentAvilityStamp::ComponentAvilityStamp(Player& owner) :
 
 ComponentAvilityStamp::~ComponentAvilityStamp()
 {
-
+	if (attackCollider_)
+	{
+		attackCollider_->Delete();
+		attackCollider_ = nullptr;
+	}
 }
 
 void ComponentAvilityStamp::Init()

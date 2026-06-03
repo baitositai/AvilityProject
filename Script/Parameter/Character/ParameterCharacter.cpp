@@ -3,6 +3,7 @@
 ParameterCharacter::ParameterCharacter() :
     jumpCount_(-1),
     jumpCountMax_(-1),
+    defaultAttackStartFrame_(-1),
     damageRate_(0.0f),
     invincibleTimeMax_(0.0f),
     invincibleTime_(0.0f),
@@ -11,7 +12,8 @@ ParameterCharacter::ParameterCharacter() :
     knockBackPower_({ 0.0f, 0.0f }),
     knockBackDistance_(0.0f),
     defaultAttackDistance_(0.0f),
-    defaultAttackRadius_(0.0f)
+    defaultAttackRadius_(0.0f),
+    attackCollisionTag_(CollisionTags::TAG::NONE)
 {
 }
 
@@ -36,6 +38,7 @@ void ParameterCharacter::LoadParameter(const Json& parameter)
     knockBackDistance_ = parameter.value("knockBackDistance", 0.0f);
     defaultAttackRadius_ = parameter.value("defaultAttackRadius", 0.0f);
     defaultAttackDistance_ = parameter.value("defaultAttackDistance", 0.0f);
+    defaultAttackStartFrame_ = parameter.value("defaultAttackStartFrame", -1);
     stateComponentKeys_ = parameter.value("stateComponentKeys", std::unordered_map<std::string, std::string>());
 
     // ノックバックパワーの読み込み

@@ -21,10 +21,10 @@ OnHitAvilityBox::OnHitAvilityBox(AvilityBox& owner):
         {
             return OnHitStage(opponentCollider);
         });
-    onHitMap_.emplace(CollisionTags::TAG::AVILITY_BOX, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
-        {
-            return OnHitBox(opponentCollider);
-        });
+    //onHitMap_.emplace(CollisionTags::TAG::AVILITY_BOX, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
+    //    {
+    //        return OnHitBox(opponentCollider);
+    //    });
 }
 
 OnHitAvilityBox::~OnHitAvilityBox()

@@ -1,0 +1,21 @@
+#pragma once
+
+class EnemyTypes
+{
+public:
+
+	// éÌóﬁ
+	enum class TYPE
+	{
+		CLONE,
+		SLIME,
+		MUSHROOM,
+		HAT,
+		SNAKE,
+		SAMURAI,
+		MAX,
+	};
+
+	// ç≈ëÂêî
+	static constexpr int MAX = static_cast<int>(TYPE::MAX);
+};

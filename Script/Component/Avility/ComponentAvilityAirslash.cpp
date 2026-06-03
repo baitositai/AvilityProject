@@ -26,14 +26,16 @@ void ComponentAvilityAirslash::Init()
 void ComponentAvilityAirslash::Update()
 {
 	// ジャンプ回数の比較
-	const int nowJumpCount = parameter_.jumpCount_;
-	if (preJumpCount_ > nowJumpCount)
+	int nowJumpCount = parameter_.jumpCount_;
+	if (preJumpCount_ > 0)
 	{
-		CreateAirslash();
+		if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_JUMP))
+		{
+			CreateAirslash();
+		}
 	}
-	
 	// バックアップ保持
-	preJumpCount_ = nowJumpCount;
+	preJumpCount_ = parameter_.jumpCount_;
 }
 
 void ComponentAvilityAirslash::Remove()
@@ -61,8 +63,6 @@ void ComponentAvilityAirslash::CreateAirslash()
 		dirRightSlash,
 		dirLeftSlash
 	};
-
-	
 
 	for (int i = 0; i < CREATE_NUM; i++)
 	{	

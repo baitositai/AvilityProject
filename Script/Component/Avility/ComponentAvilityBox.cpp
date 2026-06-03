@@ -8,7 +8,7 @@ ComponentAvilityBox::ComponentAvilityBox(Player& owner):
 	boxCnt_(),
 	coolCnt_()
 {
-	type_ = AvilityTypes::TYPE::BOX;
+	//type_ = AvilityTypes::TYPE::BOX;
 }
 
 ComponentAvilityBox::~ComponentAvilityBox()

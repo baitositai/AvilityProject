@@ -9,11 +9,12 @@ ComponentStateAttackDefault::ComponentStateAttackDefault(CharacterBase& owner) :
 	owner_(owner),
 	parameter_(owner.GetParameter()),
 	ATTACK_DISTANCE(owner.GetParameter().defaultAttackDistance_),
+	ATTACK_START_FRAME(owner.GetParameter().defaultAttackStartFrame_),
 	ComponentCharacterStateBase(owner)
 {
 	attackPos_ = {};
 	isAttack_ = false;
-	collider_ = std::make_shared<ColliderCircle>(owner_, CollisionTags::TAG::PLAYER_ATTACK_NORMAL, attackPos_, parameter_.defaultAttackRadius_);
+	collider_ = std::make_shared<ColliderCircle>(owner_, parameter_.attackCollisionTag_, attackPos_, parameter_.defaultAttackRadius_);
 	collider_->SetIsActive(false);
 
 	CollisionManager::GetInstance().Add(collider_);
@@ -21,6 +22,11 @@ ComponentStateAttackDefault::ComponentStateAttackDefault(CharacterBase& owner) :
 
 ComponentStateAttackDefault::~ComponentStateAttackDefault()
 {
+	if (collider_)
+	{
+		collider_->Delete();
+		collider_ = nullptr;
+	}
 }
 
 void ComponentStateAttackDefault::Init()
@@ -33,7 +39,7 @@ void ComponentStateAttackDefault::Update()
 {
 	Animation& animation = owner_.GetAnimation();
 
-	if (!isAttack_ && animation.GetAnimationIndex() >= 33)
+	if (!isAttack_ && animation.GetAnimationIndex() >= ATTACK_START_FRAME)
 	{
 		// コライダーを活動状態へ
 		collider_->SetIsActive(true);

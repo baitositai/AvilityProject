@@ -9,7 +9,7 @@ public:
 	enum class TYPE
 	{
 		SHOT,			// ショット
-		BOX,			// ボックス
+		//BOX,			// ボックス
 		STAMP,			// スタンプ
 		GRAVITY,		// 重力変化
 		TELEPORT,		// テレポート

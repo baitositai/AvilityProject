@@ -16,10 +16,10 @@ OnHitCharacterBase::OnHitCharacterBase(CharacterBase& owner) :
         {
             return OnHitStage(opponentCollider);
         });
-    onHitMap_.emplace(CollisionTags::TAG::AVILITY_BOX, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
-        {
-            return OnHitAvilityBox(opponentCollider);
-        });
+    //onHitMap_.emplace(CollisionTags::TAG::AVILITY_BOX, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
+    //    {
+    //        return OnHitAvilityBox(opponentCollider);
+    //    });
     onHitMap_.emplace(CollisionTags::TAG::AIRSLASH, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
         {
             return OnHitAttack(opponentCollider);

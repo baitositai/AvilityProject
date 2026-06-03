@@ -100,6 +100,12 @@ void CharacterBase::ChangeState(const STATE state)
 	state_ = state;
 }
 
+void CharacterBase::AttackReset()
+{
+	// 初期化
+	componentStateMap_.at(STATE::ATTACK)->Init();
+}
+
 void CharacterBase::Damage(const int damage)
 {
 	// 体力を減らす（ダメージ率だけダメージ量を変える）

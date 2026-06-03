@@ -17,6 +17,9 @@ Player::Player(std::unique_ptr<ParameterPlayer> parameter) :
 	// プレイヤー用のパラメータ
 	parameterPlayer_ = dynamic_cast<ParameterPlayer*>(GetParameterCharacterPtr());
 	assert(parameterPlayer_ != nullptr);
+
+	// 攻撃用のタグの設定
+	parameterPlayer_->attackCollisionTag_ = CollisionTags::TAG::PLAYER_ATTACK_NORMAL;
 	
 	// コライダー
 	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::PLAYER, parameterPlayer_->pos_, parameterPlayer_->hitSize_, parameterPlayer_->angle_);
@@ -101,12 +104,6 @@ void Player::Dead()
 
 	// 残機を減らす
 	PlayerManager::GetInstance().AddPlayersLeft();
-}
-
-void Player::AttackReset()
-{
-	// 初期化
-	componentStateMap_.at(STATE::ATTACK)->Init();
 }
 
 std::shared_ptr<ColliderBox> Player::CreateColliderClone()

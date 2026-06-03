@@ -32,6 +32,9 @@ public:
 
 private:
 
+	// 攻撃開始フレーム
+	const int ATTACK_START_FRAME;
+
 	// 通常攻撃の相対位置
 	const float ATTACK_DISTANCE;
 

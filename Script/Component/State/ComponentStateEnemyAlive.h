@@ -45,8 +45,14 @@ private:
 	// 所有者
 	EnemyBase& owner_;
 
+	// 視界用角度
+	float eyeBaseAngle_;
+
 	// パトロールの移動時間
 	float moveTimer_;
+
+	// 移動方向
+	float moveDirection_;	
 
 	// 移動判定
 	bool isMove_;
@@ -77,4 +83,10 @@ private:
 	void ChangeState(const STATE state);
 	void ChangeStatePatrol();
 	void ChangeStateChase();
+
+	// 視界角度の更新
+	void UpdateEyeAngle();
+
+	// アニメーションの更新
+	void UpdateAnimation();
 };

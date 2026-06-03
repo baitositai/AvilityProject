@@ -48,17 +48,6 @@
         "num": 6
       }
     },
-    "animationAttackSpeed": 0.2,
-    "animationDefaultSpeed": 0.1,
-    "animationsAttack": 7,
-    "animationsBrake": 4,
-    "animationsDamage": 4,
-    "animationsDie": 10,
-    "animationsFall": 6,
-    "animationsIdle": 6,
-    "animationsJump": 6,
-    "animationsPause": 6,
-    "animationsWalk": 8,
     "attackPower": 10,
     "componentKeys": [
       "jump",
@@ -73,6 +62,7 @@
     "dashSpeed": 4.0,
     "defaultAttackDistance": 40.0,
     "defaultAttackRadius": 20.0,
+    "defaultAttackStartFrame": 33,
     "direction": false,
     "divisionNum": {
       "x": 10,

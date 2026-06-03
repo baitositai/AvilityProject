@@ -1,13 +1,17 @@
 #include <DxLib.h>
+#include "../Manager/Common/SceneManager.h"
+#include "../Manager/Common/Camera.h"
 #include "../Utility/UtilityCommon.h"
 #include "../Object/ActorBase.h"
 #include "ColliderFan.h"
 
-ColliderFan::ColliderFan(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos, float& radius, float& viewAngle) :
+ColliderFan::ColliderFan(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos, float& radius, float& baseAngle, float& viewAngle) :
 	ColliderBase(owner, tag, followPos),
 	radius_(radius),
-	viewAngle_(viewAngle)
+	viewAngle_(viewAngle),
+	baseAngle_(baseAngle)
 {
+    type_ = ColliderType::TYPE::FAN;
 }
 
 ColliderFan::~ColliderFan()
@@ -16,18 +20,18 @@ ColliderFan::~ColliderFan()
 
 void ColliderFan::DebugDraw()
 {
-    // 中心座標を取得
-    Vector2F center = followPos_;
+    // カメラ座標取得
+    Vector2F cameraPos = mainCamera.GetPos();
 
-    // 敵の向いている基準角度を取得
-    float baseAngleRad = owner_.GetParameter().angle_;
+    // 中心座標を取得
+    Vector2F center = Vector2F::AddVector2F(followPos_, cameraPos);
 
     // 視野角の半分を計算
     float halfAngleRad = viewAngle_ * 0.5f;
 
     // 扇形の左端と右端の角度を計算
-    float startAngleRad = baseAngleRad - halfAngleRad;
-    float endAngleRad = baseAngleRad + halfAngleRad;
+    float startAngleRad = baseAngle_ - halfAngleRad;
+    float endAngleRad = baseAngle_ + halfAngleRad;
 
     // 左端の境界線の先端座標
     int leftEndX = static_cast<int>(center.x + cosf(startAngleRad) * radius_);
@@ -69,9 +73,4 @@ void ColliderFan::DebugDraw()
 std::shared_ptr<ColliderBase> ColliderFan::Clone() const
 {
     return std::make_shared<ColliderFan>(*this);
-}
-
-const float ColliderFan::GetBaseAngle() const
-{
-    return owner_.GetParameter().angle_;
 }

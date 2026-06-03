@@ -52,19 +52,9 @@ void CollisionManager::Update()
 			//衝突判定の初期化
 			colliders_[j]->SetIsHit(false);
 
-			if (collider->GetTag() == CollisionTags::TAG::ENEMY_CLONE)
+			if (tag1 == CollisionTags::TAG::AIRSLASH || tag2 == CollisionTags::TAG::AIRSLASH)
 			{
-				if(!collider->IsActive())
-				{
-					int a = 0;
-				}
-			}
-			if (collider2->GetTag() == CollisionTags::TAG::ENEMY_CLONE)
-			{
-				if(!collider2->IsActive())
-				{
-					int a = 0;
-				}
+				int a = 0;
 			}
 
 			// コライダーや所有者が非活動状態の場合
@@ -74,8 +64,8 @@ void CollisionManager::Update()
 				continue;
 			}	
 			
-			if(tag1 == CollisionTags::TAG::PLAYER && tag2 == CollisionTags::TAG::ENEMY_CLONE ||
-				tag1 == CollisionTags::TAG::ENEMY_CLONE && tag2 == CollisionTags::TAG::PLAYER)
+			if(tag1 == CollisionTags::TAG::AIRSLASH && tag2 == CollisionTags::TAG::ENEMY_CLONE ||
+				tag1 == CollisionTags::TAG::ENEMY_CLONE && tag2 == CollisionTags::TAG::AIRSLASH)
 			{
 				int a = 0;
 			}
@@ -83,12 +73,6 @@ void CollisionManager::Update()
 			//// 各コライダーからタグを取得
 			//const auto& tag1 = colliders_[i]->GetTag();
 			//const auto& tag2 = colliders_[j]->GetTag();
-
-			if (tag1 == CollisionTags::TAG::PLAYER && tag2 == CollisionTags::TAG::ITEM_AVILITY ||
-				tag1 == CollisionTags::TAG::ITEM_AVILITY && tag2 == CollisionTags::TAG::PLAYER)
-			{
-				int a = 0;
-			}
 
 			// 衝突判定が不要な組み合わせの場合
 			if (!collTagMatrix_[static_cast<int>(tag1)][static_cast<int>(tag2)])
@@ -192,14 +176,14 @@ void CollisionManager::InitTagMatrix()
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::STAGE)] = true;						// プレイヤーとステージ
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::STAGE)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
 
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;					// アビリティ設置ボックスとプレイヤー
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;
+	//collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;					// アビリティ設置ボックスとプレイヤー
+	//collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;
 
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::STAGE)] = true;					// アビリティ設置ボックスとステージ
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::STAGE)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;
+	//collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::STAGE)] = true;					// アビリティ設置ボックスとステージ
+	//collTagMatrix_[static_cast<int>(CollisionTags::TAG::STAGE)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;
 
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;			// アビリティ設置ボックスと敵
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;
+	//collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;			// アビリティ設置ボックスと敵
+	//collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;
 
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::STAGE)] = true;					// 敵とステージ
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::STAGE)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;
@@ -210,7 +194,7 @@ void CollisionManager::InitTagMatrix()
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;					// プレイヤーと敵
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
 
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;			//アビリティ設置ボックス同士
+	//collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;			//アビリティ設置ボックス同士
 
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_STAMP)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;	// プレイヤースタンプと敵
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_STAMP)] = true;
@@ -232,6 +216,12 @@ void CollisionManager::InitTagMatrix()
 
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;			// 敵同士
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::ENEMY_VIEW)] = true;					// プレイヤー敵の視界
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_VIEW)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::ENEMY_ATTACK_NORMAL)] = true;			// プレイヤー敵の攻撃
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_ATTACK_NORMAL)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
 }
 
 void CollisionManager::InitColliderMatrix()
