@@ -107,9 +107,6 @@ void ComponentStatePlayerProcess::ProcessInputAttack()
 
 		// ó‘Ô‘JˆÚ
 		owner_.ChangeState(Player::STATE::ATTACK);
-
-		// UŒ‚‚Ì‰Šú‰»
-		owner_.AttackReset();
 		
 		// ‰¡ˆÚ“®‚Ì’l‚ğ‚È‚­‚·
 		moveAmount_.x = 0.0f;

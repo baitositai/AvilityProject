@@ -103,6 +103,9 @@ void Player::Dead()
 	// 全てのアビリティを無効にする
 	SetAllAvilityComponentActive(false);
 
+	// カメラ範囲チェックのコンポーネントを無効にする
+	SetComponentActive("cameraRangeCheck", false);
+
 	// 残機を減らす
 	PlayerManager::GetInstance().AddPlayersLeft();
 

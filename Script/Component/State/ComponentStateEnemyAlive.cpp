@@ -5,6 +5,7 @@
 #include "../../Collider/ColliderFan.h"
 #include "../../Utility/UtilityCommon.h"
 #include "ComponentStateEnemyAlive.h"
+#include "ComponentStateDead.h"
 
 ComponentStateEnemyAlive::ComponentStateEnemyAlive(EnemyBase& owner) :
 	ComponentCharacterStateBase(owner),
@@ -194,9 +195,6 @@ void ComponentStateEnemyAlive::UpdateChase()
 	{
 		// 攻撃に変更
 		owner_.ChangeState(EnemyBase::STATE::ATTACK);
-
-		// 攻撃に関する初期化
-		owner_.AttackReset();
 
 		// 攻撃のアニメーションを開始（ループしない）
 		owner_.GetAnimation().Play(Animation::TYPE::ATTACK, false);

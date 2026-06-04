@@ -3,6 +3,7 @@
 #include "../../Object/Common/Animation.h"
 #include "../../Object/Character/CharacterBase.h"
 #include "ComponentStateEnter.h"
+#include "ComponentStateRespawn.h"
 
 ComponentStateEnter::ComponentStateEnter(CharacterBase& owner) :
 	ComponentCharacterStateBase(owner),
