@@ -1,17 +1,22 @@
 #include <algorithm>
 #include "../../Application.h"
 #include "../../Manager/Common/InputManager.h"
+#include "../../Manager/Common/SceneManager.h"
 #include "Camera.h"
 
 Camera::Camera() :
-	inputMng_(InputManager::GetInstance())
+	inputMng_(InputManager::GetInstance()),
+	scnMng_(SceneManager::GetInstance())
 {	
 	// 変数の初期化
+	shakePower_ = 0.0f;
+	shakeTime_ = 0.0f;
 	mode_ = MODE::NONE;
 	pos_ = Vector2F();
 	limitMax_ = Vector2F();
 	limitMin_ = Vector2F();
 	followPos_ = {};
+	offset_ = {};
 
 	// モード別状態遷移処理
 	changeStateMap_.emplace(MODE::FREE, std::bind(&Camera::ChangeModeFree, this));
@@ -37,6 +42,9 @@ void Camera::Update()
 
 	// カメラの移動制限
 	LimitCameraMove();
+
+	// カメラシェイク処理
+	CameraShake();
 }
 
 void Camera::ChangeMode(const MODE mode)
@@ -46,6 +54,24 @@ void Camera::ChangeMode(const MODE mode)
 
 	// カメラ別モードの設定
 	changeStateMap_.at(mode)();
+}
+
+void Camera::SetCameraShake(const float shakeTime, const float shakePower)
+{
+	shakeTime_ = shakeTime;
+	shakePower_ = shakePower;
+}
+
+void Camera::SetCameraPosOffset()
+{
+	// オフセットを加算
+	pos_ = Vector2F::AddVector2F(pos_, offset_);
+}
+
+void Camera::ResetCameraPos()
+{
+	// オフセットを減算
+	pos_ = Vector2F::SubVector2F(pos_, offset_);
 }
 
 void Camera::UpdateModeFree()
@@ -135,6 +161,26 @@ void Camera::ChangeModePlayerFollow()
 void Camera::ChangeModeScroll()
 {
 	updateFunction_ = std::bind(&Camera::UpdateModeScroll, this);
+}
+
+void Camera::CameraShake()
+{
+	// シェイク時間が残っていない場合はオフセットをリセットして終了
+	if (shakeTime_ <= 0)
+	{
+		offset_ = {};
+		return;
+	}
+
+	// ランダムな値を計算
+	float randX = static_cast<float>(GetRand(static_cast<int>(shakePower_ * 200))) / 100.0f - shakePower_;
+	float randY = static_cast<float>(GetRand(static_cast<int>(shakePower_ * 200))) / 100.0f - shakePower_;
+
+	offset_.x = randX;
+	offset_.y = randY;
+
+	// 残り時間を減らす
+	shakeTime_ -= scnMng_.GetDeltaTime();
 }
 
 void Camera::LimitCameraMove()

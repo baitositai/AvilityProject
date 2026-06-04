@@ -14,7 +14,8 @@ ComponentStateEnemyAlive::ComponentStateEnemyAlive(EnemyBase& owner) :
 {
 	moveDirection_ = 0.0f;
 	eyeBaseAngle_ = 0.0f;
-	moveTimer_ = 0.0f;
+	stopTimer_ = 0.0f;
+	moveDistance_ = {};
 	isMove_ = false;
 	state_ = STATE::PATROL;
 
@@ -63,7 +64,7 @@ void ComponentStateEnemyAlive::Update()
 	}
 }
 
-void ComponentStateEnemyAlive::UpdatePatrol()
+void ComponentStateEnemyAlive::UpdatePatrolLand()
 {
 	// ターゲットを発見した場合
 	if (parameter_.isDiscover_)
@@ -73,40 +74,99 @@ void ComponentStateEnemyAlive::UpdatePatrol()
 		return;
 	}
 
-	// タイマーをデルタタイムで減算
-	moveTimer_ -= sceneManager_.GetDeltaTime();
-
-	// 時間が終了した場合
-	if (moveTimer_ <= 0.0f)
+	if (isMove_)
 	{
-		// 状態を反転
-		isMove_ = !isMove_;
+		// 移動処理
+		float moveStep = parameter_.moveSpeed_ * moveDirection_;
+		parameter_.moveAmount_.x += moveStep;
 
-		if (isMove_)
+		// 移動した絶対値分だけ残り移動距離を減算
+		moveDistance_.x -= fabsf(moveStep);
+
+		// 移動距離が0以下になったら停止
+		if (moveDistance_.x <= 0.0f)
 		{
-			// 移動時間ランダム決定
-			moveTimer_ = static_cast<float>(GetRand(200)) / 100.0f + 1.0f;
+			moveDistance_.x = 0.0f;
+			isMove_ = false;
+
+			// 待機時間をランダム決定
+			stopTimer_ = static_cast<float>(GetRand(150)) / 100.0f + 0.5f;
+		}
+	}
+	else
+	{
+		// タイマーをデルタタイムで減算
+		stopTimer_ -= sceneManager_.GetDeltaTime();
+
+		// 時間が終了した場合
+		if (stopTimer_ <= 0.0f)
+		{
+			isMove_ = true;
+
+			// 移動距離をランダム決定
+			moveDistance_.x = static_cast<float>(GetRand(200)) + 1.0f;
 
 			// 移動方向を決定
 			moveDirection_ = (GetRand(2) == 0) ? -1.0f : 1.0f;
 		}
-		else
-		{
-			// 待機時間ランダム決定
-			moveTimer_ = static_cast<float>(GetRand(150)) / 100.0f + 0.5f;
-		}
+	}
+}
+
+void ComponentStateEnemyAlive::UpdatePatrolAir()
+{
+	// ターゲットを発見した場合
+	if (parameter_.isDiscover_)
+	{
+		// 状態遷移
+		ChangeState(STATE::CHASE);
+		return;
 	}
 
-	// 現在の状態に応じた処理
 	if (isMove_)
 	{
-		// 左に進む デルタタイムを掛けて移動距離を均一化
-		parameter_.moveAmount_.x += parameter_.moveSpeed_ * moveDirection_;
+		// 移動処理
+		float moveStep = parameter_.moveSpeed_ * moveDirection_;
+		parameter_.moveAmount_.x += moveStep;
+		parameter_.moveAmount_.y += moveStep;
+
+		// 移動した絶対値分だけ残り移動距離を減算
+		moveDistance_.x -= fabsf(moveStep);
+		moveDistance_.y -= fabsf(moveStep);
+
+		// XとYの両方の移動距離が0以下になったら停止
+		if (moveDistance_.x <= 0.0f && moveDistance_.y <= 0.0f)
+		{
+			moveDistance_.x = 0.0f;
+			moveDistance_.y = 0.0f;
+			isMove_ = false;
+
+			// 待機時間をランダム決定
+			stopTimer_ = static_cast<float>(GetRand(150)) / 100.0f + 0.5f;
+		}
+	}
+	else
+	{
+		// タイマーをデルタタイムで減算
+		stopTimer_ -= sceneManager_.GetDeltaTime();
+
+		// 時間が終了した場合
+		if (stopTimer_ <= 0.0f)
+		{
+			isMove_ = true;
+
+			// 移動距離をランダム決定
+			float randomDistance = static_cast<float>(GetRand(200)) + 1.0f;
+			moveDistance_.x = randomDistance;
+			moveDistance_.y = randomDistance;
+
+			// 移動方向を決定
+			moveDirection_ = (GetRand(2) == 0) ? -1.0f : 1.0f;
+		}
 	}
 }
 
 void ComponentStateEnemyAlive::UpdateChase()
-{
+{	
 	// ターゲットの座標が存在しない場合
 	if (parameter_.targetPos_ == nullptr)
 	{
@@ -167,10 +227,19 @@ void ComponentStateEnemyAlive::ChangeState(const STATE state)
 
 void ComponentStateEnemyAlive::ChangeStatePatrol()
 {
-	update_ = std::bind(&ComponentStateEnemyAlive::UpdatePatrol, this);
+	// 移動種類別に更新処理を設定
+	if (parameter_.habitatType_ == ParameterEnemy::HABITAT_TYPE::LAND)
+	{
+		update_ = std::bind(&ComponentStateEnemyAlive::UpdatePatrolLand, this);
+	}
+	else if (parameter_.habitatType_ == ParameterEnemy::HABITAT_TYPE::AIR)
+	{
+		update_ = std::bind(&ComponentStateEnemyAlive::UpdatePatrolAir, this);
+	}
 
 	// 初期化処理
-	moveTimer_ = 0.0f;
+	stopTimer_ = 0.0f;
+	moveDistance_ = {};
 	isMove_ = true;
 	parameter_.isDiscover_ = false;
 }

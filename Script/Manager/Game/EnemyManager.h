@@ -5,7 +5,7 @@
 #include "EnemyTypes.h"
 
 class EnemyBase;
-class ParameterEnemy;
+class EnemyGenerator;
 
 class EnemyManager : public Singleton<EnemyManager>
 {
@@ -40,23 +40,23 @@ public:
 	void DebugDraw();
 
 	/// <summary>
+	/// 生成処理
+	/// </summary>
+	/// <param name="createPositionList">生成位置を格納したリスト</param>
+	void Generator(const std::vector<Vector2F>& createPositionList);
+
+	/// <summary>
 	/// 削除
 	/// </summary>
 	void Clear();	
-	
-	// 敵の生成処理
-	void GenerateEnemy();
 
 private:
 
+	// 敵の生成に関するジェネレーター
+	std::unique_ptr<EnemyGenerator> enemyGenerator_;
+
 	// 敵を管理するマップ
 	std::unordered_map<EnemyTypes::TYPE, std::vector<std::unique_ptr<EnemyBase>>> enemiesMap_;
-
-	// テンプレートとなるパラメータマップ
-	std::unordered_map<EnemyTypes::TYPE, std::unique_ptr<ParameterEnemy>> templateParameterMap_;
-
-	// パラメータの初期化処理
-	void InitParameter();
 
 	// コンストラクタ
 	EnemyManager();

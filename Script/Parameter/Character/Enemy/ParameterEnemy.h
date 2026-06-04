@@ -5,6 +5,13 @@ class ParameterEnemy : public ParameterCharacter
 {
 public:
 
+	// 敵の移動タイプ
+	enum class HABITAT_TYPE
+	{
+		LAND,	// 陸
+		AIR		// 空中
+	};
+
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
@@ -44,4 +51,18 @@ public:
 
 	// 許容距離
 	float permissibleDistance_;
+
+	// 生成率
+	float spawnRate_;
+
+	// 移動種類
+	HABITAT_TYPE habitatType_;
+
+private:
+
+	// 移動種類を列挙型に変換
+	const std::unordered_map<std::string, HABITAT_TYPE> HABITAT_TYPE_STRING_TO_ENUM = {
+		{ "land", HABITAT_TYPE::LAND },
+		{ "air", HABITAT_TYPE::AIR }
+	};
 };

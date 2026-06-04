@@ -1,4 +1,4 @@
-#include "../Utility/UtilityLoad.h"
+#include <random>
 #include "../../Object/Character/Enemy/EnemyBase.h"
 #include "../../Object/Character/Enemy/EnemyClone.h"
 #include "../../Object/Character/Enemy/EnemyHat.h"
@@ -6,10 +6,40 @@
 #include "../../Object/Character/Enemy/EnemySamurai.h"
 #include "../../Object/Character/Enemy/EnemySlime.h"
 #include "../../Object/Character/Enemy/EnemySnake.h"
+#include "../Utility/UtilityLoad.h"
 #include "EnemyGenerator.h"
 
 EnemyGenerator::EnemyGenerator()
 {
+	// ƒV[ƒh‚ğ—pˆÓ‚µ‚ÄƒGƒ“ƒWƒ“‚É“n‚µ‚Ä‚¨‚­
+	std::random_device seedGen;
+	randomCountEngine_.seed(seedGen());
+
+	// ¶¬ˆ—‚Ì“o˜^
+	createEnemyMap_.emplace(EnemyTypes::TYPE::CLONE, [this]()
+		{
+			return CreateEnemyClone();
+		});
+	createEnemyMap_.emplace(EnemyTypes::TYPE::SLIME, [this]()
+		{
+			return CreateEnemySlime();
+		});
+	createEnemyMap_.emplace(EnemyTypes::TYPE::MUSHROOM, [this]()
+		{
+			return CreateEnemyMushroom();
+		});
+	createEnemyMap_.emplace(EnemyTypes::TYPE::HAT, [this]()
+		{
+			return CreateEnemyHat();
+		});
+	createEnemyMap_.emplace(EnemyTypes::TYPE::SNAKE, [this]()
+		{
+			return CreateEnemySnake();
+		});
+	createEnemyMap_.emplace(EnemyTypes::TYPE::SAMURAI, [this]()
+		{
+			return CreateEnemySamurai();
+		});
 }
 
 EnemyGenerator::~EnemyGenerator()
@@ -53,9 +83,51 @@ void EnemyGenerator::InitParameter()
 	templateParameterMap_.emplace(EnemyTypes::TYPE::SAMURAI, std::move(parameterSamurai));
 }
 
-std::unordered_map<EnemyTypes::TYPE, std::vector<std::unique_ptr<EnemyBase>>> EnemyGenerator::CreateEnemyMap(const std::vector<Vector2F>& CreatePositionsList)
+std::unordered_map<EnemyTypes::TYPE, std::vector<std::unique_ptr<EnemyBase>>> EnemyGenerator::CreateEnemyMap(const Parameter& parameter)
 {
-	return std::unordered_map<EnemyTypes::TYPE, std::vector<std::unique_ptr<EnemyBase>>>();
+	std::unordered_map<EnemyTypes::TYPE, std::vector<std::unique_ptr<EnemyBase>>> ret;
+	std::unordered_map<EnemyTypes::TYPE, float> enemySpawnMap;
+
+	for (const EnemyTypes::TYPE& type : parameter.createEnemyTypeList)
+	{
+		const auto it = templateParameterMap_.find(type);
+
+		if (it->second)
+		{
+			enemySpawnMap.emplace(type, it->second->spawnRate_);
+		}
+	}
+
+	for (const Vector2F& pos : parameter.createPositionsList)
+	{
+		// ¶¬”‚ğŒˆ‚ß‚é
+		std::uniform_int_distribution<int> countDist(parameter.createCountMin, parameter.createCountMax);
+		const int createCount = countDist(randomCountEngine_);
+
+		for (int i = 0; i < createCount; i++)
+		{
+			// ¶¬‚·‚éí—Ş‚ğŒˆ‚ß‚é
+			EnemyTypes::TYPE type = LotteryEnemyType(enemySpawnMap);
+
+			// “G‚Ì¶¬
+			std::unique_ptr<EnemyBase> enemy = CreateEnemy(type);
+			
+			// ˆÊ’u’²®—p‚Ì’l‚ğ—pˆÓ
+			std::uniform_real_distribution<float> offsetXDist(-parameter.createRange.x, parameter.createRange.x);
+			std::uniform_real_distribution<float> offsetYDist(-parameter.createRange.y, parameter.createRange.y);
+			Vector2F offset;
+			offset.x = offsetXDist(randomCountEngine_);
+			offset.y = offsetYDist(randomCountEngine_);
+
+			// “G‚ÌˆÊ’u‚ğ’²®
+			enemy->GetParameter().pos_ = Vector2F::AddVector2F(pos, offset);
+
+			// “G‚ğŠi”[‚·‚é
+			ret[type].push_back(std::move(enemy));
+		}
+	}
+
+	return ret;
 }
 
 std::unique_ptr<EnemyBase> EnemyGenerator::CreateEnemy(const EnemyTypes::TYPE type)
@@ -74,32 +146,60 @@ std::unique_ptr<EnemyBase> EnemyGenerator::CreateEnemy(const EnemyTypes::TYPE ty
 	return nullptr;
 }
 
+EnemyTypes::TYPE EnemyGenerator::LotteryEnemyType(const std::unordered_map<EnemyTypes::TYPE, float>& spawnTable)
+{
+	// Šm—¦‚Ì‡Œv’l‚ğŒvZ‚·‚é
+	float totalRate = 0.0f;
+	for (const auto& pair : spawnTable)
+	{
+		totalRate += pair.second;
+	}
+
+	// 0‚©‚ç‡ŒvŠÔ‚Å—”‚ğ¶¬‚·‚é
+	std::uniform_real_distribution<float> dist(0.0f, totalRate);
+	float randomValue = dist(randomCountEngine_);
+
+	// —”‚ğ‚à‚Æ‚É“G‚ğ’Š‘I‚·‚é
+	float currentRateSum = 0.0f;
+	for (const auto& pair : spawnTable)
+	{
+		currentRateSum += pair.second;
+		if (randomValue <= currentRateSum)
+		{
+			return pair.first;
+		}
+	}
+
+	// –œ‚ªˆêŠO‚ê‚½ê‡‚Íæ“ª‚Ì—v‘f‚ğ•Ô‚·
+	return spawnTable.begin()->first;
+}
+
 std::unique_ptr<EnemyClone> EnemyGenerator::CreateEnemyClone()
 {
-	return std::make_unique<EnemyClone>(std::move(*templateParameterMap_.at(EnemyTypes::TYPE::CLONE)));
+	return std::make_unique<EnemyClone>(std::move(std::make_unique<ParameterEnemy>(*templateParameterMap_.at(EnemyTypes::TYPE::CLONE))));
 }
 
 std::unique_ptr<EnemySlime> EnemyGenerator::CreateEnemySlime()
 {
-	return std::make_unique<EnemySlime>(std::move(*templateParameterMap_.at(EnemyTypes::TYPE::SLIME)));
+	return std::make_unique<EnemySlime>(std::move(std::make_unique<ParameterEnemy>(*templateParameterMap_.at(EnemyTypes::TYPE::SLIME))));
 }
 
 std::unique_ptr<EnemyMushroom> EnemyGenerator::CreateEnemyMushroom()
 {
-	return std::make_unique<EnemyMushroom>(std::move(*templateParameterMap_.at(EnemyTypes::TYPE::MUSHROOM)));
+	return std::make_unique<EnemyMushroom>(std::move(std::make_unique<ParameterEnemy>(*templateParameterMap_.at(EnemyTypes::TYPE::MUSHROOM))));
 }
 
 std::unique_ptr<EnemySnake> EnemyGenerator::CreateEnemySnake()
 {
-	return std::make_unique<EnemySnake>(std::move(*templateParameterMap_.at(EnemyTypes::TYPE::SNAKE)));
+	return std::make_unique<EnemySnake>(std::move(std::make_unique<ParameterEnemy>(*templateParameterMap_.at(EnemyTypes::TYPE::SNAKE))));
 }
 
 std::unique_ptr<EnemyHat> EnemyGenerator::CreateEnemyHat()
 {
-	return std::make_unique<EnemyHat>(std::move(*templateParameterMap_.at(EnemyTypes::TYPE::HAT)));
+	return std::make_unique<EnemyHat>(std::move(std::make_unique<ParameterEnemy>(*templateParameterMap_.at(EnemyTypes::TYPE::HAT))));
 }
 
 std::unique_ptr<EnemySamurai> EnemyGenerator::CreateEnemySamurai()
 {
-	return std::make_unique<EnemySamurai>(std::move(*templateParameterMap_.at(EnemyTypes::TYPE::SAMURAI)));
+	return std::make_unique<EnemySamurai>(std::move(std::make_unique<ParameterEnemy>(*templateParameterMap_.at(EnemyTypes::TYPE::SAMURAI))));
 }

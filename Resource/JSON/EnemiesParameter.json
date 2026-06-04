@@ -33,6 +33,8 @@
     "invincibleTimeMax": 2.0,
     "eyeAngle": 50.0,
     "eyeDistance": 400.0,
+    "spawnRate": 0.1,
+    "habitatType": "land",
     "divisionNum": {
       "x": 10,
       "y": 9
@@ -131,6 +133,8 @@
     "permissibleDistance": 10.0,
     "eyeAngle": 30.0,
     "eyeDistance": 400.0,
+    "spawnRate": 0.1,
+    "habitatType": "land",
     "divisionNum": {
       "x": 19,
       "y": 4
@@ -204,6 +208,8 @@
     "permissibleDistance": 10.0,
     "eyeAngle": 50.0,
     "eyeDistance": 400.0,
+    "spawnRate": 0.1,
+    "habitatType": "land",
     "divisionNum": {
       "x": 11,
       "y": 6
@@ -266,17 +272,18 @@
     "moveSpeed": 2.0,
     "hp": 100,
     "attackPower": 10,
-    "gravityPower": 9.8,
-    "defaultAttackDistance": 40.0,
-    "defaultAttackRadius": 20.0,
-    "defaultAttackStartFrame": 16,
+    "gravityPower": 0.1,
+    "defaultAttackDistance": 10.0,
+    "defaultAttackRadius": 40.0,
+    "defaultAttackStartFrame": 21,
     "weight": 0.9,
     "invincibleTimeMax": 2.0,
-    "loseSightDistance": 200.0,
-    "attackStartDistance": 100.0,
+    "attackStartDistance": 80.0,
     "permissibleDistance": 10.0,
     "eyeAngle": 50.0,
-    "eyeDistance": 120.0,
+    "eyeDistance": 500.0,
+    "spawnRate": 0.1,
+    "habitatType": "air",
     "divisionNum": {
       "x": 8,
       "y": 5
@@ -290,8 +297,8 @@
       "y": 0
     },
     "defaultAttackLoaclPos": {
-      "x": 40,
-      "y": 8
+      "x": 0,
+      "y": 0
     },
     "animation": {
       "idle": {
@@ -350,6 +357,8 @@
     "permissibleDistance": 10.0,
     "eyeAngle": 80.0,
     "eyeDistance": 500.0,
+    "spawnRate": 0.1,
+    "habitatType": "land",
     "divisionNum": {
       "x": 11,
       "y": 6
@@ -423,6 +432,8 @@
     "permissibleDistance": 10.0,
     "eyeAngle": 70.0,
     "eyeDistance": 300.0,
+    "spawnRate": 0.1,
+    "habitatType": "land",
     "divisionNum": {
       "x": 5,
       "y": 5

@@ -96,14 +96,19 @@ void SceneManager::Init3D()
 
 void SceneManager::Update()
 {
-	//if (scene_ == nullptr) { return; }
-
 	// デルタタイム
 	auto nowTime = std::chrono::system_clock::now();
 	deltaTime_ = static_cast<float>(
 		std::chrono::duration_cast<std::chrono::nanoseconds>(nowTime - preTime_).count() / 1000000000.0);
 	preTime_ = nowTime;
 	totalTime_ += deltaTime_;
+
+	// ヒットストップ処理
+	if (hitStopTimer_ > 0.0f)
+	{
+		hitStopTimer_ -= deltaTime_;
+		return;
+	}
 
 	// フェーダー更新
 	fader_->Update();
@@ -134,7 +139,7 @@ void SceneManager::Draw()
 	ClearDrawScreen();
 
 	// カメラ設定
-	//camera_->SetBeforeDraw();
+	camera_->SetCameraPosOffset();
 
 	// Effekseerにより再生中のエフェクトを更新する。
 	UpdateEffekseer3D();
@@ -158,7 +163,7 @@ void SceneManager::Draw()
 	SetDrawScreen(DX_SCREEN_BACK);
 
 	// カメラ設定
-	//camera_->CameraSetting();
+	camera_->ResetCameraPos();
 
 	// メインスクリーンを描画
 	DrawGraph(screenPos_.x, screenPos_.y, mainScreen_, true);
@@ -240,6 +245,7 @@ SceneManager::SceneManager() :
 	deltaTime_ = 1.0f / 60.0f;	// デルタタイム
 	totalTime_ = -1.0f;
 	screenPos_ = {};
+	hitStopTimer_ = 0.0f;
 }
 
 void SceneManager::ResetDeltaTime()

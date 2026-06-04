@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include <vector>
+#include <random>
 #include <unordered_map>
 #include "../Common/Vector2.h"
 #include "../Manager/Game/EnemyTypes.h"
@@ -18,6 +19,15 @@ class ParameterEnemy;
 class EnemyGenerator
 {
 public:
+
+	struct Parameter
+	{
+		int createCountMin;		// 最小生成数
+		int createCountMax;		// 最大生成数
+		Vector2F createRange;	// 生成範囲
+		std::vector<Vector2F> createPositionsList;			// 生成位置のリスト
+		std::vector<EnemyTypes::TYPE> createEnemyTypeList;	// 生成する敵の種類リスト
+	};
 	
 	/// <summary>
 	/// コンストラクタ
@@ -37,9 +47,8 @@ public:
 	/// <summary>
 	/// 敵を管理するマップを生成
 	/// </summary>
-	/// <param name="CreatePositionsList">生成位置リスト</param>
-	/// <returns>敵を管理するマップ</returns>
-	std::unordered_map<EnemyTypes::TYPE, std::vector<std::unique_ptr<EnemyBase>>> CreateEnemyMap(const std::vector<Vector2F>& CreatePositionsList);
+	/// <param name="parameter">パラメータ情報</param>
+	std::unordered_map<EnemyTypes::TYPE, std::vector<std::unique_ptr<EnemyBase>>> CreateEnemyMap(const Parameter& parameter);
 
 	/// <summary>
 	/// 敵の生成
@@ -50,11 +59,17 @@ public:
 
 private:
 
+	// 乱数生成エンジン
+	std::mt19937 randomCountEngine_;
+
 	// 敵の生成マップ
 	std::unordered_map<EnemyTypes::TYPE, std::function<std::unique_ptr<EnemyBase>()>> createEnemyMap_;
 
 	// テンプレートとなるパラメータマップ
 	std::unordered_map<EnemyTypes::TYPE, std::unique_ptr<ParameterEnemy>> templateParameterMap_;
+
+	// 敵の生成確率から抽選して種類を返す
+	EnemyTypes::TYPE LotteryEnemyType(const std::unordered_map<EnemyTypes::TYPE, float>& spawnTable);
 
 	// 各種敵の生成処理
 	std::unique_ptr<EnemyClone> CreateEnemyClone();

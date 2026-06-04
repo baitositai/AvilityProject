@@ -27,7 +27,12 @@ void ParameterEnemy::LoadParameter(const Json& parameter)
 	eyeDistance_ = parameter.value("eyeDistance", 0.0f);
     attackStartDistance_ = parameter.value("attackStartDistance", 0.0f);
 	permissibleDistance_ = parameter.value("permissibleDistance", 0.0f);
+	spawnRate_ = parameter.value("spawnRate", 0.0f);
+	std::string habitatTypeString = parameter.value("habitatType", "land");
 
 	// Ž‹–ìŠp“x‚ðƒ‰ƒWƒAƒ“‚É•ÏŠ·
 	eyeAngleRad_ = UtilityCommon::Deg2RadF(eyeAngle_);
+
+	// ˆÚ“®Ží—Þ‚ð—ñ‹“Œ^‚Ö•ÏŠ·
+	habitatType_ = HABITAT_TYPE_STRING_TO_ENUM.at(habitatTypeString);
 }
