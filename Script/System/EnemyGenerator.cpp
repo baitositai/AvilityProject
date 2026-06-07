@@ -1,3 +1,4 @@
+#include <random>
 #include "../Utility/UtilityLoad.h"
 #include "../../Object/Character/Enemy/EnemyBase.h"
 #include "../../Object/Character/Enemy/EnemyClone.h"
@@ -53,9 +54,17 @@ void EnemyGenerator::InitParameter()
 	templateParameterMap_.emplace(EnemyTypes::TYPE::SAMURAI, std::move(parameterSamurai));
 }
 
-std::unordered_map<EnemyTypes::TYPE, std::vector<std::unique_ptr<EnemyBase>>> EnemyGenerator::CreateEnemyMap(const std::vector<Vector2F>& CreatePositionsList)
-{
-	return std::unordered_map<EnemyTypes::TYPE, std::vector<std::unique_ptr<EnemyBase>>>();
+std::unordered_map<EnemyTypes::TYPE, std::vector<std::unique_ptr<EnemyBase>>> EnemyGenerator::CreateEnemyMap(const std::vector<Vector2F>& createPositionsList, const std::unordered_map<EnemyTypes::TYPE, SpawnConfig> spawnConfigMap)
+{ 
+	std::unordered_map<EnemyTypes::TYPE, std::vector<std::unique_ptr<EnemyBase>>> ret;
+	
+	for (const Vector2F& createPosition : createPositionsList)
+	{
+		// 一つの座標で生成する敵数をランダムで決める
+	}
+
+	// 管理マップを返す
+	return ret;
 }
 
 std::unique_ptr<EnemyBase> EnemyGenerator::CreateEnemy(const EnemyTypes::TYPE type)
@@ -72,6 +81,38 @@ std::unique_ptr<EnemyBase> EnemyGenerator::CreateEnemy(const EnemyTypes::TYPE ty
 
 	// 見つからない場合空で返す
 	return nullptr;
+}
+
+EnemyTypes::TYPE EnemyGenerator::LotteryEnemyType(const std::unordered_map<EnemyTypes::TYPE, EnemyGenerator::SpawnConfig>& spawnTable)
+{
+	// 乱数生成器の用意
+	std::random_device seedGen;
+	std::mt19937 engine(seedGen());
+
+	// 確率の合計値を計算
+	float totalRate = 0.0f;
+	for (const auto& pair : spawnTable)
+	{
+		totalRate += pair.second.spawnRate;
+	}
+
+	// 0から合計値までの間で乱数を生成
+	std::uniform_real_distribution<float> dist(0.0f, totalRate);
+	float randomValue = dist(engine);
+
+	// 乱数をもとに敵を抽選
+	float currentRateSum = 0.0f;
+	for (const auto& pair : spawnTable)
+	{
+		currentRateSum += pair.second.spawnRate;
+		if (randomValue <= currentRateSum)
+		{
+			return pair.first;
+		}
+	}
+
+	// 万が一外れた場合は先頭の要素を返す
+	return spawnTable.begin()->first;
 }
 
 std::unique_ptr<EnemyClone> EnemyGenerator::CreateEnemyClone()

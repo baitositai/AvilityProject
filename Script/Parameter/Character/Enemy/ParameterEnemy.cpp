@@ -8,7 +8,8 @@ ParameterEnemy::ParameterEnemy() :
 	eyeAngleRad_(0.0f),
 	eyeDistance_(0.0f),
 	attackStartDistance_(0.0f),
-	permissibleDistance_(0.0f)
+	permissibleDistance_(0.0f),
+	habitatType_(HABITAT_TYPE::MAX)
 {
 	targetPos_ = nullptr;
 }
@@ -27,7 +28,11 @@ void ParameterEnemy::LoadParameter(const Json& parameter)
 	eyeDistance_ = parameter.value("eyeDistance", 0.0f);
     attackStartDistance_ = parameter.value("attackStartDistance", 0.0f);
 	permissibleDistance_ = parameter.value("permissibleDistance", 0.0f);
+	std::string habitatTypeString = parameter.value("habitatType", "");
 
 	// Ž‹–ìŠp“x‚ðƒ‰ƒWƒAƒ“‚É•ÏŠ·
 	eyeAngleRad_ = UtilityCommon::Deg2RadF(eyeAngle_);
+
+	// —ñ‹“Œ^‚É•ÏŠ·
+	habitatType_ = HABITAT_TYPE_STRING_TO_ENUM.at(habitatTypeString);
 }

@@ -1,6 +1,14 @@
 #pragma once
 #include "../ParameterCharacter.h"
 
+// ˆÚ“®Ží—Þ
+enum class HABITAT_TYPE
+{
+	LAND,		// —¤
+	AIR,		// ‹ó
+	MAX
+};
+
 class ParameterEnemy : public ParameterCharacter
 {
 public:
@@ -44,4 +52,15 @@ public:
 
 	// ‹–—e‹——£
 	float permissibleDistance_;
+
+	// ˆÚ“®Ží—Þ
+	HABITAT_TYPE habitatType_;
+
+private:
+
+	// stringŒ^‚ð—ñ‹“Œ^‚É•ÏŠ·
+	std::unordered_map<std::string, HABITAT_TYPE> HABITAT_TYPE_STRING_TO_ENUM = {
+		{ "land", HABITAT_TYPE::LAND },
+		{ "air", HABITAT_TYPE::AIR }
+	};
 };
