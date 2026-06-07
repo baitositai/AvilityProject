@@ -28,6 +28,11 @@ public:
 	virtual void Update();
 
 	/// <summary>
+	/// 取り外し処理
+	/// </summary>
+	virtual void Remove();
+
+	/// <summary>
 	/// デバッグ用描画
 	/// </summary>
 	virtual void DebugDraw();

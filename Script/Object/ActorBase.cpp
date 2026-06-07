@@ -128,6 +128,14 @@ void ActorBase::InitResource()
 
 void ActorBase::Delete()
 {
+	// コンポーネントの取り外し処理
+	for (auto& component : componentList_)
+	{
+		component->Remove();
+	}
+	componentList_.clear();
+	componentMap_.clear();
+
 	// コライダーがある場合削除
 	if (collider_ != nullptr)
 	{

@@ -23,6 +23,21 @@ void ColliderBase::OnHit(const std::weak_ptr<ColliderBase>& opponentCollider)
 	owner_.OnHit(opponentCollider);
 }
 
+const bool ColliderBase::IsSkip() const
+{
+	if (isDelete_ ||			// コライダーが削除予定
+		!isActive_ ||			// コライダーが非活動状態
+		owner_.IsDelete() ||	// 所有者が削除予定
+		!owner_.IsActive())		// 所有者が非活動状態
+	{
+		return true;	// スキップ
+	}
+	else
+	{
+		return false;	// 実行
+	}
+}
+
 void ColliderBase::Delete()
 {
 	isActive_ = false;

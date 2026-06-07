@@ -23,7 +23,7 @@ public:
 	// キャラクター共通の状態
 	enum class STATE
 	{
-		RESPAWN,	// 復活
+		SPAWN,		// 誕生
 		ALIVE,		// 生存
 		ATTACK,		// 攻撃
 		HIT,		// ヒット
@@ -57,6 +57,11 @@ public:
 	/// 描画処理
 	/// </summary>
 	virtual void Draw() override;
+
+	/// <summary>
+	/// 削除処理
+	/// </summary>
+	virtual void Delete() override;
 
 	/// <summary>
 	/// デバッグ描画
@@ -161,12 +166,9 @@ private:
 		{ "dead", STATE::DEAD },
 		{ "attack", STATE::ATTACK },
 		{ "hit", STATE::HIT },
-		{ "respawn", STATE::RESPAWN },
+		{ "spawn", STATE::SPAWN },
 		{ "enter", STATE::ENTER },
 	};	
-
-	// 状態遷移管理マップ
-	std::unordered_map<STATE, std::function<void()>> stateChangeMap_;
 
 	// コンポーネントの生成処理
 	void CreateComponents() override;	

@@ -1,3 +1,4 @@
+#include <math.h>
 #include <cmath>
 #include "Vector2.h"
 #include "Vector2F.h"

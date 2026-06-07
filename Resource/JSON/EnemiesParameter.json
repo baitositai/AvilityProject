@@ -12,7 +12,7 @@
       "attack": "attackDefault",
       "hit": "dummy",
       "dead": "dead",
-      "respawn": "dummy",
+      "spawn": "dummy",
       "enter": "dummy"
     },
     "resourceKey": "clone",
@@ -112,7 +112,7 @@
       "attack": "attackDefault",
       "hit": "dummy",
       "dead": "dead",
-      "respawn": "dummy",
+      "spawn": "dummy",
       "enter": "dummy"
     },
     "resourceKey": "slime",
@@ -187,7 +187,7 @@
       "attack": "attackDefault",
       "hit": "dummy",
       "dead": "dead",
-      "respawn": "dummy",
+      "spawn": "dummy",
       "enter": "dummy"
     },
     "resourceKey": "mushroom",
@@ -261,7 +261,7 @@
       "attack": "attackDefault",
       "hit": "dummy",
       "dead": "dead",
-      "respawn": "dummy",
+      "spawn": "dummy",
       "enter": "dummy"
     },
     "resourceKey": "hat",
@@ -336,7 +336,7 @@
       "attack": "attackDefault",
       "hit": "dummy",
       "dead": "dead",
-      "respawn": "dummy",
+      "spawn": "dummy",
       "enter": "dummy"
     },
     "resourceKey": "snake",
@@ -411,7 +411,7 @@
       "attack": "attackDefault",
       "hit": "dummy",
       "dead": "dead",
-      "respawn": "dummy",
+      "spawn": "dummy",
       "enter": "dummy"
     },
     "resourceKey": "samurai",

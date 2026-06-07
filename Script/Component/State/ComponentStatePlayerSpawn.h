@@ -2,11 +2,12 @@
 #include <functional>
 #include "ComponentCharacterStateBase.h"
 
-class ParameterCharacter;
 class SceneManager;
-class CharacterBase;
+class PlayerManager;
+class Player;
+class ParameterPlayer;
 
-class ComponentStateRespawn : public ComponentCharacterStateBase
+class ComponentStatePlayerSpawn : public ComponentCharacterStateBase
 {
 public:
 
@@ -14,12 +15,12 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="owner">所有者</param>
-	ComponentStateRespawn(CharacterBase& owner);
+	ComponentStatePlayerSpawn(Player& owner);
 	
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~ComponentStateRespawn() override;
+	~ComponentStatePlayerSpawn() override;
 
 	/// <summary>
 	/// 初期化
@@ -33,22 +34,20 @@ public:
 
 private:
 
-	// 状態
-	enum class STATE
-	{
-		READY,
-		WAIT,
-		MAX
-	};
-
 	// 待機時間
 	static constexpr float RESPAWN_WAIT_TIME = 1.5f;
+
+	// リスポーン条件の入力回数
+	static constexpr int RESPAWN_CONDITION_INPUT_COUNT = 5;
 
 	// 所有者
 	CharacterBase& owner_;
 
 	// シーン管理クラス
 	SceneManager& sceneManager_;
+
+	// プレイヤー管理クラス
+	PlayerManager& playerManager_;
 
 	// 待機タイマー
 	float waitTimer_;
@@ -57,7 +56,7 @@ private:
 	std::function<void()> update_;
 
 	// パラメータ情報
-	ParameterCharacter& parameter_;
+	ParameterPlayer& parameter_;
 
 	// 状態別更新処理
 	void UpdateReady();

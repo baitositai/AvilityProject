@@ -35,7 +35,7 @@ ParameterActor::~ParameterActor()
 void ParameterActor::LoadParameter(const Json& parameter)
 {
     // JSON‚©‚ç’l‚ğ’Šo‚µ‚Äƒƒ“ƒo•Ï”‚Ö‘ã“ü
-    hp_ = parameter.value("hp", -1);
+    hpMax_ = parameter.value("hp", -1);
     attackPower_ = parameter.value("attackPower", -1);
     scale_ = parameter.value("scale", 1.0f);
     angle_ = parameter.value("angle", 0.0f);
@@ -74,6 +74,9 @@ void ParameterActor::LoadParameter(const Json& parameter)
         pos_.x = parameter["pos"].value("x", 0);
         pos_.y = parameter["pos"].value("y", 0);
     }
+
+    // ‘Ì—Í‚Ì”½‰f
+    hp_ = hpMax_;
 }
 
 Vector2 ParameterActor::GetScaleToHitSize()

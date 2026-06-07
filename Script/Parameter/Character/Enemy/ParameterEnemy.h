@@ -17,7 +17,8 @@ public:
 	enum class HABITAT_TYPE
 	{
 		LAND,	// —¤
-		AIR		// ‹ó’†
+		AIR,		// ‹ó’†
+		MAX
 	};
 
 	/// <summary>

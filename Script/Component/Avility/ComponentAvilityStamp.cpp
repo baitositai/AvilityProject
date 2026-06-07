@@ -49,10 +49,10 @@ void ComponentAvilityStamp::Update()
 
 void ComponentAvilityStamp::Remove()
 {
-	// コライダーの削除 
-	if(attackCollider_)
+	if (attackCollider_)
 	{
 		attackCollider_->Delete();
+		attackCollider_ = nullptr;
 	}
 
 	// 攻撃力を戻す

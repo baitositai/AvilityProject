@@ -55,6 +55,12 @@ public:
 	const bool IsActive() const { return isActive_; }
 
 	/// <summary>
+	/// Õ“Ë”»’è‚ğ”ò‚Î‚·‚©•Ô‚·
+	/// </summary>
+	/// <returns>Õ“Ë”»’è‚ÌÀs”»’è</returns>
+	const bool IsSkip() const;
+
+	/// <summary>
 	/// íœİ’è
 	/// </summary>
 	void Delete();

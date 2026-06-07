@@ -65,6 +65,16 @@ void ComponentStateEnemyAlive::Update()
 	}
 }
 
+void ComponentStateEnemyAlive::Remove()
+{
+	// コライダーの削除
+	if (colliderFan_)
+	{
+		colliderFan_->Delete();
+		colliderFan_ = nullptr;
+	}
+}
+
 void ComponentStateEnemyAlive::UpdatePatrolLand()
 {
 	// ターゲットを発見した場合

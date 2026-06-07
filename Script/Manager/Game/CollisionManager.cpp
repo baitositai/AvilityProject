@@ -33,8 +33,8 @@ void CollisionManager::Update()
 		//衝突判定の初期化
 		colliders_[i]->SetIsHit(false);
 
-		// コライダーや所有者が非活動状態の場合
-		if (!colliders_[i]->GetOwner().IsActive() || !colliders_[i]->IsActive())
+		// スキップ判定
+		if (colliders_[i]->IsSkip())
 		{
 			// 次へ
 			continue;
@@ -42,33 +42,28 @@ void CollisionManager::Update()
 
 		for (int j = i + 1; j < size; j++)
 		{
+			//衝突判定の初期化
+			colliders_[j]->SetIsHit(false);
+
+			// スキップ判定
+			if (colliders_[j]->IsSkip())
+			{
+				// 次へ
+				continue;
+			}
+
 			auto& collider = colliders_[i];
 			auto& collider2 = colliders_[j];
 
 			// 各コライダーからタグを取得
 			const auto& tag1 = colliders_[i]->GetTag();
 			const auto& tag2 = colliders_[j]->GetTag();
-
-			//衝突判定の初期化
-			colliders_[j]->SetIsHit(false);
-
-			if (tag1 == CollisionTags::TAG::AIRSLASH || tag2 == CollisionTags::TAG::AIRSLASH)
-			{
-				int a = 0;
-			}
-
-			// コライダーや所有者が非活動状態の場合
-			if (!colliders_[j]->GetOwner().IsActive() || !colliders_[j]->IsActive())
-			{
-				// 次へ
-				continue;
-			}	
 			
-			if(tag1 == CollisionTags::TAG::AIRSLASH && tag2 == CollisionTags::TAG::ENEMY_CLONE ||
+		/*	if(tag1 == CollisionTags::TAG::AIRSLASH && tag2 == CollisionTags::TAG::ENEMY_CLONE ||
 				tag1 == CollisionTags::TAG::ENEMY_CLONE && tag2 == CollisionTags::TAG::AIRSLASH)
 			{
 				int a = 0;
-			}
+			}*/
 
 			//// 各コライダーからタグを取得
 			//const auto& tag1 = colliders_[i]->GetTag();

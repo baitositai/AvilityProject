@@ -28,6 +28,11 @@ public:
 	void Update() override;
 
 	/// <summary>
+	/// 削除処理
+	/// </summary>
+	void Delete() override;
+
+	/// <summary>
 	/// デバッグ描画
 	/// </summary>
 	void DebugDraw() override;

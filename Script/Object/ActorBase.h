@@ -68,7 +68,7 @@ public:
 	/// <summary>
 	/// íœˆ—
 	/// </summary>
-	void Delete();
+	virtual void Delete();
 
 	/// <summary>
 	/// ’…’nˆ—
@@ -161,6 +161,12 @@ public:
 	/// </summary>
 	/// <returns>UŒ‚—Í</returns>
 	const int GetAttackPowerWithBoost() const;
+
+	/// <summary>
+	/// Šˆ“®ó‘Ô‚ğİ’è
+	/// </summary>
+	/// <param name="isActive">Šˆ“®ó‘Ô</param>
+	void SetIsActive(const bool isActive) { isActive_ = isActive; }
 
 	/// <summary>
 	/// •`‰æ”»’è‚ğİ’è

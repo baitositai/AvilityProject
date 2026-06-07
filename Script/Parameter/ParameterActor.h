@@ -142,6 +142,9 @@ public:
 	// ‘Ì—Í
 	int hp_;
 
+	// Å‘å‘Ì—Í
+	int hpMax_;
+
 	// UŒ‚—Í
 	int attackPower_;
 

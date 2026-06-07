@@ -19,6 +19,9 @@ Player::Player(std::unique_ptr<ParameterPlayer> parameter) :
 	parameterPlayer_ = dynamic_cast<ParameterPlayer*>(GetParameterCharacterPtr());
 	assert(parameterPlayer_ != nullptr);
 
+	// 種類定義
+	type_ = TYPE::PLAYER;
+
 	// 攻撃用のタグの設定
 	parameterPlayer_->attackCollisionTag_ = CollisionTags::TAG::PLAYER_ATTACK_NORMAL;
 	
@@ -51,6 +54,17 @@ void Player::Update()
 	ActorBase::Update();
 
 	GameLeave();
+}
+
+void Player::Delete()
+{
+	for (auto& component : avilityComponents_)
+	{
+		component->Remove();
+	}
+	avilityComponents_.clear();
+
+	CharacterBase::Delete();
 }
 
 void Player::DebugDraw()

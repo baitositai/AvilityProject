@@ -30,6 +30,11 @@ public:
 	/// </summary>
 	void Update() override;
 
+	/// <summary>
+	/// 取り外し処理
+	/// </summary>
+	void Remove() override;
+
 private:
 
 	// 攻撃開始フレーム

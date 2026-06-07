@@ -32,7 +32,7 @@ public:
 	/// <summary>
 	/// æ‚èŠO‚µ‚Ìˆ—
 	/// </summary>
-	virtual void Remove();
+	virtual void Remove() override;
 
 	/// <summary>
 	/// í—Ş‚ğ•Ô‚·

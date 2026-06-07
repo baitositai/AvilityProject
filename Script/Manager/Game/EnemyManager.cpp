@@ -22,6 +22,11 @@ void EnemyManager::Init()
 		enemyGenerator_->InitParameter();
 	}
 
+	// デバッグ用
+	//auto enemy = enemyGenerator_->CreateEnemy(EnemyTypes::TYPE::SLIME);
+	//enemy->GetParameter().pos_ = StageManager::GetInstance().GetEnemyAreaPositions().front();
+	//enemiesMap_[EnemyTypes::TYPE::SLIME].push_back(std::move(enemy));
+
 	// 空の場合後の処理を無視
 	if (enemiesMap_.empty()) { return; }
 

@@ -130,10 +130,6 @@ std::unordered_map<EnemyTypes::TYPE, std::vector<std::unique_ptr<EnemyBase>>> En
 	return ret;
 }
 
-	// 管理マップを返す
-	return ret;
-}
-
 std::unique_ptr<EnemyBase> EnemyGenerator::CreateEnemy(const EnemyTypes::TYPE type)
 {
 	// 必要とするものがあるか探索

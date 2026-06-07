@@ -68,3 +68,12 @@ void ComponentStateAttackDefault::Update()
 	// UŒ‚”»’è‚ð‚È‚­‚·
 	isAttack_ = false;
 }
+
+void ComponentStateAttackDefault::Remove()
+{
+	if (collider_)
+	{
+		collider_->Delete();
+		collider_ = nullptr;
+	}
+}

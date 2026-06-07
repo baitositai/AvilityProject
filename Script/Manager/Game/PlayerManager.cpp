@@ -105,12 +105,18 @@ void PlayerManager::AddPlayersLeft(const int addLeft)
 	// プレイヤー残機追加
 	playersLeft_ += addLeft;
 
-	// 1Pが死亡したかつ残機が0未満の場合
-	if (playerList_.front()->GetState() == Player::STATE::DEAD &&
-		playersLeft_ < 0)
+	// 残機が0未満の場合
+	if (playersLeft_ < 0)
 	{
-		// ゲームオーバーへ遷移
-		GameManager::GetInstance().GameOver();
+		// プレイヤー1が死亡状態の場合
+		if (playerList_.front()->GetState() == Player::STATE::DEAD)
+		{
+			// ゲームオーバーへ
+			GameManager::GetInstance().GameOver();
+		}
+
+		// 残機は0へ
+		playersLeft_ = 0;
 	}
 }
 

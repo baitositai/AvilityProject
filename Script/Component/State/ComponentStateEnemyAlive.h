@@ -34,6 +34,11 @@ public:
 	/// </summary>
 	void Update() override;
 
+	/// <summary>
+	/// æ‚èŠO‚µˆ—
+	/// </summary>
+	void Remove() override;
+
 private:
 
 	enum class STATE

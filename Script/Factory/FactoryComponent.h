@@ -21,6 +21,7 @@ class ComponentStateEnemyAlive;
 class ComponentStateIdle;
 class ComponentStateDead;
 class ComponentStateEnter;
+class ComponentStatePlayerSpawn;
 class ComponentStateDummy;
 
 class ComponentAvilityBase;
@@ -68,8 +69,20 @@ private:
 	std::unique_ptr<ComponentMove> CreateComponentMove(ActorBase& owner);
 	std::unique_ptr<ComponentSpriteAnimation> CreateComponentSpriteAnimation(ActorBase& owner);
 	std::unique_ptr<ComponentGravity> CreateComponentGravity(ActorBase& owner);
+	std::unique_ptr<ComponentKnockBack> CreateComponentKnockBack(ActorBase& owner);
+	std::unique_ptr<ComponentInvincible> CreateComponentInvincible(ActorBase& owner);
+	std::unique_ptr<ComponentCameraRangeCheck> CreateComponentCameraRangeCheck(ActorBase& owner);
+	std::unique_ptr<ComponentJump> CreateComponentJump(ActorBase& owner);
+
 	std::unique_ptr<ComponentStatePlayerProcess> CreateComponentStatePlayerProcess(ActorBase& owner);
 	std::unique_ptr<ComponentStateAttackDefault> CreateComponentStateAttackDefault(ActorBase& owner);
+	std::unique_ptr<ComponentStateIdle> CreateComponentStateIdle(ActorBase& owner);
+	std::unique_ptr<ComponentStateEnter> CreateComponentStateEnter(ActorBase& owner);
+	std::unique_ptr<ComponentStateDead> CreateComponentStateDead(ActorBase& owner);
+	std::unique_ptr<ComponentStateEnemyAlive> CreateComponentStateEnemyAlive(ActorBase& owner);
+	std::unique_ptr<ComponentStatePlayerSpawn> CreateComponentStatePlayerSpawn(ActorBase& owner);
+	std::unique_ptr<ComponentStateDummy> CreateComponentStateDummy(ActorBase& owner);
+
 	std::unique_ptr<ComponentAvilityBox> CreateComponentAvilityBox(ActorBase& owner);
 	std::unique_ptr<ComponentAvilityStamp> CreateComponentAvilityStamp(ActorBase& owner);
 	std::unique_ptr<ComponentAvilityAirwalk> CreateComponentAvilityAirwalk(ActorBase& owner);
@@ -80,15 +93,7 @@ private:
 	std::unique_ptr<ComponentAvilityAirslash> CreateComponentAvilityAirslash(ActorBase& owner);
 	std::unique_ptr<ComponentAvilityTeleport> CreateComponentAvilityTeleport(ActorBase& owner);
 	std::unique_ptr<ComponentAvilityGiant> CreateComponentAvilityGiant(ActorBase& owner);
-	std::unique_ptr<ComponentKnockBack> CreateComponentKnockBack(ActorBase& owner);
-	std::unique_ptr<ComponentStateIdle> CreateComponentStateIdle(ActorBase& owner);
-	std::unique_ptr<ComponentStateEnter> CreateComponentStateEnter(ActorBase& owner);
-	std::unique_ptr<ComponentStateDead> CreateComponentStateDead(ActorBase& owner);
-	std::unique_ptr<ComponentStateEnemyAlive> CreateComponentStateEnemyAlive(ActorBase& owner);
-	std::unique_ptr<ComponentStateDummy> CreateComponentStateDummy(ActorBase& owner);
-	std::unique_ptr<ComponentInvincible> CreateComponentInvincible(ActorBase& owner);
-	std::unique_ptr<ComponentCameraRangeCheck> CreateComponentCameraRangeCheck(ActorBase& owner);
-	std::unique_ptr<ComponentJump> CreateComponentJump(ActorBase& owner);
+
 	std::unique_ptr<ComponentDebugCreateItemAvility> CreateComponentDebugCreateItemAvility(ActorBase& owner);
 	
 	// コンストラクタ

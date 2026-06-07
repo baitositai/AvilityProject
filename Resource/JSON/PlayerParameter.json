@@ -90,7 +90,7 @@
       "attack": "attackDefault",
       "hit": "dummy",
       "dead": "dead",
-      "respawn": "dummy",
+      "spawn": "spawn",
       "enter": "enter"
     },
     "transparent": true,

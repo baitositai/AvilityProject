@@ -61,6 +61,12 @@ public:
 	/// <param name="addLeft">追加残機</param>
 	void AddPlayersLeft(const int addLeft = DEFAULT_ADD_PLAYER_LEFT);
 
+	/// <summary>
+	/// プレイヤー残機を返す
+	/// </summary>
+	/// <returns>プレイヤー残機</returns>
+	const int GetPlayerLeft() const { return playersLeft_; }
+
 private:
 
 	int font_;

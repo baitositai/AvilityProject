@@ -17,7 +17,7 @@ public:
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~EnemyBase() override;
+	virtual ~EnemyBase() override;
 
 	/// <summary>
 	/// 初期化処理

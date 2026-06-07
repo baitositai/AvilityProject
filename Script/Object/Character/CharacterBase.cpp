@@ -77,6 +77,18 @@ void CharacterBase::Draw()
 	}
 }
 
+void CharacterBase::Delete()
+{
+	// 状態別コンポーネントの削除処理
+	for (auto& it : componentStateMap_)
+	{
+		it.second->Remove();
+	}
+	componentStateMap_.clear();
+
+	ActorBase::Delete();
+}
+
 void CharacterBase::DebugDraw()
 {
 	// 自身の体力を描画

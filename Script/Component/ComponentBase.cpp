@@ -18,6 +18,10 @@ void ComponentBase::Update()
 {
 }
 
+void ComponentBase::Remove()
+{
+}
+
 void ComponentBase::DebugDraw()
 {
 }

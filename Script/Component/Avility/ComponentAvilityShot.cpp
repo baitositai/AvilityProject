@@ -123,10 +123,10 @@ void ComponentAvilityShot::Update()
 
 void ComponentAvilityShot::Remove()
 {
-	// コライダーの削除 
 	if (attackCollider_)
 	{
 		attackCollider_->Delete();
+		attackCollider_ = nullptr;
 	}
 
 	// 攻撃力を戻す

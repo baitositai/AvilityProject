@@ -55,7 +55,7 @@ void ComponentStateDead::UpdateRespownAccept()
 		if (respownValue_ > RESPAWN_CONDITION_INPUT_COUNT)
 		{
 			// •œŠˆˆ—
-			owner_.ChangeState(CharacterBase::STATE::RESPAWN);
+			owner_.ChangeState(CharacterBase::STATE::SPAWN);
 		}
 	}
 }
