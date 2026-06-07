@@ -80,11 +80,6 @@ public:
 	void ChangeState(const STATE state);
 
 	/// <summary>
-	/// 攻撃のリセット
-	/// </summary>
-	virtual void AttackReset();
-
-	/// <summary>
 	/// ダメージ設定
 	/// </summary>
 	/// <param name="damage">ダメージ</param>

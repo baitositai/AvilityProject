@@ -1,10 +1,12 @@
 #include <algorithm>
+#include <DxLib.h>
 #include "../../Application.h"
 #include "../../Manager/Common/SceneManager.h"
 #include "../../Manager/Common/Camera.h"
 #include "../../Manager/Common/ResourceManager.h"
 #include "../../Manager/Game/CollisionManager.h"
 #include "../../Utility/UtilityLoad.h"
+#include "../../Utility/UtilityCommon.h"
 #include "../../Collider/ColliderArray.h"
 #include "../../OnHit/OnHitBase.h"
 #include "../Common/Animation.h"
@@ -105,6 +107,23 @@ void Stage::DebugDraw()
 			tiles_[j][i]->DebugDraw();
 		}
 	}
+
+	Vector2F pos = mainCamera.GetPos();
+
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
+	// ìGÇÃê∂ê¨à íuÇâ¬éãâª
+	for (auto& enemySpawnArea : areaListMap_.at(LIST_TYPE::ENEMY_CREATE_AREA))
+	{
+		DrawBox(
+			pos.x + enemySpawnArea.x - 64,
+			pos.y + enemySpawnArea.y - 32,
+			pos.x + enemySpawnArea.x + 64,
+			pos.y + enemySpawnArea.y + 32,
+			UtilityCommon::YELLOW,
+			true
+		);
+	}
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 void Stage::SetStage()

@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include <vector>
+#include <random>
 #include <unordered_map>
 #include "../Common/Vector2.h"
 #include "../Manager/Game/EnemyTypes.h"
@@ -18,25 +19,16 @@ enum class HABITAT_TYPE;
 
 class EnemyGenerator
 {
-public:	
-	
-	// 敵の各種類に定義する値
-	struct SpawnConfig
-	{
-		float spawnRate;
-		HABITAT_TYPE habitatType;
-	};
+public:
 
-	// ステージ内の敵を生成する際のパラメータ
 	struct Parameter
 	{
-		int createEnemyCountMin;		// 一つの座標で生成する敵の最小数
-		int createEnemyCountMax;		// 一つの座標で生成する敵の最大数
-		Vector2F createRange;			// 生成範囲
-		std::unordered_map<EnemyTypes::TYPE, SpawnConfig> spawnConfigMap;	// 各敵毎の生成に関するマップ
+		int createCountMin;		// 最小生成数
+		int createCountMax;		// 最大生成数
+		Vector2F createRange;	// 生成範囲
+		std::vector<Vector2F> createPositionsList;			// 生成位置のリスト
+		std::vector<EnemyTypes::TYPE> createEnemyTypeList;	// 生成する敵の種類リスト
 	};
-
-
 	
 	/// <summary>
 	/// コンストラクタ
@@ -56,10 +48,8 @@ public:
 	/// <summary>
 	/// 敵を管理するマップを生成
 	/// </summary>
-	/// <param name="CreatePositionsList">生成位置リスト</param>
-	/// <param name="">敵の生成率管理マップ</param>
-	/// <returns>敵を管理するマップ</returns>
-	std::unordered_map<EnemyTypes::TYPE, std::vector<std::unique_ptr<EnemyBase>>> CreateEnemyMap(const std::vector<Vector2F>& createPositionsList, const std::unordered_map<EnemyTypes::TYPE, SpawnConfig> spawnConfigMap);
+	/// <param name="parameter">パラメータ情報</param>
+	std::unordered_map<EnemyTypes::TYPE, std::vector<std::unique_ptr<EnemyBase>>> CreateEnemyMap(const Parameter& parameter);
 
 	/// <summary>
 	/// 敵の生成
@@ -70,14 +60,17 @@ public:
 
 private:
 
+	// 乱数生成エンジン
+	std::mt19937 randomCountEngine_;
+
 	// 敵の生成マップ
 	std::unordered_map<EnemyTypes::TYPE, std::function<std::unique_ptr<EnemyBase>()>> createEnemyMap_;
 
 	// テンプレートとなるパラメータマップ
 	std::unordered_map<EnemyTypes::TYPE, std::unique_ptr<ParameterEnemy>> templateParameterMap_;
 
-	// 確立に基づいて敵の種類を決定する
-	EnemyTypes::TYPE LotteryEnemyType(const std::unordered_map<EnemyTypes::TYPE, SpawnConfig>& spawnTable);
+	// 敵の生成確率から抽選して種類を返す
+	EnemyTypes::TYPE LotteryEnemyType(const std::unordered_map<EnemyTypes::TYPE, float>& spawnTable);
 
 	// 各種敵の生成処理
 	std::unique_ptr<EnemyClone> CreateEnemyClone();

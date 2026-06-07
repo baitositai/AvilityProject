@@ -4,6 +4,7 @@
 #include "../../Common/Vector2F.h"
 
 class InputManager;
+class SceneManager;
 
 class Camera
 {
@@ -71,6 +72,23 @@ public:
 	void SetCameraLimit(const Vector2F& limitMin, const Vector2F& limitMax) { limitMin_ = limitMin; limitMax_ = limitMax; }
 
 	/// <summary>
+	/// カメラシェイクの設定
+	/// </summary>
+	/// <param name="shakeTime">揺れる時間</param>
+	/// <param name="shakePower">揺れの強さ</param>
+	void SetCameraShake(const float shakeTime, const float shakePower);
+
+	/// <summary>
+	/// カメラ座標にオフセットを設定
+	/// </summary>
+	void SetCameraPosOffset();
+
+	/// <summary>
+	/// カメラ座標を戻す
+	/// </summary>
+	void ResetCameraPos();
+
+	/// <summary>
 	/// カメラ座標を返す
 	/// </summary>
 	/// <returns>カメラ座標</returns>
@@ -90,8 +108,20 @@ private:
 	// スクロール速度
 	static constexpr float SCROLL_SPEED = 0.8f;
 
+	// 揺れ時間
+	float shakeTime_;
+
+	// 揺れの強さ
+	float shakePower_;
+
+	// オフセット
+	Vector2F offset_;
+
 	// 入力管理クラス
 	InputManager& inputMng_;
+
+	// シーン管理クラス
+	SceneManager& scnMng_;
 
 	// 追従対象
 	const Vector2F* followPos_;
@@ -126,6 +156,9 @@ private:
 	void ChangeModeFixedPoint();
 	void ChangeModePlayerFollow();
 	void ChangeModeScroll();
+
+	// カメラシェイク処理
+	void CameraShake();
 
 	// カメラの移動制限
 	void LimitCameraMove();

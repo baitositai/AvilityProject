@@ -48,8 +48,11 @@ private:
 	// 視界用角度
 	float eyeBaseAngle_;
 
-	// パトロールの移動時間
-	float moveTimer_;
+	// 移動停止時間
+	float stopTimer_;
+
+	// パトロールの移動距離
+	Vector2F moveDistance_;
 
 	// 移動方向
 	float moveDirection_;	
@@ -75,8 +78,9 @@ private:
 	// 状態別処理のマップ
 	std::unordered_map<STATE, std::function<void()>> stateChangeMap_;
 
-	// 状態別更新処理
-	void UpdatePatrol();
+	//移動種類別に更新処理
+	void UpdatePatrolLand();
+	void UpdatePatrolAir();
 	void UpdateChase();
 
 	// 状態遷移処理

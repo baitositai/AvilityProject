@@ -35,8 +35,8 @@ void GameStateBase::Init()
 	// プレイヤーの初期位置を決定
 	playerMng_.SetFirstPositions(stageMng_.GetPlayerFirstPositions());
 
-	// 敵の初期位置決定
-	enemyMng_.GenerateEnemy();
+	// 敵の生成処理
+	enemyMng_.Generator(stageMng_.GetEnemyAreaPositions());
 }
 
 void GameStateBase::Update()

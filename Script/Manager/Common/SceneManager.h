@@ -97,6 +97,12 @@ public:
 	void SetScreenPos(const Vector2& pos) { screenPos_ = pos; }
 
 	/// <summary>
+	/// ヒットストップを設定
+	/// </summary>
+	/// <param name="hitStopTime">ヒットストップ時間</param>
+	void SetHitStop(const float hitStopTime) { hitStopTimer_ = hitStopTime; }
+
+	/// <summary>
 	/// メインスクリーンを返す
 	/// </summary>
 	/// <returns>メインスクリーン</returns>
@@ -151,6 +157,9 @@ private:
 
 	// シーン遷移中判定
 	bool isSceneChanging_;
+
+	// ヒットストップ用タイマー
+	float hitStopTimer_;
 
 	// デルタタイム
 	std::chrono::system_clock::time_point preTime_;

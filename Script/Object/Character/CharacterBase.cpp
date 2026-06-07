@@ -97,13 +97,11 @@ void CharacterBase::DebugDraw()
 
 void CharacterBase::ChangeState(const STATE state)
 {
+	// ó‘ÔÝ’è
 	state_ = state;
-}
 
-void CharacterBase::AttackReset()
-{
-	// ‰Šú‰»
-	componentStateMap_.at(STATE::ATTACK)->Init();
+	// ‰Šú‰»ˆ—
+	componentStateMap_.at(state_)->Init();
 }
 
 void CharacterBase::Damage(const int damage)

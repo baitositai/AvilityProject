@@ -8,52 +8,22 @@
 #include "../../Object/Character/Enemy/EnemySnake.h"
 #include "../../Object/Character/Enemy/EnemySamurai.h"
 #include "../../Object/Common/Animation.h"
+#include "../../System/EnemyGenerator.h"
 #include "../Common/ResourceManager.h"
 #include "../Manager/Game/StageManager.h"
 #include "EnemyManager.h"
 
 void EnemyManager::Init()
 {
-	// パラメータの初期化
-	InitParameter();
+	// ジェネレーターの生成
+	if (!enemyGenerator_)
+	{
+		enemyGenerator_ = std::make_unique<EnemyGenerator>();
+		enemyGenerator_->InitParameter();
+	}
 
-	// 1. クローン用の生成：最初から派生クラスの unique_ptr として生成する
-	//auto parameterClone = std::make_unique<ParameterEnemyClone>(*templateParameterMap_.at(EnemyTypes::TYPE::CLONE));
-
-	std::vector<std::unique_ptr<EnemyBase>> cloneEnemies;
-	auto parameterClone = std::make_unique<ParameterEnemy>(*templateParameterMap_.at(EnemyTypes::TYPE::CLONE));
-	cloneEnemies.push_back(std::make_unique<EnemyClone>(std::move(parameterClone)));
-	enemiesMap_.emplace(EnemyTypes::TYPE::CLONE, std::move(cloneEnemies));
-
-	// 2. マッシュルーム用の生成：パラメータの unique_ptr をそのままコンストラクタに move する
-	std::vector<std::unique_ptr<EnemyBase>> mushroomEnemies;
-	auto parameterMushroom = std::make_unique<ParameterEnemy>(*templateParameterMap_.at(EnemyTypes::TYPE::MUSHROOM));
-	mushroomEnemies.push_back(std::make_unique<EnemyMushroom>(std::move(parameterMushroom)));
-	enemiesMap_.emplace(EnemyTypes::TYPE::MUSHROOM, std::move(mushroomEnemies));
-
-	//// 3. ハット用の生成
-	//std::vector<std::unique_ptr<EnemyBase>> hatEnemies;
-	//auto parameterHat = std::make_unique<ParameterEnemy>(*templateParameterMap_.at(EnemyTypes::TYPE::HAT));
-	//hatEnemies.push_back(std::make_unique<EnemyHat>(std::move(parameterHat)));
-	//enemiesMap_.emplace(EnemyTypes::TYPE::HAT, std::move(hatEnemies));
-
-	// 4. スネーク用の生成
-	std::vector<std::unique_ptr<EnemyBase>> snakeEnemies;
-	auto parameterSnake = std::make_unique<ParameterEnemy>(*templateParameterMap_.at(EnemyTypes::TYPE::SNAKE));
-	snakeEnemies.push_back(std::make_unique<EnemySnake>(std::move(parameterSnake)));
-	enemiesMap_.emplace(EnemyTypes::TYPE::SNAKE, std::move(snakeEnemies));
-
-	// 5. スライム用の生成
-	std::vector<std::unique_ptr<EnemyBase>> slimeEnemies;
-	auto parameterSlime = std::make_unique<ParameterEnemy>(*templateParameterMap_.at(EnemyTypes::TYPE::SLIME));
-	slimeEnemies.push_back(std::make_unique<EnemySlime>(std::move(parameterSlime)));
-	enemiesMap_.emplace(EnemyTypes::TYPE::SLIME, std::move(slimeEnemies));
-
-	// 6. サムライ用の生成
-	std::vector<std::unique_ptr<EnemyBase>> samuraiEnemies;
-	auto parameterSamurai = std::make_unique<ParameterEnemy>(*templateParameterMap_.at(EnemyTypes::TYPE::SAMURAI));
-	samuraiEnemies.push_back(std::make_unique<EnemySamurai>(std::move(parameterSamurai)));
-	enemiesMap_.emplace(EnemyTypes::TYPE::SAMURAI, std::move(samuraiEnemies));
+	// 空の場合後の処理を無視
+	if (enemiesMap_.empty()) { return; }
 
 	// 初期化
 	for (const auto& enemiesList : enemiesMap_)
@@ -124,6 +94,25 @@ void EnemyManager::DebugDraw()
 	}
 }
 
+void EnemyManager::Generator(const std::vector<Vector2F>& createPositionList)
+{
+	using TYPE = EnemyTypes::TYPE;
+
+	// 生成用のパラメータ情報を設定
+	EnemyGenerator::Parameter parameter {};
+	parameter.createCountMax = 2;
+	parameter.createCountMin = 1;
+	parameter.createPositionsList = createPositionList;
+	parameter.createRange = Vector2F{ 128.0f, 64.0f };
+	parameter.createEnemyTypeList = { TYPE::CLONE, TYPE::MUSHROOM, TYPE::SAMURAI, TYPE::SLIME, TYPE::SNAKE, TYPE::SLIME, TYPE::HAT };
+
+	// 生成して格納
+	enemiesMap_ = enemyGenerator_->CreateEnemyMap(parameter);
+
+	// 初期化処理
+	Init();
+}
+
 void EnemyManager::Clear()
 {
 	if (enemiesMap_.empty())
@@ -147,60 +136,9 @@ void EnemyManager::Clear()
 	enemiesMap_.clear();
 }
 
-void EnemyManager::InitParameter()
-{
-	// 情報の取得
-	const auto jsonParameterMap = UtilityLoad::GetJsonMapArrayData("EnemiesParameter");
-
-	// パラメータの取得
-	const auto jsonCloneParameter = jsonParameterMap.at("clone").front();
-	auto parameterClone = std::make_unique<ParameterEnemy>();
-	parameterClone->LoadParameter(jsonCloneParameter);
-	templateParameterMap_.emplace(EnemyTypes::TYPE::CLONE, std::move(parameterClone));
-
-	const auto jsonSlimeParameter = jsonParameterMap.at("slime").front();
-	auto parameterSlime = std::make_unique<ParameterEnemy>();
-	parameterSlime->LoadParameter(jsonSlimeParameter);
-	templateParameterMap_.emplace(EnemyTypes::TYPE::SLIME, std::move(parameterSlime));
-
-	const auto jsonMushroomParameter = jsonParameterMap.at("mushroom").front();
-	auto parameterMushroom = std::make_unique<ParameterEnemy>();
-	parameterMushroom->LoadParameter(jsonMushroomParameter);
-	templateParameterMap_.emplace(EnemyTypes::TYPE::MUSHROOM, std::move(parameterMushroom));
-
-	const auto jsonHatParameter = jsonParameterMap.at("hat").front();
-	auto parameterHat = std::make_unique<ParameterEnemy>();
-	parameterHat->LoadParameter(jsonHatParameter);
-	templateParameterMap_.emplace(EnemyTypes::TYPE::HAT, std::move(parameterHat));
-
-	const auto jsonSnakeParameter = jsonParameterMap.at("snake").front();
-	auto parameterSnake = std::make_unique<ParameterEnemy>();
-	parameterSnake->LoadParameter(jsonSnakeParameter);
-	templateParameterMap_.emplace(EnemyTypes::TYPE::SNAKE, std::move(parameterSnake));
-
-	const auto jsonSamuraiParameter = jsonParameterMap.at("samurai").front();
-	auto parameterSamurai = std::make_unique<ParameterEnemy>();
-	parameterSamurai->LoadParameter(jsonSamuraiParameter);
-	templateParameterMap_.emplace(EnemyTypes::TYPE::SAMURAI, std::move(parameterSamurai));
-}
-
-void EnemyManager::GenerateEnemy()
-{
-	std::vector<Vector2F> enemyAreaPositions = StageManager::GetInstance().GetEnemyAreaPositions();
-
-	// ランダムで位置を決定
-	for (auto& enemiesList : enemiesMap_)
-	{
-		for (auto& enemy : enemiesList.second)
-		{
-			int randomIndex = rand() % enemyAreaPositions.size();
-			enemy->GetParameter().pos_ = enemyAreaPositions[randomIndex];
-		}
-	}
-}
-
 EnemyManager::EnemyManager()
 {
+	enemyGenerator_ = nullptr;
 }
 
 EnemyManager::~EnemyManager()

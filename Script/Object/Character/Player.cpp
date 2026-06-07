@@ -1,5 +1,6 @@
 #include <DxLib.h>
 #include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/Camera.h"
 #include "../../Manager/Common/InputManager.h"
 #include "../../Manager/Game/PlayerManager.h"
 #include "../../Component/Avility/ComponentAvilityBase.h"
@@ -102,8 +103,17 @@ void Player::Dead()
 	// 全てのアビリティを無効にする
 	SetAllAvilityComponentActive(false);
 
+	// カメラ範囲チェックのコンポーネントを無効にする
+	SetComponentActive("cameraRangeCheck", false);
+
 	// 残機を減らす
 	PlayerManager::GetInstance().AddPlayersLeft();
+
+	// ヒットストップ
+	scnMng_.SetHitStop(0.5f);
+
+	// カメラシェイク
+	mainCamera.SetCameraShake(0.3f, 8.0f);
 }
 
 std::shared_ptr<ColliderBox> Player::CreateColliderClone()
