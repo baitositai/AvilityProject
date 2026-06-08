@@ -56,11 +56,8 @@ void ComponentStateAttackDefault::Update()
 		return;
 	}
 
-	// 状態遷移
-	owner_.ChangeState(CharacterBase::STATE::ALIVE);
-
-	// アニメーション変更
-	animation.Play(Animation::TYPE::IDLE);
+	// 攻撃後の処理
+	owner_.AttackAfter();
 
 	// コライダーの判定を一時消す
 	collider_->SetIsActive(false);

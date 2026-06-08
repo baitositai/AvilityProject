@@ -32,9 +32,6 @@ void SceneBoss::Init()
 {	
 	// ボス部屋の生成
 	stageMng_.Create(StageManager::TYPE::BOSS);
-	
-	// プレイヤーの初期位置を決定
-	playerMng_.SetFirstPositions(stageMng_.GetPlayerFirstPositions());
 
 	// 敵を削除
 	enemyMng_.Clear();
@@ -44,7 +41,10 @@ void SceneBoss::Init()
 	mainCamera.SetCameraPos(Vector2F(0.0f, 0.0f));
 
 	// 基底クラスの初期化処理
-	SceneBase::Init();
+	SceneBase::Init();	
+	
+	// プレイヤーの初期位置を決定
+	playerMng_.SetFirstPositions(stageMng_.GetPlayerFirstPositions());
 }
 
 void SceneBoss::NormalUpdate()

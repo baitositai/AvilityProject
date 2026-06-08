@@ -96,6 +96,7 @@ void GimmickManager::InitParameter()
 
 GimmickManager::GimmickManager()
 {
+
 }
 
 GimmickManager::~GimmickManager()

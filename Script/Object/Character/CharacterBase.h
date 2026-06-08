@@ -72,6 +72,16 @@ public:
 	/// €–Sˆ—
 	/// </summary>	
 	virtual void Dead();
+
+	/// <summary>
+	/// UŒ‚‚Ì‰Šú‰»
+	/// </summary>
+	virtual void AttackReset();
+
+	/// <summary>
+	/// UŒ‚Œã‚Ìˆ—
+	/// </summary>
+	virtual void AttackAfter();
 	
 	/// <summary>
 	/// ’…’nˆ—

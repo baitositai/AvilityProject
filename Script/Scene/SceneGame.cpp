@@ -39,9 +39,6 @@ void SceneGame::Init()
 	// ステージ生成
 	stageMng_.Create(StageManager::TYPE::ROAD);
 
-	// プレイヤーの初期位置を決定
-	playerMng_.SetFirstPositions(stageMng_.GetPlayerFirstPositions());
-
 	// 敵の生成処理
 	enemyMng_.Generator(stageMng_.GetEnemyAreaPositions());	
 
@@ -49,7 +46,10 @@ void SceneGame::Init()
 	gimmickMng_.SetBossDoor(stageMng_.GetBossDoorPos());
 	
 	// 基底クラスの処理
-	SceneBase::Init();
+	SceneBase::Init();	
+	
+	// プレイヤーの初期位置を決定
+	playerMng_.SetFirstPositions(stageMng_.GetPlayerFirstPositions());
 
 	// カメラ設定
 	mainCamera.ChangeMode(Camera::MODE::CAMERA_SCROLL);

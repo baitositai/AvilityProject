@@ -43,6 +43,11 @@ public:
 	void Dead() override;
 
 	/// <summary>
+	/// 攻撃後の処理
+	/// </summary>
+	void AttackAfter() override;
+
+	/// <summary>
 	/// 自身のコライダーのクローンを生成して返す
 	/// </summary>
 	/// <returns>自身のコライダーのクローン</returns>

@@ -107,6 +107,9 @@ void ComponentStatePlayerProcess::ProcessInputAttack()
 
 		// 状態遷移
 		owner_.ChangeState(Player::STATE::ATTACK);
+
+		// アビリティを無効にする
+		owner_.SetAllAvilityComponentActive(false);
 		
 		// 横移動の値をなくす
 		moveAmount_.x = 0.0f;

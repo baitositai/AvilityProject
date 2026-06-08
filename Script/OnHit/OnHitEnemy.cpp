@@ -75,6 +75,9 @@ void OnHitEnemy::OnHitPlayerAttack(const std::weak_ptr<ColliderBase>& opponentCo
 
 	// 相手コライダーの判定を無効化
 	opponentCollider.lock()->SetIsActive(false);
+
+    // 攻撃を無効
+    owner_.AttackReset();
 }
 
 void OnHitEnemy::OnHitPlayerAvilityStamp(const std::weak_ptr<ColliderBase>& opponentCollider)

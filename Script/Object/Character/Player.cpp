@@ -130,6 +130,13 @@ void Player::Dead()
 	mainCamera.SetCameraShake(0.3f, 8.0f);
 }
 
+void Player::AttackAfter()
+{
+	CharacterBase::AttackAfter();
+
+	SetAllAvilityComponentActive(true);
+}
+
 std::shared_ptr<ColliderBox> Player::CreateColliderClone()
 {
 	std::shared_ptr<ColliderBase> collider = collider_->Clone();

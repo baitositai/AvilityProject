@@ -161,6 +161,24 @@ void CharacterBase::Dead()
 	SetComponentActive("jump", false);
 }
 
+void CharacterBase::AttackReset()
+{
+	// UŒ‚‚Ì‰Šú‰»
+	componentStateMap_.at(STATE::ATTACK)->Init();
+
+	// ó‘Ô‘JˆÚ
+	ChangeState(STATE::ALIVE);
+}
+
+void CharacterBase::AttackAfter()
+{
+	// ó‘Ô‘JˆÚ
+	ChangeState(STATE::ALIVE);
+
+	// ƒAƒjƒ[ƒVƒ‡ƒ“
+	animation_->Play(Animation::TYPE::IDLE);
+}
+
 void CharacterBase::SetJumpPow(const float jumpPow)
 {
 	parameterCharacter_->jumpPow_ = jumpPow;

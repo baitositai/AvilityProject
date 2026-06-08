@@ -109,7 +109,7 @@ void PlayerManager::AddPlayersLeft(const int addLeft)
 		if (playerList_.front()->GetState() == Player::STATE::DEAD)
 		{
 			// ゲームオーバーへ
-			//GameManager::GetInstance().GameOver();
+			SceneManager::GetInstance().ChangeScene(SceneManager::SCENE_ID::GAMEOVER);
 		}
 
 		// 残機は0へ
@@ -130,8 +130,8 @@ void PlayerManager::AcceptNewPlayer()
 		parameter->padNo_ = static_cast<Input::JOYPAD_NO>(padNo);
 		parameter->resourceKey_ = "player" + std::to_string(padNo);
 
-		// 残機がない場合HPを5分の1にする
-		if (playersLeft_ < 1) { parameter->hp_ /= 5; }
+		// 残機がない場合HPを10分の1にする
+		if (playersLeft_ < 1) { parameter->hp_ /= 10; }
 		
 		// 初期位置を画面真ん中に生成
 		parameter->pos_ = Vector2F::SubVector2F(Vector2F((float)Application::SCREEN_HALF_X, (float)Application::SCREEN_HALF_Y), mainCamera.GetPos());
