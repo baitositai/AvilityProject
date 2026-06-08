@@ -1,0 +1,51 @@
+{
+  "road": {
+    "resourceKey": "groundChipsDungeon",
+    "chipSize": {
+      "x": 32,
+      "y": 32
+    },
+    "connectNum": 4,
+    "candidates": [
+      "SD",
+      "SC",
+      "SU",
+      "DD",
+      "DC",
+      "DU",
+      "CC",
+      "CD",
+      "CU",
+      "UU",
+      "UC",
+      "UD",
+      "DG",
+      "CG",
+      "UG"
+    ]
+  },
+  "boss": {
+    "resourceKey": "groundChipsDungeon",
+    "path": "BossStage.csv",
+    "chipSize": {
+      "x": 32,
+      "y": 32
+    }
+  },
+  "event": {
+    "resourceKey": "groundChipsDungeon",
+    "path": "BossStage.csv",
+    "chipSize": {
+      "x": 32,
+      "y": 32
+    }
+  },
+  "train": {
+    "resourceKey": "groundChipsDungeon",
+    "path": "TrainStage.csv",
+    "chipSize": {
+      "x": 32,
+      "y": 32
+    }
+  }
+}

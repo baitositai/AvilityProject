@@ -12,6 +12,13 @@
 #include "../Common/FontManager.h"
 #include "../Common/ScoreManager.h"
 #include "../Common/EffectManager.h"
+#include "../Game/CollisionManager.h"
+#include "../Game/PlayerManager.h"
+#include "../Game/EnemyManager.h"
+#include "../Game/ItemManager.h"
+#include "../Game/StageManager.h"
+#include "../Game/GimmickManager.h"
+#include "../Factory/FactoryComponent.h"
 #include "Camera.h"
 #include "SpriteEffectManager.h"
 #include "SceneManager.h"
@@ -42,9 +49,22 @@ void SceneManager::Init()
 	// スコア管理生成
 	ScoreManager::CreateInstance();
 
+	// 各種オブジェクト管理クラスの生成	
+	SpriteEffectManager::CreateInstance();
+	StageManager::CreateInstance();
+	GimmickManager::CreateInstance();
+	PlayerManager::CreateInstance();
+	EnemyManager::CreateInstance();
+	CollisionManager::CreateInstance();
+	ItemManager::CreateInstance();
+	FactoryComponent::CreateInstance();
+
 	// 読み込み中処理管理クラス生成
 	Loading::CreateInstance();
 	Loading::GetInstance().Init();
+
+	StageManager::GetInstance().InitParameter();
+	GimmickManager::GetInstance().InitParameter();
 
 	// シーン遷移中
 	isSceneChanging_ = true;
@@ -107,6 +127,10 @@ void SceneManager::Update()
 	if (hitStopTimer_ > 0.0f)
 	{
 		hitStopTimer_ -= deltaTime_;
+		return;
+	}
+
+	if (!scenes_.back()) {
 		return;
 	}
 
@@ -208,6 +232,14 @@ void SceneManager::Release()
 	EffectManager::GetInstance().Destroy();
 	ScoreManager::GetInstance().Destroy();
 	Loading::GetInstance().Destroy();
+	StageManager::GetInstance().Destroy();
+	GimmickManager::GetInstance().Destroy();
+	PlayerManager::GetInstance().Destroy();
+	EnemyManager::GetInstance().Destroy();
+	CollisionManager::GetInstance().Destroy();
+	ItemManager::GetInstance().Destroy();
+	SpriteEffectManager::GetInstance().Destroy();
+	FactoryComponent::GetInstance().Destroy();
 }
 
 void SceneManager::ChangeScene(const SCENE_ID nextId, const Fader::STATE fadeState)
@@ -232,8 +264,7 @@ void SceneManager::StartFadeIn(const Fader::STATE fadeState)
 	isSceneChanging_ = false;
 }
 
-SceneManager::SceneManager() :
-	spriteEffectManager_(SpriteEffectManager::GetInstance())
+SceneManager::SceneManager()
 {
 	mainScreen_ = -1;
 	sceneId_ = SCENE_ID::NONE;
@@ -267,7 +298,7 @@ void SceneManager::DoChangeScene(SCENE_ID sceneId)
 	}
 
 	// エフェクトを削除
-	spriteEffectManager_.Clear();
+	SpriteEffectManager::GetInstance().Clear();
 
 	// シーン生成
 	switch (sceneId_)

@@ -3,8 +3,14 @@
 #include "../Manager/Common/SceneManager.h"
 #include "../Manager/Common/Camera.h"
 #include "../Manager/Common/InputManager.h"
+#include "../Manager/Common/SpriteEffectManager.h"
 #include "../Manager/Game/GameManager.h"
 #include "../Manager/Game/PlayerManager.h"
+#include "../Manager/Game/CollisionManager.h"
+#include "../Manager/Game/GimmickManager.h"
+#include "../Manager/Game/EnemyManager.h"
+#include "../Manager/Game/StageManager.h"
+#include "../Manager/Game/ItemManager.h"
 #include "../Factory/FactoryComponent.h"
 #include "../Utility/UtilityCommon.h"
 #include "ScenePause.h"
@@ -19,21 +25,38 @@ SceneGame::SceneGame()
 	drawFunc_ = std::bind(&SceneGame::LoadingDraw, this);
 
 	// 管理クラスの生成
-	FactoryComponent::CreateInstance();
-	GameManager::CreateInstance();
+	//GameManager::CreateInstance();
 }
 
 SceneGame::~SceneGame()
 {
 	// 管理クラスの解放
-	FactoryComponent::GetInstance().Destroy();
-	GameManager::GetInstance().Destroy();
+	//GameManager::GetInstance().Destroy();
 }
 
 void SceneGame::Init()
 {	
-	// 管理クラスの初期化
-	GameManager::GetInstance().Init();
+	// ステージ生成
+	stageMng_.Create(StageManager::TYPE::ROAD);
+
+	// プレイヤーの初期位置を決定
+	playerMng_.SetFirstPositions(stageMng_.GetPlayerFirstPositions());
+
+	// 敵の生成処理
+	enemyMng_.Generator(stageMng_.GetEnemyAreaPositions());	
+
+	// ボス部屋の生成
+	gimmickMng_.SetBossDoor(stageMng_.GetBossDoorPos());
+	
+	// 基底クラスの処理
+	SceneBase::Init();
+
+	// カメラ設定
+	mainCamera.ChangeMode(Camera::MODE::CAMERA_SCROLL);
+
+	// カメラの移動制限を設定
+	Vector2 stageSize = stageMng_.GetStageSize();
+	mainCamera.SetCameraLimit(Vector2F{ 0.0f, 0.0f }, stageSize.ToVector2F());
 }
 
 void SceneGame::NormalUpdate()
@@ -45,39 +68,23 @@ void SceneGame::NormalUpdate()
 	//	return;
 	//}
 
-	// 管理クラスの更新
-	GameManager::GetInstance().Update();
+	// 基底クラスの処理
+	SceneBase::NormalUpdate();
 
 #ifdef _DEBUG	
-
 	DebugUpdate();
-
 #endif 
 }
 
 void SceneGame::NormalDraw()
 {	
-	// 管理クラスの描画
-	GameManager::GetInstance().Draw();
+	// 基底クラスの処理
+	SceneBase::NormalDraw();
 
 #ifdef _DEBUG
-	// デバッグ用の当たり判定描画
-	GameManager::GetInstance().DebugDraw();
-
 	// デバッグ用の情報描画
 	DebugDraw();
-
 #endif
-}
-
-void SceneGame::ChangeNormal()
-{
-	// 処理変更
-	updataFunc_ = std::bind(&SceneGame::NormalUpdate, this);
-	drawFunc_ = std::bind(&SceneGame::NormalDraw, this);
-
-	//フェードイン開始
-	scnMng_.StartFadeIn();
 }
 
 void SceneGame::DebugUpdate()
@@ -120,6 +127,9 @@ void SceneGame::DebugUpdate()
 
 void SceneGame::DebugDraw()
 {
+	// 基底クラスの描画処理
+	SceneBase::DebugDraw();
+
 	constexpr int INIT_POS_Y = 60;
 	constexpr int OFFSET_Y = 20;
 	int posY = INIT_POS_Y;

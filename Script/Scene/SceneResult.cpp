@@ -15,6 +15,7 @@ SceneResult::SceneResult()
 {
 	// 更新関数のセット
 	updataFunc_ = std::bind(&SceneResult::LoadingUpdate, this);
+
 	// 描画関数のセット
 	drawFunc_ = std::bind(&SceneResult::LoadingDraw, this);
 }
@@ -44,14 +45,4 @@ void SceneResult::NormalDraw()
 	// 背景
 	DrawBox(0, 0, Application::SCREEN_SIZE_X, Application::SCREEN_SIZE_Y, UtilityCommon::CYAN, true);
 	DrawFormatString(0, 0, UtilityCommon::RED, L"リザルト");
-}
-
-void SceneResult::ChangeNormal()
-{
-	// 処理変更
-	updataFunc_ = std::bind(&SceneResult::NormalUpdate, this);
-	drawFunc_ = std::bind(&SceneResult::NormalDraw, this);
-
-	//フェードイン開始
-	scnMng_.StartFadeIn(Fader::STATE::IMMEDIATE);
 }

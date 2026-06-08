@@ -12,6 +12,8 @@ ItemManager::~ItemManager()
 
 void ItemManager::Init()
 {
+	if (itemList_.empty()) return;
+
 	for (auto& item : itemList_)
 	{
 		item->Init();
@@ -20,6 +22,8 @@ void ItemManager::Init()
 
 void ItemManager::Update()
 {
+	if (itemList_.empty()) return;
+
 	for (auto& item : itemList_)
 	{
 		item->Update();
@@ -28,6 +32,8 @@ void ItemManager::Update()
 
 void ItemManager::Draw()
 {
+	if (itemList_.empty()) return;
+
 	for (auto& item : itemList_)
 	{
 		item->Draw();

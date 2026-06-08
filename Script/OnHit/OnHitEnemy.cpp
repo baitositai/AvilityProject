@@ -61,8 +61,17 @@ void OnHitEnemy::OnHitPlayerAttack(const std::weak_ptr<ColliderBase>& opponentCo
     // 生存状態遷移(ダメージを受ける前に変更)
 	owner_.ChangeState(EnemyBase::STATE::ALIVE);
 	
-    // 共通処理
-	OnHitAttack(opponentCollider);
+    // 衝突者が無敵のときは無視
+    if (owner_.IsInvincible()
+        || opponentCollider.lock()->GetPartnerTag() == CollisionTags::TAG::PLAYER_ATTACK_NORMAL
+        || opponentCollider.lock()->GetPartnerTag() == CollisionTags::TAG::PLAYER_AVILITY_SHOT
+        )
+    {
+        return;
+    }
+
+    // ダメージ処理
+    Damage(opponentCollider);
 
 	// 相手コライダーの判定を無効化
 	opponentCollider.lock()->SetIsActive(false);

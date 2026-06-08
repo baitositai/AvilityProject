@@ -4,13 +4,13 @@
 #include <memory>
 #include <string>
 #include "../../Common/Vector2.h"
-
 #include "../Template/Singleton.h"
 
 class Stage;
 class GimmickBase;
 class CharacterBase;
 class BackGround;
+class ParameterStage;
 
 class StageManager : public Singleton<StageManager>
 {
@@ -22,9 +22,11 @@ public:
 	// ステージの種類
 	enum class TYPE
 	{
-		NONE,
-		BOSS,
-		ROAD,
+		NONE,	
+		TRAIN,	// 電車
+		BOSS,	// ボス部屋
+		ROAD,	// ロード
+		EVENT,	// イベント
 		MAX,
 	};
 
@@ -44,10 +46,15 @@ public:
 	void Draw();
 
 	/// <summary>
-	/// ステージの変更
+	/// 生成
 	/// </summary>
 	/// <param name="type">種類</param>
-	void ChageStage(const TYPE type);
+	void Create(const TYPE type);
+
+	/// <summary>
+	/// デバッグ描画
+	/// </summary>
+	void DebugDraw();
 
 	/// <summary>
 	/// ステージサイズを返す
@@ -56,40 +63,43 @@ public:
 	const Vector2& GetStageSize() const;
 
 	/// <summary>
-	/// デバッグ描画
+	/// ボス部屋の座標を返す
 	/// </summary>
-	void DebugDraw();
+	/// <returns></returns>
+	const Vector2F& GetBossDoorPos() const;
 
 	/// <summary>
-	/// ギミックの追加
+	/// プレイヤーの初期位置を返す
 	/// </summary>
-	void AddGimmick(CharacterBase& _chara,const int _boxNum);
-
-	/// <summary>
-	/// ギミックの削除
-	/// </summary>
-	/// <param name=""></param>
-	void DeleteGimmick(void);
-
-	/// <summary>
-	/// ギミックの削除
-	/// </summary>
-	void GimmickSweep();
-
+	/// <returns>プレイヤーの初期位置</returns>
 	const std::vector<Vector2F>& GetPlayerFirstPositions() const;
-	const std::vector<Vector2F>& GetEnemyAreaPositions() const;
+
+	/// <summary>
+	/// 敵のエリア位置を返す
+	/// </summary>
+	/// <returns></returns>
+	const std::vector<Vector2F>& GetEnemyAreaPositions() const;	
+	
+	// パラメータ関係の初期化
+	void InitParameter();
 
 private:
 
-	// 各種ステージごとのパス
-	const std::unordered_map<TYPE, std::string> STAGE_PATH_MAP =
+	// 各種ステージごとの名前パス
+	const std::unordered_map<TYPE, std::string> STAGE_NAME_MAP =
 	{
 		{ TYPE::NONE, "none" },
-		{ TYPE::BOSS, "StageBoss.csv" },
+		{ TYPE::TRAIN, "train" },
+		{ TYPE::ROAD, "road" },
+		{ TYPE::BOSS, "boss" },
+		{ TYPE::EVENT, "event" },
 	};
 
 	// 種類
 	TYPE type_;
+
+	// タイルのチップサイズ
+	Vector2 tileChipSize_;
 
 	// メインステージ
 	std::unique_ptr<Stage> stage_;
@@ -97,13 +107,19 @@ private:
 	// 背景
 	std::unique_ptr<BackGround> backGround_;
 
-	//ギミック(後々に複数置きたい)
-	std::vector<std::unique_ptr<GimmickBase>>gimmick_;
+	// テンプレートとなるパラメータマップ
+	std::unordered_map<TYPE, std::unique_ptr<ParameterStage>> templateParameterMap_;
+
+
+
+	// 各種ステージ生成処理
+	void CreateStageRoad();	// 自動生成の場合
+	void CreateStageRoom();	// 決められた部屋の場合
 
 	// コンストラクタ
 	StageManager();
 
 	// デストラクタ
-	~StageManager()override;	
+	~StageManager() override;	
 };
 

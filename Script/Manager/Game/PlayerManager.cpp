@@ -16,22 +16,22 @@
 
 void PlayerManager::Init()
 {
-	// 初回のみ外部データを読み込んでテンプレートを作成
-	if (!templateParameter_)
-	{
-		const auto jsonParameterMap = UtilityLoad::GetJsonMapArrayData("PlayerParameter");
-		const auto jsonParameter = jsonParameterMap.at("player").front();
+	// パッドの接続数空プレイヤー生成数を取得
+	int playerCount = GetJoypadNum();
 
-		templateParameter_ = std::make_unique<ParameterPlayer>();
-		templateParameter_->LoadParameter(jsonParameter);
-	}
+	// パッドの接続がない場合プレイヤー数1人
+	if (playerCount < 1) { playerCount = 1; }
 
 	// プレイヤーを生成する
-	auto parameter = std::make_unique<ParameterPlayer>(*templateParameter_);
-	parameter->resourceKey_ += std::to_string(1);
-
-	// プレイヤーの生成
-	playerList_.emplace_back(std::make_unique<Player>(std::move(parameter)));
+	for (int i = 0; i < playerCount; i++)
+	{
+		// パラメータ取得
+		auto parameter = std::make_unique<ParameterPlayer>(*templateParameter_);
+		parameter->resourceKey_ += std::to_string(i + 1);
+		
+		// プレイヤーの生成
+		playerList_.emplace_back(std::make_unique<Player>(std::move(parameter)));
+	}
 
 	// 初期化
 	for (const auto& player : playerList_)
@@ -45,9 +45,6 @@ void PlayerManager::Init()
 
 	// プレイヤー残機
 	playersLeft_ = PLAYER_LEFT;
-
-	// フォント
-	font_ = FontManager::GetInstance().CreateMyFont(L"ベストテンDOT", 48, 3);
 }
 
 void PlayerManager::Update()
@@ -112,7 +109,7 @@ void PlayerManager::AddPlayersLeft(const int addLeft)
 		if (playerList_.front()->GetState() == Player::STATE::DEAD)
 		{
 			// ゲームオーバーへ
-			GameManager::GetInstance().GameOver();
+			//GameManager::GetInstance().GameOver();
 		}
 
 		// 残機は0へ
@@ -180,9 +177,22 @@ void PlayerManager::LeavePlayer()
 }
 
 PlayerManager::PlayerManager()
-{
-	font_ = -1;
-	playersLeft_ = -1;
+{	
+	playersLeft_ = -1;	
+	
+	// フォント
+	font_ = FontManager::GetInstance().CreateMyFont(L"ベストテンDOT", 48, 3);
+
+	
+	// 初回のみ外部データを読み込んでテンプレートを作成
+	if (!templateParameter_)
+	{
+		const auto jsonParameterMap = UtilityLoad::GetJsonMapArrayData("PlayerParameter");
+		const auto jsonParameter = jsonParameterMap.at("player").front();
+
+		templateParameter_ = std::make_unique<ParameterPlayer>();
+		templateParameter_->LoadParameter(jsonParameter);
+	}
 }
 
 PlayerManager::~PlayerManager()

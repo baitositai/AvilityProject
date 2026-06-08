@@ -70,6 +70,6 @@ void ComponentStateEnter::ChangeStateWait()
 void ComponentStateEnter::ChangeStateEnd()
 {
 	update_ = std::bind(&ComponentStateEnter::UpdateEnd, this);
-	GameManager::GetInstance().ChangeState(GameManager::STATE::BOSS);
+	SceneManager::GetInstance().ChangeScene(SceneManager::SCENE_ID::BOSS);
 	owner_.ChangeState(CharacterBase::STATE::ALIVE);
 }

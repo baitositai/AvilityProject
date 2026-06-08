@@ -43,12 +43,3 @@ void SceneGameOver::NormalDraw()
 {
 	DrawFormatString(0, 0, UtilityCommon::WHITE, L"GAME OVER", true);
 }
-
-void SceneGameOver::ChangeNormal()
-{
-	// 更新関数のセット
-	updataFunc_ = std::bind(&SceneGameOver::NormalUpdate, this);
-
-	// 描画関数のセット
-	drawFunc_ = std::bind(&SceneGameOver::NormalDraw, this);
-}

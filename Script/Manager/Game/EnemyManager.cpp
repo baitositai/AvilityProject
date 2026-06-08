@@ -15,19 +15,7 @@
 
 void EnemyManager::Init()
 {
-	// ジェネレーターの生成
-	if (!enemyGenerator_)
-	{
-		enemyGenerator_ = std::make_unique<EnemyGenerator>();
-		enemyGenerator_->InitParameter();
-	}
-
-	// デバッグ用
-	//auto enemy = enemyGenerator_->CreateEnemy(EnemyTypes::TYPE::SLIME);
-	//enemy->GetParameter().pos_ = StageManager::GetInstance().GetEnemyAreaPositions().front();
-	//enemiesMap_[EnemyTypes::TYPE::SLIME].push_back(std::move(enemy));
-
-	// 空の場合後の処理を無視
+	// 空の場合無視
 	if (enemiesMap_.empty()) { return; }
 
 	// 初期化
@@ -113,9 +101,6 @@ void EnemyManager::Generator(const std::vector<Vector2F>& createPositionList)
 
 	// 生成して格納
 	enemiesMap_ = enemyGenerator_->CreateEnemyMap(parameter);
-
-	// 初期化処理
-	Init();
 }
 
 void EnemyManager::Clear()
@@ -143,7 +128,8 @@ void EnemyManager::Clear()
 
 EnemyManager::EnemyManager()
 {
-	enemyGenerator_ = nullptr;
+	enemyGenerator_ = std::make_unique<EnemyGenerator>();
+	enemyGenerator_->InitParameter();
 }
 
 EnemyManager::~EnemyManager()

@@ -20,7 +20,7 @@ public:
 	virtual ~OnHitCharacterBase() override;
 
 protected:
-	
+
 	// ノックバックの力
 	const Vector2F KNOCK_BACK_FORCE = { 800.0f, 800.0f };	
 

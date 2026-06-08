@@ -145,6 +145,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Manager\Game\GimmickManager.cpp" />
+    <ClCompile Include="Script\Scene\SceneEvent.cpp" />
+    <ClCompile Include="Script\Scene\SceneBoss.cpp" />
+    <ClCompile Include="Script\Scene\SceneTrain.cpp" />
+    <ClCompile Include="Script\Parameter\Character\Enemy\ParameterEnemyMaid.cpp" />
+    <ClCompile Include="Script\Object\Character\Enemy\EnemyMaid.cpp" />
     <ClCompile Include="Script\Component\State\ComponentStatePlayerSpawn.cpp" />
     <ClCompile Include="Script\System\EnemyGenerator.cpp" />
     <ClCompile Include="Script\Collider\ColliderFan.cpp" />
@@ -301,6 +307,12 @@
     <ClCompile Include="Script\Object\Stage\Train.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Manager\Game\GimmickManager.h" />
+    <ClInclude Include="Script\Scene\SceneEvent.h" />
+    <ClInclude Include="Script\Scene\SceneBoss.h" />
+    <ClInclude Include="Script\Scene\SceneTrain.h" />
+    <ClInclude Include="Script\Parameter\Character\Enemy\ParameterEnemyMaid.h" />
+    <ClInclude Include="Script\Object\Character\Enemy\EnemyMaid.h" />
     <ClInclude Include="Script\Component\State\ComponentStatePlayerSpawn.h" />
     <ClInclude Include="Script\Manager\Game\EnemyTypes.h" />
     <ClInclude Include="Script\System\EnemyGenerator.h" />

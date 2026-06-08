@@ -29,20 +29,8 @@
       "fontName": "KazukiReiwa"
     },
     {
-      "key": "standardVs",
-      "sceneIds": [ 0 ],
-      "type": "vertexShader",
-      "path": "Resource/Shader/StandardModelVS.cso"
-    },
-    {
-      "key": "standardPs",
-      "sceneIds": [ 0 ],
-      "type": "pixelShader",
-      "path": "Resource/Shader/StandardModelPS.cso"
-    },
-    {
       "key": "player1",
-      "sceneIds": [ 2 ],
+      "sceneIds": [ 2,3,4,5,6 ],
       "type": "sprite",
       "divX": 10,
       "divY": 9,
@@ -52,7 +40,7 @@
     },
     {
       "key": "player2",
-      "sceneIds": [ 2 ],
+      "sceneIds": [ 2, 3, 4, 5, 6 ],
       "type": "sprite",
       "divX": 10,
       "divY": 9,
@@ -62,7 +50,7 @@
     },
     {
       "key": "player3",
-      "sceneIds": [ 2 ],
+      "sceneIds": [ 2, 3, 4, 5, 6 ],
       "type": "sprite",
       "divX": 10,
       "divY": 9,
@@ -72,7 +60,7 @@
     },
     {
       "key": "player4",
-      "sceneIds": [ 2 ],
+      "sceneIds": [ 2, 3, 4, 5, 6 ],
       "type": "sprite",
       "divX": 10,
       "divY": 9,
@@ -82,7 +70,7 @@
     },
     {
       "key": "clone",
-      "sceneIds": [ 2 ],
+      "sceneIds": [ 3 ],
       "type": "sprite",
       "divX": 10,
       "divY": 9,
@@ -92,7 +80,7 @@
     },
     {
       "key": "slime",
-      "sceneIds": [ 2 ],
+      "sceneIds": [ 3 ],
       "type": "sprite",
       "divX": 19,
       "divY": 4,
@@ -102,7 +90,7 @@
     },
     {
       "key": "mushroom",
-      "sceneIds": [ 2 ],
+      "sceneIds": [ 3 ],
       "type": "sprite",
       "divX": 11,
       "divY": 6,
@@ -112,7 +100,7 @@
     },
     {
       "key": "hat",
-      "sceneIds": [ 2 ],
+      "sceneIds": [ 3 ],
       "type": "sprite",
       "divX": 8,
       "divY": 5,
@@ -122,7 +110,7 @@
     },
     {
       "key": "snake",
-      "sceneIds": [ 2 ],
+      "sceneIds": [ 3 ],
       "type": "sprite",
       "divX": 11,
       "divY": 5,
@@ -132,7 +120,7 @@
     },
     {
       "key": "samurai",
-      "sceneIds": [ 2 ],
+      "sceneIds": [ 3 ],
       "type": "sprite",
       "divX": 5,
       "divY": 5,
@@ -150,7 +138,7 @@
     {
       "key": "bgmResult",
       "path": "Resource/Sound/BGM/BgmResult.mp3",
-      "sceneIds": [ 3 ],
+      "sceneIds": [ 5, 6 ],
       "soundType": "bgm",
       "type": "sound"
     },
@@ -180,7 +168,7 @@
       "path": "Resource/Image/Effect/Airslash.png",
       "divX": 4,
       "divY": 1,
-      "sceneIds": [ 2 ],
+      "sceneIds": [ 2, 3, 4, 6 ],
       "sizeX": 64,
       "sizeY": 64
     },
@@ -190,7 +178,7 @@
       "path": "Resource/Image/Effect/TeleportEnter.png",
       "divX": 9,
       "divY": 1,
-      "sceneIds": [ 2 ],
+      "sceneIds": [ 2, 3, 4, 6 ],
       "sizeX": 96,
       "sizeY": 96
     },
@@ -200,29 +188,9 @@
       "path": "Resource/Image/Effect/TeleportExit.png",
       "divX": 11,
       "divY": 1,
-      "sceneIds": [ 2 ],
+      "sceneIds": [ 2, 3, 4, 6 ],
       "sizeX": 96,
       "sizeY": 96
-    },
-    {
-      "key": "groundChips",
-      "type": "sprite",
-      "path": "Resource/Image/Stage/GroundChips.png",
-      "divX": 8,
-      "divY": 8,
-      "sceneIds": [ 2 ],
-      "sizeX": 32,
-      "sizeY": 32
-    },
-    {
-      "key": "groundChipsFacility",
-      "type": "sprite",
-      "path": "Resource/Image/Stage/GroundChipsFacility.png",
-      "divX": 10,
-      "divY": 10,
-      "sceneIds": [ 2 ],
-      "sizeX": 32,
-      "sizeY": 32
     },
     {
       "key": "groundChipsDungeon",
@@ -230,20 +198,20 @@
       "path": "Resource/Image/Stage/GroundChipsDungeon.png",
       "divX": 15,
       "divY": 18,
-      "sceneIds": [ 2 ],
+      "sceneIds": [ 3, 4 ],
       "sizeX": 32,
       "sizeY": 32
     },
     {
       "key": "backGround02",
       "path": "Resource/Image/BackGround/BackGround02.png",
-      "sceneIds": [ 2 ],
+      "sceneIds": [ 2, 3, 4 ],
       "type": "texture"
     },
     {
       "key": "door",
       "path": "Resource/Image/Gimmick/Door.png",
-      "sceneIds": [ 2 ],
+      "sceneIds": [ 3 ],
       "type": "texture"
     },
     {
@@ -252,7 +220,7 @@
       "path": "Resource/Image/Stage/Train.png",
       "divX": 16,
       "divY": 1,
-      "sceneIds": [ 0 ],
+      "sceneIds": [ 1, 2, 3, 4 ],
       "sizeX": 256,
       "sizeY": 64
     },
@@ -262,9 +230,19 @@
       "path": "Resource/Image/Stage/Carriage.png",
       "divX": 16,
       "divY": 1,
-      "sceneIds": [ 0 ],
+      "sceneIds": [ 1, 2, 3, 4 ],
       "sizeX": 256,
       "sizeY": 64
+    },
+    {
+      "key": "maid",
+      "type": "sprite",
+      "path": "Resource/Image/Enemy/Maid.png",
+      "divX": 6,
+      "divY": 3,
+      "sceneIds": [ 4 ],
+      "sizeX": 192,
+      "sizeY": 128
     }
   ]
 }

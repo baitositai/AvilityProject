@@ -1,0 +1,9 @@
+{
+  "door": {
+    "resourceKey": "door",
+    "hitSize": {
+      "x": 160,
+      "y": 240
+    }
+  }
+}

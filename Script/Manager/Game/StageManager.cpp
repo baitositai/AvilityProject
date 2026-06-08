@@ -13,120 +13,47 @@
 
 void StageManager::Init()
 {
-	Vector2 chipSize = {};
-
-	// ステージジェネレーター用のパラメータ
-	StageGenerator::Parameter generatorParameter = {};
-	generatorParameter.connectNum = 4;
-	generatorParameter.candidates = { "SD", "SC", "SU", "DD", "DC", "DU", "CC", "CD", "CU", "UU", "UC", "UD", "DG", "CG", "UG" };
-	auto stageGenerator = std::unique_ptr<StageGenerator>();
-
-	// ステージパラメータ
-	std::unique_ptr<ParameterStage> parameter = std::make_unique<ParameterStage>();
-	parameter->path_ = STAGE_PATH_MAP.at(type_);
-	parameter->chipSize_ = Vector2(32, 32);
-	parameter->tileIndexs_ = stageGenerator->CreateStageData(generatorParameter);
-	parameter->resourceKey_ = "groundChipsDungeon";
-
-	chipSize = parameter->chipSize_;
-
-	// ステージ生成
-	stage_ = std::make_unique<Stage>(std::move(parameter));
-	stage_->Init();
+	// 初期化
+	if(stage_) stage_->Init();
 
 	// 背景生成
 	backGround_ = std::make_unique<BackGround>();
-	backGround_->Init();
 	backGround_->SetResource("backGround02");
-
-	// ボスドア
-	auto doorParameter = std::make_unique<ParameterGimmick>();
-	doorParameter->hitSize_ = { 160, 240 };
-	doorParameter->pos_ = stage_->GetAreaListMap(Stage::LIST_TYPE::BOSS_DOOR).front();
-	doorParameter->pos_.y -= doorParameter->hitSize_.y / 2 - chipSize.y;
-	doorParameter->resourceKey_ = "door";
-	
-	auto door = std::make_unique<GimmickDoor>(std::move(doorParameter));
-	door->Init();
-	gimmick_.push_back(std::move(door));
+	backGround_->Init();
 }
 
 void StageManager::Update()
 {
 	stage_->Update();
-	//gimmick_->Update();
-	for (const auto& gim : gimmick_)
-	{
-		gim->Update();
-	}
-	GimmickSweep();
 }
 
 void StageManager::Draw()
 {
 	backGround_->Draw();
 	stage_->Draw();
-	for (const auto& gim : gimmick_)
-	{
-		gim->Draw();
-	}
 }
 
-void StageManager::ChageStage(const TYPE type)
+void StageManager::Create(const TYPE type)
 {
+	// 種類
 	type_ = type;
-	DeleteGimmick();
-	stage_->ChageStage(STAGE_PATH_MAP.at(type_));
+	
+	// 種類別生成処理
+	switch (type)
+	{
+	case TYPE::ROAD:
+		CreateStageRoad();
+		break;
+
+	default:
+		CreateStageRoom();
+		break;
+	}
 }
 
 void StageManager::DebugDraw()
 {
 	stage_->DebugDraw();
-	for (const auto& gim : gimmick_)
-	{
-		gim->DebugDraw();
-	}
-}
-
-void StageManager::AddGimmick(CharacterBase& _chara, const int _boxNum)
-{
-	//AvilityBox::Parameter avParam = {};
-	//avParam.hitBoxSize = Vector2(48, 48);
-	//avParam.gravityPower = 0.5f;
-	//avParam.weight = 1.0f;
-	//avParam.blastTime = 3.0f;
-	//avParam.boxNum = _boxNum;
-
-	////ローカル座標をJsonで読み込み、プレイヤーの向きによって設置場所を変える
-	//Vector2F localPos = { 50.0f,50.0f };
-	//const bool charaDir = _chara.GetParameter()->direction;
-	//const Vector2F charaPos = _chara.GetParameter()->pos;
-
-	//avParam.placePos= charaDir ? Vector2F::SubVector2F(charaPos, localPos) : Vector2F::AddVector2F(charaPos, localPos);
-	//std::vector<std::string> componentNameList = { "gravity","move" };
-
-	////いったんアビリティボックスのみ対応
-	//std::unique_ptr avBox = std::make_unique<AvilityBox>(avParam, _chara, componentNameList);
-	//avBox->Init();
-	//gimmick_.push_back(std::move(avBox));
-}
-
-void StageManager::DeleteGimmick(void)
-{
-	for (auto& gimmick : gimmick_)
-	{
-		gimmick->Delete();
-	}
-	gimmick_.clear();
-}
-
-void StageManager::GimmickSweep()
-{
-	auto removeGim = std::remove_if(gimmick_.begin(), gimmick_.end(), [](std::unique_ptr<GimmickBase>& _gim)
-		{
-			return _gim->IsDelete();
-		});
-	gimmick_.erase(removeGim, gimmick_.end());
 }
 
 const std::vector<Vector2F>& StageManager::GetPlayerFirstPositions() const
@@ -142,6 +69,66 @@ const std::vector<Vector2F>& StageManager::GetEnemyAreaPositions() const
 const Vector2& StageManager::GetStageSize() const
 {
 	return stage_->GetStageSize();
+}
+
+const Vector2F& StageManager::GetBossDoorPos() const
+{
+	return stage_->GetAreaListMap(Stage::LIST_TYPE::BOSS_DOOR).front();
+}
+
+void StageManager::InitParameter()
+{
+	// 情報の取得
+	const auto jsonParameterMap = UtilityLoad::GetJsonMapArrayData("StageParameter");
+
+	// ロード生成
+	const auto jsonRoadParameter = jsonParameterMap.at("road").front();
+	auto parameterRoad = std::make_unique<ParameterStage>();
+	parameterRoad->LoadParameter(jsonRoadParameter);
+	templateParameterMap_.emplace(StageManager::TYPE::ROAD, std::move(parameterRoad));
+
+	// ボス生成
+	const auto jsonBossParameter = jsonParameterMap.at("boss").front();
+	auto parameterBoss = std::make_unique<ParameterStage>();
+	parameterBoss->LoadParameter(jsonBossParameter);
+	templateParameterMap_.emplace(StageManager::TYPE::BOSS, std::move(parameterBoss));
+
+	// イベント生成
+	const auto jsonEventParameter = jsonParameterMap.at("event").front();
+	auto parameterEvent = std::make_unique<ParameterStage>();
+	parameterEvent->LoadParameter(jsonBossParameter);
+	templateParameterMap_.emplace(StageManager::TYPE::EVENT, std::move(parameterEvent));
+}
+
+void StageManager::CreateStageRoad()
+{
+	// ステージパラメータ取得
+	std::unique_ptr<ParameterStage> parameter = std::make_unique<ParameterStage>(std::move(*templateParameterMap_.at(type_)));
+
+	// ステージジェネレーター用のパラメータ設定
+	StageGenerator::Parameter generatorParameter = {};
+	generatorParameter.connectNum = parameter->connectNum_;
+	generatorParameter.candidates = parameter->candidates_;
+	auto stageGenerator = std::unique_ptr<StageGenerator>();
+
+	// ステージチップ生成
+	parameter->tileIndexs_ = stageGenerator->CreateStageData(generatorParameter);
+
+	// ステージ生成
+	stage_ = std::make_unique<Stage>(std::move(parameter));
+	stage_->Init();
+}
+
+void StageManager::CreateStageRoom()
+{
+	// ステージパラメータ
+	std::unique_ptr<ParameterStage> parameter = std::make_unique<ParameterStage>(std::move(*templateParameterMap_.at(type_)));
+
+	// タイルチップサイズを保持
+	tileChipSize_ = parameter->chipSize_;
+
+	// ステージ生成
+	stage_ = std::make_unique<Stage>(std::move(parameter));
 }
 
 StageManager::StageManager()

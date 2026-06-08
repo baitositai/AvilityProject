@@ -23,7 +23,7 @@ void GameStateBoss::Init()
 	mainCamera.SetCameraPos(Vector2F(0.0f, 0.0f));
 
 	// ステージの変更
-	stageMng_.ChageStage(StageManager::TYPE::BOSS);
+	//stageMng_.ChageStage(StageManager::TYPE::BOSS);
 
 	// プレイヤーの初期位置を決定
 	playerMng_.SetFirstPositions(stageMng_.GetPlayerFirstPositions());

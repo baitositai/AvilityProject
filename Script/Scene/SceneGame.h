@@ -34,10 +34,7 @@ private:
 	// 描画関数
 	void NormalDraw() override;
 
-	// 処理の変更
-	void ChangeNormal() override;
-
 	//デバッグ処理
-	void DebugUpdate();
-	void DebugDraw();
+	void DebugUpdate() override;
+	void DebugDraw() override;
 };

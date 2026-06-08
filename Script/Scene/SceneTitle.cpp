@@ -68,13 +68,3 @@ void SceneTitle::NormalDraw()
 	titleLogo_.DrawExtend();
 	DrawString(0, 0, L"RSHIFTでシーン遷移", UtilityCommon::WHITE);
 }
-
-void SceneTitle::ChangeNormal()
-{
-	//処理変更
-	updataFunc_ = std::bind(&SceneTitle::NormalUpdate, this);
-	drawFunc_ = std::bind(&SceneTitle::NormalDraw, this);
-
-	//フェードイン開始
-	scnMng_.StartFadeIn();
-}

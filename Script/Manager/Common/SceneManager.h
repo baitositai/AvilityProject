@@ -12,7 +12,6 @@
 class SceneBase;
 class Fader;
 class Camera;
-class SpriteEffectManager;
 
 class SceneManager : public Singleton<SceneManager>
 {
@@ -30,9 +29,11 @@ public:
 	{
 		NONE	= 0,
 		TITLE	= 1,
-		GAME	= 2, 
-		RESULT	= 3,
-		GAMEOVER= 4
+		TRAIN	= 2,
+		GAME	= 3,
+		BOSS	= 4,
+		RESULT	= 5,
+		GAMEOVER= 6,
 	};
 
 	/// <summary>
@@ -136,9 +137,6 @@ private:
 
 	SCENE_ID sceneId_;
 	SCENE_ID waitSceneId_;
-
-	// エフェクト管理
-	SpriteEffectManager& spriteEffectManager_;
 
 	// 各種シーン
 	std::list<std::shared_ptr<SceneBase>> scenes_;

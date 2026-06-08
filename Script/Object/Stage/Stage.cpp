@@ -110,9 +110,12 @@ void Stage::DebugDraw()
 
 	Vector2F pos = mainCamera.GetPos();
 
+	const auto& enemyCreateAreaList = areaListMap_.at(LIST_TYPE::ENEMY_CREATE_AREA);
+	if (enemyCreateAreaList.empty()) return;
+
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
 	// “G‚Ì¶¬ˆÊ’u‚ğ‰Â‹‰»
-	for (auto& enemySpawnArea : areaListMap_.at(LIST_TYPE::ENEMY_CREATE_AREA))
+	for (const auto& enemySpawnArea : enemyCreateAreaList)
 	{
 		DrawBox(
 			pos.x + enemySpawnArea.x - 64,

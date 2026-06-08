@@ -1,19 +1,22 @@
 #pragma once
+#include <memory>
 #include "SceneBase.h"
 
-class SceneResult : public SceneBase
+class ScenePause;
+
+class SceneTrain : public SceneBase
 {
 public:
 
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	SceneResult();
+	SceneTrain();
 
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~SceneResult() override;
+	~SceneTrain() override;
 
 	/// <summary>
 	/// 初期化処理
@@ -22,9 +25,16 @@ public:
 
 private:
 
+	//ポーズ画面
+	std::shared_ptr<ScenePause> ScenePause_;
+
 	// 更新関数
 	void NormalUpdate() override;
 
 	// 描画関数
 	void NormalDraw() override;
+
+	//デバッグ処理
+	void DebugUpdate();
+	void DebugDraw();
 };

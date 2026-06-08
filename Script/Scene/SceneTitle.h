@@ -35,7 +35,4 @@ private:
 
 	// •`‰æŠÖ”
 	void NormalDraw() override;
-
-	// ˆ—‚Ì•ÏX
-	void ChangeNormal() override;
 };

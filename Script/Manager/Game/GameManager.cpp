@@ -79,13 +79,6 @@ GameManager::GameManager()
 	// 初期化
 	state_ = STATE::MAX;
 
-	// 各種オブジェクトらの生成
-	StageManager::CreateInstance();
-	PlayerManager::CreateInstance();
-	EnemyManager::CreateInstance();
-	CollisionManager::CreateInstance();
-	ItemManager::CreateInstance();
-
 	// 状態遷移の関数マップの初期化
 	changeStateMap_[STATE::ROAD] = std::bind(&GameManager::ChangeStateRoad, this);
 	changeStateMap_[STATE::BOSS] = std::bind(&GameManager::ChangeStateBoss, this);
@@ -94,9 +87,4 @@ GameManager::GameManager()
 
 GameManager::~GameManager()
 {
-	StageManager::GetInstance().Destroy();
-	PlayerManager::GetInstance().Destroy();
-	EnemyManager::GetInstance().Destroy();
-	CollisionManager::GetInstance().Destroy();
-	ItemManager::GetInstance().Destroy();
 }

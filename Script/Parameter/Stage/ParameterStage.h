@@ -20,6 +20,9 @@ public:
 	/// <param name="parameter">パラメータ</param>
 	void LoadParameter(const Json& parameter) override;
 	
+	// 接続数
+	int connectNum_;
+
 	// チップサイズ
 	Vector2 chipSize_;				
 	
@@ -28,5 +31,8 @@ public:
 
 	// タイル番号の配列
 	std::vector<std::vector<int>> tileIndexs_;
+
+	// 接続候補リスト
+	std::vector<std::string> candidates_;
 };
 

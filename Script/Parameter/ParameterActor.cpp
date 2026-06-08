@@ -23,6 +23,7 @@ ParameterActor::ParameterActor() :
     texture_(-1),
     spriteTexture_(nullptr),    
     hp_(-1),
+    hpMax_(-1),
     attackPower_(-1),
     attackBoostRate_(0.0f)
 {

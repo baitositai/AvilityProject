@@ -32,7 +32,7 @@ void ComponentAvilityBox::PlaceBox()
 	if (boxCnt_ < SET_BLAST_NUM)
 	{
 		//プレイヤーの座標からボックスの位置を決める
-		stageManager_.AddGimmick(owner_, boxCnt_);
+		//stageManager_.AddGimmick(owner_, boxCnt_);
 
 		//ボックスカウントを増加
 		boxCnt_++;
