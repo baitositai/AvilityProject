@@ -4,19 +4,26 @@
 #include "SceneBase.h"
 
 class Train;
+class BackGround;
 
 class SceneTitle : public SceneBase
 {
 
 public:
 
-	// コンストラクタ
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
 	SceneTitle();
 
-	// デストラクタ
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
 	~SceneTitle() override;
 
-	// 初期化処理
+	/// <summary>
+	/// 初期化
+	/// </summary>
 	void Init() override;
 
 private:
@@ -27,8 +34,8 @@ private:
 	// トレイン
 	std::unique_ptr<Train> train_;
 
-	// 荷物
-	std::unique_ptr<Train> carriage_;
+	// 背景
+	std::unique_ptr<BackGround> backGround_;
 
 	// 更新関数
 	void NormalUpdate() override;

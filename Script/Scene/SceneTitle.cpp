@@ -8,6 +8,8 @@
 #include "../Manager/Common/SoundManager.h"
 #include "../Manager/Common/FontManager.h"
 #include "../Utility/UtilityCommon.h"
+#include "../Object/Stage/BackGround.h"
+#include "../Object/Common/Animation.h"
 #include "../Object/Stage/Train.h"
 #include "SceneTitle.h"
 
@@ -27,32 +29,31 @@ SceneTitle::~SceneTitle()
 void SceneTitle::Init()
 {
 	titleLogo_.handleId = resMng_.GetHandle("titleLogo");
-	titleLogo_.pos = { Application::SCREEN_HALF_X, Application::SCREEN_HALF_Y };
+	titleLogo_.pos = { Application::SCREEN_HALF_X, Application::SCREEN_HALF_Y - 150 };
 
 	sndMng_.PlayBgm(SoundType::BGM::TITLE);
 
 	// パラメータ設定
 	auto parameterTrain = std::make_unique<ParameterActor>();
-	parameterTrain->pos_ = { (float)Application::SCREEN_HALF_X, 800.0f };
-	parameterTrain->scale_ = 5.0f;
+	parameterTrain->scale_ = 4.5f;
 	parameterTrain->hitSize_ = { 4096, 64 };
 	parameterTrain->resourceKey_ = "train";
 	parameterTrain->divisionNum_ = { 16, 1 };
-
-	auto parameterCarriage = std::make_unique<ParameterActor>(*parameterTrain);
-	parameterCarriage->pos_.x += (float)parameterTrain->hitSize_.x * parameterTrain->scale_;
-	parameterCarriage->resourceKey_ = "carriage";
+	parameterTrain->componentkeys_ = { "spriteAnimation" };
+	parameterTrain->animationDataMap_ = { {"walk", Animation::Data{ 0,15, 0.3f}} };
+	parameterTrain->pos_ = { (float)Application::SCREEN_HALF_X, 
+		(float)Application::SCREEN_SIZE_Y - (float)parameterTrain->hitSize_.y * parameterTrain->scale_ / 2.0f - 30.0f };
 
 	// オブジェクト定義
-	//train_ = std::make_unique<Train>(std::move(parameterTrain));
-	//train_->Init();
-
-	//carriage_ = std::make_unique<Train>(std::move(parameterCarriage));
-	//carriage_->Init();
+	train_ = std::make_unique<Train>(std::move(parameterTrain));
+	train_->Init();
+	train_->GetAnimation().Play(Animation::TYPE::WALK);
 }
 
 void SceneTitle::NormalUpdate()
 {
+	train_->Update();
+
 	// シーン遷移
 	if (inputMng_.IsTrgDown(InputManager::TYPE::DEBUG_SCENE_CHANGE))
 	{
@@ -65,6 +66,7 @@ void SceneTitle::NormalUpdate()
 
 void SceneTitle::NormalDraw()
 {
+	train_->Draw();
 	titleLogo_.DrawRota();
 	DrawString(0, 0, L"RSHIFTでシーン遷移", UtilityCommon::WHITE);
 }

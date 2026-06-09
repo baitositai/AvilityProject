@@ -217,7 +217,7 @@
     {
       "key": "train",
       "type": "sprite",
-      "path": "Resource/Image/Stage/Train.png",
+      "path": "Resource/Image/Train/Train.png",
       "divX": 16,
       "divY": 1,
       "sceneIds": [ 1, 2, 3, 4 ],
@@ -227,7 +227,7 @@
     {
       "key": "carriage",
       "type": "sprite",
-      "path": "Resource/Image/Stage/Carriage.png",
+      "path": "Resource/Image/Train/Carriage.png",
       "divX": 16,
       "divY": 1,
       "sceneIds": [ 1, 2, 3, 4 ],
