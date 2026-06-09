@@ -158,7 +158,7 @@
     },
     {
       "key": "titleLogo",
-      "path": "Resource/Image/BackGround/TitleLogo.png",
+      "path": "Resource/Image/Ui/TitleLogo.png",
       "sceneIds": [ 1 ],
       "type": "texture"
     },

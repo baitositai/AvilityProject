@@ -27,7 +27,7 @@ SceneTitle::~SceneTitle()
 void SceneTitle::Init()
 {
 	titleLogo_.handleId = resMng_.GetHandle("titleLogo");
-	titleLogo_.size = { Application::SCREEN_SIZE_X, Application::SCREEN_SIZE_Y };
+	titleLogo_.pos = { Application::SCREEN_HALF_X, Application::SCREEN_HALF_Y };
 
 	sndMng_.PlayBgm(SoundType::BGM::TITLE);
 
@@ -65,6 +65,6 @@ void SceneTitle::NormalUpdate()
 
 void SceneTitle::NormalDraw()
 {
-	titleLogo_.DrawExtend();
+	titleLogo_.DrawRota();
 	DrawString(0, 0, L"RSHIFTÇ≈ÉVÅ[ÉìëJà⁄", UtilityCommon::WHITE);
 }
