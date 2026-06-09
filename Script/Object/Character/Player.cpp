@@ -13,7 +13,8 @@
 #include "Player.h"
 
 Player::Player(std::unique_ptr<ParameterPlayer> parameter) :
-	CharacterBase(std::move(parameter))
+	CharacterBase(std::move(parameter)),
+	playerManager_(PlayerManager::GetInstance())
 {		
 	// プレイヤー用のパラメータ
 	parameterPlayer_ = dynamic_cast<ParameterPlayer*>(GetParameterCharacterPtr());
@@ -43,6 +44,10 @@ void Player::Update()
 {
 	// 移動後の値を初期化
 	parameterPlayer_->moveAmount_ = {};
+
+	if (!isActive_) {
+		int i = 0;
+	};
 
 	// 状態別処理
 	UpdateComponentState();
@@ -128,6 +133,65 @@ void Player::Dead()
 
 	// カメラシェイク
 	mainCamera.SetCameraShake(0.3f, 8.0f);
+}
+
+void Player::Ready()
+{
+	// 全コンポーネントを有効にする
+	for (auto& component : componentList_)
+	{
+		component->SetActive(true);
+	}
+
+	// 全アビリティを有効にする
+	SetAllAvilityComponentActive(true);
+
+	// 初期化
+	for (auto& avility : avilityComponents_)
+	{
+		avility->Init();
+	}
+
+	// 活動状態を有効にする
+	isActive_ = true;
+
+	// コライダーを有効にする
+	collider_->SetIsActive(true);
+
+	// ジャンプ回数初期化
+	parameterPlayer_->jumpCount_ = parameterPlayer_->jumpCountMax_;
+
+	// 重力方向を初期化
+	parameterPlayer_->gravityDir_ = ParameterActor::DIR::DOWN;
+
+	// 攻撃判定無効
+	parameterPlayer_->isAction_ = false;
+
+	// 角度初期化
+	parameterPlayer_->angle_ = 0.0f;
+}
+
+void Player::Spawn()
+{
+	// 状態遷移
+	ChangeState(CharacterBase::STATE::ALIVE);
+
+	// 残機減らす
+	playerManager_.AddPlayersLeft();
+
+	// 残機数に応じてHP回復
+	if (playerManager_.GetPlayerLeft() > 0)
+	{
+		// HPを最大回復
+		parameterPlayer_->hp_ = parameterPlayer_->hpMax_;
+	}
+	else
+	{
+		// 最大HPの10%で回復
+		parameterPlayer_->hp_ = parameterPlayer_->hpMax_ / 10;
+	}
+
+	Ready();
 }
 
 void Player::AttackAfter()

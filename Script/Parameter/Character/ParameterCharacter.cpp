@@ -1,6 +1,7 @@
 #include "ParameterCharacter.h"
 
 ParameterCharacter::ParameterCharacter() :
+    isAction_(false),
     jumpCount_(-1),
     jumpCountMax_(-1),
     defaultAttackStartFrame_(-1),

@@ -1,5 +1,6 @@
 #pragma once
 #include "EnemyBase.h"
+#include "../../Parameter/Character/Enemy/ParameterEnemyMaid.h"
 
 class EnemyMaid : public EnemyBase
 {
@@ -18,4 +19,6 @@ public:
 
 private:
 
+	// ƒpƒ‰ƒ[ƒ^î•ñ
+	ParameterEnemyMaid* parameterEnemyMaid_;
 };

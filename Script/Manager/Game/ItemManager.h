@@ -32,6 +32,11 @@ public:
 	void Sweep();
 
 	/// <summary>
+	/// クリア処理
+	/// </summary>
+	void Clear();
+
+	/// <summary>
 	/// 追加処理
 	/// </summary>
 	/// <param name="item">アイテム</param>

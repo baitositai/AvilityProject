@@ -53,7 +53,7 @@ std::vector<std::vector<int>> StageGenerator::CreateStageData(const Parameter& p
 	for (const auto& name : selectedNames)
 	{
 		// ファイル名として配列の名前をそのまま渡してデータをロードします
-		std::vector<std::vector<int>> currentMatrix = UtilityLoad::LoadCSVData(Application::PATH_CSV + "StageChip" + name + ".csv");
+		std::vector<std::vector<int>> currentMatrix = UtilityLoad::LoadCSVData("StageChip" + name);
 		selectedMatrices.push_back(currentMatrix);
 	}
 

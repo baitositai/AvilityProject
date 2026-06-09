@@ -64,7 +64,7 @@ void EnemyBase::Damage(const int damage)
 	parameterEnemy_->hp_ -= damage * (1 + parameterEnemy_->damageRate_);
 
 	// ダメージを受けている場合はダメージ描画用のステップを設定
-	damageDrawStep_ = DAMAGE_DRAW_STEP_MAX;
+	damageDrawStep_ = DAMAGE_DRAW_STEP_MAX;	
 
 	// 体力が0以下の場合
 	if (parameterEnemy_->hp_ <= 0)
@@ -72,7 +72,7 @@ void EnemyBase::Damage(const int damage)
 		// 死亡処理
 		Dead();
 		return;
-	}
+	}	
 	
 	// 状態遷移
 	ChangeState(STATE::ALIVE);

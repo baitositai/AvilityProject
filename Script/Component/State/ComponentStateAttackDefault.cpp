@@ -64,6 +64,7 @@ void ComponentStateAttackDefault::Update()
 
 	// UŒ‚”»’è‚ğ‚È‚­‚·
 	isAttack_ = false;
+	parameter_.isAction_ = false;
 }
 
 void ComponentStateAttackDefault::Remove()

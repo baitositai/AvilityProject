@@ -3,6 +3,7 @@
 #include "../../Application.h"
 #include "../../Utility/UtilityLoad.h"
 #include "../../Utility/UtilityCommon.h"
+#include "../../Manager/Common/Input.h"
 #include "../../Manager/Common/SceneManager.h"
 #include "../../Manager/Common/FontManager.h"
 #include "../../Manager/Common/Camera.h"
@@ -14,8 +15,15 @@
 #include "../Game/GameManager.h"
 #include "PlayerManager.h"
 
-void PlayerManager::Init()
-{
+void PlayerManager::Create()
+{	
+	// 空じゃない場合
+	if (!playerList_.empty())
+	{
+		// 中身をけす
+		Clear();
+	}
+
 	// パッドの接続数空プレイヤー生成数を取得
 	int playerCount = GetJoypadNum();
 
@@ -28,15 +36,22 @@ void PlayerManager::Init()
 		// パラメータ取得
 		auto parameter = std::make_unique<ParameterPlayer>(*templateParameter_);
 		parameter->resourceKey_ += std::to_string(i + 1);
+		parameter->padNo_ = static_cast<Input::JOYPAD_NO>(i + 1);
 		
 		// プレイヤーの生成
 		playerList_.emplace_back(std::make_unique<Player>(std::move(parameter)));
 	}
+}
 
+void PlayerManager::Init()
+{
 	// 初期化
-	for (const auto& player : playerList_)
+	if (!playerList_.empty())
 	{
-		player->Init();
+		for (const auto& player : playerList_)
+		{
+			player->Init();
+		}
 	}
 
 	// プレイ中の新規受付処理
@@ -67,6 +82,23 @@ void PlayerManager::Draw()
 	for (const auto& player : playerList_)
 	{
 		player->Draw();
+	}
+}
+
+void PlayerManager::Clear()
+{
+	for (const auto& player : playerList_)
+	{
+		player->Delete();
+	}
+	playerList_.clear();
+}
+
+void PlayerManager::Ready()
+{
+	for (const auto& player : playerList_)
+	{
+		player->Ready();
 	}
 }
 

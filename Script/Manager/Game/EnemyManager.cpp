@@ -30,7 +30,7 @@ void EnemyManager::Init()
 
 void EnemyManager::Update()
 {
-	if (enemiesMap_.empty()) { return; }
+	if (isStop_ || enemiesMap_.empty()) { return; }
 
 	// XVˆ—
 	for (auto& enemiesList : enemiesMap_)
@@ -103,6 +103,18 @@ void EnemyManager::Generator(const std::vector<Vector2F>& createPositionList)
 	enemiesMap_ = enemyGenerator_->CreateEnemyMap(parameter);
 }
 
+void EnemyManager::Create(const EnemyTypes::TYPE type, const Vector2F& pos)
+{
+	// ¶¬
+	auto enemy = enemyGenerator_->CreateEnemy(type);
+
+	// ˆÊ’u’²®
+	enemy->GetParameter().pos_ = pos;
+
+	// Ši”[
+	enemiesMap_[type].push_back(std::move(enemy));
+}
+
 void EnemyManager::Clear()
 {
 	if (enemiesMap_.empty())
@@ -126,8 +138,15 @@ void EnemyManager::Clear()
 	enemiesMap_.clear();
 }
 
+const bool EnemyManager::IsBossDestroy(const EnemyTypes::TYPE type) const
+{
+	// ‹ó‚È‚çŒ‚”j
+	return enemiesMap_.at(type).empty();
+}
+
 EnemyManager::EnemyManager()
 {
+	isStop_ = false;
 	enemyGenerator_ = std::make_unique<EnemyGenerator>();
 	enemyGenerator_->InitParameter();
 }

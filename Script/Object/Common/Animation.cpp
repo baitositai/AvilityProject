@@ -33,7 +33,7 @@ void Animation::Add(const std::string stringType, const int startIndex, const in
     animationData.endIndex = endIndex;
 
     // Ši”[
-    animationMap_.emplace(type, std::move(animationData));
+    animationMap_[type] = std::move(animationData);
 }
 
 void Animation::Play(const TYPE type, const bool isLoop)

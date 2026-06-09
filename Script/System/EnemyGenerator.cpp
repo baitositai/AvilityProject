@@ -6,6 +6,7 @@
 #include "../../Object/Character/Enemy/EnemySamurai.h"
 #include "../../Object/Character/Enemy/EnemySlime.h"
 #include "../../Object/Character/Enemy/EnemySnake.h"
+#include "../../Object/Character/Enemy/EnemyMaid.h"
 #include "../Utility/UtilityLoad.h"
 #include "EnemyGenerator.h"
 
@@ -39,6 +40,10 @@ EnemyGenerator::EnemyGenerator()
 	createEnemyMap_.emplace(EnemyTypes::TYPE::SAMURAI, [this]()
 		{
 			return CreateEnemySamurai();
+		});
+	createEnemyMap_.emplace(EnemyTypes::TYPE::MAID, [this]()
+		{
+			return CreateEnemyMaid();
 		});
 }
 
@@ -81,6 +86,11 @@ void EnemyGenerator::InitParameter()
 	auto parameterSamurai = std::make_unique<ParameterEnemy>();
 	parameterSamurai->LoadParameter(jsonSamuraiParameter);
 	templateParameterMap_.emplace(EnemyTypes::TYPE::SAMURAI, std::move(parameterSamurai));
+
+	const auto jsonMaidParameter = jsonParameterMap.at("maid").front();
+	auto parameterMaid = std::make_unique<ParameterEnemyMaid>();
+	parameterMaid->LoadParameter(jsonMaidParameter);
+	templateParameterMap_.emplace(EnemyTypes::TYPE::MAID, std::move(parameterMaid));
 }
 
 std::unordered_map<EnemyTypes::TYPE, std::vector<std::unique_ptr<EnemyBase>>> EnemyGenerator::CreateEnemyMap(const Parameter& parameter)
@@ -202,4 +212,22 @@ std::unique_ptr<EnemyHat> EnemyGenerator::CreateEnemyHat()
 std::unique_ptr<EnemySamurai> EnemyGenerator::CreateEnemySamurai()
 {
 	return std::make_unique<EnemySamurai>(std::move(std::make_unique<ParameterEnemy>(*templateParameterMap_.at(EnemyTypes::TYPE::SAMURAI))));
+}
+
+std::unique_ptr<EnemyMaid> EnemyGenerator::CreateEnemyMaid()
+{
+	// メイド用のパラメータにキャスト
+	auto parameterBase = templateParameterMap_.at(EnemyTypes::TYPE::MAID).get();
+	auto parameterMaid = dynamic_cast<ParameterEnemyMaid*>(parameterBase);
+
+	// 空の場合
+	if (parameterMaid == nullptr)
+	{
+		// 空で返す
+		return nullptr;
+	}
+
+	// 生成したものを返す
+	auto parameter = std::make_unique<ParameterEnemyMaid>(*parameterMaid);
+	return std::make_unique<EnemyMaid>(std::move(parameter));
 }

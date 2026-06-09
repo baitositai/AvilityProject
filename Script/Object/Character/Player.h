@@ -5,6 +5,7 @@
 
 class ParameterPlayer;
 class ComponentAvilityBase;
+class PlayerManager;
 class ColliderBox;
 
 class Player : public CharacterBase
@@ -41,6 +42,16 @@ public:
 	/// 死亡処理
 	/// </summary>	
 	void Dead() override;
+
+	/// <summary>
+	/// 準備処理
+	/// </summary>
+	void Ready();
+
+	/// <summary>
+	/// 誕生処理
+	/// </summary>
+	void Spawn();
 
 	/// <summary>
 	/// 攻撃後の処理
@@ -115,6 +126,9 @@ private:
 
 	// パラメータ情報
 	ParameterPlayer* parameterPlayer_;
+
+	// プレイヤー管理クラス
+	PlayerManager& playerManager_;
 
 	// アビリティコンポーネント
 	std::vector<std::unique_ptr<ComponentAvilityBase>> avilityComponents_;	

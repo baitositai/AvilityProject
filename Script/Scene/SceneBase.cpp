@@ -74,6 +74,18 @@ void SceneBase::Draw()
 	drawFunc_();
 }
 
+void SceneBase::SceneChangeReady()
+{	
+	// 一部の管理クラスの配列の中身を削除
+	itemMng_.Clear();
+	gimmickMng_.Clear();
+	enemyMng_.Clear();
+	collisionMng_.Clear();
+
+	// プレイヤーのパラメーター準備
+	playerMng_.Ready();
+}
+
 void SceneBase::LoadingUpdate()
 {
 	// ローディング中の場合

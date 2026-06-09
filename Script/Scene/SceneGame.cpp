@@ -36,6 +36,8 @@ SceneGame::~SceneGame()
 
 void SceneGame::Init()
 {	
+	playerMng_.Create();
+
 	// ステージ生成
 	stageMng_.Create(StageManager::TYPE::ROAD);
 
@@ -92,7 +94,7 @@ void SceneGame::DebugUpdate()
 	// シーン遷移
 	if (inputMng_.IsTrgDown(InputManager::TYPE::DEBUG_SCENE_CHANGE))
 	{
-		scnMng_.ChangeScene(SceneManager::SCENE_ID::RESULT);
+		scnMng_.ChangeScene(SceneManager::SCENE_ID::BOSS);
 		return;
 	}
 

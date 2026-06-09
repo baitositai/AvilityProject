@@ -6,6 +6,7 @@
 #include "../Common/Vector2.h"
 #include "../Manager/Game/EnemyTypes.h"
 
+// ŽG‹›“G
 class EnemyBase;
 class EnemyClone;
 class EnemySlime;
@@ -13,6 +14,9 @@ class EnemyMushroom;
 class EnemySnake;
 class EnemyHat;
 class EnemySamurai;
+
+// ƒ{ƒX
+class EnemyMaid;
 
 class ParameterEnemy;
 enum class HABITAT_TYPE;
@@ -79,4 +83,6 @@ private:
 	std::unique_ptr<EnemySnake> CreateEnemySnake();
 	std::unique_ptr<EnemyHat> CreateEnemyHat();
 	std::unique_ptr<EnemySamurai> CreateEnemySamurai();
+
+	std::unique_ptr<EnemyMaid> CreateEnemyMaid();
 };

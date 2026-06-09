@@ -467,5 +467,75 @@
         "num": 4
       }
     }
+  },
+  "maid": {
+    "componentKeys": [
+      "knockBack",
+      "invincible",
+      "gravity",
+      "move",
+      "spriteAnimation"
+    ],
+    "stateComponentKeys": {
+      "alive": "enemyAlive",
+      "attack": "attackDefault",
+      "hit": "dummy",
+      "dead": "dead",
+      "spawn": "dummy",
+      "enter": "dummy"
+    },
+    "resourceKey": "maid",
+    "scale": 1.2,
+    "angle": 0.0,
+    "direction": true,
+    "transparent": true,
+    "moveSpeed": 3.0,
+    "hp": 100,
+    "attackPower": 10,
+    "gravityPower": 9.8,
+    "defaultAttackDistance": 50.0,
+    "defaultAttackRadius": 50.0,
+    "defaultAttackStartFrame": 14,
+    "weight": 0.9,
+    "invincibleTimeMax": 2.0,
+    "attackStartDistance": 120.0,
+    "permissibleDistance": 10.0,
+    "eyeAngle": 70.0,
+    "eyeDistance": 300.0,
+    "spawnRate": 0.1,
+    "habitatType": "land",
+    "divisionNum": {
+      "x": 6,
+      "y": 3
+    },
+    "hitBoxSize": {
+      "x": 50,
+      "y": 60
+    },
+    "localPos": {
+      "x": 0,
+      "y": -4
+    },
+    "defaultAttackLoaclPos": {
+      "x": 50,
+      "y": 8
+    },
+    "animation": {
+      "idle": {
+        "no": 0,
+        "speed": 0.1,
+        "num": 4
+      },
+      "walk": {
+        "no": 1,
+        "speed": 0.1,
+        "num": 6
+      },
+      "attack": {
+        "no": 2,
+        "speed": 0.1,
+        "num": 6
+      }
+    }
   }
 }

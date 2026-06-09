@@ -75,10 +75,12 @@ void ComponentAvilityStamp::UpdateInput()
 	inputEnableTime_ -= sceneManager_.GetDeltaTime();
 
 	// 入力受付
-	if(inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_STAMP, parameter_.padNo_) && inputEnableTime_ <= 0.0f)
+	if(inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_STAMP, parameter_.padNo_) && inputEnableTime_ <= 0.0f && !parameter_.isAction_)
 	{
 		// 状態変更
 		ChangeState(STATE::STOP);
+
+		parameter_.isAction_ = true;
 	}
 }
 
@@ -132,6 +134,9 @@ void ComponentAvilityStamp::ChangeStateInput()
 
 	// 所有者のコライダーの判定を有効にする
 	owner_.SetColliderActive(true);
+
+	// 攻撃判定無効
+	parameter_.isAction_ = false;
 }
 
 void ComponentAvilityStamp::ChangeStateStop()
@@ -152,6 +157,7 @@ void ComponentAvilityStamp::ChangeStateStop()
 
 	// 全てのアビリティを無効にする
 	owner_.SetAllAvilityComponentActive(false);
+	owner_.SetAvilityActive(AvilityTypes::TYPE::GRAVITY, true);	// 横方向に備えて重力は有効にしておく
 	isActive_ = true;
 
 	// アニメーション切り替えて停止

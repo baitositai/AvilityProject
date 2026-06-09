@@ -110,23 +110,23 @@ void Stage::DebugDraw()
 
 	Vector2F pos = mainCamera.GetPos();
 
-	const auto& enemyCreateAreaList = areaListMap_.at(LIST_TYPE::ENEMY_CREATE_AREA);
-	if (enemyCreateAreaList.empty()) return;
+	//const auto& enemyCreateAreaList = areaListMap_.at(LIST_TYPE::ENEMY_CREATE_AREA);
+	//if (enemyCreateAreaList.empty()) return;
 
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
-	// ìGÇÃê∂ê¨à íuÇâ¬éãâª
-	for (const auto& enemySpawnArea : enemyCreateAreaList)
-	{
-		DrawBox(
-			pos.x + enemySpawnArea.x - 64,
-			pos.y + enemySpawnArea.y - 32,
-			pos.x + enemySpawnArea.x + 64,
-			pos.y + enemySpawnArea.y + 32,
-			UtilityCommon::YELLOW,
-			true
-		);
-	}
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	//SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
+	//// ìGÇÃê∂ê¨à íuÇâ¬éãâª
+	//for (const auto& enemySpawnArea : enemyCreateAreaList)
+	//{
+	//	DrawBox(
+	//		pos.x + enemySpawnArea.x - 64,
+	//		pos.y + enemySpawnArea.y - 32,
+	//		pos.x + enemySpawnArea.x + 64,
+	//		pos.y + enemySpawnArea.y + 32,
+	//		UtilityCommon::YELLOW,
+	//		true
+	//	);
+	//}
+	//SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 void Stage::SetStage()

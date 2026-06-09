@@ -6,6 +6,7 @@
 #include "../Manager/Common/SpriteEffectManager.h"
 #include "../Manager/Game/GameManager.h"
 #include "../Manager/Game/PlayerManager.h"
+#include "../Manager/Game/GimmickManager.h"
 #include "../Manager/Game/CollisionManager.h"
 #include "../Manager/Game/EnemyManager.h"
 #include "../Manager/Game/StageManager.h"
@@ -29,12 +30,12 @@ SceneBoss::~SceneBoss()
 }
 
 void SceneBoss::Init()
-{	
+{		
 	// ボス部屋の生成
 	stageMng_.Create(StageManager::TYPE::BOSS);
 
-	// 敵を削除
-	enemyMng_.Clear();
+	// ボス生成
+	enemyMng_.Create(EnemyTypes::TYPE::MAID, Vector2F(1050, 500));
 
 	// カメラ設定
 	mainCamera.ChangeMode(Camera::MODE::FIXED_POINT);
@@ -42,6 +43,9 @@ void SceneBoss::Init()
 
 	// 基底クラスの初期化処理
 	SceneBase::Init();	
+
+	// 敵の更新を戻す
+	enemyMng_.SetIsStop(false);
 	
 	// プレイヤーの初期位置を決定
 	playerMng_.SetFirstPositions(stageMng_.GetPlayerFirstPositions());
@@ -50,16 +54,39 @@ void SceneBoss::Init()
 void SceneBoss::NormalUpdate()
 {
 	SceneBase::NormalUpdate();
+
+	// ボスを撃破できた場合
+	if (enemyMng_.IsBossDestroy(EnemyTypes::TYPE::MAID))
+	{
+		scnMng_.ChangeScene(SceneManager::SCENE_ID::RESULT);
+	}
+
+#ifdef _DEBUG
+	// デバッグ用の更新処理
+	DebugUpdate();
+#endif
 }
 
 void SceneBoss::NormalDraw()
 {
 	SceneBase::NormalDraw();
+
+#ifdef _DEBUG
+	// デバッグ用の情報描画
+	DebugDraw();
+#endif
 }
 
 void SceneBoss::DebugUpdate()
 {
 	SceneBase::DebugUpdate();
+
+	// シーン遷移
+	if (inputMng_.IsTrgDown(InputManager::TYPE::DEBUG_SCENE_CHANGE))
+	{
+		scnMng_.ChangeScene(SceneManager::SCENE_ID::RESULT);
+		return;
+	}
 }
 
 void SceneBoss::DebugDraw()

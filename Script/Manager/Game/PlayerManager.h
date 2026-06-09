@@ -24,6 +24,11 @@ public:
 	static constexpr int DEFAULT_ADD_PLAYER_LEFT = -1;
 
 	/// <summary>
+	/// プレイヤー生成
+	/// </summary>
+	void Create();
+
+	/// <summary>
 	/// 初期化処理
 	/// </summary>
 	void Init();
@@ -37,6 +42,16 @@ public:
 	/// 描画処理
 	/// </summary>
 	void Draw();
+
+	/// <summary>
+	/// 削除処理
+	/// </summary>
+	void Clear();
+
+	/// <summary>
+	/// 準備処理
+	/// </summary>
+	void Ready();
 
 	/// <summary>
 	/// デバッグ描画

@@ -23,6 +23,9 @@ public:
     /// <param name="parameter">読み込むJSONデータ</param>
     virtual void LoadParameter(const Json& parameter) override;
 
+    // アクション判定
+    bool isAction_;
+
     // ジャンプ回数
     int jumpCount_;
 

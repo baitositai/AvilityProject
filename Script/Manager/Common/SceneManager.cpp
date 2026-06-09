@@ -3,8 +3,11 @@
 #include <EffekseerForDXLib.h>
 #include "../../Application.h"
 #include "../../Scene/SceneTitle.h"
+#include "../../Scene/SceneTrain.h"
 #include "../../Scene/SceneGame.h"
 #include "../../Scene/SceneResult.h"
+#include "../../Scene/SceneGameOver.h"
+#include "../../Scene/SceneBoss.h"
 #include "../../Scene/SceneGameOver.h"
 #include "../../Common/Loading.h"
 #include "../Common/ResourceManager.h"
@@ -62,9 +65,6 @@ void SceneManager::Init()
 	// 読み込み中処理管理クラス生成
 	Loading::CreateInstance();
 	Loading::GetInstance().Init();
-
-	StageManager::GetInstance().InitParameter();
-	GimmickManager::GetInstance().InitParameter();
 
 	// シーン遷移中
 	isSceneChanging_ = true;
@@ -244,7 +244,7 @@ void SceneManager::Release()
 
 void SceneManager::ChangeScene(const SCENE_ID nextId, const Fader::STATE fadeState)
 {
-
+	if (isSceneChanging_) { return; }
 	// フェード処理が終わってからシーンを変える場合もあるため、
 	// 遷移先シーンをメンバ変数に保持
 	waitSceneId_ = nextId;
@@ -287,6 +287,9 @@ void SceneManager::ResetDeltaTime()
 
 void SceneManager::DoChangeScene(SCENE_ID sceneId)
 {
+	// 変更前の準備
+	scenes_.back()->SceneChangeReady();
+
 	// シーンを変更する
 	sceneId_ = sceneId;
 
@@ -306,12 +309,23 @@ void SceneManager::DoChangeScene(SCENE_ID sceneId)
 	case SCENE_ID::TITLE:
 		CreateScene(std::make_shared<SceneTitle>());
 		break;
+
+	case SCENE_ID::TRAIN:
+		CreateScene(std::make_shared<SceneTrain>());
+		break;
+
 	case SCENE_ID::GAME:
 		CreateScene(std::make_shared<SceneGame>());
 		break;
+
+	case SCENE_ID::BOSS:
+		CreateScene(std::make_shared<SceneBoss>());
+		break;
+
 	case SCENE_ID::RESULT:
 		CreateScene(std::make_shared<SceneResult>());
 		break;
+
 	case SCENE_ID::GAMEOVER:
 		CreateScene(std::make_shared<SceneGameOver>());
 		break;

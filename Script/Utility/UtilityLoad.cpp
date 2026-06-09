@@ -51,7 +51,7 @@ std::vector<std::vector<int>> UtilityLoad::LoadCSVData(const std::string& filePa
     std::vector<std::vector<int>> csvData;
 
     //ƒtƒ@ƒCƒ‹‚Ì€”õ
-    std::ifstream ifs = std::ifstream(filePath);
+    std::ifstream ifs = std::ifstream(Application::PATH_CSV + filePath + ".csv");
 
     if (!ifs)
     {

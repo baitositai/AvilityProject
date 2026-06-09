@@ -138,6 +138,9 @@ void CharacterBase::Damage(const int damage)
 	// 次回アニメーション設定
 	animation_->SetNextAnimationType(Animation::TYPE::IDLE);
 
+	// 攻撃判定無効
+	parameterCharacter_->isAction_ = false;
+
 	// 状態遷移
 	ChangeState(STATE::ALIVE);
 }
@@ -152,6 +155,12 @@ void CharacterBase::Dead()
 
 	// コライダーの判定を無効にする
 	collider_->SetIsActive(false);
+
+	// 攻撃の初期化
+	componentStateMap_.at(STATE::ATTACK)->Init();
+
+	// 攻撃判定無効
+	parameterCharacter_->isAction_ = false;
 
 	// アニメーション開始
 	animation_->Play(Animation::TYPE::DEAD, false);
@@ -168,6 +177,9 @@ void CharacterBase::AttackReset()
 
 	// 状態遷移
 	ChangeState(STATE::ALIVE);
+
+	// 攻撃判定無効
+	parameterCharacter_->isAction_ = false;
 }
 
 void CharacterBase::AttackAfter()
@@ -218,23 +230,30 @@ void CharacterBase::UpdateComponentState()
 
 void CharacterBase::CreateComponents()
 {
-	// 状態別コンポーネントの取得
-	for (const auto & name : parameterCharacter_->stateComponentKeys_)
+	if (!componentStateMap_.empty())
 	{
-		// 状態の名前が取得できているか確認
+		for (const auto& component : componentStateMap_)
+		{
+			component.second->Remove();
+		}
+		componentStateMap_.clear();
+	}
+
+	for (const auto& name : parameterCharacter_->stateComponentKeys_)
+	{
 		auto it = NAME_TO_STATE_MAP.find(name.first);
 
-		// ない場合次へ
-		if (it == NAME_TO_STATE_MAP.end()) { continue; }
+		if (it == NAME_TO_STATE_MAP.end())
+		{
+			continue;
+		}
 
-		// 同名のコンポーネントが既に存在するか確認しながら挿入
-		auto result = componentStateMap_.emplace(NAME_TO_STATE_MAP.at(name.first), std::move(facCom_.CreateComponent(name.second, *this)));
 
-		// 挿入に成功してるか確認
+		auto result = componentStateMap_.emplace(it->second, std::move(facCom_.CreateComponent(name.second, *this)));
+
 		assert(result.second && "状態別コンポーネントの追加に失敗しています");
 	}
 
-	// 基底クラスの処理
 	ActorBase::CreateComponents();
 }
 

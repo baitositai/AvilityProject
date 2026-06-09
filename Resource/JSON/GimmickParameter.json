@@ -1,6 +1,8 @@
 {
   "door": {
     "resourceKey": "door",
+    "transparent": true,
+    "scale": 1.0,
     "hitBoxSize": {
       "x": 160,
       "y": 240

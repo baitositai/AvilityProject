@@ -40,9 +40,13 @@ void ComponentAvilityTeleport::Remove()
 
 void ComponentAvilityTeleport::UpdateInput()
 {
-	if (inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_TELEPORT, parameter_.padNo_))
+	if (inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_TELEPORT, parameter_.padNo_) && !parameter_.isAction_)
 	{
+		// 状態遷移
 		ChangeState(STATE::MOVE);
+
+		// 攻撃を有効
+		parameter_.isAction_ = true;
 	}
 }
 
@@ -114,6 +118,9 @@ void ComponentAvilityTeleport::ChangeStateInput()
 
 	// アニメーションリスタート
 	owner_.GetAnimation().Restart();
+
+	// 攻撃判定無効
+	parameter_.isAction_ = false;
 }
 
 void ComponentAvilityTeleport::ChangeStateMove()

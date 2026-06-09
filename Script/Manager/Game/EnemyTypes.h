@@ -13,6 +13,7 @@ public:
 		HAT,
 		SNAKE,
 		SAMURAI,
+		MAID,
 		MAX,
 	};
 

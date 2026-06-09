@@ -57,9 +57,9 @@ void OnHitEnemy::Update(const std::weak_ptr<ColliderBase>& opponentCollider)
 }
 
 void OnHitEnemy::OnHitPlayerAttack(const std::weak_ptr<ColliderBase>& opponentCollider)
-{    
-    // 生存状態遷移(ダメージを受ける前に変更)
-	owner_.ChangeState(EnemyBase::STATE::ALIVE);
+{        
+    // 攻撃を無効
+    owner_.AttackReset();
 	
     // 衝突者が無敵のときは無視
     if (owner_.IsInvincible()
@@ -75,9 +75,6 @@ void OnHitEnemy::OnHitPlayerAttack(const std::weak_ptr<ColliderBase>& opponentCo
 
 	// 相手コライダーの判定を無効化
 	opponentCollider.lock()->SetIsActive(false);
-
-    // 攻撃を無効
-    owner_.AttackReset();
 }
 
 void OnHitEnemy::OnHitPlayerAvilityStamp(const std::weak_ptr<ColliderBase>& opponentCollider)
@@ -91,6 +88,7 @@ void OnHitEnemy::OnHitPlayerAvilityStamp(const std::weak_ptr<ColliderBase>& oppo
 
 void OnHitEnemy::OnHitOtherEnemy(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
+    return;
     auto pinOpponent = opponentCollider.lock();
     if (pinOpponent == nullptr)
     {

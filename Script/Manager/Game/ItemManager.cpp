@@ -76,3 +76,14 @@ void ItemManager::Sweep()
 	// 終了したコライダを削除する
 	itemList_.erase(it, itemList_.end());
 }
+
+void ItemManager::Clear()
+{
+	if (itemList_.empty()) return;
+
+	for (auto& item : itemList_)
+	{
+		item->Delete();
+	}
+	itemList_.clear();
+}

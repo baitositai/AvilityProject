@@ -71,9 +71,9 @@ const Vector2& StageManager::GetStageSize() const
 	return stage_->GetStageSize();
 }
 
-const Vector2F& StageManager::GetBossDoorPos() const
+const Vector2F& StageManager::GetBossDoorPos()
 {
-	return stage_->GetAreaListMap(Stage::LIST_TYPE::BOSS_DOOR).front();
+	return Vector2F::AddVector2F(stage_->GetAreaListMap(Stage::LIST_TYPE::BOSS_DOOR).front(), tileChipSize_.ToVector2F());
 }
 
 void StageManager::InitParameter()
@@ -114,6 +114,9 @@ void StageManager::CreateStageRoad()
 	// ステージチップ生成
 	parameter->tileIndexs_ = stageGenerator->CreateStageData(generatorParameter);
 
+	// タイルチップサイズを保持
+	tileChipSize_ = parameter->chipSize_;
+
 	// ステージ生成
 	stage_ = std::make_unique<Stage>(std::move(parameter));
 	stage_->Init();
@@ -127,6 +130,9 @@ void StageManager::CreateStageRoom()
 	// タイルチップサイズを保持
 	tileChipSize_ = parameter->chipSize_;
 
+	// タイル配列を設定
+	parameter->tileIndexs_ = UtilityLoad::LoadCSVData(parameter->path_);
+
 	// ステージ生成
 	stage_ = std::make_unique<Stage>(std::move(parameter));
 }
@@ -134,6 +140,7 @@ void StageManager::CreateStageRoom()
 StageManager::StageManager()
 {
 	type_ = TYPE::NONE;
+	InitParameter();
 }
 
 StageManager::~StageManager()

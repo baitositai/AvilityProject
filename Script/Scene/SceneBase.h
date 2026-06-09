@@ -22,23 +22,40 @@ class SceneBase
 {
 public:
 
-	// コンストラクタ
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
 	SceneBase();
 
-	// デストラクタ
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
 	virtual ~SceneBase();
 
-	// 読み込み処理
+	/// <summary>
+	/// 読み込み処理
+	/// </summary>
 	virtual void Load();
 
-	// 初期化処理
+	/// <summary>
+	/// 初期化処理
+	/// </summary>
 	virtual void Init();
 
-	// 更新ステップ
+	/// <summary>
+	/// 更新処理
+	/// </summary>
 	virtual void Update();
 
-	// 描画処理
+	/// <summary>
+	/// 描画処理
+	/// </summary>
 	virtual void Draw();
+
+	/// <summary>
+	/// シーン遷移の準備
+	/// </summary>
+	virtual void SceneChangeReady();
 
 protected:
 

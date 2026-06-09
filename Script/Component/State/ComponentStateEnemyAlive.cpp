@@ -22,7 +22,13 @@ ComponentStateEnemyAlive::ComponentStateEnemyAlive(EnemyBase& owner) :
 
 	// 状態遷移処理のマップを初期化
 	stateChangeMap_.emplace(STATE::PATROL, std::bind(&ComponentStateEnemyAlive::ChangeStatePatrol, this));
-	stateChangeMap_.emplace(STATE::CHASE, std::bind(&ComponentStateEnemyAlive::ChangeStateChase, this));
+	stateChangeMap_.emplace(STATE::CHASE, std::bind(&ComponentStateEnemyAlive::ChangeStateChase, this));	
+	
+	// 視野角用のコライダーを生成
+	colliderFan_ = std::make_shared<ColliderFan>(owner_, CollisionTags::TAG::ENEMY_VIEW, owner_.GetParameter().pos_, parameter_.eyeDistance_, eyeBaseAngle_, parameter_.eyeAngleRad_);
+
+	// コライダーの登録
+	CollisionManager::GetInstance().Add(colliderFan_);
 }
 
 ComponentStateEnemyAlive::~ComponentStateEnemyAlive()
@@ -39,12 +45,6 @@ void ComponentStateEnemyAlive::Init()
 {
 	// 視野角の初期化
 	UpdateEyeAngle();
-
-	// 視野角用のコライダーを生成
-	colliderFan_ = std::make_shared<ColliderFan>(owner_, CollisionTags::TAG::ENEMY_VIEW, owner_.GetParameter().pos_, parameter_.eyeDistance_, eyeBaseAngle_, parameter_.eyeAngleRad_);
-
-	// コライダーの登録
-	CollisionManager::GetInstance().Add(colliderFan_);
 
 	// 初期状態
 	ChangeState(STATE::PATROL);
@@ -211,6 +211,9 @@ void ComponentStateEnemyAlive::UpdateChase()
 
 		// 次回アニメーションを指定しない
 		owner_.GetAnimation().SetNextAnimationType(Animation::TYPE::MAX);
+
+		// 攻撃判定
+		parameter_.isAction_ = true;
 	}
 
 	// ターゲットから離れた場合 見失う距離まで離れたか

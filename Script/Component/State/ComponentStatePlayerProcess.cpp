@@ -97,7 +97,7 @@ void ComponentStatePlayerProcess::ProcessInputJump()
 
 void ComponentStatePlayerProcess::ProcessInputAttack()
 {
-	if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_ATTACK, parameter_.padNo_))
+	if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_ATTACK, parameter_.padNo_) && !parameter_.isAction_)
 	{
 		// 攻撃のアニメーションを開始（ループしない）
 		owner_.GetAnimation().Play(Animation::TYPE::ATTACK, false);
@@ -110,6 +110,9 @@ void ComponentStatePlayerProcess::ProcessInputAttack()
 
 		// アビリティを無効にする
 		owner_.SetAllAvilityComponentActive(false);
+
+		// アクション判定を有効
+		parameter_.isAction_ = true;
 		
 		// 横移動の値をなくす
 		moveAmount_.x = 0.0f;

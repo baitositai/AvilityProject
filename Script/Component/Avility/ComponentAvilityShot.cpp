@@ -139,7 +139,7 @@ void ComponentAvilityShot::ProcessInputShot()
 	const float moveSpeed = parameter_.moveSpeed_;
 
 	//　ショット入力があったらCharge開始(現在Qキー)
-	if (inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_SHOT, parameter_.padNo_))
+	if (inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_SHOT, parameter_.padNo_) && !parameter_.isAction_)
 	{
 		// 影響を与えるコンポーネントを無効にする
 		owner_.SetStateComponentActive(Player::STATE::ALIVE, false);
@@ -159,6 +159,9 @@ void ComponentAvilityShot::ProcessInputShot()
 		// 初期化
 		shotVec_ = {};
 		shotAngle_ = 0.0f;
+
+		// 攻撃判定有効
+		parameter_.isAction_ = true;
 	}
 }
 
@@ -311,6 +314,9 @@ void ComponentAvilityShot::ProcessMoveShot()
 
 		// 全てのアビリティコンポーネントを有効にする
 		owner_.SetAllAvilityComponentActive(true);
+
+		// 攻撃判定無効
+		parameter_.isAction_ = false;
 
 		currentState_ = "input";
 		currentStateFunction_ = stateFunctionMap_[currentState_];

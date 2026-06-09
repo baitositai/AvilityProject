@@ -25,7 +25,7 @@ public:
 private:
 
 	// 所有者のアニメーション
-	Animation& animation_;
+	//Animation& animation_;
 
 	//アニメーションステップ
 	float animStep_;

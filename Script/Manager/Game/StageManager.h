@@ -66,7 +66,7 @@ public:
 	/// ボス部屋の座標を返す
 	/// </summary>
 	/// <returns></returns>
-	const Vector2F& GetBossDoorPos() const;
+	const Vector2F& GetBossDoorPos();
 
 	/// <summary>
 	/// プレイヤーの初期位置を返す

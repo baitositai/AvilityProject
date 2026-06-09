@@ -139,6 +139,8 @@ void CollisionManager::Clear()
 {
 	// ’†g‚Ìíœ
 	colliders_.clear();
+
+	int size = static_cast<int>(colliders_.size());
 }
 
 void CollisionManager::Sweep()

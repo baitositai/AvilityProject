@@ -46,11 +46,33 @@ public:
 	void Generator(const std::vector<Vector2F>& createPositionList);
 
 	/// <summary>
+	/// 生成処理
+	/// </summary>
+	/// <param name="type">種類</param>
+	/// <param name="pos">生成位置</param>
+	void Create(const EnemyTypes::TYPE type, const Vector2F& pos);
+
+	/// <summary>
 	/// 削除
 	/// </summary>
 	void Clear();	
 
+	/// <summary>
+	/// 停止設定
+	/// </summary>
+	/// <param name="isStop"></param>
+	void SetIsStop(const bool isStop) { isStop_ = isStop; }
+
+	/// <summary>
+	/// ボスを撃破できたか
+	/// </summary>
+	/// <returns>trueは撃破、falseは生存</returns>
+	const bool IsBossDestroy(const EnemyTypes::TYPE type) const;
+
 private:
+
+	// 更新の停止
+	bool isStop_;
 
 	// 敵の生成に関するジェネレーター
 	std::unique_ptr<EnemyGenerator> enemyGenerator_;

@@ -247,7 +247,22 @@ void ActorBase::RegisterCollider()
 
 void ActorBase::CreateComponents()
 {
-	// 必要なコンポーネントの生成
+	if (!componentList_.empty())
+	{
+		// 実体を持っている list 側からループを回して Remove を呼ぶ
+		for (const auto& component : componentList_)
+		{
+			if (component)
+			{
+				component->Remove();
+			}
+		}
+
+		// 参照・実体をそれぞれクリアして完全に解放する
+		componentMap_.clear();
+		componentList_.clear();
+	}
+
 	for (const std::string& name : parameter_->componentkeys_)
 	{
 		AddComponent(name, std::move(facCom_.CreateComponent(name, *this)));

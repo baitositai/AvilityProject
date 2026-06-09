@@ -3,7 +3,6 @@
 #include "ComponentCharacterStateBase.h"
 
 class SceneManager;
-class PlayerManager;
 class Player;
 class ParameterPlayer;
 
@@ -41,13 +40,10 @@ private:
 	static constexpr int RESPAWN_CONDITION_INPUT_COUNT = 5;
 
 	// 所有者
-	CharacterBase& owner_;
+	Player& owner_;
 
 	// シーン管理クラス
 	SceneManager& sceneManager_;
-
-	// プレイヤー管理クラス
-	PlayerManager& playerManager_;
 
 	// 待機タイマー
 	float waitTimer_;
