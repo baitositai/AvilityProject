@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <math.h>
 #include "../../Application.h"
 #include "../../Manager/Common/InputManager.h"
 #include "../../Manager/Common/SceneManager.h"
@@ -23,6 +24,7 @@ Camera::Camera() :
 	changeStateMap_.emplace(MODE::FIXED_POINT, std::bind(&Camera::ChangeModeFixedPoint, this));
 	changeStateMap_.emplace(MODE::PLAYER_FOLLOW, std::bind(&Camera::ChangeModePlayerFollow, this));
 	changeStateMap_.emplace(MODE::CAMERA_SCROLL, std::bind(&Camera::ChangeModeScroll, this));
+	changeStateMap_.emplace(MODE::TRAIN_SHAKE, std::bind(&Camera::ChangeModeTrainShake, this));
 }
 
 Camera::~Camera()
@@ -36,15 +38,15 @@ void Camera::Init()
 }
 
 void Camera::Update()
-{
+{	
+	// カメラシェイク処理
+	CameraShake();
+	
 	// カメラのモードに応じた更新処理
 	updateFunction_();
 
 	// カメラの移動制限
 	LimitCameraMove();
-
-	// カメラシェイク処理
-	CameraShake();
 }
 
 void Camera::ChangeMode(const MODE mode)
@@ -143,6 +145,32 @@ void Camera::UpdateModeScroll()
 	}
 }
 
+void Camera::UpdateModeTrainShake()
+{
+	constexpr float SHAKE_SPEED = 0.05f;
+	constexpr float SHAKE_SCALE = 5.0f;
+
+	// タイマーを進める
+	shakeTime_ += SHAKE_SPEED;
+
+	// 縦揺れと横揺れを異なる周期のサイン波で計算
+	float waveX = sinf(shakeTime_);
+	float waveY = sinf(shakeTime_ * 1.5f);
+
+	// 電車特有の不規則なガタゴト感を出すための微小なノイズ
+	// GetRand で 0 から 200 の乱数を取得し -1.0 から 1.0 の範囲に正規化
+	float noiseX = (static_cast<float>(GetRand(200)) / 100.0f) - 1.0f;
+	float noiseY = (static_cast<float>(GetRand(200)) / 100.0f) - 1.0f;
+
+	// メインのサイン波にノイズを 20パーセント ほどブレンド
+	float finalShakeX = (waveX * 0.8f) + (noiseX * 0.2f);
+	float finalShakeY = (waveY * 0.8f) + (noiseY * 0.2f);
+
+	// 基準座標に揺れを加算してカメラ座標を更新
+	offset_.x = finalShakeX * SHAKE_SCALE;
+	offset_.y = finalShakeY * SHAKE_SCALE;
+}
+
 void Camera::ChangeModeFree()
 {
 	updateFunction_ = std::bind(&Camera::UpdateModeFree, this);
@@ -161,6 +189,11 @@ void Camera::ChangeModePlayerFollow()
 void Camera::ChangeModeScroll()
 {
 	updateFunction_ = std::bind(&Camera::UpdateModeScroll, this);
+}
+
+void Camera::ChangeModeTrainShake()
+{
+	updateFunction_ = std::bind(&Camera::UpdateModeTrainShake, this);
 }
 
 void Camera::CameraShake()

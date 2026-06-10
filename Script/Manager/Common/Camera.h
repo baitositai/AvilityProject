@@ -17,7 +17,8 @@ public:
 		FREE,			// 自由移動
 		FIXED_POINT,	// 固定点
 		PLAYER_FOLLOW,	// プレイヤー追従
-		CAMERA_SCROLL	// カメラスクロール
+		CAMERA_SCROLL,	// カメラスクロール
+		TRAIN_SHAKE		// 電車のような揺れ
 	};
 
 	/// <summary>
@@ -95,6 +96,12 @@ public:
 	const Vector2F& GetPos() const { return pos_; }
 
 	/// <summary>
+	/// 調整位置を返す
+	/// </summary>
+	/// <returns>調整位置</returns>
+	const Vector2F& GetOffset() const { return offset_; }
+
+	/// <summary>
 	/// カメラモードを返す
 	/// </summary>
 	/// <returns>モードを返す</returns>
@@ -150,12 +157,14 @@ private:
 	void UpdateModeFixedPoint();
 	void UpdateModePlayerFollow();
 	void UpdateModeScroll();
+	void UpdateModeTrainShake();
 
 	// モード別遷移処理
 	void ChangeModeFree();
 	void ChangeModeFixedPoint();
 	void ChangeModePlayerFollow();
 	void ChangeModeScroll();
+	void ChangeModeTrainShake();
 
 	// カメラシェイク処理
 	void CameraShake();

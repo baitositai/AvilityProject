@@ -84,6 +84,9 @@ void InputManager::Init()
 	// 入室
 	RegisterTrigger(TYPE::PLAYER_ENTER_DOOR, { KEY_INPUT_W }, { }, STICK::L_STICK_UP);
 
+	// シーン遷移
+	RegisterTrigger(TYPE::SCENE_CHANGE, { KEY_INPUT_SPACE }, { BTN::RB_RIGHT, BTN::START });
+
 	// デバッグ操作
 	RegisterTrigger(TYPE::DEBUG_SCENE_CHANGE, { KEY_INPUT_RSHIFT }, { });
 	RegisterTrigger(TYPE::DEBUG_CAMERA_CHANGE, { KEY_INPUT_TAB }, { });

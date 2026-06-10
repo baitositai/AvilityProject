@@ -35,7 +35,10 @@ private:
 	std::unique_ptr<Train> train_;
 
 	// ”wŒi
-	std::unique_ptr<BackGround> backGround_;
+	std::unique_ptr<BackGround> backGround_[9];
+
+	// ’n–Ê
+	std::unique_ptr<BackGround> ground_;
 
 	// XVŠÖ”
 	void NormalUpdate() override;

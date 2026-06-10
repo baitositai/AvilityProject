@@ -30,7 +30,7 @@
     },
     {
       "key": "player1",
-      "sceneIds": [ 2,3,4,5,6 ],
+      "sceneIds": [ 2, 3, 4, 5, 6 ],
       "type": "sprite",
       "divX": 10,
       "divY": 9,
@@ -243,6 +243,66 @@
       "sceneIds": [ 4 ],
       "sizeX": 192,
       "sizeY": 128
+    },
+    {
+      "key": "backGround0",
+      "path": "Resource/Image/BackGround/BackGround0.png",
+      "sceneIds": [ 1, 2, 3, 4 ],
+      "type": "texture"
+    },
+    {
+      "key": "backGround1",
+      "path": "Resource/Image/BackGround/BackGround1.png",
+      "sceneIds": [ 1, 2, 3, 4 ],
+      "type": "texture"
+    },
+    {
+      "key": "backGround2",
+      "path": "Resource/Image/BackGround/BackGround2.png",
+      "sceneIds": [ 1, 2, 3, 4 ],
+      "type": "texture"
+    },
+    {
+      "key": "backGround3",
+      "path": "Resource/Image/BackGround/BackGround3.png",
+      "sceneIds": [ 1, 2, 3, 4 ],
+      "type": "texture"
+    },
+    {
+      "key": "backGround4",
+      "path": "Resource/Image/BackGround/BackGround4.png",
+      "sceneIds": [ 1, 2, 3, 4 ],
+      "type": "texture"
+    },
+    {
+      "key": "backGround5",
+      "path": "Resource/Image/BackGround/BackGround5.png",
+      "sceneIds": [ 1, 2, 3, 4 ],
+      "type": "texture"
+    },
+    {
+      "key": "backGround6",
+      "path": "Resource/Image/BackGround/BackGround6.png",
+      "sceneIds": [ 1, 2, 3, 4 ],
+      "type": "texture"
+    },
+    {
+      "key": "backGround7",
+      "path": "Resource/Image/BackGround/BackGround7.png",
+      "sceneIds": [ 1, 2, 3, 4 ],
+      "type": "texture"
+    },
+    {
+      "key": "backGround8",
+      "path": "Resource/Image/BackGround/BackGround8.png",
+      "sceneIds": [ 1, 2, 3, 4 ],
+      "type": "texture"
+    },
+    {
+      "key": "titleGround",
+      "path": "Resource/Image/BackGround/TitleGround.png",
+      "sceneIds": [ 1 ],
+      "type": "texture"
     }
   ]
 }

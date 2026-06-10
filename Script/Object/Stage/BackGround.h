@@ -50,7 +50,19 @@ public:
 	/// <param name="key">リソース呼び出し用のキー</param>
 	void SetResource(const std::string& key);
 
+	/// <summary>
+	/// スクロール速度の設定
+	/// </summary>
+	/// <param name="scrollSpeed">スクロール速度</param>
+	void SetScrollSpeed(const float scrollSpeed);
+
 private:
+
+	// スクロール背景数
+	static constexpr int SCROLL_NUM = 2;
+
+	// 位置調整
+	static constexpr float OFFSET = 0.0f;
 
 	// リソース
 	int img_;
@@ -58,11 +70,8 @@ private:
 	// スクロール速度
 	float scrollSpeed_;
 
-	// 座標
-	Vector2F pos_;
-
-	// スクロール用サブ座標
-	Vector2F subPos_;
+	// スクロール用座標
+	Vector2F scrollPos_[SCROLL_NUM];
 
 	// 更新処理
 	std::function<void()> update_;
@@ -78,4 +87,3 @@ private:
 	void DrawFix();
 	void DrawScroll();
 };
-
