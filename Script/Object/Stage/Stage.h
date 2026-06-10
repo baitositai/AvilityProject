@@ -29,22 +29,22 @@ public:
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~Stage() override;
+	virtual ~Stage() override;
 
 	/// <summary>
 	/// 初期化処理
 	/// </summary>
-	void Init() override;
+	virtual void Init() override;
 
 	/// <summary>
 	/// 更新処理
 	/// </summary>
-	void Update() override;
+	virtual void Update() override;
 
 	/// <summary>
 	/// 描画処理
 	/// </summary>
-	void Draw() override;
+	virtual void Draw() override;
 
 	/// <summary>
 	/// ステージの変更
@@ -75,6 +75,11 @@ public:
 	/// <param name="type">リスト種類</param>
 	/// <returns>エリアリスト</returns>
 	const std::vector<Vector2F>& GetAreaListMap(const LIST_TYPE type) const;
+
+protected:
+
+	// 型変換用のパラメータを返す関数
+	ParameterStage* GetParameterStagePtr() { return parameterStage_; }
 
 private:
 

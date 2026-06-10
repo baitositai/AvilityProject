@@ -77,10 +77,10 @@ void BackGround::UpdateScroll()
 
 void BackGround::DrawFix()
 {
-	DrawExtendGraph(
-		0, 0,
-		Application::SCREEN_SIZE_X,
-		Application::SCREEN_SIZE_Y,
+	Vector2F offsetF = mainCamera.GetOffset();
+	Vector2 offset = offsetF.ToVector2();
+	DrawGraph(
+		offset.x, offset.y,
 		img_,
 		true
 	);

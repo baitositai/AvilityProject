@@ -4,8 +4,8 @@
 #include "../../Object/Character/CharacterBase.h"
 #include "../../Object/Stage/BackGround.h"
 #include "../../Object/Stage/Stage.h"
+#include "../../Object/Stage/StageTrain.h"
 #include "../../Object/Gimmick/GimmickDoor.h"
-#include "../../Object/Gimmick/AvilityBox.h"
 #include "../../System/StageGenerator.h"
 #include "../Common/Camera.h"
 #include "../Common/SceneManager.h"
@@ -16,20 +16,27 @@ void StageManager::Init()
 	// 初期化
 	if(stage_) stage_->Init();
 
-	// 背景生成
-	backGround_ = std::make_unique<BackGround>();
-	backGround_->SetResource("backGround02");
-	backGround_->Init();
+	for (auto& back : backGrounds_)
+	{
+		back->Init();
+	}
 }
 
 void StageManager::Update()
 {
 	stage_->Update();
+	for (auto& back : backGrounds_)
+	{
+		back->Update();
+	}
 }
 
 void StageManager::Draw()
 {
-	backGround_->Draw();
+	for (auto& back : backGrounds_)
+	{
+		back->Draw();
+	}
 	stage_->Draw();
 }
 
@@ -45,7 +52,11 @@ void StageManager::Create(const TYPE type)
 		CreateStageRoad();
 		break;
 
-	default:
+	case TYPE::TRAIN:
+		CreateStageTrain();
+		break;
+
+	case TYPE::BOSS:
 		CreateStageRoom();
 		break;
 	}
@@ -98,6 +109,12 @@ void StageManager::InitParameter()
 	auto parameterEvent = std::make_unique<ParameterStage>();
 	parameterEvent->LoadParameter(jsonBossParameter);
 	templateParameterMap_.emplace(StageManager::TYPE::EVENT, std::move(parameterEvent));
+
+	// 車内生成
+	const auto jsonTrainParameter = jsonParameterMap.at("train").front();
+	auto parameterTrain = std::make_unique<ParameterStage>();
+	parameterTrain->LoadParameter(jsonTrainParameter);
+	templateParameterMap_.emplace(StageManager::TYPE::TRAIN, std::move(parameterTrain));
 }
 
 void StageManager::CreateStageRoad()
@@ -120,9 +137,21 @@ void StageManager::CreateStageRoad()
 	// ステージ生成
 	stage_ = std::make_unique<Stage>(std::move(parameter));
 	stage_->Init();
+
+	// 背景生成
+	CreateBackGround();
+
+	// 背景のスクロール速度設定
+	float addScrollSpeed = -0.05f;
+	float scrollSpeed = -Camera::SCROLL_SPEED - addScrollSpeed * static_cast<int>(backGrounds_.size());
+	for (auto& back : backGrounds_)
+	{
+		back->SetScrollSpeed(scrollSpeed);
+		scrollSpeed += addScrollSpeed;
+	}
 }
 
-void StageManager::CreateStageRoom()
+void StageManager::CreateStageTrain()
 {
 	// ステージパラメータ
 	std::unique_ptr<ParameterStage> parameter = std::make_unique<ParameterStage>(std::move(*templateParameterMap_.at(type_)));
@@ -134,7 +163,55 @@ void StageManager::CreateStageRoom()
 	parameter->tileIndexs_ = UtilityLoad::LoadCSVData(parameter->path_);
 
 	// ステージ生成
+	stage_ = std::make_unique<StageTrain>(std::move(parameter));
+	
+	// 背景生成
+	CreateBackGround();
+
+	// 乗客室の背景を追加
+	auto back = std::make_unique<BackGround>();
+	back->SetType(BackGround::TYPE::FIX);
+	back->SetResource("guestRoom");
+	backGrounds_.push_back(std::move(back));
+}
+
+void StageManager::CreateStageRoom()
+{
+	// 共通処理
+	CreateStageCommon();
+	CreateBackGround();
+}
+
+void StageManager::CreateStageCommon()
+{	
+	// ステージパラメータ
+	std::unique_ptr<ParameterStage> parameter = std::make_unique<ParameterStage>(std::move(*templateParameterMap_.at(type_)));
+
+	// タイルチップサイズを保持
+	tileChipSize_ = parameter->chipSize_;
+
+	// タイル配列を設定
+	parameter->tileIndexs_ = UtilityLoad::LoadCSVData(parameter->path_);
+
+	// ステージ生成
 	stage_ = std::make_unique<Stage>(std::move(parameter));
+}
+
+void StageManager::CreateBackGround()
+{	
+	// 背景
+	constexpr int BACK_GROUND_NUM = 9;
+	float scrollSpeed = -0.5f;
+	float addScrollSpeed = -0.2f;
+	for (int i = 0; i < BACK_GROUND_NUM; i++)
+	{
+		auto backGround = std::make_unique<BackGround>();
+		backGround->SetType(BackGround::TYPE::SCROLL);
+		backGround->SetScrollSpeed(scrollSpeed);
+		backGround->SetResource("backGround" + std::to_string(i));
+		backGrounds_.push_back(std::move(backGround));
+		scrollSpeed += addScrollSpeed;
+	}
 }
 
 StageManager::StageManager()

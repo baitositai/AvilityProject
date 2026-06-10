@@ -3,13 +3,13 @@
 #include "../../Factory/FactoryComponent.h"
 #include "../../Component/Avility/ComponentAvilityBase.h"
 #include "../../Manager/Common/InputManager.h"
+#include "../../Manager/Common/SceneManager.h"
 #include "../Utility/UtilityCommon.h"
 #include "../Object/Character/Player.h"
 #include "../Collider/ColliderArray.h"
 #include "../Collider/ColliderBox.h"
 #include "OnHitPlayerStamp.h"
 #include "OnHitPlayer.h"
-
 
 OnHitPlayer::OnHitPlayer(Player& owner) :
     OnHitCharacterBase(owner),
@@ -20,6 +20,7 @@ OnHitPlayer::OnHitPlayer(Player& owner) :
 	onHitMap_.emplace(CollisionTags::TAG::ITEM_AVILITY, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitItemAvility(opponentCollider); });
 	onHitMap_.emplace(CollisionTags::TAG::DOOR, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitDoor(opponentCollider); });
 	onHitMap_.emplace(CollisionTags::TAG::ENEMY_ATTACK_NORMAL, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitAttack(opponentCollider); });
+	onHitMap_.emplace(CollisionTags::TAG::CHANGE_NEXT_AREA, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitNextArea(opponentCollider); });
 
     onHitPlayerStamp_ = std::make_unique<OnHitPlayerStamp>(owner_);
 }
@@ -78,6 +79,18 @@ void OnHitPlayer::OnHitDoor(const std::weak_ptr<ColliderBase>& opponentCollider)
         // 全てのアビリティ処理を無効
         owner_.SetAllAvilityComponentActive(false);
     }
+}
+
+void OnHitPlayer::OnHitNextArea(const std::weak_ptr<ColliderBase>& opponentCollider)
+{
+    // シーン遷移
+    SceneManager::GetInstance().ChangeScene(SceneManager::SCENE_ID::GAME);
+
+    // コライダーの判定を消す
+    opponentCollider.lock()->SetIsActive(false);
+
+    // プレイヤーのアニメーションを再生
+    owner_.GetAnimation().Play(Animation::TYPE::WALK);
 }
 
 void OnHitPlayer::AvilityShot(const std::weak_ptr<ColliderBase>& opponentCollider, const Vector2F& normal)

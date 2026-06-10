@@ -12,6 +12,7 @@ Camera::Camera() :
 	// 変数の初期化
 	shakePower_ = 0.0f;
 	shakeTime_ = 0.0f;
+	shakeTrainTime_ = 0.0f;
 	mode_ = MODE::NONE;
 	pos_ = Vector2F();
 	limitMax_ = Vector2F();
@@ -151,11 +152,11 @@ void Camera::UpdateModeTrainShake()
 	constexpr float SHAKE_SCALE = 5.0f;
 
 	// タイマーを進める
-	shakeTime_ += SHAKE_SPEED;
+	shakeTrainTime_ += SHAKE_SPEED;
 
 	// 縦揺れと横揺れを異なる周期のサイン波で計算
-	float waveX = sinf(shakeTime_);
-	float waveY = sinf(shakeTime_ * 1.5f);
+	float waveX = sinf(shakeTrainTime_);
+	float waveY = sinf(shakeTrainTime_ * 1.5f);
 
 	// 電車特有の不規則なガタゴト感を出すための微小なノイズ
 	// GetRand で 0 から 200 の乱数を取得し -1.0 から 1.0 の範囲に正規化

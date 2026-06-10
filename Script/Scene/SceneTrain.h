@@ -25,7 +25,7 @@ public:
 
 private:
 
-	//ポーズ画面
+	// ポーズ画面
 	std::shared_ptr<ScenePause> ScenePause_;
 
 	// 更新関数

@@ -105,16 +105,17 @@ private:
 	std::unique_ptr<Stage> stage_;
 
 	// 背景
-	std::unique_ptr<BackGround> backGround_;
+	std::vector<std::unique_ptr<BackGround>> backGrounds_;
 
 	// テンプレートとなるパラメータマップ
 	std::unordered_map<TYPE, std::unique_ptr<ParameterStage>> templateParameterMap_;
 
-
-
 	// 各種ステージ生成処理
-	void CreateStageRoad();	// 自動生成の場合
-	void CreateStageRoom();	// 決められた部屋の場合
+	void CreateStageRoad();		// 自動生成の場合
+	void CreateStageTrain();	// 電車シーンの場合
+	void CreateStageRoom();		// 決められた部屋の場合
+	void CreateStageCommon();	// 共通処理
+	void CreateBackGround();	// 背景
 
 	// コンストラクタ
 	StageManager();

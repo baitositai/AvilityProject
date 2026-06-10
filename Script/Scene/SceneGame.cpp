@@ -36,8 +36,6 @@ SceneGame::~SceneGame()
 
 void SceneGame::Init()
 {	
-	playerMng_.Create();
-
 	// ステージ生成
 	stageMng_.Create(StageManager::TYPE::ROAD);
 

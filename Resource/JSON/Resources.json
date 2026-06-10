@@ -303,6 +303,28 @@
       "path": "Resource/Image/BackGround/TitleGround.png",
       "sceneIds": [ 1 ],
       "type": "texture"
+    },
+    {
+      "key": "pleaseButton",
+      "path": "Resource/Image/Ui/PleaseBButton.png",
+      "sceneIds": [ 1 ],
+      "type": "texture"
+    },
+    {
+      "key": "guestRoom",
+      "path": "Resource/Image/BackGround/GuestRoom.png",
+      "sceneIds": [ 2 ],
+      "type": "texture"
+    },
+    {
+      "key": "guestRoomChips",
+      "path": "Resource/Image/Stage/GuestRoomChips.png",
+      "sceneIds": [ 2 ],
+      "type": "sprite",
+      "divX": 22,
+      "divY": 20,
+      "sizeX": 32,
+      "sizeY": 32
     }
   ]
 }

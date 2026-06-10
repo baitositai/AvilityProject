@@ -12,13 +12,13 @@ public:
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~ParameterStage() override;
+	virtual ~ParameterStage() override;
 
 	/// <summary>
 	/// 読み込み
 	/// </summary>
 	/// <param name="parameter">パラメータ</param>
-	void LoadParameter(const Json& parameter) override;
+	virtual void LoadParameter(const Json& parameter) override;
 	
 	// 接続数
 	int connectNum_;

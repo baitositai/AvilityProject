@@ -8,6 +8,7 @@
 #include "../Manager/Common/ResourceManager.h"
 #include "../Manager/Common/SoundManager.h"
 #include "../Manager/Common/FontManager.h"
+#include "../Manager/Game/PlayerManager.h"
 #include "../Utility/UtilityCommon.h"
 #include "../Object/Stage/BackGround.h"
 #include "../Object/Common/Animation.h"
@@ -21,6 +22,8 @@ SceneTitle::SceneTitle()
 
 	// 描画関数のセット
 	drawFunc_ = std::bind(&SceneTitle::LoadingDraw, this);
+
+	alphaRate_ = 0.0f;
 }
 
 SceneTitle::~SceneTitle()
@@ -29,10 +32,12 @@ SceneTitle::~SceneTitle()
 
 void SceneTitle::Init()
 {
+	// UI
 	titleLogo_.handleId = resMng_.GetHandle("titleLogo");
 	titleLogo_.pos = { Application::SCREEN_HALF_X, Application::SCREEN_HALF_Y - 150 };
 
-
+	pleaseButton_.handleId = resMng_.GetHandle("pleaseButton");
+	pleaseButton_.pos = { Application::SCREEN_HALF_X, Application::SCREEN_HALF_Y + 170 };
 
 	sndMng_.PlayBgm(SoundType::BGM::TITLE);
 
@@ -66,10 +71,13 @@ void SceneTitle::Init()
 		scrollSpeed += addScrollSpeed;
 	}	
 	
+	// 地面
 	ground_ = std::make_unique<BackGround>();
 	ground_->SetResource("titleGround");
 	ground_->SetType(BackGround::TYPE::SCROLL);
 	ground_->SetScrollSpeed(scrollSpeed);
+
+	// カメラ
 	mainCamera.ChangeMode(Camera::MODE::TRAIN_SHAKE);
 }
 
@@ -85,9 +93,10 @@ void SceneTitle::NormalUpdate()
 	// シーン遷移
 	if (inputMng_.IsTrgDown(InputManager::TYPE::SCENE_CHANGE))
 	{
-		scnMng_.ChangeScene(SceneManager::SCENE_ID::GAME);
+		scnMng_.ChangeScene(SceneManager::SCENE_ID::TRAIN);
 		sndMng_.PlaySe(SoundType::SE::GAME_START);
 		sndMng_.StopBgm(SoundType::BGM::TITLE);
+		playerMng_.Create();
 		return;
 	}
 }
@@ -101,5 +110,20 @@ void SceneTitle::NormalDraw()
 	ground_->Draw();
 	train_->Draw();
 	titleLogo_.DrawRota();
-	DrawString(0, 0, L"RSHIFTでシーン遷移", UtilityCommon::WHITE);
+
+	// 点滅の1周期にかかる時間
+	constexpr int BLINK_CYCLE_MS = 3200;
+
+	// 現在の時間を取得
+	int nowTime = GetNowCount();
+
+	// 周期に基づいて角度を計算
+	float currentAngle = (nowTime % BLINK_CYCLE_MS) * DX_PI_F * 2.0f / static_cast<float>(BLINK_CYCLE_MS);
+
+	// サイン波を使って範囲変換
+	int alphaValue = static_cast<int>((sin(currentAngle) + 1.0f) * (UtilityCommon::ALPHA_MAX / 2.0f));
+
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alphaValue);
+	pleaseButton_.DrawRota();
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }

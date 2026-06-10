@@ -73,7 +73,7 @@ private:
 	// ステージのコライダー
 	std::shared_ptr<ColliderArray> stageCollider_;
 
-		// タグのマトリックスの設定設定
+	// タグのマトリックスの設定設定
 	void InitTagMatrix();
 
 	// コライダー種のマトリックス設定

@@ -10,6 +10,12 @@ class Camera
 {
 public:
 
+	// カメラの移動速度
+	static constexpr float CAMERA_MOVE_SPEED = 5.0f;
+
+	// スクロール速度
+	static constexpr float SCROLL_SPEED = 0.8f;
+
 	// カメラのモード
 	enum class MODE
 	{
@@ -109,14 +115,11 @@ public:
 
 private:
 
-	// カメラの移動速度
-	static constexpr float CAMERA_MOVE_SPEED = 5.0f;
-
-	// スクロール速度
-	static constexpr float SCROLL_SPEED = 0.8f;
-
 	// 揺れ時間
 	float shakeTime_;
+
+	// 電車用揺れ時間
+	float shakeTrainTime_;
 
 	// 揺れの強さ
 	float shakePower_;

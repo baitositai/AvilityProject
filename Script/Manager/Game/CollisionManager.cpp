@@ -219,6 +219,9 @@ void CollisionManager::InitTagMatrix()
 
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::ENEMY_ATTACK_NORMAL)] = true;			// プレイヤー敵の攻撃
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_ATTACK_NORMAL)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::CHANGE_NEXT_AREA)] = true;			// プレイヤー次遷移エリア
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::CHANGE_NEXT_AREA)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
 }
 
 void CollisionManager::InitColliderMatrix()

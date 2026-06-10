@@ -1,3 +1,19 @@
+#include <DxLib.h>
+#include "../Application.h"
+#include "../Manager/Common/SceneManager.h"
+#include "../Manager/Common/Camera.h"
+#include "../Manager/Common/InputManager.h"
+#include "../Manager/Common/SpriteEffectManager.h"
+#include "../Manager/Game/GameManager.h"
+#include "../Manager/Game/PlayerManager.h"
+#include "../Manager/Game/GimmickManager.h"
+#include "../Manager/Game/CollisionManager.h"
+#include "../Manager/Game/EnemyManager.h"
+#include "../Manager/Game/StageManager.h"
+#include "../Manager/Game/ItemManager.h"
+#include "../Factory/FactoryComponent.h"
+#include "../Utility/UtilityCommon.h"
+#include "ScenePause.h"
 #include "SceneTrain.h"
 
 SceneTrain::SceneTrain()
@@ -15,16 +31,37 @@ SceneTrain::~SceneTrain()
 
 void SceneTrain::Init()
 {
+	// 乗客室の生成
+	stageMng_.Create(StageManager::TYPE::TRAIN);
+
+	// カメラ設定
+	mainCamera.ChangeMode(Camera::MODE::TRAIN_SHAKE);
+	mainCamera.SetCameraPos(Vector2F(0.0f, 0.0f));
+
+	// 基底クラスの初期化処理
+	SceneBase::Init();
+
+	// プレイヤーの初期位置を決定
+	playerMng_.SetFirstPositions(stageMng_.GetPlayerFirstPositions());
 }
 
 void SceneTrain::NormalUpdate()
 {
 	SceneBase::NormalUpdate();
+
+#ifdef _DEBUG	
+	DebugUpdate();
+#endif 
 }
 
 void SceneTrain::NormalDraw()
 {
 	SceneBase::NormalDraw();
+
+#ifdef _DEBUG
+	// デバッグ用の情報描画
+	DebugDraw();
+#endif
 }
 
 void SceneTrain::DebugUpdate()

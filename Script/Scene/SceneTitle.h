@@ -28,8 +28,13 @@ public:
 
 private:
 
+	float alphaRate_;
+
 	// タイトルロゴ
 	Image titleLogo_;
+
+	// キー入力
+	Image pleaseButton_;
 
 	// トレイン
 	std::unique_ptr<Train> train_;

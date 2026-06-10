@@ -305,6 +305,7 @@
     <ClCompile Include="Script\Manager\Common\SpriteEffectManager.cpp" />
     <ClCompile Include="Script\System\StageGenerator.cpp" />
     <ClCompile Include="Script\Object\Stage\Train.cpp" />
+    <ClCompile Include="Script\Object\Stage\StageTrain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\Manager\Game\GimmickManager.h" />
@@ -528,6 +529,7 @@
     <ClInclude Include="Script\Manager\Common\SpriteEffectManager.h" />
     <ClInclude Include="Script\System\StageGenerator.h" />
     <ClInclude Include="Script\Object\Stage\Train.h" />
+    <ClInclude Include="Script\Object\Stage\StageTrain.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
