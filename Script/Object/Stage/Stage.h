@@ -16,7 +16,7 @@ public:
 		BOSS_DOOR,			// ボス部屋ドア
 		ENEMY_CREATE_AREA,	// 敵生成エリア
 		ITEM_CREATE_AREA,	// アイテム生成エリア
-		EVENT_DOOR,			// イベントドア
+		EVENT,				// イベント位置
 		MAX
 	};
 

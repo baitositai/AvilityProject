@@ -145,6 +145,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Parameter\Event\ParameterEventTargetDestroy.cpp" />
+    <ClCompile Include="Script\Parameter\Event\ParameterEventTimeLimitDefeatAll.cpp" />
+    <ClCompile Include="Script\Parameter\ParameterBase.cpp" />
+    <ClCompile Include="Script\Parameter\Event\ParameterEvent.cpp" />
+    <ClCompile Include="Script\Manager\Game\EventTypes.cpp" />
+    <ClCompile Include="Script\System\EventGenerator.cpp" />
+    <ClCompile Include="Script\System\Event\EventTargetDestroy.cpp" />
+    <ClCompile Include="Script\System\Event\EventTimeLimitDefeatAll.cpp" />
+    <ClCompile Include="Script\System\Event\EventBase.cpp" />
+    <ClCompile Include="Script\Manager\Game\EventManager.cpp" />
     <ClCompile Include="Script\Manager\Game\GimmickManager.cpp" />
     <ClCompile Include="Script\Scene\SceneEvent.cpp" />
     <ClCompile Include="Script\Scene\SceneBoss.cpp" />
@@ -308,6 +318,16 @@
     <ClCompile Include="Script\Object\Stage\StageTrain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Parameter\Event\ParameterEventTargetDestroy.h" />
+    <ClInclude Include="Script\Parameter\Event\ParameterEventTimeLimitDefeatAll.h" />
+    <ClInclude Include="Script\Parameter\ParameterBase.h" />
+    <ClInclude Include="Script\Parameter\Event\ParameterEvent.h" />
+    <ClInclude Include="Script\Manager\Game\EventTypes.h" />
+    <ClInclude Include="Script\System\EventGenerator.h" />
+    <ClInclude Include="Script\System\Event\EventTargetDestroy.h" />
+    <ClInclude Include="Script\System\Event\EventTimeLimitDefeatAll.h" />
+    <ClInclude Include="Script\System\Event\EventBase.h" />
+    <ClInclude Include="Script\Manager\Game\EventManager.h" />
     <ClInclude Include="Script\Manager\Game\GimmickManager.h" />
     <ClInclude Include="Script\Scene\SceneEvent.h" />
     <ClInclude Include="Script\Scene\SceneBoss.h" />

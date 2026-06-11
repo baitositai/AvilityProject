@@ -77,11 +77,14 @@ public:
 	/// <summary>
 	/// 敵のエリア位置を返す
 	/// </summary>
-	/// <returns></returns>
+	/// <returns>敵の生成エリア位置</returns>
 	const std::vector<Vector2F>& GetEnemyAreaPositions() const;	
 	
-	// パラメータ関係の初期化
-	void InitParameter();
+	/// <summary>
+	/// イベント発生エリアを返す
+	/// </summary>
+	/// <returns>イベント発生位置リスト</returns>
+	const std::vector<Vector2F>& GetEventTriggerPositions() const;	
 
 private:
 
@@ -116,6 +119,9 @@ private:
 	void CreateStageRoom();		// 決められた部屋の場合
 	void CreateStageCommon();	// 共通処理
 	void CreateBackGround();	// 背景
+
+	// パラメータ関係の初期化
+	void InitParameter();
 
 	// コンストラクタ
 	StageManager();

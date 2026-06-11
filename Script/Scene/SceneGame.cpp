@@ -11,6 +11,7 @@
 #include "../Manager/Game/EnemyManager.h"
 #include "../Manager/Game/StageManager.h"
 #include "../Manager/Game/ItemManager.h"
+#include "../Manager/Game/EventManager.h"
 #include "../Factory/FactoryComponent.h"
 #include "../Utility/UtilityCommon.h"
 #include "ScenePause.h"
@@ -25,17 +26,21 @@ SceneGame::SceneGame()
 	drawFunc_ = std::bind(&SceneGame::LoadingDraw, this);
 
 	// 管理クラスの生成
+	EventManager::CreateInstance();
 	//GameManager::CreateInstance();
 }
 
 SceneGame::~SceneGame()
 {
 	// 管理クラスの解放
+	EventManager::GetInstance().Destroy();
 	//GameManager::GetInstance().Destroy();
 }
 
 void SceneGame::Init()
 {	
+	EventManager& eventManager = EventManager::GetInstance();
+
 	// ステージ生成
 	stageMng_.Create(StageManager::TYPE::ROAD);
 
@@ -45,8 +50,14 @@ void SceneGame::Init()
 	// ボス部屋の生成
 	gimmickMng_.SetBossDoor(stageMng_.GetBossDoorPos());
 	
+	// イベントの生成
+	eventManager.Create(stageMng_.GetPlayerFirstPositions());
+
 	// 基底クラスの処理
 	SceneBase::Init();	
+
+	// イベント関係の初期化
+	eventManager.Init();
 	
 	// プレイヤーの初期位置を決定
 	playerMng_.SetFirstPositions(stageMng_.GetPlayerFirstPositions());
@@ -70,6 +81,9 @@ void SceneGame::NormalUpdate()
 
 	// 基底クラスの処理
 	SceneBase::NormalUpdate();
+
+	// イベント関係の更新
+	EventManager::GetInstance().Update();
 
 #ifdef _DEBUG	
 	DebugUpdate();

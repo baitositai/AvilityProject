@@ -48,6 +48,16 @@ public:
 	void Update();
 
 	/// <summary>
+	/// 停止
+	/// </summary>
+	void Stop() { isStop_ = true; }
+
+	/// <summary>
+	/// 再スタート
+	/// </summary>
+	void Restart() { isStop_ = false; }
+
+	/// <summary>
 	/// カメラモードの変更
 	/// </summary>
 	/// <param name="mode">変更先のモード</param>
@@ -123,6 +133,9 @@ private:
 
 	// 揺れの強さ
 	float shakePower_;
+
+	// 停止判定
+	bool isStop_;
 
 	// オフセット
 	Vector2F offset_;

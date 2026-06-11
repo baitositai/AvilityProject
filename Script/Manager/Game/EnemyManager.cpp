@@ -115,6 +115,27 @@ void EnemyManager::Create(const EnemyTypes::TYPE type, const Vector2F& pos)
 	enemiesMap_[type].push_back(std::move(enemy));
 }
 
+void EnemyManager::CreateEventEnemy(const EnemyTypes::TYPE type, const Vector2F& pos)
+{
+	// ¶¬
+	auto enemy = enemyGenerator_->CreateEnemy(type);
+
+	// ƒCƒxƒ“ƒgŠÇ——p‚É¶ƒ|ƒCƒ“ƒ^‚Å•ÛŽ
+	EnemyBase* enemyPtr = enemy.get();
+
+	// ˆÊ’u’²®
+	enemy->GetParameter().pos_ = pos;
+
+	// ‰Šú‰»
+	enemy->Init();
+
+	// Ši”[
+	enemiesMap_[type].push_back(std::move(enemy));
+
+	// ƒCƒxƒ“ƒg‘¤‚Å‚àŠÄŽ‹‘ÎÛ‚Æ‚µ‚Ä“o˜^
+	eventEnemyList_.push_back(enemyPtr);
+}
+
 void EnemyManager::Clear()
 {
 	if (enemiesMap_.empty())
@@ -142,6 +163,19 @@ const bool EnemyManager::IsBossDestroy(const EnemyTypes::TYPE type) const
 {
 	// ‹ó‚È‚çŒ‚”j
 	return enemiesMap_.at(type).empty();
+}
+
+const bool EnemyManager::IsEmptyEventEnemies() 
+{
+	// Ž€–SÏ‚Ý‚Ì‚à‚Ì‚ðíœ
+	eventEnemyList_.erase(
+		std::remove_if(eventEnemyList_.begin(), eventEnemyList_.end(),
+			[](EnemyBase* enemy) { return enemy->IsDelete(); }),
+		eventEnemyList_.end()
+	);
+
+	// ‹ó‚©•Ô‚·
+	return eventEnemyList_.empty();
 }
 
 EnemyManager::EnemyManager()

@@ -2,15 +2,12 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
-#include <nlohmann/json.hpp>
+#include "ParameterBase.h"
 #include "../Common/Vector2.h"
 #include "../Common/Vector2F.h"
 #include "../Object/Common/Animation.h"
 
-// JSON名前空間
-using Json = nlohmann::json;
-
-class ParameterActor
+class ParameterActor : public ParameterBase
 {
 public:	
 	
@@ -32,13 +29,13 @@ public:
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	virtual ~ParameterActor();
+	virtual ~ParameterActor() override;
 
 	/// <summary>
 	/// 読み込み
 	/// </summary>
 	/// <param name="parameter">パラメータ</param>
-	virtual void LoadParameter(const Json& parameter);
+	virtual void LoadParameter(const Json& parameter) override;
 
 	/// <summary>
 	/// ヒットサイズ合わせたスケールを返す

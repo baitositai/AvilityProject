@@ -77,6 +77,11 @@ const std::vector<Vector2F>& StageManager::GetEnemyAreaPositions() const
 	return stage_->GetAreaListMap(Stage::LIST_TYPE::ENEMY_CREATE_AREA);
 }
 
+const std::vector<Vector2F>& StageManager::GetEventTriggerPositions() const
+{
+	return stage_->GetAreaListMap(Stage::LIST_TYPE::EVENT);
+}
+
 const Vector2& StageManager::GetStageSize() const
 {
 	return stage_->GetStageSize();

@@ -10,6 +10,7 @@ Camera::Camera() :
 	scnMng_(SceneManager::GetInstance())
 {	
 	// 変数の初期化
+	isStop_ = false;
 	shakePower_ = 0.0f;
 	shakeTime_ = 0.0f;
 	shakeTrainTime_ = 0.0f;
@@ -44,7 +45,7 @@ void Camera::Update()
 	CameraShake();
 	
 	// カメラのモードに応じた更新処理
-	updateFunction_();
+	if (!isStop_) { updateFunction_(); }
 
 	// カメラの移動制限
 	LimitCameraMove();

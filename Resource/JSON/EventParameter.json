@@ -1,0 +1,22 @@
+{
+  "targetDestroy": {
+    "targetMax": 8,
+    "targetMin": 5
+  },
+  "timeLimitDefeatAll": {
+    "waveMax": 3,
+    "waveMin": 1,
+    "enemyNumMax": 6,
+    "enemyNumMin": 3,
+    "challengeTime": 20,
+    "endTime": 3,
+    "createRange": {
+      "x": 250,
+      "y": 150
+    },
+    "createLeftTopPos": {
+      "x": 250,
+      "y": 250
+    }
+  }
+}

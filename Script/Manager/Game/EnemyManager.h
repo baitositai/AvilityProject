@@ -51,6 +51,13 @@ public:
 	/// <param name="type">種類</param>
 	/// <param name="pos">生成位置</param>
 	void Create(const EnemyTypes::TYPE type, const Vector2F& pos);
+	
+	/// <summary>
+	/// イベント用の敵生成処理
+	/// </summary>
+	/// <param name="type">種類</param>
+	/// <param name="pos">生成位置</param>
+	void CreateEventEnemy(const EnemyTypes::TYPE type, const Vector2F& pos);
 
 	/// <summary>
 	/// 削除
@@ -69,6 +76,12 @@ public:
 	/// <returns>trueは撃破、falseは生存</returns>
 	const bool IsBossDestroy(const EnemyTypes::TYPE type) const;
 
+	/// <summary>
+	/// イベント用の敵がいない返す
+	/// </summary>
+	/// <returns>trueの場合空</returns>
+	const bool IsEmptyEventEnemies();
+
 private:
 
 	// 更新の停止
@@ -79,6 +92,9 @@ private:
 
 	// 敵を管理するマップ
 	std::unordered_map<EnemyTypes::TYPE, std::vector<std::unique_ptr<EnemyBase>>> enemiesMap_;
+
+	// イベントで生成した敵を管理するリスト
+	std::vector<EnemyBase*> eventEnemyList_;
 
 	// コンストラクタ
 	EnemyManager();
