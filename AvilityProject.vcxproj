@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -145,6 +145,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Manager\Game\GimmickTypes.cpp" />
+    <ClCompile Include="Script\System\GimmickGenerator.cpp" />
+    <ClCompile Include="Script\Parameter\Gimmick\ParameterGimmickTarget.cpp" />
+    <ClCompile Include="Script\Object\Gimmick\GimmickTarget.cpp" />
     <ClCompile Include="Script\Parameter\Event\ParameterEventTargetDestroy.cpp" />
     <ClCompile Include="Script\Parameter\Event\ParameterEventTimeLimitDefeatAll.cpp" />
     <ClCompile Include="Script\Parameter\ParameterBase.cpp" />
@@ -318,6 +322,10 @@
     <ClCompile Include="Script\Object\Stage\StageTrain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Manager\Game\GimmickTypes.h" />
+    <ClInclude Include="Script\System\GimmickGenerator.h" />
+    <ClInclude Include="Script\Parameter\Gimmick\ParameterGimmickTarget.h" />
+    <ClInclude Include="Script\Object\Gimmick\GimmickTarget.h" />
     <ClInclude Include="Script\Parameter\Event\ParameterEventTargetDestroy.h" />
     <ClInclude Include="Script\Parameter\Event\ParameterEventTimeLimitDefeatAll.h" />
     <ClInclude Include="Script\Parameter\ParameterBase.h" />

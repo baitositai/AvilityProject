@@ -7,5 +7,14 @@
       "x": 160,
       "y": 240
     }
+  },
+  "target": {
+    "resourceKey": "target",
+    "transparent": true,
+    "scale": 1.0,
+    "hitBoxSize": {
+      "x": 96,
+      "y": 96
+    }
   }
 }

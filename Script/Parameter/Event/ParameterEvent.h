@@ -21,7 +21,9 @@ public:
 	/// <param name="parameter">パラメータ</param>
 	virtual void LoadParameter(const Json& parameter) override;
 
-private:
+	// チャレンジ時間
+	float challengeTime_;
 
+	// 終了後時間
+	float endTime_;
 };
-

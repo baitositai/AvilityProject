@@ -5,8 +5,6 @@ ParameterEventTimeLimitDefeatAll::ParameterEventTimeLimitDefeatAll() :
     waveMin_(-1),
     enemyNumMax_(-1),
     enemyNumMin_(-1),
-    challengeTime_(0.0f),
-    endTime_(0.0f),
     createRange_(Vector2()),
     createLeftTopPos_(Vector2())
 {
@@ -22,8 +20,6 @@ void ParameterEventTimeLimitDefeatAll::LoadParameter(const Json& parameter)
     waveMin_ = parameter.value("waveMin", -1);
     enemyNumMax_ = parameter.value("enemyNumMax", -1);
     enemyNumMin_ = parameter.value("enemyNumMin", -1);
-    challengeTime_ = parameter.value("challengeTime", 0.0f);
-    endTime_ = parameter.value("endTime", 0.0f);
 
     if (parameter.contains("createRange"))
     {

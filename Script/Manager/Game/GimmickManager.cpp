@@ -1,5 +1,6 @@
 #include "../../Utility/UtilityLoad.h"
 #include "../../Object/Gimmick/GimmickDoor.h"
+#include "../../Object/Gimmick/GimmickTarget.h"
 #include "GimmickManager.h"
 
 void GimmickManager::Init()
@@ -92,6 +93,12 @@ void GimmickManager::InitParameter()
 	auto parameterDoor = std::make_unique<ParameterGimmick>();
 	parameterDoor->LoadParameter(jsonDoorParameter);
 	templateParameterMap_.emplace(GimmickBase::TYPE::DOOR, std::move(parameterDoor));
+
+	// ターゲット生成
+	const auto jsonTargetParameter = jsonParameterMap.at("target").front();
+	auto parameterTarget = std::make_unique<ParameterGimmickTarget>();
+	parameterTarget->LoadParameter(jsonTargetParameter);
+	templateParameterMap_.emplace(GimmickBase::TYPE::TARGET, std::move(parameterTarget));
 }
 
 GimmickManager::GimmickManager()

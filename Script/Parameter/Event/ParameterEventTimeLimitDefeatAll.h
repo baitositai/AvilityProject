@@ -30,12 +30,6 @@ public:
 	int enemyNumMax_;
 	int enemyNumMin_;
 
-	// ƒ`ƒƒƒŒƒ“ƒWŠÔ
-	float challengeTime_;
-
-	// I—¹ŒãŠÔ
-	float endTime_;
-
 	// ¶¬”ÍˆÍ
 	Vector2 createRange_;
 

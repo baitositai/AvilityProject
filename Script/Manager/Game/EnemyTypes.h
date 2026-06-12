@@ -13,10 +13,15 @@ public:
 		HAT,
 		SNAKE,
 		SAMURAI,
+		
+		// ƒ{ƒX
 		MAID,
 		MAX,
 	};
 
 	// Å‘å”
 	static constexpr int MAX = static_cast<int>(TYPE::MAX);
+
+	// G‹›“G”
+	static constexpr int WEAK_MAX = static_cast<int>(TYPE::MAID);
 };

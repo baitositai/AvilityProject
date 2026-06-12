@@ -1,18 +1,18 @@
 #pragma once
-#include "ParameterEvent.h"
-class ParameterEventTargetDestroy : public ParameterEvent
+#include "ParameterGimmick.h"
+class ParameterGimmickTarget : public ParameterGimmick
 {
 public:
 
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	ParameterEventTargetDestroy();
-
+	ParameterGimmickTarget();
+	
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~ParameterEventTargetDestroy() override;
+	~ParameterGimmickTarget() override;
 
 	/// <summary>
 	/// 読み込み
@@ -20,7 +20,6 @@ public:
 	/// <param name="parameter">パラメータ</param>
 	void LoadParameter(const Json& parameter) override;
 
-	// ターゲットの生成数
-	int targetMax_;
-	int targetMin_;
+
+
 };

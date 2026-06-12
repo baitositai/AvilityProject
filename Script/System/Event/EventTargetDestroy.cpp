@@ -8,3 +8,23 @@ EventTargetDestroy::EventTargetDestroy(std::unique_ptr<ParameterEventTargetDestr
 EventTargetDestroy::~EventTargetDestroy()
 {
 }
+
+void EventTargetDestroy::CreateTargets()
+{
+}
+
+void EventTargetDestroy::UpdateChallenge()
+{
+}
+
+void EventTargetDestroy::UpdateEnd()
+{
+}
+
+void EventTargetDestroy::ChangeStateChallenge()
+{
+}
+
+void EventTargetDestroy::ChangeStateEnd()
+{
+}

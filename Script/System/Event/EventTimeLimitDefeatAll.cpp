@@ -2,6 +2,7 @@
 #include <cassert>
 #include "../../Application.h"
 #include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/Camera.h"
 #include "../../Manager/Game/EventManager.h"
 #include "../../Manager/Game/EnemyManager.h"
 #include "../../Manager/Game/GimmickManager.h"
@@ -25,7 +26,7 @@ void EventTimeLimitDefeatAll::CreateEnemyList()
 	// 固定の場合
 	if (GetRand(ENEMY_CREATE_TYPE_MAX - 1) == 0)
 	{
-		ETYPE type = static_cast<ETYPE>(GetRand(EnemyTypes::MAX - 1));
+		ETYPE type = static_cast<ETYPE>(GetRand(EnemyTypes::WEAK_MAX - 1));
 		int wave = GetRand(parameterPtr_->waveMax_ - parameterPtr_->waveMin_) + parameterPtr_->waveMin_;
 		for (int i = 0; i < wave; i++)
 		{
@@ -48,7 +49,7 @@ void EventTimeLimitDefeatAll::CreateEnemyList()
 			std::vector<ETYPE> enemyList;
 			for (int j = 0; j < createNum; j++)
 			{	
-				ETYPE type = static_cast<ETYPE>(GetRand(EnemyTypes::MAX - 1));
+				ETYPE type = static_cast<ETYPE>(GetRand(EnemyTypes::WEAK_MAX - 1));
 				enemyList.push_back(type);
 			}
 			createEnemiesList_.push_back(enemyList);
@@ -59,8 +60,10 @@ void EventTimeLimitDefeatAll::CreateEnemyList()
 void EventTimeLimitDefeatAll::CreateEnemies()
 {
 	const Vector2 RIGHT_TOP = { Application::SCREEN_SIZE_X - parameterPtr_->createLeftTopPos_.x - parameterPtr_->createRange_.x, parameterPtr_->createLeftTopPos_.y };	// 右の生成範囲トップ位置
-	Vector2 pos = {};	// 生成位置
-	bool dir = true;	// 方向
+	Vector2 pos = {};							// 生成位置
+	Vector2F cameraPosF = mainCamera.GetPos();	// カメラ位置
+	Vector2 cameraPos = cameraPosF.ToVector2();
+	bool dir = true;							// 方向
 	
 	auto& enemyList = createEnemiesList_.front();
 	for (auto& type : enemyList)
@@ -70,12 +73,12 @@ void EventTimeLimitDefeatAll::CreateEnemies()
 
 		// 生成位置を決定
 		pos = {
-			top.x + GetRand(parameterPtr_->createRange_.x),
-			top.y + GetRand(parameterPtr_->createRange_.y)
+			top.x + GetRand(parameterPtr_->createRange_.x) - cameraPos.x,
+			top.y + GetRand(parameterPtr_->createRange_.y) - cameraPos.y
 		};
 
 		// 敵の生成
-		enemyManager_.Create(type, pos.ToVector2F());
+		enemyManager_.CreateEventEnemy(type, pos.ToVector2F());
 	}
 
 	// 先頭要素を消す
@@ -95,6 +98,7 @@ void EventTimeLimitDefeatAll::UpdateChallenge()
 		{
 			// 状態遷移
 			ChangeState(STATE::END);
+			return;
 		}
 	}
 

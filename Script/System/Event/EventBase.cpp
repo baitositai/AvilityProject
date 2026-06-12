@@ -53,10 +53,21 @@ void EventBase::CameraRestart()
 
 void EventBase::UpdateStart()
 {
+	// カメラ座標を取得
 	Vector2F cameraPos = mainCamera.GetPos();
 
-	// ターゲット位置がカメラの中心より右に来た場合
-	if (triggerPos_.x + mainCamera.GetPos().x < Application::SCREEN_HALF_X)
+	// トリガーの画面上の位置（スクリーン座標）を算出
+	Vector2 screenTriggerPos = Vector2::AddVector2(triggerPos_.ToVector2(), cameraPos.ToVector2());
+
+	// 判定の中心となる画面基準位置
+	constexpr int TARGET_SCREEN_X = Application::SCREEN_HALF_X;
+	constexpr int TARGET_SCREEN_Y = Application::SCREEN_SIZE_Y - GROUND_OFFSET;
+
+	// ターゲット位置が指定の矩形範囲内にあるか判定
+	if (screenTriggerPos.x >= TARGET_SCREEN_X - OFFSET_X &&
+		screenTriggerPos.x <= TARGET_SCREEN_X + OFFSET_X &&
+		screenTriggerPos.y >= TARGET_SCREEN_Y - OFFSET_Y &&
+		screenTriggerPos.y <= TARGET_SCREEN_Y + OFFSET_Y)
 	{
 		ChangeState(STATE::CHALLENGE);
 	}

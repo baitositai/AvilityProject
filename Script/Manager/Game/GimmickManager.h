@@ -59,8 +59,7 @@ public:
 	/// <param name="type">種類</param>
 	/// <returns>パラメータ</returns>
 	std::unique_ptr<ParameterGimmick> GetGimmickParameter(const GimmickBase::TYPE type) const;
-	// パラメータ関係の初期化
-	void InitParameter();
+
 
 private:
 
@@ -69,7 +68,9 @@ private:
 
 	// テンプレートとなるパラメータマップ
 	std::unordered_map<GimmickBase::TYPE, std::unique_ptr<ParameterGimmick>> templateParameterMap_;
-
+	
+	// パラメータ関係の初期化
+	void InitParameter();
 
 	// コンストラクタ
 	GimmickManager();

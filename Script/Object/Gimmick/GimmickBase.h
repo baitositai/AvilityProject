@@ -11,6 +11,7 @@ public:
 	{
 		AVILITY_BOX,
 		DOOR,
+		TARGET,
 		MAX,
 	};
 
