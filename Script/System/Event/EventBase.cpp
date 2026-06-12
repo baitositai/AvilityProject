@@ -53,6 +53,8 @@ void EventBase::CameraRestart()
 
 void EventBase::UpdateStart()
 {
+	Vector2F cameraPos = mainCamera.GetPos();
+
 	// ターゲット位置がカメラの中心より右に来た場合
 	if (triggerPos_.x + mainCamera.GetPos().x < Application::SCREEN_HALF_X)
 	{

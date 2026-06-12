@@ -51,7 +51,7 @@ void SceneGame::Init()
 	gimmickMng_.SetBossDoor(stageMng_.GetBossDoorPos());
 	
 	// イベントの生成
-	eventManager.Create(stageMng_.GetPlayerFirstPositions());
+	eventManager.Create(stageMng_.GetEventTriggerPositions());
 
 	// 基底クラスの処理
 	SceneBase::Init();	
