@@ -36,6 +36,9 @@ void GimmickTreasureChest::Init()
 
 void GimmickTreasureChest::Update()
 {
+	// Šî’êƒNƒ‰ƒX‚Ìˆ—
+	ActorBase::Update();
+
 	if (collider_->IsActive()) return;
 
 	if (!animation_->IsPlay())
