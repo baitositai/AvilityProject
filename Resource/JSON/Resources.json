@@ -325,6 +325,22 @@
       "divY": 20,
       "sizeX": 32,
       "sizeY": 32
+    },
+    {
+      "key": "treasureChests",
+      "path": "Resource/Image/Gimmick/TreasureChests.png",
+      "sceneIds": [ 2, 3 ],
+      "type": "sprite",
+      "divX": 8,
+      "divY": 2,
+      "sizeX": 138,
+      "sizeY": 96
+    },
+    {
+      "key": "target",
+      "path": "Resource/Image/Gimmick/Target.png",
+      "sceneIds": [ 3 ],
+      "type": "texture"
     }
   ]
 }

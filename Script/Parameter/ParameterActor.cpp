@@ -45,6 +45,7 @@ void ParameterActor::LoadParameter(const Json& parameter)
     moveSpeed_ = parameter.value("moveSpeed", 0.0f);
     gravityPower_ = parameter.value("gravityPower", 0.0f);
     weight_ = parameter.value("weight", 0.0f);
+    hitRadius_ = parameter.value("hitRadius", 0.0f);
     resourceKey_ = parameter.value("resourceKey", "");
     componentkeys_ = parameter.value("componentKeys", std::vector<std::string>());
 

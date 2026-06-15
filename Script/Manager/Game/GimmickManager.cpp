@@ -6,62 +6,101 @@
 
 void GimmickManager::Init()
 {
-	if (gimmickList_.empty()) return;
+	if (gimmickListMap_.empty()) return;
 
-	for (auto& gimmick : gimmickList_)
+	for (auto& gimmickList : gimmickListMap_)
 	{
-		gimmick->Init();
+		for (auto& gimmick : gimmickList.second)
+		{
+			gimmick->Init();
+		}
 	}
 }
 
 void GimmickManager::Update()
 {
-	if (gimmickList_.empty()) return;
+	if (gimmickListMap_.empty()) return;
 
-	for (auto& gimmick : gimmickList_)
+	for (auto& gimmickList : gimmickListMap_)
 	{
-		gimmick->Update();
+		for (auto& gimmick : gimmickList.second)
+		{
+			gimmick->Update();
+		}
 	}
 }
 
 void GimmickManager::Draw()
 {
-	if (gimmickList_.empty()) return;
+	if (gimmickListMap_.empty()) return;
 
-	for (auto& gimmick : gimmickList_)
+	for (auto& gimmickList : gimmickListMap_)
 	{
-		gimmick->Draw();
+		for (auto& gimmick : gimmickList.second)
+		{
+			gimmick->Draw();
+		}
 	}
 }
 
 void GimmickManager::Sweep()
 {
-	if (gimmickList_.empty()) return;
+	if (gimmickListMap_.empty()) return;
 
-	auto removeGim = std::remove_if(gimmickList_.begin(), gimmickList_.end(), [](std::unique_ptr<GimmickBase>& _gim)
-		{
-			return _gim->IsDelete();
-		});
-	gimmickList_.erase(removeGim, gimmickList_.end());
+	for (auto& gimmickList : gimmickListMap_)
+	{
+		auto it = std::remove_if(gimmickList.second.begin(), gimmickList.second.end(),
+			[](const std::unique_ptr<GimmickBase>& gimmick)
+			{
+				if (gimmick == nullptr)
+				{
+					return true;
+				}
+				return gimmick->IsDelete();
+			});
+		gimmickList.second.erase(it, gimmickList.second.end());
+	}
 }
 
 void GimmickManager::Clear()
 {
-	if (gimmickList_.empty()) return;
-
-	for (auto& gimmick : gimmickList_)
+	if (gimmickListMap_.empty())
 	{
-		gimmick->Delete();
+		return;
 	}
-	gimmickList_.clear();
+
+	for (auto& gimmickList : gimmickListMap_)
+	{
+		for (auto& gimmick : gimmickList.second)
+		{
+			if (gimmick == nullptr)
+			{
+				continue;
+			}
+			gimmick->Delete();
+			gimmick.reset();
+		}
+		gimmickList.second.clear();
+	}
+	gimmickListMap_.clear();
 }
 
-void GimmickManager::Add(std::unique_ptr<GimmickBase> gimmick)
-{
-	gimmickList_.push_back(std::move(gimmick));
+void GimmickManager::Add(const GimmickTypes::TYPE type, const Vector2F& pos)
+{	
+	// ¶¬
+	auto gimmick = gimmickGenerator_->Create(type);
+
+	// ‰Šúƒpƒ‰ƒ[ƒ^‚Ì’²®
+	gimmick->GetParameter().pos_ = pos;
+
+	// ‰Šú‰»
+	gimmick->Init();
+
+	// Ši”[
+	gimmickListMap_[type].push_back(std::move(gimmick));
 }
 
-void GimmickManager::SetBossDoor(const Vector2F pos)
+void GimmickManager::CreateBossDoor(const Vector2F pos)
 {
 	// ƒhƒA¶¬
 	auto door = gimmickGenerator_->Create(GimmickTypes::TYPE::DOOR);
@@ -72,16 +111,45 @@ void GimmickManager::SetBossDoor(const Vector2F pos)
 	parameter.pos_.y -= parameter.hitSize_.y / 2;
 
 	// Ši”[
-	gimmickList_.push_back(std::move(door));
+	gimmickListMap_[GimmickTypes::TYPE::DOOR].push_back(std::move(door));
+}
+
+void GimmickManager::CreateTarget(const Vector2F pos, const Vector2F& moveDir)
+{	
+	// ƒ^[ƒQƒbƒg¶¬
+	auto target = gimmickGenerator_->CreateTarget(pos, moveDir);
+
+	// ‰Šú‰»
+	target->Init();
+
+	// Ši”[
+	gimmickListMap_[GimmickTypes::TYPE::TARGET].push_back(std::move(target));
+}
+
+void GimmickManager::AllDeleteTarget()
+{
+	for (auto& target : gimmickListMap_.at(GimmickTypes::TYPE::TARGET))
+	{
+		target->Delete();
+	}
+	gimmickListMap_.at(GimmickTypes::TYPE::TARGET).clear();
+}
+
+const bool GimmickManager::IsDestrolyAllTarget() const
+{
+	return gimmickListMap_.at(GimmickTypes::TYPE::TARGET).empty();
 }
 
 void GimmickManager::DebugDraw()
 {
-	if (gimmickList_.empty()) return;
+	if (gimmickListMap_.empty()) return;
 
-	for (auto& gimmick : gimmickList_)
+	for (auto& gimmickList : gimmickListMap_)
 	{
-		gimmick->DebugDraw();
+		for (auto& gimmick : gimmickList.second)
+		{
+			gimmick->DebugDraw();
+		}
 	}
 }
 

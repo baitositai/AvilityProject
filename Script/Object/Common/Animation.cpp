@@ -41,6 +41,12 @@ void Animation::Play(const TYPE type, const bool isLoop)
 	type_ = type;
 	isLoop_ = isLoop;
 	isPlay_ = true;
+
+    const auto it = animationMap_.find(type_);
+    if (it != animationMap_.end())
+    {
+        animationIndex_ = it->second.startIndex;
+    }
 }
 
 void Animation::Stop()

@@ -145,6 +145,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\OnHit\OnHitTreasureChest.cpp" />
+    <ClCompile Include="Script\Parameter\Gimmick\ParameterGimmickTreasureChest.cpp" />
+    <ClCompile Include="Script\Object\Gimmick\GimmickTreasureChest.cpp" />
     <ClCompile Include="Script\OnHit\OnHitTarget.cpp" />
     <ClCompile Include="Script\Manager\Game\GimmickTypes.cpp" />
     <ClCompile Include="Script\System\GimmickGenerator.cpp" />
@@ -323,6 +326,9 @@
     <ClCompile Include="Script\Object\Stage\StageTrain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\OnHit\OnHitTreasureChest.h" />
+    <ClInclude Include="Script\Parameter\Gimmick\ParameterGimmickTreasureChest.h" />
+    <ClInclude Include="Script\Object\Gimmick\GimmickTreasureChest.h" />
     <ClInclude Include="Script\OnHit\OnHitTarget.h" />
     <ClInclude Include="Script\Manager\Game\GimmickTypes.h" />
     <ClInclude Include="Script\System\GimmickGenerator.h" />

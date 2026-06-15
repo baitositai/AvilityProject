@@ -48,7 +48,7 @@ void SceneGame::Init()
 	enemyMng_.Generator(stageMng_.GetEnemyAreaPositions());	
 
 	// ボス部屋の生成
-	gimmickMng_.SetBossDoor(stageMng_.GetBossDoorPos());
+	gimmickMng_.CreateBossDoor(stageMng_.GetBossDoorPos());
 	
 	// イベントの生成
 	eventManager.Create(stageMng_.GetEventTriggerPositions());
@@ -179,7 +179,7 @@ void SceneGame::DebugDraw()
 		DrawCircle(
 			pos.x + cPos.x,
 			pos.y + cPos.y,
-			20.0f,
+			3.0f,
 			UtilityCommon::RED,
 			true);
 	}

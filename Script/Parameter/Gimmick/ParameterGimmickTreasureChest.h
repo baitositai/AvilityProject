@@ -1,26 +1,24 @@
 #pragma once
-#include "../ParameterActor.h"
+#include "ParameterGimmick.h"
 
-class ParameterGimmick : public ParameterActor
+class ParameterGimmickTreasureChest : public ParameterGimmick
 {
 public:
 
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	ParameterGimmick();
+	ParameterGimmickTreasureChest();
 
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	virtual ~ParameterGimmick() override;
+	~ParameterGimmickTreasureChest() override;
 
 	/// <summary>
 	/// 読み込み
 	/// </summary>
 	/// <param name="parameter">パラメータ</param>
-	virtual void LoadParameter(const Json& parameter) override;
-
-private:
+	void LoadParameter(const Json& parameter) override;
 
 };

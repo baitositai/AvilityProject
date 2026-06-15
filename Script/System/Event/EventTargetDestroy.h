@@ -22,9 +22,10 @@ private:
 	// ターゲットの生成方法
 	enum class TARGET_CREATE_PATTERN
 	{
-		FIX,		// 固定
+	//	FIX,		// 固定
 		FIX_MOVE,	// 固定動き
 		RANDOM,		// ランダム
+		RANDOM_MOVE,	// ランダム動き
 		MAX			
 	};
 
@@ -37,8 +38,14 @@ private:
 	// 制限時間
 	float timeLimit_;
 
-	// ターゲットらの生成
-	void CreateTargets();
+	// ターゲットの生成
+	void CreateTargets();	
+	
+	// 各種生成処理
+	void CreateTargetFix();
+	void CreateTargetFixMove();
+	void CreateTargetRandom();
+	void CreateTargetRandomMove();
 
 	// 状態別更新処理
 	void UpdateChallenge() override;
@@ -48,4 +55,3 @@ private:
 	void ChangeStateChallenge() override;
 	void ChangeStateEnd() override;
 };
-

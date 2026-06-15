@@ -1,9 +1,11 @@
 #pragma once
 #include <vector>
-#include "../Common/Vector2F.h"
+#include <unordered_map>
 #include "../../Template/Singleton.h"
-#include "../../Object/Gimmick/GimmickBase.h"
+#include "../../Common/Vector2F.h"
+#include "GimmickTypes.h"
 
+class GimmickBase;
 class GimmickGenerator;
 
 class GimmickManager : public Singleton<GimmickManager>
@@ -41,14 +43,35 @@ public:
 	/// <summary>
 	/// 追加処理
 	/// </summary>
-	/// <param name="gimmick">ギミック</param>
-	void Add(std::unique_ptr<GimmickBase> gimmick);
+	/// <param name="type">種類</param>
+	/// <param name="pos">座標</param>
+	/// <param name="isMove">移動判定</param>
+	/// <param name="moveDir">移動方向</param>
+	void Add(const GimmickTypes::TYPE type, const Vector2F& pos);
 
 	/// <summary>
-	/// ボス部屋の設定
+	/// ボス部屋ドアの生成
 	/// </summary>
 	/// <param name="pos"></param>
-	void SetBossDoor(const Vector2F pos);
+	void CreateBossDoor(const Vector2F pos);
+
+	/// <summary>
+	/// ターゲットの生成
+	/// </summary>
+	/// <param name="pos">座標</param>
+	/// <param name="isMove">移動判定</param>
+	void CreateTarget(const Vector2F pos, const Vector2F& moveDir = {});
+
+	/// <summary>
+	/// ターゲットをすべて消す
+	/// </summary>
+	void AllDeleteTarget();
+
+	/// <summary>
+	/// 全てのターゲットを破壊することができたか
+	/// </summary>
+	/// <returns>空の場合true</returns>
+	const bool IsDestrolyAllTarget() const;
 
 	/// <summary>
 	/// デバッグ描画
@@ -60,11 +83,8 @@ private:
 	// ギミック生成
 	std::unique_ptr<GimmickGenerator> gimmickGenerator_;
 
-	// ギミックリスト
-	std::vector<std::unique_ptr<GimmickBase>> gimmickList_;
-
-	// テンプレートとなるパラメータマップ
-	std::unordered_map<GimmickBase::TYPE, std::unique_ptr<ParameterGimmick>> templateParameterMap_;
+	// ギミック管理マップ
+	std::unordered_map<GimmickTypes::TYPE, std::vector<std::unique_ptr<GimmickBase>>> gimmickListMap_;
 
 	// コンストラクタ
 	GimmickManager();

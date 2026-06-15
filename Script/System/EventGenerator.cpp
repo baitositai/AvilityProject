@@ -45,7 +45,7 @@ std::list<std::unique_ptr<EventBase>> EventGenerator::CreateEventList(const std:
 	{
 		// í—Ş
 		EventTypes::TYPE type = static_cast<EventTypes::TYPE>(GetRand(EventTypes::TYPE_MAX - 1));
-		type = EventTypes::TYPE::TIME_LIMIT_DEFEAT_ALL;
+		type = EventTypes::TYPE::TARGET_DESTROY;
 
 		// ƒCƒxƒ“ƒg¶¬
 		auto event = CreateGameEvent(type);
