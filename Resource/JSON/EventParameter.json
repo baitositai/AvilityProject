@@ -25,5 +25,9 @@
       "x": 250,
       "y": 250
     }
+  },
+  "treasureChest": {
+    "challengeTime": 5,
+    "endTime": 3
   }
 }

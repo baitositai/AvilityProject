@@ -10,6 +10,7 @@ public:
 	{
 		TIME_LIMIT_DEFEAT_ALL,
 		TARGET_DESTROY,
+		TREASURE_CHEST,
 		MAX
 	};
 

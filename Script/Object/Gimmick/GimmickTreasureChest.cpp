@@ -34,6 +34,16 @@ void GimmickTreasureChest::Init()
 	parameterTreasureChest_->pos_.y -= parameterTreasureChest_->hitSize_.y / 2;
 }
 
+void GimmickTreasureChest::Update()
+{
+	if (collider_->IsActive()) return;
+
+	if (!animation_->IsPlay())
+	{
+		Delete();
+	}
+}
+
 void GimmickTreasureChest::Draw()
 {
 	ActorBase::Draw();

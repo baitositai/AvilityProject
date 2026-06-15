@@ -23,6 +23,11 @@ public:
 	void Init() override;
 
 	/// <summary>
+	/// XVˆ—
+	/// </summary>
+	void Update() override;
+
+	/// <summary>
 	/// •`‰æ
 	/// </summary>
 	void Draw()override;

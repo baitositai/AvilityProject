@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\System\Event\EventTreasureChest.cpp" />
     <ClCompile Include="Script\OnHit\OnHitTreasureChest.cpp" />
     <ClCompile Include="Script\Parameter\Gimmick\ParameterGimmickTreasureChest.cpp" />
     <ClCompile Include="Script\Object\Gimmick\GimmickTreasureChest.cpp" />
@@ -326,6 +327,7 @@
     <ClCompile Include="Script\Object\Stage\StageTrain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\System\Event\EventTreasureChest.h" />
     <ClInclude Include="Script\OnHit\OnHitTreasureChest.h" />
     <ClInclude Include="Script\Parameter\Gimmick\ParameterGimmickTreasureChest.h" />
     <ClInclude Include="Script\Object\Gimmick\GimmickTreasureChest.h" />

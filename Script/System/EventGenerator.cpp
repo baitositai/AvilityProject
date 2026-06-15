@@ -2,6 +2,7 @@
 #include "../Utility/UtilityLoad.h"
 #include "Event/EventTargetDestroy.h"
 #include "Event/EventTimeLimitDefeatAll.h"
+#include "Event/EventTreasureChest.h"
 #include "EventGenerator.h"
 
 EventGenerator::EventGenerator()
@@ -14,6 +15,10 @@ EventGenerator::EventGenerator()
 	createEventMap_.emplace(EventTypes::TYPE::TIME_LIMIT_DEFEAT_ALL, [this]()
 		{
 			return CreateEventTimeLimitDefeatAll();
+		});
+	createEventMap_.emplace(EventTypes::TYPE::TREASURE_CHEST, [this]()
+		{
+			return CreateEventTreasureChest();
 		});
 }
 
@@ -36,6 +41,11 @@ void EventGenerator::InitParameter()
 	auto parameterTimeLimitDefeatAll = std::make_unique<ParameterEventTimeLimitDefeatAll>();
 	parameterTimeLimitDefeatAll->LoadParameter(jsonTimeLimitDefeatAllParameter);
 	templateParameterMap_.emplace(EventTypes::TYPE::TIME_LIMIT_DEFEAT_ALL, std::move(parameterTimeLimitDefeatAll));
+
+	const auto jsonTreasureChestParameter = jsonParameterMap.at("treasureChest").front();
+	auto parameterTreasureChest = std::make_unique<ParameterEventTimeLimitDefeatAll>();
+	parameterTreasureChest->LoadParameter(jsonTreasureChestParameter);
+	templateParameterMap_.emplace(EventTypes::TYPE::TREASURE_CHEST, std::move(parameterTreasureChest));
 }
 
 std::list<std::unique_ptr<EventBase>> EventGenerator::CreateEventList(const std::vector<Vector2F>& triggerPositionsList)
@@ -45,7 +55,7 @@ std::list<std::unique_ptr<EventBase>> EventGenerator::CreateEventList(const std:
 	{
 		// éÌóﬁ
 		EventTypes::TYPE type = static_cast<EventTypes::TYPE>(GetRand(EventTypes::TYPE_MAX - 1));
-		type = EventTypes::TYPE::TARGET_DESTROY;
+		type = EventTypes::TYPE::TREASURE_CHEST;
 
 		// ÉCÉxÉìÉgê∂ê¨
 		auto event = CreateGameEvent(type);
@@ -110,4 +120,9 @@ std::unique_ptr<EventTimeLimitDefeatAll> EventGenerator::CreateEventTimeLimitDef
 	// ê∂ê¨ÇµÇΩÇ‡ÇÃÇï‘Ç∑
 	auto parameter = std::make_unique<ParameterEventTimeLimitDefeatAll>(*parameterEventTimeLimitDefeatAll);
 	return std::make_unique<EventTimeLimitDefeatAll>(std::move(parameter));
+}
+
+std::unique_ptr<EventTreasureChest> EventGenerator::CreateEventTreasureChest()
+{
+	return std::make_unique<EventTreasureChest>(std::move(std::make_unique<ParameterEvent>(*templateParameterMap_.at(EventTypes::TYPE::TREASURE_CHEST))));
 }
