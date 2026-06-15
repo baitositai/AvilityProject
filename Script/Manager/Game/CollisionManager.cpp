@@ -222,6 +222,15 @@ void CollisionManager::InitTagMatrix()
 
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::CHANGE_NEXT_AREA)] = true;			// プレイヤー次遷移エリア
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::CHANGE_NEXT_AREA)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_ATTACK_NORMAL)][static_cast<int>(CollisionTags::TAG::TARGET)] = true;		// プレイヤー通常攻撃ターゲット
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TARGET)][static_cast<int>(CollisionTags::TAG::PLAYER_ATTACK_NORMAL)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_SHOT)][static_cast<int>(CollisionTags::TAG::TARGET)] = true;			// プレイヤーショット攻撃ターゲット
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TARGET)][static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_SHOT)] = true;
+	
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_STAMP)][static_cast<int>(CollisionTags::TAG::TARGET)] = true;		// プレイヤースタンプ攻撃ターゲット
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TARGET)][static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_STAMP)] = true;
 }
 
 void CollisionManager::InitColliderMatrix()

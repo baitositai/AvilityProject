@@ -20,13 +20,13 @@ void GimmickGenerator::InitParameter()
 	const auto jsonDoorParameter = jsonParameterMap.at("door").front();
 	auto parameterDoor = std::make_unique<ParameterGimmick>();
 	parameterDoor->LoadParameter(jsonDoorParameter);
-	templateParameterMap_.emplace(GimmickBase::TYPE::DOOR, std::move(parameterDoor));
+	templateParameterMap_.emplace(GimmickTypes::TYPE::DOOR, std::move(parameterDoor));
 
 	// ターゲット生成
 	const auto jsonTargetParameter = jsonParameterMap.at("target").front();
 	auto parameterTarget = std::make_unique<ParameterGimmickTarget>();
 	parameterTarget->LoadParameter(jsonTargetParameter);
-	templateParameterMap_.emplace(GimmickBase::TYPE::TARGET, std::move(parameterTarget));
+	templateParameterMap_.emplace(GimmickTypes::TYPE::TARGET, std::move(parameterTarget));
 }
 
 std::unique_ptr<GimmickBase> GimmickGenerator::Create(const GimmickTypes::TYPE type)
@@ -47,8 +47,7 @@ std::unique_ptr<GimmickBase> GimmickGenerator::Create(const GimmickTypes::TYPE t
 
 std::unique_ptr<GimmickDoor> GimmickGenerator::CreateGimmickDoor()
 {
-	return nullptr;
-		//std::make_unique<GimmickDoor>(std::move(std::make_unique<ParameterGimmick>(*templateParameterMap_.at(GimmickTypes::TYPE::DOOR))));
+	return std::make_unique<GimmickDoor>(std::move(std::make_unique<ParameterGimmick>(*templateParameterMap_.at(GimmickTypes::TYPE::DOOR))));
 }
 
 std::unique_ptr<GimmickTarget> GimmickGenerator::CreateGimmickTarget()

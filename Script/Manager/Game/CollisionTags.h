@@ -25,6 +25,7 @@ public:
 		TELEPORT_EXIT,				// テレポート
 		DOOR,						// ドア
 		CHANGE_NEXT_AREA,			// 次へ遷移するエリア
+		TARGET,						// ターゲット
 		MAX
 	};
 
