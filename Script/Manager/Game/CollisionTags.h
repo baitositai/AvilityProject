@@ -22,6 +22,9 @@ public:
 		BLAST,						// 爆風
 		AIRSLASH,					// エアースラッシュ
 		ITEM_AVILITY,				// アイテム:アビリティ
+		ITEM_TREASURE,				// アイテム:宝
+		ITEM_FOOD,					// アイテム:食べ物
+		ITEM_MONEY,					// アイテム:お金
 		TELEPORT_EXIT,				// テレポート
 		DOOR,						// ドア
 		CHANGE_NEXT_AREA,			// 次へ遷移するエリア

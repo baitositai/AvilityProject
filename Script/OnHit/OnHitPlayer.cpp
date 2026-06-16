@@ -1,5 +1,7 @@
 #include "../../Object/Common/Animation.h"
 #include "../../Object/Item/ItemAvility.h"
+#include "../../Object/Item/ItemFood.h"
+#include "../../Object/Item/ItemAvility.h"
 #include "../../Factory/FactoryComponent.h"
 #include "../../Component/Avility/ComponentAvilityBase.h"
 #include "../../Manager/Common/InputManager.h"
@@ -67,6 +69,31 @@ void OnHitPlayer::OnHitItemAvility(const std::weak_ptr<ColliderBase>& opponentCo
 
     // アイテムの種類を獲得
     owner_.SetAvilityComponent(std::move(factoryComponent_.CreateComponentAvility(itemAvility->GetCreateAvilityName(), owner_)));
+}
+
+void OnHitPlayer::OnHitItemFood(const std::weak_ptr<ColliderBase>& opponentCollider)
+{
+    // 衝突相手の所有者をキャストしてアイテムのインスタンスを取得
+    const auto& item = dynamic_cast<const ItemBase*>(&opponentCollider.lock()->GetOwner());
+
+    // アイテムのアビリティを取得
+    const auto& itemFood = dynamic_cast<const ItemFood*>(item);
+
+    // アイテムの種類を獲得
+    owner_.Heal(itemFood->GetParameter().heal_);
+}
+
+void OnHitPlayer::OnHitItemTreasure(const std::weak_ptr<ColliderBase>& opponentCollider)
+{
+}
+
+void OnHitPlayer::OnHitItemMoney(const std::weak_ptr<ColliderBase>& opponentCollider)
+{
+    //// 衝突相手の所有者をキャストしてアイテムのインスタンスを取得
+    //const auto& item = dynamic_cast<const ItemBase*>(&opponentCollider.lock()->GetOwner());
+
+    //// アイテムのアビリティを取得
+    //const auto& itemMoney = dynamic_cast<const ItemAvility*>(item);
 }
 
 void OnHitPlayer::OnHitDoor(const std::weak_ptr<ColliderBase>& opponentCollider)

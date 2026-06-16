@@ -2,14 +2,14 @@
 
 const std::unordered_map<AvilityTypes::TYPE, std::string> AvilityTypes::AVILITY_NAME_MAP =
 {
-	{AvilityTypes::TYPE::SHOT, "avilityShot"},
-	//{AvilityTypes::TYPE::BOX, "avilityBox"},
-	{AvilityTypes::TYPE::STAMP, "avilityStamp"},
-	{AvilityTypes::TYPE::GRAVITY, "avilityGravity"},
-	{AvilityTypes::TYPE::TELEPORT, "avilityTeleport"},
-	{AvilityTypes::TYPE::GIANT, "avilityGiant"},
-	{AvilityTypes::TYPE::METAL, "avilityMetal"},
-	{AvilityTypes::TYPE::AIRWALK, "avilityAirwalk"},
-	{AvilityTypes::TYPE::AIRSLASH, "avilityAirslash"},
-	{AvilityTypes::TYPE::SUPERMAN, "avilitySuperman"}
+	{AvilityTypes::TYPE::SHOT, "shot"},
+	//{AvilityTypes::TYPE::BOX, "box"},
+	{AvilityTypes::TYPE::STAMP, "stamp"},
+	{AvilityTypes::TYPE::GRAVITY, "gravity"},
+	{AvilityTypes::TYPE::TELEPORT, "teleport"},
+	{AvilityTypes::TYPE::GIANT, "giant"},
+	{AvilityTypes::TYPE::METAL, "metal"},
+	{AvilityTypes::TYPE::AIRWALK, "airwalk"},
+	{AvilityTypes::TYPE::AIRSLASH, "airslash"},
+	{AvilityTypes::TYPE::SUPERMAN, "superman"}
 };

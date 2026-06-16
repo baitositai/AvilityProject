@@ -1,6 +1,7 @@
 #include "ParameterItem.h"
 
-ParameterItem::ParameterItem()
+ParameterItem::ParameterItem() :
+	spriteIndex_(-1)
 {
 }
 

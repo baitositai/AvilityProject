@@ -15,11 +15,6 @@ public:
 	/// </summary>
 	virtual ~ParameterItem() override;
 
-
-
-private:
-
-
-
+	// •`‰æ”Ô†
+	int spriteIndex_;
 };
-

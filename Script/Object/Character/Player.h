@@ -59,6 +59,12 @@ public:
 	void AttackAfter() override;
 
 	/// <summary>
+	/// 回復
+	/// </summary>
+	/// <param name="healHp">体力の回復量</param>
+	void Heal(const int healHp);
+
+	/// <summary>
 	/// 自身のコライダーのクローンを生成して返す
 	/// </summary>
 	/// <returns>自身のコライダーのクローン</returns>

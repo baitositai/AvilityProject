@@ -201,6 +201,19 @@ void Player::AttackAfter()
 	SetAllAvilityComponentActive(true);
 }
 
+void Player::Heal(const int healHp)
+{
+	// HP‚ÌÝ’è
+	parameterPlayer_->hp_ = healHp;
+
+	// Å‘åHP‚ð’´‚¦‚Ä‚¢‚½ê‡
+	if (parameterPlayer_->hpMax_ < parameterPlayer_->hp_)
+	{
+		// ãŒÀ‚ÉÝ’è
+		parameterPlayer_->hp_ = parameterPlayer_->hpMax_;
+	}
+}
+
 std::shared_ptr<ColliderBox> Player::CreateColliderClone()
 {
 	std::shared_ptr<ColliderBase> collider = collider_->Clone();

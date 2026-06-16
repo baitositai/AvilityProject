@@ -44,6 +44,7 @@ private:
 	// パラメータ情報
 	ParameterGimmickTarget* parameterTarget_;
 
+	// バックアップ座標
 	Vector2F prePos_;
 
 	// カメラ範囲内か判定
