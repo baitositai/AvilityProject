@@ -1,6 +1,6 @@
 #include <DxLib.h>
 #include "../../Manager/Common/ResourceManager.h"
-#include "../../OnHit/OnHitItemBase.h"
+#include "../../OnHit/OnHitItemTreasure.h"
 #include "../../Collider/ColliderBox.h"
 #include "../../Object/Character/Player.h"
 #include "ItemTreasure.h"
@@ -26,7 +26,7 @@ ItemTreasure::~ItemTreasure()
 void ItemTreasure::Init()
 {
 	// 衝突後処理
-	onHit_ = std::make_unique<OnHitItemBase>(*this);
+	onHit_ = std::make_unique<OnHitItemTreasure>(*this);
 
 	// コライダー生成
 	collider_ = std::make_shared<ColliderBox>(*this, tag_, parameterItemTreasure_->pos_, parameterItemTreasure_->hitSize_, parameterItemTreasure_->angle_);
@@ -95,6 +95,13 @@ void ItemTreasure::FollowPlayer(Player& player)
 	status.size = parameterItemTreasure_->hitSize_;
 	treasureList.push_back(status);
 
+	// コンポーネント無効
+	SetComponentActive("gravity", false);
+	SetComponentActive("move", false);
+
+	// コライダー無効
+	collider_->SetIsActive(false);
+
 	UpdateFollow();
 }
 
@@ -116,6 +123,12 @@ void ItemTreasure::FollowRemove()
 	// 追従解除
 	owner_ = nullptr;
 	ownerHeadPos_ = {};
+
+	// コンポーネント有効
+	SetComponentActive("gravity", true);
+	SetComponentActive("move", true);
+	// コライダー無効
+	collider_->SetIsActive(true);
 }
 
 void ItemTreasure::UpdateFollow()
@@ -123,11 +136,15 @@ void ItemTreasure::UpdateFollow()
 	// 頭部位置取得
 	ownerHeadPos_ = owner_->GetHeadPos(index_);
 
+	// ハーフサイズの取得
+	Vector2F halfSize = Vector2F::MulVector2FFloat(parameterItemTreasure_->hitSize_.ToVector2F(), 0.5f);
+
 	// 重力や角度を所有者に合わせる
 	const auto& ownerParameter = owner_->GetParameter();
 	parameterItemTreasure_->gravityDir_ = ownerParameter.gravityDir_;
 	parameterItemTreasure_->angle_ = ownerParameter.angle_;
 
 	// 座標更新
-	parameterItemTreasure_->pos_ = Vector2F::AddVector2F(parameterItemTreasure_->pos_, ownerHeadPos_);
+	parameterItemTreasure_->pos_ = ownerHeadPos_;
+	parameterItemTreasure_->pos_.y -= halfSize.y;
 }

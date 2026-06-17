@@ -44,7 +44,9 @@ void SceneTrain::Init()
 	// プレイヤーの初期位置を決定
 	playerMng_.SetFirstPositions(stageMng_.GetPlayerFirstPositions());
 
-	itemMng_.CreateTreasureChestItems(Vector2F(640, 500));
+	itemMng_.CreateTreasureItem(ItemTypes::TREASURE_TYPE::STUFFED_TOY, Vector2F(300, 500));
+	itemMng_.CreateTreasureItem(ItemTypes::TREASURE_TYPE::CLAY_WORK, Vector2F(600, 500));
+	itemMng_.CreateTreasureItem(ItemTypes::TREASURE_TYPE::POT, Vector2F(900, 500));
 }
 
 void SceneTrain::NormalUpdate()

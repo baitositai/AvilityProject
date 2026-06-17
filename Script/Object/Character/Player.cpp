@@ -354,7 +354,7 @@ const Vector2F Player::GetHeadPos(const int index) const
 	// 取得したお宝の番号位置までサイズを足す
 	for (int i = 0; i < index; i++)
 	{
-		pos.y = parameterPlayer_->treasureList_[i].size.y;
+		pos.y -= parameterPlayer_->treasureList_[i].size.y;
 	}
 
 	return pos;
