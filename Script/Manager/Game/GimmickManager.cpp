@@ -1,6 +1,7 @@
 #include "../../Utility/UtilityLoad.h"
 #include "../../Object/Gimmick/GimmickDoor.h"
 #include "../../Object/Gimmick/GimmickTarget.h"
+#include "../../System/GimmickGenerator.h"
 #include "GimmickManager.h"
 
 void GimmickManager::Init()
@@ -62,10 +63,16 @@ void GimmickManager::Add(std::unique_ptr<GimmickBase> gimmick)
 
 void GimmickManager::SetBossDoor(const Vector2F pos)
 {
-	auto parameter = GetGimmickParameter(GimmickBase::TYPE::DOOR);
-	parameter->pos_ = pos;
-	parameter->pos_.y -= parameter->hitSize_.y / 2;
-	gimmickList_.push_back(std::make_unique<GimmickDoor>(std::move(parameter)));
+	// ドア生成
+	auto door = gimmickGenerator_->Create(GimmickTypes::TYPE::DOOR);
+
+	// 座標の調整
+	auto& parameter = door->GetParameter();
+	parameter.pos_ = pos;
+	parameter.pos_.y -= parameter.hitSize_.y / 2;
+
+	// 格納
+	gimmickList_.push_back(std::move(door));
 }
 
 void GimmickManager::DebugDraw()
@@ -78,32 +85,11 @@ void GimmickManager::DebugDraw()
 	}
 }
 
-std::unique_ptr<ParameterGimmick> GimmickManager::GetGimmickParameter(const GimmickBase::TYPE type) const
-{
-	return std::make_unique<ParameterGimmick>(*templateParameterMap_.at(type));
-}
-
-void GimmickManager::InitParameter()
-{
-	// 情報の取得
-	const auto jsonParameterMap = UtilityLoad::GetJsonMapArrayData("GimmickParameter");
-
-	// ドア生成
-	const auto jsonDoorParameter = jsonParameterMap.at("door").front();
-	auto parameterDoor = std::make_unique<ParameterGimmick>();
-	parameterDoor->LoadParameter(jsonDoorParameter);
-	templateParameterMap_.emplace(GimmickBase::TYPE::DOOR, std::move(parameterDoor));
-
-	// ターゲット生成
-	const auto jsonTargetParameter = jsonParameterMap.at("target").front();
-	auto parameterTarget = std::make_unique<ParameterGimmickTarget>();
-	parameterTarget->LoadParameter(jsonTargetParameter);
-	templateParameterMap_.emplace(GimmickBase::TYPE::TARGET, std::move(parameterTarget));
-}
-
 GimmickManager::GimmickManager()
 {
-	InitParameter();
+	// 生成クラスの用意
+	gimmickGenerator_ = std::make_unique<GimmickGenerator>();
+	gimmickGenerator_->InitParameter();
 }
 
 GimmickManager::~GimmickManager()

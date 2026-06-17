@@ -2,7 +2,9 @@
 #include <vector>
 #include "../Common/Vector2F.h"
 #include "../../Template/Singleton.h"
-#include "../../Object/Gimmick/GimmickBase.h"
+
+class GimmickGenerator;
+class GimmickBase;
 
 class GimmickManager : public Singleton<GimmickManager>
 {
@@ -53,24 +55,13 @@ public:
 	/// </summary>
 	void DebugDraw();
 
-	/// <summary>
-	/// 指定したギミックのパラメータを返す
-	/// </summary>
-	/// <param name="type">種類</param>
-	/// <returns>パラメータ</returns>
-	std::unique_ptr<ParameterGimmick> GetGimmickParameter(const GimmickBase::TYPE type) const;
-
-
 private:
 
 	// ギミックリスト
 	std::vector<std::unique_ptr<GimmickBase>> gimmickList_;
 
-	// テンプレートとなるパラメータマップ
-	std::unordered_map<GimmickBase::TYPE, std::unique_ptr<ParameterGimmick>> templateParameterMap_;
-	
-	// パラメータ関係の初期化
-	void InitParameter();
+	// ギミック生成
+	std::unique_ptr<GimmickGenerator> gimmickGenerator_;
 
 	// コンストラクタ
 	GimmickManager();
