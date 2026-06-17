@@ -82,6 +82,12 @@ public:
 	/// <returns>プレイヤー残機</returns>
 	const int GetPlayerLeft() const { return playersLeft_; }
 
+	/// <summary>
+	/// プレイヤー人数を返す
+	/// </summary>
+	/// <returns>プレイヤー人数</returns>
+	const int GetPlayerNum() const;
+
 private:
 
 	int font_;

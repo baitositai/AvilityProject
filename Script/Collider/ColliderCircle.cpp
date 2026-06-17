@@ -26,5 +26,5 @@ void ColliderCircle::DebugDraw()
 	if (!isActive_ || !owner_.IsActive()) return;
 	Vector2F cameraPos = mainCamera.GetPos();
 	Vector2 pos = Vector2::AddVector2(followPos_.ToVector2(), cameraPos.ToVector2());
-	DrawCircle(pos.x, pos.y, radius_,  UtilityCommon::YELLOW, false , 3);
+	DrawCircle(pos.x, pos.y, radius_,  UtilityCommon::YELLOW, false , 1);
 }

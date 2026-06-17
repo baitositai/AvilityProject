@@ -76,6 +76,12 @@ public:
 	virtual void Landing();
 
 	/// <summary>
+	/// ダメージ処理
+	/// </summary>
+	/// <param name="damage"></param>
+	virtual void Damage(const int damage);
+
+	/// <summary>
 	/// コンポーネントの追加
 	/// </summary>
 	/// <param name="name">コンポーネントの名前</param>

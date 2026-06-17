@@ -30,6 +30,9 @@ void InputManager::Init()
 	// 通常攻撃
 	RegisterTrigger(TYPE::PLAYER_ATTACK, { KEY_INPUT_R }, { BTN::RB_TOP });
 
+	// アイテム入手
+	RegisterTrigger(TYPE::PLAYER_GET_ITEM, { KEY_INPUT_SPACE }, { BTN::RB_RIGHT });
+
 	// アビリティ：重力方向の切り替え
 	RegisterTrigger(TYPE::AVILITY_GRAVITY_RIGHT, { KEY_INPUT_RIGHT }, { }, STICK::R_STICK_RIGHT);
 	RegisterTrigger(TYPE::AVILITY_GRAVITY_LEFT, { KEY_INPUT_LEFT }, { }, STICK::R_STICK_LEFT);

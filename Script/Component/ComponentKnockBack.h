@@ -1,7 +1,7 @@
 #pragma once
 #include "ComponentBase.h"
 
-class ParameterCharacter;
+class ParameterActor;
 
 class ComponentKnockBack : public ComponentBase
 {
@@ -11,7 +11,7 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="owner">所有者</param>
-	ComponentKnockBack(CharacterBase& owner);
+	ComponentKnockBack(ActorBase& owner);
 
 	/// <summary>
 	/// デストラクタ
@@ -29,6 +29,6 @@ private:
 	static constexpr float KNOCK_BACK_DECELERATION = 1200.0f;
 
 	// 所有者
-	ParameterCharacter& parameter_;
+	ParameterActor& parameter_;
 };
 

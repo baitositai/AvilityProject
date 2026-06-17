@@ -138,6 +138,7 @@ void SceneBase::NormalDraw()
 {
 	stageMng_.Draw();
 	gimmickMng_.Draw();
+	itemMng_.Draw();
 	playerMng_.Draw();
 	enemyMng_.Draw();
 	effectMng_.Draw();

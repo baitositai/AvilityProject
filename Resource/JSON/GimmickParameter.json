@@ -12,9 +12,42 @@
     "resourceKey": "target",
     "transparent": true,
     "scale": 1.0,
+    "moveSpeed": 2.0,
+    "hitRadius": 48.0,
     "hitBoxSize": {
       "x": 96,
       "y": 96
-    }
+    },
+    "componentKeys": [
+      "move"
+    ]
+  },
+  "treasureChest": {
+    "resourceKey": "treasureChests",
+    "transparent": true,
+    "scale": 1.0,
+    "moveSpeed": 2.0,
+    "hitRadius": 48.0,
+    "gravityPower": 9.8,
+    "hitBoxSize": {
+      "x": 110,
+      "y": 75
+    },
+    "divisionNum": {
+      "x": 8,
+      "y": 2
+    },
+    "animation": {
+      "walk": {
+        "no": 0,
+        "speed": 0.1,
+        "num": 8
+      }
+    },
+    "componentKeys": [
+      "gravity",
+      "move",
+      "spriteAnimation"
+    ]
   }
-}
+  }

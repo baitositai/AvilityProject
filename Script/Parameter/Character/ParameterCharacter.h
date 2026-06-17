@@ -47,12 +47,6 @@ public:
     // ジャンプ力の最大量
     float jumpPowMax_;
 
-    // ノックバックパワー
-    Vector2F knockBackPower_;
-
-    // ノックバック距離
-    float knockBackDistance_;
-
     // 通常攻撃開始フレーム
 	int defaultAttackStartFrame_;
 

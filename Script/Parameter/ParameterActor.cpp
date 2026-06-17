@@ -25,7 +25,8 @@ ParameterActor::ParameterActor() :
     hp_(-1),
     hpMax_(-1),
     attackPower_(-1),
-    attackBoostRate_(0.0f)
+    attackBoostRate_(0.0f),
+    knockBackPower_({ 0.0f, 0.0f })
 {
 }
 
@@ -45,6 +46,7 @@ void ParameterActor::LoadParameter(const Json& parameter)
     moveSpeed_ = parameter.value("moveSpeed", 0.0f);
     gravityPower_ = parameter.value("gravityPower", 0.0f);
     weight_ = parameter.value("weight", 0.0f);
+    hitRadius_ = parameter.value("hitRadius", 0.0f);
     resourceKey_ = parameter.value("resourceKey", "");
     componentkeys_ = parameter.value("componentKeys", std::vector<std::string>());
 

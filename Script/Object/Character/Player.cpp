@@ -9,6 +9,7 @@
 #include "../../Collider/ColliderBox.h"
 #include "../../Utility/UtilityCommon.h"
 #include "../../Parameter/Character/Player/ParameterPlayer.h"
+#include "../Item/ItemTreasure.h"
 #include "../Common/Animation.h"
 #include "Player.h"
 
@@ -58,6 +59,10 @@ void Player::Update()
 	// 基底クラスの処理
 	ActorBase::Update();
 
+	// 更新後処理
+	UpdateAfter();
+
+	// ゲームから去る処理
 	GameLeave();
 }
 
@@ -135,6 +140,19 @@ void Player::Dead()
 	mainCamera.SetCameraShake(0.3f, 8.0f);
 }
 
+void Player::Damage(const int damage)
+{
+	CharacterBase::Damage(damage);
+
+	// すべて外す
+	for (auto item : attachedTreasures_)
+	{
+		item->FollowRemove();
+	}
+
+	attachedTreasures_.clear();
+}
+
 void Player::Ready()
 {
 	// 全コンポーネントを有効にする
@@ -201,11 +219,29 @@ void Player::AttackAfter()
 	SetAllAvilityComponentActive(true);
 }
 
+void Player::Heal(const int healHp)
+{
+	// HPの設定
+	parameterPlayer_->hp_ = healHp;
+
+	// 最大HPを超えていた場合
+	if (parameterPlayer_->hpMax_ < parameterPlayer_->hp_)
+	{
+		// 上限に設定
+		parameterPlayer_->hp_ = parameterPlayer_->hpMax_;
+	}
+}
+
 std::shared_ptr<ColliderBox> Player::CreateColliderClone()
 {
 	std::shared_ptr<ColliderBase> collider = collider_->Clone();
 	std::shared_ptr<ColliderBox> colliderBox = std::dynamic_pointer_cast<ColliderBox>(collider);
 	return colliderBox;
+}
+
+void Player::SetAttachedItem(ItemTreasure* item)
+{
+	attachedTreasures_.push_back(item);
 }
 
 void Player::SetAvilityComponent(std::unique_ptr<ComponentAvilityBase> component)
@@ -237,7 +273,7 @@ void Player::SetAvilityComponent(std::unique_ptr<ComponentAvilityBase> component
 		spareAvilityComponent_ = std::move(component);
 
 		// 操作が被るため一時的にアビリティ重力を無効にする
-		SetAvilityActive(AvilityTypes::TYPE::GRAVITY, false);
+		SetAvilityActive(AvilityTypes::TYPE::GRAVITYCONTROLL, false);
 
 		// 選択時間の設定
 		selectAvilityTime_ = AVILITY_SELECT_TIME;
@@ -300,6 +336,30 @@ void Player::ResetAvilityComponent(const AvilityTypes::TYPE avilityType)
 	}
 }
 
+const Vector2F Player::GetHeadPos(const int index) const
+{
+	// プレイヤーの頭部位置を取得
+	Vector2F pos = parameterPlayer_->pos_;
+	Vector2F size = parameterPlayer_->hitSize_.ToVector2F();
+	Vector2F halfSize = { size.x / 2.0f, size.y / 2.0f };
+	pos = Vector2F::AddVector2F(pos, Vector2F::MulVector2F(parameterPlayer_->GetUp(), halfSize));
+
+	// 取得した番号より配列が小さい場合
+	if (parameterPlayer_->treasureList_.size() < index)
+	{
+		// 座標を返す
+		return pos;
+	}
+
+	// 取得したお宝の番号位置までサイズを足す
+	for (int i = 0; i < index; i++)
+	{
+		pos.y = parameterPlayer_->treasureList_[i].size.y;
+	}
+
+	return pos;
+}
+
 void Player::UpdateComponentAvility()
 {
 	if (avilityComponents_.empty())
@@ -353,7 +413,7 @@ void Player::SelectAvility()
 		if (selectAvilityTime_ <= 0.0f)
 		{
 			spareAvilityComponent_ = nullptr;
-			SetAvilityActive(AvilityTypes::TYPE::GRAVITY, true);
+			SetAvilityActive(AvilityTypes::TYPE::GRAVITYCONTROLL, true);
 		}
 	}
 }
@@ -380,4 +440,9 @@ void Player::GameLeave()
 	{
 		leaveInputTime_ = 0.0f;
 	}
+}
+
+void Player::UpdateAfter()
+{
+	parameterPlayer_->isHitItem_ = false;
 }

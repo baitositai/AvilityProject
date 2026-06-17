@@ -10,6 +10,7 @@
 class EventBase;
 class EventTargetDestroy;
 class EventTimeLimitDefeatAll;
+class EventTreasureChest;
 
 class ParameterEvent;
 
@@ -57,4 +58,5 @@ private:
 	// 各種イベントの生成処理
 	std::unique_ptr<EventTargetDestroy> CreateEventTargetDestroy();
 	std::unique_ptr<EventTimeLimitDefeatAll> CreateEventTimeLimitDefeatAll();
+	std::unique_ptr<EventTreasureChest> CreateEventTreasureChest();
 };

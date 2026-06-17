@@ -11,7 +11,7 @@ public:
 		SHOT,			// ショット
 		//BOX,			// ボックス
 		STAMP,			// スタンプ
-		GRAVITY,		// 重力変化
+		GRAVITYCONTROLL,		// 重力変化
 		TELEPORT,		// テレポート
 		GIANT,			// 巨大化
 		METAL,			// メタル
@@ -20,6 +20,9 @@ public:
 		SUPERMAN,		// スーパーマン
 		MAX
 	};
+
+	// 最大数
+	static constexpr int AVILITY_TYPE_MAX = static_cast<int>(TYPE::MAX);
 
 	// アビリティの名前を管理
 	static const std::unordered_map<TYPE, std::string> AVILITY_NAME_MAP;

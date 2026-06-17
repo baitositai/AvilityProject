@@ -10,8 +10,6 @@ ParameterCharacter::ParameterCharacter() :
     invincibleTime_(0.0f),
     jumpPow_(0.0f),
     jumpPowMax_(0.0f),
-    knockBackPower_({ 0.0f, 0.0f }),
-    knockBackDistance_(0.0f),
     defaultAttackDistance_(0.0f),
     defaultAttackRadius_(0.0f),
     attackCollisionTag_(CollisionTags::TAG::NONE)
@@ -36,7 +34,6 @@ void ParameterCharacter::LoadParameter(const Json& parameter)
     invincibleTime_ = parameter.value("invincibleTime", 0.0f);
     jumpPow_ = parameter.value("jumpPow", 0.0f);
     jumpPowMax_ = parameter.value("jumpPowerMax", 0.0f);
-    knockBackDistance_ = parameter.value("knockBackDistance", 0.0f);
     defaultAttackRadius_ = parameter.value("defaultAttackRadius", 0.0f);
     defaultAttackDistance_ = parameter.value("defaultAttackDistance", 0.0f);
     defaultAttackStartFrame_ = parameter.value("defaultAttackStartFrame", -1);

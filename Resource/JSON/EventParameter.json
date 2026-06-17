@@ -1,14 +1,21 @@
 {
   "targetDestroy": {
     "targetMax": 8,
-    "targetMin": 5
+    "targetMin": 5,
+    "challengeTime": 30,
+    "endTime": 3,
+    "targetSize": 96.0,
+    "createRangeOffset": {
+      "x": 250,
+      "y": 100
+    }
   },
   "timeLimitDefeatAll": {
     "waveMax": 3,
     "waveMin": 1,
     "enemyNumMax": 6,
     "enemyNumMin": 3,
-    "challengeTime": 20,
+    "challengeTime": 30,
     "endTime": 3,
     "createRange": {
       "x": 250,
@@ -18,5 +25,9 @@
       "x": 250,
       "y": 250
     }
+  },
+  "treasureChest": {
+    "challengeTime": 5,
+    "endTime": 3
   }
 }

@@ -27,7 +27,7 @@ void ComponentAvilityAirslash::Update()
 {
 	// ƒWƒƒƒ“ƒv‰ñ”‚Ì”äŠr
 	int nowJumpCount = parameter_.jumpCount_;
-	if (preJumpCount_ > 0)
+	if (preJumpCount_ > 0 && !parameter_.isHitItem_)
 	{
 		if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_JUMP))
 		{

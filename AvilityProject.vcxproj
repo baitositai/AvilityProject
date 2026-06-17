@@ -145,6 +145,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\OnHit\OnHitItemMoney.cpp" />
+    <ClCompile Include="Script\OnHit\OnHitItemTreasure.cpp" />
+    <ClCompile Include="Script\Object\Item\ItemMoney.cpp" />
+    <ClCompile Include="Script\Manager\Game\ItemTypes.cpp" />
+    <ClCompile Include="Script\Parameter\Item\ParameterItemMoney.cpp" />
+    <ClCompile Include="Script\System\ItemGenerator.cpp" />
+    <ClCompile Include="Script\Object\Item\ItemTreasure.cpp" />
+    <ClCompile Include="Script\Object\Item\ItemFood.cpp" />
+    <ClCompile Include="Script\Parameter\Item\ParameterItemTreasure.cpp" />
+    <ClCompile Include="Script\Parameter\Item\ParameterItemFood.cpp" />
+    <ClCompile Include="Script\System\Event\EventTreasureChest.cpp" />
+    <ClCompile Include="Script\OnHit\OnHitTreasureChest.cpp" />
+    <ClCompile Include="Script\Parameter\Gimmick\ParameterGimmickTreasureChest.cpp" />
+    <ClCompile Include="Script\Object\Gimmick\GimmickTreasureChest.cpp" />
+    <ClCompile Include="Script\OnHit\OnHitTarget.cpp" />
     <ClCompile Include="Script\Manager\Game\GimmickTypes.cpp" />
     <ClCompile Include="Script\System\GimmickGenerator.cpp" />
     <ClCompile Include="Script\Parameter\Gimmick\ParameterGimmickTarget.cpp" />
@@ -208,7 +223,7 @@
     <ClCompile Include="Script\Component\Avility\ComponentAvilityAirwalk.cpp" />
     <ClCompile Include="Script\Component\Avility\AvilityTypes.cpp" />
     <ClCompile Include="Script\Component\ComponentDebugCreateItemAvility.cpp" />
-    <ClCompile Include="Script\OnHit\OnHitItem.cpp" />
+    <ClCompile Include="Script\OnHit\OnHitItemBase.cpp" />
     <ClCompile Include="Script\Manager\Game\ItemManager.cpp" />
     <ClCompile Include="Script\Object\Item\ItemAvility.cpp" />
     <ClCompile Include="Script\OnHit\OnHitPlayerStamp.cpp" />
@@ -322,6 +337,21 @@
     <ClCompile Include="Script\Object\Stage\StageTrain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\OnHit\OnHitItemMoney.h" />
+    <ClInclude Include="Script\OnHit\OnHitItemTreasure.h" />
+    <ClInclude Include="Script\Object\Item\ItemMoney.h" />
+    <ClInclude Include="Script\Manager\Game\ItemTypes.h" />
+    <ClInclude Include="Script\Parameter\Item\ParameterItemMoney.h" />
+    <ClInclude Include="Script\System\ItemGenerator.h" />
+    <ClInclude Include="Script\Object\Item\ItemTreasure.h" />
+    <ClInclude Include="Script\Object\Item\ItemFood.h" />
+    <ClInclude Include="Script\Parameter\Item\ParameterItemTreasure.h" />
+    <ClInclude Include="Script\Parameter\Item\ParameterItemFood.h" />
+    <ClInclude Include="Script\System\Event\EventTreasureChest.h" />
+    <ClInclude Include="Script\OnHit\OnHitTreasureChest.h" />
+    <ClInclude Include="Script\Parameter\Gimmick\ParameterGimmickTreasureChest.h" />
+    <ClInclude Include="Script\Object\Gimmick\GimmickTreasureChest.h" />
+    <ClInclude Include="Script\OnHit\OnHitTarget.h" />
     <ClInclude Include="Script\Manager\Game\GimmickTypes.h" />
     <ClInclude Include="Script\System\GimmickGenerator.h" />
     <ClInclude Include="Script\Parameter\Gimmick\ParameterGimmickTarget.h" />
@@ -386,7 +416,7 @@
     <ClInclude Include="Script\Component\Avility\ComponentAvilityAirwalk.h" />
     <ClInclude Include="Script\Component\Avility\AvilityTypes.h" />
     <ClInclude Include="Script\Component\ComponentDebugCreateItemAvility.h" />
-    <ClInclude Include="Script\OnHit\OnHitItem.h" />
+    <ClInclude Include="Script\OnHit\OnHitItemBase.h" />
     <ClInclude Include="Script\Manager\Game\ItemManager.h" />
     <ClInclude Include="Script\Object\Item\ItemAvility.h" />
     <ClInclude Include="Script\OnHit\OnHitPlayerStamp.h" />

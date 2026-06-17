@@ -1,0 +1,326 @@
+{
+  "avilityCommon": {
+    "hitBoxSize": {
+      "x": 48,
+      "y": 48
+    },
+    "hitRadius": 24,
+    "transparent": true,
+    "gravityPower": 9.8,
+    "resourceKey": "avilityItems",
+    "componentKeys": [
+      "knockBack",
+      "gravity",
+      "move"
+    ]
+  },
+  "abilities": {
+    "superman": {
+      "index": 0
+    },
+    "airwalk": {
+      "index": 1
+    },
+    "gravityControll": {
+      "index": 2
+    },
+    "shot": {
+      "index": 3
+    },
+    "airslash": {
+      "index": 4
+    },
+    "metal": {
+      "index": 5
+    },
+    "stamp": {
+      "index": 6
+    },
+    "teleport": {
+      "index": 7
+    },
+    "giant": {
+      "index": 8
+    }
+  },
+  "moneyCommon": {
+    "scale": 1.0,
+    "transparent": true,
+    "gravityPower": 9.8,
+    "componentKeys": [
+      "knockBack",
+      "gravity",
+      "move"
+    ]
+  },
+  "money": {
+    "coin": {
+      "amount": 100,
+      "hitBoxSize": {
+        "x": 18,
+        "y": 18
+      },
+      "hitRadius": 12,
+      "resourceKey": "coins",
+      "animation": {
+        "idle": {
+          "no": 0,
+          "speed": 0.1,
+          "num": 3
+        }
+      },
+      "divisionNum": {
+        "x": 3,
+        "y": 3
+      }
+    },
+    "coinBag": {
+      "amount": 1000,
+      "hitBoxSize": {
+        "x": 40,
+        "y": 40
+      },
+      "hitRadius": 24,
+      "resourceKey": "coinBag",
+      "animation": {
+        "idle": {
+          "no": 0,
+          "speed": 0.1,
+          "num": 3
+        }
+      },
+      "divisionNum": {
+        "x": 2,
+        "y": 2
+      }
+    }
+  },
+  "foodCommon": {
+    "gravityPower": 9.8,
+    "transparent": true,
+    "hitBoxSize": {
+      "x": 48,
+      "y": 48
+    },
+    "hitRadius": 24,
+    "resourceKey": "foods",
+    "componentKeys": [
+      "knockBack",
+      "gravity",
+      "move"
+    ]
+  },
+  "foods": {
+    "friedEgg": {
+      "index": 0,
+      "healHp": 20
+    },
+    "waffle": {
+      "index": 1,
+      "healHp": 25
+    },
+    "pineapple": {
+      "index": 2,
+      "healHp": 40
+    },
+    "bacon": {
+      "index": 3,
+      "healHp": 15
+    },
+    "beer": {
+      "index": 4,
+      "healHp": 10
+    },
+    "steak": {
+      "index": 5,
+      "healHp": 85
+    },
+    "cheese": {
+      "index": 6,
+      "healHp": 30
+    },
+    "roastedChicken": {
+      "index": 7,
+      "healHp": 80
+    },
+    "bread": {
+      "index": 8,
+      "healHp": 25
+    },
+    "eggplant": {
+      "index": 9,
+      "healHp": 15
+    },
+    "redChili": {
+      "index": 10,
+      "healHp": 5
+    },
+    "greenChili": {
+      "index": 11,
+      "healHp": 5
+    },
+    "tomato": {
+      "index": 12,
+      "healHp": 12
+    },
+    "strawberry": {
+      "index": 13,
+      "healHp": 15
+    },
+    "apple": {
+      "index": 14,
+      "healHp": 18
+    },
+    "kiwi": {
+      "index": 15,
+      "healHp": 20
+    },
+    "pumpkinPie": {
+      "index": 16,
+      "healHp": 45
+    },
+    "cheesecake": {
+      "index": 17,
+      "healHp": 50
+    },
+    "pretzel": {
+      "index": 18,
+      "healHp": 15
+    },
+    "salami": {
+      "index": 19,
+      "healHp": 35
+    },
+    "salmonFillet": {
+      "index": 20,
+      "healHp": 55
+    },
+    "honeyJar": {
+      "index": 21,
+      "healHp": 60
+    },
+    "jerky": {
+      "index": 22,
+      "healHp": 40
+    },
+    "potato": {
+      "index": 23,
+      "healHp": 15
+    },
+    "watermelon": {
+      "index": 24,
+      "healHp": 30
+    },
+    "pancakes": {
+      "index": 25,
+      "healHp": 35
+    },
+    "chickenLeg": {
+      "index": 26,
+      "healHp": 45
+    },
+    "cherry": {
+      "index": 27,
+      "healHp": 10
+    },
+    "chocolate": {
+      "index": 28,
+      "healHp": 25
+    },
+    "sodaCan": {
+      "index": 29,
+      "healHp": 20
+    },
+    "avocado": {
+      "index": 30,
+      "healHp": 22
+    },
+    "meatSlice": {
+      "index": 31,
+      "healHp": 50
+    },
+    "shrimp": {
+      "index": 32,
+      "healHp": 30
+    },
+    "olive": {
+      "index": 33,
+      "healHp": 8
+    },
+    "picklesJar": {
+      "index": 34,
+      "healHp": 35
+    },
+    "bakedPotato": {
+      "index": 35,
+      "healHp": 25
+    }
+  },
+  "treasureCommon": {
+    "gravityPower": 9.8,
+    "transparent": true,
+    "componentKeys": [
+      "knockBack",
+      "gravity",
+      "move"
+    ]
+  },
+  "treasure": {
+    "beckoningCat": {
+      "amount": 3000,
+      "resourceKey": "beckoningCat",
+      "hitBoxSize": {
+        "x": 72,
+        "y": 96
+      }
+    },
+    "tv": {
+      "amount": 10000,
+      "resourceKey": "tv",
+      "hitBoxSize": {
+        "x": 128,
+        "y": 96
+      }
+    },
+    "tinRobot": {
+      "amount": 5000,
+      "resourceKey": "tinRobot",
+      "hitBoxSize": {
+        "x": 96,
+        "y": 128
+      }
+    },
+    "clayWork": {
+      "amount": 20,
+      "resourceKey": "clayWork",
+      "hitBoxSize": {
+        "x": 48,
+        "y": 75
+      }
+    },
+    "bottleShip": {
+      "amount": 7500,
+      "resourceKey": "bottleShip",
+      "hitBoxSize": {
+        "x": 64,
+        "y": 48
+      }
+    },
+    "stuffedToy": {
+      "amount": 4500,
+      "resourceKey": "stuffedToy",
+      "hitBoxSize": {
+        "x": 91,
+        "y": 128
+      }
+    },
+    "pot": {
+      "amount": 12000,
+      "resourceKey": "pot",
+      "hitBoxSize": {
+        "x": 96,
+        "y": 128
+      }
+    }
+  }
+}

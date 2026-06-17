@@ -129,7 +129,7 @@ void ComponentAvilityStamp::ChangeStateInput()
 	owner_.SetAllAvilityComponentActive(true);
 
 	// 一部アビリティの初期化
-	owner_.ResetAvilityComponent(AvilityTypes::TYPE::GRAVITY);
+	owner_.ResetAvilityComponent(AvilityTypes::TYPE::GRAVITYCONTROLL);
 	owner_.ResetAvilityComponent(AvilityTypes::TYPE::SHOT);
 
 	// 所有者のコライダーの判定を有効にする
@@ -157,7 +157,7 @@ void ComponentAvilityStamp::ChangeStateStop()
 
 	// 全てのアビリティを無効にする
 	owner_.SetAllAvilityComponentActive(false);
-	owner_.SetAvilityActive(AvilityTypes::TYPE::GRAVITY, true);	// 横方向に備えて重力は有効にしておく
+	owner_.SetAvilityActive(AvilityTypes::TYPE::GRAVITYCONTROLL, true);	// 横方向に備えて重力は有効にしておく
 	isActive_ = true;
 
 	// アニメーション切り替えて停止

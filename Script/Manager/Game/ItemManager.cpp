@@ -1,14 +1,10 @@
 #include "../../Object/Item/ItemBase.h"
 #include "../../Object/Item/ItemAvility.h"
+#include "../../Object/Item/ItemMoney.h"
+#include "../../Object/Item/ItemFood.h"
+#include "../../Object/Item/ItemTreasure.h"
+#include "../../System/ItemGenerator.h"
 #include "ItemManager.h"
-
-ItemManager::ItemManager()
-{
-}
-
-ItemManager::~ItemManager()
-{
-}
 
 void ItemManager::Init()
 {
@@ -56,6 +52,71 @@ void ItemManager::Add(std::unique_ptr<ItemBase> item)
 	itemList_.push_back(std::move(item));
 }
 
+void ItemManager::CreateAvilityItem(const AvilityTypes::TYPE type, const Vector2F& pos)
+{
+	// ¶¬
+	auto item = itemGenerator_->CreateAvility(type);
+
+	// À•Wİ’è
+	item->GetParameter().pos_ = pos;
+
+	// ‰Šú‰»
+	item->Init();
+
+	// Ši”[
+	itemList_.push_back(std::move(item));
+}
+
+void ItemManager::CreateFoodItem(const ItemTypes::FOOD_TYPE type, const Vector2F& pos)
+{
+	// ¶¬
+	auto item = itemGenerator_->CreateFood(type);
+
+	// À•Wİ’è
+	item->GetParameter().pos_ = pos;
+
+	// ‰Šú‰»
+	item->Init();
+
+	// Ši”[
+	itemList_.push_back(std::move(item));
+}
+
+void ItemManager::CreateTreasureItem(const ItemTypes::TREASURE_TYPE type, const Vector2F& pos)
+{
+	// ¶¬
+	auto item = itemGenerator_->CreateTreasure(type);
+
+	// À•Wİ’è
+	item->GetParameter().pos_ = pos;
+
+	// ‰Šú‰»
+	item->Init();
+
+	// Ši”[
+	itemList_.push_back(std::move(item));
+}
+
+void ItemManager::CreateMoneyItem(const int moneyAmount, const Vector2F& pos)
+{
+	auto items = itemGenerator_->CreateMonies(moneyAmount, pos);
+	for (auto& item : items)
+	{
+		item->Init();
+		itemList_.push_back(std::move(item));
+	}
+}
+
+void ItemManager::CreateTreasureChestItems(const Vector2F& tresureChestPos)
+{
+	auto items = itemGenerator_->CreateTreasureChestItemList(tresureChestPos);
+	for (auto& item : items)
+	{
+		item->Init();
+		itemList_.push_back(std::move(item));
+	}
+}
+
 void ItemManager::DebugDraw()
 {
 	for (auto& item : itemList_)
@@ -86,4 +147,15 @@ void ItemManager::Clear()
 		item->Delete();
 	}
 	itemList_.clear();
+}
+
+ItemManager::ItemManager()
+{
+	// ƒAƒCƒeƒ€¶¬ˆ—‚Ì¶¬
+	itemGenerator_ = std::make_unique<ItemGenerator>();
+	itemGenerator_->InitParameter();
+}
+
+ItemManager::~ItemManager()
+{
 }

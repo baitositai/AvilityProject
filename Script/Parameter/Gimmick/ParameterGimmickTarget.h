@@ -20,6 +20,12 @@ public:
 	/// <param name="parameter">ƒpƒ‰ƒ[ƒ^</param>
 	void LoadParameter(const Json& parameter) override;
 
+	// ˆÚ“®”»’è
+	bool isMove_;
 
+	// ˆÚ“®§ŒÀ
+	Vector2 moveLimit_;
 
+	// ˆÚ“®•ûŒü
+	Vector2F moveDir_;
 };

@@ -1,5 +1,7 @@
 #include "../../Object/Common/Animation.h"
 #include "../../Object/Item/ItemAvility.h"
+#include "../../Object/Item/ItemFood.h"
+#include "../../Object/Item/ItemTreasure.h"
 #include "../../Factory/FactoryComponent.h"
 #include "../../Component/Avility/ComponentAvilityBase.h"
 #include "../../Manager/Common/InputManager.h"
@@ -13,11 +15,14 @@
 
 OnHitPlayer::OnHitPlayer(Player& owner) :
     OnHitCharacterBase(owner),
+    inputManager_(InputManager::GetInstance()),
     factoryComponent_(FactoryComponent::GetInstance()),
     owner_(owner)
 {
     onHitMap_.emplace(CollisionTags::TAG::ENEMY_CLONE, [this](const std::weak_ptr<ColliderBase>& opponentCollider){ return OnHitEnemy(opponentCollider); });
 	onHitMap_.emplace(CollisionTags::TAG::ITEM_AVILITY, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitItemAvility(opponentCollider); });
+	onHitMap_.emplace(CollisionTags::TAG::ITEM_FOOD, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitItemFood(opponentCollider); });
+	onHitMap_.emplace(CollisionTags::TAG::ITEM_TREASURE, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitItemTreasure(opponentCollider); });
 	onHitMap_.emplace(CollisionTags::TAG::DOOR, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitDoor(opponentCollider); });
 	onHitMap_.emplace(CollisionTags::TAG::ENEMY_ATTACK_NORMAL, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitAttack(opponentCollider); });
 	onHitMap_.emplace(CollisionTags::TAG::CHANGE_NEXT_AREA, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitNextArea(opponentCollider); });
@@ -59,14 +64,38 @@ void OnHitPlayer::OnHitEnemy(const std::weak_ptr<ColliderBase>& opponentCollider
 
 void OnHitPlayer::OnHitItemAvility(const std::weak_ptr<ColliderBase>& opponentCollider)
 {	
-    // 衝突相手の所有者をキャストしてアイテムのインスタンスを取得
-	const auto& item = dynamic_cast<const ItemBase*>(&opponentCollider.lock()->GetOwner());
+    owner_.GetParameter().isHitItem_ = true;
+    if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_GET_ITEM))
+    {
+        // 衝突相手の所有者をキャストしてアイテムのインスタンスを取得
+        const auto& item = dynamic_cast<const ItemBase*>(&opponentCollider.lock()->GetOwner());
 
-	// アイテムのアビリティを取得
-	const auto& itemAvility = dynamic_cast<const ItemAvility*>(item);
+        // アイテムのアビリティを取得
+        const auto& itemAvility = dynamic_cast<const ItemAvility*>(item);
 
-    // アイテムの種類を獲得
-    owner_.SetAvilityComponent(std::move(factoryComponent_.CreateComponentAvility(itemAvility->GetCreateAvilityName(), owner_)));
+        // アイテムの種類を獲得
+        owner_.SetAvilityComponent(std::move(factoryComponent_.CreateComponentAvility(itemAvility->GetCreateAvilityName(), owner_)));
+    }
+}
+
+void OnHitPlayer::OnHitItemFood(const std::weak_ptr<ColliderBase>& opponentCollider)
+{
+    owner_.GetParameter().isHitItem_ = true;
+    if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_GET_ITEM))
+    {
+        // 衝突相手の所有者をキャストしてアイテムのインスタンスを取得
+        const auto& item = dynamic_cast<const ItemBase*>(&opponentCollider.lock()->GetOwner());
+
+        // アイテムのアビリティを取得
+        const auto& itemFood = dynamic_cast<const ItemFood*>(item);
+
+        // アイテムの種類を獲得
+        owner_.Heal(itemFood->GetParameter().heal_);
+    }
+}
+
+void OnHitPlayer::OnHitItemTreasure(const std::weak_ptr<ColliderBase>& opponentCollider)
+{
 }
 
 void OnHitPlayer::OnHitDoor(const std::weak_ptr<ColliderBase>& opponentCollider)

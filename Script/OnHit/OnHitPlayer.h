@@ -4,6 +4,7 @@
 
 class Player;
 class FactoryComponent;
+class InputManager;
 class OnHitPlayerStamp;
 
 class OnHitPlayer : public OnHitCharacterBase
@@ -32,6 +33,9 @@ private:
 	// 所有者
 	Player& owner_;
 
+	// 入力管理クラス
+	InputManager& inputManager_;
+
 	// コンポーネント生成クラス
 	FactoryComponent& factoryComponent_;
 
@@ -42,6 +46,8 @@ private:
 	void OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider) override;
 	void OnHitEnemy(const std::weak_ptr<ColliderBase>& opponentCollider);
 	void OnHitItemAvility(const std::weak_ptr<ColliderBase>& opponentCollider);
+	void OnHitItemFood(const std::weak_ptr<ColliderBase>& opponentCollider);
+	void OnHitItemTreasure(const std::weak_ptr<ColliderBase>& opponentCollider);
 	void OnHitDoor(const std::weak_ptr<ColliderBase>& opponentCollider);
 	void OnHitNextArea(const std::weak_ptr<ColliderBase>& opponentCollider);
 

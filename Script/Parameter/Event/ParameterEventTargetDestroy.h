@@ -1,5 +1,7 @@
 #pragma once
 #include "ParameterEvent.h"
+#include "../../Common/Vector2.h"
+
 class ParameterEventTargetDestroy : public ParameterEvent
 {
 public:
@@ -23,4 +25,10 @@ public:
 	// ターゲットの生成数
 	int targetMax_;
 	int targetMin_;
+
+	// ターゲットサイズ
+	float targetSize_;
+
+	// 生成範囲調整位置
+	Vector2 createRangeOffset_;
 };

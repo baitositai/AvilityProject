@@ -96,6 +96,9 @@ void EventTimeLimitDefeatAll::UpdateChallenge()
 		// ¶¬ƒŠƒXƒg‚ª‹ó‚Ìê‡
 		if (createEnemiesList_.empty())
 		{
+			// •ó” oŒ»
+			gimmickManager_.Add(GimmickTypes::TYPE::TREASURE_CHEST, triggerPos_);
+
 			// ó‘Ô‘JˆÚ
 			ChangeState(STATE::END);
 			return;

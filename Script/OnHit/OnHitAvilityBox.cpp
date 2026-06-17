@@ -2,8 +2,7 @@
 #include "../Object/Gimmick/AvilityBox.h"
 #include "../Collider/ColliderArray.h"
 #include "../Collider/ColliderBox.h"
-#include "./OnHitAvilityBox.h"
-#include "OnHitItem.h"
+#include "OnHitAvilityBox.h"
 
 OnHitAvilityBox::OnHitAvilityBox(AvilityBox& owner):
 	OnHitBase(owner),

@@ -16,6 +16,9 @@ ParameterEventTimeLimitDefeatAll::~ParameterEventTimeLimitDefeatAll()
 
 void ParameterEventTimeLimitDefeatAll::LoadParameter(const Json& parameter)
 {
+    // 親クラスの共通パラメータの読み込み
+    ParameterEvent::LoadParameter(parameter);
+
     waveMax_ = parameter.value("waveMax", -1);
     waveMin_ = parameter.value("waveMin", -1);
     enemyNumMax_ = parameter.value("enemyNumMax", -1);

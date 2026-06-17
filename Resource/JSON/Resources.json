@@ -325,6 +325,114 @@
       "divY": 20,
       "sizeX": 32,
       "sizeY": 32
+    },
+    {
+      "key": "treasureChests",
+      "path": "Resource/Image/Gimmick/TreasureChests.png",
+      "sceneIds": [ 2, 3 ],
+      "type": "sprite",
+      "divX": 8,
+      "divY": 2,
+      "sizeX": 138,
+      "sizeY": 96
+    },
+    {
+      "key": "target",
+      "path": "Resource/Image/Gimmick/Target.png",
+      "sceneIds": [ 3 ],
+      "type": "texture"
+    },
+    {
+      "key": "avilityItems",
+      "path": "Resource/Image/Item/AvilityItems.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "sprite",
+      "divX": 5,
+      "divY": 2,
+      "sizeX": 48,
+      "sizeY": 48
+    },
+    {
+      "key": "foods",
+      "path": "Resource/Image/Item/Foods.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "sprite",
+      "divX": 6,
+      "divY": 6,
+      "sizeX": 48,
+      "sizeY": 48
+    },
+    {
+      "key": "beckoningCat",
+      "path": "Resource/Image/Item/BeckoningCat.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture"
+    },
+    {
+      "key": "bottleShip",
+      "path": "Resource/Image/Item/BottleShip.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture"
+    },
+    {
+      "key": "clayWork",
+      "path": "Resource/Image/Item/ClayWork.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture"
+    },
+    {
+      "key": "pot",
+      "path": "Resource/Image/Item/Pot.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture"
+    },
+    {
+      "key": "stuffedToy",
+      "path": "Resource/Image/Item/StuffedToy.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture"
+    },
+    {
+      "key": "tinRobot",
+      "path": "Resource/Image/Item/TinRobot.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture"
+    },
+    {
+      "key": "tv",
+      "path": "Resource/Image/Item/Tv.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture"
+    },
+    {
+      "key": "creasks",
+      "path": "Resource/Image/Effect/Creasks.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "sprite",
+      "divX": 6,
+      "divY": 6,
+      "sizeX": 48,
+      "sizeY": 48
+    },
+    {
+      "key": "coins",
+      "path": "Resource/Image/Item/Coins.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "sprite",
+      "divX": 3,
+      "divY": 3,
+      "sizeX": 48,
+      "sizeY": 48
+    },
+    {
+      "key": "coinBag",
+      "path": "Resource/Image/Item/CoinBag.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "sprite",
+      "divX": 2,
+      "divY": 2,
+      "sizeX": 64,
+      "sizeY": 64
     }
   ]
 }

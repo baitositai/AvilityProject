@@ -15,6 +15,12 @@ public:
 	/// </summary>
 	virtual ~ParameterGimmick() override;
 
+	/// <summary>
+	/// “Ç‚İ‚İ
+	/// </summary>
+	/// <param name="parameter">ƒpƒ‰ƒ[ƒ^</param>
+	virtual void LoadParameter(const Json& parameter) override;
+
 private:
 
 };

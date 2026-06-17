@@ -18,13 +18,38 @@ public:
 	~GimmickTarget() override;
 
 	/// <summary>
+	/// 初期化処理
+	/// </summary>
+	void Init() override;
+
+	/// <summary>
 	/// 更新処理
 	/// </summary>
 	void Update() override;
+
+	/// <summary>
+	/// パラメーターを返す(変更可)
+	/// </summary>
+	/// <returns>パラメータ</returns>
+	ParameterGimmickTarget& GetParameter() { return *parameterTarget_; }
+
+	/// <summary>
+	/// パラメータを返す
+	/// </summary>
+	/// <returns>パラメータ</returns>
+	const ParameterGimmickTarget& GetParameter() const { return *parameterTarget_; }
 
 private:
 
 	// パラメータ情報
 	ParameterGimmickTarget* parameterTarget_;
 
+	// バックアップ座標
+	Vector2F prePos_;
+
+	// カメラ範囲内か判定
+	bool CheckCameraRange();
+
+	// 前回位置から動いたか判定
+	bool IsCheckPrePos();
 };

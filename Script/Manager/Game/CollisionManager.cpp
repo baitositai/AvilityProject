@@ -59,11 +59,11 @@ void CollisionManager::Update()
 			const auto& tag1 = colliders_[i]->GetTag();
 			const auto& tag2 = colliders_[j]->GetTag();
 			
-		/*	if(tag1 == CollisionTags::TAG::AIRSLASH && tag2 == CollisionTags::TAG::ENEMY_CLONE ||
-				tag1 == CollisionTags::TAG::ENEMY_CLONE && tag2 == CollisionTags::TAG::AIRSLASH)
+			if(tag1 == CollisionTags::TAG::TARGET && tag2 == CollisionTags::TAG::PLAYER_ATTACK_NORMAL ||
+				tag1 == CollisionTags::TAG::PLAYER_ATTACK_NORMAL && tag2 == CollisionTags::TAG::TARGET)
 			{
 				int a = 0;
-			}*/
+			}
 
 			//// 各コライダーからタグを取得
 			//const auto& tag1 = colliders_[i]->GetTag();
@@ -196,9 +196,6 @@ void CollisionManager::InitTagMatrix()
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_STAMP)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;	// プレイヤースタンプと敵
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_STAMP)] = true;
 
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::ITEM_AVILITY)] = true;				// プレイヤーとアイテム
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ITEM_AVILITY)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
-
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_SHOT)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;	// プレイヤーショットと敵
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_SHOT)] = true;
 
@@ -222,6 +219,54 @@ void CollisionManager::InitTagMatrix()
 
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::CHANGE_NEXT_AREA)] = true;			// プレイヤー次遷移エリア
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::CHANGE_NEXT_AREA)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_ATTACK_NORMAL)][static_cast<int>(CollisionTags::TAG::TARGET)] = true;		// プレイヤー通常攻撃ターゲット
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TARGET)][static_cast<int>(CollisionTags::TAG::PLAYER_ATTACK_NORMAL)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_SHOT)][static_cast<int>(CollisionTags::TAG::TARGET)] = true;			// プレイヤーショット攻撃ターゲット
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TARGET)][static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_SHOT)] = true;
+	
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_STAMP)][static_cast<int>(CollisionTags::TAG::TARGET)] = true;		// プレイヤースタンプ攻撃ターゲット
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TARGET)][static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_STAMP)] = true;
+	
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TELEPORT_EXIT)][static_cast<int>(CollisionTags::TAG::TARGET)] = true;				// テレポート攻撃ターゲット
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TARGET)][static_cast<int>(CollisionTags::TAG::TELEPORT_EXIT)] = true;
+	
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AIRSLASH)][static_cast<int>(CollisionTags::TAG::TARGET)] = true;					// エアースラッシュ攻撃ターゲット
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TARGET)][static_cast<int>(CollisionTags::TAG::AIRSLASH)] = true;
+	
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::BLAST)][static_cast<int>(CollisionTags::TAG::TARGET)] = true;						// 爆破攻撃ターゲット
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TARGET)][static_cast<int>(CollisionTags::TAG::BLAST)] = true;
+	
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_ATTACK_NORMAL)][static_cast<int>(CollisionTags::TAG::TREASURE_CHEST)] = true;		// プレイヤー通常攻撃宝箱
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TREASURE_CHEST)][static_cast<int>(CollisionTags::TAG::PLAYER_ATTACK_NORMAL)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_SHOT)][static_cast<int>(CollisionTags::TAG::TREASURE_CHEST)] = true;			// プレイヤーショット攻撃宝箱
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TREASURE_CHEST)][static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_SHOT)] = true;
+	
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_STAMP)][static_cast<int>(CollisionTags::TAG::TREASURE_CHEST)] = true;		// プレイヤースタンプ攻撃宝箱
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TREASURE_CHEST)][static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_STAMP)] = true;
+	
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TELEPORT_EXIT)][static_cast<int>(CollisionTags::TAG::TREASURE_CHEST)] = true;				// テレポート攻撃宝箱
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TREASURE_CHEST)][static_cast<int>(CollisionTags::TAG::TELEPORT_EXIT)] = true;
+	
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AIRSLASH)][static_cast<int>(CollisionTags::TAG::TREASURE_CHEST)] = true;					// エアースラッシュ攻撃宝箱
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TREASURE_CHEST)][static_cast<int>(CollisionTags::TAG::AIRSLASH)] = true;
+	
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::BLAST)][static_cast<int>(CollisionTags::TAG::TREASURE_CHEST)] = true;						// 爆破攻撃宝箱
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TREASURE_CHEST)][static_cast<int>(CollisionTags::TAG::BLAST)] = true;
+	
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::ITEM_AVILITY)] = true;						// プレイヤーとアイテムアビリティ
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ITEM_AVILITY)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
+	
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::ITEM_FOOD)] = true;							// プレイヤーとアイテム食べ物
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ITEM_FOOD)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
+	
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::ITEM_MONEY)] = true;							// プレイヤーとアイテムお金
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ITEM_MONEY)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
+	
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::ITEM_TREASURE)] = true;						// プレイヤーとアイテム宝
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ITEM_TREASURE)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
 }
 
 void CollisionManager::InitColliderMatrix()
@@ -369,7 +414,31 @@ bool CollisionManager::IsHitCheckArrayToBox(std::weak_ptr<ColliderBase> collider
 
 bool CollisionManager::IsHitCheckCircleToCircle(std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2)
 {
-	return false;
+	std::weak_ptr<ColliderCircle> colliderCircle1;
+	std::weak_ptr<ColliderCircle> colliderCirlce2;
+
+	// サークルコライダーの用意
+	if (collider1.lock()->GetType() == ColliderType::TYPE::CIRCLE) { colliderCircle1 = std::dynamic_pointer_cast<ColliderCircle>(collider1.lock()); }
+	if (collider2.lock()->GetType() == ColliderType::TYPE::CIRCLE) { colliderCirlce2 = std::dynamic_pointer_cast<ColliderCircle>(collider2.lock()); }
+
+	// 判定結果
+	ColliderArray::Result result = {};
+	
+	// 情報の取得
+	Vector2F center1 = colliderCircle1.lock()->GetPos();
+	const float radius1 = colliderCircle1.lock()->GetRadius();
+	Vector2F center2 = colliderCirlce2.lock()->GetPos();
+	const float radius2 = colliderCirlce2.lock()->GetRadius();
+
+	// 衝突判定
+	const bool isHit = UtilityCollision::IsHitCircleToCircle(
+		center1.ToVector2(),
+		radius1,
+		center2.ToVector2(),
+		radius2);
+
+	// 衝突しているか返す
+	return isHit;
 }
 
 bool CollisionManager::IsHitCheckCircleToBox(std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2)

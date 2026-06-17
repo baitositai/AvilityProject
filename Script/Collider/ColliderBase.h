@@ -96,6 +96,12 @@ public:
 	const ActorBase& GetOwner() const { return owner_; }
 
 	/// <summary>
+	/// 所有者のインスタンスを返す(上書き可)
+	/// </summary>
+	/// <returns>所有者のインスタンス</returns>
+	ActorBase& GetOwner() { return owner_; }
+
+	/// <summary>
 	/// 追従対象の座標を渡す
 	/// </summary>
 	/// <returns>追従対象の座標</returns>
