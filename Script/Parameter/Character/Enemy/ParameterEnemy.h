@@ -1,14 +1,6 @@
 #pragma once
 #include "../ParameterCharacter.h"
 
-// ˆÚ“®Ží—Þ
-enum class HABITAT_TYPE
-{
-	LAND,		// —¤
-	AIR,		// ‹ó
-	MAX
-};
-
 class ParameterEnemy : public ParameterCharacter
 {
 public:

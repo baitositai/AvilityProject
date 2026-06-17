@@ -82,7 +82,7 @@ void ComponentStatePlayerProcess::ProcessInputJump()
 	if (parameter_.jumpCount_ > 0)
 	{
 		// “ü—Í‚ª‚ ‚éê‡
-		if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_JUMP, parameter_.padNo_))
+		if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_JUMP, parameter_.padNo_) && !parameter_.isHitItem_)
 		{
 			isGround_ = false;
 

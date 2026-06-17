@@ -5,9 +5,11 @@
       "y": 48
     },
     "hitRadius": 24,
+    "transparent": true,
     "gravityPower": 9.8,
     "resourceKey": "avilityItems",
     "componentKeys": [
+      "knockBack",
       "gravity",
       "move"
     ]
@@ -19,7 +21,7 @@
     "airwalk": {
       "index": 1
     },
-    "gravity": {
+    "gravityControll": {
       "index": 2
     },
     "shot": {
@@ -41,63 +43,72 @@
       "index": 8
     }
   },
-  "coin": {
-    "amount": 100,
+  "moneyCommon": {
+    "scale": 1.0,
+    "transparent": true,
     "gravityPower": 9.8,
-    "hitBoxSize": {
-      "x": 24,
-      "y": 24
-    },
-    "hitRadius": 12,
-    "resourceKey": "coins",
     "componentKeys": [
+      "knockBack",
       "gravity",
       "move"
-    ],
-    "animation": {
-      "idle": {
-        "no": 0,
-        "speed": 0.1,
-        "num": 3
-      }
-    },
-    "divisionNum": {
-      "x": 3,
-      "y": 3
-    }
+    ]
   },
-  "coinBag": {
-    "amount": 1000,
-    "gravityPower": 9.8,
-    "hitBoxSize": {
-      "x": 48,
-      "y": 48
-    },
-    "hitRadius": 24,
-    "resourceKey": "coinBag",
-    "componentKeys": [
-      "gravity",
-      "move"
-    ],
-    "animation": {
-      "idle": {
-        "no": 0,
-        "speed": 0.1,
-        "num": 3
+  "money": {
+    "coin": {
+      "amount": 100,
+      "hitBoxSize": {
+        "x": 18,
+        "y": 18
+      },
+      "hitRadius": 12,
+      "resourceKey": "coins",
+      "animation": {
+        "idle": {
+          "no": 0,
+          "speed": 0.1,
+          "num": 3
+        }
+      },
+      "divisionNum": {
+        "x": 3,
+        "y": 3
       }
     },
-    "divisionNum": {
-      "x": 2,
-      "y": 2
+    "coinBag": {
+      "amount": 1000,
+      "hitBoxSize": {
+        "x": 40,
+        "y": 40
+      },
+      "hitRadius": 24,
+      "resourceKey": "coinBag",
+      "animation": {
+        "idle": {
+          "no": 0,
+          "speed": 0.1,
+          "num": 3
+        }
+      },
+      "divisionNum": {
+        "x": 2,
+        "y": 2
+      }
     }
   },
   "foodCommon": {
+    "gravityPower": 9.8,
+    "transparent": true,
     "hitBoxSize": {
       "x": 48,
       "y": 48
     },
     "hitRadius": 24,
-    "resourceKey": "foods"
+    "resourceKey": "foods",
+    "componentKeys": [
+      "knockBack",
+      "gravity",
+      "move"
+    ]
   },
   "foods": {
     "friedEgg": {
@@ -245,34 +256,71 @@
       "healHp": 25
     }
   },
+  "treasureCommon": {
+    "gravityPower": 9.8,
+    "transparent": true,
+    "componentKeys": [
+      "knockBack",
+      "gravity",
+      "move"
+    ]
+  },
   "treasure": {
     "beckoningCat": {
       "amount": 3000,
-      "resourceKey": "beckoningCat"
+      "resourceKey": "beckoningCat",
+      "hitBoxSize": {
+        "x": 72,
+        "y": 96
+      }
     },
     "tv": {
       "amount": 10000,
-      "resourceKey": "tv"
+      "resourceKey": "tv",
+      "hitBoxSize": {
+        "x": 128,
+        "y": 96
+      }
     },
     "tinRobot": {
       "amount": 5000,
-      "resourceKey": "tinRobot"
+      "resourceKey": "tinRobot",
+      "hitBoxSize": {
+        "x": 96,
+        "y": 128
+      }
     },
     "clayWork": {
       "amount": 20,
-      "resourceKey": "clayWork"
+      "resourceKey": "clayWork",
+      "hitBoxSize": {
+        "x": 48,
+        "y": 75
+      }
     },
     "bottleShip": {
       "amount": 7500,
-      "resourceKey": "bottleShip"
+      "resourceKey": "bottleShip",
+      "hitBoxSize": {
+        "x": 64,
+        "y": 48
+      }
     },
     "stuffedToy": {
       "amount": 4500,
-      "resourceKey": "stuffedToy"
+      "resourceKey": "stuffedToy",
+      "hitBoxSize": {
+        "x": 91,
+        "y": 128
+      }
     },
     "pot": {
       "amount": 12000,
-      "resourceKey": "pot"
+      "resourceKey": "pot",
+      "hitBoxSize": {
+        "x": 96,
+        "y": 128
+      }
     }
   }
 }

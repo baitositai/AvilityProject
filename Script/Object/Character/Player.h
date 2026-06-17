@@ -5,6 +5,7 @@
 
 class ParameterPlayer;
 class ComponentAvilityBase;
+class ItemTreasure;
 class PlayerManager;
 class ColliderBox;
 
@@ -44,6 +45,12 @@ public:
 	void Dead() override;
 
 	/// <summary>
+	/// ダメージ処理
+	/// </summary>
+	/// <param name="damage">ダメージ</param>
+	void Damage(const int damage) override;
+
+	/// <summary>
 	/// 準備処理
 	/// </summary>
 	void Ready();
@@ -69,6 +76,12 @@ public:
 	/// </summary>
 	/// <returns>自身のコライダーのクローン</returns>
 	std::shared_ptr<ColliderBox> CreateColliderClone();
+
+	/// <summary>
+	/// アイテムのアタッチ
+	/// </summary>
+	/// <param name="item">アイテム</param>
+	void SetAttachedItem(ItemTreasure* item);
 
 	/// <summary>
 	/// アビリティコンポーネントの設定
@@ -113,6 +126,12 @@ public:
 	/// <returns>パラメータ</returns>
 	const ParameterPlayer& GetParameter() const { return *parameterPlayer_; }
 
+	/// <summary>
+	/// 頭部の位置を返す
+	/// </summary>
+	/// <returns>頭部位置</returns>
+	const Vector2F GetHeadPos(const int index) const;
+
 private:
 
 	// 持てるアビリティの上限
@@ -129,6 +148,9 @@ private:
 
 	// 選択時間
 	float selectAvilityTime_;
+
+	// 保持しているお宝
+	std::vector<ItemTreasure*> attachedTreasures_;
 
 	// パラメータ情報
 	ParameterPlayer* parameterPlayer_;
@@ -150,4 +172,7 @@ private:
 
 	// 途中退出用処理
 	void GameLeave();
+
+	// 更新後処理
+	void UpdateAfter();
 };

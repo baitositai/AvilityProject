@@ -49,25 +49,30 @@ public:
 	/// アビリティアイテムの生成
 	/// </summary>
 	/// <param name="type">種類</param>
-	void CreateAvilityItem(const AvilityTypes::TYPE type);
+	void CreateAvilityItem(const AvilityTypes::TYPE type, const Vector2F& pos);
 
 	/// <summary>
 	/// 食べ物の生成
 	/// </summary>
 	/// <param name="type">種類</param>
-	void CreateFoodItem(const ItemTypes::FOOD_TYPE type);
+	void CreateFoodItem(const ItemTypes::FOOD_TYPE type, const Vector2F& pos);
 
 	/// <summary>
 	/// お宝の生成
 	/// </summary>
 	/// <param name="type">種類</param>
-	void CreateTreasureItem(const ItemTypes::TREASURE_TYPE type);
+	void CreateTreasureItem(const ItemTypes::TREASURE_TYPE type, const Vector2F& pos);
 
 	/// <summary>
 	/// 金額分お金アイテムを生成
 	/// </summary>
 	/// <param name="moneyAmount">金額</param>
-	void CreateMoneyItem(const int moneyAmount);
+	void CreateMoneyItem(const int moneyAmount, const Vector2F& pos);
+
+	/// <summary>
+	/// 宝箱用のアイテムの生成
+	/// </summary>
+	void CreateTreasureChestItems(const Vector2F& tresureChestPos);
 
 	/// <summary>
 	/// デバッグ描画

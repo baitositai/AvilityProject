@@ -1,8 +1,8 @@
 #include "../../Manager/Common/SceneManager.h"
-#include "../Object/Character/CharacterBase.h"
+#include "../Object/ActorBase.h"
 #include "ComponentKnockBack.h"
 
-ComponentKnockBack::ComponentKnockBack(CharacterBase& owner) :
+ComponentKnockBack::ComponentKnockBack(ActorBase& owner) :
 	ComponentBase(owner),
     parameter_(owner.GetParameter())
 {

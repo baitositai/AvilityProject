@@ -50,3 +50,9 @@ const std::unordered_map<ItemTypes::TREASURE_TYPE, std::string> ItemTypes::TREAS
 	{ItemTypes::TREASURE_TYPE::STUFFED_TOY, "stuffedToy"},
 	{ItemTypes::TREASURE_TYPE::POT, "pot"}
 };
+
+const std::unordered_map<ItemTypes::MONEY_TYPE, std::string> ItemTypes::MONEY_STRING_TO_ENUM_MAP =
+{
+	{ItemTypes::MONEY_TYPE::COIN, "coin"},
+	{ItemTypes::MONEY_TYPE::COIN_BAG, "coinBag"}
+};

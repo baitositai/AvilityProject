@@ -61,16 +61,29 @@ public:
 		MAX
 	};
 
+	// お金
+	enum class MONEY_TYPE
+	{
+		COIN,
+		COIN_BAG,
+		MAX
+	};
+
 	// 食べ物の最大数
 	static constexpr int FOOD_TYPE_MAX = static_cast<int>(FOOD_TYPE::MAX);
 
 	// お宝の最大数
 	static constexpr int TREASURE_TYPE_MAX = static_cast<int>(TREASURE_TYPE::MAX);
 
+	// お金の最大数
+	static constexpr int MONEY_TYPE_MAX = static_cast<int>(MONEY_TYPE::MAX);
+
 	// 食べ物の列挙型からstring型へ変換する用のマップ
 	static const std::unordered_map<FOOD_TYPE, std::string> FOOD_STRING_TO_ENUM_MAP;
 
 	// お宝の列挙型からstring型へ変換する用のマップ
 	static const std::unordered_map<TREASURE_TYPE, std::string> TREASURE_STRING_TO_ENUM_MAP;
-};
 
+	// お金の列挙型からstring型へ変換する用のマップ
+	static const std::unordered_map<MONEY_TYPE, std::string> MONEY_STRING_TO_ENUM_MAP;
+};

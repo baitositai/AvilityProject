@@ -148,6 +148,9 @@ public:
 	// 攻撃力上昇率
 	float attackBoostRate_;
 
+	// ノックバックパワー
+	Vector2F knockBackPower_;
+
 	// リソース取得用のキー
 	std::string resourceKey_;
 

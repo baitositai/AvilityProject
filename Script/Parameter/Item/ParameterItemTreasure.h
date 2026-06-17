@@ -1,5 +1,7 @@
 #pragma once
 #include "ParameterItem.h"
+#include "../../Manager/Game/ItemTypes.h"
+
 class ParameterItemTreasure : public ParameterItem
 {
 public:
@@ -23,4 +25,7 @@ public:
 
 	// ‹àŠz
 	int amount_;
+
+	// Ží—Þ
+	ItemTypes::TREASURE_TYPE type_;
 };

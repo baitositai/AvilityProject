@@ -25,7 +25,8 @@ ParameterActor::ParameterActor() :
     hp_(-1),
     hpMax_(-1),
     attackPower_(-1),
-    attackBoostRate_(0.0f)
+    attackBoostRate_(0.0f),
+    knockBackPower_({ 0.0f, 0.0f })
 {
 }
 

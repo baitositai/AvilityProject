@@ -21,22 +21,12 @@ ComponentDebugCreateItemAvility::~ComponentDebugCreateItemAvility()
 
 void ComponentDebugCreateItemAvility::Update()
 {
-	constexpr float RADIUS = 20.0f;
-
 	Input::JOYPAD_NO padNo = playerOwner_.GetParameter().padNo_;
 
 	if (inputManager_.IsTrgDown(InputManager::TYPE::DEBUG_CREATE_ITEM_AVILITY, padNo))
 	{
-		std::unique_ptr<ParameterItemAvility> parameter = std::make_unique<ParameterItemAvility>();
-		parameter->type_ = static_cast<AvilityTypes::TYPE>(type_);
-		parameter->pos_ = Vector2F::AddVector2F(owner_.GetParameter().pos_, Vector2F::MulVector2FFloat(owner_.GetParameter().GetFront(), 50.0f));
-		parameter->hitSize_ = Vector2(static_cast<int>(RADIUS * 2.0f), static_cast<int>(RADIUS * 2.0f));
-		parameter->hitRadius_ = RADIUS;
-		parameter->hitSize_ = Vector2(RADIUS, RADIUS);
-		parameter->gravityPower_ = 9.8f;
-		parameter->gravityDir_ = ParameterActor::DIR::DOWN;
-		parameter->componentkeys_ = { "gravity", "move" };
-		ItemManager::GetInstance().Add(std::make_unique<ItemAvility>(std::move(parameter)));
+		Vector2F pos = Vector2F::AddVector2F(owner_.GetParameter().pos_, Vector2F::MulVector2FFloat(owner_.GetParameter().GetFront(), 80.0f));
+		ItemManager::GetInstance().CreateAvilityItem(static_cast<AvilityTypes::TYPE>(type_), pos);
 	}
 	else if (inputManager_.IsTrgDown(InputManager::TYPE::DEBUG_SELECT_RIGHT_ITEM_AVILITY, padNo))
 	{

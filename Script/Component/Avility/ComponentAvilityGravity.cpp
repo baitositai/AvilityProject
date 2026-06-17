@@ -8,7 +8,7 @@ ComponentAvilityGravity::ComponentAvilityGravity(Player& owner) :
 	ComponentAvilityBase(owner)
 {
 	coolTime_ = 0.0f;
-	type_ = AvilityTypes::TYPE::GRAVITY;
+	type_ = AvilityTypes::TYPE::GRAVITYCONTROLL;
 }
 
 ComponentAvilityGravity::~ComponentAvilityGravity()

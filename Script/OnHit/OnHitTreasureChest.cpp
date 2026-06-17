@@ -1,4 +1,5 @@
 #include "../Object/Gimmick/GimmickTreasureChest.h"
+#include "../Manager/Game/ItemManager.h"
 #include "../Collider/ColliderBase.h"
 #include "OnHitTreasureChest.h"
 
@@ -19,4 +20,7 @@ void OnHitTreasureChest::Update(const std::weak_ptr<ColliderBase>& opponentColli
 
 	// アニメーションを再生（ループしない）
 	owner_.GetAnimation().Play(Animation::TYPE::WALK, false);
+
+	// 宝箱用のアイテム生成
+	ItemManager::GetInstance().CreateTreasureChestItems(owner_.GetParameter().pos_);
 }

@@ -5,7 +5,7 @@ const std::unordered_map<AvilityTypes::TYPE, std::string> AvilityTypes::AVILITY_
 	{AvilityTypes::TYPE::SHOT, "shot"},
 	//{AvilityTypes::TYPE::BOX, "box"},
 	{AvilityTypes::TYPE::STAMP, "stamp"},
-	{AvilityTypes::TYPE::GRAVITY, "gravity"},
+	{AvilityTypes::TYPE::GRAVITYCONTROLL, "gravityControll"},
 	{AvilityTypes::TYPE::TELEPORT, "teleport"},
 	{AvilityTypes::TYPE::GIANT, "giant"},
 	{AvilityTypes::TYPE::METAL, "metal"},

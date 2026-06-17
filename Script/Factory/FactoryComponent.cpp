@@ -230,14 +230,7 @@ std::unique_ptr<ComponentAvilityGiant> FactoryComponent::CreateComponentAvilityG
 
 std::unique_ptr<ComponentKnockBack> FactoryComponent::CreateComponentKnockBack(ActorBase& owner)
 {
-    auto* charaPtr = dynamic_cast<CharacterBase*>(&owner);
-
-    if (charaPtr == nullptr)
-    {
-        // ÉLÉÉÉXÉgÇ…é∏îsÇµÇΩèÍçánullptrÇï‘Ç∑
-        return nullptr;
-    }
-    return std::make_unique<ComponentKnockBack>(*charaPtr);
+    return std::make_unique<ComponentKnockBack>(owner);
 }
 
 std::unique_ptr<ComponentStateIdle> FactoryComponent::CreateComponentStateIdle(ActorBase& owner)
@@ -387,43 +380,43 @@ FactoryComponent::FactoryComponent()
         {
             return CreateComponentStateAttackDefault(owner);
         });
-    componentCreateMap_.emplace("avilityBox", [this](ActorBase& owner)
+    componentCreateMap_.emplace("box", [this](ActorBase& owner)
         {
             return CreateComponentAvilityBox(owner);
         });
-    componentCreateMap_.emplace("avilityStamp", [this](ActorBase& owner)
+    componentCreateMap_.emplace("stamp", [this](ActorBase& owner)
         {
             return CreateComponentAvilityStamp(owner);
         });
-    componentCreateMap_.emplace("avilityGravity", [this](ActorBase& owner)
+    componentCreateMap_.emplace("gravityControll", [this](ActorBase& owner)
         {
             return CreateComponentAvilityGravity(owner);
         });
-    componentCreateMap_.emplace("avilityShot", [this](ActorBase& owner)
+    componentCreateMap_.emplace("shot", [this](ActorBase& owner)
         {
             return CreateComponentAvilityShot(owner);
         });
-    componentCreateMap_.emplace("avilityMetal", [this](ActorBase& owner)
+    componentCreateMap_.emplace("metal", [this](ActorBase& owner)
         {
             return CreateComponentAvilityMetal(owner);
         });
-    componentCreateMap_.emplace("avilityAirslash", [this](ActorBase& owner)
+    componentCreateMap_.emplace("airslash", [this](ActorBase& owner)
         {
             return CreateComponentAvilityAirslash(owner);
         });
-    componentCreateMap_.emplace("avilitySuperman", [this](ActorBase& owner)
+    componentCreateMap_.emplace("superman", [this](ActorBase& owner)
         {
             return CreateComponentAvilitySuperman(owner);
         });
-    componentCreateMap_.emplace("avilityTeleport", [this](ActorBase& owner)
+    componentCreateMap_.emplace("teleport", [this](ActorBase& owner)
         {
             return CreateComponentAvilityTeleport(owner);
         });
-    componentCreateMap_.emplace("avilityGiant", [this](ActorBase& owner)
+    componentCreateMap_.emplace("giant", [this](ActorBase& owner)
         {
             return CreateComponentAvilityGiant(owner);
         });
-    componentCreateMap_.emplace("avilityAirwalk", [this](ActorBase& owner)
+    componentCreateMap_.emplace("airwalk", [this](ActorBase& owner)
         {
             return CreateComponentAvilityAirwalk(owner);
         });

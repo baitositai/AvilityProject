@@ -1,10 +1,18 @@
 #pragma once
 #include "../ParameterCharacter.h"
 #include "../../Manager/Common/Input.h"
+#include "../../Manager/Game/ItemTypes.h"
 
 class ParameterPlayer : public ParameterCharacter
 {
 public:
+    
+    struct TreasureStatus
+    {
+        ItemTypes::TREASURE_TYPE type;
+        int amount;
+        Vector2 size;
+    };
 
     /// <summary>
     /// コンストラクタ
@@ -28,35 +36,11 @@ public:
     // ダッシュスピード
     float dashSpeed_;
 
-    // 待機アニメーション数
-    int animationsIdle_;
+    // アイテムとの衝突判定
+    bool isHitItem_;
 
-    // 移動アニメーション
-    int animationsWalk_;
-
-    // ブレーキアニメーション
-    int animationsBrake_;
-
-    // 攻撃アニメーション
-    int animationsAttack_;
-
-    // ジャンプアニメーション
-    int animationsJump_;
-
-    // 落下アニメーション
-    int animationsFall_;
-
-    // 死亡アニメーション
-    int animationsDie_;
-
-    // ダメージアニメーション
-    int animationsDamage_;
-
-    // ポーズアニメーション
-    int animationsPause_;
-
-    // 攻撃アニメーション速度
-    float animationAttackSpeed_;
+    // 保持しているお宝情報
+    std::vector<TreasureStatus> treasureList_;
 
     // 入力パッド
     Input::JOYPAD_NO padNo_;

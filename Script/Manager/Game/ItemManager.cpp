@@ -1,7 +1,6 @@
 #include "../../Object/Item/ItemBase.h"
 #include "../../Object/Item/ItemAvility.h"
-#include "../../Object/Item/ItemCoin.h"
-#include "../../Object/Item/ItemCoinBag.h"
+#include "../../Object/Item/ItemMoney.h"
 #include "../../Object/Item/ItemFood.h"
 #include "../../Object/Item/ItemTreasure.h"
 #include "../../System/ItemGenerator.h"
@@ -53,11 +52,14 @@ void ItemManager::Add(std::unique_ptr<ItemBase> item)
 	itemList_.push_back(std::move(item));
 }
 
-void ItemManager::CreateAvilityItem(const AvilityTypes::TYPE type)
+void ItemManager::CreateAvilityItem(const AvilityTypes::TYPE type, const Vector2F& pos)
 {
 	// 生成
 	auto item = itemGenerator_->CreateAvility(type);
 
+	// 座標設定
+	item->GetParameter().pos_ = pos;
+
 	// 初期化
 	item->Init();
 
@@ -65,11 +67,14 @@ void ItemManager::CreateAvilityItem(const AvilityTypes::TYPE type)
 	itemList_.push_back(std::move(item));
 }
 
-void ItemManager::CreateFoodItem(const ItemTypes::FOOD_TYPE type)
+void ItemManager::CreateFoodItem(const ItemTypes::FOOD_TYPE type, const Vector2F& pos)
 {
 	// 生成
 	auto item = itemGenerator_->CreateFood(type);
 
+	// 座標設定
+	item->GetParameter().pos_ = pos;
+
 	// 初期化
 	item->Init();
 
@@ -77,11 +82,14 @@ void ItemManager::CreateFoodItem(const ItemTypes::FOOD_TYPE type)
 	itemList_.push_back(std::move(item));
 }
 
-void ItemManager::CreateTreasureItem(const ItemTypes::TREASURE_TYPE type)
+void ItemManager::CreateTreasureItem(const ItemTypes::TREASURE_TYPE type, const Vector2F& pos)
 {
 	// 生成
 	auto item = itemGenerator_->CreateTreasure(type);
 
+	// 座標設定
+	item->GetParameter().pos_ = pos;
+
 	// 初期化
 	item->Init();
 
@@ -89,24 +97,21 @@ void ItemManager::CreateTreasureItem(const ItemTypes::TREASURE_TYPE type)
 	itemList_.push_back(std::move(item));
 }
 
-void ItemManager::CreateMoneyItem(const int moneyAmount)
+void ItemManager::CreateMoneyItem(const int moneyAmount, const Vector2F& pos)
 {
-	int bagCount = moneyAmount / 1000;
-	int coinCount = (moneyAmount % 1000) / 1000;
-	coinCount = (moneyAmount % 1000) / 100;
-
-	// コインバッグの生成とリストへの追加
-	for (int i = 0; i < bagCount; i++)
+	auto items = itemGenerator_->CreateMonies(moneyAmount, pos);
+	for (auto& item : items)
 	{
-		auto item = itemGenerator_->CreateCoinBag();
 		item->Init();
 		itemList_.push_back(std::move(item));
 	}
+}
 
-	// コインの生成とリストへの追加
-	for (int i = 0; i < coinCount; i++)
+void ItemManager::CreateTreasureChestItems(const Vector2F& tresureChestPos)
+{
+	auto items = itemGenerator_->CreateTreasureChestItemList(tresureChestPos);
+	for (auto& item : items)
 	{
-		auto item = itemGenerator_->CreateCoin();
 		item->Init();
 		itemList_.push_back(std::move(item));
 	}

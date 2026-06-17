@@ -196,9 +196,6 @@ void CollisionManager::InitTagMatrix()
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_STAMP)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;	// プレイヤースタンプと敵
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_STAMP)] = true;
 
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::ITEM_AVILITY)] = true;				// プレイヤーとアイテム
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ITEM_AVILITY)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
-
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_SHOT)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;	// プレイヤーショットと敵
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_SHOT)] = true;
 
@@ -258,6 +255,18 @@ void CollisionManager::InitTagMatrix()
 	
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::BLAST)][static_cast<int>(CollisionTags::TAG::TREASURE_CHEST)] = true;						// 爆破攻撃宝箱
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TREASURE_CHEST)][static_cast<int>(CollisionTags::TAG::BLAST)] = true;
+	
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::ITEM_AVILITY)] = true;						// プレイヤーとアイテムアビリティ
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ITEM_AVILITY)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
+	
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::ITEM_FOOD)] = true;							// プレイヤーとアイテム食べ物
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ITEM_FOOD)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
+	
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::ITEM_MONEY)] = true;							// プレイヤーとアイテムお金
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ITEM_MONEY)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
+	
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::ITEM_TREASURE)] = true;						// プレイヤーとアイテム宝
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ITEM_TREASURE)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
 }
 
 void CollisionManager::InitColliderMatrix()

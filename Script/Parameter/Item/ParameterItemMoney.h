@@ -19,7 +19,7 @@ public:
 	/// “Ç‚İ‚İ
 	/// </summary>
 	/// <param name="parameter">ƒpƒ‰ƒ[ƒ^</param>
-	void LoadParameter(const Json& parameter) override;
+	void LoadParameter(const Json& parameter, const std::string& name);
 
 	// ‚¨‹à—Ê
 	int amount_;

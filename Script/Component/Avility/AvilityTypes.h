@@ -11,7 +11,7 @@ public:
 		SHOT,			// ショット
 		//BOX,			// ボックス
 		STAMP,			// スタンプ
-		GRAVITY,		// 重力変化
+		GRAVITYCONTROLL,		// 重力変化
 		TELEPORT,		// テレポート
 		GIANT,			// 巨大化
 		METAL,			// メタル

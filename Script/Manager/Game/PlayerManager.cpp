@@ -149,6 +149,11 @@ void PlayerManager::AddPlayersLeft(const int addLeft)
 	}
 }
 
+const int PlayerManager::GetPlayerNum() const
+{
+	return static_cast<int>(playerList_.size());
+}
+
 void PlayerManager::AcceptNewPlayer()
 {
 	// 新しいパッドからの参加入力があった場合

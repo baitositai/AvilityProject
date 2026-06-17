@@ -12,6 +12,10 @@ ParameterItemTreasure::~ParameterItemTreasure()
 
 void ParameterItemTreasure::LoadParameter(const Json& parameter, std::string& name)
 {
+	// お宝共通のパラメータ読み込み
+	const auto& jsonCommonParameter = parameter.at("treasureCommon").front();
+	ParameterActor::LoadParameter(jsonCommonParameter);
+
 	// 個別のパラメータ読み込み
 	try
 	{
@@ -25,8 +29,13 @@ void ParameterItemTreasure::LoadParameter(const Json& parameter, std::string& na
 			{
 				const auto& jsonTreasureParameter = jsonTreasures.at(name);
 				amount_ = jsonTreasureParameter.value("amount", -1);
-				spriteIndex_ = jsonTreasureParameter.value("index", -1);	
-				ParameterActor::LoadParameter(jsonTreasureParameter);
+				spriteIndex_ = jsonTreasureParameter.value("index", -1);
+				resourceKey_ = jsonTreasureParameter.value("resourceKey", "");
+				if (jsonTreasureParameter.contains("hitBoxSize"))
+				{
+					hitSize_.x = jsonTreasureParameter["hitBoxSize"].value("x", 0);
+					hitSize_.y = jsonTreasureParameter["hitBoxSize"].value("y", 0);
+				}
 			}
 		}
 	}

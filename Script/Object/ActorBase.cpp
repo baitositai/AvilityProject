@@ -152,6 +152,15 @@ void ActorBase::Landing()
 	parameter_->isGround_ = true;
 }
 
+void ActorBase::Damage(const int damage)
+{
+	parameter_->hp_ -= damage;
+	if (0 > parameter_->hp_)
+	{
+		parameter_->hp_ = 0;
+	}
+}
+
 void ActorBase::AddComponent(const std::string& name, std::unique_ptr<ComponentBase> component)
 {
 	// 同名のコンポーネントが既に存在するかチェック

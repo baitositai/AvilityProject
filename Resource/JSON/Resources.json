@@ -349,8 +349,8 @@
       "type": "sprite",
       "divX": 5,
       "divY": 2,
-      "sizeX": 96,
-      "sizeY": 96
+      "sizeX": 48,
+      "sizeY": 48
     },
     {
       "key": "foods",
@@ -363,7 +363,7 @@
       "sizeY": 48
     },
     {
-      "key": "bekoningCat",
+      "key": "beckoningCat",
       "path": "Resource/Image/Item/BeckoningCat.png",
       "sceneIds": [ 2, 3, 4 ],
       "type": "texture"
@@ -421,8 +421,8 @@
       "type": "sprite",
       "divX": 3,
       "divY": 3,
-      "sizeX": 24,
-      "sizeY": 24
+      "sizeX": 48,
+      "sizeY": 48
     },
     {
       "key": "coinBag",
@@ -431,8 +431,8 @@
       "type": "sprite",
       "divX": 2,
       "divY": 2,
-      "sizeX": 48,
-      "sizeY": 48
+      "sizeX": 64,
+      "sizeY": 64
     }
   ]
 }

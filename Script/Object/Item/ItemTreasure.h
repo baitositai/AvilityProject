@@ -2,6 +2,8 @@
 #include "ItemBase.h"
 #include "../../Parameter/Item/ParameterItemTreasure.h"
 
+class Player;
+
 class ItemTreasure : public ItemBase
 {
 public:
@@ -18,6 +20,37 @@ public:
 	~ItemTreasure() override;
 
 	/// <summary>
+	/// 初期化処理
+	/// </summary>
+	void Init() override;
+
+	/// <summary>
+	/// 更新処理
+	/// </summary>
+	void Update() override;
+
+	/// <summary>
+	/// 描画処理
+	/// </summary>
+	void Draw() override;
+
+	/// <summary>
+	/// リソース取得
+	/// </summary>
+	void InitResource() override;
+
+	/// <summary>
+	/// プレイヤーの追従
+	/// </summary>
+	/// <param name="player"></param>
+	void FollowPlayer(Player& player);
+
+	/// <summary>
+	/// 追従解除
+	/// </summary>
+	void FollowRemove();
+
+	/// <summary>
 	/// パラメーターを返す(変更可)
 	/// </summary>
 	/// <returns>パラメータ</returns>
@@ -31,6 +64,18 @@ public:
 
 private:
 
+	// お宝の保持番号
+	int index_;
+
+	// 所有者のポインタ
+	const Player* owner_;
+
+	// 所有者の頭位置
+	Vector2F ownerHeadPos_;
+
 	// パラメータ情報
 	ParameterItemTreasure* parameterItemTreasure_;
+
+	// 追従座標の更新
+	void UpdateFollow();
 };
