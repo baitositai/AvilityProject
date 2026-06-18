@@ -1,5 +1,7 @@
+#include <DxLib.h>
 #include "../../../Utility/UtilityCommon.h"
 #include "../../../Manager/Common/SceneManager.h"
+#include "../../../Manager/Game/ItemManager.h"
 #include "../../../Collider/ColliderBox.h"
 #include "../../../OnHit/OnHitEnemy.h"
 #include "../../../Parameter/Character/Enemy/ParameterEnemy.h"
@@ -58,6 +60,30 @@ void EnemyBase::Draw()
 	SetDrawAddColor(0, 0, 0);
 }
 
+void EnemyBase::DropItem()
+{
+	ItemManager& itemManager = ItemManager::GetInstance();
+
+	// アイテムを生成する
+	itemManager.CreateMoneyItem(parameterEnemy_->dropMoney_, parameterEnemy_->pos_);
+
+	// ランダム確率でほかのアイテムも生成
+	int probability = GetRand(15);
+
+	if (probability < 3)
+	{
+		itemManager.CreateFoodItem(static_cast<ItemTypes::FOOD_TYPE>(GetRand(ItemTypes::FOOD_TYPE_MAX - 1)), parameterEnemy_->pos_);
+	}
+	else if (probability == 3)
+	{
+		itemManager.CreateAvilityItem(static_cast<AvilityTypes::TYPE>(GetRand(AvilityTypes::AVILITY_TYPE_MAX - 1)), parameterEnemy_->pos_);
+	}
+	else if (probability == 4)
+	{
+		itemManager.CreateTreasureItem(static_cast<ItemTypes::TREASURE_TYPE>(GetRand(ItemTypes::TREASURE_TYPE_MAX - 1)), parameterEnemy_->pos_);
+	}
+}
+
 void EnemyBase::Damage(const int damage)
 {	
 	// 体力を減らす（ダメージ率だけダメージ量を変える）
@@ -74,6 +100,6 @@ void EnemyBase::Damage(const int damage)
 		return;
 	}	
 	
-	// 状態遷移
-	ChangeState(STATE::ALIVE);
+	// 攻撃関係のリセット
+	AttackReset();
 }

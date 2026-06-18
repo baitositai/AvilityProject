@@ -56,6 +56,9 @@ public:
 	// ¶¬—¦
 	float spawnRate_;
 
+	// —‚Æ‚·‹àŠz
+	int dropMoney_;
+
 	// ˆÚ“®í—Ş
 	HABITAT_TYPE habitatType_;
 

@@ -32,14 +32,15 @@ SceneTitle::~SceneTitle()
 
 void SceneTitle::Init()
 {
+	// カメラ位置リセット
+	mainCamera.SetCameraPos(Vector2F());
+
 	// UI
 	titleLogo_.handleId = resMng_.GetHandle("titleLogo");
 	titleLogo_.pos = { Application::SCREEN_HALF_X, Application::SCREEN_HALF_Y - 150 };
 
 	pleaseButton_.handleId = resMng_.GetHandle("pleaseButton");
 	pleaseButton_.pos = { Application::SCREEN_HALF_X, Application::SCREEN_HALF_Y + 170 };
-
-	sndMng_.PlayBgm(SoundType::BGM::TITLE);
 
 	// パラメータ設定
 	auto parameterTrain = std::make_unique<ParameterActor>();
@@ -79,6 +80,12 @@ void SceneTitle::Init()
 
 	// カメラ
 	mainCamera.ChangeMode(Camera::MODE::TRAIN_SHAKE);
+
+	// BGM再生
+	sndMng_.PlayBgm(SoundType::BGM::TRAIN);
+
+	// SE再生
+	sndMng_.PlaySe(SoundType::SE::TRAIN_WHISTLE);
 }
 
 void SceneTitle::NormalUpdate()
@@ -94,8 +101,8 @@ void SceneTitle::NormalUpdate()
 	if (inputMng_.IsTrgDown(InputManager::TYPE::SCENE_CHANGE))
 	{
 		scnMng_.ChangeScene(SceneManager::SCENE_ID::TRAIN);
-		sndMng_.PlaySe(SoundType::SE::GAME_START);
-		sndMng_.StopBgm(SoundType::BGM::TITLE);
+		sndMng_.PlaySe(SoundType::SE::DECISION);
+		sndMng_.StopBgm(SoundType::BGM::TRAIN);
 		playerMng_.Create();
 		return;
 	}

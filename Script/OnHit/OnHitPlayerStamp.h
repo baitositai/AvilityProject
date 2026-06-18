@@ -32,4 +32,3 @@ private:
 	Player& owner_;
 
 };
-

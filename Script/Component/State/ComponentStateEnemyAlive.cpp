@@ -5,7 +5,6 @@
 #include "../../Collider/ColliderFan.h"
 #include "../../Utility/UtilityCommon.h"
 #include "ComponentStateEnemyAlive.h"
-#include "ComponentStateDead.h"
 
 ComponentStateEnemyAlive::ComponentStateEnemyAlive(EnemyBase& owner) :
 	ComponentCharacterStateBase(owner),

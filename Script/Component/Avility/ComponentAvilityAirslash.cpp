@@ -29,7 +29,7 @@ void ComponentAvilityAirslash::Update()
 	int nowJumpCount = parameter_.jumpCount_;
 	if (preJumpCount_ > 0 && !parameter_.isHitItem_)
 	{
-		if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_JUMP))
+		if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_JUMP, parameter_.padNo_))
 		{
 			CreateAirslash();
 		}

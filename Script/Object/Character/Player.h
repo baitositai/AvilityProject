@@ -81,7 +81,12 @@ public:
 	/// アイテムのアタッチ
 	/// </summary>
 	/// <param name="item">アイテム</param>
-	void SetAttachedItem(ItemTreasure* item);
+	void AttachedItem(ItemTreasure* item);
+
+	/// <summary>
+	/// アイテムのデタッチ
+	/// </summary>
+	void DetachItem();
 
 	/// <summary>
 	/// アビリティコンポーネントの設定
@@ -130,7 +135,7 @@ public:
 	/// 頭部の位置を返す
 	/// </summary>
 	/// <returns>頭部位置</returns>
-	const Vector2F GetHeadPos(const int index) const;
+	const Vector2F GetHeadLocalPos(const int index) const;
 
 private:
 

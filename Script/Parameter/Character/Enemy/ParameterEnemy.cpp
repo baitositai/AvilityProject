@@ -29,6 +29,7 @@ void ParameterEnemy::LoadParameter(const Json& parameter)
     attackStartDistance_ = parameter.value("attackStartDistance", 0.0f);
 	permissibleDistance_ = parameter.value("permissibleDistance", 0.0f);
 	spawnRate_ = parameter.value("spawnRate", 0.0f);
+	dropMoney_ = parameter.value("dropMoney", -1);
 	std::string habitatTypeString = parameter.value("habitatType", "land");
 
 	// Ž‹–ìŠp“x‚ðƒ‰ƒWƒAƒ“‚É•ÏŠ·

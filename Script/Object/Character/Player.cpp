@@ -131,7 +131,7 @@ void Player::Dead()
 	SetComponentActive("cameraRangeCheck", false);
 
 	// 残機を減らす
-	PlayerManager::GetInstance().AddPlayersLeft();
+	playerManager_.AddPlayersLeft();
 
 	// ヒットストップ
 	scnMng_.SetHitStop(0.5f);
@@ -142,34 +142,15 @@ void Player::Dead()
 
 void Player::Damage(const int damage)
 {
+	// 基底クラスの処理
 	CharacterBase::Damage(damage);
 
-	// すべて外す
-	for (auto item : attachedTreasures_)
-	{
-		item->FollowRemove();
-	}
-
-	attachedTreasures_.clear();
+	// アイテムのデタッチ
+	DetachItem();
 }
 
 void Player::Ready()
 {
-	// 全コンポーネントを有効にする
-	for (auto& component : componentList_)
-	{
-		component->SetActive(true);
-	}
-
-	// 全アビリティを有効にする
-	SetAllAvilityComponentActive(true);
-
-	// 初期化
-	for (auto& avility : avilityComponents_)
-	{
-		avility->Init();
-	}
-
 	// 活動状態を有効にする
 	isActive_ = true;
 
@@ -187,15 +168,21 @@ void Player::Ready()
 
 	// 角度初期化
 	parameterPlayer_->angle_ = 0.0f;
+
+	// 全コンポーネントを有効にする
+	for (auto& component : componentList_)
+	{
+		component->SetActive(true);
+	}
+
+	// 全アビリティを有効にする
+	SetAllAvilityComponentActive(true);
 }
 
 void Player::Spawn()
 {
 	// 状態遷移
 	ChangeState(CharacterBase::STATE::ALIVE);
-
-	// 残機減らす
-	playerManager_.AddPlayersLeft();
 
 	// 残機数に応じてHP回復
 	if (playerManager_.GetPlayerLeft() > 0)
@@ -239,9 +226,22 @@ std::shared_ptr<ColliderBox> Player::CreateColliderClone()
 	return colliderBox;
 }
 
-void Player::SetAttachedItem(ItemTreasure* item)
+void Player::AttachedItem(ItemTreasure* item)
 {
 	attachedTreasures_.push_back(item);
+}
+
+void Player::DetachItem()
+{
+	// すべて外す
+	for (auto item : attachedTreasures_)
+	{
+		item->FollowRemove();
+	}
+
+	// アタッチしたアイテムを削除
+	attachedTreasures_.clear();
+	parameterPlayer_->treasureList_.clear();
 }
 
 void Player::SetAvilityComponent(std::unique_ptr<ComponentAvilityBase> component)
@@ -336,28 +336,31 @@ void Player::ResetAvilityComponent(const AvilityTypes::TYPE avilityType)
 	}
 }
 
-const Vector2F Player::GetHeadPos(const int index) const
+const Vector2F Player::GetHeadLocalPos(const int index) const
 {
 	// プレイヤーの頭部位置を取得
 	Vector2F pos = parameterPlayer_->pos_;
 	Vector2F size = parameterPlayer_->hitSize_.ToVector2F();
 	Vector2F halfSize = { size.x / 2.0f, size.y / 2.0f };
-	pos = Vector2F::AddVector2F(pos, Vector2F::MulVector2F(parameterPlayer_->GetUp(), halfSize));
+	Vector2F headPos = Vector2F::AddVector2F(pos, Vector2F::MulVector2F(Vector2F(0.0f, -1.0f), halfSize));
+
+	// 相対位置を取得
+	Vector2F loaclPos = Vector2F::SubVector2F(headPos, pos);
 
 	// 取得した番号より配列が小さい場合
 	if (parameterPlayer_->treasureList_.size() < index)
 	{
 		// 座標を返す
-		return pos;
+		return loaclPos;
 	}
 
 	// 取得したお宝の番号位置までサイズを足す
 	for (int i = 0; i < index; i++)
 	{
-		pos.y -= parameterPlayer_->treasureList_[i].size.y;
+		loaclPos.y -= parameterPlayer_->treasureList_[i].size.y;
 	}
 
-	return pos;
+	return loaclPos;
 }
 
 void Player::UpdateComponentAvility()

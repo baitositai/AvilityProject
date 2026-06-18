@@ -30,6 +30,11 @@ public:
 	virtual void Draw() override;
 
 	/// <summary>
+	/// アイテムの生成
+	/// </summary>
+	virtual void DropItem();
+
+	/// <summary>
 	/// ダメージ処理
 	/// </summary>
 	/// <param name="damage"></param>

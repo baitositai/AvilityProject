@@ -145,6 +145,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Component\State\ComponentStateEnemyDead.cpp" />
+    <ClCompile Include="Script\Component\State\ComponentStatePlayerDead.cpp" />
     <ClCompile Include="Script\OnHit\OnHitItemMoney.cpp" />
     <ClCompile Include="Script\OnHit\OnHitItemTreasure.cpp" />
     <ClCompile Include="Script\Object\Item\ItemMoney.cpp" />
@@ -236,7 +238,6 @@
     <ClCompile Include="Script\Component\ComponentJump.cpp" />
     <ClCompile Include="Script\Component\ComponentInvincible.cpp" />
     <ClCompile Include="Script\Object\Common\Animation.cpp" />
-    <ClCompile Include="Script\Component\State\ComponentStateDead.cpp" />
     <ClCompile Include="Script\Component\ComponentKnockBack.cpp" />
     <ClCompile Include="Script\OnHit\OnHitCharacterBase.cpp" />
     <ClCompile Include="Script\OnHit\OnHitEnemyClone.cpp" />
@@ -337,6 +338,8 @@
     <ClCompile Include="Script\Object\Stage\StageTrain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Component\State\ComponentStateEnemyDead.h" />
+    <ClInclude Include="Script\Component\State\ComponentStatePlayerDead.h" />
     <ClInclude Include="Script\OnHit\OnHitItemMoney.h" />
     <ClInclude Include="Script\OnHit\OnHitItemTreasure.h" />
     <ClInclude Include="Script\Object\Item\ItemMoney.h" />
@@ -429,7 +432,6 @@
     <ClInclude Include="Script\Component\ComponentJump.h" />
     <ClInclude Include="Script\Component\ComponentInvincible.h" />
     <ClInclude Include="Script\Object\Common\Animation.h" />
-    <ClInclude Include="Script\Component\State\ComponentStateDead.h" />
     <ClInclude Include="Script\Component\ComponentKnockBack.h" />
     <ClInclude Include="Script\OnHit\OnHitCharacterBase.h" />
     <ClInclude Include="Script\OnHit\OnHitEnemyClone.h" />

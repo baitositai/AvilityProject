@@ -3,6 +3,7 @@
 #include "../Manager/Common/SceneManager.h"
 #include "../Manager/Common/Camera.h"
 #include "../Manager/Common/InputManager.h"
+#include "../Manager/Common/SoundManager.h"
 #include "../Manager/Common/SpriteEffectManager.h"
 #include "../Manager/Game/GameManager.h"
 #include "../Manager/Game/PlayerManager.h"
@@ -68,6 +69,9 @@ void SceneGame::Init()
 	// カメラの移動制限を設定
 	Vector2 stageSize = stageMng_.GetStageSize();
 	mainCamera.SetCameraLimit(Vector2F{ 0.0f, 0.0f }, stageSize.ToVector2F());
+
+	// サウンド再生
+	sndMng_.PlayBgm(SoundType::BGM::GAME1);
 }
 
 void SceneGame::NormalUpdate()

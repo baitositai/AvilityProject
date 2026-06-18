@@ -21,7 +21,8 @@
 #include "../../Component/State/ComponentStatePlayerProcess.h"
 #include "../../Component/State/ComponentStateEnemyAlive.h"
 #include "../../Component/State/ComponentStateAttackDefault.h"
-#include "../../Component/State/ComponentStateDead.h"
+#include "../../Component/State/ComponentStatePlayerDead.h"
+#include "../../Component/State/ComponentStateEnemyDead.h"
 #include "../../Component/State/ComponentStateIdle.h"
 #include "../../Component/State/ComponentStateEnter.h"
 #include "../../Component/State/ComponentStatePlayerSpawn.h"
@@ -257,16 +258,28 @@ std::unique_ptr<ComponentStateEnter> FactoryComponent::CreateComponentStateEnter
     return std::make_unique<ComponentStateEnter>(*charaPtr);
 }
 
-std::unique_ptr<ComponentStateDead> FactoryComponent::CreateComponentStateDead(ActorBase& owner)
+std::unique_ptr<ComponentStatePlayerDead> FactoryComponent::CreateComponentStatePlayerDead(ActorBase& owner)
 {
-    auto* charaPtr = dynamic_cast<CharacterBase*>(&owner);
+    auto* playerPtr = dynamic_cast<Player*>(&owner);
 
-    if (charaPtr == nullptr)
+    if (playerPtr == nullptr)
     {
         // キャストに失敗した場合nullptrを返す
         return nullptr;
     }
-    return std::make_unique<ComponentStateDead>(*charaPtr);
+    return std::make_unique<ComponentStatePlayerDead>(*playerPtr);
+}
+
+std::unique_ptr<ComponentStateEnemyDead> FactoryComponent::CreateComponentStateEnemyDead(ActorBase& owner)
+{
+    auto* enemyPtr = dynamic_cast<EnemyBase*>(&owner);
+
+    if (enemyPtr == nullptr)
+    {
+        // キャストに失敗した場合nullptrを返す
+        return nullptr;
+    }
+    return std::make_unique<ComponentStateEnemyDead>(*enemyPtr);
 }
 
 std::unique_ptr<ComponentStateEnemyAlive> FactoryComponent::CreateComponentStateEnemyAlive(ActorBase& owner)
@@ -432,9 +445,13 @@ FactoryComponent::FactoryComponent()
         {
             return CreateComponentStateEnter(owner);
         });
-    componentCreateMap_.emplace("dead", [this](ActorBase& owner)
+    componentCreateMap_.emplace("playerDead", [this](ActorBase& owner)
         {
-            return CreateComponentStateDead(owner);
+            return CreateComponentStatePlayerDead(owner);
+        });
+    componentCreateMap_.emplace("enemyDead", [this](ActorBase& owner)
+        {
+            return CreateComponentStateEnemyDead(owner);
         });
     componentCreateMap_.emplace("enemyAlive", [this](ActorBase& owner)
         {

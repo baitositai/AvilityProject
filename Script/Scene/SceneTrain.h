@@ -23,6 +23,11 @@ public:
 	/// </summary>
 	void Init() override;
 
+	/// <summary>
+	/// シーン遷移の準備
+	/// </summary>
+	void SceneChangeReady() override;
+
 private:
 
 	// ポーズ画面

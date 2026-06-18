@@ -59,6 +59,11 @@ public:
 	void DebugDraw();
 
 	/// <summary>
+	/// 全プレイヤーの持つアイテムをデタッチ
+	/// </summary>
+	void AllDetachItem();
+
+	/// <summary>
 	/// カメラの追従を行う座標を返す
 	/// </summary>
 	/// <returns>追従対象の座標</returns>

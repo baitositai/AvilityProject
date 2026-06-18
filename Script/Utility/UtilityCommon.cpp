@@ -471,3 +471,33 @@ Vector2F UtilityCommon::Reflect(const Vector2F& v, const Vector2F& n)
 
     return result;
 }
+
+Vector2F UtilityCommon::ConvertLocalToWorldByGravity(const Vector2F& localVector, const ParameterActor::DIR gravityDir)
+{
+    Vector2F worldVector;
+
+    switch (gravityDir)
+    {
+    case ParameterActor::DIR::DOWN:
+        worldVector.x = localVector.x;
+        worldVector.y = localVector.y;
+        break;
+
+    case ParameterActor::DIR::UP:
+        worldVector.x = -localVector.x;
+        worldVector.y = -localVector.y;
+        break;
+
+    case ParameterActor::DIR::RIGHT:
+        worldVector.x = localVector.y;
+        worldVector.y = -localVector.x;
+        break;
+
+    case ParameterActor::DIR::LEFT:
+        worldVector.x = -localVector.y;
+        worldVector.y = localVector.x;
+        break;
+    }
+
+    return worldVector;
+}

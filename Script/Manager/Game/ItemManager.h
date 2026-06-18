@@ -35,6 +35,17 @@ public:
 	void Sweep();
 
 	/// <summary>
+	/// 持ち越しとクリア
+	/// </summary>
+	void CarryAndClear();
+
+	/// <summary>
+	/// 全てのアイテムに持ち越し判定を設定する
+	/// </summary>
+	/// <param name="isCarry">持ち越し判定</param>
+	void SetAllIsCarry(const bool isCarry);
+
+	/// <summary>
 	/// クリア処理
 	/// </summary>
 	void Clear();

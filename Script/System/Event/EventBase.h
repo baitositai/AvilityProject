@@ -50,8 +50,8 @@ public:
 protected:
 
 	// ƒJƒƒ‰‚Æ‚Ì”»’è—p
-	static constexpr int OFFSET_X = 10;
-	static constexpr int OFFSET_Y = 10;
+	static constexpr int OFFSET_X = 20;
+	static constexpr int OFFSET_Y = 15;
 	static constexpr int GROUND_OFFSET = 110;
 
 	// ó‘Ô

@@ -1,24 +1,23 @@
 #pragma once
-#include <functional>
-#include "../Component/State/ComponentCharacterStateBase.h"
+#include "ComponentCharacterStateBase.h"
 
-class CharacterBase;
+class Player;
 class InputManager;
 
-class ComponentStateDead :  public ComponentCharacterStateBase
+class ComponentStatePlayerDead : public ComponentCharacterStateBase
 {
 public:
 
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	/// <param name="owner">所有者</param>
-	ComponentStateDead(CharacterBase& owner);
+	/// <param name="owner"></param>
+	ComponentStatePlayerDead(Player& owner);
 
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~ComponentStateDead() override;
+	~ComponentStatePlayerDead() override;
 
 	/// <summary>
 	/// 初期化処理
@@ -49,7 +48,7 @@ private:
 	std::function<void()> update_;
 
 	// 所有者
-	CharacterBase& owner_;
+	Player& owner_;
 
 	// 入力管理クラスの参照
 	InputManager& inputManager_;

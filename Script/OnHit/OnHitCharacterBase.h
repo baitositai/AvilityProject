@@ -22,7 +22,7 @@ public:
 protected:
 
 	// ノックバックの力
-	const Vector2F KNOCK_BACK_FORCE = { 800.0f, 800.0f };	
+	const Vector2F KNOCK_BACK_FORCE = { 600.0f, 800.0f };	
 
 	// ノックバックの強め
 	const Vector2F KNOCK_BACK_FORCE_STRONG = { 1200.0f, 1200.0f };

@@ -62,16 +62,16 @@ public:
 	/// <returns>パラメータ</returns>
 	const ParameterItemTreasure& GetParameter() const { return *parameterItemTreasure_; }
 
-private:
+private:	
+	
+	// 所有者のポインタ
+	const Player* owner_;
 
 	// お宝の保持番号
 	int index_;
 
-	// 所有者のポインタ
-	const Player* owner_;
-
-	// 所有者の頭位置
-	Vector2F ownerHeadPos_;
+	// 重力方向のバックアップ
+	ParameterActor::DIR preGravityDir_;
 
 	// パラメータ情報
 	ParameterItemTreasure* parameterItemTreasure_;

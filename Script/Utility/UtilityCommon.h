@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include "../Common/Vector2.h"
+#include "../Parameter/ParameterActor.h"
 
 class UtilityCommon
 {
@@ -172,5 +173,13 @@ public:
 
 	// 法線に合わせたベクトルの反射
 	static Vector2F Reflect(const Vector2F& v, const Vector2F& n);
+
+	/// <summary>
+	/// 重力方向に応じてベクトルを変換する
+	/// </summary>
+	/// <param name="localVector">相対ベクトル</param>
+	/// <param name="gravityDir">重力方向</param>
+	/// <returns>変換したベクトル</returns>
+	static Vector2F ConvertLocalToWorldByGravity(const Vector2F& localVector, const ParameterActor::DIR gravityDir);
 
 };

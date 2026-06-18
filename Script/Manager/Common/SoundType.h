@@ -18,7 +18,15 @@ public:
 	enum class BGM
 	{
 		TITLE,
+		TRAIN,
+		TRAIN_ROOM,
+		GAME1,
+		GAME2,
+		GAME3,
+		GAME4,
+		GAME5,
 		RESULT,
+		GAMEOVER,
 		MAX
 	};
 
@@ -27,6 +35,8 @@ public:
 	{
 		GAME_START,
 		SELECT,
+		TRAIN_WHISTLE,
+		DECISION,
 		MAX
 	};
 

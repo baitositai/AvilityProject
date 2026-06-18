@@ -6,6 +6,8 @@
 #include "../Manager/Common/SoundManager.h"
 #include "../Manager/Common/FontManager.h"
 #include "../Manager/Common/ScoreManager.h"
+#include "../Manager/Game/PlayerManager.h"
+#include "../Manager/Game/ItemManager.h"
 #include "../Render/PixelMaterial.h"
 #include "../Render/PixelRenderer.h"
 #include "../Utility/UtilityCommon.h"
@@ -26,23 +28,26 @@ SceneResult::~SceneResult()
 
 void SceneResult::Init()
 {
+	backGround_.handleId = resMng_.GetHandle("gameClear");
+	backGround_.size = { Application::SCREEN_SIZE_X, Application::SCREEN_SIZE_Y };
+
 	sndMng_.PlayBgm(SoundType::BGM::RESULT);
 }
 
 void SceneResult::NormalUpdate()
 {
 	// ÉVÅ[ÉìëJà⁄
-	if (inputMng_.IsTrgDown(InputManager::TYPE::DEBUG_SCENE_CHANGE))
+	if (inputMng_.IsTrgDown(InputManager::TYPE::SCENE_CHANGE))
 	{
 		scnMng_.ChangeScene(SceneManager::SCENE_ID::TITLE);
 		sndMng_.StopBgm(SoundType::BGM::RESULT);
+		playerMng_.AllDetachItem();
+		itemMng_.SetAllIsCarry(false);
 		return;
 	}
 }
 
 void SceneResult::NormalDraw()
 {
-	// îwåi
-	DrawBox(0, 0, Application::SCREEN_SIZE_X, Application::SCREEN_SIZE_Y, UtilityCommon::CYAN, true);
-	DrawFormatString(0, 0, UtilityCommon::RED, L"ÉäÉUÉãÉg");
+	backGround_.DrawExtend();
 }

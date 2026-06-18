@@ -4,8 +4,11 @@
 #include "../../Object/Item/ItemTreasure.h"
 #include "../../Factory/FactoryComponent.h"
 #include "../../Component/Avility/ComponentAvilityBase.h"
+#include "../../Manager/Common/SoundManager.h"
 #include "../../Manager/Common/InputManager.h"
 #include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Game/ItemManager.h"
+#include "../../Manager/Game/PlayerManager.h"
 #include "../Utility/UtilityCommon.h"
 #include "../Object/Character/Player.h"
 #include "../Collider/ColliderArray.h"
@@ -65,7 +68,7 @@ void OnHitPlayer::OnHitEnemy(const std::weak_ptr<ColliderBase>& opponentCollider
 void OnHitPlayer::OnHitItemAvility(const std::weak_ptr<ColliderBase>& opponentCollider)
 {	
     owner_.GetParameter().isHitItem_ = true;
-    if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_GET_ITEM))
+    if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_GET_ITEM, owner_.GetParameter().padNo_))
     {
         // 衝突相手の所有者をキャストしてアイテムのインスタンスを取得
         const auto& item = dynamic_cast<const ItemBase*>(&opponentCollider.lock()->GetOwner());
@@ -81,7 +84,7 @@ void OnHitPlayer::OnHitItemAvility(const std::weak_ptr<ColliderBase>& opponentCo
 void OnHitPlayer::OnHitItemFood(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
     owner_.GetParameter().isHitItem_ = true;
-    if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_GET_ITEM))
+    if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_GET_ITEM, owner_.GetParameter().padNo_))
     {
         // 衝突相手の所有者をキャストしてアイテムのインスタンスを取得
         const auto& item = dynamic_cast<const ItemBase*>(&opponentCollider.lock()->GetOwner());
@@ -100,7 +103,7 @@ void OnHitPlayer::OnHitItemTreasure(const std::weak_ptr<ColliderBase>& opponentC
 
 void OnHitPlayer::OnHitDoor(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
-    if (InputManager::GetInstance().IsTrgDown(InputManager::TYPE::PLAYER_ENTER_DOOR))
+    if (InputManager::GetInstance().IsTrgDown(InputManager::TYPE::PLAYER_ENTER_DOOR, owner_.GetParameter().padNo_))
     {
         // 入室状態へ遷移
         owner_.ChangeState(Player::STATE::ENTER);
@@ -120,6 +123,14 @@ void OnHitPlayer::OnHitNextArea(const std::weak_ptr<ColliderBase>& opponentColli
 
     // プレイヤーのアニメーションを再生
     owner_.GetAnimation().Play(Animation::TYPE::WALK);
+
+    // BGM停止
+    SoundManager& sndMng = SoundManager::GetInstance();
+    sndMng.StopBgm(SoundType::BGM::TRAIN);
+    sndMng.StopBgm(SoundType::BGM::TRAIN_ROOM);
+
+    // 汽笛
+    sndMng.PlaySe(SoundType::SE::TRAIN_WHISTLE);
 }
 
 void OnHitPlayer::AvilityShot(const std::weak_ptr<ColliderBase>& opponentCollider, const Vector2F& normal)

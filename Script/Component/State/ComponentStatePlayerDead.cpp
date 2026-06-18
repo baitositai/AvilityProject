@@ -1,9 +1,9 @@
 #include "../../Manager/Common/InputManager.h"
-#include "../../Object/Character/CharacterBase.h"
+#include "../../Object/Character/Player.h"
 #include "../../Object/Common/Animation.h"
-#include "ComponentStateDead.h"
+#include "ComponentStatePlayerDead.h"
 
-ComponentStateDead::ComponentStateDead(CharacterBase& owner) :
+ComponentStatePlayerDead::ComponentStatePlayerDead(Player& owner) :
 	ComponentCharacterStateBase(owner),
 	owner_(owner),
 	inputManager_(InputManager::GetInstance())
@@ -11,22 +11,22 @@ ComponentStateDead::ComponentStateDead(CharacterBase& owner) :
 	respownValue_ = -1;
 }
 
-ComponentStateDead::~ComponentStateDead()
+ComponentStatePlayerDead::~ComponentStatePlayerDead()
 {
 }
 
-void ComponentStateDead::Init()
+void ComponentStatePlayerDead::Init()
 {
 	respownValue_ = 0;
-	update_ = std::bind(&ComponentStateDead::UpdateAnimation, this);
+	update_ = std::bind(&ComponentStatePlayerDead::UpdateAnimation, this);
 }
 
-void ComponentStateDead::Update()
+void ComponentStatePlayerDead::Update()
 {
 	update_();
 }
 
-void ComponentStateDead::UpdateAnimation()
+void ComponentStatePlayerDead::UpdateAnimation()
 {
 	// 死亡アニメーションが終了した場合
 	if (owner_.GetAnimation().GetType() == Animation::TYPE::DEAD &&
@@ -35,21 +35,21 @@ void ComponentStateDead::UpdateAnimation()
 		// プレイヤーの場合は処理を無視
 		if (owner_.GetType() == CharacterBase::TYPE::PLAYER)
 		{
-			update_ = std::bind(&ComponentStateDead::UpdateRespownAccept, this);
+			update_ = std::bind(&ComponentStatePlayerDead::UpdateRespownAccept, this);
 			return;
 		}
 		else
-		{	
+		{
 			// 所有者を消す
 			owner_.Delete();
 		}
 	}
 }
 
-void ComponentStateDead::UpdateRespownAccept()
+void ComponentStatePlayerDead::UpdateRespownAccept()
 {
 	// リスポーン処理受付
-	if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_RESPAWN))
+	if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_RESPAWN, owner_.GetParameter().padNo_))
 	{
 		respownValue_++;
 		if (respownValue_ > RESPAWN_CONDITION_INPUT_COUNT)

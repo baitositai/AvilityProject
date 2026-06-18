@@ -60,7 +60,7 @@
       "debugCreateItemAvility"
     ],
     "dashSpeed": 4.0,
-    "defaultAttackDistance": 40.0,
+    "defaultAttackDistance": 30.0,
     "defaultAttackRadius": 20.0,
     "defaultAttackStartFrame": 33,
     "direction": false,
@@ -73,11 +73,11 @@
       "x": 48,
       "y": 64
     },
-    "hp": 100,
+    "hp": 200,
     "invincibleTimeMax": 2.0,
     "jumpCount": 1,
     "jumpCountMax": 1,
-    "jumpPowerMax": 20.0,
+    "jumpPowerMax": 25.0,
     "localPos": {
       "x": 0,
       "y": 0
@@ -89,7 +89,7 @@
       "alive": "playerProcess",
       "attack": "attackDefault",
       "hit": "dummy",
-      "dead": "dead",
+      "dead": "playerDead",
       "spawn": "spawn",
       "enter": "enter"
     },

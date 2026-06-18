@@ -1,5 +1,6 @@
 #pragma once
 #include "SceneBase.h"
+#include "../Common/Image.h"
 
 class SceneResult : public SceneBase
 {
@@ -21,6 +22,9 @@ public:
 	void Init() override;
 
 private:
+
+	// ”wŒi
+	Image backGround_;
 
 	// XVŠÖ”
 	void NormalUpdate() override;

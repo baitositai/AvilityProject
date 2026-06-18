@@ -4,6 +4,7 @@
 #include "../Manager/Common/Camera.h"
 #include "../Manager/Common/InputManager.h"
 #include "../Manager/Common/SpriteEffectManager.h"
+#include "../Manager/Common/SoundManager.h"
 #include "../Manager/Game/GameManager.h"
 #include "../Manager/Game/PlayerManager.h"
 #include "../Manager/Game/GimmickManager.h"
@@ -44,9 +45,25 @@ void SceneTrain::Init()
 	// プレイヤーの初期位置を決定
 	playerMng_.SetFirstPositions(stageMng_.GetPlayerFirstPositions());
 
+	// BGM再生
+	sndMng_.PlayBgm(SoundType::BGM::TRAIN);
+	sndMng_.PlayBgm(SoundType::BGM::TRAIN_ROOM);
+
 	itemMng_.CreateTreasureItem(ItemTypes::TREASURE_TYPE::STUFFED_TOY, Vector2F(300, 500));
 	itemMng_.CreateTreasureItem(ItemTypes::TREASURE_TYPE::CLAY_WORK, Vector2F(600, 500));
 	itemMng_.CreateTreasureItem(ItemTypes::TREASURE_TYPE::POT, Vector2F(900, 500));
+}
+
+void SceneTrain::SceneChangeReady()
+{
+	// 全てのアイテムの持越しを禁止
+	itemMng_.SetAllIsCarry(false);
+
+	// 全プレイヤーのアイテムをデタッチ
+	playerMng_.AllDetachItem();
+
+	// 基底クラスの処理
+	SceneBase::SceneChangeReady();
 }
 
 void SceneTrain::NormalUpdate()

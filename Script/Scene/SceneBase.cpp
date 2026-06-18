@@ -77,7 +77,7 @@ void SceneBase::Draw()
 void SceneBase::SceneChangeReady()
 {	
 	// 一部の管理クラスの配列の中身を削除
-	itemMng_.Clear();
+	itemMng_.CarryAndClear();
 	gimmickMng_.Clear();
 	enemyMng_.Clear();
 	collisionMng_.Clear();
@@ -139,8 +139,8 @@ void SceneBase::NormalDraw()
 	stageMng_.Draw();
 	gimmickMng_.Draw();
 	itemMng_.Draw();
-	playerMng_.Draw();
 	enemyMng_.Draw();
+	playerMng_.Draw();
 	effectMng_.Draw();
 }
 
@@ -161,9 +161,9 @@ void SceneBase::DebugDraw()
 {
 	stageMng_.DebugDraw();
 	gimmickMng_.DebugDraw();
-	playerMng_.DebugDraw();
-	enemyMng_.DebugDraw();
 	itemMng_.DebugDraw();
+	enemyMng_.DebugDraw();
+	playerMng_.DebugDraw();
 	effectMng_.DebugDraw();
 	collisionMng_.DebugDraw();
 }

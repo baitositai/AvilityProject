@@ -1,5 +1,7 @@
-#include "../../Manager/Common/InputManager.h"
+#include "../Manager/Common/InputManager.h"
+#include "../Object/Character/Player.h"
 #include "../Object/Item/ItemBase.h"
+#include "../Collider/ColliderBase.h"
 #include "OnHitItemBase.h"
 
 OnHitItemBase::OnHitItemBase(ItemBase& owner) :
@@ -17,9 +19,16 @@ OnHitItemBase::~OnHitItemBase()
 
 void OnHitItemBase::OnHitPlayer(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
-    if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_GET_ITEM))
-    {
-		// 削除する
-		owner_.Delete();
-    }
+	// 書き換え可能な所有者を取得
+	auto* player = dynamic_cast<Player*>(&opponentCollider.lock()->GetOwner());
+
+	// キャストが成功した場合
+	if (player)
+	{
+		if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_GET_ITEM, player->GetParameter().padNo_))
+		{
+			// 衝突者を所有者として取得
+			owner_.Delete();
+		}
+	}
 }

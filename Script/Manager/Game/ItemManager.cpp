@@ -138,14 +138,63 @@ void ItemManager::Sweep()
 	itemList_.erase(it, itemList_.end());
 }
 
-void ItemManager::Clear()
+void ItemManager::CarryAndClear()
+{
+	if (itemList_.empty())
+	{
+		return;
+	}
+
+	// 一時退避用のコンテナ
+	std::vector<std::unique_ptr<ItemBase>> keepList;
+
+	// 持ち越しと削除 
+	for (auto& item : itemList_)
+	{
+		// 持ち越しの場合
+		if (item->IsCarryOver())
+		{
+			// 一時退避
+			keepList.push_back(std::move(item));
+		}
+		else
+		{
+			// 削除
+			item->Delete();
+		}
+	}
+
+	// 中身を削除
+	itemList_.clear();
+
+	// 退避してたアイテムを戻す
+	itemList_ = std::move(keepList);
+}
+
+void ItemManager::SetAllIsCarry(const bool isCarry)
 {
 	if (itemList_.empty()) return;
 
 	for (auto& item : itemList_)
 	{
+		item->SetIsCarryOver(isCarry);
+	}
+}
+
+void ItemManager::Clear()
+{
+	if (itemList_.empty())
+	{
+		return;
+	}
+
+	for (auto& item : itemList_)
+	{
+		// 削除
 		item->Delete();
 	}
+
+	// 中身を削除
 	itemList_.clear();
 }
 

@@ -3,6 +3,7 @@
 #include "../../OnHit/OnHitItemTreasure.h"
 #include "../../Collider/ColliderBox.h"
 #include "../../Object/Character/Player.h"
+#include "../../Utility/UtilityCommon.h"
 #include "ItemTreasure.h"
 
 ItemTreasure::ItemTreasure(std::unique_ptr<ParameterItemTreasure> parameter) :
@@ -16,7 +17,7 @@ ItemTreasure::ItemTreasure(std::unique_ptr<ParameterItemTreasure> parameter) :
 	tag_ = CollisionTags::TAG::ITEM_TREASURE;
 	owner_ = nullptr;
 	index_ = -1;
-	ownerHeadPos_ = {};
+	preGravityDir_ = ParameterActor::DIR::MAX;
 }
 
 ItemTreasure::~ItemTreasure()
@@ -82,11 +83,17 @@ void ItemTreasure::FollowPlayer(Player& player)
 	// プレイヤー取得
 	owner_ = &player;
 
+	// プレイヤー側にも登録
+	player.AttachedItem(this);
+
 	// 配列取得
 	auto& treasureList = player.GetParameter().treasureList_;
 
 	// 保持番号を取得
 	index_ = treasureList.empty() ? 0 : static_cast<int>(treasureList.size());
+
+	// 重力方向のバックアップ取得
+	preGravityDir_ = player.GetParameter().gravityDir_;
 
 	// プレイヤーに必要な情報を送る
 	ParameterPlayer::TreasureStatus status = {};
@@ -102,13 +109,17 @@ void ItemTreasure::FollowPlayer(Player& player)
 	// コライダー無効
 	collider_->SetIsActive(false);
 
+	// 持っている間は持ち越しする
+	isCarryOver_ = true;
+
+	// 初期更新
 	UpdateFollow();
 }
 
 void ItemTreasure::FollowRemove()
 {	
 	// 座標変更
-	parameterItemTreasure_->pos_ = owner_->GetHeadPos(0);
+	parameterItemTreasure_->pos_ = Vector2F::AddVector2F(owner_->GetParameter().pos_, owner_->GetHeadLocalPos(0));
 	
 	// 一部パラメータの初期化
 	parameterItemTreasure_->gravityDir_ = ParameterActor::DIR::DOWN;
@@ -122,29 +133,43 @@ void ItemTreasure::FollowRemove()
 	
 	// 追従解除
 	owner_ = nullptr;
-	ownerHeadPos_ = {};
 
 	// コンポーネント有効
 	SetComponentActive("gravity", true);
 	SetComponentActive("move", true);
+
 	// コライダー無効
 	collider_->SetIsActive(true);
+
+	// 持ち越し解除
+	isCarryOver_ = false;
 }
 
 void ItemTreasure::UpdateFollow()
 {
-	// 頭部位置取得
-	ownerHeadPos_ = owner_->GetHeadPos(index_);
+	const auto& ownerParameter = owner_->GetParameter();
 
-	// ハーフサイズの取得
+	// 所有者のパラメータに合わせる
+	parameterItemTreasure_->gravityDir_ = ownerParameter.gravityDir_;
+	if (preGravityDir_ != parameterItemTreasure_->gravityDir_) { parameterItemTreasure_->angle_ = ownerParameter.angle_; }
+	
+	// 1. プレイヤーの足元からの「頭部のローカル位置」を取得
+	Vector2F ownerHeadLocalPos = owner_->GetHeadLocalPos(index_);
+
+	// 2. 宝箱のハーフサイズの取得
 	Vector2F halfSize = Vector2F::MulVector2FFloat(parameterItemTreasure_->hitSize_.ToVector2F(), 0.5f);
 
-	// 重力や角度を所有者に合わせる
-	const auto& ownerParameter = owner_->GetParameter();
-	parameterItemTreasure_->gravityDir_ = ownerParameter.gravityDir_;
-	parameterItemTreasure_->angle_ = ownerParameter.angle_;
+	// 3. ローカル空間上で、頭部位置からさらに宝箱のサイズ分だけ上にズラす（ローカル同士の計算）
+	Vector2F totalLocalOffset;
+	totalLocalOffset.x = ownerHeadLocalPos.x;
+	totalLocalOffset.y = ownerHeadLocalPos.y - halfSize.y;
 
-	// 座標更新
-	parameterItemTreasure_->pos_ = ownerHeadPos_;
-	parameterItemTreasure_->pos_.y -= halfSize.y;
+	// 4. 合成したローカルオフセットを、現在の重力方向のワールドベクトルに変換
+	Vector2F worldOffset = UtilityCommon::ConvertLocalToWorldByGravity(totalLocalOffset, parameterItemTreasure_->gravityDir_);
+
+	parameterItemTreasure_->pos_.x = ownerParameter.pos_.x + worldOffset.x;
+	parameterItemTreasure_->pos_.y = ownerParameter.pos_.y + worldOffset.y;
+
+	// 重力バックアップ
+	preGravityDir_ = parameterItemTreasure_->gravityDir_;
 }

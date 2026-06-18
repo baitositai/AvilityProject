@@ -6,6 +6,8 @@
 #include "../Manager/Common/SoundManager.h"
 #include "../Manager/Common/FontManager.h"
 #include "../Manager/Common/ScoreManager.h"
+#include "../Manager/Game/PlayerManager.h"
+#include "../Manager/Game/ItemManager.h"
 #include "../Render/PixelMaterial.h"
 #include "../Render/PixelRenderer.h"
 #include "../Utility/UtilityCommon.h"
@@ -26,20 +28,25 @@ SceneGameOver::~SceneGameOver()
 
 void SceneGameOver::Init()
 {
+	backGround_.handleId = resMng_.GetHandle("gameOver");
+	backGround_.size = { Application::SCREEN_SIZE_X, Application::SCREEN_SIZE_Y };
+	sndMng_.PlayBgm(SoundType::BGM::RESULT);
 }
 
 void SceneGameOver::NormalUpdate()
 {
 	// ÉVÅ[ÉìëJà⁄
-	if (inputMng_.IsTrgDown(InputManager::TYPE::DEBUG_SCENE_CHANGE))
+	if (inputMng_.IsTrgDown(InputManager::TYPE::SCENE_CHANGE))
 	{
 		scnMng_.ChangeScene(SceneManager::SCENE_ID::TITLE);
 		sndMng_.StopBgm(SoundType::BGM::RESULT);
+		playerMng_.AllDetachItem();
+		itemMng_.SetAllIsCarry(false);
 		return;
 	}
 }
 
 void SceneGameOver::NormalDraw()
 {
-	DrawFormatString(0, 0, UtilityCommon::WHITE, L"GAME OVER", true);
+	backGround_.DrawExtend();
 }

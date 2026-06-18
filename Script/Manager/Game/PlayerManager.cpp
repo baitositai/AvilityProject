@@ -111,6 +111,14 @@ void PlayerManager::DebugDraw()
 	}
 }
 
+void PlayerManager::AllDetachItem()
+{
+	for (const auto& player : playerList_)
+	{
+		player->DetachItem();
+	}
+}
+
 const Vector2F& PlayerManager::GetCameraFollowPos() const
 {
 	// 1Pの座標を返す
@@ -135,7 +143,7 @@ void PlayerManager::AddPlayersLeft(const int addLeft)
 	playersLeft_ += addLeft;
 
 	// 残機が0未満の場合
-	if (playersLeft_ < 0)
+	if (playersLeft_ < 1)
 	{
 		// プレイヤー1が死亡状態の場合
 		if (playerList_.front()->GetState() == Player::STATE::DEAD)

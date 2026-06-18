@@ -38,7 +38,22 @@ public:
 	/// </summary>
 	virtual void DebugDraw() override;
 
+	/// <summary>
+	/// ‚¿‰z‚µ”»’è
+	/// </summary>
+	/// <returns>true‚Ìê‡‚¿‰z‚µ‚·‚é</returns>
+	const bool IsCarryOver() const;
+
+	/// <summary>
+	/// ‚¿‰z‚µİ’è
+	/// </summary>
+	/// <param name="isCarry">‚¿‰z‚µ”»’è</param>
+	void SetIsCarryOver(const bool isCarry);
+
 protected:
+
+	// ‚¿‰z‚µ”»’è
+	bool isCarryOver_;
 
 	// Õ“Ë”»’è—pƒ^ƒO
 	CollisionTags::TAG tag_;

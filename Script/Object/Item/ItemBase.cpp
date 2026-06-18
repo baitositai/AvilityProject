@@ -14,6 +14,7 @@ ItemBase::ItemBase(std::unique_ptr<ParameterItem> parameter) :
 
 	// ‰Šú‰»
 	tag_ = CollisionTags::TAG::MAX;
+	isCarryOver_ = false;
 }
 
 ItemBase::~ItemBase()
@@ -64,4 +65,14 @@ void ItemBase::Draw()
 void ItemBase::DebugDraw()
 {
 	collider_->DebugDraw();
+}
+
+const bool ItemBase::IsCarryOver() const
+{
+	return isCarryOver_;
+}
+
+void ItemBase::SetIsCarryOver(const bool isCarry)
+{
+	isCarryOver_ = isCarry;
 }

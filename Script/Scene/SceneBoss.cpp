@@ -3,6 +3,7 @@
 #include "../Manager/Common/SceneManager.h"
 #include "../Manager/Common/Camera.h"
 #include "../Manager/Common/InputManager.h"
+#include "../Manager/Common/SoundManager.h"
 #include "../Manager/Common/SpriteEffectManager.h"
 #include "../Manager/Game/GameManager.h"
 #include "../Manager/Game/PlayerManager.h"
@@ -49,6 +50,12 @@ void SceneBoss::Init()
 	
 	// プレイヤーの初期位置を決定
 	playerMng_.SetFirstPositions(stageMng_.GetPlayerFirstPositions());
+
+	// ゲームシーン用のBMGを停止
+	sndMng_.StopBgm(SoundType::BGM::GAME1);
+
+	// サウンド再生
+	sndMng_.PlayBgm(SoundType::BGM::GAME2);
 }
 
 void SceneBoss::NormalUpdate()
@@ -58,7 +65,9 @@ void SceneBoss::NormalUpdate()
 	// ボスを撃破できた場合
 	if (enemyMng_.IsBossDestroy(EnemyTypes::TYPE::MAID))
 	{
+		sndMng_.StopBgm(SoundType::BGM::GAME2);
 		scnMng_.ChangeScene(SceneManager::SCENE_ID::RESULT);
+		return;
 	}
 
 #ifdef _DEBUG
