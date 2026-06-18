@@ -94,6 +94,62 @@
       "enter": "enter"
     },
     "transparent": true,
-    "weight": 0.9
+    "weight": 0.9,
+    "avility": {
+      "shot": {
+        "attackBoostRate": 0.2,
+        "moveSpeedBoostRate": 0.1,
+        "gravityBoostRate": 0,
+        "defenceRate": 0
+      },
+      "stamp": {
+        "attackBoostRate": 0.5,
+        "moveSpeedBoostRate": 0,
+        "gravityBoostRate": 0,
+        "defenceRate": 0
+      },
+      "gravityControll": {
+        "attackBoostRate": 0.1,
+        "moveSpeedBoostRate": 0,
+        "gravityBoostRate": 0,
+        "defenceRate": 0.1
+      },
+      "teleport": {
+        "attackBoostRate": 0.3,
+        "moveSpeedBoostRate": 0.2,
+        "gravityBoostRate": 0,
+        "defenceRate": 0
+      },
+      "giant": {
+        "attackBoostRate": 0.5,
+        "moveSpeedBoostRate": 0,
+        "gravityBoostRate": 0.15,
+        "defenceRate": 0.5
+      },
+      "metal": {
+        "attackBoostRate": 0,
+        "moveSpeedBoostRate": -0.5,
+        "gravityBoostRate": 0.5,
+        "defenceRate": 1.0
+      },
+      "airwalk": {
+        "attackBoostRate": 0,
+        "moveSpeedBoostRate": 0,
+        "gravityBoostRate": 0,
+        "defenceRate": 0
+      },
+      "airslash": {
+        "attackBoostRate": 0,
+        "moveSpeedBoostRate": 0,
+        "gravityBoostRate": 0,
+        "defenceRate": 0
+      },
+      "superman": {
+        "attackBoostRate": 0.75,
+        "moveSpeedBoostRate": 1,
+        "gravityBoostRate": 0,
+        "defenceRate": 0
+      }
+    }
   }
 }

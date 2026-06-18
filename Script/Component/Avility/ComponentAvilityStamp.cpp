@@ -30,16 +30,19 @@ ComponentAvilityStamp::~ComponentAvilityStamp()
 	}
 }
 
+void ComponentAvilityStamp::Create()
+{	
+	ComponentAvilityBase::Create();
+	Init();
+}
+
 void ComponentAvilityStamp::Init()
 {	
 	// コライダーの登録
 	attackCollider_ = owner_.CreateColliderClone();
 	attackCollider_->ChangeTag(CollisionTags::TAG::PLAYER_AVILITY_STAMP);
 	attackCollider_->SetIsActive(false);
-	CollisionManager::GetInstance().Add(attackCollider_);
-
-	// 攻撃力の加算
-	parameter_.attackPower_ +=ADD_ATTACK_POWER;
+	collisionManager_.Add(attackCollider_);
 }
 
 void ComponentAvilityStamp::Update()
@@ -55,8 +58,7 @@ void ComponentAvilityStamp::Remove()
 		attackCollider_ = nullptr;
 	}
 
-	// 攻撃力を戻す
-	parameter_.attackPower_ +=-ADD_ATTACK_POWER;
+	ComponentAvilityBase::Remove();
 
 	// 所有者のコライダーの判定を有効にする
 	owner_.SetColliderActive(true);

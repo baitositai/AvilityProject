@@ -8,6 +8,7 @@ class StageManager;
 class SceneManager;
 class InputManager;
 class SpriteEffectManager;
+class CollisionManager;
 
 class ComponentAvilityBase : public ComponentBase
 {
@@ -23,6 +24,11 @@ public:
 	/// デストラクタ
 	/// </summary>
 	virtual ~ComponentAvilityBase() override;
+
+	/// <summary>
+	/// 生成処理
+	/// </summary>
+	virtual void Create();
 
 	/// <summary>
 	/// 更新処理
@@ -59,6 +65,9 @@ protected:
 
 	// エフェクト管理クラスの参照
 	SpriteEffectManager& effectManager_;
+
+	// 衝突判定管理クラスの参照
+	CollisionManager& collisionManager_;
 
 	// 種類
 	AvilityTypes::TYPE type_;

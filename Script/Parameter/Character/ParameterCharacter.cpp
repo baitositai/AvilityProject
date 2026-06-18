@@ -5,7 +5,7 @@ ParameterCharacter::ParameterCharacter() :
     jumpCount_(-1),
     jumpCountMax_(-1),
     defaultAttackStartFrame_(-1),
-    damageRate_(0.0f),
+    defenseRate_(0.0f),
     invincibleTimeMax_(0.0f),
     invincibleTime_(0.0f),
     jumpPow_(0.0f),
@@ -29,7 +29,7 @@ void ParameterCharacter::LoadParameter(const Json& parameter)
     jumpCount_ = parameter.value("jumpCount", -1);
     jumpCountMax_ = parameter.value("jumpCountMax", -1);
     attackBoostRate_ = parameter.value("attackBoostRate", 0.0f);
-    damageRate_ = parameter.value("damageRate", 0.0f);
+    defenseRate_ = parameter.value("damageRate", 0.0f);
     invincibleTimeMax_ = parameter.value("invincibleTimeMax", 0.0f);
     invincibleTime_ = parameter.value("invincibleTime", 0.0f);
     jumpPow_ = parameter.value("jumpPow", 0.0f);

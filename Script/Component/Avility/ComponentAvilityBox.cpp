@@ -15,6 +15,16 @@ ComponentAvilityBox::~ComponentAvilityBox()
 {
 }
 
+void ComponentAvilityBox::Create()
+{
+	ComponentAvilityBase::Create();
+	Init();
+}
+
+void ComponentAvilityBox::Init()
+{
+}
+
 void ComponentAvilityBox::Update()
 {
 	if (inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_SHOT, parameter_.padNo_))

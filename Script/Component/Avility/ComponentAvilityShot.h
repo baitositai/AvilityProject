@@ -27,9 +27,15 @@ public:
 	~ComponentAvilityShot() override;
 
 	/// <summary>
+	/// 生成処理
+	/// </summary>
+	void Create() override;
+
+	/// <summary>
 	/// 初期化
 	/// </summary>
 	void Init() override;
+
 
 	/// <summary>
 	/// 更新処理

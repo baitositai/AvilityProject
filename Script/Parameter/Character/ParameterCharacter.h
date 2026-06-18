@@ -33,7 +33,7 @@ public:
     int jumpCountMax_;
 
     // –hŒä—¦
-    float damageRate_;
+    float defenseRate_;
 
     // Å‘å–³“GŠÔ
     float invincibleTimeMax_;

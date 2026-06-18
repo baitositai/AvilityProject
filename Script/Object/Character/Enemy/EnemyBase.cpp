@@ -87,7 +87,7 @@ void EnemyBase::DropItem()
 void EnemyBase::Damage(const int damage)
 {	
 	// 体力を減らす（ダメージ率だけダメージ量を変える）
-	parameterEnemy_->hp_ -= damage * (1 + parameterEnemy_->damageRate_);
+	parameterEnemy_->hp_ -= damage * (1 + parameterEnemy_->defenseRate_);
 
 	// ダメージを受けている場合はダメージ描画用のステップを設定
 	damageDrawStep_ = DAMAGE_DRAW_STEP_MAX;	

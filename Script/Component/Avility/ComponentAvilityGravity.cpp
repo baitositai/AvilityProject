@@ -16,6 +16,12 @@ ComponentAvilityGravity::~ComponentAvilityGravity()
 
 }
 
+void ComponentAvilityGravity::Create()
+{
+	ComponentAvilityBase::Create();
+	Init();
+}
+
 void ComponentAvilityGravity::Init()
 {
 	coolTime_ = 0.0f;
@@ -42,6 +48,8 @@ void ComponentAvilityGravity::Remove()
 		parameter_.gravityDir_ = ParameterActor::DIR::DOWN;
 		parameter_.isGround_ = false;
 	}
+
+	ComponentAvilityBase::Remove();
 }
 
 void ComponentAvilityGravity::ProcessGravity()

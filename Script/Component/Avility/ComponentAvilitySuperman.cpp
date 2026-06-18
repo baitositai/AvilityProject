@@ -11,16 +11,17 @@ ComponentAvilitySuperman::~ComponentAvilitySuperman()
 {	
 }
 
+void ComponentAvilitySuperman::Create()
+{
+	ComponentAvilityBase::Create();
+	Init();
+}
+
 void ComponentAvilitySuperman::Init()
 {	
-	parameter_.attackBoostRate_ += ADD_ATTACK_POWER_BOOST_RATE;
-	parameter_.moveSpeedBoostRate_ += ADD_MOVE_SPEED_BOOST_RATE;
-	parameter_.jumpPowMax_ += ADD_JUMP_POWER_MAX;
 }
 
 void ComponentAvilitySuperman::Remove()
 {
-	parameter_.attackBoostRate_ -= ADD_ATTACK_POWER_BOOST_RATE;
-	parameter_.moveSpeedBoostRate_ -= ADD_MOVE_SPEED_BOOST_RATE;
-	parameter_.jumpPowMax_ -= ADD_JUMP_POWER_MAX;
+	ComponentAvilityBase::Remove();
 }

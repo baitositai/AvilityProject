@@ -30,6 +30,9 @@ public:
 
 private:
 
+	// 敵にぶつかった時のダメージ
+	static constexpr int DAMAGE_HIT_ENEMY = 10;
+
 	// 所有者
 	Player& owner_;
 

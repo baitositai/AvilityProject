@@ -11,14 +11,17 @@ ComponentAvilityMetal::~ComponentAvilityMetal()
 {
 }
 
+void ComponentAvilityMetal::Create()
+{
+	ComponentAvilityBase::Create();
+	Init();
+}
+
 void ComponentAvilityMetal::Init()
 {
-	parameter_.damageRate_ -= ADD_DAMAGE_RATE;
-	parameter_.gravityBoostRate_ += GRAVITY_BOOST_RATE;
 }
 
 void ComponentAvilityMetal::Remove()
 {
-	parameter_.damageRate_ += ADD_DAMAGE_RATE;
-	parameter_.gravityBoostRate_ -= GRAVITY_BOOST_RATE;
+	ComponentAvilityBase::Remove();
 }

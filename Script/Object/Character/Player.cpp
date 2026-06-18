@@ -175,6 +175,12 @@ void Player::Ready()
 		component->SetActive(true);
 	}
 
+	// 全アビリティを初期化
+	for (auto& avility : avilityComponents_)
+	{
+		avility->Init();
+	}
+
 	// 全アビリティを有効にする
 	SetAllAvilityComponentActive(true);
 }

@@ -12,6 +12,15 @@ ComponentAvilityAirwalk::~ComponentAvilityAirwalk()
 {
 }
 
+void ComponentAvilityAirwalk::Create()
+{
+	ComponentAvilityBase::Create();
+}
+
+void ComponentAvilityAirwalk::Init()
+{
+}
+
 void ComponentAvilityAirwalk::Update()
 {
 	if (parameter_.jumpCount_ < 1)

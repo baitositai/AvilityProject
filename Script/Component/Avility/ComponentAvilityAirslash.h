@@ -17,6 +17,11 @@ public:
 	~ComponentAvilityAirslash();
 
 	/// <summary>
+	/// ¶¬ˆ—
+	/// </summary>
+	void Create() override;
+
+	/// <summary>
 	/// ‰Šú‰»
 	/// </summary>
 	void Init() override;

@@ -44,6 +44,12 @@ ComponentAvilityShot::~ComponentAvilityShot()
 	}
 }
 
+void ComponentAvilityShot::Create()
+{
+	ComponentAvilityBase::Create();
+	Init();
+}
+
 void ComponentAvilityShot::Init()
 {
 	// コライダーの登録

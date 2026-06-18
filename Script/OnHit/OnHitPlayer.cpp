@@ -61,8 +61,17 @@ void OnHitPlayer::OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider
 
 void OnHitPlayer::OnHitEnemy(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
-    // 共通処理
-	OnHitAttack(opponentCollider);
+    // 衝突者が無敵のときは無視
+    if (owner_.IsInvincible())
+    {
+        return;
+    }
+
+    // ノックバック処理
+    KnockBack(opponentCollider, KNOCK_BACK_FORCE);
+
+    // ダメージ処理
+    Damage(opponentCollider, DAMAGE_HIT_ENEMY);
 }
 
 void OnHitPlayer::OnHitItemAvility(const std::weak_ptr<ColliderBase>& opponentCollider)

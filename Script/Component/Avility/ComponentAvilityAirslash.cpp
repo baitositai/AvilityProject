@@ -17,10 +17,16 @@ ComponentAvilityAirslash::~ComponentAvilityAirslash()
 {
 }
 
+void ComponentAvilityAirslash::Create()
+{	
+	ComponentAvilityBase::Create();
+
+	Init();
+}
+
 void ComponentAvilityAirslash::Init()
 {	
 	preJumpCount_ = parameter_.jumpCount_;
-	parameter_.attackPower_ += ADD_ATTACK_POWER;
 }
 
 void ComponentAvilityAirslash::Update()
@@ -40,7 +46,7 @@ void ComponentAvilityAirslash::Update()
 
 void ComponentAvilityAirslash::Remove()
 {
-	parameter_.attackPower_ -= ADD_ATTACK_POWER;
+	ComponentAvilityBase::Remove();
 }
 
 void ComponentAvilityAirslash::CreateAirslash()

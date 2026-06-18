@@ -24,6 +24,12 @@ ComponentAvilityTeleport::~ComponentAvilityTeleport()
 {
 }
 
+void ComponentAvilityTeleport::Create()
+{
+	ComponentAvilityBase::Create();
+	Init();
+}
+
 void ComponentAvilityTeleport::Init()
 {
 }
@@ -35,7 +41,8 @@ void ComponentAvilityTeleport::Update()
 
 void ComponentAvilityTeleport::Remove()
 {
-
+	ComponentAvilityBase::Remove();
+	Init();
 }
 
 void ComponentAvilityTeleport::UpdateInput()
