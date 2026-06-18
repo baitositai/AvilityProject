@@ -97,7 +97,7 @@ void CharacterBase::DebugDraw()
 		parameterCharacter_->drawPos_.y - parameterCharacter_->hitSize_.y / 2 -20,
 		UtilityCommon::RED,
 		L"AT:%d",
-		parameterCharacter_->attackPower_);
+		GetAttackPowerWithBoost());
 
 	DrawFormatString(
 		parameterCharacter_->drawPos_.x - parameterCharacter_->hitSize_.x / 2,

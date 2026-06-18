@@ -1,6 +1,7 @@
 #pragma once
 #include "SceneBase.h"
 #include "../Common/Image.h"
+#include "../Common/CharacterString.h"
 
 class SceneResult : public SceneBase
 {
@@ -22,6 +23,10 @@ public:
 	void Init() override;
 
 private:
+
+	int font_;
+
+	CharacterString scoreText_;
 
 	// îwåi
 	Image backGround_;

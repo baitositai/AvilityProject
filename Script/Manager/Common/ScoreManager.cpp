@@ -1,16 +1,5 @@
 #include "ScoreManager.h"
 
-void ScoreManager::Init()
-{
-	// 通常のスコアを設定
-	score_ = DEFAULT_SCORE;
-}
-
-void ScoreManager::SetEndState(const END_STATE state)
-{
-	state_ = state;
-}
-
 void ScoreManager::AddScore(const int score)
 {
 	// スコアを追加
@@ -23,8 +12,19 @@ void ScoreManager::AddScore(const int score)
 	}
 }
 
+void ScoreManager::AddTotalScore()
+{
+	totalScore_ += score_;
+}
+
+void ScoreManager::Clear()
+{
+	totalScore_ = 0;
+	score_ = 0;
+}
+
 ScoreManager::ScoreManager()
 {
-	state_ = END_STATE::MAX;
+	totalScore_ = 0;
 	score_ = 0;
 }

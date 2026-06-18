@@ -5,6 +5,7 @@
 #include "../Manager/Common/InputManager.h"
 #include "../Manager/Common/SoundManager.h"
 #include "../Manager/Common/SpriteEffectManager.h"
+#include "../Manager/Common/ScoreManager.h"
 #include "../Manager/Game/GameManager.h"
 #include "../Manager/Game/PlayerManager.h"
 #include "../Manager/Game/GimmickManager.h"
@@ -67,6 +68,7 @@ void SceneBoss::NormalUpdate()
 	{
 		sndMng_.StopBgm(SoundType::BGM::GAME2);
 		scnMng_.ChangeScene(SceneManager::SCENE_ID::RESULT);
+		scoreManager_.AddScore(playerMng_.GetTotalLootTreasuresMoney());
 		return;
 	}
 

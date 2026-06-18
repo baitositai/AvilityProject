@@ -9,37 +9,16 @@ class ScoreManager : public Singleton<ScoreManager>
 public:
 
 	/// <summary>
-	/// 終了状態
-	/// </summary>
-	enum class END_STATE
-	{
-		CLEAR,	// クリア
-		DEAD,	// 死亡
-		MAX
-	};
-
-	/// <summary>
-	/// 初期化処理
-	/// </summary>
-	void Init();
-
-	/// <summary>
-	/// ゲームの終了状態を設定
-	/// </summary>
-	/// <returns></returns>
-	const END_STATE GetEndState() const { return state_; }
-
-	/// <summary>
 	/// スコアを返す
 	/// </summary>
 	/// <returns>スコア</returns>
 	const int GetScore() const { return score_; }
 
 	/// <summary>
-	/// 終了状態の設定
+	/// 合計スコアを返す
 	/// </summary>
-	/// <param name="state">終了状態</param>
-	void SetEndState(const END_STATE state);
+	/// <returns></returns>
+	const int GetTotalScore() const { return totalScore_; }
 
 	/// <summary>
 	/// スコアの追加
@@ -48,20 +27,27 @@ public:
 	void AddScore(const int score);
 
 	/// <summary>
+	/// 合計スコアに追加
+	/// </summary>
+	void AddTotalScore();
+
+	/// <summary>
 	/// スコアを0にする
 	/// </summary>
 	void DeadScore() { score_ = 0; }
 
+	/// <summary>
+	/// クリア処理
+	/// </summary>
+	void Clear();
+
 private:
-
-	// 通常スコア
-	static constexpr int DEFAULT_SCORE = 10000;
-
-	// 終了状態
-	END_STATE state_;
 
 	// ゲームスコア
 	int score_;
+
+	// 合計スコア
+	int totalScore_;
 
 	// コンストラクタ
 	ScoreManager();

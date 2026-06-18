@@ -7,6 +7,7 @@ class ResourceManager;
 class SoundManager;
 class InputManager;
 class FontManager;
+class ScoreManager;
 class Loading;
 
 class PlayerManager;
@@ -65,6 +66,7 @@ protected:
 	SoundManager& sndMng_;
 	SceneManager& scnMng_;
 	FontManager& fontMng_;
+	ScoreManager& scoreManager_;
 	Loading& loading_;
 
 	// オブジェクト管理

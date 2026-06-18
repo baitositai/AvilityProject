@@ -123,13 +123,13 @@
       "giant": {
         "attackBoostRate": 0.5,
         "moveSpeedBoostRate": 0,
-        "gravityBoostRate": 0.15,
+        "gravityBoostRate": 0.05,
         "defenceRate": 0.5
       },
       "metal": {
         "attackBoostRate": 0,
         "moveSpeedBoostRate": -0.5,
-        "gravityBoostRate": 0.5,
+        "gravityBoostRate": 0.2,
         "defenceRate": 1.0
       },
       "airwalk": {

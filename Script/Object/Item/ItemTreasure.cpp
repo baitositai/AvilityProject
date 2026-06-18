@@ -34,6 +34,12 @@ void ItemTreasure::Init()
 
 	// 基底クラスの処理
 	ActorBase::Init();
+
+	// 持ち越ししている場合
+	if (isCarryOver_)
+	{
+		collider_->SetIsActive(false);
+	}
 }
 
 void ItemTreasure::Update()
@@ -138,7 +144,7 @@ void ItemTreasure::FollowRemove()
 	SetComponentActive("gravity", true);
 	SetComponentActive("move", true);
 
-	// コライダー無効
+	// コライダー有効
 	collider_->SetIsActive(true);
 
 	// 持ち越し解除

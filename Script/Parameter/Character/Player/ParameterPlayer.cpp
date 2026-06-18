@@ -36,10 +36,10 @@ void ParameterPlayer::SetAvilityBoost(const AvilityTypes::TYPE type)
     const AvilityBoostStatus& status = avilityBoostStatusMap_.at(type);
 
     // ê›íË
-    attackBoostRate_ + status.attackBoostRate;
-    moveSpeedBoostRate_ + status.attackBoostRate;
-    gravityBoostRate_ + status.attackBoostRate;
-    gravityBoostRate_ + status.attackBoostRate;
+    attackBoostRate_ += status.attackBoostRate;
+    moveSpeedBoostRate_ += status.moveSpeedBoostRate;
+    gravityBoostRate_ += status.gravityBoostRate;
+    defenseRate_ += status.defenceRate;
 }
 
 void ParameterPlayer::RemoveAvilityBoost(const AvilityTypes::TYPE type)
@@ -48,9 +48,9 @@ void ParameterPlayer::RemoveAvilityBoost(const AvilityTypes::TYPE type)
 
     // âèú
     attackBoostRate_ -= status.attackBoostRate;
-    moveSpeedBoostRate_ -= status.attackBoostRate;
-    gravityBoostRate_ -= status.attackBoostRate;
-    gravityBoostRate_ -= status.attackBoostRate;
+    moveSpeedBoostRate_ -= status.moveSpeedBoostRate;
+    gravityBoostRate_ -= status.gravityBoostRate;
+    defenseRate_ -= status.defenceRate;
 }
 
 void ParameterPlayer::LoadAvilityBoostParameter(const Json& parameter)

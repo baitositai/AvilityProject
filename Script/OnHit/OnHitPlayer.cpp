@@ -108,6 +108,7 @@ void OnHitPlayer::OnHitItemFood(const std::weak_ptr<ColliderBase>& opponentColli
 
 void OnHitPlayer::OnHitItemTreasure(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
+    owner_.GetParameter().isHitItem_ = true;
 }
 
 void OnHitPlayer::OnHitDoor(const std::weak_ptr<ColliderBase>& opponentCollider)

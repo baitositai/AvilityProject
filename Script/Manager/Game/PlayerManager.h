@@ -93,6 +93,12 @@ public:
 	/// <returns>プレイヤー人数</returns>
 	const int GetPlayerNum() const;
 
+	/// <summary>
+	/// 盗んだお宝の合計金額を返す
+	/// </summary>
+	/// <returns>合計金額</returns>
+	const int GetTotalLootTreasuresMoney() const;
+
 private:
 
 	int font_;

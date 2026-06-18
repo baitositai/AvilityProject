@@ -215,7 +215,7 @@ void Player::AttackAfter()
 void Player::Heal(const int healHp)
 {
 	// HP‚ÌÝ’è
-	parameterPlayer_->hp_ = healHp;
+	parameterPlayer_->hp_ += healHp;
 
 	// Å‘åHP‚ð’´‚¦‚Ä‚¢‚½ê‡
 	if (parameterPlayer_->hpMax_ < parameterPlayer_->hp_)
@@ -289,7 +289,7 @@ void Player::SetAvilityComponent(std::unique_ptr<ComponentAvilityBase> component
 	}
 
 	// Ši”[
-	component->Init();
+	component->Create();
 	avilityComponents_.push_back(std::move(component));
 }
 
@@ -367,6 +367,20 @@ const Vector2F Player::GetHeadLocalPos(const int index) const
 	}
 
 	return loaclPos;
+}
+
+const int Player::GetTotalLootTreasuresMoney() const
+{
+	if (parameterPlayer_->treasureList_.empty())
+	{
+		return 0;
+	}
+	int total = 0;
+	for (const auto& treasure : parameterPlayer_->treasureList_)
+	{
+		total += treasure.amount;
+	}
+	return total;
 }
 
 void Player::UpdateComponentAvility()

@@ -221,12 +221,19 @@ void PlayerManager::LeavePlayer()
 	}
 }
 
+const int PlayerManager::GetTotalLootTreasuresMoney() const
+{
+	int total = 0;
+	for (const auto& player : playerList_)
+	{
+		total += player->GetTotalLootTreasuresMoney();
+	}
+	return total;
+}
+
 PlayerManager::PlayerManager()
 {	
 	playersLeft_ = -1;	
-	
-	// フォント
-	font_ = FontManager::GetInstance().CreateMyFont(L"ベストテンDOT", 48, 3);
 
 	
 	// 初回のみ外部データを読み込んでテンプレートを作成

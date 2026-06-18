@@ -4,7 +4,9 @@
 #include "../Manager/Common/Camera.h"
 #include "../Manager/Common/InputManager.h"
 #include "../Manager/Common/SoundManager.h"
+#include "../Manager/Common/FontManager.h"
 #include "../Manager/Common/SpriteEffectManager.h"
+#include "../Manager/Common/ScoreManager.h"
 #include "../Manager/Game/GameManager.h"
 #include "../Manager/Game/PlayerManager.h"
 #include "../Manager/Game/CollisionManager.h"
@@ -54,6 +56,8 @@ void SceneGame::Init()
 	// イベントの生成
 	eventManager.Create(stageMng_.GetEventTriggerPositions());
 
+	itemMng_.CreateTreasureItem(ItemTypes::TREASURE_TYPE::STUFFED_TOY, stageMng_.GetBossDoorPos());
+
 	// 基底クラスの処理
 	SceneBase::Init();	
 
@@ -72,6 +76,9 @@ void SceneGame::Init()
 
 	// サウンド再生
 	sndMng_.PlayBgm(SoundType::BGM::GAME1);
+
+	// フォント
+	font_ = fontMng_.CreateMyFont(L"ベストテンDOT", 48, 3);
 }
 
 void SceneGame::NormalUpdate()
@@ -187,4 +194,7 @@ void SceneGame::DebugDraw()
 			UtilityCommon::RED,
 			true);
 	}
+
+	DrawFormatStringToHandle(0, 0, UtilityCommon::WHITE, font_, L"YOUR LIFE  %d", playerMng_.GetPlayerLeft());
+	DrawFormatStringToHandle(0, 48, UtilityCommon::WHITE, font_, L"YOUR MONEY %d", scoreManager_.GetScore());
 }

@@ -6,6 +6,7 @@
 #include "../Manager/Common/FontManager.h"
 #include "../Manager/Common/SoundManager.h"
 #include "../Manager/Common/SpriteEffectManager.h"
+#include "../Manager/Common/ScoreManager.h"
 #include "../Manager/Game/CollisionManager.h"
 #include "../Manager/Game/PlayerManager.h"
 #include "../Manager/Game/GimmickManager.h"
@@ -31,7 +32,8 @@ SceneBase::SceneBase() :
 	itemMng_(ItemManager::GetInstance()),
 	gimmickMng_(GimmickManager::GetInstance()),
 	effectMng_(SpriteEffectManager::GetInstance()),
-	facCom_(FactoryComponent::GetInstance())
+	facCom_(FactoryComponent::GetInstance()),
+	scoreManager_(ScoreManager::GetInstance())
 {
 	//// 更新関数のセット
 	//updataFunc_ = std::bind(&SceneBase::LoadingUpdate, this);

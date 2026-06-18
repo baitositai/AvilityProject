@@ -137,6 +137,12 @@ public:
 	/// <returns>頭部位置</returns>
 	const Vector2F GetHeadLocalPos(const int index) const;
 
+	/// <summary>
+	/// 盗んだお金の総額を返す
+	/// </summary>
+	/// <returns>お金の総額</returns>
+	const int GetTotalLootTreasuresMoney() const;
+
 private:
 
 	// 持てるアビリティの上限
