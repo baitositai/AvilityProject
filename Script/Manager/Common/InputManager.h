@@ -55,6 +55,7 @@ public:
 		AVILITY_GRAVITY_DOWN,	// 重力制御:下
 
 		AVILITY_STAMP,			// スタンプ
+		AVILITY_STAMP_SUB,		// スタンプのサブ条件
 
 		AVILITY_SHOT,			// ショット使用
 		AVILITY_SHOT_SUB,		// ショットのサブ条件(使わない)

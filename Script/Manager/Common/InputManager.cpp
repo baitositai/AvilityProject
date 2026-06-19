@@ -22,7 +22,7 @@ void InputManager::Init()
 	RegisterTrigger(TYPE::PLAYER_RESPAWN, { KEY_INPUT_RETURN }, { BTN::RB_RIGHT });
 
 	// ジャンプ
-	RegisterTrigger(TYPE::PLAYER_JUMP, { KEY_INPUT_SPACE }, { BTN::RB_RIGHT });
+	RegisterTrigger(TYPE::PLAYER_JUMP, { KEY_INPUT_SPACE }, { BTN::RB_RIGHT }, STICK::MAX, MOUSE::MAX, {}, { TYPE::AVILITY_STAMP_SUB });
 
 	// ダッシュ
 	RegisterTrigger(TYPE::PLAYER_DASH, { KEY_INPUT_LSHIFT }, { BTN::RB_DOWN });
@@ -47,7 +47,8 @@ void InputManager::Init()
 	RegisterTrigger(TYPE::AVILITY_SHOT_LEFT, { KEY_INPUT_LEFT }, {}, STICK::MAX);
 	
 	// アビリティ：スタンプ
-	RegisterTrigger(TYPE::AVILITY_STAMP, { KEY_INPUT_SPACE }, { BTN::RB_RIGHT });
+	RegisterTrigger(TYPE::AVILITY_STAMP, { KEY_INPUT_SPACE }, { BTN::RB_RIGHT }, STICK::MAX, MOUSE::MAX, { TYPE::AVILITY_STAMP_SUB });
+	RegisterTrigger(TYPE::AVILITY_STAMP_SUB, { KEY_INPUT_S }, { }, STICK::L_STICK_DOWN);
 
 	// アビリティ：レーザー
 	RegisterTrigger(TYPE::AVILITY_LASER, { KEY_INPUT_E }, { BTN::RB_LEFT }, STICK::MAX, MOUSE::MAX, {}, { TYPE::AVILITY_SHOT_SUB, TYPE::AVILITY_TELEPORT_SUB });

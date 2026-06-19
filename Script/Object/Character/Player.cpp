@@ -27,18 +27,27 @@ Player::Player(std::unique_ptr<ParameterPlayer> parameter) :
 	// 攻撃用のタグの設定
 	parameterPlayer_->attackCollisionTag_ = CollisionTags::TAG::PLAYER_ATTACK_NORMAL;
 	
+	// 変数初期化
+	selectAvilityTime_ = 0.0f;
+}
+
+Player::~Player()
+{	
+}
+
+void Player::Init()
+{	
 	// コライダー
 	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::PLAYER, parameterPlayer_->pos_, parameterPlayer_->hitSize_, parameterPlayer_->angle_);
 
 	// 衝突後処理
 	onHit_ = std::make_unique<OnHitPlayer>(*this);
 
-	// 変数初期化
-	selectAvilityTime_ = 0.0f;
-}
+	// 基底クラスの処理
+	CharacterBase::Init();
 
-Player::~Player()
-{
+	// アビリティの生成処理
+	CreateAvilities();
 }
 
 void Player::Update()
@@ -83,7 +92,7 @@ void Player::DebugDraw()
 	//componentMap_["cameraRangeCheck"]->DebugDraw();
 
 	// 基底クラスのデバッグ描画
-	CharacterBase::DebugDraw();
+ 	CharacterBase::DebugDraw();
 
 	// 選ぶやつのデバッグ描画
 	componentMap_["debugCreateItemAvility"]->DebugDraw();
@@ -155,7 +164,7 @@ void Player::Ready()
 	isActive_ = true;
 
 	// コライダーを有効にする
-	collider_->SetIsActive(true);
+	if (collider_) { collider_->SetIsActive(true); }
 
 	// ジャンプ回数初期化
 	parameterPlayer_->jumpCount_ = parameterPlayer_->jumpCountMax_;
@@ -229,6 +238,8 @@ std::shared_ptr<ColliderBox> Player::CreateColliderClone()
 {
 	std::shared_ptr<ColliderBase> collider = collider_->Clone();
 	std::shared_ptr<ColliderBox> colliderBox = std::dynamic_pointer_cast<ColliderBox>(collider);
+	colliderBox->SetIsActive(false);
+	colliderBox->SetIsRegister(false);
 	return colliderBox;
 }
 
@@ -381,6 +392,24 @@ const int Player::GetTotalLootTreasuresMoney() const
 		total += treasure.amount;
 	}
 	return total;
+}
+
+void Player::CreateAvilities()
+{
+	if (avilityComponents_.empty())
+	{
+		return;
+	}
+
+	// アビリティの生成
+	for (auto& avility : avilityComponents_)
+	{
+		// 中身が有効かチェック
+		if (avility)
+		{
+			avility->Init();
+		}
+	}
 }
 
 void Player::UpdateComponentAvility()

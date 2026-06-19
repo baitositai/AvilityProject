@@ -25,6 +25,11 @@ public:
 	~Player() override;
 
 	/// <summary>
+	/// 初期化処理
+	/// </summary>
+	void Init() override;
+
+	/// <summary>
 	/// 更新処理
 	/// </summary>
 	void Update() override;
@@ -174,6 +179,9 @@ private:
 
 	// 選択用で保持する予備
 	std::unique_ptr<ComponentAvilityBase> spareAvilityComponent_;
+
+	// アビリティの生成
+	void CreateAvilities();
 
 	// アビリティ更新処理
 	void UpdateComponentAvility();

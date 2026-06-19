@@ -52,22 +52,18 @@ void CollisionManager::Update()
 				continue;
 			}
 
-			auto& collider = colliders_[i];
-			auto& collider2 = colliders_[j];
+		/*	auto& collider = colliders_[i];
+			auto& collider2 = colliders_[j];*/
 
 			// 各コライダーからタグを取得
 			const auto& tag1 = colliders_[i]->GetTag();
 			const auto& tag2 = colliders_[j]->GetTag();
 			
-			if(tag1 == CollisionTags::TAG::TARGET && tag2 == CollisionTags::TAG::PLAYER_ATTACK_NORMAL ||
-				tag1 == CollisionTags::TAG::PLAYER_ATTACK_NORMAL && tag2 == CollisionTags::TAG::TARGET)
-			{
-				int a = 0;
-			}
-
-			//// 各コライダーからタグを取得
-			//const auto& tag1 = colliders_[i]->GetTag();
-			//const auto& tag2 = colliders_[j]->GetTag();
+			//if(tag1 == CollisionTags::TAG::TARGET && tag2 == CollisionTags::TAG::PLAYER_ATTACK_NORMAL ||
+			//	tag1 == CollisionTags::TAG::PLAYER_ATTACK_NORMAL && tag2 == CollisionTags::TAG::TARGET)
+			//{
+			//	int a = 0;
+			//}
 
 			// 衝突判定が不要な組み合わせの場合
 			if (!collTagMatrix_[static_cast<int>(tag1)][static_cast<int>(tag2)])
@@ -110,15 +106,15 @@ void CollisionManager::Update()
 
 void CollisionManager::Add(std::shared_ptr<ColliderBase> collider)
 {
-	// 中身が空の場合
-	if (collider == nullptr)
+	// 中身が空ではなく非登録済みの場合
+	if (collider != nullptr && !collider->IsRegister())
 	{
-		// 追加しない
-		return;
-	}
+		// 登録
+		collider->SetIsRegister(true);
 
-	// コライダーの追加
-	colliders_.push_back(collider);
+		// コライダーの追加
+		colliders_.push_back(collider);
+	}
 }
 
 ColliderArray::Result CollisionManager::IsHitStage(const Vector2& checkPos)

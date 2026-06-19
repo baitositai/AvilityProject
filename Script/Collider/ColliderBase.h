@@ -61,6 +61,12 @@ public:
 	const bool IsSkip() const;
 
 	/// <summary>
+	/// “o˜^Ï‚İ‚©•Ô‚·
+	/// </summary>
+	/// <returns>true‚Ìê‡“o˜^Ï‚İ</returns>
+	const bool IsRegister() const { return isRegister_; }
+
+	/// <summary>
 	/// íœİ’è
 	/// </summary>
 	void Delete();
@@ -70,6 +76,12 @@ public:
 	/// </summary>
 	/// <param name="isActive">Šˆ“®”»’è</param>
 	void SetIsActive(const bool isActive) { isActive_ = isActive; }
+
+	/// <summary>
+	/// “o˜^”»’è‚ğİ’è
+	/// </summary>
+	/// <param name="isRegister">“o˜^”»’è</param>
+	void SetIsRegister(const bool isRegister) { isRegister_ = isRegister; }
 
 	/// <summary>
 	/// ©g‚ÌƒRƒ‰ƒCƒ_[í—Ş‚ğ•Ô‚·
@@ -154,4 +166,7 @@ protected:
 
 	// Šˆ“®”»’è
 	bool isActive_;
+
+	// “o˜^”»’è
+	bool isRegister_;
 };
