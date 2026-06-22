@@ -24,8 +24,7 @@ public:
 
 private:
 
-	int font_;
-
+	// スコアテキスト
 	CharacterString scoreText_;
 
 	// 背景
