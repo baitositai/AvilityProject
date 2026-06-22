@@ -1,5 +1,5 @@
 #include "../../Collider/ColliderBox.h"
-#include "../../OnHit/OnHitEffect.h"
+#include "../../OnHit/OnHitEffectTeleport.h"
 #include "EffectTeleportExit.h"
 
 EffectTeleportExit::EffectTeleportExit(std::unique_ptr<ParameterEffectTeleportExit> parameter) :
@@ -10,7 +10,7 @@ EffectTeleportExit::EffectTeleportExit(std::unique_ptr<ParameterEffectTeleportEx
 	assert(parameterEffectTeleportExit_ != nullptr);
 
 	// 衝突後処理
-	//onHit_ = std::make_unique<OnHitEffect>(*this);
+	onHit_ = std::make_unique<OnHitEffectTeleport>(*this);
 	
 	// コライダー
 	collider_ = std::make_unique<ColliderBox>(*this, CollisionTags::TAG::TELEPORT_EXIT,parameterEffectTeleportExit_->pos_, parameterEffectTeleportExit_->hitSize_, parameterEffectTeleportExit_->angle_);

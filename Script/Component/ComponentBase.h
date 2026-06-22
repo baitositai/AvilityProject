@@ -18,6 +18,11 @@ public:
 	virtual ~ComponentBase();
 
 	/// <summary>
+	/// ¶¬ˆ—
+	/// </summary>
+	virtual void Create();
+
+	/// <summary>
 	/// ‰Šú‰»
 	/// </summary>
 	virtual void Init();

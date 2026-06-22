@@ -4,8 +4,9 @@
 #include "../../Manager/Common/InputManager.h"
 #include "../../Manager/Common/SceneManager.h"
 #include "../../Manager/Common/SoundManager.h"
-#include "../../Manager/Game/CollisionManager.h"
 #include "../../Manager/Common/Camera.h"
+#include "../../Manager/Game/CollisionManager.h"
+#include "../../Manager/Game/UiManager.h"
 #include "../OnHit/OnHitBase.h"
 #include "../Collider/ColliderBase.h"
 #include "../Parameter/ParameterActor.h"
@@ -18,7 +19,8 @@ ActorBase::ActorBase(std::unique_ptr<ParameterActor> parameter) :
 	sndMng_(SoundManager::GetInstance()),
 	resMng_(ResourceManager::GetInstance()),
 	collMng_(CollisionManager::GetInstance()),
-	facCom_(FactoryComponent::GetInstance())
+	facCom_(FactoryComponent::GetInstance()),
+	uiMng_(UiManager::GetInstance())
 {
 	if (!parameter_) { parameter_ = std::make_unique<ParameterActor>(); }	// 必ず実態を持つ
 	isActive_ = true;
@@ -38,6 +40,9 @@ void ActorBase::Init()
 
 	// リソースの初期化
 	InitResource();
+
+	// UIの初期化
+	InitUi();
 	
 	// コンポーネント生成
 	CreateComponents();
@@ -124,6 +129,10 @@ void ActorBase::InitResource()
 
 	// リソース取得
 	parameter_->spriteTexture_ = resMng_.GetHandles(parameter_->resourceKey_);
+}
+
+void ActorBase::InitUi()
+{
 }
 
 void ActorBase::Delete()

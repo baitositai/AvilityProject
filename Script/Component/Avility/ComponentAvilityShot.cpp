@@ -89,11 +89,6 @@ void ComponentAvilityShot::Init()
 	// 攻撃判定用コライダーを無効にする
 	attackCollider_->SetIsActive(false);
 
-
-
-	// 攻撃判定用コライダーを無効にする
-	attackCollider_->SetIsActive(false);
-
 	shotVec_ = {};
 	shotAngle_ = 0.0f;
 

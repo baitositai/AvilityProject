@@ -21,6 +21,6 @@ private:
 	EffectBase& owner_;
 
 	// ƒ^ƒO•ÊÕ“ËŒãˆ—
-	//void OnHitEnemy(const std::weak_ptr<ColliderBase>& opponentCollider) override;
+	void OnHitEnemy(const std::weak_ptr<ColliderBase>& opponentCollider) override;
 };
 

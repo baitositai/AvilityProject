@@ -56,13 +56,13 @@ void SceneGame::Init()
 	// イベントの生成
 	eventManager.Create(stageMng_.GetEventTriggerPositions());
 
-	itemMng_.CreateTreasureItem(ItemTypes::TREASURE_TYPE::STUFFED_TOY, stageMng_.GetBossDoorPos());
-
 	// 基底クラスの処理
 	SceneBase::Init();	
 
 	// イベント関係の初期化
-	eventManager.Init();
+	eventManager.Init();	
+	
+	itemMng_.CreateTreasureItem(ItemTypes::TREASURE_TYPE::STUFFED_TOY, stageMng_.GetBossDoorPos());
 	
 	// プレイヤーの初期位置を決定
 	playerMng_.SetFirstPositions(stageMng_.GetPlayerFirstPositions());

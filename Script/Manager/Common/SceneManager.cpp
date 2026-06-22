@@ -8,7 +8,6 @@
 #include "../../Scene/SceneResult.h"
 #include "../../Scene/SceneGameOver.h"
 #include "../../Scene/SceneBoss.h"
-#include "../../Scene/SceneGameOver.h"
 #include "../../Common/Loading.h"
 #include "../Common/ResourceManager.h"
 #include "../Common/SoundManager.h"
@@ -21,6 +20,7 @@
 #include "../Game/ItemManager.h"
 #include "../Game/StageManager.h"
 #include "../Game/GimmickManager.h"
+#include "../Game/UiManager.h"
 #include "../Factory/FactoryComponent.h"
 #include "Camera.h"
 #include "SpriteEffectManager.h"
@@ -60,6 +60,7 @@ void SceneManager::Init()
 	EnemyManager::CreateInstance();
 	CollisionManager::CreateInstance();
 	ItemManager::CreateInstance();
+	UiManager::CreateInstance();
 	FactoryComponent::CreateInstance();
 
 	// “Ç‚İ‚İ’†ˆ—ŠÇ—ƒNƒ‰ƒX¶¬

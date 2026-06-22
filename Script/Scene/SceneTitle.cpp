@@ -7,6 +7,7 @@
 #include "../Manager/Common/InputManager.h"
 #include "../Manager/Common/ResourceManager.h"
 #include "../Manager/Common/SoundManager.h"
+#include "../Manager/Common/ScoreManager.h"
 #include "../Manager/Common/FontManager.h"
 #include "../Manager/Game/PlayerManager.h"
 #include "../Utility/UtilityCommon.h"
@@ -103,6 +104,7 @@ void SceneTitle::NormalUpdate()
 		scnMng_.ChangeScene(SceneManager::SCENE_ID::TRAIN);
 		sndMng_.PlaySe(SoundType::SE::DECISION);
 		sndMng_.StopBgm(SoundType::BGM::TRAIN);
+		scoreManager_.Clear();
 		playerMng_.Create();
 		return;
 	}

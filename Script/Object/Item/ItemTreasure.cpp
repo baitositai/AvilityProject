@@ -178,4 +178,6 @@ void ItemTreasure::UpdateFollow()
 
 	// 重力バックアップ
 	preGravityDir_ = parameterItemTreasure_->gravityDir_;
+
+	collider_->SetIsActive(false);
 }

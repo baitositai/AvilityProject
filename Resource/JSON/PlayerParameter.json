@@ -97,13 +97,13 @@
     "weight": 0.9,
     "avility": {
       "shot": {
-        "attackBoostRate": 0.2,
+        "attackBoostRate": 0.5,
         "moveSpeedBoostRate": 0.1,
         "gravityBoostRate": 0,
         "defenceRate": 0
       },
       "stamp": {
-        "attackBoostRate": 0.5,
+        "attackBoostRate": 0.75,
         "moveSpeedBoostRate": 0,
         "gravityBoostRate": 0,
         "defenceRate": 0
@@ -121,7 +121,7 @@
         "defenceRate": 0
       },
       "giant": {
-        "attackBoostRate": 0.5,
+        "attackBoostRate": 0.8,
         "moveSpeedBoostRate": 0,
         "gravityBoostRate": 0.05,
         "defenceRate": 0.5

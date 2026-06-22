@@ -18,6 +18,7 @@ class SceneManager;
 class ResourceManager;
 class SoundManager;
 class CollisionManager;
+class UiManager;
 class FactoryComponent;
 
 class ActorBase
@@ -187,6 +188,7 @@ protected:
 	ResourceManager& resMng_;
 	SoundManager& sndMng_;
 	CollisionManager& collMng_;
+	UiManager& uiMng_;
 	FactoryComponent& facCom_;
 
 	// アニメーション
@@ -218,6 +220,9 @@ protected:
 
 	// リソースの初期化
 	virtual void InitResource();
+
+	// UIの初期化
+	virtual void InitUi();
 
 	// コライダーの登録
 	void RegisterCollider();	

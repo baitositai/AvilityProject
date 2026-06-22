@@ -11,6 +11,7 @@ ColliderBase::ColliderBase(ActorBase& owner, const CollisionTags::TAG tag, Vecto
 	isHit_ = false;
 	isDelete_ = false;
 	isActive_ = true;
+	isRegister_ = false;
 }
 
 ColliderBase::~ColliderBase()

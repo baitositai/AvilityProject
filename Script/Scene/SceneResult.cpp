@@ -28,6 +28,9 @@ SceneResult::~SceneResult()
 
 void SceneResult::Init()
 {
+
+	scoreManager_.AddScore(playerMng_.GetTotalLootTreasuresMoney());
+
 	backGround_.handleId = resMng_.GetHandle("gameClear");
 	backGround_.size = { Application::SCREEN_SIZE_X, Application::SCREEN_SIZE_Y };
 	// ƒtƒHƒ“ƒg

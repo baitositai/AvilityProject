@@ -17,6 +17,7 @@ class StageManager;
 class GimmickManager;
 class SpriteEffectManager;
 class CollisionManager;
+class UiManager;
 class FactoryComponent;
 
 class SceneBase
@@ -77,6 +78,7 @@ protected:
 	ItemManager& itemMng_;
 	SpriteEffectManager& effectMng_;
 	GimmickManager& gimmickMng_;
+	UiManager& uiMng_;
 	FactoryComponent& facCom_;
 
 	//XVˆ—ŠÇ—
