@@ -508,6 +508,62 @@
       "path": "Resource/Image/BackGround/GameOver.png",
       "sceneIds": [ 6 ],
       "type": "texture"
+    },
+    {
+      "key": "playerHpGage",
+      "path": "Resource/Image/Ui/PlayerHpGage.png",
+      "sceneIds": [ 2,3,4 ],
+      "type": "texture"
+    },
+    {
+      "key": "numbers",
+      "path": "Resource/Image/Ui/Numbers.png",
+      "sceneIds": [ 0 ],
+      "type": "sprite",
+      "divX": 2,
+      "divY": 2,
+      "sizeX": 128,
+      "sizeY": 128
+    },
+    {
+      "key": "playerIcons",
+      "path": "Resource/Image/Ui/PlayerIcons.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "sprite",
+      "divX": 4,
+      "divY": 1,
+      "sizeX": 100,
+      "sizeY": 66
+    },
+    {
+      "key": "gameStatusUis",
+      "path": "Resource/Image/Ui/GameStatusUis.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "sprite",
+      "divX": 1,
+      "divY": 2,
+      "sizeX": 380,
+      "sizeY": 48
+    },
+    {
+      "key": "playerStatusMessageUis",
+      "path": "Resource/Image/Ui/PlayerStatusMessageUis.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "sprite",
+      "divX": 1,
+      "divY": 2,
+      "sizeX": 83,
+      "sizeY": 20
+    },
+    {
+      "key": "playerUis",
+      "path": "Resource/Image/Ui/PlayerUis.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "sprite",
+      "divX": 1,
+      "divY": 3,
+      "sizeX": 166,
+      "sizeY": 63
     }
   ]
 }
