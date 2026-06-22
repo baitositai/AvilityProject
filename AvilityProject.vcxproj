@@ -336,6 +336,11 @@
     <ClCompile Include="Script\System\StageGenerator.cpp" />
     <ClCompile Include="Script\Object\Stage\Train.cpp" />
     <ClCompile Include="Script\Object\Stage\StageTrain.cpp" />
+    <ClCompile Include="Script\Manager\Game\UiManager.cpp" />
+    <ClCompile Include="Script\Ui\UiBase.cpp" />
+    <ClCompile Include="Script\Ui\Player\UiPlayerIcon.cpp" />
+    <ClCompile Include="Script\Ui\Player\UiPlayerHpBar.cpp" />
+    <ClCompile Include="Script\Ui\Player\UiPlayerBase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\Component\State\ComponentStateEnemyDead.h" />
@@ -590,6 +595,11 @@
     <ClInclude Include="Script\System\StageGenerator.h" />
     <ClInclude Include="Script\Object\Stage\Train.h" />
     <ClInclude Include="Script\Object\Stage\StageTrain.h" />
+    <ClInclude Include="Script\Manager\Game\UiManager.h" />
+    <ClInclude Include="Script\Ui\UiBase.h" />
+    <ClInclude Include="Script\Ui\Player\UiPlayerIcon.h" />
+    <ClInclude Include="Script\Ui\Player\UiPlayerHpBar.h" />
+    <ClInclude Include="Script\Ui\Player\UiPlayerBase.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

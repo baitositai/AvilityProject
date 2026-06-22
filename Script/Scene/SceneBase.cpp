@@ -13,6 +13,7 @@
 #include "../Manager/Game/EnemyManager.h"
 #include "../Manager/Game/ItemManager.h"
 #include "../Manager/Game/StageManager.h"
+#include "../Manager/Game/UiManager.h"
 #include "../Factory/FactoryComponent.h"
 #include "../Common/Loading.h"
 #include "../Utility/UtilityCommon.h"
@@ -33,13 +34,9 @@ SceneBase::SceneBase() :
 	gimmickMng_(GimmickManager::GetInstance()),
 	effectMng_(SpriteEffectManager::GetInstance()),
 	facCom_(FactoryComponent::GetInstance()),
+	uiMng_(UiManager::GetInstance()),
 	scoreManager_(ScoreManager::GetInstance())
 {
-	//// 更新関数のセット
-	//updataFunc_ = std::bind(&SceneBase::LoadingUpdate, this);
-
-	//// 描画関数のセット
-	//drawFunc_ = std::bind(&SceneBase::LoadingDraw, this);
 }
 
 SceneBase::~SceneBase()
@@ -64,6 +61,7 @@ void SceneBase::Init()
 	collisionMng_.Init();
 	itemMng_.Init();
 	gimmickMng_.Init();
+	uiMng_.Init();
 }
 
 void SceneBase::Update()
@@ -83,6 +81,7 @@ void SceneBase::SceneChangeReady()
 	gimmickMng_.Clear();
 	enemyMng_.Clear();
 	collisionMng_.Clear();
+	uiMng_.Clear();
 
 	// プレイヤーのパラメーター準備
 	playerMng_.Ready();
@@ -120,6 +119,7 @@ void SceneBase::NormalUpdate()
 	itemMng_.Update();
 	gimmickMng_.Update();
 	effectMng_.Update();
+	uiMng_.Update();
 	collisionMng_.Update();
 
 	// 削除処理
@@ -128,6 +128,7 @@ void SceneBase::NormalUpdate()
 	collisionMng_.Sweep();
 	effectMng_.Sweep();
 	gimmickMng_.Sweep();
+	uiMng_.Sweep();
 }
 
 void SceneBase::LoadingDraw()
@@ -144,6 +145,7 @@ void SceneBase::NormalDraw()
 	enemyMng_.Draw();
 	playerMng_.Draw();
 	effectMng_.Draw();
+	uiMng_.Draw();
 }
 
 void SceneBase::ChangeNormal()

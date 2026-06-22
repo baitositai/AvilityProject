@@ -180,6 +180,9 @@ private:
 	// 選択用で保持する予備
 	std::unique_ptr<ComponentAvilityBase> spareAvilityComponent_;
 
+	// UIの初期化
+	void InitUi() override;
+
 	// アビリティの生成
 	void CreateAvilities();
 

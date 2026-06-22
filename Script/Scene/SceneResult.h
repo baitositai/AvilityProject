@@ -24,8 +24,6 @@ public:
 
 private:
 
-	int font_;
-
 	CharacterString scoreText_;
 
 	// îwåi

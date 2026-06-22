@@ -68,7 +68,6 @@ void SceneBoss::NormalUpdate()
 	{
 		sndMng_.StopBgm(SoundType::BGM::GAME2);
 		scnMng_.ChangeScene(SceneManager::SCENE_ID::RESULT);
-		scoreManager_.AddScore(playerMng_.GetTotalLootTreasuresMoney());
 		return;
 	}
 

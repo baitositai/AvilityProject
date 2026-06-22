@@ -533,7 +533,7 @@
       "divX": 4,
       "divY": 1,
       "sizeX": 100,
-      "sizeY": 66
+      "sizeY": 65
     },
     {
       "key": "gameStatusUis",
@@ -556,14 +556,14 @@
       "sizeY": 20
     },
     {
-      "key": "playerUis",
-      "path": "Resource/Image/Ui/PlayerUis.png",
+      "key": "playerHpBars",
+      "path": "Resource/Image/Ui/PlayerHpBars.png",
       "sceneIds": [ 2, 3, 4 ],
       "type": "sprite",
       "divX": 1,
       "divY": 3,
       "sizeX": 166,
-      "sizeY": 63
+      "sizeY": 21
     }
   ]
 }

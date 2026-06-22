@@ -3,12 +3,15 @@
 #include "../../Manager/Common/Camera.h"
 #include "../../Manager/Common/InputManager.h"
 #include "../../Manager/Game/PlayerManager.h"
+#include "../../Manager/Game/UiManager.h"
 #include "../../Component/Avility/ComponentAvilityBase.h"
 #include "../../Component/Avility/AvilityTypes.h"
 #include "../../OnHit/OnHitPlayer.h"
 #include "../../Collider/ColliderBox.h"
 #include "../../Utility/UtilityCommon.h"
 #include "../../Parameter/Character/Player/ParameterPlayer.h"
+#include "../../Ui/Player/UiPlayerHpBar.h"
+#include "../../Ui/Player/UiPlayerIcon.h"
 #include "../Item/ItemTreasure.h"
 #include "../Common/Animation.h"
 #include "Player.h"
@@ -29,6 +32,7 @@ Player::Player(std::unique_ptr<ParameterPlayer> parameter) :
 	
 	// ïœêîèâä˙âª
 	selectAvilityTime_ = 0.0f;
+	leaveInputTime_ = 0.0f;
 }
 
 Player::~Player()
@@ -392,6 +396,12 @@ const int Player::GetTotalLootTreasuresMoney() const
 		total += treasure.amount;
 	}
 	return total;
+}
+
+void Player::InitUi()
+{
+	uiMng_.Add(std::move(std::make_unique<UiPlayerHpBar>(*this)));
+	uiMng_.Add(std::move(std::make_unique<UiPlayerIcon>(*this)));
 }
 
 void Player::CreateAvilities()
