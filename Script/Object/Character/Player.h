@@ -6,6 +6,7 @@
 class ParameterPlayer;
 class ComponentAvilityBase;
 class ItemTreasure;
+class UiPlayerBase;
 class PlayerManager;
 class ColliderBox;
 
@@ -148,6 +149,12 @@ public:
 	/// <returns>お金の総額</returns>
 	const int GetTotalLootTreasuresMoney() const;
 
+	/// <summary>
+	/// アビリティリソース番号を返す
+	/// </summary>
+	/// <returns>アビリティリソース番号</returns>
+	const std::vector<int>& GetAvilityItemResourceIndexs() const { return avilityItemResourceIndexs_; }
+
 private:
 
 	// 持てるアビリティの上限
@@ -165,8 +172,14 @@ private:
 	// 選択時間
 	float selectAvilityTime_;
 
+	// アビリティリソース番号を格納
+	std::vector<int> avilityItemResourceIndexs_;
+
 	// 保持しているお宝
 	std::vector<ItemTreasure*> attachedTreasures_;
+	
+	// 保持しているUI（削除用）
+	std::vector<UiPlayerBase*> uis_;
 
 	// パラメータ情報
 	ParameterPlayer* parameterPlayer_;
@@ -197,4 +210,7 @@ private:
 
 	// 更新後処理
 	void UpdateAfter();
+
+	// アビリティリソース番号の設定
+	void SetAvilityResourceIndexs();
 };

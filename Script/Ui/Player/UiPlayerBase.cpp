@@ -16,12 +16,14 @@ UiPlayerBase::~UiPlayerBase()
 
 void UiPlayerBase::Init()
 {
+	constexpr int OFFSET = 300;
+
 	// 番号取得
 	playerNum_ = static_cast<int>(owner_.GetParameter().padNo_) - 1;
 
 	// ベース位置
 	basePos_ = {
-		Application::SCREEN_SIZE_X / (PlayerManager::PLAYER_MAX + 1) * (playerNum_ + 1),
+		Application::SCREEN_SIZE_X / (PlayerManager::PLAYER_MAX + 1) + OFFSET * playerNum_,
 		Application::SCREEN_SIZE_Y - 45
 	};
 }

@@ -14,6 +14,7 @@
 #include "../Manager/Game/EnemyManager.h"
 #include "../Manager/Game/StageManager.h"
 #include "../Manager/Game/ItemManager.h"
+#include "../Manager/Game/UiManager.h"
 #include "../Manager/Game/EventManager.h"
 #include "../Factory/FactoryComponent.h"
 #include "../Utility/UtilityCommon.h"
@@ -73,6 +74,9 @@ void SceneGame::Init()
 	// カメラの移動制限を設定
 	Vector2 stageSize = stageMng_.GetStageSize();
 	mainCamera.SetCameraLimit(Vector2F{ 0.0f, 0.0f }, stageSize.ToVector2F());
+
+	// UI作成
+	uiMng_.CreateGameUi();
 
 	// サウンド再生
 	sndMng_.PlayBgm(SoundType::BGM::GAME1);
@@ -165,25 +169,14 @@ void SceneGame::DebugDraw()
 	Vector2F triggerPos = stageMng_.GetEventTriggerPositions().front();
 
 	// 描画
-	DrawFormatString(0, posY, UtilityCommon::RED, L"カメラ位置：%2f,%2f", cPosF.x, cPosF.y);
-	posY += OFFSET_Y;
-	DrawFormatString(0, posY, UtilityCommon::RED, L"プレイヤー位置：%2f,%2f", pPos.x, pPos.y);
-	posY += OFFSET_Y;
-	DrawFormatString(0, posY, UtilityCommon::RED, L"トリガー位置：%2f,%2f", triggerPos.x, triggerPos.y);
-	posY += OFFSET_Y;
-	DrawFormatString(0, posY, UtilityCommon::RED, L"テスト：%2f,%2f", triggerPos.x + cPosF.x, triggerPos.y + cPosF.y);
+	//DrawFormatString(0, posY, UtilityCommon::RED, L"カメラ位置：%2f,%2f", cPosF.x, cPosF.y);
+	//posY += OFFSET_Y;
+	//DrawFormatString(0, posY, UtilityCommon::RED, L"プレイヤー位置：%2f,%2f", pPos.x, pPos.y);
+	//posY += OFFSET_Y;
+	//DrawFormatString(0, posY, UtilityCommon::RED, L"トリガー位置：%2f,%2f", triggerPos.x, triggerPos.y);
+	//posY += OFFSET_Y;
+	//DrawFormatString(0, posY, UtilityCommon::RED, L"テスト：%2f,%2f", triggerPos.x + cPosF.x, triggerPos.y + cPosF.y);
 	Vector2 cPos = cPosF.ToVector2();
-
-	Vector2 circlePos = {
-		Application::SCREEN_HALF_X- cPos.x,
-		Application::SCREEN_SIZE_Y - 96 - cPos.y
-	};
-	DrawCircle(
-		circlePos.x,
-		circlePos.y,
-		3.0f,
-		UtilityCommon::RED,
-		true);
 
 	for (auto& pos : stageMng_.GetEventTriggerPositions())
 	{
@@ -194,7 +187,4 @@ void SceneGame::DebugDraw()
 			UtilityCommon::RED,
 			true);
 	}
-
-	DrawFormatStringToHandle(0, 0, UtilityCommon::WHITE, font_, L"YOUR LIFE  %d", playerMng_.GetPlayerLeft());
-	DrawFormatStringToHandle(0, 48, UtilityCommon::WHITE, font_, L"YOUR MONEY %d", scoreManager_.GetScore());
 }

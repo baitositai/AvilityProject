@@ -117,7 +117,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)Script/Lib/DxLib/;$(ProjectDir)Script/Lib/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard>stdcpp23</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -136,7 +136,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)Script/Lib/DxLib/;$(ProjectDir)Script/Lib/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard>stdcpp23</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Object\Gimmick\GimmickSpeechBubble.cpp" />
     <ClCompile Include="Script\Component\State\ComponentStateEnemyDead.cpp" />
     <ClCompile Include="Script\Component\State\ComponentStatePlayerDead.cpp" />
     <ClCompile Include="Script\OnHit\OnHitItemMoney.cpp" />
@@ -341,8 +342,14 @@
     <ClCompile Include="Script\Ui\Player\UiPlayerIcon.cpp" />
     <ClCompile Include="Script\Ui\Player\UiPlayerHpBar.cpp" />
     <ClCompile Include="Script\Ui\Player\UiPlayerBase.cpp" />
+    <ClCompile Include="Script\Ui\Game\UiPlayerLeft.cpp" />
+    <ClCompile Include="Script\Ui\Game\UiMoney.cpp" />
+    <ClCompile Include="Script\Ui\Game\UiGameBase.cpp" />
+    <ClCompile Include="Script\Ui\Player\UiPlayerAvilitySlot.cpp" />
+    <ClCompile Include="Script\Ui\Player\UiPlayerMessages.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Object\Gimmick\GimmickSpeechBubble.h" />
     <ClInclude Include="Script\Component\State\ComponentStateEnemyDead.h" />
     <ClInclude Include="Script\Component\State\ComponentStatePlayerDead.h" />
     <ClInclude Include="Script\OnHit\OnHitItemMoney.h" />
@@ -600,6 +607,11 @@
     <ClInclude Include="Script\Ui\Player\UiPlayerIcon.h" />
     <ClInclude Include="Script\Ui\Player\UiPlayerHpBar.h" />
     <ClInclude Include="Script\Ui\Player\UiPlayerBase.h" />
+    <ClInclude Include="Script\Ui\Game\UiPlayerLeft.h" />
+    <ClInclude Include="Script\Ui\Game\UiMoney.h" />
+    <ClInclude Include="Script\Ui\Game\UiGameBase.h" />
+    <ClInclude Include="Script\Ui\Player\UiPlayerAvilitySlot.h" />
+    <ClInclude Include="Script\Ui\Player\UiPlayerMessages.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

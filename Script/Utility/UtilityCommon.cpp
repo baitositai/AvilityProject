@@ -501,3 +501,23 @@ Vector2F UtilityCommon::ConvertLocalToWorldByGravity(const Vector2F& localVector
 
     return worldVector;
 }
+
+int UtilityCommon::GetDigitCount(const int value)
+{
+    if (value == 0)
+    {
+        return 1;
+    }
+
+    int count = 0;
+
+    int temp = std::abs(value);
+
+    while (temp > 0)
+    {
+        temp /= 10;
+        count++;
+    }
+
+    return count;
+}

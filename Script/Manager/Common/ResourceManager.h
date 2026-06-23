@@ -18,14 +18,12 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	/// <param name=""></param>
-	void Init(void);
+	void Init();
 
 	/// <summary>
 	/// リソースの完全解放
 	/// </summary>
-	/// <param name=""></param>
-	void Release(void);
+	void Release();
 
 	/// <summary>
 	/// シーン変更の処理

@@ -12,6 +12,8 @@
 #include "../../Parameter/Character/Player/ParameterPlayer.h"
 #include "../../Ui/Player/UiPlayerHpBar.h"
 #include "../../Ui/Player/UiPlayerIcon.h"
+#include "../../Ui/Player/UiPlayerAvilitySlot.h"
+#include "../../Ui/Player/UiPlayerMessages.h"
 #include "../Item/ItemTreasure.h"
 #include "../Common/Animation.h"
 #include "Player.h"
@@ -81,13 +83,22 @@ void Player::Update()
 
 void Player::Delete()
 {
+	// ÉRÉìÉ|Å[ÉlÉìÉgä÷åWÇÃçÌèúèàóù
 	for (auto& component : avilityComponents_)
 	{
 		component->Remove();
 	}
 	avilityComponents_.clear();
 
+	// äÓíÍÉNÉâÉXÇÃçÌèúèàóù
 	CharacterBase::Delete();
+
+	// ÉvÉåÉCÉÑÅ[ä÷åWÇÃUIÇÃçÌèú
+	for (auto& ui : uis_)
+	{
+		ui->Delete();
+	}
+	uis_.clear();
 }
 
 void Player::DebugDraw()
@@ -306,6 +317,7 @@ void Player::SetAvilityComponent(std::unique_ptr<ComponentAvilityBase> component
 	// äiî[
 	component->Create();
 	avilityComponents_.push_back(std::move(component));
+	SetAvilityResourceIndexs();
 }
 
 void Player::SetAvilityActive(const AvilityTypes::TYPE avilityType, const bool isActive)
@@ -400,8 +412,22 @@ const int Player::GetTotalLootTreasuresMoney() const
 
 void Player::InitUi()
 {
-	uiMng_.Add(std::move(std::make_unique<UiPlayerHpBar>(*this)));
-	uiMng_.Add(std::move(std::make_unique<UiPlayerIcon>(*this)));
+	// UIÇÃï€éùÇ∆äiî[
+	auto hpBar = std::make_unique<UiPlayerHpBar>(*this);
+	uis_.push_back(hpBar.get());
+	uiMng_.Add(std::move(hpBar));
+
+	auto icon = std::make_unique<UiPlayerIcon>(*this);
+	uis_.push_back(icon.get());
+	uiMng_.Add(std::move(icon));
+
+	auto slot = std::make_unique<UiPlayerAvilitySlot>(*this);
+	uis_.push_back(slot.get());
+	uiMng_.Add(std::move(slot));
+
+	auto messages = std::make_unique<UiPlayerMessages>(*this);
+	uis_.push_back(messages.get());
+	uiMng_.Add(std::move(messages));
 }
 
 void Player::CreateAvilities()
@@ -476,6 +502,7 @@ void Player::SelectAvility()
 		{
 			spareAvilityComponent_ = nullptr;
 			SetAvilityActive(AvilityTypes::TYPE::GRAVITYCONTROLL, true);
+			SetAvilityResourceIndexs();
 		}
 	}
 }
@@ -507,4 +534,13 @@ void Player::GameLeave()
 void Player::UpdateAfter()
 {
 	parameterPlayer_->isHitItem_ = false;
+}
+
+void Player::SetAvilityResourceIndexs()
+{
+	avilityItemResourceIndexs_.clear();
+	for (const auto& avility : avilityComponents_)
+	{
+		avilityItemResourceIndexs_.push_back(avility->GetAvilityResourceIndex());
+	}
 }

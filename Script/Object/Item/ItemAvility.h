@@ -24,6 +24,12 @@ public:
 	/// <returns>コンポーネント名前</returns>
 	const std::string GetCreateAvilityName() const;
 
+	/// <summary>
+	/// リソース指定用番号を返す
+	/// </summary>
+	/// <returns></returns>
+	const int GetAvilityItemResourceIndex() const;
+
 private:
 
 	// パラメータ
