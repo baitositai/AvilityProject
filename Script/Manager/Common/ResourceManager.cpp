@@ -34,9 +34,8 @@ static const std::unordered_map<std::string, ResourceBase::RESOURCE_TYPE> RESOUR
 	{"vertexShader", ResourceBase::RESOURCE_TYPE::VERTEX_SHADER}
 };
 
-void ResourceManager::Init(void)
+void ResourceManager::Init()
 {
-	//ローカル変数を定義
 	int divX = -1;
 	int divY = -1;
 	int sizeX = -1;
@@ -48,31 +47,24 @@ void ResourceManager::Init(void)
 	std::wstring path = L"";
 	std::string fontName = "";
 
-	//JSONファイルからリソース情報を読み込む
-	//JSONファイル読み込み
 	std::ifstream ifs((Application::PATH_JSON + "Resources.json").c_str());
-	
-	//読み込めない場合アサート
+
 	assert(ifs.is_open() && "ファイルが開けません");
-	
+
 	json j;
 	ifs >> j;
 
-	//配列を走査
 	for (auto& res : j["resources"])
 	{
-		//共通項目の情報受け取り
 		key = res["key"].get<std::string>();
 		stringType = res["type"].get<std::string>();
 		path = UtilityCommon::GetWStringFromString(res["path"].get<std::string>());
 		sceneIds = res["sceneIds"].get<std::vector<int>>();
 
-		//列挙型へ変換
 		auto it = RESOURCE_TYPE_MAP.find(stringType);
 		assert(it != RESOURCE_TYPE_MAP.end() && "登録されてない種類です");
 		ResourceBase::RESOURCE_TYPE type = it->second;
-		
-		//情報の格納
+
 		std::unique_ptr<ResourceBase> resource;
 		switch (type)
 		{
@@ -88,7 +80,7 @@ void ResourceManager::Init(void)
 			divX = res["divX"].get<int>();
 			divY = res["divY"].get<int>();
 			sizeX = res["sizeX"].get<int>();
-			sizeY= res["sizeY"].get<int>();
+			sizeY = res["sizeY"].get<int>();
 			resource = make_unique<ResourceSprite>(type, path, sceneIds, divX, divY, sizeX, sizeY);
 			break;
 
@@ -118,28 +110,23 @@ void ResourceManager::Init(void)
 			break;
 		}
 
-		//マップに格納
 		resourcesMap_.emplace(key, std::move(resource));
 	}
 
-	// 全シーン共通のリソースを読み込む
 	for (auto& p : resourcesMap_)
 	{
 		const auto& ids = p.second->GetSceneIds();
 
-		// 共通リソースが含まれているか判定
-		if (std::ranges::contains(ids, 0))
+		if (std::ranges::find(ids, 0) != ids.end())
 		{
-			// 読み込み処理
 			p.second->Load();
 
-			// コピーコンストラクタ
 			loadedMap_.emplace(p.first, p.second.get());
 		}
 	}
 }
 
-void ResourceManager::Release(void)
+void ResourceManager::Release()
 {
 	for (auto& p : loadedMap_)
 	{
@@ -152,30 +139,26 @@ void ResourceManager::Release(void)
 
 void ResourceManager::SceneChangeResource(const int nextSceneId)
 {
-	// 現在読み込んだリソースを解放
 	for (auto it = loadedMap_.begin(); it != loadedMap_.end(); )
 	{
 		const auto& ids = it->second->GetSceneIds();
 
-		// 共通リソースが含まれているか判定
-		if (!std::ranges::contains(ids, 0))
+		if (std::ranges::find(ids, 0) == ids.end())
 		{
 			it->second->Release();
-			it = loadedMap_.erase(it); // eraseして次へ
+			it = loadedMap_.erase(it);
 		}
 		else
 		{
-			++it; // 共通リソースは残す
+			++it;
 		}
 	}
 
-	// 次のシーンのリソースを読み込む
 	for (auto& p : resourcesMap_)
 	{
 		const auto& ids = p.second->GetSceneIds();
 
-		// 指定したシーンのリソースだけロード
-		if (std::ranges::contains(ids, nextSceneId))
+		if (std::ranges::find(ids, nextSceneId) != ids.end())
 		{
 			p.second->Load();
 			loadedMap_.emplace(p.first, p.second.get());

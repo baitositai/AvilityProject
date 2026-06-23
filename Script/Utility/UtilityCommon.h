@@ -182,4 +182,10 @@ public:
 	/// <returns>変換したベクトル</returns>
 	static Vector2F ConvertLocalToWorldByGravity(const Vector2F& localVector, const ParameterActor::DIR gravityDir);
 
+	/// <summary>
+	/// 桁数を返す
+	/// </summary>
+	/// <param name="value">値</param>
+	/// <returns><桁数/returns>
+	static int GetDigitCount(const int value);
 };

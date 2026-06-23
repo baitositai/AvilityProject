@@ -46,6 +46,18 @@ public:
 	/// <returns>種類</returns>
 	const AvilityTypes::TYPE GetType() const { return type_; }
 
+	/// <summary>
+	/// リソース用アビリティ番号を設定
+	/// </summary>
+	/// <param name="index"></param>
+	void SetAvilityResourceIndex(const int index) { avilityResourceIndex_ = index; }
+
+	/// <summary>
+	/// リソース用アビリティ番号を返す
+	/// </summary>
+	/// <returns>リソース用アビリティ番号</returns>
+	const int GetAvilityResourceIndex() const { return avilityResourceIndex_; }
+
 protected:
 
 	// 所有者
@@ -71,4 +83,7 @@ protected:
 
 	// 種類
 	AvilityTypes::TYPE type_;
+
+	// アビリティリソース番号
+	int avilityResourceIndex_;
 };

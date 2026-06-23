@@ -85,8 +85,13 @@ void OnHitPlayer::OnHitItemAvility(const std::weak_ptr<ColliderBase>& opponentCo
         // アイテムのアビリティを取得
         const auto& itemAvility = dynamic_cast<const ItemAvility*>(item);
 
+        auto componentAvility = factoryComponent_.CreateComponentAvility(itemAvility->GetCreateAvilityName(), owner_);
+
+        // リソース番号指定
+        componentAvility->SetAvilityResourceIndex(itemAvility->GetAvilityItemResourceIndex());
+        
         // アイテムの種類を獲得
-        owner_.SetAvilityComponent(std::move(factoryComponent_.CreateComponentAvility(itemAvility->GetCreateAvilityName(), owner_)));
+        owner_.SetAvilityComponent(std::move(componentAvility));
     }
 }
 

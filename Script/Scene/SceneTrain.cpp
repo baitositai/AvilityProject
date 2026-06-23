@@ -12,6 +12,7 @@
 #include "../Manager/Game/EnemyManager.h"
 #include "../Manager/Game/StageManager.h"
 #include "../Manager/Game/ItemManager.h"
+#include "../Manager/Game/UiManager.h"
 #include "../Factory/FactoryComponent.h"
 #include "../Utility/UtilityCommon.h"
 #include "ScenePause.h"
@@ -49,9 +50,8 @@ void SceneTrain::Init()
 	sndMng_.PlayBgm(SoundType::BGM::TRAIN);
 	sndMng_.PlayBgm(SoundType::BGM::TRAIN_ROOM);
 
-	itemMng_.CreateTreasureItem(ItemTypes::TREASURE_TYPE::STUFFED_TOY, Vector2F(300, 500));
-	itemMng_.CreateTreasureItem(ItemTypes::TREASURE_TYPE::CLAY_WORK, Vector2F(600, 500));
-	itemMng_.CreateTreasureItem(ItemTypes::TREASURE_TYPE::POT, Vector2F(900, 500));
+	// UIçÏê¨
+	uiMng_.CreateGameUi();
 }
 
 void SceneTrain::SceneChangeReady()

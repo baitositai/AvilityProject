@@ -13,6 +13,7 @@
 #include "../Manager/Game/EnemyManager.h"
 #include "../Manager/Game/StageManager.h"
 #include "../Manager/Game/ItemManager.h"
+#include "../Manager/Game/UiManager.h"
 #include "../Factory/FactoryComponent.h"
 #include "../Utility/UtilityCommon.h"
 #include "ScenePause.h"
@@ -57,6 +58,9 @@ void SceneBoss::Init()
 
 	// ƒTƒEƒ“ƒhÄ¶
 	sndMng_.PlayBgm(SoundType::BGM::GAME2);
+
+	// UIì¬
+	uiMng_.CreateGameUi();
 }
 
 void SceneBoss::NormalUpdate()

@@ -35,6 +35,11 @@ public:
 	void Add(std::unique_ptr<UiBase> ui);
 
 	/// <summary>
+	/// ƒQ[ƒ€‰æ–Ê—p‚ÌUI‚ğì¬
+	/// </summary>
+	void CreateGameUi();
+
+	/// <summary>
 	/// íœˆ—
 	/// </summary>
 	void Sweep();

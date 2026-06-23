@@ -19,3 +19,8 @@ const std::string ItemAvility::GetCreateAvilityName() const
 {
 	return AvilityTypes::AVILITY_NAME_MAP.at(parameterItemAvility_->type_);
 }
+
+const int ItemAvility::GetAvilityItemResourceIndex() const
+{
+	return parameterItemAvility_->spriteIndex_;
+}

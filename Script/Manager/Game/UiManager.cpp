@@ -1,4 +1,6 @@
 #include "../../Ui/UiBase.h"
+#include "../../Ui/Game/UiMoney.h"
+#include "../../Ui/Game/UiPlayerLeft.h"
 #include "UiManager.h"
 
 void UiManager::Init()
@@ -45,6 +47,12 @@ void UiManager::Add(std::unique_ptr<UiBase> ui)
 		// ’Ç‰Á
 		uiList_.push_back(std::move(ui));
 	}
+}
+
+void UiManager::CreateGameUi()
+{
+	Add(std::move(std::make_unique<UiMoney>()));
+	Add(std::move(std::make_unique<UiPlayerLeft>()));
 }
 
 void UiManager::Sweep()
