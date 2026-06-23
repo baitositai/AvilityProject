@@ -26,6 +26,7 @@ void UiPlayerAvilitySlot::Init()
 
 void UiPlayerAvilitySlot::Update()
 {
+	CheckOwnerDead();
 }
 
 void UiPlayerAvilitySlot::Draw()

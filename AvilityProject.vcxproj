@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Parameter\Gimmick\ParameterGimmickSpeechBubble.cpp" />
     <ClCompile Include="Script\Object\Gimmick\GimmickSpeechBubble.cpp" />
     <ClCompile Include="Script\Component\State\ComponentStateEnemyDead.cpp" />
     <ClCompile Include="Script\Component\State\ComponentStatePlayerDead.cpp" />
@@ -347,8 +348,11 @@
     <ClCompile Include="Script\Ui\Game\UiGameBase.cpp" />
     <ClCompile Include="Script\Ui\Player\UiPlayerAvilitySlot.cpp" />
     <ClCompile Include="Script\Ui\Player\UiPlayerMessages.cpp" />
+    <ClCompile Include="Script\Ui\SpeechBubble\UiSpeechBubbleBase.cpp" />
+    <ClCompile Include="Script\Ui\SpeechBubble\UiSpeechBubbleSelectAvility.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Parameter\Gimmick\ParameterGimmickSpeechBubble.h" />
     <ClInclude Include="Script\Object\Gimmick\GimmickSpeechBubble.h" />
     <ClInclude Include="Script\Component\State\ComponentStateEnemyDead.h" />
     <ClInclude Include="Script\Component\State\ComponentStatePlayerDead.h" />
@@ -612,6 +616,8 @@
     <ClInclude Include="Script\Ui\Game\UiGameBase.h" />
     <ClInclude Include="Script\Ui\Player\UiPlayerAvilitySlot.h" />
     <ClInclude Include="Script\Ui\Player\UiPlayerMessages.h" />
+    <ClInclude Include="Script\Ui\SpeechBubble\UiSpeechBubbleBase.h" />
+    <ClInclude Include="Script\Ui\SpeechBubble\UiSpeechBubbleSelectAvility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

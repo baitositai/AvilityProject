@@ -8,6 +8,16 @@
       "y": 240
     }
   },
+  "speechBubble": {
+    "transparent": true,
+    "scale": 1.0,
+    "scaleUpSpeed": 0.1,
+    "displayTime": 2.75,
+    "localPos": {
+      "x": 40,
+      "y": -40
+    }
+  },
   "target": {
     "resourceKey": "target",
     "transparent": true,

@@ -27,3 +27,18 @@ void UiPlayerBase::Init()
 		Application::SCREEN_SIZE_Y - 45
 	};
 }
+
+void UiPlayerBase::Update()
+{
+	CheckOwnerDead();
+}
+
+bool UiPlayerBase::CheckOwnerDead()
+{
+	if (owner_.IsDelete())
+	{
+		isDelete_ = true;
+		isActive_ = false;
+	}
+	return isDelete_;
+}

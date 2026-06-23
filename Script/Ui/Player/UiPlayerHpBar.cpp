@@ -45,6 +45,8 @@ void UiPlayerHpBar::Init()
 
 void UiPlayerHpBar::Update()
 {
+	if (CheckOwnerDead()) { return; }
+
 	// ƒpƒ‰ƒ[ƒ^æ“¾
 	auto& parameter = owner_.GetParameter();
 

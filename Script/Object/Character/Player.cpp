@@ -3,6 +3,7 @@
 #include "../../Manager/Common/Camera.h"
 #include "../../Manager/Common/InputManager.h"
 #include "../../Manager/Game/PlayerManager.h"
+#include "../../Manager/Game/GimmickManager.h"
 #include "../../Manager/Game/UiManager.h"
 #include "../../Component/Avility/ComponentAvilityBase.h"
 #include "../../Component/Avility/AvilityTypes.h"
@@ -96,7 +97,10 @@ void Player::Delete()
 	// プレイヤー関係のUIの削除
 	for (auto& ui : uis_)
 	{
-		ui->Delete();
+		if (ui)
+		{
+			ui->Delete();
+		}
 	}
 	uis_.clear();
 }
@@ -309,6 +313,9 @@ void Player::SetAvilityComponent(std::unique_ptr<ComponentAvilityBase> component
 
 		// 選択時間の設定
 		selectAvilityTime_ = AVILITY_SELECT_TIME;
+
+		// 吹き出しを出す
+		GimmickManager::GetInstance().CreateSpeechBubble(&parameterPlayer_->pos_, "sbSelectAvility", AVILITY_SELECT_TIME);
 
 		// 終了
 		return;

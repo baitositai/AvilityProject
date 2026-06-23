@@ -31,6 +31,8 @@ void UiPlayerIcon::Init()
 
 void UiPlayerIcon::Update()
 {
+	if (CheckOwnerDead()) { return; }
+
 	// プレイヤーの活動状況に応じて活動状態を変更
 	isActive_ = owner_.IsActive();
 }

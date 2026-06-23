@@ -41,6 +41,7 @@ void SceneGameOver::NormalUpdate()
 		scnMng_.ChangeScene(SceneManager::SCENE_ID::TITLE);
 		sndMng_.StopBgm(SoundType::BGM::RESULT);
 		playerMng_.AllDetachItem();
+		playerMng_.Clear();
 		itemMng_.SetAllIsCarry(false);
 		return;
 	}

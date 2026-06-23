@@ -25,9 +25,6 @@ public:
 
 private:
 
-	// フォント
-	int font_;
-
 	//ポーズ画面
 	std::shared_ptr<ScenePause> ScenePause_;
 

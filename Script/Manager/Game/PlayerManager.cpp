@@ -104,7 +104,6 @@ void PlayerManager::Ready()
 
 void PlayerManager::DebugDraw()
 {
-	DrawFormatStringToHandle(0, 0, UtilityCommon::WHITE, font_, L"YOUR LIFE %d", playersLeft_);
 	for (const auto& player : playerList_)
 	{
 		player->DebugDraw();

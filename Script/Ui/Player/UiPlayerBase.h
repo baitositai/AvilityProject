@@ -24,6 +24,11 @@ public:
 	/// </summary>
 	virtual void Init() override;
 
+	/// <summary>
+	/// 更新処理
+	/// </summary>
+	virtual void Update() override;
+
 protected:
 
 	// 所有者
@@ -34,5 +39,8 @@ protected:
 
 	// プレイヤー番号
 	int playerNum_;
+
+	// 所有者が死んだか調べる
+	bool CheckOwnerDead();
 };
 

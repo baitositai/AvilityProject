@@ -512,7 +512,7 @@
     {
       "key": "playerHpGage",
       "path": "Resource/Image/Ui/PlayerHpGage.png",
-      "sceneIds": [ 2,3,4 ],
+      "sceneIds": [ 2, 3, 4 ],
       "type": "texture"
     },
     {
@@ -564,6 +564,12 @@
       "divY": 3,
       "sizeX": 166,
       "sizeY": 21
+    },
+    {
+      "key": "sbSelectAvility",
+      "path": "Resource/Image/SpeechBubble/SB_SelectAvility.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture"
     }
   ]
 }

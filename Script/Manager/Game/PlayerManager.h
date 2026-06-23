@@ -101,8 +101,6 @@ public:
 
 private:
 
-	int font_;
-
 	// プレイヤー残機
 	int playersLeft_;
 

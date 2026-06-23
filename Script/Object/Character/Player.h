@@ -6,7 +6,6 @@
 class ParameterPlayer;
 class ComponentAvilityBase;
 class ItemTreasure;
-class UiPlayerBase;
 class PlayerManager;
 class ColliderBox;
 
@@ -177,9 +176,6 @@ private:
 
 	// 保持しているお宝
 	std::vector<ItemTreasure*> attachedTreasures_;
-	
-	// 保持しているUI（削除用）
-	std::vector<UiPlayerBase*> uis_;
 
 	// パラメータ情報
 	ParameterPlayer* parameterPlayer_;
