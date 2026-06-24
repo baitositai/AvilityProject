@@ -84,22 +84,11 @@ void EnemyBase::DropItem()
 	}
 }
 
-void EnemyBase::Damage(const int damage)
+void EnemyBase::Damage(const int damage, const Vector2& hitPos)
 {	
-	// 体力を減らす（ダメージ率だけダメージ量を変える）
-	parameterEnemy_->hp_ -= damage * (1 + parameterEnemy_->defenseRate_);
-
+	// 基底クラスの処理
+	CharacterBase::Damage(damage, hitPos);
+	
 	// ダメージを受けている場合はダメージ描画用のステップを設定
 	damageDrawStep_ = DAMAGE_DRAW_STEP_MAX;	
-
-	// 体力が0以下の場合
-	if (parameterEnemy_->hp_ <= 0)
-	{
-		// 死亡処理
-		Dead();
-		return;
-	}	
-	
-	// 攻撃関係のリセット
-	AttackReset();
 }

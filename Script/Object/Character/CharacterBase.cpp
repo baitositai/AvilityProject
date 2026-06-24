@@ -1,10 +1,12 @@
 #include <DxLib.h>
 #include "../../Manager/Common/ResourceManager.h"
+#include "../../Manager/Game/UiManager.h"
 #include "../../Factory/FactoryComponent.h"
 #include "../../Utility/UtilityCommon.h"
 #include "../../Component/ComponentBase.h"
 #include "../../Collider/ColliderBase.h"
 #include "../../Parameter/Character/ParameterCharacter.h"
+#include "../../Ui/Game/UiDamage.h"
 #include "../Common/Animation.h"
 #include "CharacterBase.h"
 
@@ -116,10 +118,14 @@ void CharacterBase::ChangeState(const STATE state)
 	componentStateMap_.at(state_)->Init();
 }
 
-void CharacterBase::Damage(const int damage)
+void CharacterBase::Damage(const int damage, const Vector2& hitPos)
 {
 	// 体力を減らす（ダメージ率だけダメージ量を変える）
-	parameterCharacter_->hp_ -= damage * (1 + parameterCharacter_->defenseRate_);
+	float newDamage =  static_cast<float>(damage) * (1.0f - parameterCharacter_->defenseRate_);
+	parameterCharacter_->hp_ -= static_cast<float>(newDamage);
+
+	// ダメージUIの作成
+	uiMng_.Add(std::move(std::make_unique<UiDamage>(newDamage, hitPos, parameterCharacter_->damageColor_)));
 
 	// 体力が0以下の場合
 	if (parameterCharacter_->hp_ <= 0)
@@ -129,20 +135,14 @@ void CharacterBase::Damage(const int damage)
 		return;
 	}
 
-	// 無敵時間の設定
-	parameterCharacter_->invincibleTime_ = parameterCharacter_->invincibleTimeMax_;
-
 	// アニメーション設定
 	animation_->Play(Animation::TYPE::DAMAGE, false);
 
 	// 次回アニメーション設定
 	animation_->SetNextAnimationType(Animation::TYPE::IDLE);
 
-	// 攻撃判定無効
-	parameterCharacter_->isAction_ = false;
-
-	// 状態遷移
-	ChangeState(STATE::ALIVE);
+	// 攻撃のリセット
+	AttackReset();
 }
 
 void CharacterBase::Dead()

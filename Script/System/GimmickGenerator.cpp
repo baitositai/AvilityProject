@@ -2,7 +2,6 @@
 #include "../Object/Gimmick/GimmickDoor.h"
 #include "../Object/Gimmick/GimmickTarget.h"
 #include "../Object/Gimmick/GimmickTreasureChest.h"
-#include "../Object/Gimmick/GimmickSpeechBubble.h"
 #include "GimmickGenerator.h"
 
 GimmickGenerator::GimmickGenerator()
@@ -18,10 +17,6 @@ GimmickGenerator::GimmickGenerator()
 	createGimmickMap_.emplace(GimmickTypes::TYPE::TREASURE_CHEST, [this]()
 		{
 			return CreateGimmickTreasureChest();
-		});
-	createGimmickMap_.emplace(GimmickTypes::TYPE::SPEECH_BUBBLE, [this]()
-		{
-			return CreateGimmickSpeechBubble();
 		});
 }
 
@@ -51,12 +46,6 @@ void GimmickGenerator::InitParameter()
 	auto parameterTreasureChest = std::make_unique<ParameterGimmickTreasureChest>();
 	parameterTreasureChest->LoadParameter(jsonTreasureChestParameter);
 	templateParameterMap_.emplace(GimmickTypes::TYPE::TREASURE_CHEST, std::move(parameterTreasureChest));
-	
-	// 吹き出し生成
-	const auto jsonSpeechBubbleParameter = jsonParameterMap.at("speechBubble").front();
-	auto parameterSpeechBubble = std::make_unique<ParameterGimmickSpeechBubble>();
-	parameterSpeechBubble->LoadParameter(jsonSpeechBubbleParameter);
-	templateParameterMap_.emplace(GimmickTypes::TYPE::SPEECH_BUBBLE, std::move(parameterSpeechBubble));
 }
 
 std::unique_ptr<GimmickBase> GimmickGenerator::Create(const GimmickTypes::TYPE type)
@@ -83,13 +72,6 @@ std::unique_ptr<GimmickTarget> GimmickGenerator::CreateTarget(const Vector2F pos
 	parameter.moveDir_ = moveDir;
 	parameter.isMove_ = moveDir.x != 0.0f || moveDir.y != 0.0f;
 	return target;
-}
-
-std::unique_ptr<GimmickSpeechBubble> GimmickGenerator::CreateSpeechBubble(const Vector2F* followPos, const std::string& resourceName, const float displayTime)
-{
-	auto speech = CreateGimmickSpeechBubble();
-	speech->Set(followPos, resourceName, displayTime);
-	return speech;
 }
 
 std::unique_ptr<GimmickDoor> GimmickGenerator::CreateGimmickDoor()
@@ -131,22 +113,4 @@ std::unique_ptr<GimmickTreasureChest> GimmickGenerator::CreateGimmickTreasureChe
 	// 生成したものを返す
 	auto parameter = std::make_unique<ParameterGimmickTreasureChest>(*parameterTreasureChest);
 	return std::make_unique<GimmickTreasureChest>(std::move(parameter));
-}
-
-std::unique_ptr<GimmickSpeechBubble> GimmickGenerator::CreateGimmickSpeechBubble()
-{
-	// 専用のパラメータにキャスト
-	auto parameterBase = templateParameterMap_.at(GimmickTypes::TYPE::SPEECH_BUBBLE).get();
-	auto parameterSpeechBubble = dynamic_cast<ParameterGimmickSpeechBubble*>(parameterBase);
-
-	// 空の場合
-	if (parameterSpeechBubble == nullptr)
-	{
-		// 空で返す
-		return nullptr;
-	}
-
-	// 生成したものを返す
-	auto parameter = std::make_unique<ParameterGimmickSpeechBubble>(*parameterSpeechBubble);
-	return std::make_unique<GimmickSpeechBubble>(std::move(parameter));
 }

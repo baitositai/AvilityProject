@@ -98,7 +98,7 @@ public:
 	/// ダメージ設定
 	/// </summary>
 	/// <param name="damage">ダメージ</param>
-	virtual void Damage(const int damage) override;
+	virtual void Damage(const int damage, const Vector2& hitPos = {}) override;
 
 	/// <summary>
 	/// 状態別コンポーネントの活動状態を設定

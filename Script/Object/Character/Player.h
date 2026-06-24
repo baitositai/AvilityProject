@@ -8,10 +8,20 @@ class ComponentAvilityBase;
 class ItemTreasure;
 class PlayerManager;
 class ColliderBox;
+class UiSpeechBubbleBase;
 
 class Player : public CharacterBase
 {
 public:
+
+	// 持てるアビリティの上限
+	static constexpr int AVILITY_MAX = 3;
+
+	// アビリティ選択時間
+	static constexpr float AVILITY_SELECT_TIME = 3.0f;
+
+	// 退出用入力時間
+	static constexpr float LEAVE_INPUT_TIME = 3.0f;
 
 	/// <summary>
 	/// コンストラクタ
@@ -53,7 +63,7 @@ public:
 	/// ダメージ処理
 	/// </summary>
 	/// <param name="damage">ダメージ</param>
-	void Damage(const int damage) override;
+	void Damage(const int damage, const Vector2& hitPos = {}) override;
 
 	/// <summary>
 	/// 準備処理
@@ -156,20 +166,8 @@ public:
 
 private:
 
-	// 持てるアビリティの上限
-	static constexpr int AVILITY_MAX = 3;	
-	
-	// アビリティ選択時間
-	static constexpr float AVILITY_SELECT_TIME = 2.5f;
-
-	// 退出用入力時間
-	static constexpr float LEAVE_INPUT_TIME = 3.0f;
-
 	// 退出用入力時間
 	float leaveInputTime_;
-
-	// 選択時間
-	float selectAvilityTime_;
 
 	// アビリティリソース番号を格納
 	std::vector<int> avilityItemResourceIndexs_;
@@ -179,6 +177,9 @@ private:
 
 	// パラメータ情報
 	ParameterPlayer* parameterPlayer_;
+
+	// 吹き出し
+	UiSpeechBubbleBase* speechBubble_;
 
 	// プレイヤー管理クラス
 	PlayerManager& playerManager_;

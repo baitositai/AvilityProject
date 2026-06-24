@@ -80,9 +80,6 @@ void SceneGame::Init()
 
 	// サウンド再生
 	sndMng_.PlayBgm(SoundType::BGM::GAME1);
-
-	// フォント
-	font_ = fontMng_.CreateMyFont(L"ベストテンDOT", 48, 3);
 }
 
 void SceneGame::NormalUpdate()
@@ -112,7 +109,7 @@ void SceneGame::NormalDraw()
 
 #ifdef _DEBUG
 	// デバッグ用の情報描画
-	DebugDraw();
+	//DebugDraw();
 #endif
 }
 

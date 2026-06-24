@@ -27,4 +27,3 @@ private:
 	virtual void OnHitEnemy(const std::weak_ptr<ColliderBase>& opponentCollider);
 
 };
-

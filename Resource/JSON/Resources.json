@@ -566,6 +566,18 @@
       "sizeY": 21
     },
     {
+      "key": "playerSelectAvilityBar",
+      "path": "Resource/Image/Ui/PlayerSelectAvilityBar.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture"
+    },
+    {
+      "key": "playerSelectAvility",
+      "path": "Resource/Image/Ui/PlayerSelectAvility.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture"
+    },
+    {
       "key": "sbSelectAvility",
       "path": "Resource/Image/SpeechBubble/SB_SelectAvility.png",
       "sceneIds": [ 2, 3, 4 ],

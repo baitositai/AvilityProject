@@ -271,17 +271,17 @@ void CollisionManager::InitColliderMatrix()
 	collisionFunctionMatrix_.resize(ColliderType::COLLIDER_TYPES, std::vector<std::function<bool(std::weak_ptr<ColliderBase>, std::weak_ptr<ColliderBase>)>>(ColliderType::COLLIDER_TYPES));
 
 	// 特定の組み合わせの関数を代入
-	collisionFunctionMatrix_[static_cast<int>(ColliderType::TYPE::ARRAY)][static_cast<int>(ColliderType::TYPE::CIRCLE)] =
-		[this](std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2) -> bool
-		{
-			return IsHitCheckArrayToCircle(collider1, collider2);
-		};
+	//collisionFunctionMatrix_[static_cast<int>(ColliderType::TYPE::ARRAY)][static_cast<int>(ColliderType::TYPE::CIRCLE)] =
+	//	[this](std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2) -> bool
+	//	{
+	//		return IsHitCheckArrayToCircle(collider1, collider2);
+	//	};
 
-	collisionFunctionMatrix_[static_cast<int>(ColliderType::TYPE::ARRAY)][static_cast<int>(ColliderType::TYPE::BOX)] =
-		[this](std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2) -> bool
-		{
-			return IsHitCheckArrayToBox(collider1, collider2);
-		};
+	//collisionFunctionMatrix_[static_cast<int>(ColliderType::TYPE::ARRAY)][static_cast<int>(ColliderType::TYPE::BOX)] =
+	//	[this](std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2) -> bool
+	//	{
+	//		return IsHitCheckArrayToBox(collider1, collider2);
+	//	};
 
 	collisionFunctionMatrix_[static_cast<int>(ColliderType::TYPE::CIRCLE)][static_cast<int>(ColliderType::TYPE::CIRCLE)] =
 		[this](std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2) -> bool
@@ -369,42 +369,6 @@ bool CollisionManager::IsHitCheckArrayToCircle(std::weak_ptr<ColliderBase> colli
 
 bool CollisionManager::IsHitCheckArrayToBox(std::weak_ptr<ColliderBase> collider1, std::weak_ptr<ColliderBase> collider2)
 {
-	std::weak_ptr<ColliderArray> colliderArray;
-	std::weak_ptr<ColliderBox> colliderBox;
-
-	// モデルコライダーの用意
-	if (collider1.lock()->GetType() == ColliderType::TYPE::ARRAY) { colliderArray = std::dynamic_pointer_cast<ColliderArray>(collider1.lock()); }
-	else if (collider2.lock()->GetType() == ColliderType::TYPE::ARRAY) { colliderArray = std::dynamic_pointer_cast<ColliderArray>(collider2.lock()); }
-
-	// カプセルコライダーの用意
-	if (collider1.lock()->GetType() == ColliderType::TYPE::BOX) { colliderBox = std::dynamic_pointer_cast<ColliderBox>(collider1.lock()); }
-	else if (collider2.lock()->GetType() == ColliderType::TYPE::BOX) { colliderBox = std::dynamic_pointer_cast<ColliderBox>(collider2.lock()); }
-
-	// 判定結果
-	ColliderArray::Result result = {};
-
-	const Vector2F top = colliderBox.lock()->GetAABBMin();
-	const Vector2F bottom = colliderBox.lock()->GetAABBMax();
-	const auto arrayOfarray = colliderArray.lock()->GetArrayOfArrys();
-	const Vector2 size = colliderArray.lock()->GetChipSize();
-	const Vector2F movedAmount = colliderBox.lock()->GetOwner().GetParameter().moveAmount_;
-	ParameterActor::DIR gravityDir = colliderBox.lock()->GetOwner().GetParameter().gravityDir_;
-
-	// 衝突判定
-	//bool isHit = UtilityCollision::IsHitArrayToBox(
-	//	arrayOfarray,
-	//	ids,
-	//	size, 
-	//	result,
-	//	top, 
-	//	bottom,
-	//	movedAmount,
-	//	gravityDir);
-
-	// 判定結果を保存
-	colliderArray.lock()->SetResult(result);
-
-	// 衝突しているか返す
 	return false;
 }
 
@@ -416,22 +380,27 @@ bool CollisionManager::IsHitCheckCircleToCircle(std::weak_ptr<ColliderBase> coll
 	// サークルコライダーの用意
 	if (collider1.lock()->GetType() == ColliderType::TYPE::CIRCLE) { colliderCircle1 = std::dynamic_pointer_cast<ColliderCircle>(collider1.lock()); }
 	if (collider2.lock()->GetType() == ColliderType::TYPE::CIRCLE) { colliderCirlce2 = std::dynamic_pointer_cast<ColliderCircle>(collider2.lock()); }
-
-	// 判定結果
-	ColliderArray::Result result = {};
 	
 	// 情報の取得
 	Vector2F center1 = colliderCircle1.lock()->GetPos();
 	const float radius1 = colliderCircle1.lock()->GetRadius();
 	Vector2F center2 = colliderCirlce2.lock()->GetPos();
 	const float radius2 = colliderCirlce2.lock()->GetRadius();
+	Vector2 hitPos = {};
 
 	// 衝突判定
 	const bool isHit = UtilityCollision::IsHitCircleToCircle(
 		center1.ToVector2(),
 		radius1,
 		center2.ToVector2(),
-		radius2);
+		radius2,
+		hitPos);
+
+	if (isHit)
+	{
+		colliderCircle1.lock()->SetHitPos(hitPos);
+		colliderCircle1.lock()->SetHitPos(hitPos);
+	}
 
 	// 衝突しているか返す
 	return isHit;
@@ -450,21 +419,27 @@ bool CollisionManager::IsHitCheckCircleToBox(std::weak_ptr<ColliderBase> collide
 	if (collider1.lock()->GetType() == ColliderType::TYPE::BOX) { colliderBox = std::dynamic_pointer_cast<ColliderBox>(collider1.lock()); }
 	else if (collider2.lock()->GetType() == ColliderType::TYPE::BOX) { colliderBox = std::dynamic_pointer_cast<ColliderBox>(collider2.lock()); }
 
-	// 判定結果
-	ColliderArray::Result result = {};
-
-	 Vector2F top = colliderBox.lock()->GetAABBMin();
-	 Vector2F bottom = colliderBox.lock()->GetAABBMax();
+	// 情報の取得
+	Vector2F top = colliderBox.lock()->GetAABBMin();
+	Vector2F bottom = colliderBox.lock()->GetAABBMax();
 	Vector2F centerF = colliderCircle.lock()->GetPos();
 	const Vector2 center = centerF.ToVector2();
 	const float radius = colliderCircle.lock()->GetRadius();
+	Vector2 hitPos = {};
 
 	// 衝突判定
 	const bool isHit = UtilityCollision::IsHitCircleToBox(
 		center,
 		radius,
 		top.ToVector2(),
-		bottom.ToVector2());
+		bottom.ToVector2(),
+		hitPos);
+
+	if (isHit)
+	{
+		colliderCircle.lock()->SetHitPos(hitPos);
+		colliderBox.lock()->SetHitPos(hitPos);
+	}
 
 	// 衝突しているか返す
 	return isHit;
@@ -494,6 +469,7 @@ bool CollisionManager::IsHitCheckCircleToFan(std::weak_ptr<ColliderBase> collide
 	const float fanRadius = colliderFan.lock()->GetRadius();
 	const float baseAngle = colliderFan.lock()->GetBaseAngle();
 	const float viewAngle = colliderFan.lock()->GetViewAngle();
+	Vector2 hitPos = {};
 
 	// 衝突判定
 	const bool isHit = UtilityCollision::IsHitCircleToFan(
@@ -502,7 +478,8 @@ bool CollisionManager::IsHitCheckCircleToFan(std::weak_ptr<ColliderBase> collide
 		fanPos.ToVector2(),
 		fanRadius,
 		baseAngle,
-		viewAngle);
+		viewAngle,
+		hitPos);
 
 	// 衝突しているか返す
 	return isHit;
@@ -533,6 +510,18 @@ bool CollisionManager::IsHitCheckBoxToBox(std::weak_ptr<ColliderBase> collider1,
 		}
 	}
 
+	// 簡易敵に衝突位置を計算
+	Vector2F hitPosF;
+	Vector2F pos1 = colliderBox1.lock()->GetOwner().GetParameter().pos_;
+	Vector2F pos2 = colliderBox2.lock()->GetOwner().GetParameter().pos_;
+	hitPosF.x = (pos1.x + pos2.x) * 0.5f;
+	hitPosF.y = (pos1.y + pos2.y) * 0.5f;
+
+	// 衝突位置格納
+	Vector2 hitPos = hitPosF.ToVector2();
+	colliderBox1.lock()->SetHitPos(hitPos);
+	colliderBox2.lock()->SetHitPos(hitPos);
+
 	return true;
 }
 
@@ -560,6 +549,7 @@ bool CollisionManager::IsHitCheckBoxToFan(std::weak_ptr<ColliderBase> collider1,
 	const float radius = colliderFan.lock()->GetRadius();
 	const float baseAngle = colliderFan.lock()->GetBaseAngle();
 	const float viewAngle = colliderFan.lock()->GetViewAngle();
+	Vector2 hitPos = {};
 
 	// 衝突判定
 	const bool isHit = UtilityCollision::IsHitBoxToFan(
@@ -568,7 +558,8 @@ bool CollisionManager::IsHitCheckBoxToFan(std::weak_ptr<ColliderBase> collider1,
 		fanPos.ToVector2(),
 		radius,
 		baseAngle,
-		viewAngle);
+		viewAngle,
+		hitPos);
 
 	// 衝突しているか返す
 	return isHit;

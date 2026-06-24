@@ -60,6 +60,11 @@
       "debugCreateItemAvility"
     ],
     "dashSpeed": 4.0,
+    "damageColor": {
+      "r": 0,
+      "g": -255,
+      "b": -255
+    },
     "defaultAttackDistance": 30.0,
     "defaultAttackRadius": 20.0,
     "defaultAttackStartFrame": 33,
@@ -112,7 +117,7 @@
         "attackBoostRate": 0.8,
         "moveSpeedBoostRate": 0,
         "gravityBoostRate": 0.05,
-        "defenceRate": 0.5
+        "defenceRate": 0.25
       },
       "gravityControll": {
         "attackBoostRate": 0.1,
@@ -124,7 +129,7 @@
         "attackBoostRate": 0,
         "moveSpeedBoostRate": -0.5,
         "gravityBoostRate": 0.2,
-        "defenceRate": 1.0
+        "defenceRate": 0.25
       },
       "shot": {
         "attackBoostRate": 0.5,

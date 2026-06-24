@@ -57,6 +57,9 @@ public:
     // ダッシュスピード
     float dashSpeed_;
 
+    // 選択時間
+    float selectAvilityTime_;
+
     // アイテムとの衝突判定
     bool isHitItem_;
 

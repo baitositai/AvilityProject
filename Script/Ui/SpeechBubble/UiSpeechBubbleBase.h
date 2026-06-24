@@ -31,6 +31,7 @@ public:
 
 protected:
 
+	// シーン管理クラス
 	SceneManager& sceneManager_;
 
 	// 追従座標
@@ -38,9 +39,6 @@ protected:
 
 	// 相対位置
 	Vector2F localPos_;
-
-	// タイマー
-	float timer_;
 
 	// 拡大速度
 	float scaleUpSpeed_;

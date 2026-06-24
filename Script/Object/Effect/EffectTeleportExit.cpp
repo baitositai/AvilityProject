@@ -9,6 +9,8 @@ EffectTeleportExit::EffectTeleportExit(std::unique_ptr<ParameterEffectTeleportEx
 	parameterEffectTeleportExit_ = dynamic_cast<ParameterEffectTeleportExit*>(GetParameterEffectPtr());
 	assert(parameterEffectTeleportExit_ != nullptr);
 
+	isAttack_ = false;
+
 	// 衝突後処理
 	onHit_ = std::make_unique<OnHitEffectTeleport>(*this);
 	
@@ -23,9 +25,10 @@ EffectTeleportExit::~EffectTeleportExit()
 void EffectTeleportExit::Update()
 {
 	// アニメーション番号が指定の番号以上になったら
-	if (animation_->GetAnimationIndex() >= 4)
+	if (animation_->GetAnimationIndex() >= 4 && !isAttack_)
 	{
 		collider_->SetIsActive(true);
+		isAttack_ = true;
 	}
 
 	// 基底クラスの処理

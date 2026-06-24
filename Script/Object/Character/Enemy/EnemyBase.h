@@ -38,7 +38,7 @@ public:
 	/// ダメージ処理
 	/// </summary>
 	/// <param name="damage"></param>
-	void Damage(const int damage) override;
+	void Damage(const int damage, const Vector2& hitPos = {}) override;
 
 	/// <summary>
 	/// パラメーターを返す(変更可)

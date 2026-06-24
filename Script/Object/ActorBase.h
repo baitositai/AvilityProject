@@ -80,7 +80,7 @@ public:
 	/// ダメージ処理
 	/// </summary>
 	/// <param name="damage"></param>
-	virtual void Damage(const int damage);
+	virtual void Damage(const int damage, const Vector2& hitPos = {});
 
 	/// <summary>
 	/// コンポーネントの追加

@@ -161,7 +161,7 @@ void ActorBase::Landing()
 	parameter_->isGround_ = true;
 }
 
-void ActorBase::Damage(const int damage)
+void ActorBase::Damage(const int damage, const Vector2& hitPos)
 {
 	parameter_->hp_ -= damage;
 	if (0 > parameter_->hp_)

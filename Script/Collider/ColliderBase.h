@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include "../Manager/Game/CollisionTags.h"
+#include "../Common/Vector2.h"
 #include "../Common/Vector2F.h"
 #include "ColliderType.h"
 
@@ -84,6 +85,12 @@ public:
 	void SetIsRegister(const bool isRegister) { isRegister_ = isRegister; }
 
 	/// <summary>
+	/// 衝突位置を格納
+	/// </summary>
+	/// <param name="hitPos">衝突位置</param>
+	void SetHitPos(const Vector2& hitPos) { hitPos_ = hitPos; }
+
+	/// <summary>
 	/// 自身のコライダー種類を返す
 	/// </summary>
 	/// <returns>種類</returns>
@@ -118,6 +125,12 @@ public:
 	/// </summary>
 	/// <returns>追従対象の座標</returns>
 	const Vector2F& GetPos() const { return followPos_; }
+
+	/// <summary>
+	/// 衝突位置を返す
+	/// </summary>
+	/// <returns>衝突位置</returns>
+	const Vector2& GetHitPos() const { return hitPos_; }
 
 	/// <summary>
 	/// 衝突相手の種類を設定
@@ -169,4 +182,7 @@ protected:
 
 	// 登録判定
 	bool isRegister_;
+
+	// 衝突位置
+	Vector2 hitPos_;
 };

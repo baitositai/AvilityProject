@@ -123,6 +123,7 @@ void SceneBase::NormalUpdate()
 	collisionMng_.Update();
 
 	// íœˆ—
+	playerMng_.Sweep();
 	enemyMng_.Sweep();
 	itemMng_.Sweep();
 	collisionMng_.Sweep();
@@ -141,11 +142,12 @@ void SceneBase::NormalDraw()
 {
 	stageMng_.Draw();
 	gimmickMng_.Draw();
+	uiMng_.Draw(UiManager::LAYER::SPEECH_BUBBLE);
 	itemMng_.Draw();
 	enemyMng_.Draw();
 	playerMng_.Draw();
 	effectMng_.Draw();
-	uiMng_.Draw();
+	uiMng_.Draw(UiManager::LAYER::UI);
 }
 
 void SceneBase::ChangeNormal()

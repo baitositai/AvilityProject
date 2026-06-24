@@ -350,6 +350,8 @@
     <ClCompile Include="Script\Ui\Player\UiPlayerMessages.cpp" />
     <ClCompile Include="Script\Ui\SpeechBubble\UiSpeechBubbleBase.cpp" />
     <ClCompile Include="Script\Ui\SpeechBubble\UiSpeechBubbleSelectAvility.cpp" />
+    <ClCompile Include="Script\Ui\Player\UiPlayerSelectAvility.cpp" />
+    <ClCompile Include="Script\Ui\Game\UiDamage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\Parameter\Gimmick\ParameterGimmickSpeechBubble.h" />
@@ -618,6 +620,8 @@
     <ClInclude Include="Script\Ui\Player\UiPlayerMessages.h" />
     <ClInclude Include="Script\Ui\SpeechBubble\UiSpeechBubbleBase.h" />
     <ClInclude Include="Script\Ui\SpeechBubble\UiSpeechBubbleSelectAvility.h" />
+    <ClInclude Include="Script\Ui\Player\UiPlayerSelectAvility.h" />
+    <ClInclude Include="Script\Ui\Game\UiDamage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -5,39 +5,46 @@
 
 void UiManager::Init()
 {
-	if (uiList_.empty())
+	if (uiMap_.empty())
 	{
 		return;
 	}
-	for (const auto& ui : uiList_)
+	for (const auto& uiList : uiMap_)
 	{
-		ui->Init();
+		for (const auto& ui : uiList.second)
+		{
+			ui->Init();
+		}
 	}
 }
 void UiManager::Update()
 {
-	if (uiList_.empty())
+	if (uiMap_.empty())
 	{
 		return;
 	}
-	for (const auto& ui : uiList_)
+	for (const auto& uiList : uiMap_)
 	{
-		ui->Update();
+		for (const auto& ui : uiList.second)
+		{
+			ui->Update();
+		}
 	}
 }
-void UiManager::Draw()
-{
-	if (uiList_.empty())
+void UiManager::Draw(const LAYER layer)
+{	
+	if (uiMap_[layer].empty())
 	{
 		return;
 	}
-	for (const auto& ui : uiList_)
+	for (const auto& ui : uiMap_[layer])
 	{
 		ui->Draw();
 	}
 }
-void UiManager::Add(std::unique_ptr<UiBase> ui)
-{
+
+void UiManager::Add(std::unique_ptr<UiBase> ui, const LAYER layer)
+{	
 	// 中身がある場合
 	if (ui)
 	{
@@ -45,7 +52,7 @@ void UiManager::Add(std::unique_ptr<UiBase> ui)
 		ui->Init();
 
 		// 追加
-		uiList_.push_back(std::move(ui));
+		uiMap_[layer].push_back(std::move(ui));
 	}
 }
 
@@ -57,28 +64,35 @@ void UiManager::CreateGameUi()
 
 void UiManager::Sweep()
 {
-	// 終了したアイテムを並び変える
-	auto it = std::remove_if(uiList_.begin(), uiList_.end(),
-		[](const std::unique_ptr<UiBase>& item)
-		{
-			return item->IsDelete();
-		});
-
-	// 終了したコライダを削除する
-	uiList_.erase(it, uiList_.end());
+	for (auto& uiList : uiMap_)
+	{
+		auto it = std::remove_if(uiList.second.begin(), uiList.second.end(),
+			[](const std::unique_ptr<UiBase>& ui)
+			{
+				if (ui == nullptr)
+				{
+					return true;
+				}
+				return ui->IsDelete();
+			});
+		uiList.second.erase(it, uiList.second.end());
+	}
 }
 
 void UiManager::Clear()
 {
-	if (uiList_.empty())
+	if (uiMap_.empty())
 	{
 		return;
 	}
-	for (const auto& ui : uiList_)
+	for (const auto& uiList : uiMap_)
 	{
-		ui->Delete();
+		for (const auto& ui : uiList.second)
+		{
+			ui->Delete();
+		}
 	}
-	uiList_.clear();
+	uiMap_.clear();
 }
 
 UiManager::UiManager()

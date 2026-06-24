@@ -64,14 +64,6 @@ public:
 	void CreateTarget(const Vector2F pos, const Vector2F& moveDir = {});
 
 	/// <summary>
-	/// 吹き出しの生成
-	/// </summary>
-	/// <param name="followPos">追従座標</param>
-	/// <param name="resourceName">リソース名</param>
-	/// <param name="displayTime">表示時間</param>
-	void CreateSpeechBubble(const Vector2F* followPos, const std::string& resourceName, const float displayTime = -1.0f);
-
-	/// <summary>
 	/// ターゲットをすべて消す
 	/// </summary>
 	void AllDeleteTarget();

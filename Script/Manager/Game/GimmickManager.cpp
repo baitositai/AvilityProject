@@ -1,7 +1,6 @@
 #include "../../Utility/UtilityLoad.h"
 #include "../../Object/Gimmick/GimmickDoor.h"
 #include "../../Object/Gimmick/GimmickTarget.h"
-#include "../../Object/Gimmick/GimmickSpeechBubble.h"
 #include "../../System/GimmickGenerator.h"
 #include "GimmickManager.h"
 
@@ -125,15 +124,6 @@ void GimmickManager::CreateTarget(const Vector2F pos, const Vector2F& moveDir)
 
 	// Ši”[
 	gimmickListMap_[GimmickTypes::TYPE::TARGET].push_back(std::move(target));
-}
-
-void GimmickManager::CreateSpeechBubble(const Vector2F* followPos, const std::string& resourceName, const float displayTime)
-{
-	// ƒ^[ƒQƒbƒg¶¬
-	auto speechBubble = gimmickGenerator_->CreateSpeechBubble(followPos, resourceName, displayTime);
-
-	// Ši”[
-	gimmickListMap_[GimmickTypes::TYPE::SPEECH_BUBBLE].push_back(std::move(speechBubble));
 }
 
 void GimmickManager::AllDeleteTarget()

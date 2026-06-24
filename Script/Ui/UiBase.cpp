@@ -45,4 +45,5 @@ void UiBase::Draw()
 void UiBase::Delete()
 {
 	isDelete_ = true;
+	isActive_ = false;
 }

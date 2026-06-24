@@ -15,6 +15,8 @@
 #include "../../Ui/Player/UiPlayerIcon.h"
 #include "../../Ui/Player/UiPlayerAvilitySlot.h"
 #include "../../Ui/Player/UiPlayerMessages.h"
+#include "../../Ui/Player/UiPlayerSelectAvility.h"
+#include "../../Ui/SpeechBubble/UiSpeechBubbleSelectAvility.h"
 #include "../Item/ItemTreasure.h"
 #include "../Common/Animation.h"
 #include "Player.h"
@@ -34,8 +36,8 @@ Player::Player(std::unique_ptr<ParameterPlayer> parameter) :
 	parameterPlayer_->attackCollisionTag_ = CollisionTags::TAG::PLAYER_ATTACK_NORMAL;
 	
 	// 変数初期化
-	selectAvilityTime_ = 0.0f;
 	leaveInputTime_ = 0.0f;
+	speechBubble_ = nullptr;
 }
 
 Player::~Player()
@@ -93,16 +95,6 @@ void Player::Delete()
 
 	// 基底クラスの削除処理
 	CharacterBase::Delete();
-
-	// プレイヤー関係のUIの削除
-	for (auto& ui : uis_)
-	{
-		if (ui)
-		{
-			ui->Delete();
-		}
-	}
-	uis_.clear();
 }
 
 void Player::DebugDraw()
@@ -168,10 +160,13 @@ void Player::Dead()
 	mainCamera.SetCameraShake(0.3f, 8.0f);
 }
 
-void Player::Damage(const int damage)
+void Player::Damage(const int damage, const Vector2& hitPos)
 {
 	// 基底クラスの処理
-	CharacterBase::Damage(damage);
+	CharacterBase::Damage(damage, hitPos);
+
+	// 無敵時間の設定
+	if (state_ != STATE::DEAD) { parameterPlayer_->invincibleTime_ = parameterPlayer_->invincibleTimeMax_; }
 
 	// アイテムのデタッチ
 	DetachItem();
@@ -196,6 +191,9 @@ void Player::Ready()
 
 	// 角度初期化
 	parameterPlayer_->angle_ = 0.0f;
+
+	// 吹き出しも空にする
+	speechBubble_ = nullptr;
 
 	// 全コンポーネントを有効にする
 	for (auto& component : componentList_)
@@ -230,6 +228,7 @@ void Player::Spawn()
 		parameterPlayer_->hp_ = parameterPlayer_->hpMax_ / 10;
 	}
 
+	// 準備処理
 	Ready();
 }
 
@@ -312,10 +311,21 @@ void Player::SetAvilityComponent(std::unique_ptr<ComponentAvilityBase> component
 		SetAvilityActive(AvilityTypes::TYPE::GRAVITYCONTROLL, false);
 
 		// 選択時間の設定
-		selectAvilityTime_ = AVILITY_SELECT_TIME;
+		parameterPlayer_->selectAvilityTime_ = AVILITY_SELECT_TIME;
 
 		// 吹き出しを出す
-		GimmickManager::GetInstance().CreateSpeechBubble(&parameterPlayer_->pos_, "sbSelectAvility", AVILITY_SELECT_TIME);
+		auto speechBubble = std::make_unique<UiSpeechBubbleSelectAvility>(*this);
+
+		// 既に中身がある場合
+		if (speechBubble_)
+		{
+			if (!speechBubble_->IsDelete())
+			{
+				speechBubble_->Delete();
+			}
+		}
+		speechBubble_ = speechBubble.get();
+		uiMng_.Add(std::move(speechBubble), UiManager::LAYER::SPEECH_BUBBLE);
 
 		// 終了
 		return;
@@ -421,20 +431,19 @@ void Player::InitUi()
 {
 	// UIの保持と格納
 	auto hpBar = std::make_unique<UiPlayerHpBar>(*this);
-	uis_.push_back(hpBar.get());
 	uiMng_.Add(std::move(hpBar));
 
 	auto icon = std::make_unique<UiPlayerIcon>(*this);
-	uis_.push_back(icon.get());
 	uiMng_.Add(std::move(icon));
 
 	auto slot = std::make_unique<UiPlayerAvilitySlot>(*this);
-	uis_.push_back(slot.get());
 	uiMng_.Add(std::move(slot));
 
 	auto messages = std::make_unique<UiPlayerMessages>(*this);
-	uis_.push_back(messages.get());
 	uiMng_.Add(std::move(messages));
+
+	auto select = std::make_unique<UiPlayerSelectAvility>(*this);
+	uiMng_.Add(std::move(select));
 }
 
 void Player::CreateAvilities()
@@ -486,14 +495,15 @@ void Player::SelectAvility()
 	if (spareAvilityComponent_)
 	{
 		// 時間を減らす
-		selectAvilityTime_ -= scnMng_.GetDeltaTime();
+		parameterPlayer_->selectAvilityTime_ -= scnMng_.GetDeltaTime();
 
 		// 選択処理
 		int index = -1;
+		const auto pad = parameterPlayer_->padNo_;
 		InputManager& input = InputManager::GetInstance();
-		if (input.IsTrgDown(InputManager::TYPE::SELECT_AVILITY_FIRST)) { index = 0; }
-		else if (input.IsTrgDown(InputManager::TYPE::SELECT_AVILITY_SECOND)) { index = 1; }
-		else if(input.IsTrgDown(InputManager::TYPE::SELECT_AVILITY_THIRD)) { index = 2; }
+		if (input.IsTrgDown(InputManager::TYPE::SELECT_AVILITY_FIRST, pad)) { index = 0; }
+		else if (input.IsTrgDown(InputManager::TYPE::SELECT_AVILITY_SECOND, pad)) { index = 1; }
+		else if(input.IsTrgDown(InputManager::TYPE::SELECT_AVILITY_THIRD, pad)) { index = 2; }
 
 		// 選択した場合
 		if (index > -1)
@@ -501,15 +511,16 @@ void Player::SelectAvility()
 			avilityComponents_[index]->Remove();
 			spareAvilityComponent_->Init();
 			avilityComponents_[index] = std::move(spareAvilityComponent_);
-			selectAvilityTime_ = 0.0f;
+			parameterPlayer_->selectAvilityTime_ = 0.0f;
 		}
 
 		// 時間に達した場合
-		if (selectAvilityTime_ <= 0.0f)
+		if (parameterPlayer_->selectAvilityTime_ <= 0.0f)
 		{
 			spareAvilityComponent_ = nullptr;
 			SetAvilityActive(AvilityTypes::TYPE::GRAVITYCONTROLL, true);
 			SetAvilityResourceIndexs();
+			speechBubble_ = nullptr;
 		}
 	}
 }

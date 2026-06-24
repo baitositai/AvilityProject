@@ -13,6 +13,13 @@ class UiManager : public Singleton<UiManager>
 
 public:
 
+	enum class LAYER
+	{
+		SPEECH_BUBBLE,	// 先に描画
+		UI,				// 後に描画
+		MAX
+	};
+
 	/// <summary>
 	/// 初期化処理
 	/// </summary>
@@ -26,13 +33,15 @@ public:
 	/// <summary>
 	/// 描画処理
 	/// </summary>
-	void Draw();
+	/// <param name="layer">レイヤー</param>
+	void Draw(const LAYER layer);
 
 	/// <summary>
 	/// UIの追加処理
 	/// </summary>
-	/// <param name="ui"></param>
-	void Add(std::unique_ptr<UiBase> ui);
+	/// <param name="ui">UI</param>
+	/// <param name="layer">レイヤー種類</param>
+	void Add(std::unique_ptr<UiBase> ui, const LAYER layer = LAYER::UI);
 
 	/// <summary>
 	/// ゲーム画面用のUIを作成
@@ -52,7 +61,7 @@ public:
 private:
 
 	// UIリスト
-	std::vector<std::unique_ptr<UiBase>> uiList_;
+	std::unordered_map<LAYER, std::vector<std::unique_ptr<UiBase>>> uiMap_;
 	
 	// コンストラクタ
 	UiManager();

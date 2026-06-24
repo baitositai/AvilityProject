@@ -239,6 +239,7 @@ void SceneManager::Release()
 	EnemyManager::GetInstance().Destroy();
 	CollisionManager::GetInstance().Destroy();
 	ItemManager::GetInstance().Destroy();
+	UiManager::GetInstance().Destroy();
 	SpriteEffectManager::GetInstance().Destroy();
 	FactoryComponent::GetInstance().Destroy();
 }

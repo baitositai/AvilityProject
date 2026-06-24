@@ -72,19 +72,19 @@ void ComponentAvilityTeleport::UpdateMove()
 	// 上下左右移動処理
 	if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_RIGHT, parameter_.padNo_))
 	{
-		moveAmount.x += parameter_.moveSpeed_;
+		moveAmount.x += parameter_.dashSpeed_;
 	}
 	if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_LEFT, parameter_.padNo_))
 	{
-		moveAmount.x -= parameter_.moveSpeed_;
+		moveAmount.x -= parameter_.dashSpeed_;
 	}
 	if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_UP, parameter_.padNo_))
 	{
-		moveAmount.y -= parameter_.moveSpeed_;
+		moveAmount.y -= parameter_.dashSpeed_;
 	}
 	if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_DOWN, parameter_.padNo_))
 	{
-		moveAmount.y += parameter_.moveSpeed_;
+		moveAmount.y += parameter_.dashSpeed_;
 	}
 
 	// 移動量を更新
@@ -121,6 +121,7 @@ void ComponentAvilityTeleport::ChangeStateInput()
 	// コンポーネントを有効にする
 	owner_.SetComponentActive("gravity", true);
 	owner_.SetStateComponentActive(Player::STATE::ATTACK, true);
+	owner_.SetStateComponentActive(Player::STATE::ALIVE, true);
 	owner_.SetAllAvilityComponentActive(true);
 
 	// アニメーションリスタート
@@ -137,6 +138,7 @@ void ComponentAvilityTeleport::ChangeStateMove()
 	// 不要なコンポーネントを無効にする
 	owner_.SetComponentActive("gravity", false);
 	owner_.SetStateComponentActive(Player::STATE::ATTACK, false);
+	owner_.SetStateComponentActive(Player::STATE::ALIVE, false);
 	owner_.SetAllAvilityComponentActive(false);
 	isActive_ = true;
 	
@@ -144,6 +146,9 @@ void ComponentAvilityTeleport::ChangeStateMove()
 	parameter_.jumpPow_ = 0.0f;
 	parameter_.knockBackPower_ = {};	
 	parameter_.isGround_ = false;
+
+	// コライダー非活動
+	owner_.SetColliderActive(false);
 
 	// 描画を非表示
 	owner_.SetIsDraw(false);
@@ -176,6 +181,9 @@ void ComponentAvilityTeleport::ChangeStateAppear()
 
 	// 少しだけ無敵
 	parameter_.invincibleTime_ = FINISH_INVICIBLE_TIME;
+
+	// コライダー非活動
+	owner_.SetColliderActive(true);
 
 	// 描画を非表示
 	owner_.SetIsDraw(true);

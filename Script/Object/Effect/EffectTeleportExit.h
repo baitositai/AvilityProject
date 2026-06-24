@@ -26,6 +26,8 @@ public:
 
 private:
 
+	bool isAttack_;
+
 	// ƒpƒ‰ƒ[ƒ^î•ñ
 	ParameterEffectTeleportExit* parameterEffectTeleportExit_;
 

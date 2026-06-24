@@ -123,7 +123,7 @@ bool OnHitCharacterBase::Damage(const std::weak_ptr<ColliderBase>& opponentColli
         damage = opponentCollider.lock()->GetOwner().GetAttackPowerWithBoost();
 	}
     // ダメージを与える
-    owner_.Damage(damage);
+    owner_.Damage(damage, opponentCollider.lock()->GetHitPos());
 
 	// ダメージを与えた結果、死亡しているか
 	return owner_.GetState() == CharacterBase::STATE::DEAD;

@@ -94,6 +94,19 @@ void PlayerManager::Clear()
 	playerList_.clear();
 }
 
+void PlayerManager::Sweep()
+{
+	// 終了したプレイヤーを並び変える
+	auto it = std::remove_if(playerList_.begin(), playerList_.end(),
+		[](const std::unique_ptr<Player>& player)
+		{
+			return player->IsDelete();
+		});
+
+	// 終了したプレイヤーを削除する
+	playerList_.erase(it, playerList_.end());
+}
+
 void PlayerManager::Ready()
 {
 	for (const auto& player : playerList_)
@@ -190,32 +203,23 @@ void PlayerManager::AcceptNewPlayer()
 void PlayerManager::LeavePlayer()
 {
 	int playerListSize = static_cast<int>(playerList_.size());
-	
+
 	// 参加者が複数人いない場合
-	if (playerList_.size() < 2)
+	if (playerListSize < 2)
 	{
 		return;
 	}
 
 	// 2Pから開始
-	auto it = playerList_.begin() + 1;
-
-	while (it != playerList_.end())
+	for (int i = 1; i < playerListSize; ++i)
 	{
-		if ((*it)->IsDelete())
+		if (playerList_[i]->IsDelete())
 		{
 			// 受付パッドを追加
-			playerNewAccept_->SetPadNo(static_cast<int>((*it)->GetParameter().padNo_));
+			playerNewAccept_->SetPadNo(static_cast<int>(playerList_[i]->GetParameter().padNo_));
 
-			(*it)->Delete();
-
-			// 削除された次の要素のイテレータを返す
-			it = playerList_.erase(it);
-		}
-		else
-		{
-			// インテレータを進める
-			++it;
+			// 削除要求のみを行う
+			playerList_[i]->Delete();
 		}
 	}
 }

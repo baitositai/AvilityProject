@@ -12,6 +12,7 @@ ParameterCharacter::ParameterCharacter() :
     jumpPowMax_(0.0f),
     defaultAttackDistance_(0.0f),
     defaultAttackRadius_(0.0f),
+    damageColor_({}),
     attackCollisionTag_(CollisionTags::TAG::NONE)
 {
 }
@@ -44,6 +45,13 @@ void ParameterCharacter::LoadParameter(const Json& parameter)
     {
         knockBackPower_.x = parameter["knockBackPower"].value("x", 0.0f);
         knockBackPower_.y = parameter["knockBackPower"].value("y", 0.0f);
+    }
+
+    if (parameter.contains("damageColor"))
+    {
+        damageColor_.x = parameter["damageColor"].value("r", 0);
+        damageColor_.y = parameter["damageColor"].value("g", 0);
+        damageColor_.z = parameter["damageColor"].value("b", 0);
     }
 
     // アニメーションデータの取得

@@ -46,6 +46,11 @@ public:
 	/// <summary>
 	/// íœˆ—
 	/// </summary>
+	void Sweep();
+
+	/// <summary>
+	/// íœˆ—
+	/// </summary>
 	void Clear();
 
 	/// <summary>

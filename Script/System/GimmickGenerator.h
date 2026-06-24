@@ -10,7 +10,6 @@ class GimmickBase;
 class GimmickDoor;
 class GimmickTarget;
 class GimmickTreasureChest;
-class GimmickSpeechBubble;
 
 class ParameterGimmick;
 
@@ -48,15 +47,6 @@ public:
 	/// <returns>ギミックを返す</returns>
 	std::unique_ptr<GimmickTarget> CreateTarget(const Vector2F pos, const Vector2F& moveDir = {});
 	
-	/// <summary>
-	/// 吹き出しの生成
-	/// </summary>
-	/// <param name="followPos">追従座標</param>
-	/// <param name="resourceName">リソース名</param>
-	/// <param name="displayTime">表示時間</param>
-	/// <returns>ギミックを返す</returns>
-	std::unique_ptr<GimmickSpeechBubble> CreateSpeechBubble(const Vector2F* followPos, const std::string& resourceName, const float displayTime = -1.0f);
-
 private:
 
 	// イベントの生成マップ
@@ -69,5 +59,4 @@ private:
 	std::unique_ptr<GimmickDoor> CreateGimmickDoor();
 	std::unique_ptr<GimmickTarget> CreateGimmickTarget();
 	std::unique_ptr<GimmickTreasureChest> CreateGimmickTreasureChest();
-	std::unique_ptr<GimmickSpeechBubble> CreateGimmickSpeechBubble();
 };

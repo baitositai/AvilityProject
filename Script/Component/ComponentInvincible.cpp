@@ -27,9 +27,6 @@ void ComponentInvincible::Wait()
 	{
 		// 無敵状態に遷移
 		updateFunc_ = std::bind(&ComponentInvincible::SubInvincibleTime, this);
-
-		// 所有者のコライダーの判定を無効化する
-		owner_.SetColliderActive(false);
 	}
 }
 
@@ -47,7 +44,4 @@ void ComponentInvincible::SubInvincibleTime()
 
 	// 待機状態に遷移
 	updateFunc_ = std::bind(&ComponentInvincible::Wait, this);
-	
-	// 所有者のコライダーの判定を有効化する
-	owner_.SetColliderActive(true);
 }

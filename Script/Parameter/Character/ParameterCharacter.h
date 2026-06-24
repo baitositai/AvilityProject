@@ -1,6 +1,7 @@
 #pragma once
 #include <unordered_map>
 #include "../../Manager/Game/CollisionTags.h"
+#include "../../Common/IntVector3.h"
 #include "../ParameterActor.h"
 
 class ParameterCharacter : public ParameterActor
@@ -55,6 +56,9 @@ public:
 
     // 通常攻撃の範囲半径
     float defaultAttackRadius_;
+
+    // ダメージカラー
+    IntVector3 damageColor_;
 
     // 攻撃用の衝突タグ
 	CollisionTags::TAG attackCollisionTag_;
