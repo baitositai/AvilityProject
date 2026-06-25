@@ -35,7 +35,7 @@
     "eyeDistance": 400.0,
     "spawnRate": 0.1,
     "habitatType": "land",
-    "dropMoney" : 600, 
+    "dropMoney": 600,
     "divisionNum": {
       "x": 10,
       "y": 9
@@ -77,6 +77,11 @@
         "no": 7,
         "speed": 0.2,
         "num": 4
+      }
+    },
+    "logic": {
+      "patrol": {
+        "probability": 1.0
       }
     }
   },
@@ -154,6 +159,11 @@
         "speed": 0.1,
         "num": 11
       }
+    },
+    "logic": {
+      "patrol": {
+        "probability": 1.0
+      }
     }
   },
   "mushroom": {
@@ -230,6 +240,11 @@
         "speed": 0.1,
         "num": 8
       }
+    },
+    "logic": {
+      "patrol": {
+        "probability": 1.0
+      }
     }
   },
   "hat": {
@@ -304,6 +319,11 @@
         "no": 4,
         "speed": 0.1,
         "num": 8
+      }
+    },
+    "logic": {
+      "patrol": {
+        "probability": 1.0
       }
     }
   },
@@ -381,6 +401,11 @@
         "speed": 0.1,
         "num": 10
       }
+    },
+    "logic": {
+      "patrol": {
+        "probability": 1.0
+      }
     }
   },
   "samurai": {
@@ -452,6 +477,11 @@
         "speed": 0.1,
         "num": 4
       }
+    },
+    "logic": {
+      "patrol": {
+        "probability": 1.0
+      }
     }
   },
   "maid": {
@@ -522,6 +552,124 @@
         "speed": 0.1,
         "num": 6
       }
+    },
+    "logic": {
+      "patrol": {
+        "probability": 1.0
+      }
+    }
+  },
+  "panda": {
+    "componentKeys": [
+      "knockBack",
+      "invincible",
+      "gravity",
+      "move",
+      "spriteAnimation"
+    ],
+    "stateComponentKeys": {
+      "alive": "enemyAlive",
+      "attack": "attackDefault",
+      "hit": "dummy",
+      "dead": "enemyDead",
+      "spawn": "dummy",
+      "enter": "dummy"
+    },
+    "resourceKey": "panda",
+    "scale": 2.0,
+    "angle": 0.0,
+    "direction": true,
+    "transparent": true,
+    "moveSpeed": 5.0,
+    "hp": 800,
+    "attackPower": 30,
+    "gravityPower": 9.8,
+    "defaultAttackDistance": 50.0,
+    "defaultAttackRadius": 50.0,
+    "defaultAttackStartFrame": 112,
+    "defaultAttackStartFrame2": 128,
+    "defaultAttackStartFrame3": 147,
+    "defaultAttackStartFrame4": 168,
+    "weight": 0.9,
+    "invincibleTimeMax": 2.0,
+    "attackStartDistance": 100.0,
+    "permissibleDistance": 10.0,
+    "eyeAngle": 70.0,
+    "eyeDistance": 700.0,
+    "spawnRate": 0.1,
+    "habitatType": "land",
+    "divisionNum": {
+      "x": 18,
+      "y": 10
+    },
+    "hitBoxSize": {
+      "x": 34,
+      "y": 44
+    },
+    "localPos": {
+      "x": 0,
+      "y": -4
+    },
+    "defaultAttackLoaclPos": {
+      "x": 50,
+      "y": 8
+    },
+    "animation": {
+      "idle": {
+        "no": 0,
+        "speed": 0.1,
+        "num": 8
+      },
+      "walk": {
+        "no": 1,
+        "speed": 0.1,
+        "num": 8
+      },
+      "dash": {
+        "no": 2,
+        "speed": 0.1,
+        "num": 7
+      },
+      "jump": {
+        "no": 3,
+        "speed": 0.1,
+        "num": 3
+      },
+      "dead": {
+        "no": 4,
+        "speed": 0.1,
+        "num": 9
+      },
+      "defence": {
+        "no": 5,
+        "speed": 0.1,
+        "num": 6
+      },
+      "attack": {
+        "no": 6,
+        "speed": 0.1,
+        "num": 7
+      },
+      "attack2": {
+        "no": 7,
+        "speed": 0.1,
+        "num": 5
+      },
+      "attack3": {
+        "no": 8,
+        "speed": 0.1,
+        "num": 6
+      },
+      "attack4": {
+        "no": 9,
+        "speed": 0.1,
+        "num": 18
+      }
+    }
+  },
+  "logic": {
+    "patrol": {
+      "probability": 1.0
     }
   }
 }

@@ -27,6 +27,8 @@
 #include "../../Component/State/ComponentStateEnter.h"
 #include "../../Component/State/ComponentStatePlayerSpawn.h"
 #include "../../Component/State/ComponentStateDummy.h"
+#include "../../Component/Logic/ComponentLogicBase.h"
+#include "../../Component/Logic/ComponentLogicPatrol.h"
 #include "../../Object/Character/CharacterBase.h" 
 #include "../../Object/Character/Player.h" 
 #include "../../Object/Character/Enemy/EnemyBase.h" 
@@ -64,6 +66,27 @@ std::unique_ptr<ComponentAvilityBase> FactoryComponent::CreateComponentAvility(c
 		{
 			return std::unique_ptr<ComponentAvilityBase>(avilityComponent);
 		}
+    }
+
+    // 見つからない場合空で返す
+    return nullptr;
+}
+
+std::unique_ptr<ComponentLogicBase> FactoryComponent::CreateComponentLogicBase(const std::string& name, ActorBase& owner)
+{
+    // 必要とするものがあるか探索
+    auto it = componentCreateMap_.find(name);
+
+    // ある場合
+    if (it != componentCreateMap_.end())
+    {
+        // 生成したものをアビリティ用の型にキャストして返す
+        auto logicComponent = dynamic_cast<ComponentLogicBase*>(it->second(owner).release());
+
+        if (logicComponent)
+        {
+            return std::unique_ptr<ComponentLogicBase>(logicComponent);
+        }
     }
 
     // 見つからない場合空で返す
@@ -227,6 +250,18 @@ std::unique_ptr<ComponentAvilityGiant> FactoryComponent::CreateComponentAvilityG
         return nullptr;
     }
     return std::make_unique<ComponentAvilityGiant>(*playerPtr);
+}
+
+std::unique_ptr<ComponentLogicPatrol> FactoryComponent::CreateComponentLogicPatrol(ActorBase& owner)
+{
+    auto* enemyPtr = dynamic_cast<EnemyBase*>(&owner);
+
+    if (enemyPtr == nullptr)
+    {
+        // キャストに失敗した場合nullptrを返す
+        return nullptr;
+    }
+    return std::make_unique<ComponentLogicPatrol>(*enemyPtr);
 }
 
 std::unique_ptr<ComponentKnockBack> FactoryComponent::CreateComponentKnockBack(ActorBase& owner)
@@ -468,6 +503,10 @@ FactoryComponent::FactoryComponent()
     componentCreateMap_.emplace("jump", [this](ActorBase& owner)
         {
             return CreateComponentJump(owner);
+        });
+    componentCreateMap_.emplace("patrol", [this](ActorBase& owner)
+        {
+            return CreateComponentLogicPatrol(owner);
         });
     componentCreateMap_.emplace("debugCreateItemAvility", [this](ActorBase& owner)
         {

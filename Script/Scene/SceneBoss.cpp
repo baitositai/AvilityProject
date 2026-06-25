@@ -34,11 +34,14 @@ SceneBoss::~SceneBoss()
 
 void SceneBoss::Init()
 {		
+	// ボス指定
+	bossType_ = EnemyTypes::TYPE::PANDA;
+
 	// ボス部屋の生成
 	stageMng_.Create(StageManager::TYPE::BOSS);
 
 	// ボス生成
-	enemyMng_.Create(EnemyTypes::TYPE::MAID, Vector2F(1050, 500));
+	enemyMng_.Create(bossType_, Vector2F(1050, 500));
 
 	// カメラ設定
 	mainCamera.ChangeMode(Camera::MODE::FIXED_POINT);
@@ -68,7 +71,7 @@ void SceneBoss::NormalUpdate()
 	SceneBase::NormalUpdate();
 
 	// ボスを撃破できた場合
-	if (enemyMng_.IsBossDestroy(EnemyTypes::TYPE::MAID))
+	if (enemyMng_.IsBossDestroy(bossType_))
 	{
 		sndMng_.StopBgm(SoundType::BGM::GAME2);
 		scnMng_.ChangeScene(SceneManager::SCENE_ID::RESULT);

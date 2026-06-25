@@ -145,6 +145,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Component\Logic\ComponentLogicPatrol.cpp" />
+    <ClCompile Include="Script\Component\Logic\ComponentLogicBase.cpp" />
+    <ClCompile Include="Script\Component\State\ComponentStateBossAlive.cpp" />
+    <ClCompile Include="Script\Parameter\Character\Enemy\ParameterEnemyPanda.cpp" />
+    <ClCompile Include="Script\Object\Character\Enemy\EnemyPanda.cpp" />
     <ClCompile Include="Script\Parameter\Gimmick\ParameterGimmickSpeechBubble.cpp" />
     <ClCompile Include="Script\Object\Gimmick\GimmickSpeechBubble.cpp" />
     <ClCompile Include="Script\Component\State\ComponentStateEnemyDead.cpp" />
@@ -354,6 +359,11 @@
     <ClCompile Include="Script\Ui\Game\UiDamage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Component\Logic\ComponentLogicPatrol.h" />
+    <ClInclude Include="Script\Component\Logic\ComponentLogicBase.h" />
+    <ClInclude Include="Script\Component\State\ComponentStateBossAlive.h" />
+    <ClInclude Include="Script\Parameter\Character\Enemy\ParameterEnemyPanda.h" />
+    <ClInclude Include="Script\Object\Character\Enemy\EnemyPanda.h" />
     <ClInclude Include="Script\Parameter\Gimmick\ParameterGimmickSpeechBubble.h" />
     <ClInclude Include="Script\Object\Gimmick\GimmickSpeechBubble.h" />
     <ClInclude Include="Script\Component\State\ComponentStateEnemyDead.h" />

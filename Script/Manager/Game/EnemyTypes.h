@@ -16,6 +16,8 @@ public:
 		
 		// É{ÉX
 		MAID,
+		PANDA,
+
 		MAX,
 	};
 

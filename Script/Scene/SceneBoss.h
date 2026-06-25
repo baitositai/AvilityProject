@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include "SceneBase.h"
+#include "../Manager/Game/EnemyTypes.h"
 
 class ScenePause;
 
@@ -24,6 +25,8 @@ public:
 	void Init() override;
 
 private:
+
+	EnemyTypes::TYPE bossType_;
 
 	//É|Å[ÉYâÊñ 
 	std::shared_ptr<ScenePause> ScenePause_;

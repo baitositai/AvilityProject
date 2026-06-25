@@ -1,4 +1,5 @@
 #include <random>
+
 #include "../../Object/Character/Enemy/EnemyBase.h"
 #include "../../Object/Character/Enemy/EnemyClone.h"
 #include "../../Object/Character/Enemy/EnemyHat.h"
@@ -6,7 +7,10 @@
 #include "../../Object/Character/Enemy/EnemySamurai.h"
 #include "../../Object/Character/Enemy/EnemySlime.h"
 #include "../../Object/Character/Enemy/EnemySnake.h"
+
 #include "../../Object/Character/Enemy/EnemyMaid.h"
+#include "../../Object/Character/Enemy/EnemyPanda.h"
+
 #include "../Utility/UtilityLoad.h"
 #include "EnemyGenerator.h"
 
@@ -45,6 +49,10 @@ EnemyGenerator::EnemyGenerator()
 		{
 			return CreateEnemyMaid();
 		});
+	createEnemyMap_.emplace(EnemyTypes::TYPE::PANDA, [this]()
+		{
+			return CreateEnemyPanda();
+		});
 }
 
 EnemyGenerator::~EnemyGenerator()
@@ -57,40 +65,45 @@ void EnemyGenerator::InitParameter()
 	const auto jsonParameterMap = UtilityLoad::GetJsonMapArrayData("EnemiesParameter");
 
 	// パラメータの取得
-	const auto jsonCloneParameter = jsonParameterMap.at("clone").front();
+	const auto& jsonCloneParameter = jsonParameterMap.at("clone").front();
 	auto parameterClone = std::make_unique<ParameterEnemy>();
 	parameterClone->LoadParameter(jsonCloneParameter);
 	templateParameterMap_.emplace(EnemyTypes::TYPE::CLONE, std::move(parameterClone));
 
-	const auto jsonSlimeParameter = jsonParameterMap.at("slime").front();
+	const auto& jsonSlimeParameter = jsonParameterMap.at("slime").front();
 	auto parameterSlime = std::make_unique<ParameterEnemy>();
 	parameterSlime->LoadParameter(jsonSlimeParameter);
 	templateParameterMap_.emplace(EnemyTypes::TYPE::SLIME, std::move(parameterSlime));
 
-	const auto jsonMushroomParameter = jsonParameterMap.at("mushroom").front();
+	const auto& jsonMushroomParameter = jsonParameterMap.at("mushroom").front();
 	auto parameterMushroom = std::make_unique<ParameterEnemy>();
 	parameterMushroom->LoadParameter(jsonMushroomParameter);
 	templateParameterMap_.emplace(EnemyTypes::TYPE::MUSHROOM, std::move(parameterMushroom));
 
-	const auto jsonHatParameter = jsonParameterMap.at("hat").front();
+	const auto& jsonHatParameter = jsonParameterMap.at("hat").front();
 	auto parameterHat = std::make_unique<ParameterEnemy>();
 	parameterHat->LoadParameter(jsonHatParameter);
 	templateParameterMap_.emplace(EnemyTypes::TYPE::HAT, std::move(parameterHat));
 
-	const auto jsonSnakeParameter = jsonParameterMap.at("snake").front();
+	const auto& jsonSnakeParameter = jsonParameterMap.at("snake").front();
 	auto parameterSnake = std::make_unique<ParameterEnemy>();
 	parameterSnake->LoadParameter(jsonSnakeParameter);
 	templateParameterMap_.emplace(EnemyTypes::TYPE::SNAKE, std::move(parameterSnake));
 
-	const auto jsonSamuraiParameter = jsonParameterMap.at("samurai").front();
+	const auto& jsonSamuraiParameter = jsonParameterMap.at("samurai").front();
 	auto parameterSamurai = std::make_unique<ParameterEnemy>();
 	parameterSamurai->LoadParameter(jsonSamuraiParameter);
 	templateParameterMap_.emplace(EnemyTypes::TYPE::SAMURAI, std::move(parameterSamurai));
 
-	const auto jsonMaidParameter = jsonParameterMap.at("maid").front();
+	const auto& jsonMaidParameter = jsonParameterMap.at("maid").front();
 	auto parameterMaid = std::make_unique<ParameterEnemyMaid>();
 	parameterMaid->LoadParameter(jsonMaidParameter);
 	templateParameterMap_.emplace(EnemyTypes::TYPE::MAID, std::move(parameterMaid));
+
+	const auto& jsonPandaParameter = jsonParameterMap.at("panda").front();
+	auto parameterPanda = std::make_unique<ParameterEnemyPanda>();
+	parameterPanda->LoadParameter(jsonPandaParameter);
+	templateParameterMap_.emplace(EnemyTypes::TYPE::PANDA, std::move(parameterPanda));
 }
 
 std::unordered_map<EnemyTypes::TYPE, std::vector<std::unique_ptr<EnemyBase>>> EnemyGenerator::CreateEnemyMap(const Parameter& parameter)
@@ -230,4 +243,22 @@ std::unique_ptr<EnemyMaid> EnemyGenerator::CreateEnemyMaid()
 	// 生成したものを返す
 	auto parameter = std::make_unique<ParameterEnemyMaid>(*parameterMaid);
 	return std::make_unique<EnemyMaid>(std::move(parameter));
+}
+
+std::unique_ptr<EnemyPanda> EnemyGenerator::CreateEnemyPanda()
+{
+	// パンダ用のパラメータにキャスト
+	auto parameterBase = templateParameterMap_.at(EnemyTypes::TYPE::PANDA).get();
+	auto parameterPanda = dynamic_cast<ParameterEnemyPanda*>(parameterBase);
+
+	// 空の場合
+	if (parameterPanda == nullptr)
+	{
+		// 空で返す
+		return nullptr;
+	}
+
+	// 生成したものを返す
+	auto parameter = std::make_unique<ParameterEnemyPanda>(*parameterPanda);
+	return std::make_unique<EnemyPanda>(std::move(parameter));
 }

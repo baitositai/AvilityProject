@@ -62,6 +62,9 @@ public:
 	// 移動種類
 	HABITAT_TYPE habitatType_;
 
+	// ロジックマップ
+	std::unordered_map<std::string, float> logicMap_;
+
 private:
 
 	// 移動種類を列挙型に変換

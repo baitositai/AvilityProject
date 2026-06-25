@@ -10,7 +10,7 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="parameter">パラメータ</param>
-	explicit EnemyMaid(std::unique_ptr<ParameterEnemy> parameter);
+	explicit EnemyMaid(std::unique_ptr<ParameterEnemyMaid> parameter);
 
 	/// <summary>
 	/// デストラクタ

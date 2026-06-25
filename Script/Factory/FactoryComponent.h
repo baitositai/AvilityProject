@@ -37,6 +37,9 @@ class ComponentAvilityAirslash;
 class ComponentAvilityTeleport;
 class ComponentAvilityGiant;
 
+class ComponentLogicBase;
+class ComponentLogicPatrol;
+
 class ComponentDebugCreateItemAvility;
 
 class FactoryComponent : public Singleton<FactoryComponent>
@@ -60,6 +63,14 @@ public:
 	/// <param name="owner">所有者</param>
 	/// <returns>生成されたアビリティコンポーネント</returns>
 	std::unique_ptr<ComponentAvilityBase> CreateComponentAvility(const std::string& name, ActorBase& owner);
+
+	/// <summary>
+	/// ロジックコンポーネントの生成
+	/// </summary>
+	/// <param name="name">名前</param>
+	/// <param name="owner">所有者</param>
+	/// <returns>生成されたロジックコンポーネント</returns>
+	std::unique_ptr<ComponentLogicBase> CreateComponentLogicBase(const std::string& name, ActorBase& owner);
 
 private:
 
@@ -95,6 +106,8 @@ private:
 	std::unique_ptr<ComponentAvilityAirslash> CreateComponentAvilityAirslash(ActorBase& owner);
 	std::unique_ptr<ComponentAvilityTeleport> CreateComponentAvilityTeleport(ActorBase& owner);
 	std::unique_ptr<ComponentAvilityGiant> CreateComponentAvilityGiant(ActorBase& owner);
+
+	std::unique_ptr<ComponentLogicPatrol> CreateComponentLogicPatrol(ActorBase& owner);
 
 	std::unique_ptr<ComponentDebugCreateItemAvility> CreateComponentDebugCreateItemAvility(ActorBase& owner);
 	

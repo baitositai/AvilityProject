@@ -3,6 +3,7 @@
 #include "../../../Parameter/Character/Enemy/ParameterEnemy.h"
 
 class ParameterEnemy;
+class ComponentLogicBase;
 
 class EnemyBase : public CharacterBase
 {
@@ -62,6 +63,9 @@ protected:
 
 	// 型変換用のパラメータを返す関数
 	ParameterEnemy* GetParameterEnemyPtr() { return parameterEnemy_; }
+
+	// ロジック用のマップ
+	std::unordered_map<std::string, std::unique_ptr<ComponentLogicBase>> componentLogicMap_;
 
 private:
 

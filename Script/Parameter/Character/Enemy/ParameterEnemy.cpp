@@ -32,6 +32,17 @@ void ParameterEnemy::LoadParameter(const Json& parameter)
 	dropMoney_ = parameter.value("dropMoney", -1);
 	std::string habitatTypeString = parameter.value("habitatType", "land");
 
+	for (auto it = parameter["logic"].begin(); it != parameter["logic"].end(); ++it)
+	{
+		// データの取得
+		std::string logicName = it.key();
+		auto& data = it.value();
+		float probability = data.value("probability", -1);
+
+		// 情報を格納
+		logicMap_.emplace(logicName, probability);
+	}	
+	
 	// 視野角度をラジアンに変換
 	eyeAngleRad_ = UtilityCommon::Deg2RadF(eyeAngle_);
 

@@ -161,8 +161,17 @@ void EnemyManager::Clear()
 
 const bool EnemyManager::IsBossDestroy(const EnemyTypes::TYPE type) const
 {
+	// キーを探す
+	auto it = enemiesMap_.find(type);
+
+	// マップに存在しない場合は撃破された（あるいは存在しない）とみなす
+	if (it == enemiesMap_.end())
+	{
+		return true;
+	}
+
 	// 空なら撃破
-	return enemiesMap_.at(type).empty();
+	return it->second.empty();
 }
 
 const bool EnemyManager::IsEmptyEventEnemies() 

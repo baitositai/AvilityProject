@@ -582,6 +582,56 @@
       "path": "Resource/Image/SpeechBubble/SB_SelectAvility.png",
       "sceneIds": [ 2, 3, 4 ],
       "type": "texture"
+    },
+    {
+      "key": "panda",
+      "path": "Resource/Image/Enemy/Panda.png",
+      "sceneIds": [ 4 ],
+      "type": "sprite",
+      "divX": 18,
+      "divY": 10,
+      "sizeX": 128,
+      "sizeY": 64
+    },
+    {
+      "key": "gaiaGolem",
+      "path": "Resource/Image/Enemy/GaiaGolem.png",
+      "sceneIds": [ 4 ],
+      "type": "sprite",
+      "divX": 8,
+      "divY": 5,
+      "sizeX": 200,
+      "sizeY": 132
+    },
+    {
+      "key": "glacier",
+      "path": "Resource/Image/Enemy/Glacier.png",
+      "sceneIds": [ 4 ],
+      "type": "sprite",
+      "divX": 8,
+      "divY": 5,
+      "sizeX": 200,
+      "sizeY": 132
+    },
+    {
+      "key": "ifrit",
+      "path": "Resource/Image/Enemy/Ifrit.png",
+      "sceneIds": [ 4 ],
+      "type": "sprite",
+      "divX": 8,
+      "divY": 5,
+      "sizeX": 200,
+      "sizeY": 132
+    },
+    {
+      "key": "sylph",
+      "path": "Resource/Image/Enemy/Sylph.png",
+      "sceneIds": [ 4 ],
+      "type": "sprite",
+      "divX": 10,
+      "divY": 5,
+      "sizeX": 200,
+      "sizeY": 132
     }
   ]
 }
