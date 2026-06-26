@@ -1,6 +1,7 @@
 #include "../Utility/UtilityLoad.h"
 #include "../Object/Gimmick/GimmickDoor.h"
 #include "../Object/Gimmick/GimmickTarget.h"
+#include "../Object/Gimmick/GimmickBamboo.h"
 #include "../Object/Gimmick/GimmickTreasureChest.h"
 #include "GimmickGenerator.h"
 
@@ -17,6 +18,10 @@ GimmickGenerator::GimmickGenerator()
 	createGimmickMap_.emplace(GimmickTypes::TYPE::TREASURE_CHEST, [this]()
 		{
 			return CreateGimmickTreasureChest();
+		});
+	createGimmickMap_.emplace(GimmickTypes::TYPE::BAMBOO, [this]()
+		{
+			return CreateGimmickBamboo();
 		});
 }
 
@@ -46,6 +51,12 @@ void GimmickGenerator::InitParameter()
 	auto parameterTreasureChest = std::make_unique<ParameterGimmickTreasureChest>();
 	parameterTreasureChest->LoadParameter(jsonTreasureChestParameter);
 	templateParameterMap_.emplace(GimmickTypes::TYPE::TREASURE_CHEST, std::move(parameterTreasureChest));
+
+	// 竹生成
+	const auto jsonBambooParameter = jsonParameterMap.at("bamboo").front();
+	auto parameterBamboo = std::make_unique<ParameterGimmickBamboo>();
+	parameterBamboo->LoadParameter(jsonBambooParameter);
+	templateParameterMap_.emplace(GimmickTypes::TYPE::BAMBOO, std::move(parameterBamboo));
 }
 
 std::unique_ptr<GimmickBase> GimmickGenerator::Create(const GimmickTypes::TYPE type)
@@ -95,6 +106,24 @@ std::unique_ptr<GimmickTarget> GimmickGenerator::CreateGimmickTarget()
 	// 生成したものを返す
 	auto parameter = std::make_unique<ParameterGimmickTarget>(*parameterTarget);
 	return std::make_unique<GimmickTarget>(std::move(parameter));
+}
+
+std::unique_ptr<GimmickBamboo> GimmickGenerator::CreateGimmickBamboo()
+{
+	// 専用のパラメータにキャスト
+	auto parameterBase = templateParameterMap_.at(GimmickTypes::TYPE::BAMBOO).get();
+	auto parameterBamboo = dynamic_cast<ParameterGimmickBamboo*>(parameterBase);
+
+	// 空の場合
+	if (parameterBamboo == nullptr)
+	{
+		// 空で返す
+		return nullptr;
+	}
+
+	// 生成したものを返す
+	auto parameter = std::make_unique<ParameterGimmickBamboo>(*parameterBamboo);
+	return std::make_unique<GimmickBamboo>(std::move(parameter));
 }
 
 std::unique_ptr<GimmickTreasureChest> GimmickGenerator::CreateGimmickTreasureChest()

@@ -84,13 +84,20 @@ void ComponentStatePlayerProcess::ProcessInputJump()
 		// 入力がある場合
 		if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_JUMP, parameter_.padNo_) && !parameter_.isHitItem_)
 		{
+			// 非陸状態
 			isGround_ = false;
 
+			// ジャンプ力設定
 			owner_.SetJumpPow(-parameter_.jumpPowMax_);
 
+			// アニメーション再生
 			owner_.GetAnimation().Play(Animation::TYPE::JUMP);
 
+			// ジャンプ回数減少
 			parameter_.jumpCount_--;
+
+			// ノックバック初期化
+			parameter_.knockBackPower_ = {};
 		}
 	}
 }

@@ -630,9 +630,6 @@
     <ClCompile Include="Script\Ui\Player\UiPlayerMessages.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Script\Object\Gimmick\GimmickSpeechBubble.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Script\Parameter\Gimmick\ParameterGimmickSpeechBubble.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -661,6 +658,15 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Script\Component\Logic\ComponentLogicPatrol.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Component\Logic\ComponentLogicBambooThrowing.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Object\Gimmick\GimmickBamboo.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Parameter\Gimmick\ParameterGimmickBamboo.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1466,9 +1472,6 @@
     <ClInclude Include="Script\Ui\Player\UiPlayerMessages.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Script\Object\Gimmick\GimmickSpeechBubble.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Script\Parameter\Gimmick\ParameterGimmickSpeechBubble.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -1497,6 +1500,15 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Script\Component\Logic\ComponentLogicPatrol.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Component\Logic\ComponentLogicBambooThrowing.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Object\Gimmick\GimmickBamboo.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Parameter\Gimmick\ParameterGimmickBamboo.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

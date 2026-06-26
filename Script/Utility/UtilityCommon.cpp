@@ -521,3 +521,8 @@ int UtilityCommon::GetDigitCount(const int value)
 
     return count;
 }
+
+int UtilityCommon::GetRandomCount(const int max, const int min)
+{
+    return GetRand(max - min) + min;
+}

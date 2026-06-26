@@ -283,7 +283,9 @@ void ActorBase::CreateComponents()
 
 	for (const std::string& name : parameter_->componentkeys_)
 	{
-		AddComponent(name, std::move(facCom_.CreateComponent(name, *this)));
+		auto component = facCom_.CreateComponent(name, *this);
+		component->Create();
+		AddComponent(name, std::move(component));
 	}
 }
 

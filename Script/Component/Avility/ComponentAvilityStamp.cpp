@@ -169,6 +169,9 @@ void ComponentAvilityStamp::ChangeStateStop()
 	// 自身のコライダーの判定を無効にする
 	owner_.SetColliderActive(false);
 
+	// パラメータの初期化
+	parameter_.jumpPow_ = 0.0f;
+	parameter_.knockBackPower_ = Vector2F(0.0f, 0.0f);
 	parameter_.shotVec_ = Vector2F(0.0f, 0.0f);
 	Vector2F gravityDir = parameter_.GetDown();
 	parameter_.angle_ = std::atan2f(-gravityDir.x, gravityDir.y);

@@ -1,12 +1,16 @@
 #include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/SpriteEffectManager.h"
 #include "../../Manager/Game/CollisionManager.h"
+#include "../../Manager/Game/GimmickManager.h"
 #include "../../Object/Character/Enemy/EnemyBase.h"
 #include "ComponentLogicBase.h"
 
 ComponentLogicBase::ComponentLogicBase(EnemyBase& owner) :
 	ComponentBase(owner),
 	sceneManager_(SceneManager::GetInstance()),
-	collisionManager_(CollisionManager::GetInstance())
+	collisionManager_(CollisionManager::GetInstance()),
+	gimmickManager_(GimmickManager::GetInstance()),
+	spriteEffectManager_(SpriteEffectManager::GetInstance())
 {
 	// コンストラクタは変数の初期化のみ
 	isEnd_ = false;
@@ -34,9 +38,4 @@ void ComponentLogicBase::Update()
 
 void ComponentLogicBase::Remove()
 {
-}
-
-const float ComponentLogicBase::GetProbability() const
-{
-	return 0.0f;
 }

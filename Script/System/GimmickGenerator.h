@@ -9,6 +9,7 @@
 class GimmickBase;
 class GimmickDoor;
 class GimmickTarget;
+class GimmickBamboo;
 class GimmickTreasureChest;
 
 class ParameterGimmick;
@@ -58,5 +59,6 @@ private:
 	// 各種ギミックの生成処理
 	std::unique_ptr<GimmickDoor> CreateGimmickDoor();
 	std::unique_ptr<GimmickTarget> CreateGimmickTarget();
+	std::unique_ptr<GimmickBamboo> CreateGimmickBamboo();
 	std::unique_ptr<GimmickTreasureChest> CreateGimmickTreasureChest();
 };

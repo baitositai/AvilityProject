@@ -29,6 +29,10 @@ ComponentLogicPatrol::ComponentLogicPatrol(EnemyBase& owner) :
 	collisionManager_.Add(colliderFan_);
 }
 
+ComponentLogicPatrol::~ComponentLogicPatrol()
+{
+}
+
 void ComponentLogicPatrol::Init()
 {
 	// Šî’êƒNƒ‰ƒX‚Ì‰Šú‰»

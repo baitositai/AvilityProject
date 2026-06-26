@@ -21,6 +21,7 @@ public:
 	/// <param name="parameter">ƒpƒ‰ƒ[ƒ^</param>
 	virtual void LoadParameter(const Json& parameter) override;
 
-private:
+	// ˆÚ“®•ûŒü
+	Vector2F moveDir_;
 
 };

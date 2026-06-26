@@ -46,22 +46,14 @@ public:
 	/// </summary>
 	/// <param name="type">種類</param>
 	/// <param name="pos">座標</param>
-	/// <param name="isMove">移動判定</param>
 	/// <param name="moveDir">移動方向</param>
-	void Add(const GimmickTypes::TYPE type, const Vector2F& pos);
+	void Create(const GimmickTypes::TYPE type, const Vector2F& pos, const Vector2F& moveDir = {});
 
 	/// <summary>
 	/// ボス部屋ドアの生成
 	/// </summary>
 	/// <param name="pos"></param>
 	void CreateBossDoor(const Vector2F pos);
-
-	/// <summary>
-	/// ターゲットの生成
-	/// </summary>
-	/// <param name="pos">座標</param>
-	/// <param name="isMove">移動判定</param>
-	void CreateTarget(const Vector2F pos, const Vector2F& moveDir = {});
 
 	/// <summary>
 	/// ターゲットをすべて消す

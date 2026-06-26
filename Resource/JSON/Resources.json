@@ -632,6 +632,12 @@
       "divY": 5,
       "sizeX": 200,
       "sizeY": 132
+    },
+    {
+      "key": "bamboo",
+      "path": "Resource/Image/Gimmick/Bamboo.png",
+      "sceneIds": [ 4 ],
+      "type": "texture"
     }
   ]
 }

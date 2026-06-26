@@ -70,7 +70,7 @@ void EventTargetDestroy::CreateTargetFixMove()
 		dir.x *= -1.0f;
 		
 		// ƒMƒ~ƒbƒNŠÇ—‚ÉŠi”[
-		gimmickManager_.CreateTarget(pos.ToVector2F(), dir);
+		gimmickManager_.Create(GimmickTypes::TYPE::TARGET, pos.ToVector2F(), dir);
 
 		// Ÿ‰ñ—p‚ÉÀ•W‚ğ‚¸‚ç‚·
 		pos.y += OFFSET_Y;
@@ -93,7 +93,7 @@ void EventTargetDestroy::CreateTargetRandom()
 		};
 
 		// ƒMƒ~ƒbƒNŠÇ—‚ÉŠi”[
-		gimmickManager_.Add(GimmickTypes::TYPE::TARGET, pos.ToVector2F());
+		gimmickManager_.Create(GimmickTypes::TYPE::TARGET, pos.ToVector2F());
 	}
 }
 
@@ -119,7 +119,7 @@ void EventTargetDestroy::CreateTargetRandomMove()
 		};
 
 		// ƒMƒ~ƒbƒNŠÇ—‚ÉŠi”[
-		gimmickManager_.CreateTarget(pos.ToVector2F(), dir);
+		gimmickManager_.Create(GimmickTypes::TYPE::TARGET, pos.ToVector2F(), dir);
 	}
 }
 
@@ -129,7 +129,7 @@ void EventTargetDestroy::UpdateChallenge()
 	if (gimmickManager_.IsDestrolyAllTarget())
 	{
 		// •ó” oŒ»
-		gimmickManager_.Add(GimmickTypes::TYPE::TREASURE_CHEST, triggerPos_);
+		gimmickManager_.Create(GimmickTypes::TYPE::TREASURE_CHEST, triggerPos_);
 
 		// ŠÔ§ŒÀ‚ğ0‚É‚·‚é
 		timeLimit_ = 0.0f;

@@ -188,4 +188,12 @@ public:
 	/// <param name="value">値</param>
 	/// <returns><桁数/returns>
 	static int GetDigitCount(const int value);
+
+	/// <summary>
+	/// 指定範囲からランダム値を返す(引数の値は含む)
+	/// </summary>
+	/// <param name="max"></param>
+	/// <param name="min"></param>
+	/// <returns></returns>
+	static int GetRandomCount(const int max, const int min);
 };

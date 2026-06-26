@@ -7,6 +7,7 @@
 #include "../../Component/ComponentJump.h"
 #include "../../Component/ComponentCameraRangeCheck.h"
 #include "../../Component/ComponentDebugCreateItemAvility.h"
+
 #include "../../Component/Avility/ComponentAvilityBase.h"
 #include "../../Component/Avility/ComponentAvilityBox.h"
 #include "../../Component/Avility/ComponentAvilityShot.h"
@@ -18,6 +19,7 @@
 #include "../../Component/Avility/ComponentAvilityAirslash.h"
 #include "../../Component/Avility/ComponentAvilityTeleport.h"
 #include "../../Component/Avility/ComponentAvilityGiant.h"
+
 #include "../../Component/State/ComponentStatePlayerProcess.h"
 #include "../../Component/State/ComponentStateEnemyAlive.h"
 #include "../../Component/State/ComponentStateAttackDefault.h"
@@ -27,12 +29,17 @@
 #include "../../Component/State/ComponentStateEnter.h"
 #include "../../Component/State/ComponentStatePlayerSpawn.h"
 #include "../../Component/State/ComponentStateDummy.h"
+
 #include "../../Component/Logic/ComponentLogicBase.h"
 #include "../../Component/Logic/ComponentLogicPatrol.h"
+#include "../../Component/Logic/ComponentLogicBambooThrowing.h"
+
 #include "../../Object/Character/CharacterBase.h" 
 #include "../../Object/Character/Player.h" 
 #include "../../Object/Character/Enemy/EnemyBase.h" 
+#include "../../Object/Character/Enemy/EnemyPanda.h" 
 #include "../../Object/ActorBase.h" 
+
 #include "FactoryComponent.h"
 
 std::unique_ptr<ComponentBase> FactoryComponent::CreateComponent(const std::string& name, ActorBase& owner)
@@ -262,6 +269,18 @@ std::unique_ptr<ComponentLogicPatrol> FactoryComponent::CreateComponentLogicPatr
         return nullptr;
     }
     return std::make_unique<ComponentLogicPatrol>(*enemyPtr);
+}
+
+std::unique_ptr<ComponentLogicBambooThrowing> FactoryComponent::CreateComponentLogicBambooThrowing(ActorBase& owner)
+{
+    auto* enemyPtr = dynamic_cast<EnemyPanda*>(&owner);
+
+    if (enemyPtr == nullptr)
+    {
+        // ÉLÉÉÉXÉgÇ…é∏îsÇµÇΩèÍçánullptrÇï‘Ç∑
+        return nullptr;
+    }
+    return std::make_unique<ComponentLogicBambooThrowing>(*enemyPtr);
 }
 
 std::unique_ptr<ComponentKnockBack> FactoryComponent::CreateComponentKnockBack(ActorBase& owner)
@@ -507,6 +526,10 @@ FactoryComponent::FactoryComponent()
     componentCreateMap_.emplace("patrol", [this](ActorBase& owner)
         {
             return CreateComponentLogicPatrol(owner);
+        });
+    componentCreateMap_.emplace("bambooThrowing", [this](ActorBase& owner)
+        {
+            return CreateComponentLogicBambooThrowing(owner);
         });
     componentCreateMap_.emplace("debugCreateItemAvility", [this](ActorBase& owner)
         {

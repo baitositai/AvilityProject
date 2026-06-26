@@ -18,7 +18,7 @@ void EventTreasureChest::UpdateChallenge()
 	ChangeState(STATE::END);
 
 	// ïÛî†èoåª
-	gimmickManager_.Add(GimmickTypes::TYPE::TREASURE_CHEST, triggerPos_);
+	gimmickManager_.Create(GimmickTypes::TYPE::TREASURE_CHEST, triggerPos_);
 }
 
 void EventTreasureChest::UpdateEnd()

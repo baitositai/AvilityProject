@@ -230,8 +230,10 @@ void CharacterBase::UpdateComponentState()
 
 void CharacterBase::CreateComponents()
 {
+	// 空じゃない場合
 	if (!componentStateMap_.empty())
 	{
+		// 取り外し兼削除
 		for (const auto& component : componentStateMap_)
 		{
 			component.second->Remove();
@@ -239,18 +241,27 @@ void CharacterBase::CreateComponents()
 		componentStateMap_.clear();
 	}
 
+	// 指定しターキーのコンポーネントの作成
 	for (const auto& name : parameterCharacter_->stateComponentKeys_)
 	{
+		// 指定のキーが登録できるか探索
 		auto it = NAME_TO_STATE_MAP.find(name.first);
-
 		if (it == NAME_TO_STATE_MAP.end())
 		{
+			// 次へ
 			continue;
 		}
 
+		// コンポーネントの生成
+		auto component = facCom_.CreateComponent(name.second, *this);
 
-		auto result = componentStateMap_.emplace(it->second, std::move(facCom_.CreateComponent(name.second, *this)));
+		// 生成できた場合生成処理
+		if (component) { component->Create(); }
 
+		// 登録
+		auto result = componentStateMap_.emplace(it->second, std::move(component));
+
+		// 登録の失敗時のアサ―ト
 		assert(result.second && "状態別コンポーネントの追加に失敗しています");
 	}
 

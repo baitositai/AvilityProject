@@ -85,13 +85,14 @@ void GimmickManager::Clear()
 	gimmickListMap_.clear();
 }
 
-void GimmickManager::Add(const GimmickTypes::TYPE type, const Vector2F& pos)
+void GimmickManager::Create(const GimmickTypes::TYPE type, const Vector2F& pos, const Vector2F& moveDir)
 {	
 	// ¶¬
 	auto gimmick = gimmickGenerator_->Create(type);
 
 	// ‰Šúƒpƒ‰ƒ[ƒ^‚Ì’²®
 	gimmick->GetParameter().pos_ = pos;
+	gimmick->GetParameter().moveDir_ = moveDir;
 
 	// ‰Šú‰»
 	gimmick->Init();
@@ -112,18 +113,6 @@ void GimmickManager::CreateBossDoor(const Vector2F pos)
 
 	// Ši”[
 	gimmickListMap_[GimmickTypes::TYPE::DOOR].push_back(std::move(door));
-}
-
-void GimmickManager::CreateTarget(const Vector2F pos, const Vector2F& moveDir)
-{	
-	// ƒ^[ƒQƒbƒg¶¬
-	auto target = gimmickGenerator_->CreateTarget(pos, moveDir);
-
-	// ‰Šú‰»
-	target->Init();
-
-	// Ši”[
-	gimmickListMap_[GimmickTypes::TYPE::TARGET].push_back(std::move(target));
 }
 
 void GimmickManager::AllDeleteTarget()

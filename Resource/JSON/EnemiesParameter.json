@@ -647,7 +647,7 @@
       },
       "attack": {
         "no": 6,
-        "speed": 0.1,
+        "speed": 0.3,
         "num": 7
       },
       "attack2": {
@@ -665,11 +665,14 @@
         "speed": 0.1,
         "num": 18
       }
-    }
-  },
-  "logic": {
-    "patrol": {
-      "probability": 1.0
+    },
+    "logic": {
+      "patrol": {
+        "probability": 1.0
+      },
+      "bambooThrowing": {
+        "probability": 1.0
+      }
     }
   }
 }

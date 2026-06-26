@@ -4,6 +4,8 @@
 class EnemyBase;
 class SceneManager;
 class CollisionManager;
+class GimmickManager;
+class SpriteEffectManager;
 
 class ComponentLogicBase : public ComponentBase
 {
@@ -56,7 +58,7 @@ public:
 	/// 実行確立を返す
 	/// </summary>
 	/// <returns>実行確立</returns>
-	virtual const float GetProbability() const;
+	virtual const float GetProbability() const { return probability_; }
 
 protected:
 
@@ -71,4 +73,10 @@ protected:
 
 	// 衝突判定管理クラス
 	CollisionManager& collisionManager_;
+
+	// ギミック管理クラス
+	GimmickManager& gimmickManager_;
+
+	// エフェクト管理クラス
+	SpriteEffectManager& spriteEffectManager_;
 };
