@@ -117,6 +117,59 @@ void CollisionManager::Add(std::shared_ptr<ColliderBase> collider)
 	}
 }
 
+CollisionManager::CollisionResult CollisionManager::CheckStageCollision(const CollisionCheckParam& parameter)
+{
+	CollisionResult resultReturn;
+	resultReturn.isHit = false;
+	resultReturn.chipSize = 0.0f;
+	resultReturn.chipIndex = 0;
+	resultReturn.normal = Vector2F(0.0f, 0.0f);
+
+	float sizeVal = parameter.isXAxis ? parameter.size.x : parameter.size.y;
+	float otherSizeVal = parameter.isXAxis ? parameter.size.y : parameter.size.x;
+
+	float margin = 0.45f;
+	float offsets[] = { -margin, 0.0f, margin };
+
+	for (float offset : offsets)
+	{
+		Vector2 checkPos = parameter.pos;
+
+		if (parameter.isXAxis)
+		{
+			checkPos.x += (parameter.stepMove > 0.0f) ? sizeVal / 2.0f : -sizeVal / 2.0f;
+			checkPos.y += otherSizeVal * offset;
+		}
+		else
+		{
+			checkPos.y += (parameter.stepMove > 0.0f) ? sizeVal / 2.0f : -sizeVal / 2.0f;
+			checkPos.x += otherSizeVal * offset;
+		}
+
+		auto result = IsHitStage(checkPos);
+
+		if (result.hit)
+		{
+			resultReturn.isHit = true;
+			resultReturn.chipSize = parameter.isXAxis ? result.chipSize.x : result.chipSize.y;
+			resultReturn.chipIndex = parameter.isXAxis ? result.hitChipIndex.x : result.hitChipIndex.y;
+
+			// 法線の計算も共通化してしまう
+			if (parameter.isXAxis)
+			{
+				resultReturn.normal.x = (parameter.stepMove > 0.0f) ? -1.0f : 1.0f;
+			}
+			else
+			{
+				resultReturn.normal.y = (parameter.stepMove > 0.0f) ? -1.0f : 1.0f;
+			}
+			break;
+		}
+	}
+
+	return resultReturn;
+}
+
 ColliderArray::Result CollisionManager::IsHitStage(const Vector2& checkPos)
 {
 	ColliderArray::Result result{};
@@ -263,6 +316,21 @@ void CollisionManager::InitTagMatrix()
 	
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::ITEM_TREASURE)] = true;						// プレイヤーとアイテム宝
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ITEM_TREASURE)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::BAMBOO)] = true;								// プレイヤーと竹
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::BAMBOO)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_ATTACK_NORMAL)][static_cast<int>(CollisionTags::TAG::BAMBOO)] = true;				// プレイヤー通常攻撃と竹
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::BAMBOO)][static_cast<int>(CollisionTags::TAG::PLAYER_ATTACK_NORMAL)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_SHOT)][static_cast<int>(CollisionTags::TAG::BAMBOO)] = true;					// プレイヤーショットと竹
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::BAMBOO)][static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_SHOT)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_STAMP)][static_cast<int>(CollisionTags::TAG::BAMBOO)] = true;				// プレイヤースタンプと竹
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::BAMBOO)][static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_STAMP)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TELEPORT_EXIT)][static_cast<int>(CollisionTags::TAG::BAMBOO)] = true;						// テレポートと竹
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::BAMBOO)][static_cast<int>(CollisionTags::TAG::TELEPORT_EXIT)] = true;
 }
 
 void CollisionManager::InitColliderMatrix()

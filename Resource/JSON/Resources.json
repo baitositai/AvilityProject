@@ -635,7 +635,7 @@
     },
     {
       "key": "bamboo",
-      "path": "Resource/Image/Gimmick/Bamboo.png",
+      "path": "Resource/Image/Gimmick/BambooBar.png",
       "sceneIds": [ 4 ],
       "type": "texture"
     }

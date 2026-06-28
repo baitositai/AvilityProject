@@ -69,8 +69,12 @@ void EventTargetDestroy::CreateTargetFixMove()
 		// ”½“]
 		dir.x *= -1.0f;
 		
-		// ƒMƒ~ƒbƒNŠÇ—‚ÉŠi”[
-		gimmickManager_.Create(GimmickTypes::TYPE::TARGET, pos.ToVector2F(), dir);
+		// ƒMƒ~ƒbƒN¶¬
+		GimmickManager::CreateParameter createParameter = {};
+		createParameter.type = GimmickTypes::TYPE::TARGET;
+		createParameter.pos = pos.ToVector2F();
+		createParameter.moveDir = dir;
+		gimmickManager_.Create(createParameter);
 
 		// Ÿ‰ñ—p‚ÉÀ•W‚ğ‚¸‚ç‚·
 		pos.y += OFFSET_Y;
@@ -93,7 +97,11 @@ void EventTargetDestroy::CreateTargetRandom()
 		};
 
 		// ƒMƒ~ƒbƒNŠÇ—‚ÉŠi”[
-		gimmickManager_.Create(GimmickTypes::TYPE::TARGET, pos.ToVector2F());
+				// ƒMƒ~ƒbƒN¶¬
+		GimmickManager::CreateParameter createParameter = {};
+		createParameter.type = GimmickTypes::TYPE::TARGET;
+		createParameter.pos = pos.ToVector2F();
+		gimmickManager_.Create(createParameter);
 	}
 }
 
@@ -118,8 +126,12 @@ void EventTargetDestroy::CreateTargetRandomMove()
 			static_cast<float>(GetRand(100)) / 100.0f
 		};
 
-		// ƒMƒ~ƒbƒNŠÇ—‚ÉŠi”[
-		gimmickManager_.Create(GimmickTypes::TYPE::TARGET, pos.ToVector2F(), dir);
+		// ƒMƒ~ƒbƒNŠÇ—‚ÉŠi”[		// ƒMƒ~ƒbƒN¶¬
+		GimmickManager::CreateParameter createParameter = {};
+		createParameter.type = GimmickTypes::TYPE::TARGET;
+		createParameter.pos = pos.ToVector2F();
+		createParameter.moveDir = dir;
+		gimmickManager_.Create(createParameter);
 	}
 }
 
@@ -128,8 +140,11 @@ void EventTargetDestroy::UpdateChallenge()
 	// ƒ^[ƒQƒbƒg‚ğ‚·‚×‚Ä”j‰ó‚Å‚«‚½ê‡
 	if (gimmickManager_.IsDestrolyAllTarget())
 	{
-		// •ó” oŒ»
-		gimmickManager_.Create(GimmickTypes::TYPE::TREASURE_CHEST, triggerPos_);
+		// •ó” oŒ»		
+		GimmickManager::CreateParameter createParameter = {};
+		createParameter.type = GimmickTypes::TYPE::TREASURE_CHEST;
+		createParameter.pos = triggerPos_;
+		gimmickManager_.Create(createParameter);
 
 		// ŠÔ§ŒÀ‚ğ0‚É‚·‚é
 		timeLimit_ = 0.0f;

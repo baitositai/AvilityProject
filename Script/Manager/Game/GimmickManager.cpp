@@ -85,23 +85,26 @@ void GimmickManager::Clear()
 	gimmickListMap_.clear();
 }
 
-void GimmickManager::Create(const GimmickTypes::TYPE type, const Vector2F& pos, const Vector2F& moveDir)
+void GimmickManager::Create(const CreateParameter& parameter)
 {	
 	// 生成
-	auto gimmick = gimmickGenerator_->Create(type);
+	auto gimmick = gimmickGenerator_->Create(parameter.type);
 
 	// 初期パラメータの調整
-	gimmick->GetParameter().pos_ = pos;
-	gimmick->GetParameter().moveDir_ = moveDir;
+	auto& parameterGimmick = gimmick->GetParameter();
+	parameterGimmick.pos_ = parameter.pos;
+	parameterGimmick.moveDir_ = parameter.moveDir;
+	if (parameter.hp > -1) { parameterGimmick.hp_ = parameter.hp; }
+	if (parameter.attackPower > -1) { parameterGimmick.attackPower_ = parameter.attackPower; }
 
 	// 初期化
 	gimmick->Init();
 
 	// 格納
-	gimmickListMap_[type].push_back(std::move(gimmick));
+	gimmickListMap_[parameter.type].push_back(std::move(gimmick));
 }
 
-void GimmickManager::CreateBossDoor(const Vector2F pos)
+void GimmickManager::CreateBossDoor(const Vector2F& pos)
 {
 	// ドア生成
 	auto door = gimmickGenerator_->Create(GimmickTypes::TYPE::DOOR);

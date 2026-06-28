@@ -41,6 +41,15 @@ public:
 
 private:
 
+	// パラメータ情報
 	ParameterGimmickBamboo* parameterBamboo_;
-};
 
+	// 衝突判定と押し出し処理の共通ロジック
+	void ProcessCollision(bool isXAxis);
+
+	// 接地判定の共通ロジック
+	void CheckGroundStatus(float moveVal, bool isXAxis);
+
+	// 反射回数
+	int reflectCount_;
+};

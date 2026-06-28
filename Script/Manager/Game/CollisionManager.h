@@ -14,6 +14,24 @@ class CollisionManager : public Singleton<CollisionManager>
 	friend class Singleton<CollisionManager>;
 
 public:
+
+	// 判定に必要なオブジェクトの情報
+	struct CollisionCheckParam
+	{
+		Vector2 pos;
+		Vector2 size;
+		bool isXAxis;
+		float stepMove;
+	};
+
+	// 判定結果を返す構造体
+	struct CollisionResult
+	{
+		bool isHit;
+		float chipSize;
+		int chipIndex;
+		Vector2F normal; // 反射に使う法線も一緒に返すと便利
+	};
 	
 	/// <summary>
 	/// 初期化処理
@@ -41,6 +59,13 @@ public:
 	/// </summary>
 	/// <param name="stageCollider">ステージのコライダー</param>
 	void SetStageCollider(std::shared_ptr<ColliderArray> stageCollider) { stageCollider_ = stageCollider; }
+
+	/// <summary>
+	/// ステージとの衝突判定
+	/// </summary>
+	/// <param name="parameter">衝突判定のパラメータ情報</param>
+	/// <returns>衝突判定結果</returns>
+	CollisionResult CheckStageCollision(const CollisionCheckParam& parameter);
 
 	/// <summary>
 	/// 指定した座標がステージと衝突しているか調べる

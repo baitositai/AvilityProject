@@ -97,7 +97,10 @@ void EventTimeLimitDefeatAll::UpdateChallenge()
 		if (createEnemiesList_.empty())
 		{
 			// •ó” oŒ»
-			gimmickManager_.Create(GimmickTypes::TYPE::TREASURE_CHEST, triggerPos_);
+			GimmickManager::CreateParameter createParameter = {};
+			createParameter.type = GimmickTypes::TYPE::TREASURE_CHEST;
+			createParameter.pos = triggerPos_;
+			gimmickManager_.Create(createParameter);
 
 			// ó‘Ô‘JˆÚ
 			ChangeState(STATE::END);

@@ -30,6 +30,7 @@ public:
 		CHANGE_NEXT_AREA,			// 次へ遷移するエリア
 		TARGET,						// ターゲット
 		TREASURE_CHEST,				// 宝箱
+		BAMBOO,						// 竹
 		MAX
 	};
 

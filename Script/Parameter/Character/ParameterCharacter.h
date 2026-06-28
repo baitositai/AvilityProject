@@ -24,6 +24,12 @@ public:
     /// <param name="parameter">読み込むJSONデータ</param>
     virtual void LoadParameter(const Json& parameter) override;
 
+    /// <summary>
+    /// 足の位置を返す
+    /// </summary>
+    /// <returns>足の位置</returns>
+    const Vector2F GetFootPos();
+
     // アクション判定
     bool isAction_;
 

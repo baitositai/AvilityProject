@@ -52,59 +52,31 @@ void ComponentMove::Update()
 void ComponentMove::ProcessCollision(bool isXAxis)
 {
     float& moveVal = isXAxis ? moveAmount_.x : moveAmount_.y;
-    if (moveVal == 0.0f) return;
+    if (moveVal == 0.0f)
+    {
+        return;
+    }
 
     float& currentPos = isXAxis ? pos_.x : pos_.y;
     float sizeVal = isXAxis ? nowSize_.x : nowSize_.y;
-    float otherSizeVal = isXAxis ? nowSize_.y : nowSize_.x; // 判定する「面」の幅
 
-    // 座標更新
     currentPos += moveVal;
 
-    // 四隅・多点判定の追加
-    bool isHit = false;
-    ColliderArray::Result finalResult;
+    CollisionManager::CollisionCheckParam checkParameter;
+    checkParameter.pos = pos_.ToVector2();
+    checkParameter.size = nowSize_;
+    checkParameter.isXAxis = isXAxis;
+    checkParameter.stepMove = moveVal;
 
-    // 判定点のリスト（進行方向の面の、左端・中央・右端の3点）
-    // 0.5fを調整することで、角の判定を少し内側に寄せる（あそびを作る）ことも可能
-    float margin = 0.45f;
-    float offsets[] = { -margin, 0.0f, margin };
+    CollisionManager:: CollisionResult result = collisionManager_.CheckStageCollision(checkParameter);
 
-    for (float offset : offsets)
-    {
-        Vector2 checkPos = pos_.ToVector2();
-        if (isXAxis)
-        {
-            // X移動時：進行方向の「縦の面」を3点チェック
-            checkPos.x += (moveVal > 0.0f) ? sizeVal / 2.0f : -sizeVal / 2.0f;
-            checkPos.y += otherSizeVal * offset;
-        }
-        else
-        {
-            // Y移動時：進行方向の「横の面」を3点チェック
-            checkPos.y += (moveVal > 0.0f) ? sizeVal / 2.0f : -sizeVal / 2.0f;
-            checkPos.x += otherSizeVal * offset;
-        }
-
-        auto result = collisionManager_.IsHitStage(checkPos);
-        if (result.hit)
-        {
-            isHit = true;
-            finalResult = result;
-            break; // 1点でも当たっていれば衝突とみなす
-        }
-    }
-
-    if (isHit)
+    if (result.isHit)
     {
         CheckGroundStatus(moveVal, isXAxis);
 
-        float chipSize = isXAxis ? finalResult.chipSize.x : finalResult.chipSize.y;
-        int chipIndex = isXAxis ? finalResult.hitChipIndex.x : finalResult.hitChipIndex.y;
-
         float boundaryPos = (moveVal > 0.0f)
-            ? static_cast<float>(chipIndex * chipSize)
-            : static_cast<float>((chipIndex + 1) * chipSize);
+            ? static_cast<float>(result.chipIndex * result.chipSize)
+            : static_cast<float>((result.chipIndex + 1) * result.chipSize);
 
         currentPos = (moveVal > 0.0f)
             ? boundaryPos - (sizeVal / 2.0f)

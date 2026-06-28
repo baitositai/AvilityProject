@@ -15,8 +15,8 @@
     "moveSpeed": 8.0,
     "gravityPower": 9.8,
     "hitBoxSize": {
-      "x": 64,
-      "y": 40
+      "x": 40,
+      "y": 64
     },
     "componentKeys": [
       "move"

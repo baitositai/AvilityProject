@@ -71,7 +71,7 @@ void ComponentLogicBambooThrowing::UpdateAnimation()
 		attackCollider_->SetIsActive(true);
 
 		// í|ÇÃçÏê¨
-		
+		CreateBamboo();
 
 		// çUåÇîªíË
 		isAttack_ = true;
@@ -154,7 +154,12 @@ void ComponentLogicBambooThrowing::CreateBamboo()
 	moveDir.y = rotatedY;
 
 	// í|ê∂ê¨
-	gimmickManager_.Create(GimmickTypes::TYPE::BAMBOO, pos, moveDir);
+	GimmickManager::CreateParameter createParameter = {};
+	createParameter.type = GimmickTypes::TYPE::BAMBOO;
+	createParameter.pos = attackPos_;
+	createParameter.moveDir = moveDir;
+	createParameter.attackPower = 20;
+	gimmickManager_.Create(createParameter);
 }
 
 void ComponentLogicBambooThrowing::ChangeStateAnimation()

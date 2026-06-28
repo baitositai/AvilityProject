@@ -2,7 +2,6 @@
 
 ParameterGimmickTarget::ParameterGimmickTarget() :
 	isMove_(false),
-	moveDir_({}),
 	moveLimit_({})
 {
 }

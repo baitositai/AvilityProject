@@ -346,148 +346,56 @@ void ComponentAvilityShot::ProcessMoveShot()
 void ComponentAvilityShot::ProcessCollision(bool isXAxis)
 {
 	float& moveVal = isXAxis ? moveAmount_.x : moveAmount_.y;
-
-	if (moveVal == 0.0f) return;
+	if (moveVal == 0.0f)
+	{
+		return;
+	}
 
 	float& currentPos = isXAxis ? pos_.x : pos_.y;
 
-	float sizeVal = isXAxis ? nowSize_.x : nowSize_.y;
-	float otherSizeVal = isXAxis ? nowSize_.y : nowSize_.x;
-
-	// =========================
-	// 分割移動
-	// =========================
-
 	float move = moveVal;
-
-	// タイル半分単位で分割すると安定
 	float maxStep = 8.0f;
-
-	int step = static_cast<int>(
-		std::ceil(std::abs(move) / maxStep));
-
-	if (step <= 0) step = 1;
-
+	int step = static_cast<int>(std::ceil(std::abs(move) / maxStep));
+	if (step <= 0)
+	{
+		step = 1;
+	}
 	float stepMove = move / step;
-
-	// =========================
-	// 少しずつ移動
-	// =========================
 
 	for (int i = 0; i < step; i++)
 	{
 		currentPos += stepMove;
 
-		bool isHit = false;
-		ColliderArray::Result finalResult;
+		CollisionManager::CollisionCheckParam checkParameter;
+		checkParameter.pos = pos_.ToVector2();
+		checkParameter.size = nowSize_;
+		checkParameter.isXAxis = isXAxis;
+		checkParameter.stepMove = stepMove;
 
-		// 判定点
-		float margin = 0.45f;
-		float offsets[] = { -margin, 0.0f, margin };
+		CollisionManager::CollisionResult result = collisionManager_.CheckStageCollision(checkParameter);
 
-		for (float offset : offsets)
-		{
-			Vector2 checkPos = pos_.ToVector2();
-
-			if (isXAxis)
-			{
-				// X軸移動時
-				checkPos.x +=
-					(stepMove > 0.0f)
-					? sizeVal / 2.0f
-					: -sizeVal / 2.0f;
-
-				checkPos.y += otherSizeVal * offset;
-			}
-			else
-			{
-				// Y軸移動時
-				checkPos.y +=
-					(stepMove > 0.0f)
-					? sizeVal / 2.0f
-					: -sizeVal / 2.0f;
-
-				checkPos.x += otherSizeVal * offset;
-			}
-
-			auto result =
-				collisionManager_.IsHitStage(checkPos);
-
-			//　衝突がない場合敵の衝突も試す
-			if (!result.hit)
-			{
-				result =
-					collisionManager_.IsHitStage(checkPos);
-			}
-
-			if (result.hit)
-			{
-				isHit = true;
-				finalResult = result;
-				break;
-			}
-		}
-
-		// =========================
-		// 衝突
-		// =========================
-
-		if (isHit)
+		if (result.isHit)
 		{
 			// 1個戻す
 			currentPos -= stepMove;
 
 			CheckGroundStatus(stepMove, isXAxis);
 
-			// =========================
-			// 法線作成
-			// =========================
-
-			Vector2F normal(0.0f, 0.0f);
-
-			if (isXAxis)
-			{
-				normal.x =
-					(stepMove > 0.0f)
-					? -1.0f
-					: 1.0f;
-			}
-			else
-			{
-				normal.y =
-					(stepMove > 0.0f)
-					? -1.0f
-					: 1.0f;
-			}
-
-			// =========================
-			// 反射
-			// =========================
-
-			Vector2F reflectDir =
-				UtilityCommon::Reflect(
-					parameter_.shotVec_,
-					normal);
-
+			// 反射ベクトル計算（共通化した法線を使用）
+			Vector2F reflectDir = UtilityCommon::Reflect(parameter_.shotVec_, result.normal);
 			parameter_.shotVec_ = reflectDir;
 
-			// =========================
-			// 反射回数
-			// =========================
-
+			// 反射回数・時間の調整
 			if (!isReflected_)
 			{
 				isReflected_ = true;
-
 				if (shotTime_ > 0.5f)
 				{
 					shotTime_ -= 0.35f;
 				}
 			}
 
-			// 移動停止
 			moveVal = 0.0f;
-
 			break;
 		}
 		else

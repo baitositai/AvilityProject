@@ -17,8 +17,11 @@ void EventTreasureChest::UpdateChallenge()
 	// ó‘Ô‘JˆÚ
 	ChangeState(STATE::END);
 
-	// •ó” oŒ»
-	gimmickManager_.Create(GimmickTypes::TYPE::TREASURE_CHEST, triggerPos_);
+	// •ó” oŒ»	
+	GimmickManager::CreateParameter createParameter = {};
+	createParameter.type = GimmickTypes::TYPE::TREASURE_CHEST;
+	createParameter.pos = triggerPos_;
+	gimmickManager_.Create(createParameter);
 }
 
 void EventTreasureChest::UpdateEnd()

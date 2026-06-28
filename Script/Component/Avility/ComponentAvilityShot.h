@@ -36,7 +36,6 @@ public:
 	/// </summary>
 	void Init() override;
 
-
 	/// <summary>
 	/// 更新処理
 	/// </summary>

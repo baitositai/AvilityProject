@@ -57,3 +57,10 @@ void ParameterCharacter::LoadParameter(const Json& parameter)
     // アニメーションデータの取得
     LoadParameterAnimation(parameter);
 }
+
+const Vector2F ParameterCharacter::GetFootPos() 
+{
+    Vector2F footPos = pos_;
+    footPos.x += static_cast<float>(hitSize_.x / 2);
+    return footPos;
+}

@@ -57,4 +57,3 @@ private:
 	// 接地判定の共通ロジック
 	void CheckGroundStatus(float moveVal, bool isXAxis);
 };
-

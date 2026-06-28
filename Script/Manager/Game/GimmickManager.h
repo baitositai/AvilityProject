@@ -16,6 +16,15 @@ class GimmickManager : public Singleton<GimmickManager>
 
 public:
 
+	struct CreateParameter
+	{
+		GimmickTypes::TYPE type = GimmickTypes::TYPE::MAX;
+		Vector2F pos = {};
+		Vector2F moveDir = {};
+		int attackPower = -1;
+		int hp = -1;
+	};
+
 	/// <summary>
 	/// 初期化処理
 	/// </summary>
@@ -42,18 +51,16 @@ public:
 	void Clear();
 
 	/// <summary>
-	/// 追加処理
+	/// 生成処理
 	/// </summary>
-	/// <param name="type">種類</param>
-	/// <param name="pos">座標</param>
-	/// <param name="moveDir">移動方向</param>
-	void Create(const GimmickTypes::TYPE type, const Vector2F& pos, const Vector2F& moveDir = {});
+	/// <param name="parameter">生成パラメータ</param>
+	void Create(const CreateParameter& parameter);
 
 	/// <summary>
 	/// ボス部屋ドアの生成
 	/// </summary>
-	/// <param name="pos"></param>
-	void CreateBossDoor(const Vector2F pos);
+	/// <param name="pos">座標位置</param>
+	void CreateBossDoor(const Vector2F& pos);
 
 	/// <summary>
 	/// ターゲットをすべて消す
