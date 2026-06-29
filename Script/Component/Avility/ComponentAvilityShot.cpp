@@ -18,7 +18,6 @@ ComponentAvilityShot::ComponentAvilityShot(Player& owner)
 	inputManager_(InputManager::GetInstance()),
 	moveAmount_({}),
 	chageTime_(0.0f),
-	shotTime_(0.0f),
 	shotVec_({}),
 	shotAngle_(0.0f),
 	isReflected_(false),
@@ -153,7 +152,7 @@ void ComponentAvilityShot::ProcessInputShot()
 
 		//!parameter_.direction_ ? shotAngle_ = UtilityCommon::Deg2RadF(0.0f) : shotAngle_ = UtilityCommon::Deg2RadF(180.0f);
 
-		shotTime_ = 0.0f;
+		parameter_.shotTime_ = 0.0f;
 		currentState_ = "charge";
 		currentStateFunction_ = stateFunctionMap_[currentState_];
 
@@ -168,8 +167,6 @@ void ComponentAvilityShot::ProcessInputShot()
 
 void ComponentAvilityShot::ProcessInputCharge()
 {
-	//shotVec_ = {};
-
 	// 現在の向きを入れる
 	shotVec_.x = parameter_.direction_ ? -1 : 1;
 
@@ -237,7 +234,7 @@ void ComponentAvilityShot::ProcessInputCharge()
 	if (inputManager_.IsNew(InputManager::TYPE::AVILITY_SHOT_CHARGE, parameter_.padNo_))
 	{
 		chageTime_ += 0.5f;
-		shotTime_ += 0.1f;
+		parameter_.shotTime_ += 0.1f;
 
 		moveAmount_.x = std::sin(chageTime_);
 		moveAmount_.y = 0.0f;
@@ -248,9 +245,9 @@ void ComponentAvilityShot::ProcessInputCharge()
 	{
 
 		// 時間の割り当て
-		if (shotTime_ > SHOT_TIME)
+		if (parameter_.shotTime_ > SHOT_TIME)
 		{
-			shotTime_ = SHOT_TIME;
+			parameter_.shotTime_ = SHOT_TIME;
 		}
 
 		// チャージ時間初期化
@@ -279,11 +276,13 @@ void ComponentAvilityShot::ProcessInputCharge()
 
 void ComponentAvilityShot::ProcessMoveShot()
 {
-	// ショット時間を減らす
-	shotTime_ -= sceneManager_.GetDeltaTime();
+	// 時間を減らす
+	float deltaTime = sceneManager_.GetDeltaTime();
+	parameter_.shotTime_ -= deltaTime;				// ショット時間
+	parameter_.shotDamageInterval_ -= deltaTime;	// ショットダメージインターバル
 
 	// 終了条件に当てはまる場合
-	if (shotTime_ <= 0.0f || (parameter_.shotVec_.x == 0.0f && parameter_.shotVec_.y == 0.0f))
+	if (parameter_.shotTime_ <= 0.0f || (parameter_.shotVec_.x == 0.0f && parameter_.shotVec_.y == 0.0f))
 	{ 		
 		// 重力別角度初期化
 		if (gravityDir_ == ParameterActor::DIR::RIGHT)
@@ -327,8 +326,8 @@ void ComponentAvilityShot::ProcessMoveShot()
 	{
 		Vector2F dir = parameter_.shotVec_;
 
-		moveAmount_.y = dir.y * shotTime_ * SHOT_SPEED;
-		moveAmount_.x = dir.x * shotTime_ * SHOT_SPEED;
+		moveAmount_.y = dir.y * parameter_.shotTime_ * SHOT_SPEED;
+		moveAmount_.x = dir.x * parameter_.shotTime_ * SHOT_SPEED;
 
 		float currentAngle = std::atan2(dir.y, dir.x) - UtilityCommon::Deg2RadF(-90.0f);
 
@@ -389,9 +388,9 @@ void ComponentAvilityShot::ProcessCollision(bool isXAxis)
 			if (!isReflected_)
 			{
 				isReflected_ = true;
-				if (shotTime_ > 0.5f)
+				if (parameter_.shotTime_ > 0.5f)
 				{
-					shotTime_ -= 0.35f;
+					parameter_.shotTime_ -= 0.35f;
 				}
 			}
 

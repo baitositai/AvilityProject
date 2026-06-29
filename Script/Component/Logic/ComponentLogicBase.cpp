@@ -14,6 +14,7 @@ ComponentLogicBase::ComponentLogicBase(EnemyBase& owner) :
 {
 	// コンストラクタは変数の初期化のみ
 	isEnd_ = false;
+	probability_ = 0.0f;
 }
 
 ComponentLogicBase::~ComponentLogicBase()
@@ -38,4 +39,9 @@ void ComponentLogicBase::Update()
 
 void ComponentLogicBase::Remove()
 {
+}
+
+void ComponentLogicBase::AttackReset()
+{
+	// 攻撃のコライダーとかがある場合ここで判定リセット
 }

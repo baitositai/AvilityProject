@@ -22,6 +22,7 @@ public:
 		DEAD,
 		DAMAGE,
 		PAUSE,
+		DEFENCE,
 		EFFECT, 
 		MAX,
 	};
@@ -85,7 +86,7 @@ public:
 	/// 次回再生予定のアニメーション種類の設定
 	/// </summary>
 	/// <param name="nextType">次回再生予定のアニメーション種類</param>
-	void SetNextAnimationType(const TYPE nextType) { nextType_ = nextType; }
+	void SetNextAnimationType(const TYPE nextType, const bool isNextLoop = true);
 
 	/// <summary>
 	/// ループ判定を返す
@@ -135,6 +136,7 @@ private:
 		{ "dead", TYPE::DEAD },
 		{ "damage", TYPE::DAMAGE },
 		{ "pause", TYPE::PAUSE },
+		{ "defence", TYPE::DEFENCE },
 		{ "effect", TYPE::EFFECT },
 	};
 
@@ -149,6 +151,9 @@ private:
 
 	// ループ判定
 	bool isLoop_;
+
+	// 次のアニメーションのループ判定
+	bool isNextLoop_;
 
 	// 再生判定
 	bool isPlay_;

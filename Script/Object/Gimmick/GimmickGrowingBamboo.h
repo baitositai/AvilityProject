@@ -28,6 +28,11 @@ public:
 	void Update() override;
 
 	/// <summary>
+	/// 描画処理
+	/// </summary>
+	void Draw() override;
+
+	/// <summary>
 	/// パラメーターを返す(変更可)
 	/// </summary>
 	/// <returns>パラメータ</returns>
@@ -41,7 +46,27 @@ public:
 
 private:
 
+	// 成長インターバル
+	static constexpr float GROWING_INTERVAL = 0.05;
+
+	// 成長回数カウント
+	int growingCount_;
+
+	// タイマー
+	float timer_;
+
+	// 成長長さ
+	float growLength_;
+
+	// 更新処理
+	std::function<void()> update_;
+
 	// パラメータ情報
 	ParameterGimmickGrowingBamboo* parameterBamboo_;
-};
 
+	// 成長処理
+	void UpdateGrow();
+
+	// 待機処理
+	void UpdateWait();
+};

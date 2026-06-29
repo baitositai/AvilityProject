@@ -44,10 +44,15 @@ public:
 	/// </summary>
 	void Remove() override;
 
+	/// <summary>
+	/// 攻撃のリセット
+	/// </summary>
+	void AttackReset() override;
+
 private:
 
 	// 竹の生成インターバル
-	static constexpr float INTERVAL_TIME = 0.2f;
+	static constexpr float INTERVAL_TIME = 0.05f;
 
 	// 竹の生成位置ずらし値
 	static constexpr int CREATE_OFFSET_X = 48;

@@ -11,10 +11,12 @@ public:
 	static int SqrMagnitude(const Vector2& v);
 	static double Distance(const Vector2& v1, const Vector2& v2);
 
-	/// @brief 内積を求める
-	/// @param v1 
-	/// @param v2 
-	/// @return 
+	/// <summary>
+	/// 内積を求める
+	/// </summary>
+	/// <param name="v1">ベクトル1</param>
+	/// <param name="v2">ベクトル2</param>
+	/// <returns>内積結果</returns>
 	static float Dot(const Vector2F& v1, const Vector2F& v2);
 
 

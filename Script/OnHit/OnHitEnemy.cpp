@@ -76,29 +76,23 @@ void OnHitEnemy::OnHitPlayerAttack(const std::weak_ptr<ColliderBase>& opponentCo
 
 void OnHitEnemy::OnHitPlayerAvilityStamp(const std::weak_ptr<ColliderBase>& opponentCollider)
 {    
-	// ノックバック処理
-	KnockBack(opponentCollider, KNOCK_BACK_FORCE);
-
 	// 相手コライダーの判定を無効化
 	opponentCollider.lock()->SetIsActive(false);
 }
 
 void OnHitEnemy::OnHitPlayerAvilityShot(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
-    // 衝突者が無敵のときは無視
-    if (owner_.IsInvincible()
-        || opponentCollider.lock()->GetPartnerTag() == CollisionTags::TAG::PLAYER_ATTACK_NORMAL
-        || opponentCollider.lock()->GetPartnerTag() == CollisionTags::TAG::PLAYER_AVILITY_SHOT
-        )
-    {
-        return;
-    }
+    //// 衝突者が無敵のときは無視
+    //if (owner_.IsInvincible()
+    //    || opponentCollider.lock()->GetPartnerTag() == CollisionTags::TAG::PLAYER_ATTACK_NORMAL
+    //    || opponentCollider.lock()->GetPartnerTag() == CollisionTags::TAG::PLAYER_AVILITY_SHOT
+    //    )
+    //{
+    //    return;
+    //}
 
-    // ダメージ処理
-    Damage(opponentCollider);
-
-    // ノックバック処理
-    KnockBack(opponentCollider, KNOCK_BACK_FORCE);
+    //// ダメージ処理
+    //Damage(opponentCollider);
 }
 
 void OnHitEnemy::OnHitOtherEnemy(const std::weak_ptr<ColliderBase>& opponentCollider)

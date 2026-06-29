@@ -10,6 +10,7 @@ class GimmickBase;
 class GimmickDoor;
 class GimmickTarget;
 class GimmickBamboo;
+class GimmickGrowingBamboo;
 class GimmickTreasureChest;
 
 class ParameterGimmick;
@@ -60,5 +61,6 @@ private:
 	std::unique_ptr<GimmickDoor> CreateGimmickDoor();
 	std::unique_ptr<GimmickTarget> CreateGimmickTarget();
 	std::unique_ptr<GimmickBamboo> CreateGimmickBamboo();
+	std::unique_ptr<GimmickGrowingBamboo> CreateGimmickGrowingBamboo();
 	std::unique_ptr<GimmickTreasureChest> CreateGimmickTreasureChest();
 };

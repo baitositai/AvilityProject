@@ -64,10 +64,16 @@ void Animation::CheckNextAnimation()
     }
 
     // çƒê∂
-    Play(nextType_);
+    Play(nextType_, isNextLoop_);
    
     // ãÛÇ…Ç∑ÇÈ
     nextType_ = TYPE::MAX;
+}
+
+void Animation::SetNextAnimationType(const TYPE nextType, const bool isNextLoop)
+{
+    nextType_ = nextType;
+    isNextLoop_ = isNextLoop;
 }
 
 const Animation::Data Animation::GetAnimationData() const

@@ -6,6 +6,7 @@ class Player;
 class FactoryComponent;
 class InputManager;
 class OnHitPlayerStamp;
+class OnHitPlayerShot;
 
 class OnHitPlayer : public OnHitCharacterBase
 {
@@ -44,6 +45,9 @@ private:
 
 	// スタンプ用の衝突後処理
 	std::unique_ptr<OnHitPlayerStamp> onHitPlayerStamp_;
+
+	// ショット用の衝突後処理
+	std::unique_ptr<OnHitPlayerShot> onHitPlayerShot_;
 
 	// タグ別衝突後処理
 	void OnHitStage(const std::weak_ptr<ColliderBase>& opponentCollider) override;

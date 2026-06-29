@@ -135,12 +135,6 @@ void CharacterBase::Damage(const int damage, const Vector2& hitPos)
 		return;
 	}
 
-	// アニメーション設定
-	animation_->Play(Animation::TYPE::DAMAGE, false);
-
-	// 次回アニメーション設定
-	animation_->SetNextAnimationType(Animation::TYPE::IDLE);
-
 	// 攻撃のリセット
 	AttackReset();
 }

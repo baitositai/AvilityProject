@@ -26,6 +26,7 @@ void GimmickBamboo::Init()
 	// Õ“ËŒãˆ—
 	onHit_ = std::make_unique<OnHitBamboo>(*this);
 
+	// ‰Šú‰»
 	ActorBase::Init();
 }
 
@@ -97,7 +98,7 @@ void GimmickBamboo::ProcessCollision(bool isXAxis)
 			reflectCount_++;
 
 			// ˆê’è‰ñ””½Ë‚µ‚½‚ç
-			if (reflectCount_ > 12)
+			if (reflectCount_ > parameterBamboo_->reflectCountMax_)
 			{
 				Delete();
 				return;

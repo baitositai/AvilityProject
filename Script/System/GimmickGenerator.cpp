@@ -2,6 +2,7 @@
 #include "../Object/Gimmick/GimmickDoor.h"
 #include "../Object/Gimmick/GimmickTarget.h"
 #include "../Object/Gimmick/GimmickBamboo.h"
+#include "../Object/Gimmick/GimmickGrowingBamboo.h"
 #include "../Object/Gimmick/GimmickTreasureChest.h"
 #include "GimmickGenerator.h"
 
@@ -22,6 +23,10 @@ GimmickGenerator::GimmickGenerator()
 	createGimmickMap_.emplace(GimmickTypes::TYPE::BAMBOO, [this]()
 		{
 			return CreateGimmickBamboo();
+		});
+	createGimmickMap_.emplace(GimmickTypes::TYPE::GROWING_BAMBOO, [this]()
+		{
+			return CreateGimmickGrowingBamboo();
 		});
 }
 
@@ -57,6 +62,12 @@ void GimmickGenerator::InitParameter()
 	auto parameterBamboo = std::make_unique<ParameterGimmickBamboo>();
 	parameterBamboo->LoadParameter(jsonBambooParameter);
 	templateParameterMap_.emplace(GimmickTypes::TYPE::BAMBOO, std::move(parameterBamboo));
+
+	// 成長する竹生成
+	const auto jsonGrowingBambooParameter = jsonParameterMap.at("growingBamboo").front();
+	auto parameterGrowingBamboo = std::make_unique<ParameterGimmickGrowingBamboo>();
+	parameterGrowingBamboo->LoadParameter(jsonGrowingBambooParameter);
+	templateParameterMap_.emplace(GimmickTypes::TYPE::GROWING_BAMBOO, std::move(parameterGrowingBamboo));
 }
 
 std::unique_ptr<GimmickBase> GimmickGenerator::Create(const GimmickTypes::TYPE type)
@@ -124,6 +135,24 @@ std::unique_ptr<GimmickBamboo> GimmickGenerator::CreateGimmickBamboo()
 	// 生成したものを返す
 	auto parameter = std::make_unique<ParameterGimmickBamboo>(*parameterBamboo);
 	return std::make_unique<GimmickBamboo>(std::move(parameter));
+}
+
+std::unique_ptr<GimmickGrowingBamboo> GimmickGenerator::CreateGimmickGrowingBamboo()
+{
+	// 専用のパラメータにキャスト
+	auto parameterBase = templateParameterMap_.at(GimmickTypes::TYPE::GROWING_BAMBOO).get();
+	auto parameterGrowingBamboo = dynamic_cast<ParameterGimmickGrowingBamboo*>(parameterBase);
+
+	// 空の場合
+	if (parameterGrowingBamboo == nullptr)
+	{
+		// 空で返す
+		return nullptr;
+	}
+
+	// 生成したものを返す
+	auto parameter = std::make_unique<ParameterGimmickGrowingBamboo>(*parameterGrowingBamboo);
+	return std::make_unique<GimmickGrowingBamboo>(std::move(parameter));
 }
 
 std::unique_ptr<GimmickTreasureChest> GimmickGenerator::CreateGimmickTreasureChest()

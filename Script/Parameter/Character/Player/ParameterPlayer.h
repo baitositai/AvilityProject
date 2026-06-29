@@ -54,6 +54,12 @@ public:
     // ショットベクトル
     Vector2F shotVec_;
 
+    // ショットのダメージインターバル
+    float shotDamageInterval_;
+
+    // ショット時間
+    float shotTime_;
+
     // ダッシュスピード
     float dashSpeed_;
 

@@ -40,6 +40,7 @@ class ComponentAvilityGiant;
 class ComponentLogicBase;
 class ComponentLogicPatrol;
 class ComponentLogicBambooThrowing;
+class ComponentLogicBambooGrowing;
 
 class ComponentDebugCreateItemAvility;
 
@@ -110,6 +111,7 @@ private:
 
 	std::unique_ptr<ComponentLogicPatrol> CreateComponentLogicPatrol(ActorBase& owner);
 	std::unique_ptr<ComponentLogicBambooThrowing> CreateComponentLogicBambooThrowing(ActorBase& owner);
+	std::unique_ptr<ComponentLogicBambooGrowing> CreateComponentLogicBambooGrowing(ActorBase& owner);
 
 	std::unique_ptr<ComponentDebugCreateItemAvility> CreateComponentDebugCreateItemAvility(ActorBase& owner);
 	

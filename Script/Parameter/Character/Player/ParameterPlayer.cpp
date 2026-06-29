@@ -3,6 +3,9 @@
 ParameterPlayer::ParameterPlayer() :
     shotVec_({ 0.0f, 0.0f }),
     dashSpeed_(0.0f),
+    shotDamageInterval_(0.0f),
+    shotTime_(0.0f),
+    selectAvilityTime_(0.0f),
     padNo_(Input::JOYPAD_NO::PAD1),
     isHitItem_(false)
 {
@@ -19,6 +22,7 @@ void ParameterPlayer::LoadParameter(const Json& parameter)
 
     // プレイヤー固有パラメータの読み込み
     dashSpeed_ = parameter.value("dashSpeed", 0.0f);
+    shotDamageInterval_ = parameter.value("shotDamageInterval", 0.0f);
 
     // ショットベクトルの読み込み
     if (parameter.contains("shotVec"))

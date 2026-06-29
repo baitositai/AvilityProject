@@ -37,6 +37,11 @@ public:
 	/// </summary>
 	void Remove() override;
 
+	/// <summary>
+	/// UŒ‚‚ÌƒŠƒZƒbƒg
+	/// </summary>
+	void AttackReset() override;
+
 private:
 
 	enum class STATE

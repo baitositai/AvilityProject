@@ -161,7 +161,13 @@ void Player::Dead()
 }
 
 void Player::Damage(const int damage, const Vector2& hitPos)
-{
+{	
+	// アニメーション設定
+	animation_->Play(Animation::TYPE::DAMAGE, false);
+
+	// 次回アニメーション設定
+	animation_->SetNextAnimationType(Animation::TYPE::IDLE);
+	
 	// 基底クラスの処理
 	CharacterBase::Damage(damage, hitPos);
 
@@ -509,7 +515,7 @@ void Player::SelectAvility()
 		if (index > -1)
 		{
 			avilityComponents_[index]->Remove();
-			spareAvilityComponent_->Init();
+			spareAvilityComponent_->Create();
 			avilityComponents_[index] = std::move(spareAvilityComponent_);
 			parameterPlayer_->selectAvilityTime_ = 0.0f;
 		}

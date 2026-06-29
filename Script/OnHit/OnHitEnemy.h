@@ -24,17 +24,19 @@ public:
 	/// <param name="opponentCollider">衝突相手のコライダー</param>
 	virtual void Update(const std::weak_ptr<ColliderBase>& opponentCollider) override;
 
-private:
-
-	// 所有者
-	EnemyBase& owner_;
+protected:
 
 	// 各種衝突後処理
-	void OnHitPlayerAttack(const std::weak_ptr<ColliderBase>& opponentCollider);
+	virtual void OnHitPlayerAttack(const std::weak_ptr<ColliderBase>& opponentCollider);
 	void OnHitPlayerAvilityStamp(const std::weak_ptr<ColliderBase>& opponentCollider);
 	void OnHitPlayerAvilityShot(const std::weak_ptr<ColliderBase>& opponentCollider);
 	void OnHitOtherEnemy(const std::weak_ptr<ColliderBase>& opponentCollider);
 
 	// 視野角の衝突後処理
 	void OnHitEnemyViewToPlayer(const std::weak_ptr<ColliderBase>& opponentCollider);
+
+private:
+
+	// 所有者
+	EnemyBase& owner_;
 };

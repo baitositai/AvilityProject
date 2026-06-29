@@ -145,6 +145,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\OnHit\OnHitPlayerShot.cpp" />
+    <ClCompile Include="Script\OnHit\OnHitPanda.cpp" />
     <ClCompile Include="Script\Parameter\Gimmick\ParameterGimmickGrowingBamboo.cpp" />
     <ClCompile Include="Script\Object\Gimmick\GimmickGrowingBamboo.cpp" />
     <ClCompile Include="Script\Component\Logic\ComponentLogicBambooGrowing.cpp" />
@@ -365,6 +367,8 @@
     <ClCompile Include="Script\Ui\Game\UiDamage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\OnHit\OnHitPlayerShot.h" />
+    <ClInclude Include="Script\OnHit\OnHitPanda.h" />
     <ClInclude Include="Script\Parameter\Gimmick\ParameterGimmickGrowingBamboo.h" />
     <ClInclude Include="Script\Object\Gimmick\GimmickGrowingBamboo.h" />
     <ClInclude Include="Script\Component\Logic\ComponentLogicBambooGrowing.h" />
@@ -509,7 +513,7 @@
     <ClInclude Include="Script\Manager\Game\CollisionManager.h" />
     <ClInclude Include="Script\Collider\ColliderType.h" />
     <ClInclude Include="Script\Collider\ColliderBase.h" />
-    <ClInclude Include="Script\Object\Gimmick\Player.h" />
+    <ClInclude Include="Script\Object\Character\Player.h" />
     <ClInclude Include="Script\Object\Character\CharacterBase.h" />
     <ClInclude Include="Script\Component\ComponentBase.h" />
     <ClInclude Include="Script\Application.h" />

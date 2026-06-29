@@ -87,7 +87,7 @@ Vector2 ParameterActor::GetScaleToHitSize()
     return Vector2F::MulVector2FFloat(hitSize_.ToVector2F(), scale_).ToVector2();
 }
 
-const Vector2F ParameterActor::GetGravityDirectionVector() const
+Vector2F ParameterActor::GetGravityDirectionVector() 
 {
     Vector2F dir = {};
 
@@ -102,7 +102,7 @@ const Vector2F ParameterActor::GetGravityDirectionVector() const
     return dir;
 }
 
-const Vector2F ParameterActor::GetFront() const
+Vector2F ParameterActor::GetFront()
 {
     Vector2F vec = {};
 
@@ -124,7 +124,7 @@ const Vector2F ParameterActor::GetFront() const
     return vec;
 }
 
-const Vector2F ParameterActor::GetBack() const
+Vector2F ParameterActor::GetBack()
 {
     // 後ろ方向は前方向を完全に反転させたもの
     Vector2F vec = GetFront();
@@ -132,7 +132,7 @@ const Vector2F ParameterActor::GetBack() const
     return vec;
 }
 
-const Vector2F ParameterActor::GetUp() const
+Vector2F ParameterActor::GetUp()
 {
     // 上方向は重力ベクトルを完全に反転させたもの
     Vector2F vec = GetGravityDirectionVector();
@@ -140,7 +140,7 @@ const Vector2F ParameterActor::GetUp() const
     return vec;
 }
 
-const Vector2F ParameterActor::GetDown() const
+Vector2F ParameterActor::GetDown() 
 {
     // 下方向は重力ベクトルそのもの
     return GetGravityDirectionVector();

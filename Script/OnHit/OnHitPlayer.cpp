@@ -14,6 +14,7 @@
 #include "../Collider/ColliderArray.h"
 #include "../Collider/ColliderBox.h"
 #include "OnHitPlayerStamp.h"
+#include "OnHitPlayerShot.h"
 #include "OnHitPlayer.h"
 
 OnHitPlayer::OnHitPlayer(Player& owner) :
@@ -32,6 +33,7 @@ OnHitPlayer::OnHitPlayer(Player& owner) :
 	onHitMap_.emplace(CollisionTags::TAG::CHANGE_NEXT_AREA, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitNextArea(opponentCollider); });
 
     onHitPlayerStamp_ = std::make_unique<OnHitPlayerStamp>(owner_);
+    onHitPlayerShot_ = std::make_unique<OnHitPlayerShot>(owner_);
 }
 
 OnHitPlayer::~OnHitPlayer()
@@ -48,6 +50,10 @@ void OnHitPlayer::Update(const std::weak_ptr<ColliderBase>& opponentCollider)
 
         case CollisionTags::TAG::PLAYER_AVILITY_STAMP:
             onHitPlayerStamp_->Update(opponentCollider);
+            break;
+
+        case CollisionTags::TAG::PLAYER_AVILITY_SHOT:
+            onHitPlayerShot_->Update(opponentCollider);
             break;
 
         default:

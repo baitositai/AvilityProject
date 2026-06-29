@@ -16,6 +16,7 @@ ComponentLogicBambooGrowing::ComponentLogicBambooGrowing(EnemyPanda& owner) :
 	createBambooCount_ = -1;
 	attackPos_ = {};
 	createBambooPos_ = {};
+	createIntervalTime_ = 0.0f;
 	attackCollider_ = nullptr;
 	state_ = STATE::ANIMATION;
 
@@ -40,7 +41,7 @@ void ComponentLogicBambooGrowing::Init()
 {
 	ComponentLogicBase::Init();
 	ChangeState(STATE::ANIMATION);
-	createBambooCount_ = UtilityCommon::GetRandomCount(4, 6);
+	createBambooCount_ = UtilityCommon::GetRandomCount(8, 12);
 }
 
 void ComponentLogicBambooGrowing::Update()
@@ -57,10 +58,15 @@ void ComponentLogicBambooGrowing::Remove()
 	}
 }
 
+void ComponentLogicBambooGrowing::AttackReset()
+{
+	attackCollider_->SetIsActive(false);
+}
+
 void ComponentLogicBambooGrowing::UpdateAnimation()
 {
 	Animation& animation = owner_.GetAnimation();
-	if (animation.GetAnimationIndex() >= owner_.GetParameter().defaultAttackStartFrame_)
+	if (animation.GetAnimationIndex() >= owner_.GetParameter().defaultAttackStartFrame2_)
 	{
 		// 攻撃のコライダー設定
 		attackCollider_->SetIsActive(true);
@@ -87,6 +93,8 @@ void ComponentLogicBambooGrowing::UpdateGrowing()
 		createBambooCount_--;
 		if (createBambooCount_ < 1)
 		{
+			// コライダーの判定を無効
+			attackCollider_->SetIsActive(false);
 			isEnd_ = true;
 			return;
 		}
@@ -119,6 +127,9 @@ void ComponentLogicBambooGrowing::ChangeState(const STATE state)
 void ComponentLogicBambooGrowing::ChangeStateAnimation()
 {
 	update_ = std::bind(&ComponentLogicBambooGrowing::UpdateAnimation, this);
+
+	// 攻撃アニメーション再生
+	owner_.GetAnimation().Play(Animation::TYPE::ATTACK_2, false);
 }
 
 void ComponentLogicBambooGrowing::ChangeStateGrowing()
@@ -126,9 +137,7 @@ void ComponentLogicBambooGrowing::ChangeStateGrowing()
 	update_ = std::bind(&ComponentLogicBambooGrowing::UpdateGrowing, this);
 
 	// 一つ目の竹の生成位置
-	createBambooPos_ = parameter_.GetFootPos();
-	Vector2F dir = Vector2F::MulVector2FFloat(parameter_.GetFront(), parameter_.scale_);
-	createBambooPos_ = Vector2F::AddVector2F(parameter_.GetFootPos(), Vector2F::MulVector2FFloat(dir, parameter_.defaultAttackDistance_));
+	createBambooPos_ = Vector2F::AddVector2F(parameter_.GetFootPos(), Vector2F::MulVector2FFloat(parameter_.GetFront(), parameter_.defaultAttackDistance_));
 }
 
 void ComponentLogicBambooGrowing::CreateBamboo()
@@ -136,10 +145,10 @@ void ComponentLogicBambooGrowing::CreateBamboo()
 	// 竹生成
 	GimmickManager::CreateParameter createParameter = {};
 	createParameter.type = GimmickTypes::TYPE::GROWING_BAMBOO;
-	createParameter.pos = parameter_.GetFootPos();
+	createParameter.pos = createBambooPos_;
 	createParameter.attackPower = 40;
 	gimmickManager_.Create(createParameter);
 
 	// 竹の生成位置を調整
-	createBambooPos_.x += CREATE_OFFSET_X;
+	createBambooPos_ = Vector2F::AddVector2F(createBambooPos_, Vector2F::MulVector2FFloat(parameter_.GetFront(), CREATE_OFFSET_X));
 }

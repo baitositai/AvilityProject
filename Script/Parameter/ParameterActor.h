@@ -47,31 +47,31 @@ public:
 	/// 重力方向をベクトル変換して返す
 	/// </summary>
 	/// <returns>重力方向のベクトル</returns>
-	const Vector2F GetGravityDirectionVector() const;
+	Vector2F GetGravityDirectionVector();
 
 	/// <summary>
 	/// 現在の前方向のベクトルを返す
 	/// </summary>
 	/// <returns>前方向のベクトル</returns>
-	const Vector2F GetFront() const;
+	Vector2F GetFront();
 
 	/// <summary>
 	/// 現在の後方向のベクトルを返す
 	/// </summary>
 	/// <returns>後方向のベクトル</returns>
-	const Vector2F GetBack() const;
+	Vector2F GetBack();
 
 	/// <summary>
 	/// 現在の上方向のベクトルを返す
 	/// </summary>
 	/// <returns>上方向のベクトル</returns>	
-	const Vector2F GetUp() const;
+	Vector2F GetUp();
 
 	/// <summary>
 	/// 現在の下方向のベクトルを返す
 	/// </summary>
 	/// <returns>下方向のベクトル</returns>	
-	const Vector2F GetDown() const;
+	Vector2F GetDown();
 
 	// テクスチャ
 	int texture_;

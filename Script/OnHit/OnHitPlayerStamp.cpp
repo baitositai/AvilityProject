@@ -24,7 +24,7 @@ void OnHitPlayerStamp::Update(const std::weak_ptr<ColliderBase>& opponentCollide
     auto& opponentOwner = collider->GetOwner();
 
     // 相手のダメージ処理
-    opponentOwner.Damage(owner_.GetAttackPowerWithBoost());
+    opponentOwner.Damage(owner_.GetAttackPowerWithBoost(), collider->GetHitPos());
 
     // 自身無敵にする
     owner_.GetParameter().invincibleTime_ = INVINCIBLE_TIME;

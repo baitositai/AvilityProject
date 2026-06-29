@@ -37,9 +37,6 @@ void EnemyBase::Init()
 
 	// 基底クラスの初期化
 	CharacterBase::Init();
-
-	// 初期アニメーション
-	animation_->Play(Animation::TYPE::IDLE);
 }
 
 void EnemyBase::Draw()

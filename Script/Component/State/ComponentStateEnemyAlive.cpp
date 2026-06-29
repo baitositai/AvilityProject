@@ -1,13 +1,21 @@
 #include "../../Factory/FactoryComponent.h"
+#include "../../Manager/Common/SceneManager.h"
 #include "../../Object/Character/Enemy/EnemyBase.h"
 #include "../Logic/ComponentLogicBase.h"
 #include "ComponentStateEnemyAlive.h"
 
 ComponentStateEnemyAlive::ComponentStateEnemyAlive(EnemyBase& owner) :
 	ComponentCharacterStateBase(owner),
+    sceneManager_(SceneManager::GetInstance()),
 	owner_(owner)
 {
+    // 変数の初期化
     currentLogic_ = nullptr;
+    delayTimer_ = 0.0f;
+
+    // 状態遷移処理
+    changeStateMap_.emplace(STATE::INTERVAL, std::bind(&ComponentStateEnemyAlive::ChangeStateInterval, this));
+    changeStateMap_.emplace(STATE::LOGIC, std::bind(&ComponentStateEnemyAlive::ChangeStateLogic, this));
 }
 
 ComponentStateEnemyAlive::~ComponentStateEnemyAlive()
@@ -16,8 +24,10 @@ ComponentStateEnemyAlive::~ComponentStateEnemyAlive()
 
 void ComponentStateEnemyAlive::Create()
 {
+    // 指定するロジックのコンポーネントを生成
     FactoryComponent& factory = FactoryComponent::GetInstance();
 
+    // パラメータ取得
     const auto& logicMap = owner_.GetParameter().logicMap_;
     for (const auto& logicInfo : logicMap)
     {
@@ -27,31 +37,23 @@ void ComponentStateEnemyAlive::Create()
         componentLogicMap_.emplace(logicInfo.first, std::move(component));
     }
 
-    // 初期化
-    Init();
+    // 初期状態
+    ChangeState(STATE::LOGIC);
 }
 
 void ComponentStateEnemyAlive::Init()
 {
-    // 最初のロジックを抽選
-    SelectNextLogic();
+    // 現在のロジックが有効の場合
+    if (currentLogic_)
+    {
+        // 攻撃判定を初期化
+        currentLogic_->AttackReset();
+    }
 }
 
 void ComponentStateEnemyAlive::Update()
 {
-    // ロジックが終了している、もしくはない場合
-    if (currentLogic_ == nullptr || currentLogic_->IsEnd())
-    {
-        // 抽選
-        SelectNextLogic();
-    }
-
-    // ロジックが有効の場合
-    if (currentLogic_)
-    {    
-        // 更新処理を実行
-        currentLogic_->Update();
-    }
+    update_();
 }
 
 void ComponentStateEnemyAlive::Remove()
@@ -67,6 +69,57 @@ void ComponentStateEnemyAlive::Remove()
 
     // 現在のロジックを空にする
     currentLogic_ = nullptr;
+}
+
+void ComponentStateEnemyAlive::UpdateInterval()
+{
+    // インターバル処理
+    delayTimer_ -= sceneManager_.GetDeltaTime();
+
+    // タイマー処理
+    if (delayTimer_ < 0.0f)
+    {
+        ChangeState(STATE::LOGIC);
+        return;
+    }
+}
+
+void ComponentStateEnemyAlive::UpdateLogic()
+{
+    // ロジックが終了している、もしくはない場合
+    if (currentLogic_ == nullptr || currentLogic_->IsEnd())
+    {
+        ChangeState(STATE::INTERVAL);
+    }
+
+    // ロジックが有効の場合
+    if (currentLogic_)
+    {
+        // 更新処理を実行
+        currentLogic_->Update();
+    }
+}
+
+void ComponentStateEnemyAlive::ChangeState(const STATE state)
+{
+    state_ = state;
+    changeStateMap_[state_]();
+}
+
+void ComponentStateEnemyAlive::ChangeStateInterval()
+{
+    update_ = std::bind(&ComponentStateEnemyAlive::UpdateInterval, this);
+
+    // 遅延時間を設定
+    delayTimer_ = owner_.GetParameter().logicDelay_;
+}
+
+void ComponentStateEnemyAlive::ChangeStateLogic()
+{
+    update_ = std::bind(&ComponentStateEnemyAlive::UpdateLogic, this);
+
+    // 抽選
+    SelectNextLogic();
 }
 
 void ComponentStateEnemyAlive::SelectNextLogic()

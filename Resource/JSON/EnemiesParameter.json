@@ -584,6 +584,7 @@
     "hp": 800,
     "attackPower": 30,
     "gravityPower": 9.8,
+    "logicDelay": 1.0,
     "defaultAttackDistance": 50.0,
     "defaultAttackRadius": 50.0,
     "defaultAttackStartFrame": 112,
@@ -652,12 +653,12 @@
       },
       "attack2": {
         "no": 7,
-        "speed": 0.1,
+        "speed": 0.3,
         "num": 5
       },
       "attack3": {
         "no": 8,
-        "speed": 0.1,
+        "speed": 0.3,
         "num": 6
       },
       "attack4": {
@@ -668,9 +669,12 @@
     },
     "logic": {
       "patrol": {
-        "probability": 1.0
+        "probability": 3.0
       },
       "bambooThrowing": {
+        "probability": 1.0
+      },
+      "bambooGrowing": {
         "probability": 1.0
       }
     }

@@ -638,6 +638,12 @@
       "path": "Resource/Image/Gimmick/BambooBar.png",
       "sceneIds": [ 4 ],
       "type": "texture"
+    },
+    {
+      "key": "growingBamboo",
+      "path": "Resource/Image/Gimmick/GrowingBamboo.png",
+      "sceneIds": [ 4 ],
+      "type": "texture"
     }
   ]
 }

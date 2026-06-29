@@ -6,6 +6,7 @@
 
 class EnemyBase;
 class ComponentLogicBase;
+class SceneManager;
 
 class ComponentStateEnemyAlive : public ComponentCharacterStateBase
 {
@@ -44,6 +45,29 @@ public:
 
 private:
 
+	// 状態
+	enum class STATE
+	{
+		INTERVAL,
+		LOGIC,
+		MAX
+	};
+
+	// シーン管理クラス
+	SceneManager& sceneManager_;
+
+	// 遅延タイマー
+	float delayTimer_;
+
+	// 状態
+	STATE state_;
+
+	// 更新処理
+	std::function<void()> update_;
+
+	// 状態遷移処理
+	std::unordered_map<STATE, std::function<void()>> changeStateMap_;
+
 	// 所有者
 	EnemyBase& owner_;
 	
@@ -52,6 +76,15 @@ private:
 
 	// ロジック用のマップ
 	std::unordered_map<std::string, std::unique_ptr<ComponentLogicBase>> componentLogicMap_;
+
+	// 更新処理
+	void UpdateInterval();
+	void UpdateLogic();
+
+	// 状態遷移処理
+	void ChangeState(const STATE state);
+	void ChangeStateInterval();
+	void ChangeStateLogic();
 
 	// 次回のロジックを決定
 	void SelectNextLogic();

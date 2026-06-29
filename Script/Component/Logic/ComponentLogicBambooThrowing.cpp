@@ -62,6 +62,11 @@ void ComponentLogicBambooThrowing::Remove()
 	}
 }
 
+void ComponentLogicBambooThrowing::AttackReset()
+{
+	attackCollider_->SetIsActive(false);
+}
+
 void ComponentLogicBambooThrowing::UpdateAnimation()
 {
 	Animation& animation = owner_.GetAnimation();

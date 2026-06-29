@@ -21,4 +21,7 @@ public:
 	/// <param name="parameter">ƒpƒ‰ƒ[ƒ^</param>
 	void LoadParameter(const Json& parameter) override;
 
+	// ”½Ë‰ñ”
+	int reflectCountMax_;
+
 };

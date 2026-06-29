@@ -1,4 +1,19 @@
 {
+  "bamboo": {
+    "resourceKey": "bamboo",
+    "transparent": true,
+    "scale": 1.0,
+    "moveSpeed": 8.0,
+    "gravityPower": 9.8,
+    "reflectCountMax": 8,
+    "hitBoxSize": {
+      "x": 40,
+      "y": 64
+    },
+    "componentKeys": [
+      "move"
+    ]
+  },
   "door": {
     "resourceKey": "door",
     "transparent": true,
@@ -8,19 +23,17 @@
       "y": 240
     }
   },
-  "bamboo": {
-    "resourceKey": "bamboo",
+  "growingBamboo": {
+    "resourceKey": "growingBamboo",
     "transparent": true,
     "scale": 1.0,
-    "moveSpeed": 8.0,
-    "gravityPower": 9.8,
+    "growCountMax": 5,
+    "growingInterval": 0.05,
+    "deleteWaitTime":1.0,
     "hitBoxSize": {
-      "x": 40,
-      "y": 64
-    },
-    "componentKeys": [
-      "move"
-    ]
+      "x": 12,
+      "y": 85
+    }
   },
   "target": {
     "resourceKey": "target",
@@ -64,4 +77,4 @@
       "spriteAnimation"
     ]
   }
-  }
+}

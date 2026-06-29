@@ -9,6 +9,9 @@ ParameterEnemy::ParameterEnemy() :
 	eyeDistance_(0.0f),
 	attackStartDistance_(0.0f),
 	permissibleDistance_(0.0f),
+	dropMoney_(0.0f),
+	logicDelay_(0.0f),
+	spawnRate_(0.0f),
 	habitatType_(HABITAT_TYPE::MAX)
 {
 	targetPos_ = nullptr;
@@ -30,6 +33,7 @@ void ParameterEnemy::LoadParameter(const Json& parameter)
 	permissibleDistance_ = parameter.value("permissibleDistance", 0.0f);
 	spawnRate_ = parameter.value("spawnRate", 0.0f);
 	dropMoney_ = parameter.value("dropMoney", -1);
+	logicDelay_ = parameter.value("logicDelay", 0.0f);
 	std::string habitatTypeString = parameter.value("habitatType", "land");
 
 	for (auto it = parameter["logic"].begin(); it != parameter["logic"].end(); ++it)

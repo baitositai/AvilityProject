@@ -56,6 +56,9 @@ public:
 	// ¶¬—¦
 	float spawnRate_;
 
+	// ƒƒWƒbƒN‚Ì’x‰„
+	float logicDelay_;
+
 	// —‚Æ‚·‹àŠz
 	int dropMoney_;
 

@@ -70,6 +70,10 @@ void ComponentLogicPatrol::Remove()
 	}
 }
 
+void ComponentLogicPatrol::AttackReset()
+{
+}
+
 void ComponentLogicPatrol::UpdatePatrolLand()
 {
 	// ターゲットを発見した場合
@@ -179,8 +183,8 @@ void ComponentLogicPatrol::UpdateChase()
 		// 終了判定
 		isEnd_ = true;
 
-		// パトロールへ
-		//ChangeState(STATE::PATROL);
+		// 視野コライダー判定を無効
+		colliderFan_->SetIsActive(false);
 		return;
 	}
 
@@ -212,6 +216,12 @@ void ComponentLogicPatrol::UpdateChase()
 
 		// 攻撃判定
 		parameter_.isAction_ = true;
+
+		// 終了判定
+		isEnd_ = true;
+
+		// 視野コライダー判定を無効
+		colliderFan_->SetIsActive(false);
 	}
 
 	// ターゲットから離れた場合 見失う距離まで離れたか
@@ -251,6 +261,9 @@ void ComponentLogicPatrol::ChangeStatePatrol()
 	moveDistance_ = {};
 	isMove_ = true;
 	parameter_.isDiscover_ = false;
+
+	// 視野コライダー判定を有効
+	colliderFan_->SetIsActive(true);
 }
 
 void ComponentLogicPatrol::ChangeStateChase()

@@ -142,12 +142,7 @@ void OnHitCharacterBase::KnockBack(const std::weak_ptr<ColliderBase>& opponentCo
     const ParameterActor& oppponentParameter = opponent->GetOwner().GetParameter();
 
     // d—Í•ûŒü
-	ParameterActor::DIR gravityDirEnum = myParameter.gravityDir_;
-    Vector2F gravityDir = {};
-    if (gravityDirEnum == ParameterActor::DIR::RIGHT) { gravityDir = Vector2F(1.0f, 0.0f); }
-    else if (gravityDirEnum == ParameterActor::DIR::LEFT) { gravityDir = Vector2F(-1.0f, 0.0f); }
-    else if (gravityDirEnum == ParameterActor::DIR::UP) { gravityDir = Vector2F(0.0f, -1.0f); }
-	else { gravityDir = Vector2F(0.0f, 1.0f); }
+    Vector2F gravityDir = myParameter.GetDown();
 
     // d—Í‚É‘Î‚·‚é‰¡•ûŒü
     Vector2F sideDir(-gravityDir.y, gravityDir.x);

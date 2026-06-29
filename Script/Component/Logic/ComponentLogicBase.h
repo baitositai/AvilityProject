@@ -43,6 +43,11 @@ public:
 	virtual void Remove() override;
 
 	/// <summary>
+	/// 攻撃判定をリセット
+	/// </summary>
+	virtual void AttackReset();
+
+	/// <summary>
 	/// ロジックの終了を返す
 	/// </summary>
 	/// <returns>終了判定</returns>

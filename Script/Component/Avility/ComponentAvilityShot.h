@@ -93,8 +93,6 @@ private:
 
 	// ショット変数
 	float chageTime_;
-	float shotTime_;
 	Vector2F shotVec_;
 	float shotAngle_;
-
 };

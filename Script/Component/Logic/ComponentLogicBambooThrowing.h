@@ -44,6 +44,11 @@ public:
 	/// </summary>
 	void Remove() override;
 
+	/// <summary>
+	/// UŒ‚‚ÌƒŠƒZƒbƒg
+	/// </summary>
+	void AttackReset() override;
+
 private:	
 	
 	// ó‘Ô
