@@ -26,7 +26,7 @@ void UiPlayerHpBar::Init()
 
 	// リソースの設定
 	handle_ = resourceManager_.GetHandle("playerHpGage");
-	hpBarHandles_ = resourceManager_.GetHandles("playerHpBars");
+	hpBarHandles_ = resourceManager_.GetHandles("hpBars");
 
 	// HPゲージの設定
 	Vector2 localPos = { -34, 18 };

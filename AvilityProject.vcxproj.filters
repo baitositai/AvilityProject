@@ -651,9 +651,6 @@
     <ClCompile Include="Script\Parameter\Character\Enemy\ParameterEnemyPanda.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Script\Component\State\ComponentStateBossAlive.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Script\Component\Logic\ComponentLogicBase.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -688,6 +685,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Script\Component\Logic\ComponentLogicPandaShot.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Ui\Enemy\UiBossHpBar.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1511,9 +1511,6 @@
     <ClInclude Include="Script\Parameter\Character\Enemy\ParameterEnemyPanda.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Script\Component\State\ComponentStateBossAlive.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Script\Component\Logic\ComponentLogicBase.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -1551,6 +1548,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Script\Component\Logic\ComponentLogicPandaShot.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Ui\Enemy\UiBossHpBar.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

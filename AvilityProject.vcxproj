@@ -157,7 +157,6 @@
     <ClCompile Include="Script\Component\Logic\ComponentLogicBambooThrowing.cpp" />
     <ClCompile Include="Script\Component\Logic\ComponentLogicPatrol.cpp" />
     <ClCompile Include="Script\Component\Logic\ComponentLogicBase.cpp" />
-    <ClCompile Include="Script\Component\State\ComponentStateBossAlive.cpp" />
     <ClCompile Include="Script\Parameter\Character\Enemy\ParameterEnemyPanda.cpp" />
     <ClCompile Include="Script\Object\Character\Enemy\EnemyPanda.cpp" />
     <ClCompile Include="Script\Parameter\Gimmick\ParameterGimmickSpeechBubble.cpp" />
@@ -366,6 +365,7 @@
     <ClCompile Include="Script\Ui\SpeechBubble\UiSpeechBubbleSelectAvility.cpp" />
     <ClCompile Include="Script\Ui\Player\UiPlayerSelectAvility.cpp" />
     <ClCompile Include="Script\Ui\Game\UiDamage.cpp" />
+    <ClCompile Include="Script\Ui\Enemy\UiBossHpBar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\Component\Logic\ComponentLogicPandaShot.h" />
@@ -380,7 +380,6 @@
     <ClInclude Include="Script\Component\Logic\ComponentLogicBambooThrowing.h" />
     <ClInclude Include="Script\Component\Logic\ComponentLogicPatrol.h" />
     <ClInclude Include="Script\Component\Logic\ComponentLogicBase.h" />
-    <ClInclude Include="Script\Component\State\ComponentStateBossAlive.h" />
     <ClInclude Include="Script\Parameter\Character\Enemy\ParameterEnemyPanda.h" />
     <ClInclude Include="Script\Object\Character\Enemy\EnemyPanda.h" />
     <ClInclude Include="Script\Parameter\Gimmick\ParameterGimmickSpeechBubble.h" />
@@ -650,6 +649,7 @@
     <ClInclude Include="Script\Ui\SpeechBubble\UiSpeechBubbleSelectAvility.h" />
     <ClInclude Include="Script\Ui\Player\UiPlayerSelectAvility.h" />
     <ClInclude Include="Script\Ui\Game\UiDamage.h" />
+    <ClInclude Include="Script\Ui\Enemy\UiBossHpBar.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

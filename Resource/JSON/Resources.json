@@ -556,12 +556,12 @@
       "sizeY": 20
     },
     {
-      "key": "playerHpBars",
-      "path": "Resource/Image/Ui/PlayerHpBars.png",
+      "key": "hpBars",
+      "path": "Resource/Image/Ui/HpBars.png",
       "sceneIds": [ 2, 3, 4 ],
       "type": "sprite",
       "divX": 1,
-      "divY": 3,
+      "divY": 4,
       "sizeX": 166,
       "sizeY": 21
     },
