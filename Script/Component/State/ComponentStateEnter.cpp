@@ -11,9 +11,9 @@ ComponentStateEnter::ComponentStateEnter(CharacterBase& owner) :
 {
 	animationTime_ = 0.0f;
 	state_ = STATE::START;
-	stateChangeMap_.emplace(STATE::START, std::bind(&ComponentStateEnter::ChangeStateStart, this));
-	stateChangeMap_.emplace(STATE::WAIT, std::bind(&ComponentStateEnter::ChangeStateWait, this));
-	stateChangeMap_.emplace(STATE::END, std::bind(&ComponentStateEnter::ChangeStateEnd, this));
+	changeStateMap_.emplace(STATE::START, std::bind(&ComponentStateEnter::ChangeStateStart, this));
+	changeStateMap_.emplace(STATE::WAIT, std::bind(&ComponentStateEnter::ChangeStateWait, this));
+	changeStateMap_.emplace(STATE::END, std::bind(&ComponentStateEnter::ChangeStateEnd, this));
 	ChangeState(STATE::START);
 }
 
@@ -53,7 +53,7 @@ void ComponentStateEnter::UpdateEnd()
 void ComponentStateEnter::ChangeState(const STATE state)
 {
 	state_ = state;
-	stateChangeMap_[state_]();
+	changeStateMap_[state_]();
 }
 
 void ComponentStateEnter::ChangeStateStart()

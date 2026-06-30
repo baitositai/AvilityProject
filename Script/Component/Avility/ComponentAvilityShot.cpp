@@ -267,11 +267,13 @@ void ComponentAvilityShot::ProcessInputCharge()
 		// 反射処理の初期化
 		isReflected_ = false;
 
+		// インターバル初期化
+		parameter_.shotDamageInterval_ = -1.0f;
+
 		// 状態遷移
 		currentState_ = "shot";
 		currentStateFunction_ = stateFunctionMap_[currentState_];
 	}
-
 }
 
 void ComponentAvilityShot::ProcessMoveShot()

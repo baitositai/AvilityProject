@@ -34,6 +34,7 @@
 #include "../../Component/Logic/ComponentLogicPatrol.h"
 #include "../../Component/Logic/ComponentLogicBambooThrowing.h"
 #include "../../Component/Logic/ComponentLogicBambooGrowing.h"
+#include "../../Component/Logic/ComponentLogicPandaShot.h"
 
 #include "../../Object/Character/CharacterBase.h" 
 #include "../../Object/Character/Player.h" 
@@ -296,6 +297,18 @@ std::unique_ptr<ComponentLogicBambooGrowing> FactoryComponent::CreateComponentLo
     return std::make_unique<ComponentLogicBambooGrowing>(*enemyPtr);
 }
 
+std::unique_ptr<ComponentLogicPandaShot> FactoryComponent::CreateComponentLogicPandaShot(ActorBase& owner)
+{
+    auto* enemyPtr = dynamic_cast<EnemyPanda*>(&owner);
+
+    if (enemyPtr == nullptr)
+    {
+        // ÉLÉÉÉXÉgÇ…é∏îsÇµÇΩèÍçánullptrÇï‘Ç∑
+        return nullptr;
+    }
+    return std::make_unique<ComponentLogicPandaShot>(*enemyPtr);
+}
+
 std::unique_ptr<ComponentKnockBack> FactoryComponent::CreateComponentKnockBack(ActorBase& owner)
 {
     return std::make_unique<ComponentKnockBack>(owner);
@@ -547,6 +560,10 @@ FactoryComponent::FactoryComponent()
     componentCreateMap_.emplace("bambooGrowing", [this](ActorBase& owner)
         {
             return CreateComponentLogicBambooGrowing(owner);
+        });
+    componentCreateMap_.emplace("pandaShot", [this](ActorBase& owner)
+        {
+            return CreateComponentLogicPandaShot(owner);
         });
     componentCreateMap_.emplace("debugCreateItemAvility", [this](ActorBase& owner)
         {

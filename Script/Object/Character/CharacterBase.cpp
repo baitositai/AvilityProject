@@ -4,7 +4,7 @@
 #include "../../Factory/FactoryComponent.h"
 #include "../../Utility/UtilityCommon.h"
 #include "../../Component/ComponentBase.h"
-#include "../../Collider/ColliderBase.h"
+#include "../../Collider/ColliderBox.h"
 #include "../../Parameter/Character/ParameterCharacter.h"
 #include "../../Ui/Game/UiDamage.h"
 #include "../Common/Animation.h"
@@ -284,4 +284,13 @@ void CharacterBase::SetStateComponentActive(const STATE state, const bool isActi
 	{
 		return it->second->SetActive(isActive);
 	}
+}
+
+std::shared_ptr<ColliderBox> CharacterBase::CreateColliderClone()
+{
+	std::shared_ptr<ColliderBase> collider = collider_->Clone();
+	std::shared_ptr<ColliderBox> colliderBox = std::dynamic_pointer_cast<ColliderBox>(collider);
+	colliderBox->SetIsActive(false);
+	colliderBox->SetIsRegister(false);
+	return colliderBox;
 }

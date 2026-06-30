@@ -334,21 +334,29 @@ int UtilityCommon::WrapStepIndex(const int index, const int step, const int min,
     return value;
 }
 
-float UtilityCommon::EaseInQuad(const float _time, const float _totalTime, const float _start, const float _end)
+float UtilityCommon::EaseInQuad(const float time, const float totalTime, const float start, const float end)
 {
-    float distance = _end - _start;
-    float t = _time / _totalTime;
-    return distance * t * t + _start;
+    float distance = end - start;
+    float t = time / totalTime;
+    return distance * t * t + start;
 }
 
-float UtilityCommon::EaseOutQuad(const float _time, const float _totalTime, const float _start, const float _end)
+float UtilityCommon::EaseOutQuad(const float time, const float totalTime, const float start, const float end)
 {
-    float distance = _end - _start;
-    float t = _time / _totalTime;
-    return -distance * _time * (_time - 2) + _start;
+    float distance = end - start;
+    float t = time / totalTime;
+
+    // タイマーが合計時間を超えたら1.0に固定するガード処理
+    if (t > 1.0f)
+    {
+        t = 1.0f;
+    }
+
+    // 正しい計算式 修正前は time を使っていた部分を t に変更
+    return -distance * t * (t - 2.0f) + start;
 }
 
-float UtilityCommon::EaseInOutBack(float _time, const float _totalTime, const float _start, const float _end)
+float UtilityCommon::EaseInOutBack(float time, const float totalTime, const float start, const float end)
 {
     // 補間定数1
     constexpr float C1 = 1.70158f;
@@ -357,10 +365,10 @@ float UtilityCommon::EaseInOutBack(float _time, const float _totalTime, const fl
     constexpr float C2 = C1 * 1.525f;
 
     // 開始から終了までの距離
-    float distance = _end - _start;
+    float distance = end - start;
 
     // 補間係数
-    float t = _time / _totalTime;
+    float t = time / totalTime;
 
     // Clamp t to [0, 1]
     if (t < 0.0f) t = 0.0f;
@@ -380,7 +388,7 @@ float UtilityCommon::EaseInOutBack(float _time, const float _totalTime, const fl
     }
 
     // 値の補間
-    return distance * easedT + _start;
+    return distance * easedT + start;
 }
 
 std::wstring UtilityCommon::GetWStringFromString(const std::string& str)
@@ -525,4 +533,16 @@ int UtilityCommon::GetDigitCount(const int value)
 int UtilityCommon::GetRandomCount(const int max, const int min)
 {
     return GetRand(max - min) + min;
+}
+
+bool UtilityCommon::IsArrived(const Vector2F& current, const Vector2F& target, float tolerance)
+{
+    float diffX = target.x - current.x;
+    float diffY = target.y - current.y;
+
+    // 距離の2乗を計算
+    float distanceSq = (diffX * diffX) + (diffY * diffY);
+
+    // 許容量の2乗と比較
+    return distanceSq <= (tolerance * tolerance);
 }

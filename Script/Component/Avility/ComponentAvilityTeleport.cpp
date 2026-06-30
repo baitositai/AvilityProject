@@ -15,9 +15,9 @@ ComponentAvilityTeleport::ComponentAvilityTeleport(Player& owner) :
 	type_ = AvilityTypes::TYPE::TELEPORT;
 	state_ = STATE::INPUT;
 	update_ = std::bind(&ComponentAvilityTeleport::UpdateInput, this);
-	stateChangeMap_.emplace(STATE::INPUT, std::bind(&ComponentAvilityTeleport::ChangeStateInput, this));
-	stateChangeMap_.emplace(STATE::MOVE, std::bind(&ComponentAvilityTeleport::ChangeStateMove, this));
-	stateChangeMap_.emplace(STATE::APPEAR, std::bind(&ComponentAvilityTeleport::ChangeStateAppear, this));
+	changeStateMap_.emplace(STATE::INPUT, std::bind(&ComponentAvilityTeleport::ChangeStateInput, this));
+	changeStateMap_.emplace(STATE::MOVE, std::bind(&ComponentAvilityTeleport::ChangeStateMove, this));
+	changeStateMap_.emplace(STATE::APPEAR, std::bind(&ComponentAvilityTeleport::ChangeStateAppear, this));
 }
 
 ComponentAvilityTeleport::~ComponentAvilityTeleport()
@@ -111,7 +111,7 @@ void ComponentAvilityTeleport::UpdateAppear()
 void ComponentAvilityTeleport::ChangeState(const STATE state)
 {
 	state_ = state;
-	stateChangeMap_[state]();
+	changeStateMap_[state]();
 }
 
 void ComponentAvilityTeleport::ChangeStateInput()

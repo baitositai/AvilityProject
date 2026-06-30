@@ -258,15 +258,6 @@ void Player::Heal(const int healHp)
 	}
 }
 
-std::shared_ptr<ColliderBox> Player::CreateColliderClone()
-{
-	std::shared_ptr<ColliderBase> collider = collider_->Clone();
-	std::shared_ptr<ColliderBox> colliderBox = std::dynamic_pointer_cast<ColliderBox>(collider);
-	colliderBox->SetIsActive(false);
-	colliderBox->SetIsRegister(false);
-	return colliderBox;
-}
-
 void Player::AttachedItem(ItemTreasure* item)
 {
 	attachedTreasures_.push_back(item);

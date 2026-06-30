@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Component\Logic\ComponentLogicPandaShot.cpp" />
     <ClCompile Include="Script\OnHit\OnHitPlayerShot.cpp" />
     <ClCompile Include="Script\OnHit\OnHitPanda.cpp" />
     <ClCompile Include="Script\Parameter\Gimmick\ParameterGimmickGrowingBamboo.cpp" />
@@ -367,6 +368,7 @@
     <ClCompile Include="Script\Ui\Game\UiDamage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Component\Logic\ComponentLogicPandaShot.h" />
     <ClInclude Include="Script\OnHit\OnHitPlayerShot.h" />
     <ClInclude Include="Script\OnHit\OnHitPanda.h" />
     <ClInclude Include="Script\Parameter\Gimmick\ParameterGimmickGrowingBamboo.h" />

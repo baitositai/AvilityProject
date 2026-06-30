@@ -19,8 +19,8 @@ ComponentLogicPatrol::ComponentLogicPatrol(EnemyBase& owner) :
 	state_ = STATE::PATROL;
 
 	// 状態遷移処理のマップを初期化
-	stateChangeMap_.emplace(STATE::PATROL, std::bind(&ComponentLogicPatrol::ChangeStatePatrol, this));
-	stateChangeMap_.emplace(STATE::CHASE, std::bind(&ComponentLogicPatrol::ChangeStateChase, this));
+	changeStateMap_.emplace(STATE::PATROL, std::bind(&ComponentLogicPatrol::ChangeStatePatrol, this));
+	changeStateMap_.emplace(STATE::CHASE, std::bind(&ComponentLogicPatrol::ChangeStateChase, this));
 
 	// 視野角用のコライダーを生成
 	colliderFan_ = std::make_shared<ColliderFan>(owner_, CollisionTags::TAG::ENEMY_VIEW, owner_.GetParameter().pos_, parameter_.eyeDistance_, eyeBaseAngle_, parameter_.eyeAngleRad_);
@@ -241,7 +241,7 @@ void ComponentLogicPatrol::ChangeState(const STATE state)
 	state_ = state;
 
 	// 状態遷移処理
-	stateChangeMap_[state_]();
+	changeStateMap_[state_]();
 }
 
 void ComponentLogicPatrol::ChangeStatePatrol()

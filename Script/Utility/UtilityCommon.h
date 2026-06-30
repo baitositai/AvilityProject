@@ -196,4 +196,13 @@ public:
 	/// <param name="min"></param>
 	/// <returns></returns>
 	static int GetRandomCount(const int max, const int min);
+
+	/// <summary>
+	/// 到着判定
+	/// </summary>
+	/// <param name="current">現在地</param>
+	/// <param name="target">目的値</param>
+	/// <param name="tolerance">許容誤差</param>
+	/// <returns>たどり着いてたらtrue</returns>
+	static bool IsArrived(const Vector2F& current, const Vector2F& target, float tolerance);
 };

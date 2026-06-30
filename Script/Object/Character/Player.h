@@ -87,12 +87,6 @@ public:
 	void Heal(const int healHp);
 
 	/// <summary>
-	/// 自身のコライダーのクローンを生成して返す
-	/// </summary>
-	/// <returns>自身のコライダーのクローン</returns>
-	std::shared_ptr<ColliderBox> CreateColliderClone();
-
-	/// <summary>
 	/// アイテムのアタッチ
 	/// </summary>
 	/// <param name="item">アイテム</param>

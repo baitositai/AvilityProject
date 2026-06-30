@@ -104,6 +104,19 @@ public:
 	/// <returns>合計金額</returns>
 	const int GetTotalLootTreasuresMoney() const;
 
+	/// <summary>
+	/// プレイヤーらの位置を返す
+	/// </summary>
+	/// <returns>プレイヤーらの位置</returns>
+	const std::vector<Vector2F> GetPlayersPos() const;
+
+	/// <summary>
+	/// 指定された位置が右を向いているかどうかを判定します。
+	/// </summary>
+	/// <param name="pos">判定対象となる2次元座標。</param>
+	/// <returns>右を向いている場合は true、そうでない場合は false を返します。</returns>
+	bool IsLookRight(const Vector2F& pos) const;
+
 private:
 
 	// プレイヤー残機

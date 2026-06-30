@@ -81,7 +81,7 @@ private:
 	std::function<void()> update_;
 
 	// 状態別処理のマップ
-	std::unordered_map<STATE, std::function<void()>> stateChangeMap_;
+	std::unordered_map<STATE, std::function<void()>> changeStateMap_;
 
 	//移動種類別に更新処理
 	void UpdatePatrolLand();

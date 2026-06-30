@@ -73,7 +73,7 @@ private:
 	std::function<void()> update_;
 
 	// 状態別処理のマップ
-	std::unordered_map<STATE, std::function<void()>> stateChangeMap_;
+	std::unordered_map<STATE, std::function<void()>> changeStateMap_;
 
 	// 状態別更新処理
 	void UpdateInput();

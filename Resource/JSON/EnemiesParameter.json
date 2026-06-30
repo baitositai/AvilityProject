@@ -669,12 +669,15 @@
     },
     "logic": {
       "patrol": {
-        "probability": 3.0
-      },
-      "bambooThrowing": {
         "probability": 1.0
       },
+      "bambooThrowing": {
+        "probability": 1.5
+      },
       "bambooGrowing": {
+        "probability": 1.5
+      },
+      "pandaShot": {
         "probability": 1.0
       }
     }

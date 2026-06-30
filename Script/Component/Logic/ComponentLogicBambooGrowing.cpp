@@ -1,6 +1,7 @@
 #include "../../Manager/Common/SceneManager.h"
 #include "../../Manager/Game/CollisionManager.h"
 #include "../../Manager/Game/GimmickManager.h"
+#include "../../Manager/Game/PlayerManager.h"
 #include "../../Collider/ColliderCircle.h"
 #include "../../Object/Common/Animation.h"
 #include "../../Object/Character/Enemy/EnemyPanda.h"
@@ -130,6 +131,13 @@ void ComponentLogicBambooGrowing::ChangeStateAnimation()
 
 	// 攻撃アニメーション再生
 	owner_.GetAnimation().Play(Animation::TYPE::ATTACK_2, false);
+
+	// 攻撃位置がステージに衝突する場合
+	if (collisionManager_.IsHitStage(attackPos_.ToVector2()).hit)
+	{
+		// 向きを反転
+		parameter_.direction_ = !parameter_.direction_;
+	}
 }
 
 void ComponentLogicBambooGrowing::ChangeStateGrowing()
@@ -151,4 +159,11 @@ void ComponentLogicBambooGrowing::CreateBamboo()
 
 	// 竹の生成位置を調整
 	createBambooPos_ = Vector2F::AddVector2F(createBambooPos_, Vector2F::MulVector2FFloat(parameter_.GetFront(), CREATE_OFFSET_X));
+
+	// 攻撃位置がステージに衝突する場合
+	if (collisionManager_.IsHitStage(createBambooPos_.ToVector2()).hit)
+	{
+		// もう生成しない
+		createBambooCount_ = 0;
+	}
 }

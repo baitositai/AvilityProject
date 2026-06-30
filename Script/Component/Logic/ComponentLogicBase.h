@@ -5,6 +5,7 @@ class EnemyBase;
 class SceneManager;
 class CollisionManager;
 class GimmickManager;
+class PlayerManager;
 class SpriteEffectManager;
 
 class ComponentLogicBase : public ComponentBase
@@ -81,6 +82,9 @@ protected:
 
 	// ギミック管理クラス
 	GimmickManager& gimmickManager_;
+
+	// プレイヤー管理クラス
+	PlayerManager& playerManager_;
 
 	// エフェクト管理クラス
 	SpriteEffectManager& spriteEffectManager_;

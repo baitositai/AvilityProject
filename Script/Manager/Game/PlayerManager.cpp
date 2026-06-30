@@ -234,6 +234,52 @@ const int PlayerManager::GetTotalLootTreasuresMoney() const
 	return total;
 }
 
+const std::vector<Vector2F> PlayerManager::GetPlayersPos() const
+{
+	std::vector<Vector2F> playersPos;
+	for (const auto& player : playerList_)
+	{
+		playersPos.push_back(player->GetParameter().pos_);
+	}
+	return playersPos;
+}
+
+bool PlayerManager::IsLookRight(const Vector2F& pos) const
+{
+	if (playerList_.empty())
+	{
+		return false;
+	}
+
+	// 一番近いプレイヤーを探す
+	Vector2F closestPlayerPos = {};
+	float minDistanceSq = -1.0f;
+
+	for (const auto& player : playerList_)
+	{
+		Vector2F playerPos = player->GetParameter().pos_;
+
+		// 距離の2乗を計算
+		float dx = playerPos.x - pos.x;
+		float dy = playerPos.y - pos.y;
+		float distanceSq = dx * dx + dy * dy;
+
+		if (minDistanceSq < 0.0f || distanceSq < minDistanceSq)
+		{
+			minDistanceSq = distanceSq;
+			closestPlayerPos = playerPos;
+		}
+	}
+
+	// 向きの決定
+	if (pos.x < closestPlayerPos.x)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 PlayerManager::PlayerManager()
 {	
 	playersLeft_ = -1;	

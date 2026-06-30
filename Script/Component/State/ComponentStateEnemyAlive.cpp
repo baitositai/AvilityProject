@@ -90,6 +90,7 @@ void ComponentStateEnemyAlive::UpdateLogic()
     if (currentLogic_ == nullptr || currentLogic_->IsEnd())
     {
         ChangeState(STATE::INTERVAL);
+        return;
     }
 
     // ロジックが有効の場合

@@ -7,6 +7,7 @@
 #include "../../Common/Vector2F.h"
 
 class ParameterCharacter;
+class ColliderBox;
 
 class CharacterBase : public ActorBase
 {
@@ -118,6 +119,12 @@ public:
 	/// </summary>
 	/// <returns>無敵判定</returns>
 	const bool IsInvincible() const;
+
+	/// <summary>
+	/// 自身のコライダーのクローンを生成して返す
+	/// </summary>
+	/// <returns>自身のコライダーのクローン</returns>
+	std::shared_ptr<ColliderBox> CreateColliderClone();
 	
 	/// <summary>
 	/// 種類を返す

@@ -173,4 +173,15 @@ void ComponentLogicBambooThrowing::ChangeStateAnimation()
 
 	// アニメーションの指定
 	owner_.GetAnimation().Play(Animation::TYPE::ATTACK, false);
+
+	// 攻撃位置を取得
+	Vector2F dir = Vector2F::MulVector2FFloat(parameter_.GetFront(), parameter_.scale_);
+	attackPos_ = Vector2F::AddVector2F(parameter_.pos_, Vector2F::MulVector2FFloat(dir, parameter_.defaultAttackDistance_));
+
+	// 攻撃位置がステージに衝突する場合
+	if (collisionManager_.IsHitStage(attackPos_.ToVector2()).hit)
+	{
+		// 向きを反転
+		parameter_.direction_ = !parameter_.direction_;
+	}
 }

@@ -129,4 +129,3 @@ private:
 	// デストラクタ
 	~StageManager() override;	
 };
-

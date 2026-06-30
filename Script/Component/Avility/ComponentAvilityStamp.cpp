@@ -16,9 +16,9 @@ ComponentAvilityStamp::ComponentAvilityStamp(Player& owner) :
 	inputEnableTime_ = INPUT_ENABLE_TIME;
 	state_ = STATE::INPUT;
 	update_ = std::bind(&ComponentAvilityStamp::UpdateInput, this);
-	stateChangeMap_.emplace(STATE::INPUT, std::bind(&ComponentAvilityStamp::ChangeStateInput, this));
-	stateChangeMap_.emplace(STATE::STOP, std::bind(&ComponentAvilityStamp::ChangeStateStop, this));
-	stateChangeMap_.emplace(STATE::ACTIVE, std::bind(&ComponentAvilityStamp::ChangeStateActive, this));
+	changeStateMap_.emplace(STATE::INPUT, std::bind(&ComponentAvilityStamp::ChangeStateInput, this));
+	changeStateMap_.emplace(STATE::STOP, std::bind(&ComponentAvilityStamp::ChangeStateStop, this));
+	changeStateMap_.emplace(STATE::ACTIVE, std::bind(&ComponentAvilityStamp::ChangeStateActive, this));
 }
 
 ComponentAvilityStamp::~ComponentAvilityStamp()
@@ -108,7 +108,7 @@ void ComponentAvilityStamp::UpdateActive()
 void ComponentAvilityStamp::ChangeState(const STATE state)
 {
 	state_ = state;
-	stateChangeMap_[state]();
+	changeStateMap_[state]();
 }
 
 void ComponentAvilityStamp::ChangeStateInput()
