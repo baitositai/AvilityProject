@@ -1,8 +1,8 @@
 #pragma once
-#include "EnemyBase.h"
+#include "EnemyBoss.h"
 #include "../../../Parameter/Character/Enemy/ParameterEnemyPanda.h"
 
-class EnemyPanda : public EnemyBase
+class EnemyPanda : public EnemyBoss
 {
 public:
 

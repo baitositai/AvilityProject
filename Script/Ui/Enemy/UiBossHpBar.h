@@ -72,10 +72,8 @@ private:
 
 	// 特別なHPバーの更新
 	void UpdateDamageBar();
-	void UpdateHealBar();
 
 	// 変更処理
 	void ChangeDamageBar();
-	void ChangeHealBar();
 };
 

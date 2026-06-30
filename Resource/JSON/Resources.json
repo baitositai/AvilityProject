@@ -644,6 +644,12 @@
       "path": "Resource/Image/Gimmick/GrowingBamboo.png",
       "sceneIds": [ 4 ],
       "type": "texture"
+    },
+    {
+      "key": "hpGageBoss",
+      "path": "Resource/Image/Ui/HpGageBoss.png",
+      "sceneIds": [ 4 ],
+      "type": "texture"
     }
   ]
 }
