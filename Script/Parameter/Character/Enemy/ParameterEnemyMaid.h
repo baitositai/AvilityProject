@@ -1,7 +1,7 @@
 #pragma once
-#include "ParameterEnemy.h"
+#include "ParameterEnemyBoss.h"
 
-class ParameterEnemyMaid : public ParameterEnemy
+class ParameterEnemyMaid : public ParameterEnemyBoss
 {
 public:
 

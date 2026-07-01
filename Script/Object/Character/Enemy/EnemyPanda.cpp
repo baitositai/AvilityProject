@@ -7,7 +7,7 @@ EnemyPanda::EnemyPanda(std::unique_ptr<ParameterEnemyPanda> parameter) :
 	EnemyBoss(std::move(parameter))
 {
 	// 専用のパラメータ
-	parameterEnemyPanda_ = dynamic_cast<ParameterEnemyPanda*>(GetParameterEnemyPtr());
+	parameterEnemyPanda_ = dynamic_cast<ParameterEnemyPanda*>(GetParameterEnemyBossPtr());
 	assert(parameterEnemyPanda_ != nullptr);
 }
 

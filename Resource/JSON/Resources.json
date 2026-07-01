@@ -650,6 +650,16 @@
       "path": "Resource/Image/Ui/HpGageBoss.png",
       "sceneIds": [ 4 ],
       "type": "texture"
+    },
+    {
+      "key": "bossNamePlate",
+      "path": "Resource/Image/Ui/BossNamePlate.png",
+      "sceneIds": [ 4 ],
+      "type": "sprite",
+      "divX": 1,
+      "divY": 3,
+      "sizeX": 300,
+      "sizeY": 28
     }
   ]
 }

@@ -11,5 +11,5 @@ ParameterEnemyMaid::~ParameterEnemyMaid()
 void ParameterEnemyMaid::LoadParameter(const Json& parameter)
 {
 	// Šî’êƒNƒ‰ƒX‚Ì“Ç‚İ‚İ
-	ParameterEnemy::LoadParameter(parameter);
+	ParameterEnemyBoss::LoadParameter(parameter);
 }

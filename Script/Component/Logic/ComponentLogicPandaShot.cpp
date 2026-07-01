@@ -74,6 +74,11 @@ void ComponentLogicPandaShot::UpdateStart()
 		// ó‘Ô‘JˆÚ
 		ChangeState(STATE::READY);
 	}
+	else
+	{
+		// I—¹”»’è
+		isEnd_ = true;
+	}
 }
 
 void ComponentLogicPandaShot::UpdateReady()

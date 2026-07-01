@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Parameter\Character\Enemy\ParameterEnemyBoss.cpp" />
     <ClCompile Include="Script\Object\Character\Enemy\EnemyBoss.cpp" />
     <ClCompile Include="Script\Component\Logic\ComponentLogicPandaShot.cpp" />
     <ClCompile Include="Script\OnHit\OnHitPlayerShot.cpp" />
@@ -369,6 +370,7 @@
     <ClCompile Include="Script\Ui\Enemy\UiBossHpBar.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Parameter\Character\Enemy\ParameterEnemyBoss.h" />
     <ClInclude Include="Script\Object\Character\Enemy\EnemyBoss.h" />
     <ClInclude Include="Script\Component\Logic\ComponentLogicPandaShot.h" />
     <ClInclude Include="Script\OnHit\OnHitPlayerShot.h" />

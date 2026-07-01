@@ -61,7 +61,7 @@ bool Application::Init()
 
 void Application::Run()
 {
-	LONGLONG time = GetNowHiPerformanceCount();
+	//LONGLONG time = GetNowHiPerformanceCount();
 
 	auto& inputManager = InputManager::GetInstance();
 	auto& sceneManager = SceneManager::GetInstance();

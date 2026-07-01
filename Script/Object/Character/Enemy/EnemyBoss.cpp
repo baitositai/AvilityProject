@@ -2,9 +2,12 @@
 #include "../../Ui/Enemy/UiBossHpBar.h"
 #include "EnemyBoss.h"
 
-EnemyBoss::EnemyBoss(std::unique_ptr<ParameterEnemy> parameter) :
+EnemyBoss::EnemyBoss(std::unique_ptr<ParameterEnemyBoss> parameter) :
 	EnemyBase(std::move(parameter))
 {
+	// ƒpƒ‰ƒ[ƒ^î•ñ
+	parameterEnemyBoss_ = dynamic_cast<ParameterEnemyBoss*>(GetParameterEnemyPtr());
+	assert(parameterEnemyBoss_ != nullptr);
 }
 
 EnemyBoss::~EnemyBoss()

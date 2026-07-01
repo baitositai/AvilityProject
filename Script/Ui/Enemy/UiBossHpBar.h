@@ -1,7 +1,7 @@
 #pragma once
 #include "../UiBase.h"
 
-class EnemyBase;
+class EnemyBoss;
 
 class UiBossHpBar : public UiBase
 {
@@ -11,7 +11,7 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="owner">所有者</param>
-	UiBossHpBar(EnemyBase& owner);
+	UiBossHpBar(EnemyBoss& owner);
 
 	/// <summary>
 	/// デストラクタ
@@ -36,7 +36,7 @@ public:
 private:
 
 	// スプライト用HPバーインデックス
-	static constexpr int HPBAR_NORMAL = 0;
+	static constexpr int HPBAR_NORMAL = 3;
 	static constexpr int HPBAR_DAMAGE = 1;
 	static constexpr int HPBAR_HEAL = 2;
 
@@ -44,7 +44,7 @@ private:
 	static constexpr float HPBAR_MOVE_SPEED = 0.5f;
 
 	// 所有者
-	EnemyBase& owner_;
+	EnemyBoss& owner_;
 
 	// 特別なHPバー番号
 	int specialHpBarIndex_;
@@ -61,6 +61,12 @@ private:
 	// HPバーハンドル
 	int* hpBarHandles_;
 
+	// ネームプレートハンドル
+	int namePlateHandle_;
+
+	// ネームプレート位置
+	Vector2 namePlatePos_;
+
 	// HPバーサイズ
 	Vector2 hpBarSize_;
 
@@ -72,8 +78,10 @@ private:
 
 	// 特別なHPバーの更新
 	void UpdateDamageBar();
+	void UpdateHealBar();
 
 	// 変更処理
 	void ChangeDamageBar();
+	void ChangeHealBar();
 };
 
