@@ -8,31 +8,40 @@
 
 void ItemManager::Init()
 {
-	if (itemList_.empty()) return;
+	if (itemMap_.empty()) return;
 
-	for (auto& item : itemList_)
+	for (auto& itemList : itemMap_)
 	{
-		item->Init();
+		for (auto& item : itemList.second)
+		{
+			item->Init();
+		}
 	}
 }
 
 void ItemManager::Update()
 {
-	if (itemList_.empty()) return;
+	if (itemMap_.empty()) return;
 
-	for (auto& item : itemList_)
+	for (auto& itemList : itemMap_)
 	{
-		item->Update();
+		for (auto& item : itemList.second)
+		{
+			item->Update();
+		}
 	}
 }
 
 void ItemManager::Draw()
 {
-	if (itemList_.empty()) return;
+	if (itemMap_.empty()) return;
 
-	for (auto& item : itemList_)
+	for (auto& itemList : itemMap_)
 	{
-		item->Draw();
+		for (auto& item : itemList.second)
+		{
+			item->Draw();
+		}
 	}
 }
 
@@ -49,7 +58,7 @@ void ItemManager::Add(std::unique_ptr<ItemBase> item)
 	item->Init();
 
 	// アイテムを追加
-	itemList_.push_back(std::move(item));
+	itemMap_[item->GetParameter().itemType_].push_back(std::move(item));
 }
 
 void ItemManager::CreateAvilityItem(const AvilityTypes::TYPE type, const Vector2F& pos)
@@ -64,22 +73,25 @@ void ItemManager::CreateAvilityItem(const AvilityTypes::TYPE type, const Vector2
 	item->Init();
 
 	// 格納
-	itemList_.push_back(std::move(item));
+	itemMap_[ItemTypes::TYPE::AVILITY].push_back(std::move(item));
 }
 
-void ItemManager::CreateFoodItem(const ItemTypes::FOOD_TYPE type, const Vector2F& pos)
-{
+void ItemManager::CreateFoodItem(const ItemTypes::FOOD_TYPE type, const Vector2F& pos, const ParameterActor::DIR fallDir)
+{	
 	// 生成
 	auto item = itemGenerator_->CreateFood(type);
 
 	// 座標設定
 	item->GetParameter().pos_ = pos;
 
+	// 落下方向設定
+	item->GetParameter().gravityDir_ = fallDir;
+
 	// 初期化
 	item->Init();
 
 	// 格納
-	itemList_.push_back(std::move(item));
+	itemMap_[ItemTypes::TYPE::FOOD].push_back(std::move(item));
 }
 
 void ItemManager::CreateTreasureItem(const ItemTypes::TREASURE_TYPE type, const Vector2F& pos)
@@ -94,7 +106,7 @@ void ItemManager::CreateTreasureItem(const ItemTypes::TREASURE_TYPE type, const 
 	item->Init();
 
 	// 格納
-	itemList_.push_back(std::move(item));
+	itemMap_[ItemTypes::TYPE::TREASURE].push_back(std::move(item));
 }
 
 void ItemManager::CreateMoneyItem(const int moneyAmount, const Vector2F& pos)
@@ -103,7 +115,7 @@ void ItemManager::CreateMoneyItem(const int moneyAmount, const Vector2F& pos)
 	for (auto& item : items)
 	{
 		item->Init();
-		itemList_.push_back(std::move(item));
+		itemMap_[ItemTypes::TYPE::MONEY].push_back(std::move(item));
 	}
 }
 
@@ -113,51 +125,105 @@ void ItemManager::CreateTreasureChestItems(const Vector2F& tresureChestPos)
 	for (auto& item : items)
 	{
 		item->Init();
-		itemList_.push_back(std::move(item));
+		auto type = item->GetParameter().itemType_;
+		itemMap_[type].push_back(std::move(item));
 	}
 }
 
 void ItemManager::DebugDraw()
 {
-	for (auto& item : itemList_)
+	for (auto& itemList : itemMap_)
 	{
-		item->DebugDraw();
+		for (auto& item : itemList.second)
+		{
+			item->DebugDraw();
+		}
 	}
+}
+
+const int ItemManager::GetItemCount(const ItemTypes::TYPE type) const
+{
+	if (itemMap_.find(type) == itemMap_.end())
+	{
+		return 0;
+	}
+
+	return static_cast<int>(itemMap_.at(type).size());
 }
 
 void ItemManager::Sweep()
 {
-	// 終了したアイテムを並び変える
-	auto it = std::remove_if(itemList_.begin(), itemList_.end(),
-		[](const std::unique_ptr<ItemBase>& item)
-		{
-			return item->IsDelete();
-		});
-
-	// 終了したコライダを削除する
-	itemList_.erase(it, itemList_.end());
+	for (auto& itemList : itemMap_)
+	{
+		auto it = std::remove_if(itemList.second.begin(), itemList.second.end(),
+			[](const std::unique_ptr<ItemBase>& enemy)
+			{
+				if (enemy == nullptr)
+				{
+					return true;
+				}
+				return enemy->IsDelete();
+			});
+		itemList.second.erase(it, itemList.second.end());
+	}
 }
 
 void ItemManager::CarryAndClear()
 {
-	if (itemList_.empty())
+	if (itemMap_.empty())
 	{
 		return;
 	}
 
 	// 一時退避用のコンテナ
-	std::vector<std::unique_ptr<ItemBase>> keepList;
+	std::unordered_map<ItemTypes::TYPE, std::vector<std::unique_ptr<ItemBase>>> keepMap;
 
 	// 持ち越しと削除 
-	for (auto& item : itemList_)
+	for (auto& itemList : itemMap_)
 	{
-		// 持ち越しの場合
-		if (item->IsCarryOver())
+		for (auto& item : itemList.second)
 		{
-			// 一時退避
-			keepList.push_back(std::move(item));
+			// 持ち越しの場合
+			if (item->IsCarryOver())
+			{
+				// 一時退避
+				keepMap[item->GetParameter().itemType_].push_back(std::move(item));
+			}
+			else
+			{
+				// 削除
+				item->Delete();
+			}
 		}
-		else
+	}
+
+	// 中身を削除
+	itemMap_.clear();
+
+	// 退避してたアイテムを戻す
+	itemMap_ = std::move(keepMap);
+}
+
+void ItemManager::SetAllIsCarry(const bool isCarry)
+{
+	if (itemMap_.empty()) return;
+
+	for (auto& itemList : itemMap_)
+	{
+		for (auto& item : itemList.second)
+		{
+			item->SetIsCarryOver(isCarry);
+		}
+	}
+}
+
+void ItemManager::Clear()
+{
+	if (itemMap_.empty()) return;
+
+	for (auto& itemList : itemMap_)
+	{
+		for (auto& item : itemList.second)
 		{
 			// 削除
 			item->Delete();
@@ -165,37 +231,33 @@ void ItemManager::CarryAndClear()
 	}
 
 	// 中身を削除
-	itemList_.clear();
-
-	// 退避してたアイテムを戻す
-	itemList_ = std::move(keepList);
+	itemMap_.clear();
 }
 
-void ItemManager::SetAllIsCarry(const bool isCarry)
+ItemBase* ItemManager::GetNearestFood(const Vector2F& basePos)
 {
-	if (itemList_.empty()) return;
-
-	for (auto& item : itemList_)
+	auto& foodList = itemMap_[ItemTypes::TYPE::FOOD];
+	if (foodList.empty())
 	{
-		item->SetIsCarryOver(isCarry);
-	}
-}
-
-void ItemManager::Clear()
-{
-	if (itemList_.empty())
-	{
-		return;
+		return nullptr;
 	}
 
-	for (auto& item : itemList_)
+	ItemBase* nearestFood = nullptr;
+	float minDistanceSq = FLT_MAX;
+
+	for (const auto& item : foodList)
 	{
-		// 削除
-		item->Delete();
+		Vector2F diff = Vector2F::SubVector2F(item->GetParameter().pos_, basePos);
+		float distSq = diff.x * diff.x + diff.y * diff.y;
+
+		if (distSq < minDistanceSq)
+		{
+			minDistanceSq = distSq;
+			nearestFood = item.get(); // get() で生ポインタを取得
+		}
 	}
 
-	// 中身を削除
-	itemList_.clear();
+	return nearestFood;
 }
 
 ItemManager::ItemManager()

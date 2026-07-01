@@ -6,6 +6,15 @@ class ItemTypes
 {
 public:
 
+	enum class TYPE
+	{
+		AVILITY,	// アビリティ
+		FOOD,		// 食べ物
+		TREASURE,	// 宝
+		MONEY,		// お金
+		MAX
+	};
+
 	// 食べ物
 	enum class FOOD_TYPE
 	{

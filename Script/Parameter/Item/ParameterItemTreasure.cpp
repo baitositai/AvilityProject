@@ -4,6 +4,7 @@
 ParameterItemTreasure::ParameterItemTreasure() :
 	amount_(-1)
 {
+	itemType_ = ItemTypes::TYPE::TREASURE;
 }
 
 ParameterItemTreasure::~ParameterItemTreasure()

@@ -4,6 +4,7 @@
 ParameterItemAvility::ParameterItemAvility() :
 	type_(AvilityTypes::TYPE::MAX)
 {
+	itemType_ = ItemTypes::TYPE::AVILITY;
 }
 
 ParameterItemAvility::~ParameterItemAvility()

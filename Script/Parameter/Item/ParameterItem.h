@@ -1,5 +1,6 @@
 #pragma once
 #include "../ParameterActor.h"
+#include "../../Manager/Game/ItemTypes.h"
 
 class ParameterItem : public ParameterActor
 {
@@ -17,4 +18,7 @@ public:
 
 	// •`‰æ”Ô†
 	int spriteIndex_;
+
+	// ƒAƒCƒeƒ€‚Ìí—Ş
+	ItemTypes::TYPE itemType_;
 };

@@ -17,6 +17,18 @@ public:
 	/// </summary>
 	~EnemyMaid() override;
 
+	/// <summary>
+	/// パラメーターを返す(変更可)
+	/// </summary>
+	/// <returns>パラメータ</returns>
+	ParameterEnemyMaid& GetParameter() { return *parameterEnemyMaid_; }
+
+	/// <summary>
+	/// パラメータを返す
+	/// </summary>
+	/// <returns>パラメータ</returns>
+	const ParameterEnemyMaid& GetParameter() const { return *parameterEnemyMaid_; }
+
 private:
 
 	// パラメータ情報

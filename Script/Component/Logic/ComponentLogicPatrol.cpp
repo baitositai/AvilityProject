@@ -21,16 +21,22 @@ ComponentLogicPatrol::ComponentLogicPatrol(EnemyBase& owner) :
 	// 状態遷移処理のマップを初期化
 	changeStateMap_.emplace(STATE::PATROL, std::bind(&ComponentLogicPatrol::ChangeStatePatrol, this));
 	changeStateMap_.emplace(STATE::CHASE, std::bind(&ComponentLogicPatrol::ChangeStateChase, this));
+}
 
+ComponentLogicPatrol::~ComponentLogicPatrol()
+{
+}
+
+void ComponentLogicPatrol::Create()
+{	
 	// 視野角用のコライダーを生成
 	colliderFan_ = std::make_shared<ColliderFan>(owner_, CollisionTags::TAG::ENEMY_VIEW, owner_.GetParameter().pos_, parameter_.eyeDistance_, eyeBaseAngle_, parameter_.eyeAngleRad_);
 
 	// コライダーの登録
 	collisionManager_.Add(colliderFan_);
-}
 
-ComponentLogicPatrol::~ComponentLogicPatrol()
-{
+	// 初期化処理
+	Init();
 }
 
 void ComponentLogicPatrol::Init()

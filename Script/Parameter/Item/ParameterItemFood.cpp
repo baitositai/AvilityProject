@@ -4,6 +4,7 @@
 ParameterItemFood::ParameterItemFood() :
 	heal_(-1)
 {
+	itemType_ = ItemTypes::TYPE::FOOD;
 }
 
 ParameterItemFood::~ParameterItemFood()

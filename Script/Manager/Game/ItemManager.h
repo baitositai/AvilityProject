@@ -1,8 +1,10 @@
 #pragma once
 #include <vector>
+#include <unordered_map>
 #include "../../Template/Singleton.h"
 #include "../../Manager/Game/ItemTypes.h"
 #include "../../Component/Avility/AvilityTypes.h"
+#include "../../Parameter/ParameterActor.h"
 
 class ItemBase;
 class ItemGenerator;
@@ -66,7 +68,8 @@ public:
 	/// 食べ物の生成
 	/// </summary>
 	/// <param name="type">種類</param>
-	void CreateFoodItem(const ItemTypes::FOOD_TYPE type, const Vector2F& pos);
+	/// <param name="fallDir">落下方向</param>
+	void CreateFoodItem(const ItemTypes::FOOD_TYPE type, const Vector2F& pos, const ParameterActor::DIR fallDir = ParameterActor::DIR::DOWN);
 
 	/// <summary>
 	/// お宝の生成
@@ -90,10 +93,18 @@ public:
 	/// </summary>
 	void DebugDraw();
 
+	/// <summary>
+	/// 指定したアイテムの数を返す
+	/// </summary>
+	/// <returns>アイテム数</returns>
+	const int GetItemCount(const ItemTypes::TYPE type) const;
+
+	ItemBase* GetNearestFood(const Vector2F& basePos);
+
 private:
 
 	// アイテムのリスト
-	std::vector<std::unique_ptr<ItemBase>> itemList_;
+	std::unordered_map<ItemTypes::TYPE, std::vector<std::unique_ptr<ItemBase>>> itemMap_;
 
 	// アイテムの生成
 	std::unique_ptr<ItemGenerator> itemGenerator_;

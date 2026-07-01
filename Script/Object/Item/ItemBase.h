@@ -50,6 +50,18 @@ public:
 	/// <param name="isCarry">持ち越し判定</param>
 	void SetIsCarryOver(const bool isCarry);
 
+	/// <summary>
+	/// パラメーターを返す(変更可)
+	/// </summary>
+	/// <returns>パラメータ</returns>
+	ParameterItem& GetParameter() { return *parameterItem_; }
+
+	/// <summary>
+	/// パラメータを返す
+	/// </summary>
+	/// <returns>パラメータ</returns>
+	const ParameterItem& GetParameter() const { return *parameterItem_; }
+
 protected:
 
 	// 持ち越し判定

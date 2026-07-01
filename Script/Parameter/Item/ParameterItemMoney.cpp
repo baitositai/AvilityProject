@@ -4,6 +4,7 @@
 ParameterItemMoney::ParameterItemMoney():
 	amount_(-1)
 {
+	itemType_ = ItemTypes::TYPE::MONEY;
 }
 
 ParameterItemMoney::~ParameterItemMoney()

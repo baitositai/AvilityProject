@@ -3,11 +3,14 @@
 #include <functional>
 #include <unordered_map>
 #include "ComponentLogicBase.h"
+#include "../../Common/Vector2F.h"
 
-class ParameterEnemy;
+class EnemyMaid;
+class ParameterEnemyMaid;
 class ColliderFan;
+class FoodShawer;
 
-class ComponentLogicPatrol : public ComponentLogicBase
+class ComponentLogicMaid : public ComponentLogicBase
 {
 public:
 
@@ -15,12 +18,12 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="owner">所有者</param>
-	ComponentLogicPatrol(EnemyBase& owner);
+	ComponentLogicMaid(EnemyMaid& owner);
 
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~ComponentLogicPatrol() override;
+	~ComponentLogicMaid() override;
 
 	/// <summary>
 	/// 生成処理
@@ -49,14 +52,16 @@ public:
 
 private:
 
+	// 所有者
+	EnemyMaid& owner_;
+
+	// パラメータ
+	ParameterEnemyMaid& parameter_;
+
 	enum class STATE
 	{
-		PATROL,	// パトロール
-		CHASE,	// 追跡
+		COLLECT,	// 集める
 	};
-
-	// 所有者
-	EnemyBase& owner_;
 
 	// 視界用角度
 	float eyeBaseAngle_;
@@ -73,34 +78,28 @@ private:
 	// 移動判定
 	bool isMove_;
 
-	// 所有者のパラメータ
-	ParameterEnemy& parameter_;
-
 	// 状態
 	STATE state_;
+
+	// 状態別更新
+	std::function<void()> update_;
 
 	// 視野角用コライダー
 	std::shared_ptr<ColliderFan> colliderFan_;
 
-	// 状態別更新
-	std::function<void()> update_;
+	// 食べ物を落とす処理
+	std::unique_ptr<FoodShawer> foodShawer_;
 
 	// 状態別処理のマップ
 	std::unordered_map<STATE, std::function<void()>> changeStateMap_;
 
 	//移動種類別に更新処理
-	void UpdatePatrolLand();
-	void UpdatePatrolAir();
-	void UpdateChase();
+	void UpdateCollect();
 
 	// 状態遷移処理
 	void ChangeState(const STATE state);
-	void ChangeStatePatrol();
-	void ChangeStateChase();
+	void ChangeStateCollect();
 
 	// 視界角度の更新
 	void UpdateEyeAngle();
-
-	// アニメーションの更新
-	void UpdateAnimation();
 };

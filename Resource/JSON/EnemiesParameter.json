@@ -555,7 +555,7 @@
       }
     },
     "logic": {
-      "patrol": {
+      "maid": {
         "probability": 1.0
       }
     }
