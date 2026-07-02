@@ -21,9 +21,4 @@ public:
 	/// <param name="parameter">パラメータ</param>
 	void LoadParameter(const Json& parameter) override;
 
-	// 各攻撃の開始フレーム
-	int defaultAttackStartFrame2_;
-	int defaultAttackStartFrame3_;
-	int defaultAttackStartFrame4_;
-
 };

@@ -34,6 +34,9 @@ void ParameterEnemy::LoadParameter(const Json& parameter)
 	spawnRate_ = parameter.value("spawnRate", 0.0f);
 	dropMoney_ = parameter.value("dropMoney", -1);
 	logicDelay_ = parameter.value("logicDelay", 0.0f);
+	defaultAttackStartFrame2_ = parameter.value("defaultAttackStartFrame2", -1);
+	defaultAttackStartFrame3_ = parameter.value("defaultAttackStartFrame3", -1);
+	defaultAttackStartFrame4_ = parameter.value("defaultAttackStartFrame4", -1);
 	std::string habitatTypeString = parameter.value("habitatType", "land");
 
 	for (auto it = parameter["logic"].begin(); it != parameter["logic"].end(); ++it)

@@ -21,7 +21,9 @@ public:
 	/// <param name="parameter">パラメータ</param>
 	void LoadParameter(const Json& parameter) override;
 
-private:
+	// 食べ物の取得回数
+	int hitFoodCount_;
 
-
+	// 条件食べ物の取得回数
+	int triggerFoodCount_;
 };

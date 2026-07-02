@@ -67,4 +67,7 @@ void OnHitEnemyMaid::OnHitItemFood(const std::weak_ptr<ColliderBase>& opponentCo
 
     // ƒAƒCƒeƒ€‚Ìí—Ş‚ğŠl“¾
     owner_.Heal(itemFood->GetParameter().heal_);
+
+	// æ“¾‰ñ”’Ç‰Á
+	owner_.GetParameter().hitFoodCount_++;
 }

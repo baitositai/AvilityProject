@@ -514,7 +514,9 @@
     "gravityPower": 9.8,
     "defaultAttackDistance": 50.0,
     "defaultAttackRadius": 50.0,
-    "defaultAttackStartFrame": 14,
+    "defaultAttackStartFrame": 38,
+    "defaultAttackStartFrame2": 47,
+    "defaultAttackStartFrame3": 56,
     "weight": 0.9,
     "invincibleTimeMax": 2.0,
     "attackStartDistance": 100.0,
@@ -523,6 +525,7 @@
     "eyeDistance": 100.0,
     "spawnRate": 0.1,
     "habitatType": "land",
+    "triggerFoodCount": 8,
     "divisionNum": {
       "x": 9,
       "y": 7

@@ -62,6 +62,11 @@ public:
 	// 落とす金額
 	int dropMoney_;
 
+	// 各攻撃の開始フレーム
+	int defaultAttackStartFrame2_;
+	int defaultAttackStartFrame3_;
+	int defaultAttackStartFrame4_;
+
 	// 移動種類
 	HABITAT_TYPE habitatType_;
 

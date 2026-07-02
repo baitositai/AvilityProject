@@ -9,6 +9,7 @@
 #include "../../Object/Item/ItemBase.h"
 #include "../../Utility/UtilityCommon.h"
 #include "../../Collider/ColliderFan.h"
+#include "../../Collider/ColliderCircle.h"
 #include "../../System/FoodShawer.h"
 #include "ComponentLogicMaid.h"
 
@@ -23,6 +24,9 @@ ComponentLogicMaid::ComponentLogicMaid(EnemyMaid& owner):
 	moveDistance_ = {};
 	timer_ = 0.0f;
 	isMove_ = false;
+	isSpecialAttack_ = false;
+	specialAttackCount_ = -1;
+	specialAttackStartFrame_ = -1;
 	timer_ = 0.0f;
 	state_ = STATE::COLLECT;
 	nextGravityDir_ = ParameterActor::DIR::MAX;
@@ -32,6 +36,7 @@ ComponentLogicMaid::ComponentLogicMaid(EnemyMaid& owner):
 	changeStateMap_.emplace(STATE::JUMP, std::bind(&ComponentLogicMaid::ChangeStateJump, this));
 	changeStateMap_.emplace(STATE::STAMP_READY, std::bind(&ComponentLogicMaid::ChangeStateStampReady, this));
 	changeStateMap_.emplace(STATE::STAMP, std::bind(&ComponentLogicMaid::ChangeStateStamp, this));
+	changeStateMap_.emplace(STATE::SPECIAL, std::bind(&ComponentLogicMaid::ChangeStateSpecial, this));
 }
 
 ComponentLogicMaid::~ComponentLogicMaid()
@@ -81,7 +86,8 @@ void ComponentLogicMaid::Update()
 	update_();
 
 	// 状態が生存の場合
-	if (owner_.GetState() == CharacterBase::STATE::ALIVE)
+	if (owner_.GetState() == CharacterBase::STATE::ALIVE && 
+		state_ == STATE::COLLECT)
 	{
 		// 視野角の更新
 		UpdateEyeAngle();
@@ -106,6 +112,13 @@ void ComponentLogicMaid::AttackReset()
 
 void ComponentLogicMaid::UpdateCollect()
 {	
+	// 食べ物の取得回数が条件数満たしている場合
+	if (parameter_.hitFoodCount_ >= parameter_.triggerFoodCount_)
+	{
+		ChangeState(STATE::SPECIAL);
+		return;
+	}
+
 	// 発見判定
 	if(parameter_.isDiscover_)
 	{
@@ -237,6 +250,55 @@ void ComponentLogicMaid::UpdateStamp()
 	}
 }
 
+void ComponentLogicMaid::UpdateSpecial()
+{
+	Animation& animation = owner_.GetAnimation();
+	if (animation.IsPlay())
+	{
+		if(specialAttackStartFrame_ == animation.GetAnimationIndex() && !isSpecialAttack_)
+		{
+			// 攻撃判定を有効化
+			isSpecialAttack_ = true;
+
+			// 攻撃用コライダーを有効化
+			colliderCircle_->SetIsActive(true);
+		}
+	}
+	else
+	{
+		// 攻撃か数を減らす
+		specialAttackCount_--;
+		if(specialAttackCount_ <= 0)
+		{
+			// 状態遷移
+			ChangeState(STATE::COLLECT);
+
+			// 攻撃コライダーの削除
+			colliderCircle_->Delete();
+			colliderCircle_ = nullptr;
+			return;
+		}
+
+		// 再生するアニメーションを格納
+		const std::vector<Animation::TYPE> animationList = { Animation::TYPE::ATTACK, Animation::TYPE::ATTACK_2,Animation::TYPE::ATTACK_3 };
+
+		// アニメーションの攻撃開始番号
+		const std::vector<int> attackStartIndexList = { parameter_.defaultAttackStartFrame_, parameter_.defaultAttackStartFrame2_, parameter_.defaultAttackStartFrame3_ };
+
+		// 再生するアニメーションインデックスをランダムで取得
+		const int randomIndex = UtilityCommon::GetRandomCount(0, static_cast<int>(animationList.size()) - 1);
+
+		// 攻撃開始番号の設定
+		specialAttackStartFrame_ = attackStartIndexList[randomIndex];
+
+		// 攻撃判定を無効にする
+		isSpecialAttack_ = false;
+
+		// アニメーション再生
+		animation.Play(animationList[randomIndex], false);
+	}
+}
+
 void ComponentLogicMaid::ChangeState(const STATE state)
 {
 	state_ = state;
@@ -309,6 +371,34 @@ void ComponentLogicMaid::ChangeStateStamp()
 
 	// 重力を有効化
 	owner_.SetComponentActive("gravity", true);
+}
+
+void ComponentLogicMaid::ChangeStateSpecial()
+{
+	update_ = std::bind(&ComponentLogicMaid::UpdateSpecial, this);
+
+	// 攻撃回数を設定
+	specialAttackCount_ = SPECIAL_ATTACK_COUNT;
+
+	// 攻撃判定無効
+	isSpecialAttack_ = false;
+
+	// アニメーション設定
+	owner_.GetAnimation().Play(Animation::TYPE::ATTACK, false);
+
+	// 攻撃開始番号を設定
+	specialAttackStartFrame_ = parameter_.defaultAttackStartFrame_;
+
+	// 取得回数リセット
+	parameter_.hitFoodCount_ = 0;
+
+	// 攻撃者の前方向を取得
+	Vector2F dir = Vector2F::MulVector2FFloat(parameter_.GetFront(), parameter_.scale_);
+	specialAttackPos_ = Vector2F::AddVector2F(parameter_.pos_, Vector2F::MulVector2FFloat(dir, parameter_.defaultAttackDistance_));
+
+	// コライダーの登録
+	colliderCircle_ = std::make_shared<ColliderCircle>(owner_, parameter_.attackCollisionTag_, specialAttackPos_, parameter_.defaultAttackRadius_);
+	collisionManager_.Add(colliderCircle_);
 }
 
 void ComponentLogicMaid::UpdateEyeAngle()

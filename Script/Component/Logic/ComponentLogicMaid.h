@@ -9,6 +9,7 @@
 class EnemyMaid;
 class ParameterEnemyMaid;
 class ColliderFan;
+class ColliderCircle;
 class FoodShawer;
 
 class ComponentLogicMaid : public ComponentLogicBase
@@ -68,6 +69,9 @@ private:
 	// 追加重力量
 	static constexpr float ADD_GRAVITY = 16.0f;
 
+	// 攻撃回数
+	static constexpr int SPECIAL_ATTACK_COUNT = 30;
+
 	enum class STATE
 	{
 		COLLECT,	// 集める
@@ -95,6 +99,18 @@ private:
 	// タイマー
 	float timer_;
 
+	// 特別攻撃判定
+	bool isSpecialAttack_;
+
+	// 特別攻撃の開始フレーム
+	int specialAttackStartFrame_;
+
+	// 特別攻撃の回数
+	int specialAttackCount_;
+
+	// 特別攻撃位置
+	Vector2F specialAttackPos_;
+
 	// 状態
 	STATE state_;
 
@@ -103,6 +119,9 @@ private:
 
 	// 状態別更新
 	std::function<void()> update_;
+
+	// 特別攻撃用コライダー
+	std::shared_ptr<ColliderCircle> colliderCircle_;
 
 	// 視野角用コライダー
 	std::shared_ptr<ColliderFan> colliderFan_;
@@ -118,6 +137,7 @@ private:
 	void UpdateJump();
 	void UpdateStampReady();
 	void UpdateStamp();
+	void UpdateSpecial();
 
 	// 状態遷移処理
 	void ChangeState(const STATE state);
@@ -125,6 +145,7 @@ private:
 	void ChangeStateJump();
 	void ChangeStateStampReady();
 	void ChangeStateStamp();
+	void ChangeStateSpecial();
 
 	// 視界角度の更新
 	void UpdateEyeAngle();
