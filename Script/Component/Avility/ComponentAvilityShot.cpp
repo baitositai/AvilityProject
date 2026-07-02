@@ -287,22 +287,7 @@ void ComponentAvilityShot::ProcessMoveShot()
 	if (parameter_.shotTime_ <= 0.0f || (parameter_.shotVec_.x == 0.0f && parameter_.shotVec_.y == 0.0f))
 	{ 		
 		// 重力別角度初期化
-		if (gravityDir_ == ParameterActor::DIR::RIGHT)
-		{
-			parameter_.angle_ = UtilityCommon::Deg2RadF(270.0f);
-		}
-		else if (gravityDir_ == ParameterActor::DIR::LEFT)
-		{
-			parameter_.angle_ = UtilityCommon::Deg2RadF(90.0f);
-		}
-		else if (gravityDir_ == ParameterActor::DIR::UP)
-		{
-			parameter_.angle_ = UtilityCommon::Deg2RadF(180.0f);
-		}
-		else if (gravityDir_ == ParameterActor::DIR::DOWN)
-		{
-			parameter_.angle_ = UtilityCommon::Deg2RadF(0.0f);
-		}
+		parameter_.angle_ = UtilityCommon::GetGravityDirRadAngle(parameter_.gravityDir_);
 
 		// 自身のコライダーの判定を有効にする
 		owner_.SetColliderActive(true);

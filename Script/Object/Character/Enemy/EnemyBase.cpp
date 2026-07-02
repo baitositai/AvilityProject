@@ -27,7 +27,7 @@ void EnemyBase::Init()
 	parameterEnemy_->hitSize_ = parameterEnemy_->GetScaleToHitSize();
 
 	// コライダー
-	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::ENEMY_CLONE, parameterEnemy_->pos_, parameterEnemy_->hitSize_, parameterEnemy_->angle_);
+	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::ENEMY_BASE, parameterEnemy_->pos_, parameterEnemy_->hitSize_, parameterEnemy_->angle_);
 
 	// 衝突後処理
 	onHit_ = std::make_unique<OnHitEnemy>(*this);

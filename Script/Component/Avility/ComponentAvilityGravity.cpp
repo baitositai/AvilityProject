@@ -57,28 +57,28 @@ void ComponentAvilityGravity::ProcessGravity()
 	if (inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_GRAVITY_RIGHT, parameter_.padNo_))
 	{
 		parameter_.gravityDir_ = ParameterActor::DIR::RIGHT;
-		parameter_.angle_ = UtilityCommon::Deg2RadF(270.0f);
+		parameter_.angle_ = UtilityCommon::GetGravityDirRadAngle(parameter_.gravityDir_);
 		coolTime_ = COOL_TIME;
 		parameter_.isGround_ = false;
 	}
 	else if (inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_GRAVITY_LEFT, parameter_.padNo_))
 	{
 		parameter_.gravityDir_ = ParameterActor::DIR::LEFT;
-		parameter_.angle_ = UtilityCommon::Deg2RadF(90.0f);
+		parameter_.angle_ = UtilityCommon::GetGravityDirRadAngle(parameter_.gravityDir_);
 		coolTime_ = COOL_TIME;
 		parameter_.isGround_ = false;
 	}
 	else if (inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_GRAVITY_UP, parameter_.padNo_))
 	{
 		parameter_.gravityDir_ = ParameterActor::DIR::UP;
-		parameter_.angle_ = UtilityCommon::Deg2RadF(180.0f);
+		parameter_.angle_ = UtilityCommon::GetGravityDirRadAngle(parameter_.gravityDir_);
 		coolTime_ = COOL_TIME;
 		parameter_.isGround_ = false;
 	}
 	else if (inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_GRAVITY_DOWN, parameter_.padNo_))
 	{
 		parameter_.gravityDir_ = ParameterActor::DIR::DOWN;
-		parameter_.angle_ = UtilityCommon::Deg2RadF(0.0f);
+		parameter_.angle_ = UtilityCommon::GetGravityDirRadAngle(parameter_.gravityDir_);
 		coolTime_ = COOL_TIME;
 		parameter_.isGround_ = false;
 	}

@@ -486,6 +486,7 @@
   },
   "maid": {
     "componentKeys": [
+      "jump",
       "knockBack",
       "invincible",
       "gravity",
@@ -507,6 +508,7 @@
     "transparent": true,
     "moveSpeed": 5.0,
     "hp": 800,
+    "jumpPowerMax": 20.0,
     "bossUiNamePlateIndex": 1,
     "attackPower": 60,
     "gravityPower": 9.8,
@@ -518,12 +520,12 @@
     "attackStartDistance": 100.0,
     "permissibleDistance": 10.0,
     "eyeAngle": 70.0,
-    "eyeDistance": 700.0,
+    "eyeDistance": 100.0,
     "spawnRate": 0.1,
     "habitatType": "land",
     "divisionNum": {
-      "x": 6,
-      "y": 3
+      "x": 9,
+      "y": 7
     },
     "hitBoxSize": {
       "x": 50,
@@ -548,9 +550,29 @@
         "speed": 0.1,
         "num": 6
       },
-      "attack": {
+      "jump": {
         "no": 2,
         "speed": 0.1,
+        "num": 9
+      },
+      "dead": {
+        "no": 3,
+        "speed": 0.1,
+        "num": 6
+      },
+      "attack": {
+        "no": 4,
+        "speed": 0.3,
+        "num": 6
+      },
+      "attack2": {
+        "no": 5,
+        "speed": 0.3,
+        "num": 6
+      },
+      "attack3": {
+        "no": 6,
+        "speed": 0.3,
         "num": 6
       }
     },

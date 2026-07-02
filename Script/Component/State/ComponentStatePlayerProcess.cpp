@@ -2,6 +2,7 @@
 #include "../../Manager/Common/SceneManager.h"
 #include "../../Object/Character/Player.h"
 #include "../../Object/Common/Animation.h"
+#include "../../Utility/UtilityCommon.h"
 #include "ComponentStatePlayerProcess.h"
 
 ComponentStatePlayerProcess::ComponentStatePlayerProcess(Player& owner) :
@@ -34,6 +35,9 @@ void ComponentStatePlayerProcess::Update()
 	
 	// ’ÊíUŒ‚‚Ì“ü—Íˆ—
 	ProcessInputAttack();
+
+	// d—Í•ûŒü‚É‰‚¶‚ÄˆÚ“®—Ê‚ğ•ÏŠ·
+	moveAmount_ = UtilityCommon::ConvertLocalToWorldByGravity(moveAmount_, parameter_.gravityDir_);
 
 	// î•ñ‚ÌXV
 	parameter_.moveAmount_ = moveAmount_;

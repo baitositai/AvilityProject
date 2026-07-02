@@ -510,6 +510,35 @@ Vector2F UtilityCommon::ConvertLocalToWorldByGravity(const Vector2F& localVector
     return worldVector;
 }
 
+float UtilityCommon::GetGravityDirRadAngle(const ParameterActor::DIR gravityDir)
+{
+	// デフォルトの角度を0に設定
+    float angle = 0.0f;
+
+	// 重力方向に応じて角度を設定
+    switch (gravityDir)
+    {
+    case ParameterActor::DIR::DOWN:
+        angle = 0.0f;
+        break;
+
+    case ParameterActor::DIR::UP:
+        angle = 180.0f;
+        break;
+
+    case ParameterActor::DIR::RIGHT:
+    angle = 270.0f;        
+        break;
+
+    case ParameterActor::DIR::LEFT:
+        angle = 90.0f;
+        break;
+    }
+
+	// 度をラジアンに変換して返す
+    return UtilityCommon::Deg2RadF(angle);
+}
+
 int UtilityCommon::GetDigitCount(const int value)
 {
     if (value == 0)

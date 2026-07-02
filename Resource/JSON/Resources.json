@@ -245,10 +245,10 @@
       "key": "maid",
       "type": "sprite",
       "path": "Resource/Image/Enemy/Maid.png",
-      "divX": 6,
-      "divY": 3,
+      "divX": 9,
+      "divY": 7,
       "sceneIds": [ 4 ],
-      "sizeX": 192,
+      "sizeX": 256,
       "sizeY": 128
     },
     {

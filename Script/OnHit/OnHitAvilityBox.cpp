@@ -12,7 +12,7 @@ OnHitAvilityBox::OnHitAvilityBox(AvilityBox& owner):
 		{
 			return OnHitPlayer(opponentCollider);
 		});
-	onHitMap_.emplace(CollisionTags::TAG::ENEMY_CLONE, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
+	onHitMap_.emplace(CollisionTags::TAG::ENEMY_BASE, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
 		{
 			return OnHitEnemy(opponentCollider);
 		});

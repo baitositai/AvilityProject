@@ -111,6 +111,13 @@ public:
 	const std::vector<Vector2F> GetPlayersPos() const;
 
 	/// <summary>
+	/// 最も近いプレイヤーのポインタを返す
+	/// </summary>
+	/// <param name="pos">基準となる位置</param>
+	/// <returns>最も近いプレイヤー</returns>
+	const Player* GetNearestPlayer(const Vector2F& pos) const;
+
+	/// <summary>
 	/// 指定された位置が右を向いているかどうかを判定します。
 	/// </summary>
 	/// <param name="pos">判定対象となる2次元座標。</param>

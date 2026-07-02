@@ -5,7 +5,11 @@ OnHitEffectTeleport::OnHitEffectTeleport(EffectBase& owner) :
 	OnHitEffect(owner),
 	owner_(owner)
 {
-	onHitMap_.emplace(CollisionTags::TAG::ENEMY_CLONE, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
+	onHitMap_.emplace(CollisionTags::TAG::ENEMY_BASE, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
+		{
+			return OnHitEnemy(opponentCollider);
+		});
+	onHitMap_.emplace(CollisionTags::TAG::ENEMY_MAID, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
 		{
 			return OnHitEnemy(opponentCollider);
 		});

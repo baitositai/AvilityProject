@@ -253,7 +253,7 @@ ItemBase* ItemManager::GetNearestFood(const Vector2F& basePos)
 		if (distSq < minDistanceSq)
 		{
 			minDistanceSq = distSq;
-			nearestFood = item.get(); // get() ‚Å¶ƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+			nearestFood = item.get(); 
 		}
 	}
 

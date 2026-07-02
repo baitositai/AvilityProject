@@ -15,7 +15,8 @@ public:
 		PLAYER_AVILITY_STAMP,		// プレイヤーのアビリティ
 		PLAYER_AVILITY_SHOT,		// プレイヤーのアビリティ
 		STAGE,						// ステージ
-		ENEMY_CLONE,				// 敵:クローン
+		ENEMY_BASE,					// 敵:基本
+		ENEMY_MAID,					// 敵:メイド
 		ENEMY_VIEW,					// 敵の視界
 		ENEMY_ATTACK_NORMAL,		// 敵の攻撃
 		//AVILITY_BOX,				// アビリティ設置のボックス

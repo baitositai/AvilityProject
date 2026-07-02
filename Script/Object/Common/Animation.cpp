@@ -5,6 +5,7 @@ Animation::Animation()
     animationIndex_ = -1;
     isLoop_ = false;
     isPlay_ = false;
+	isNextLoop_ = false;
     type_ = TYPE::MAX;
     nextType_ = TYPE::MAX;
 }
@@ -38,13 +39,13 @@ void Animation::Add(const std::string stringType, const int startIndex, const in
 
 void Animation::Play(const TYPE type, const bool isLoop)
 {
-	type_ = type;
-	isLoop_ = isLoop;
-	isPlay_ = true;
 
-    const auto it = animationMap_.find(type_);
+    const auto it = animationMap_.find(type);
     if (it != animationMap_.end())
     {
+        type_ = type;
+        isLoop_ = isLoop;
+        isPlay_ = true;
         animationIndex_ = it->second.startIndex;
     }
 }

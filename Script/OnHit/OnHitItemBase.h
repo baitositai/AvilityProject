@@ -31,4 +31,5 @@ private:
 
 	// ƒ^ƒO•ÊÕ“ËŒãˆ—
 	virtual void OnHitPlayer(const std::weak_ptr<ColliderBase>& opponentCollider);
+	virtual void OnHitEnemyMaid(const std::weak_ptr<ColliderBase>& opponentCollider);
 };

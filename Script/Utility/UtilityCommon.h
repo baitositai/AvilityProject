@@ -183,6 +183,13 @@ public:
 	static Vector2F ConvertLocalToWorldByGravity(const Vector2F& localVector, const ParameterActor::DIR gravityDir);
 
 	/// <summary>
+	/// 指定した重力方向のラジアン角度を返す
+	/// </summary>
+	/// <param name="gravityDir">重力方向</param>
+	/// <returns>ラジアン角度</returns>
+	static float GetGravityDirRadAngle(const ParameterActor::DIR gravityDir);
+
+	/// <summary>
 	/// 桁数を返す
 	/// </summary>
 	/// <param name="value">値</param>

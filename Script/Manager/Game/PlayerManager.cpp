@@ -244,6 +244,42 @@ const std::vector<Vector2F> PlayerManager::GetPlayersPos() const
 	return playersPos;
 }
 
+const Player* PlayerManager::GetNearestPlayer(const Vector2F& pos) const
+{
+	// 空の場合は即終了
+	if (playerList_.empty())
+	{
+		return nullptr;
+	}
+
+	// 空のポインタを用意	
+	Player* nearestPlayer = nullptr;
+
+	// 人数を取得
+	const int playerNum = static_cast<int>(playerList_.size());
+
+	// 1Pの場合はそのまま返す
+	if (playerNum == 1)
+	{
+		nearestPlayer = playerList_.front().get();
+	}
+	else 	
+	{
+		float minDistanceSq = FLT_MAX;
+		for (const auto& player : playerList_)
+		{
+			Vector2F diff = Vector2F::SubVector2F(player->GetParameter().pos_, pos);
+			float distSq = diff.x * diff.x + diff.y * diff.y;
+			if (distSq < minDistanceSq)
+			{
+				minDistanceSq = distSq;
+				nearestPlayer = player.get();
+			}
+		}
+	}
+	return nearestPlayer;
+}
+
 bool PlayerManager::IsLookRight(const Vector2F& pos) const
 {
 	if (playerList_.empty())
@@ -284,7 +320,6 @@ PlayerManager::PlayerManager()
 {	
 	playersLeft_ = -1;	
 
-	
 	// 初回のみ外部データを読み込んでテンプレートを作成
 	if (!templateParameter_)
 	{

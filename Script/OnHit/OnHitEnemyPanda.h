@@ -3,7 +3,7 @@
 
 class EnemyPanda;
 
-class OnHitPanda : public OnHitEnemy
+class OnHitEnemyPanda : public OnHitEnemy
 {
 public:
 
@@ -11,12 +11,12 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="owner">所有者</param>
-	OnHitPanda(EnemyPanda& owner);
+	OnHitEnemyPanda(EnemyPanda& owner);
 
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~OnHitPanda() override;
+	~OnHitEnemyPanda() override;
 
 private:
 

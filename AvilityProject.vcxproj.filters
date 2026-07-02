@@ -165,9 +165,6 @@
     <ClCompile Include="Script\Utility\UtilityCommon.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Script\Utility\UtilityDraw.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Script\Utility\UtilityLoad.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -678,7 +675,7 @@
     <ClCompile Include="Script\Parameter\Gimmick\ParameterGimmickGrowingBamboo.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Script\OnHit\OnHitPanda.cpp">
+    <ClCompile Include="Script\OnHit\OnHitEnemyPanda.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Script\OnHit\OnHitPlayerShot.cpp">
@@ -700,6 +697,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Script\System\FoodShawer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\OnHit\OnHitEnemyMaid.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1026,9 +1026,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Script\Utility\UtilityCommon.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Script\Utility\UtilityDraw.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Script\Utility\UtilityLoad.h">
@@ -1550,7 +1547,7 @@
     <ClInclude Include="Script\Parameter\Gimmick\ParameterGimmickGrowingBamboo.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Script\OnHit\OnHitPanda.h">
+    <ClInclude Include="Script\OnHit\OnHitEnemyPanda.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Script\Object\Character\Player.h">
@@ -1575,6 +1572,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Script\System\FoodShawer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\OnHit\OnHitEnemyMaid.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

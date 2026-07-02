@@ -1,6 +1,7 @@
 #include "../../Manager/Common/SceneManager.h"
 #include "../../Manager/Common/SpriteEffectManager.h"
 #include "../../Manager/Game/CollisionManager.h"
+#include "../../Manager/Game/ItemManager.h"
 #include "../../Manager/Game/PlayerManager.h"
 #include "../../Manager/Game/GimmickManager.h"
 #include "../../Object/Character/Enemy/EnemyBase.h"
@@ -10,6 +11,7 @@ ComponentLogicBase::ComponentLogicBase(EnemyBase& owner) :
 	ComponentBase(owner),
 	sceneManager_(SceneManager::GetInstance()),
 	collisionManager_(CollisionManager::GetInstance()),
+	itemManager_(ItemManager::GetInstance()),
 	gimmickManager_(GimmickManager::GetInstance()),
 	spriteEffectManager_(SpriteEffectManager::GetInstance()),
 	playerManager_(PlayerManager::GetInstance())

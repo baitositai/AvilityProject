@@ -2,19 +2,19 @@
 #include "../../Object/Character/Enemy/EnemyPanda.h"
 #include "../../Object/Common/Animation.h"
 #include "../../Collider/ColliderBase.h"
-#include "OnHitPanda.h"
+#include "OnHitEnemyPanda.h"
 
-OnHitPanda::OnHitPanda(EnemyPanda& owner) :
+OnHitEnemyPanda::OnHitEnemyPanda(EnemyPanda& owner) :
 	OnHitEnemy(owner),
 	owner_(owner)
 {
 }
 
-OnHitPanda::~OnHitPanda()
+OnHitEnemyPanda::~OnHitEnemyPanda()
 {
 }
 
-void OnHitPanda::OnHitPlayerAttack(const std::weak_ptr<ColliderBase>& opponentCollider)
+void OnHitEnemyPanda::OnHitPlayerAttack(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
 	// 自身のパラメータ
 	auto& parameter = owner_.GetParameter();

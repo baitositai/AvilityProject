@@ -231,34 +231,34 @@ void CollisionManager::InitTagMatrix()
 	//collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;			// アビリティ設置ボックスと敵
 	//collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;
 
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::STAGE)] = true;					// 敵とステージ
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::STAGE)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_BASE)][static_cast<int>(CollisionTags::TAG::STAGE)] = true;					// 敵とステージ
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::STAGE)][static_cast<int>(CollisionTags::TAG::ENEMY_BASE)] = true;
 
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::PLAYER_ATTACK_NORMAL)] = true;	// 敵とプレイヤーの通常攻撃
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_ATTACK_NORMAL)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_BASE)][static_cast<int>(CollisionTags::TAG::PLAYER_ATTACK_NORMAL)] = true;	// 敵とプレイヤーの通常攻撃
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_ATTACK_NORMAL)][static_cast<int>(CollisionTags::TAG::ENEMY_BASE)] = true;
 
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;					// プレイヤーと敵
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::ENEMY_BASE)] = true;					// プレイヤーと敵
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_BASE)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
 
 	//collTagMatrix_[static_cast<int>(CollisionTags::TAG::AVILITY_BOX)][static_cast<int>(CollisionTags::TAG::AVILITY_BOX)] = true;			//アビリティ設置ボックス同士
 
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_STAMP)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;	// プレイヤースタンプと敵
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_STAMP)] = true;
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_STAMP)][static_cast<int>(CollisionTags::TAG::ENEMY_BASE)] = true;	// プレイヤースタンプと敵
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_BASE)][static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_STAMP)] = true;
 
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_SHOT)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;	// プレイヤーショットと敵
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_SHOT)] = true;
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_SHOT)][static_cast<int>(CollisionTags::TAG::ENEMY_BASE)] = true;	// プレイヤーショットと敵
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_BASE)][static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_SHOT)] = true;
 
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AIRSLASH)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;				// エアースラッシュと敵
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::AIRSLASH)] = true;
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AIRSLASH)][static_cast<int>(CollisionTags::TAG::ENEMY_BASE)] = true;				// エアースラッシュと敵
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_BASE)][static_cast<int>(CollisionTags::TAG::AIRSLASH)] = true;
 
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TELEPORT_EXIT)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;			// テレポートと敵
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::TELEPORT_EXIT)] = true;
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TELEPORT_EXIT)][static_cast<int>(CollisionTags::TAG::ENEMY_BASE)] = true;			// テレポートと敵
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_BASE)][static_cast<int>(CollisionTags::TAG::TELEPORT_EXIT)] = true;
 
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::DOOR)] = true;						// プレイヤーとドア
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::DOOR)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
 
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;			// 敵同士
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)][static_cast<int>(CollisionTags::TAG::ENEMY_CLONE)] = true;
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_BASE)][static_cast<int>(CollisionTags::TAG::ENEMY_BASE)] = true;			// 敵同士
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_BASE)][static_cast<int>(CollisionTags::TAG::ENEMY_BASE)] = true;
 
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::ENEMY_VIEW)] = true;					// プレイヤー敵の視界
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_VIEW)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
@@ -331,6 +331,27 @@ void CollisionManager::InitTagMatrix()
 
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TELEPORT_EXIT)][static_cast<int>(CollisionTags::TAG::BAMBOO)] = true;						// テレポートと竹
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::BAMBOO)][static_cast<int>(CollisionTags::TAG::TELEPORT_EXIT)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::ENEMY_MAID)] = true;							// プレイヤーとメイド
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_MAID)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_ATTACK_NORMAL)][static_cast<int>(CollisionTags::TAG::ENEMY_MAID)] = true;			// プレイヤー通常攻撃とメイド
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_MAID)][static_cast<int>(CollisionTags::TAG::PLAYER_ATTACK_NORMAL)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_SHOT)][static_cast<int>(CollisionTags::TAG::ENEMY_MAID)] = true;				// プレイヤーショット攻撃とメイド
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_MAID)][static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_SHOT)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_STAMP)][static_cast<int>(CollisionTags::TAG::ENEMY_MAID)] = true;			// プレイヤースタンプ攻撃とメイド
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_MAID)][static_cast<int>(CollisionTags::TAG::PLAYER_AVILITY_STAMP)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TELEPORT_EXIT)][static_cast<int>(CollisionTags::TAG::ENEMY_MAID)] = true;					// テレポート攻撃とメイド
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_MAID)][static_cast<int>(CollisionTags::TAG::TELEPORT_EXIT)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::AIRSLASH)][static_cast<int>(CollisionTags::TAG::ENEMY_MAID)] = true;						// エアースラッシュとメイド
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_MAID)][static_cast<int>(CollisionTags::TAG::AIRSLASH)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ITEM_FOOD)][static_cast<int>(CollisionTags::TAG::ENEMY_MAID)] = true;						// アイテムとメイド
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_MAID)][static_cast<int>(CollisionTags::TAG::ITEM_FOOD)] = true;
 }
 
 void CollisionManager::InitColliderMatrix()

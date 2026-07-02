@@ -11,6 +11,7 @@ OnHitItemBase::OnHitItemBase(ItemBase& owner) :
 {
 
 	onHitMap_.emplace(CollisionTags::TAG::PLAYER, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitPlayer(opponentCollider); });
+	onHitMap_.emplace(CollisionTags::TAG::ENEMY_MAID, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitEnemyMaid(opponentCollider); });
 }
 
 OnHitItemBase::~OnHitItemBase()
@@ -31,4 +32,10 @@ void OnHitItemBase::OnHitPlayer(const std::weak_ptr<ColliderBase>& opponentColli
 			owner_.Delete();
 		}
 	}
+}
+
+void OnHitItemBase::OnHitEnemyMaid(const std::weak_ptr<ColliderBase>& opponentCollider)
+{
+	// Õ“ËÒ‚ğŠ—LÒ‚Æ‚µ‚Äæ“¾
+	owner_.Delete();
 }

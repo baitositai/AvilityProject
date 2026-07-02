@@ -18,6 +18,17 @@ public:
 	~EnemyMaid() override;
 
 	/// <summary>
+	/// 初期化処理
+	/// </summary>
+	void Init() override;
+
+	/// <summary>
+	/// 回復処理
+	/// </summary>
+	/// <param name="heal">回復量</param>
+	void Heal(const int heal);
+
+	/// <summary>
 	/// パラメーターを返す(変更可)
 	/// </summary>
 	/// <returns>パラメータ</returns>

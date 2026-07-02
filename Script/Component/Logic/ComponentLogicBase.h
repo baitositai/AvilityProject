@@ -5,6 +5,7 @@ class EnemyBase;
 class SceneManager;
 class CollisionManager;
 class GimmickManager;
+class ItemManager;
 class PlayerManager;
 class SpriteEffectManager;
 
@@ -79,6 +80,9 @@ protected:
 
 	// 衝突判定管理クラス
 	CollisionManager& collisionManager_;
+
+	// アイテム管理クラス
+	ItemManager& itemManager_;
 
 	// ギミック管理クラス
 	GimmickManager& gimmickManager_;

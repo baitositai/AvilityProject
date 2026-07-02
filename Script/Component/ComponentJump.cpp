@@ -1,6 +1,7 @@
-#include "../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/SceneManager.h"
 #include "../../Object/Character/CharacterBase.h"
 #include "../../Object/Common/Animation.h"
+#include "../../Utility/UtilityCommon.h"
 #include "ComponentJump.h"
 
 ComponentJump::ComponentJump(CharacterBase& owner) :
@@ -39,9 +40,9 @@ void ComponentJump::Update()
 	owner_.SetJumpPow(currentJumpPow);
 
 	// 移動量の更新
-	Vector2F moveAmount = parameter_.moveAmount_;
+	Vector2F moveAmount = {};
 	moveAmount.y += currentJumpPow;
-	parameter_.moveAmount_ = moveAmount;
+	parameter_.moveAmount_ = Vector2F::AddVector2F(parameter_.moveAmount_, UtilityCommon::ConvertLocalToWorldByGravity(moveAmount, parameter_.gravityDir_));
 
 	// アニメーション切り替え
 	const float HIGHEST = -parameter_.jumpPowMax_ / 2.0f + 2.0f;

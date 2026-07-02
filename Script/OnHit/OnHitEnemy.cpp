@@ -26,7 +26,7 @@ OnHitEnemy::OnHitEnemy(EnemyBase& owner):
 		{
 			return OnHitPlayerAttack(opponentCollider);
 		});
-	onHitMap_.emplace(CollisionTags::TAG::ENEMY_CLONE, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
+	onHitMap_.emplace(CollisionTags::TAG::ENEMY_BASE, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
 		{
 			return OnHitOtherEnemy(opponentCollider);
 		});
@@ -41,7 +41,7 @@ void OnHitEnemy::Update(const std::weak_ptr<ColliderBase>& opponentCollider)
 	// 自身のタグ別に処理を呼び分ける
     switch (opponentCollider.lock()->GetPartnerTag())
     {
-    case CollisionTags::TAG::ENEMY_CLONE:
+    case CollisionTags::TAG::ENEMY_BASE:
 		// 基底クラスの共通処理
         OnHitCharacterBase::Update(opponentCollider);
         break;

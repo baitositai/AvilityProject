@@ -1,5 +1,5 @@
 #include "../../../Collider/ColliderBox.h"
-#include "../../../OnHit/OnHitPanda.h"
+#include "../../../OnHit/OnHitEnemyPanda.h"
 #include "../../Common/Animation.h"
 #include "EnemyPanda.h"
 
@@ -21,10 +21,10 @@ void EnemyPanda::Init()
 	parameterEnemyPanda_->hitSize_ = parameterEnemyPanda_->GetScaleToHitSize();
 
 	// コライダー
-	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::ENEMY_CLONE, parameterEnemyPanda_->pos_, parameterEnemyPanda_->hitSize_, parameterEnemyPanda_->angle_);
+	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::ENEMY_BASE, parameterEnemyPanda_->pos_, parameterEnemyPanda_->hitSize_, parameterEnemyPanda_->angle_);
 
 	// 衝突後処理
-	onHit_ = std::make_unique<OnHitPanda>(*this);
+	onHit_ = std::make_unique<OnHitEnemyPanda>(*this);
 
 	// 攻撃用のタグの設定
 	parameterEnemyPanda_->attackCollisionTag_ = CollisionTags::TAG::ENEMY_ATTACK_NORMAL;

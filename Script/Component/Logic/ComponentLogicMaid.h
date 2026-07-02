@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include "ComponentLogicBase.h"
 #include "../../Common/Vector2F.h"
+#include "../../Parameter/ParameterActor.h"
 
 class EnemyMaid;
 class ParameterEnemyMaid;
@@ -58,9 +59,22 @@ private:
 	// パラメータ
 	ParameterEnemyMaid& parameter_;
 
+	// 重力を切り替える時間
+	static constexpr float CHANGE_GRAVITY_TIME = 4.0f;
+
+	// 停止時間
+	static constexpr float STOP_TIME = 0.8f;
+
+	// 追加重力量
+	static constexpr float ADD_GRAVITY = 16.0f;
+
 	enum class STATE
 	{
 		COLLECT,	// 集める
+		JUMP,		// ジャンプ
+		STAMP_READY,// スタンプ準備
+		STAMP,		// スタンプ
+		SPECIAL		// スペシャル
 	};
 
 	// 視界用角度
@@ -78,8 +92,14 @@ private:
 	// 移動判定
 	bool isMove_;
 
+	// タイマー
+	float timer_;
+
 	// 状態
 	STATE state_;
+
+	// 重力変更先
+	ParameterActor::DIR nextGravityDir_;
 
 	// 状態別更新
 	std::function<void()> update_;
@@ -95,11 +115,20 @@ private:
 
 	//移動種類別に更新処理
 	void UpdateCollect();
+	void UpdateJump();
+	void UpdateStampReady();
+	void UpdateStamp();
 
 	// 状態遷移処理
 	void ChangeState(const STATE state);
 	void ChangeStateCollect();
+	void ChangeStateJump();
+	void ChangeStateStampReady();
+	void ChangeStateStamp();
 
 	// 視界角度の更新
 	void UpdateEyeAngle();
+
+	// アニメーションの更新
+	void UpdateAnimation();
 };

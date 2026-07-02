@@ -23,7 +23,8 @@ OnHitPlayer::OnHitPlayer(Player& owner) :
     factoryComponent_(FactoryComponent::GetInstance()),
     owner_(owner)
 {
-    onHitMap_.emplace(CollisionTags::TAG::ENEMY_CLONE, [this](const std::weak_ptr<ColliderBase>& opponentCollider){ return OnHitEnemy(opponentCollider); });
+    onHitMap_.emplace(CollisionTags::TAG::ENEMY_BASE, [this](const std::weak_ptr<ColliderBase>& opponentCollider){ return OnHitEnemy(opponentCollider); });
+    onHitMap_.emplace(CollisionTags::TAG::ENEMY_MAID, [this](const std::weak_ptr<ColliderBase>& opponentCollider){ return OnHitEnemy(opponentCollider); });
 	onHitMap_.emplace(CollisionTags::TAG::ITEM_AVILITY, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitItemAvility(opponentCollider); });
 	onHitMap_.emplace(CollisionTags::TAG::ITEM_FOOD, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitItemFood(opponentCollider); });
 	onHitMap_.emplace(CollisionTags::TAG::ITEM_TREASURE, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitItemTreasure(opponentCollider); });
