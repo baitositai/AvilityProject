@@ -86,6 +86,7 @@ void ComponentAvilityAirslash::CreateAirslash()
 		parameter->attackBoostRate_ = parameter_.attackBoostRate_;
 		parameter->componentkeys_ = { "spriteAnimation" };
 		parameter->animationDataMap_.emplace("effect", Animation::Data(0, 3, 0.3));
+		parameter->tag_ = CollisionTags::TAG::AIRSLASH;
 		std::unique_ptr<EffectAirslash> effect = std::make_unique<EffectAirslash>(std::move(parameter), DIR[i]);
 		SpriteEffectManager::GetInstance().Add(std::move(effect));
 	}

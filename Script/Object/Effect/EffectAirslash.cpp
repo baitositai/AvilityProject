@@ -11,7 +11,7 @@ EffectAirslash::EffectAirslash(std::unique_ptr<ParameterEffect> parameter, const
 	parameterEffect_ = GetParameterEffectPtr();
 
 	// コライダー
-	collider_ = std::make_shared<ColliderCircle>(*this, CollisionTags::TAG::AIRSLASH, parameterEffect_->pos_, parameterEffect_->hitRadius_);
+	collider_ = std::make_shared<ColliderCircle>(*this, parameterEffect_->tag_, parameterEffect_->pos_, parameterEffect_->hitRadius_);
 
 	// 衝突後処理
 	onHit_ = std::make_unique<OnHitEffect>(*this);

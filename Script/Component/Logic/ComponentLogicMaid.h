@@ -61,16 +61,22 @@ private:
 	ParameterEnemyMaid& parameter_;
 
 	// 重力を切り替える時間
-	static constexpr float CHANGE_GRAVITY_TIME = 4.0f;
+	static constexpr float CHANGE_GRAVITY_TIME = 3.0f;
 
 	// 停止時間
-	static constexpr float STOP_TIME = 0.8f;
+	static constexpr float STOP_TIME = 0.4f;
 
 	// 追加重力量
-	static constexpr float ADD_GRAVITY = 16.0f;
+	static constexpr float ADD_GRAVITY = 18.0f;
 
 	// 攻撃回数
 	static constexpr int SPECIAL_ATTACK_COUNT = 30;
+
+	// 特別攻撃遅延時間
+	static constexpr float SPECIAL_ATTACK_DELAY_TIME = 0.8f;
+
+	// テレポート時間
+	static constexpr float TEREPORT_TIME = 0.5f;
 
 	enum class STATE
 	{
@@ -78,7 +84,9 @@ private:
 		JUMP,		// ジャンプ
 		STAMP_READY,// スタンプ準備
 		STAMP,		// スタンプ
-		SPECIAL		// スペシャル
+		SPECIAL,	// スペシャル
+		TEREPORT,	// テレポート	
+		DELAY,		// 遅延
 	};
 
 	// 視界用角度
@@ -138,6 +146,8 @@ private:
 	void UpdateStampReady();
 	void UpdateStamp();
 	void UpdateSpecial();
+	void UpdateTeleport();
+	void UpdateDelay();
 
 	// 状態遷移処理
 	void ChangeState(const STATE state);
@@ -146,10 +156,19 @@ private:
 	void ChangeStateStampReady();
 	void ChangeStateStamp();
 	void ChangeStateSpecial();
+	void ChangeStateTeleport();
+	void ChangeStateDelay();
 
 	// 視界角度の更新
 	void UpdateEyeAngle();
 
 	// アニメーションの更新
 	void UpdateAnimation();
+
+	// 攻撃
+	void Attack();
+
+	// エアースラッシュ
+	void CreateAirSlash(const Vector2F& dir);
+
 };

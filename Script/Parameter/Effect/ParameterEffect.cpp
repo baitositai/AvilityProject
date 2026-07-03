@@ -1,6 +1,7 @@
 #include "ParameterEffect.h"
 
-ParameterEffect::ParameterEffect()
+ParameterEffect::ParameterEffect() :
+	 tag_(CollisionTags::TAG::MAX)
 {
 }
 

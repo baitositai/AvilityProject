@@ -33,7 +33,8 @@ void ComponentAvilityGiant::Create()
 }
 
 void ComponentAvilityGiant::Init()
-{	
+{
+
 }
 
 void ComponentAvilityGiant::Update()

@@ -1,5 +1,6 @@
 #pragma once
 #include "../ParameterActor.h"
+#include "../../Manager/Game/CollisionTags.h"
 
 class ParameterEffect : public ParameterActor
 {
@@ -21,6 +22,6 @@ public:
 	/// <param name="parameter">パラメータ情報</param>
 	virtual void LoadParameter(const Json& parameter) override;
 
-private:
-
+	// コライダータグ
+	CollisionTags::TAG tag_;
 };

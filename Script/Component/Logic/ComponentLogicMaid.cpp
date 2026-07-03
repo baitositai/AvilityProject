@@ -1,12 +1,14 @@
 #include <DxLib.h>
 #include "../../Application.h"
 #include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/SpriteEffectManager.h"
 #include "../../Manager/Game/CollisionManager.h"
 #include "../../Manager/Game/ItemManager.h"
 #include "../../Manager/Game/PlayerManager.h"
 #include "../../Object/Character/Player.h"
 #include "../../Object/Character/Enemy/EnemyMaid.h"
 #include "../../Object/Item/ItemBase.h"
+#include "../../Object/Effect/EffectAirslash.h"
 #include "../../Utility/UtilityCommon.h"
 #include "../../Collider/ColliderFan.h"
 #include "../../Collider/ColliderCircle.h"
@@ -37,6 +39,8 @@ ComponentLogicMaid::ComponentLogicMaid(EnemyMaid& owner):
 	changeStateMap_.emplace(STATE::STAMP_READY, std::bind(&ComponentLogicMaid::ChangeStateStampReady, this));
 	changeStateMap_.emplace(STATE::STAMP, std::bind(&ComponentLogicMaid::ChangeStateStamp, this));
 	changeStateMap_.emplace(STATE::SPECIAL, std::bind(&ComponentLogicMaid::ChangeStateSpecial, this));
+	changeStateMap_.emplace(STATE::TEREPORT, std::bind(&ComponentLogicMaid::ChangeStateTeleport, this));
+	changeStateMap_.emplace(STATE::DELAY, std::bind(&ComponentLogicMaid::ChangeStateDelay, this));
 }
 
 ComponentLogicMaid::~ComponentLogicMaid()
@@ -53,7 +57,7 @@ void ComponentLogicMaid::Create()
 
 	// フードシャワー
 	FoodShawer::Parameter parameter;
-	parameter.interval_ = 3.0f;
+	parameter.interval_ = 2.2f;
 	parameter.fallDirList_ = { ParameterActor::DIR::DOWN,ParameterActor::DIR::RIGHT,ParameterActor::DIR::LEFT,ParameterActor::DIR::UP };
 	parameter.limitCount_ = 10;
 	constexpr int OFFSET = 150;
@@ -78,6 +82,9 @@ void ComponentLogicMaid::Init()
 
 	// 視野角の初期化
 	UpdateEyeAngle();
+
+	// 一番最初で攻撃をさせないため
+	isSpecialAttack_ = true;
 }
 
 void ComponentLogicMaid::Update()
@@ -102,12 +109,25 @@ void ComponentLogicMaid::Remove()
 	if (colliderFan_)
 	{
 		colliderFan_->Delete();
+		colliderFan_ = nullptr;
+	}	
+	if (colliderCircle_)
+	{
+		colliderCircle_->Delete();
+		colliderCircle_ = nullptr;
 	}
 }
 
 void ComponentLogicMaid::AttackReset()
 {
-
+	if (colliderFan_)
+	{
+		colliderFan_->SetIsActive(false);
+	}
+	if (colliderCircle_)
+	{
+		colliderCircle_->SetIsActive(false);
+	}
 }
 
 void ComponentLogicMaid::UpdateCollect()
@@ -115,24 +135,15 @@ void ComponentLogicMaid::UpdateCollect()
 	// 食べ物の取得回数が条件数満たしている場合
 	if (parameter_.hitFoodCount_ >= parameter_.triggerFoodCount_)
 	{
-		ChangeState(STATE::SPECIAL);
+		ChangeState(STATE::TEREPORT);
 		return;
 	}
 
 	// 発見判定
 	if(parameter_.isDiscover_)
 	{
-		// 状態遷移
-		owner_.ChangeState(EnemyMaid::STATE::ATTACK);
-
-		// 攻撃のアニメーションを開始（ループしない）
-		owner_.GetAnimation().Play(Animation::TYPE::ATTACK, false);
-
-		// 次回アニメーションを指定しない
-		owner_.GetAnimation().SetNextAnimationType(Animation::TYPE::MAX);
-
-		// 攻撃判定
-		parameter_.isAction_ = true;
+		// 攻撃
+		Attack();
 
 		// 終了判定
 		isEnd_ = true;
@@ -162,7 +173,7 @@ void ComponentLogicMaid::UpdateCollect()
 		moveDir = Vector2F::SubVector2F(targetFood->GetParameter().pos_, parameter_.pos_);
 
 		// ターゲットの重力方向を取得
-		gravityDir = targetFood->GetParameter().gravityDir_;
+		gravityDir = targetFood->GetParameter().gravityDir_;	
 	}
 	else
 	{
@@ -170,24 +181,32 @@ void ComponentLogicMaid::UpdateCollect()
 		const Player* nearestPlayer = playerManager_.GetNearestPlayer(parameter_.pos_);
 
 		// 存在する場合
-		if (nearestPlayer)
+		if (nearestPlayer && !isSpecialAttack_)
 		{
 			// プレイヤーのパラメータを取得
 			auto& playerParameter = nearestPlayer->GetParameter();
 
-			// プレイヤーを追いかけるための方向を取得
-			moveDir = Vector2F::SubVector2F(playerParameter.pos_, parameter_.pos_);
+			// プレイヤーまでの方向を取得
+			moveDir = Vector2F::SubVector2F(playerParameter.pos_, parameter_.pos_).Normalize();
+
+			// エアースラッシュ生成
+			if (!isSpecialAttack_)
+			{
+				CreateAirSlash(moveDir);
+
+				// 攻撃状態へ
+				Attack();
+
+				// 攻撃判定
+				isSpecialAttack_ = true;
+				return;
+			}
 
 			// ターゲットの重力方向を取得
 			gravityDir = playerParameter.gravityDir_;
 		}
-		else
-		{
-			// プレイヤーが存在しない場合は移動しない
-			moveDir = Vector2F(0.0f, 0.0f);
-		}
-	}	
-
+	}			
+	
 	// ベクトルの長さを計算して距離を求める
 	distance = moveDir.Length();
 	
@@ -210,6 +229,9 @@ void ComponentLogicMaid::UpdateCollect()
 		
 		// 重力方向の更新
 		nextGravityDir_ = gravityDir;
+
+		// 攻撃判定オフ
+		isSpecialAttack_ = false;
 	}
 	else
 	{
@@ -257,6 +279,26 @@ void ComponentLogicMaid::UpdateSpecial()
 	{
 		if(specialAttackStartFrame_ == animation.GetAnimationIndex() && !isSpecialAttack_)
 		{
+			// エアースラッシュの方向を決定
+			Vector2F baseDir = parameter_.GetFront();
+
+			// ランダムな角度を計算
+			const float randomValue = static_cast<float>(UtilityCommon::GetRandomCount(0, 100)) / 100.0f;
+			const float spreadAngle = (randomValue * 2.0f - 1.0f) * UtilityCommon::Deg2RadF(30.0f);
+
+			// ベクトルを回転させる（2D回転行列の計算）
+			const float cosA = cosf(spreadAngle);
+			const float sinA = sinf(spreadAngle);
+
+			// 方向を決定
+			Vector2F dir = {
+				baseDir.x * cosA - baseDir.y * sinA,
+				baseDir.x * sinA + baseDir.y * cosA
+			};
+
+			// エアースラッシュ生成
+			CreateAirSlash(dir);
+
 			// 攻撃判定を有効化
 			isSpecialAttack_ = true;
 
@@ -296,6 +338,33 @@ void ComponentLogicMaid::UpdateSpecial()
 
 		// アニメーション再生
 		animation.Play(animationList[randomIndex], false);
+	}
+}
+
+void ComponentLogicMaid::UpdateTeleport()
+{
+	timer_ -= sceneManager_.GetDeltaTime();
+	if (timer_ < 0.0f)
+	{
+		// エフェクト再生
+		
+		// 描画
+		owner_.SetIsDraw(true);
+
+		// コライダー有効
+		owner_.SetColliderActive(true);
+
+		// 状態遷移
+		ChangeState(STATE::DELAY);
+	}
+}
+
+void ComponentLogicMaid::UpdateDelay()
+{
+	timer_ -= sceneManager_.GetDeltaTime();
+	if (timer_ < 0.0f)
+	{
+		ChangeState(STATE::SPECIAL);
 	}
 }
 
@@ -401,6 +470,36 @@ void ComponentLogicMaid::ChangeStateSpecial()
 	collisionManager_.Add(colliderCircle_);
 }
 
+void ComponentLogicMaid::ChangeStateTeleport()
+{
+	update_ = std::bind(&ComponentLogicMaid::UpdateTeleport, this);
+
+	// 移動前位置でエフェクト再生
+
+	// 移動
+	parameter_.pos_ = { 150.0f, Application::SCREEN_SIZE_Y - 180 };
+	parameter_.gravityDir_ = ParameterActor::DIR::DOWN;
+	parameter_.angle_ = UtilityCommon::GetGravityDirRadAngle(parameter_.gravityDir_);
+	parameter_.direction_ = false;
+	owner_.SetIsDraw(false);
+	owner_.SetColliderActive(false);
+
+	// テレポート時間設定
+	timer_ = TEREPORT_TIME;
+
+	// アニメーション変更
+	owner_.GetAnimation().Play(Animation::TYPE::IDLE);
+
+}
+
+void ComponentLogicMaid::ChangeStateDelay()
+{
+	update_ = std::bind(&ComponentLogicMaid::UpdateDelay, this);
+
+	// 遅延時間の指定
+	timer_ = SPECIAL_ATTACK_DELAY_TIME;
+}
+
 void ComponentLogicMaid::UpdateEyeAngle()
 {
 	// キャラクターの向きに応じてコライダーの角度を更新
@@ -451,4 +550,40 @@ void ComponentLogicMaid::UpdateAnimation()
 	}
 
 	animation.Play(type);
+}
+
+void ComponentLogicMaid::Attack()
+{
+	// 状態遷移
+	owner_.ChangeState(EnemyMaid::STATE::ATTACK);
+
+	// 攻撃のアニメーションを開始（ループしない）
+	owner_.GetAnimation().Play(Animation::TYPE::ATTACK, false);
+
+	// 次回アニメーションを指定しない
+	owner_.GetAnimation().SetNextAnimationType(Animation::TYPE::MAX);
+
+	// 攻撃判定
+	parameter_.isAction_ = true;
+}
+
+void ComponentLogicMaid::CreateAirSlash(const Vector2F& dir)
+{	
+	std::unique_ptr<ParameterEffect> parameter = std::make_unique<ParameterEffect>();
+	parameter->pos_ = parameter_.pos_;
+	parameter->gravityDir_ = parameter_.gravityDir_;
+	parameter->angle_ = std::atan2f(dir.y, dir.x);
+	parameter->hitRadius_ = 16.0f * parameter_.scale_;
+	parameter->resourceKey_ = "airslash";
+	parameter->scale_ = parameter_.scale_;
+	parameter->divisionNum_ = { 4, 1 };
+	parameter->transparent_ = true;
+	parameter->moveSpeed_ = 10.0f;
+	parameter->attackPower_ = parameter_.attackPower_;
+	parameter->attackBoostRate_ = parameter_.attackBoostRate_;
+	parameter->componentkeys_ = { "spriteAnimation" };
+	parameter->tag_ = CollisionTags::TAG::ENEMY_ATTACK_NORMAL;
+	parameter->animationDataMap_.emplace("effect", Animation::Data(0, 3, 0.3));
+	std::unique_ptr<EffectAirslash> effect = std::make_unique<EffectAirslash>(std::move(parameter), dir);
+	spriteEffectManager_.Add(std::move(effect));
 }
