@@ -137,6 +137,25 @@ void ResourceManager::Release()
 	resourcesMap_.clear();
 }
 
+void ResourceManager::SoloRelease(const std::string& key)
+{
+	// リソースを探す
+	auto it = loadedMap_.find(key);
+
+	// 見つからなかった場合
+	if (it == loadedMap_.end())
+	{
+		// 無視
+		return;
+	}
+
+	// 解放処理を行う
+	it->second->Release();
+
+	// マップから要素を削除する
+	loadedMap_.erase(it);
+}
+
 void ResourceManager::SceneChangeResource(const int nextSceneId)
 {
 	for (auto it = loadedMap_.begin(); it != loadedMap_.end(); )
@@ -174,7 +193,6 @@ std::unordered_map<std::string, ResourceSound*>& ResourceManager::GetSceneSounds
 	// 空じゃないか確認
 	if (loadedMap_.empty())
 	{
-		assert(false && "読み込んだリソースがありません");
 		return sceneSounds;
 	}
 
@@ -254,44 +272,148 @@ std::unordered_map<std::string, ResourceEffect*>& ResourceManager::GetSceneEffec
 	return sceneEffects;
 }
 
-int ResourceManager::GetHandle(const std::string& key) const
+int ResourceManager::GetHandle(const std::string& key) 
 {
-	//リソースを探す
-	const auto& res = loadedMap_.find(key);
+	// 読み込み済みマップから探す
+	auto it = loadedMap_.find(key);
 
-	//取得できないときアサート
-	assert(res != loadedMap_.end() && "指定したキーのリソースは取得できないです");
+	// 見つかった場合
+	if (it != loadedMap_.end())
+	{
+		// そのまま返す
+		return it->second->GetHandle();
+	}
 
-	//リソースを返す
-	return res->second->GetHandle();
+	// リソースマップから探す
+	auto res = resourcesMap_.find(key);
+
+	// 見つからない場合
+	if (res == resourcesMap_.end())
+	{
+		// 終了
+		return -1;
+	}
+
+	// リソースを取得して読み込み処理
+	ResourceBase* resPtr = res->second.get();
+	resPtr->Load();
+
+	// 読み込み済みマップに登録する
+	loadedMap_.emplace(key, resPtr);
+
+	// ハンドルを返す
+	return resPtr->GetHandle();
 }
 
-int* ResourceManager::GetHandles(const std::string& key) const
+int* ResourceManager::GetHandles(const std::string& key) 
 {
-	// リソースを探す
+	// 読み込み済みマップから探す
 	auto it = loadedMap_.find(key);
-	assert(it != loadedMap_.end() && "指定したキーのリソースは取得できないです");
 
-	// dynamic_cast で派生型にキャスト
+	// 見つかった場合
+	if (it != loadedMap_.end())
+	{
+		// 派生型にキャスト
+		auto sprite = dynamic_cast<ResourceSprite*>(it->second);
+
+		// そのまま返す
+		return sprite->GetHandleIds();
+	}
+
+	// リソースマップから探す
+	auto res = resourcesMap_.find(key);
+
+	// 見つからない場合
+	if (res == resourcesMap_.end())
+	{
+		// 終了
+		return nullptr;
+	}
+
+	// リソースを取得して読み込み処理
+	ResourceBase* resPtr = res->second.get();
+	resPtr->Load();
+
+	// 読み込み済みマップに登録する
+	loadedMap_.emplace(key, resPtr);
+
+	// 派生型にキャスト
 	auto sprite = dynamic_cast<ResourceSprite*>(it->second);
-	assert(sprite && "リソースの型が ResourceSprite ではありません");
 
-	// ハンドルIDを返す
+	// そのまま返す
 	return sprite->GetHandleIds();
 }
 
-const std::wstring ResourceManager::GetFontName(const std::string& key) const
+ResourceSound* ResourceManager::GetResourceSound(const std::string& key)
 {
-	// リソースを探す
+	// 読み込み済みマップから探す
+	auto itLoaded = loadedMap_.find(key);
+
+	// 見つかった場合
+	if (itLoaded != loadedMap_.end())
+	{
+		// キャストして返す
+		return dynamic_cast<ResourceSound*>(itLoaded->second);
+	}
+
+	// リソースマップから探す
+	auto itResource = resourcesMap_.find(key);
+
+	// 見つからない場合
+	if (itResource == resourcesMap_.end())
+	{
+		// 終了
+		return nullptr;
+	}
+
+	// リソースを取得して読み込み処理
+	ResourceBase* pRawResource = itResource->second.get();
+	pRawResource->Load();
+
+	// 読み込み済みマップに登録する
+	loadedMap_.emplace(key, pRawResource);
+
+	// 取得したリソースをキャストして返す
+	return dynamic_cast<ResourceSound*>(pRawResource);
+}
+
+const std::wstring ResourceManager::GetFontName(const std::string& key) 
+{
+	// 読み込み済みマップから探す
 	auto it = loadedMap_.find(key);
-	assert(it != loadedMap_.end() && "指定したキーのリソースは取得できないです");
 
-	// dynamic_cast で派生型にキャスト
-	auto font = dynamic_cast<ResourceFont*>(it->second);
-	assert(font && "リソースの型が ResourceFont ではありません");
+	// 見つかった場合
+	if (it != loadedMap_.end())
+	{
+		// 派生型にキャスト
+		auto sprite = dynamic_cast<ResourceFont*>(it->second);
 
-	// ハンドルIDを返す
-	return font->GetFontName();
+		// そのまま返す
+		return sprite->GetFontName();
+	}
+
+	// リソースマップから探す
+	auto res = resourcesMap_.find(key);
+
+	// 見つからない場合
+	if (res == resourcesMap_.end())
+	{
+		// 終了
+		return L"";
+	}
+
+	// リソースを取得して読み込み処理
+	ResourceBase* resPtr = res->second.get();
+	resPtr->Load();
+
+	// 読み込み済みマップに登録する
+	loadedMap_.emplace(key, resPtr);
+
+	// 派生型にキャスト
+	auto sprite = dynamic_cast<ResourceFont*>(it->second);
+
+	// そのまま返す
+	return sprite->GetFontName();
 }
 
 ResourceManager::ResourceManager(void)

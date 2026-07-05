@@ -4,6 +4,9 @@
 #include "../../Template/Singleton.h"
 #include "SoundType.h"
 
+class ResourceManager;
+class ResourceSound;
+
 class SoundManager : public Singleton<SoundManager>
 {
 	//シングルトンにだけ共有する
@@ -141,6 +144,9 @@ private:
 		int goalVolume;				// 目標音量
 	};
 
+	// リソース管理クラスの参照
+	ResourceManager& resourceManager_;
+
 	// 読み込みリソース管理
 	std::unordered_map<SoundType::BGM, SoundData> loadedBgmMap_;	// BGM
 	std::unordered_map<SoundType::SE, SoundData> loadedSeMap_;		// SE
@@ -152,8 +158,11 @@ private:
 	int defaultVolumeBgm_;	// BGM
 	int defaultVolumeSe_;	// SE
 
-	//再生種類を返す
+	// 再生種類を返す
 	int GetPlayType(const SoundType::TYPE soundType);
+
+	// 追加処理
+	void Add(const std::string& key, ResourceSound* resource);
 
 	// コンストラクタ
 	SoundManager();

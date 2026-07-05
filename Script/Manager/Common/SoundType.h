@@ -45,5 +45,8 @@ public:
 
 	// SE‚Ìí—Ş‚ğŠÇ—
 	static const std::map<std::string, SE> KEY_SE_MAP;
-};
 
+	// stringŒ^‚ğ“üè‚·‚é
+	static std::string GetStringFromBGM(const BGM bgmType);
+	static std::string GetStringFromSE(const SE seType);
+};

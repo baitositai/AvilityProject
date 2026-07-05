@@ -21,3 +21,29 @@ const std::map<std::string, SoundType::SE> SoundType::KEY_SE_MAP =
 	{"seTrainWhistle", SoundType::SE::TRAIN_WHISTLE},
 	{"seDecision", SoundType::SE::DECISION}
 };
+
+std::string SoundType::GetStringFromBGM(BGM bgmType)
+{
+    // マップの中身をループして一致する値を探す
+    for (const auto& pair : KEY_BGM_MAP)
+    {
+        if (pair.second == bgmType)
+        {
+            return pair.first;
+        }
+    }
+    return "";
+}
+
+std::string SoundType::GetStringFromSE(SE seType)
+{
+    // マップの中身をループして一致する値を探す
+    for (const auto& pair : KEY_SE_MAP)
+    {
+        if (pair.second == seType)
+        {
+            return pair.first;
+        }
+    }
+    return "";
+}

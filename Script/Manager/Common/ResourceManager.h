@@ -26,6 +26,12 @@ public:
 	void Release();
 
 	/// <summary>
+	/// リソース単体での解放
+	/// </summary>
+	/// <param name="key">リソースキー</param>
+	void SoloRelease(const std::string& key);
+
+	/// <summary>
 	/// シーン変更の処理
 	/// </summary>
 	/// <param name="nextSceneId">次シーンのID</param>
@@ -48,21 +54,28 @@ public:
 	/// </summary>
 	/// <param name="key">リソースキー</param>
 	/// <returns>リソースのハンドル</returns>
-	int GetHandle(const std::string& key)const;
+	int GetHandle(const std::string& key);
 
 	/// <summary>
 	/// 指定したキーのリソースを返す
 	/// </summary>
 	/// <param name="key">リソースキー</param>
 	/// <returns>リソースのハンドル(主にスプライト)</returns>
-	int* GetHandles(const std::string& key)const;
+	int* GetHandles(const std::string& key);
+
+	/// <summary>
+	/// 指定したキーのサウンドを返す
+	/// </summary>
+	/// <param name="key">リリースキー</param>
+	/// <returns>サウンドを返す</returns>
+	ResourceSound* GetResourceSound(const std::string& key);
 
 	/// <summary>
 	/// 指定したキーのフォントの名前を返す
 	/// </summary>
 	/// <param name="key">リソースキー</param>
 	/// <returns>フォントの名前</returns>
-	const std::wstring GetFontName(const std::string& key)const;
+	const std::wstring GetFontName(const std::string& key);
 
 private:
 

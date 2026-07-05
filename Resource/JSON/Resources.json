@@ -451,7 +451,7 @@
     {
       "key": "bgmGame1",
       "path": "Resource/Sound/Bgm/BgmGame1.mp3",
-      "sceneIds": [ 3, 4 ],
+      "sceneIds": [ ],
       "soundType": "bgm",
       "type": "sound"
     },
@@ -472,14 +472,14 @@
     {
       "key": "bgmGame4",
       "path": "Resource/Sound/Bgm/BgmGame4.mp3",
-      "sceneIds": [ 3, 4 ],
+      "sceneIds": [ ],
       "soundType": "bgm",
       "type": "sound"
     },
     {
       "key": "bgmGame5",
       "path": "Resource/Sound/Bgm/BgmGame5.mp3",
-      "sceneIds": [ 3, 4 ],
+      "sceneIds": [  ],
       "soundType": "bgm",
       "type": "sound"
     },
