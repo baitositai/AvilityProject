@@ -15,7 +15,7 @@ UiPlayerAvilitySlot::~UiPlayerAvilitySlot()
 
 void UiPlayerAvilitySlot::Init()
 {
-	avilitySlotHandle_ = resourceManager_.GetHandles("avilityItems");
+	avilitySlotHandle_ = resourceManager_.GetHandles("avilityItemsSprite");
 
 	UiPlayerBase::Init();
 

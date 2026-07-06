@@ -3,7 +3,7 @@
 ParameterActor::ParameterActor() :
 	scale_(1.0f),
 	angle_(0.0f),
-	alpha_(0.0f),
+	alpha_(1.0f),
     drawIndex_(0.0f),
 	direction_(false), 
 	transparent_(true), 
@@ -29,7 +29,7 @@ ParameterActor::ParameterActor() :
     attackPower_(-1),
     attackBoostRate_(0.0f),
     knockBackPower_({ 0.0f, 0.0f }),
-    color_({})
+    color_(VECTOR{ 1.0f,1.0f,1.0f })
 {
 }
 

@@ -46,14 +46,14 @@ void GimmickBase::Draw(void)
 	// 描画しない場合は無視
 	if (!isDraw_) return;
 
-	// 描画位置を取得
-	parameterGimmick_->drawPos_ = GetDrawCenterPos();
-
 	// 描画サイズを現在のスケールに合わせる
-	Vector2F nowSize = Vector2F::MulVector2FFloat(parameterGimmick_->drawSize_.ToVector2F(), parameterGimmick_->scale_);
+	Vector2 nowSize = Vector2F::MulVector2FFloat(parameterGimmick_->drawSize_.ToVector2F(), parameterGimmick_->scale_).ToVector2();
+
+	// 中心位置に設定
+	parameterGimmick_->drawPos_ = GetDrawCenterPos(nowSize);
 
 	// メッシュ生成
-	renderer_->MakeSquereVertex(parameterGimmick_->drawPos_, nowSize.ToVector2());
+	renderer_->MakeSquereVertex(parameterGimmick_->drawPos_, nowSize);
 
 	// X軸の反転
 	float isReverseX = parameterGimmick_->direction_ ? 1.0f : 0.0f;
@@ -90,12 +90,12 @@ void GimmickBase::InitDraw()
 	// レンダラーの生成
 	renderer_ = std::make_unique<PixelRenderer>(*material_);
 
-	// 中心位置に設定
-	parameterGimmick_->drawPos_ = GetDrawCenterPos();
-
 	// 描画サイズを現在のスケールに合わせる
-	Vector2F nowSize = Vector2F::MulVector2FFloat(parameterGimmick_->drawSize_.ToVector2F(), parameterGimmick_->scale_);
+	Vector2 nowSize = Vector2F::MulVector2FFloat(parameterGimmick_->drawSize_.ToVector2F(), parameterGimmick_->scale_).ToVector2();
+
+	// 中心位置に設定
+	parameterGimmick_->drawPos_ = GetDrawCenterPos(nowSize);
 
 	// メッシュ生成
-	renderer_->MakeSquereVertex(parameterGimmick_->drawPos_, nowSize.ToVector2());
+	renderer_->MakeSquereVertex(parameterGimmick_->drawPos_, nowSize);
 }

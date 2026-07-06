@@ -83,7 +83,7 @@ void ItemBase::InitDraw()
 
 	// 基底クラスではスプライト画像を前提で用意
 	// マテリアルの生成
-	material_ = std::make_unique<PixelMaterial>(resMng_.GetHandle("standardTexture"), DEFAULT_CONST_BUFFER_SIZE);
+	material_ = std::make_unique<PixelMaterial>(resMng_.GetHandle("standardSprite"), DEFAULT_CONST_BUFFER_SIZE);
 	material_->AddTextureBuf(resMng_.GetHandle(parameterItem_->resourceKey_));
 	material_->AddConstBuf(FLOAT4{ parameterItem_->color_.x, parameterItem_->color_.y,parameterItem_->color_.z, parameterItem_->alpha_ });
 	material_->AddConstBuf(FLOAT4{ isReverseX, 0.0f, parameterItem_->scale_, parameterItem_->angle_ });
@@ -92,12 +92,12 @@ void ItemBase::InitDraw()
 	// レンダラーの生成
 	renderer_ = std::make_unique<PixelRenderer>(*material_);
 
-	// 中心位置に設定
-	parameterItem_->drawPos_ = GetDrawCenterPos();
-
 	// 描画サイズを現在のスケールに合わせる
-	Vector2F nowSize = Vector2F::MulVector2FFloat(parameterItem_->drawSize_.ToVector2F(), parameterItem_->scale_);
+	Vector2 nowSize = Vector2F::MulVector2FFloat(parameterItem_->drawSize_.ToVector2F(), parameterItem_->scale_).ToVector2();
+
+	// 中心位置に設定
+	parameterItem_->drawPos_ = GetDrawCenterPos(nowSize);
 
 	// メッシュ生成
-	renderer_->MakeSquereVertex(parameterItem_->drawPos_, nowSize.ToVector2());
+	renderer_->MakeSquereVertex(parameterItem_->drawPos_, nowSize);
 }

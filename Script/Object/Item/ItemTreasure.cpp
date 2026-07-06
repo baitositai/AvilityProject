@@ -63,14 +63,14 @@ void ItemTreasure::Draw()
 	// 描画しない場合は無視
 	if (!isDraw_) return;
 		
-	// 描画位置を取得
-	parameterItemTreasure_->drawPos_ = GetDrawCenterPos();
-
 	// 描画サイズを現在のスケールに合わせる
-	Vector2F nowSize = Vector2F::MulVector2FFloat(parameterItemTreasure_->drawSize_.ToVector2F(), parameterItemTreasure_->scale_);
+	Vector2 nowSize = Vector2F::MulVector2FFloat(parameterItemTreasure_->drawSize_.ToVector2F(), parameterItemTreasure_->scale_).ToVector2();
+
+	// 中心位置に設定
+	parameterItemTreasure_->drawPos_ = GetDrawCenterPos(nowSize);
 
 	// メッシュ生成
-	renderer_->MakeSquereVertex(parameterItemTreasure_->drawPos_, nowSize.ToVector2());
+	renderer_->MakeSquereVertex(parameterItemTreasure_->drawPos_, nowSize);
 
 	// X軸の反転
 	float isReverseX = parameterItemTreasure_->direction_ ? 1.0f : 0.0f;
@@ -212,12 +212,12 @@ void ItemTreasure::InitDraw()
 	// レンダラーの生成
 	renderer_ = std::make_unique<PixelRenderer>(*material_);
 
-	// 中心位置に設定
-	parameterItemTreasure_->drawPos_ = GetDrawCenterPos();
-
 	// 描画サイズを現在のスケールに合わせる
-	Vector2F nowSize = Vector2F::MulVector2FFloat(parameterItemTreasure_->drawSize_.ToVector2F(), parameterItemTreasure_->scale_);
+	Vector2 nowSize = Vector2F::MulVector2FFloat(parameterItemTreasure_->drawSize_.ToVector2F(), parameterItemTreasure_->scale_).ToVector2();
+
+	// 中心位置に設定
+	parameterItemTreasure_->drawPos_ = GetDrawCenterPos(nowSize);
 
 	// メッシュ生成
-	renderer_->MakeSquereVertex(parameterItemTreasure_->drawPos_, nowSize.ToVector2());
+	renderer_->MakeSquereVertex(parameterItemTreasure_->drawPos_, nowSize);
 }

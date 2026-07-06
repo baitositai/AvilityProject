@@ -41,7 +41,7 @@
     {
       "key": "player2",
       "sceneIds": [ 2, 3, 4, 5, 6 ],
-      "type": "sprite",
+      "type": "texture",
       "divX": 10,
       "divY": 9,
       "sizeX": 96,
@@ -51,7 +51,7 @@
     {
       "key": "player3",
       "sceneIds": [ 2, 3, 4, 5, 6 ],
-      "type": "sprite",
+      "type": "texture",
       "divX": 10,
       "divY": 9,
       "sizeX": 96,
@@ -61,7 +61,7 @@
     {
       "key": "player4",
       "sceneIds": [ 2, 3, 4, 5, 6 ],
-      "type": "sprite",
+      "type": "texture",
       "divX": 10,
       "divY": 9,
       "sizeX": 96,
@@ -71,7 +71,7 @@
     {
       "key": "clone",
       "sceneIds": [ 3 ],
-      "type": "sprite",
+      "type": "texture",
       "divX": 10,
       "divY": 9,
       "sizeX": 96,
@@ -81,7 +81,7 @@
     {
       "key": "slime",
       "sceneIds": [ 3 ],
-      "type": "sprite",
+      "type": "texture",
       "divX": 19,
       "divY": 4,
       "sizeX": 156,
@@ -91,7 +91,7 @@
     {
       "key": "mushroom",
       "sceneIds": [ 3 ],
-      "type": "sprite",
+      "type": "texture",
       "divX": 11,
       "divY": 6,
       "sizeX": 150,
@@ -101,7 +101,7 @@
     {
       "key": "hat",
       "sceneIds": [ 3 ],
-      "type": "sprite",
+      "type": "texture",
       "divX": 8,
       "divY": 5,
       "sizeX": 38,
@@ -111,7 +111,7 @@
     {
       "key": "snake",
       "sceneIds": [ 3 ],
-      "type": "sprite",
+      "type": "texture",
       "divX": 11,
       "divY": 5,
       "sizeX": 64,
@@ -121,7 +121,7 @@
     {
       "key": "samurai",
       "sceneIds": [ 3 ],
-      "type": "sprite",
+      "type": "texture",
       "divX": 5,
       "divY": 5,
       "sizeX": 128,
@@ -167,11 +167,15 @@
       "key": "titleLogo",
       "path": "Resource/Image/Ui/TitleLogo.png",
       "sceneIds": [ 1 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 960,
+      "sizeY": 203
     },
     {
       "key": "airslash",
-      "type": "sprite",
+      "type": "texture",
       "path": "Resource/Image/Effect/Airslash.png",
       "divX": 4,
       "divY": 1,
@@ -181,7 +185,7 @@
     },
     {
       "key": "teleportEnter",
-      "type": "sprite",
+      "type": "texture",
       "path": "Resource/Image/Effect/TeleportEnter.png",
       "divX": 9,
       "divY": 1,
@@ -191,7 +195,7 @@
     },
     {
       "key": "teleportExit",
-      "type": "sprite",
+      "type": "texture",
       "path": "Resource/Image/Effect/TeleportExit.png",
       "divX": 11,
       "divY": 1,
@@ -210,16 +214,14 @@
       "sizeY": 32
     },
     {
-      "key": "backGround02",
-      "path": "Resource/Image/BackGround/BackGround02.png",
-      "sceneIds": [ 2, 3, 4 ],
-      "type": "texture"
-    },
-    {
       "key": "door",
       "path": "Resource/Image/Gimmick/Door.png",
       "sceneIds": [ 3 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 160,
+      "sizeY": 240
     },
     {
       "key": "train",
@@ -233,7 +235,7 @@
     },
     {
       "key": "carriage",
-      "type": "sprite",
+      "type": "texture",
       "path": "Resource/Image/Train/Carriage.png",
       "divX": 16,
       "divY": 1,
@@ -243,7 +245,7 @@
     },
     {
       "key": "maid",
-      "type": "sprite",
+      "type": "texture",
       "path": "Resource/Image/Enemy/Maid.png",
       "divX": 9,
       "divY": 7,
@@ -255,73 +257,121 @@
       "key": "backGround0",
       "path": "Resource/Image/BackGround/BackGround0.png",
       "sceneIds": [ 1, 2, 3, 4 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 630,
+      "sizeY": 360
     },
     {
       "key": "backGround1",
       "path": "Resource/Image/BackGround/BackGround1.png",
       "sceneIds": [ 1, 2, 3, 4 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 630,
+      "sizeY": 360
     },
     {
       "key": "backGround2",
       "path": "Resource/Image/BackGround/BackGround2.png",
       "sceneIds": [ 1, 2, 3, 4 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 630,
+      "sizeY": 360
     },
     {
       "key": "backGround3",
       "path": "Resource/Image/BackGround/BackGround3.png",
       "sceneIds": [ 1, 2, 3, 4 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 630,
+      "sizeY": 360
     },
     {
       "key": "backGround4",
       "path": "Resource/Image/BackGround/BackGround4.png",
       "sceneIds": [ 1, 2, 3, 4 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 630,
+      "sizeY": 360
     },
     {
       "key": "backGround5",
       "path": "Resource/Image/BackGround/BackGround5.png",
       "sceneIds": [ 1, 2, 3, 4 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 630,
+      "sizeY": 360
     },
     {
       "key": "backGround6",
       "path": "Resource/Image/BackGround/BackGround6.png",
       "sceneIds": [ 1, 2, 3, 4 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 630,
+      "sizeY": 360
     },
     {
       "key": "backGround7",
       "path": "Resource/Image/BackGround/BackGround7.png",
       "sceneIds": [ 1, 2, 3, 4 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 630,
+      "sizeY": 360
     },
     {
       "key": "backGround8",
       "path": "Resource/Image/BackGround/BackGround8.png",
       "sceneIds": [ 1, 2, 3, 4 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 630,
+      "sizeY": 360
     },
     {
       "key": "titleGround",
       "path": "Resource/Image/BackGround/TitleGround.png",
       "sceneIds": [ 1 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 1280,
+      "sizeY": 736
     },
     {
       "key": "pleaseButton",
       "path": "Resource/Image/Ui/PleaseBButton.png",
       "sceneIds": [ 1 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 640,
+      "sizeY": 64
     },
     {
       "key": "guestRoom",
       "path": "Resource/Image/BackGround/GuestRoom.png",
       "sceneIds": [ 2 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 1280,
+      "sizeY": 736
     },
     {
       "key": "guestRoomChips",
@@ -337,7 +387,7 @@
       "key": "treasureChests",
       "path": "Resource/Image/Gimmick/TreasureChests.png",
       "sceneIds": [ 2, 3 ],
-      "type": "sprite",
+      "type": "texture",
       "divX": 8,
       "divY": 2,
       "sizeX": 138,
@@ -347,10 +397,24 @@
       "key": "target",
       "path": "Resource/Image/Gimmick/Target.png",
       "sceneIds": [ 3 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 96,
+      "sizeY": 96
     },
     {
       "key": "avilityItems",
+      "path": "Resource/Image/Item/AvilityItems.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 5,
+      "divY": 2,
+      "sizeX": 48,
+      "sizeY": 48
+    },
+    {
+      "key": "avilityItemsSprite",
       "path": "Resource/Image/Item/AvilityItems.png",
       "sceneIds": [ 2, 3, 4 ],
       "type": "sprite",
@@ -363,7 +427,7 @@
       "key": "foods",
       "path": "Resource/Image/Item/Foods.png",
       "sceneIds": [ 2, 3, 4 ],
-      "type": "sprite",
+      "type": "texture",
       "divX": 6,
       "divY": 6,
       "sizeX": 48,
@@ -373,49 +437,77 @@
       "key": "beckoningCat",
       "path": "Resource/Image/Item/BeckoningCat.png",
       "sceneIds": [ 2, 3, 4 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 72,
+      "sizeY": 96
     },
     {
       "key": "bottleShip",
       "path": "Resource/Image/Item/BottleShip.png",
       "sceneIds": [ 2, 3, 4 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 64,
+      "sizeY": 48
     },
     {
       "key": "clayWork",
       "path": "Resource/Image/Item/ClayWork.png",
       "sceneIds": [ 2, 3, 4 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 48,
+      "sizeY": 75
     },
     {
       "key": "pot",
       "path": "Resource/Image/Item/Pot.png",
       "sceneIds": [ 2, 3, 4 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 96,
+      "sizeY": 128
     },
     {
       "key": "stuffedToy",
       "path": "Resource/Image/Item/StuffedToy.png",
       "sceneIds": [ 2, 3, 4 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 91,
+      "sizeY": 128
     },
     {
       "key": "tinRobot",
       "path": "Resource/Image/Item/TinRobot.png",
       "sceneIds": [ 2, 3, 4 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 96,
+      "sizeY": 128
     },
     {
       "key": "tv",
       "path": "Resource/Image/Item/Tv.png",
       "sceneIds": [ 2, 3, 4 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 128,
+      "sizeY": 96
     },
     {
       "key": "creasks",
       "path": "Resource/Image/Effect/Creasks.png",
       "sceneIds": [ 2, 3, 4 ],
-      "type": "sprite",
+      "type": "texture",
       "divX": 6,
       "divY": 6,
       "sizeX": 48,
@@ -425,7 +517,7 @@
       "key": "coins",
       "path": "Resource/Image/Item/Coins.png",
       "sceneIds": [ 2, 3, 4 ],
-      "type": "sprite",
+      "type": "texture",
       "divX": 3,
       "divY": 3,
       "sizeX": 48,
@@ -435,7 +527,7 @@
       "key": "coinBag",
       "path": "Resource/Image/Item/CoinBag.png",
       "sceneIds": [ 2, 3, 4 ],
-      "type": "sprite",
+      "type": "texture",
       "divX": 2,
       "divY": 2,
       "sizeX": 64,
@@ -501,19 +593,31 @@
       "key": "gameClear",
       "path": "Resource/Image/BackGround/GameClear.png",
       "sceneIds": [ 5 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 1672,
+      "sizeY": 941
     },
     {
       "key": "gameOver",
       "path": "Resource/Image/BackGround/GameOver.png",
       "sceneIds": [ 6 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 1672,
+      "sizeY": 941
     },
     {
       "key": "playerHpGage",
       "path": "Resource/Image/Ui/PlayerHpGage.png",
       "sceneIds": [ 2, 3, 4 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 175,
+      "sizeY": 31
     },
     {
       "key": "numbers",
@@ -569,25 +673,37 @@
       "key": "playerSelectAvilityBar",
       "path": "Resource/Image/Ui/PlayerSelectAvilityBar.png",
       "sceneIds": [ 2, 3, 4 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 263,
+      "sizeY": 28
     },
     {
       "key": "playerSelectAvility",
       "path": "Resource/Image/Ui/PlayerSelectAvility.png",
       "sceneIds": [ 2, 3, 4 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 263,
+      "sizeY": 28
     },
     {
       "key": "sbSelectAvility",
       "path": "Resource/Image/SpeechBubble/SB_SelectAvility.png",
       "sceneIds": [ 2, 3, 4 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 128,
+      "sizeY": 128
     },
     {
       "key": "panda",
       "path": "Resource/Image/Enemy/Panda.png",
       "sceneIds": [ 4 ],
-      "type": "sprite",
+      "type": "texture",
       "divX": 18,
       "divY": 10,
       "sizeX": 128,
@@ -597,7 +713,7 @@
       "key": "gaiaGolem",
       "path": "Resource/Image/Enemy/GaiaGolem.png",
       "sceneIds": [ 4 ],
-      "type": "sprite",
+      "type": "texture",
       "divX": 8,
       "divY": 5,
       "sizeX": 200,
@@ -607,7 +723,7 @@
       "key": "glacier",
       "path": "Resource/Image/Enemy/Glacier.png",
       "sceneIds": [ 4 ],
-      "type": "sprite",
+      "type": "texture",
       "divX": 8,
       "divY": 5,
       "sizeX": 200,
@@ -617,7 +733,7 @@
       "key": "ifrit",
       "path": "Resource/Image/Enemy/Ifrit.png",
       "sceneIds": [ 4 ],
-      "type": "sprite",
+      "type": "texture",
       "divX": 8,
       "divY": 5,
       "sizeX": 200,
@@ -627,7 +743,7 @@
       "key": "sylph",
       "path": "Resource/Image/Enemy/Sylph.png",
       "sceneIds": [ 4 ],
-      "type": "sprite",
+      "type": "texture",
       "divX": 10,
       "divY": 5,
       "sizeX": 200,
@@ -637,19 +753,31 @@
       "key": "bamboo",
       "path": "Resource/Image/Gimmick/BambooBar.png",
       "sceneIds": [ 4 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 40,
+      "sizeY": 64
     },
     {
       "key": "growingBamboo",
       "path": "Resource/Image/Gimmick/GrowingBamboo.png",
       "sceneIds": [ 4 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 24,
+      "sizeY": 85
     },
     {
       "key": "hpGageBoss",
       "path": "Resource/Image/Ui/HpGageBoss.png",
       "sceneIds": [ 4 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 739,
+      "sizeY": 41
     },
     {
       "key": "standardTexture",
@@ -667,7 +795,7 @@
       "key": "bossNamePlate",
       "path": "Resource/Image/Ui/BossNamePlate.png",
       "sceneIds": [ 4 ],
-      "type": "sprite",
+      "type": "texture",
       "divX": 1,
       "divY": 3,
       "sizeX": 300,

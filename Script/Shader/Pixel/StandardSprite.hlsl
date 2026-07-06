@@ -23,9 +23,6 @@ float4 main(PS_INPUT PSInput) : SV_TARGET
     float2 reverseSign = float2(1.0f - 2.0f * g_is_reverse_x, 1.0f - 2.0f * g_is_reverse_y);
     uv *= reverseSign;
     
-    // ƒXƒP[ƒ‹’²®
-    uv /= g_scale;
-    
     // ‰ñ“]
     float sinAngle = sin(g_angle);
     float cosAngle = cos(g_angle);

@@ -1,5 +1,6 @@
 #include <cassert>
 #include "../../Factory/FactoryComponent.h"
+#include "../../Utility/UtilityCommon.h"
 #include "../../Manager/Common/ResourceManager.h"
 #include "../../Manager/Common/InputManager.h"
 #include "../../Manager/Common/SceneManager.h"
@@ -82,15 +83,15 @@ void ActorBase::Draw()
 {	
 	// 描画しない場合は無視
 	if (!isDraw_) return;
-	
-	// 中心位置に設定
-	parameter_->drawPos_ = GetDrawCenterPos();
 
 	// 描画サイズを現在のスケールに合わせる
-	Vector2F nowSize = Vector2F::MulVector2FFloat(parameter_->drawSize_.ToVector2F(), parameter_->scale_);
+	Vector2 nowSize = Vector2F::MulVector2FFloat(parameter_->drawSize_.ToVector2F(), parameter_->scale_).ToVector2();
 
+	// 中心位置に設定
+	parameter_->drawPos_ = GetDrawCenterPos(nowSize);
+	
 	// メッシュ生成
-	renderer_->MakeSquereVertex(parameter_->drawPos_, nowSize.ToVector2());
+	renderer_->MakeSquereVertex(parameter_->drawPos_, nowSize);
 
 	// X軸の反転
 	float isReverseX = parameter_->direction_ ? 1.0f : 0.0f;
@@ -101,7 +102,9 @@ void ActorBase::Draw()
 	material_->SetConstBuf(2, FLOAT4{ (float)parameter_->divisionNum_.x, (float)parameter_->divisionNum_.y , parameter_->drawIndex_, 0.0f });
 	
 	// 描画処理
-	renderer_->Draw();
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)UtilityCommon::ALPHA_MAX);
+	renderer_->Draw(); 
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 void ActorBase::DebugDraw()
@@ -165,14 +168,14 @@ void ActorBase::InitDraw()
 	// レンダラーの生成
 	renderer_ = std::make_unique<PixelRenderer>(*material_);
 
-	// 中心位置に設定
-	parameter_->drawPos_ = GetDrawCenterPos();
-
 	// 描画サイズを現在のスケールに合わせる
-	Vector2F nowSize = Vector2F::MulVector2FFloat(parameter_->drawSize_.ToVector2F(), parameter_->scale_);
+	Vector2 nowSize = Vector2F::MulVector2FFloat(parameter_->drawSize_.ToVector2F(), parameter_->scale_).ToVector2();	
+	
+	// 中心位置に設定
+	parameter_->drawPos_ = GetDrawCenterPos(nowSize);
 
 	// メッシュ生成
-	renderer_->MakeSquereVertex(parameter_->drawPos_, nowSize.ToVector2());
+	renderer_->MakeSquereVertex(parameter_->drawPos_, nowSize);
 }
 
 void ActorBase::InitUi()
@@ -333,14 +336,17 @@ void ActorBase::CreateComponents()
 	}
 }
 
-const Vector2 ActorBase::GetDrawCenterPos() const
+const Vector2 ActorBase::GetDrawCenterPos(const Vector2& nowSize) const
 {
 	// カメラ位置分オフセット
 	Vector2F cameraPos = mainCamera.GetPos();
 	Vector2 drawPos = Vector2::AddVector2(Vector2::AddVector2(parameter_->pos_.ToVector2(), parameter_->localPos_), cameraPos.ToVector2());
 
+	// ハーフサイズ
+	Vector2 nowSizeHalf = Vector2(nowSize.x / 2, nowSize.y / 2);
+
 	// 描画サイズの半分位置を位置をずらす
-	return Vector2::SubVector2(drawPos, parameter_->drawHalfSize_);
+	return Vector2::SubVector2(drawPos, nowSizeHalf);
 }
 
 void ActorBase::OnHit(const std::weak_ptr<ColliderBase>& opponentCollider)

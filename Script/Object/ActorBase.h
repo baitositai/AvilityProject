@@ -243,7 +243,7 @@ protected:
 	virtual void CreateComponents();
 
 	// 描画位置を返す
-	const Vector2 GetDrawCenterPos() const;		
+	const Vector2 GetDrawCenterPos(const Vector2& nowSize) const;
 	
 	// 型変換用のパラメータを返す関数
 	ParameterActor* GetParameterActorPtr() { return parameter_.get(); }	
