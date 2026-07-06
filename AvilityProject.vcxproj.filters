@@ -1578,4 +1578,8 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Script\Shader\Pixel\StandardTexture.hlsl" />
+    <FxCompile Include="Script\Shader\Pixel\StandardSprite.hlsl" />
+  </ItemGroup>
 </Project>

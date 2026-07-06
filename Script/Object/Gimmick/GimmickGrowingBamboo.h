@@ -64,6 +64,9 @@ private:
 	// ƒpƒ‰ƒ[ƒ^î•ñ
 	ParameterGimmickGrowingBamboo* parameterBamboo_;
 
+	// •`‰æ‚Ì‰Šú‰»
+	void InitDraw() override {};
+
 	// ¬’·ˆ—
 	void UpdateGrow();
 

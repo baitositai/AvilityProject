@@ -1,5 +1,6 @@
 #pragma once
 #include "ResourceBase.h"
+#include "../Common/Vector2.h"
 
 class ResourceSprite : public ResourceBase
 {
@@ -31,6 +32,18 @@ public:
 	/// 解放処理
 	/// </summary>
 	void Release()override;
+
+	/// <summary>
+	/// 分割数を返す
+	/// </summary>
+	/// <returns>分割数</returns>
+	const Vector2 GetDivsion() const;
+
+	/// <summary>
+	/// サイズを返す
+	/// </summary>
+	/// <returns>サイズ</returns>
+	const Vector2 GetSize() const;
 
 	/// <summary>
 	/// ハンドルIDを返す

@@ -39,3 +39,13 @@ void ResourceSprite::Release()
 	}
 	delete[] handleIds_;
 }
+
+const Vector2 ResourceSprite::GetDivsion() const
+{
+	return Vector2(divX_, divY_);
+}
+
+const Vector2 ResourceSprite::GetSize() const
+{
+	return Vector2(sizeX_, sizeY_);
+}

@@ -79,7 +79,12 @@ protected:
 
 private:
 
+	// 定数バッファサイズ
+	static constexpr int CONST_BUFFER_SIZE = 2;
+
 	// パラメータ情報
 	ParameterGimmick* parameterGimmick_;
 
+	// 描画初期化
+	void InitDraw();
 };

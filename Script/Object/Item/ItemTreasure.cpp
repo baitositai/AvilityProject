@@ -3,6 +3,8 @@
 #include "../../OnHit/OnHitItemTreasure.h"
 #include "../../Collider/ColliderBox.h"
 #include "../../Object/Character/Player.h"
+#include "../../Render/PixelRenderer.h"
+#include "../../Render/PixelMaterial.h"
 #include "../../Utility/UtilityCommon.h"
 #include "ItemTreasure.h"
 
@@ -45,7 +47,7 @@ void ItemTreasure::Init()
 void ItemTreasure::Update()
 {	
 	// 移動量を初期化
-	parameterItem_->moveAmount_ = {};
+	parameterItemTreasure_->moveAmount_ = {};
 	
 	if (owner_)
 	{
@@ -57,19 +59,28 @@ void ItemTreasure::Update()
 }
 
 void ItemTreasure::Draw()
-{
-	parameterItemTreasure_->drawPos_ = GetDrawPos();
+{	
+	// 描画しない場合は無視
+	if (!isDraw_) return;
+		
+	// 描画位置を取得
+	parameterItemTreasure_->drawPos_ = GetDrawCenterPos();
 
-	// 描画
-	DrawRotaGraph(
-		parameterItemTreasure_->drawPos_.x,
-		parameterItemTreasure_->drawPos_.y,
-		parameterItemTreasure_->scale_,
-		parameterItemTreasure_->angle_,
-		parameterItemTreasure_->texture_,
-		parameterItemTreasure_->transparent_,
-		parameterItemTreasure_->direction_
-	);
+	// 描画サイズを現在のスケールに合わせる
+	Vector2F nowSize = Vector2F::MulVector2FFloat(parameterItemTreasure_->drawSize_.ToVector2F(), parameterItemTreasure_->scale_);
+
+	// メッシュ生成
+	renderer_->MakeSquereVertex(parameterItemTreasure_->drawPos_, nowSize.ToVector2());
+
+	// X軸の反転
+	float isReverseX = parameterItemTreasure_->direction_ ? 1.0f : 0.0f;
+
+	// 定数バッファの更新
+	material_->SetConstBuf(0, FLOAT4{ parameterItemTreasure_->color_.x,parameterItemTreasure_->color_.y ,parameterItemTreasure_->color_.z, parameterItemTreasure_->alpha_ });
+	material_->SetConstBuf(1, FLOAT4{ isReverseX, 0.0f, parameterItemTreasure_->scale_, parameterItemTreasure_->angle_ });
+
+	// 描画処理
+	renderer_->Draw();
 }
 
 void ItemTreasure::InitResource()
@@ -180,4 +191,33 @@ void ItemTreasure::UpdateFollow()
 	preGravityDir_ = parameterItemTreasure_->gravityDir_;
 
 	collider_->SetIsActive(false);
+}
+
+void ItemTreasure::InitDraw()
+{
+	// リソースの取得と同時に必要な情報を取得
+	parameterItemTreasure_->drawSize_ = parameterItemTreasure_->hitSize_;
+	parameterItemTreasure_->drawHalfSize_ = Vector2(parameterItemTreasure_->drawSize_.x / 2, parameterItemTreasure_->drawSize_.y / 2);
+
+	// X軸の反転
+	float isReverseX = parameterItemTreasure_->direction_ ? 1.0f : 0.0f;
+
+	// 基底クラスではスプライト画像を前提で用意
+	// マテリアルの生成
+	material_ = std::make_unique<PixelMaterial>(resMng_.GetHandle("standardTexture"), CONST_BUFFER_SIZE);
+	material_->AddTextureBuf(parameterItemTreasure_->texture_);
+	material_->AddConstBuf(FLOAT4{ parameterItemTreasure_->color_.x, parameterItemTreasure_->color_.y,parameterItemTreasure_->color_.z, parameterItemTreasure_->alpha_ });
+	material_->AddConstBuf(FLOAT4{ isReverseX, 0.0f, parameterItemTreasure_->scale_, parameterItemTreasure_->angle_ });
+
+	// レンダラーの生成
+	renderer_ = std::make_unique<PixelRenderer>(*material_);
+
+	// 中心位置に設定
+	parameterItemTreasure_->drawPos_ = GetDrawCenterPos();
+
+	// 描画サイズを現在のスケールに合わせる
+	Vector2F nowSize = Vector2F::MulVector2FFloat(parameterItemTreasure_->drawSize_.ToVector2F(), parameterItemTreasure_->scale_);
+
+	// メッシュ生成
+	renderer_->MakeSquereVertex(parameterItemTreasure_->drawPos_, nowSize.ToVector2());
 }

@@ -24,7 +24,7 @@ void ItemMoney::Init()
 	onHit_ = std::make_unique<OnHitItemMoney>(*this);
 
 	// コライダー生成
-	collider_ = std::make_shared<ColliderCircle>(*this, tag_, parameterItem_->pos_, parameterItem_->hitRadius_);
+	collider_ = std::make_shared<ColliderCircle>(*this, tag_, parameterItemMoney_->pos_, parameterItemMoney_->hitRadius_);
 
 	// 基底クラスの処理
 	ActorBase::Init();

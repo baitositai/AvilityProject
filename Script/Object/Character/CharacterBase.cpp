@@ -54,6 +54,9 @@ void CharacterBase::Update()
 
 void CharacterBase::Draw()
 {
+	// •`‰æ”Ô†‚Ì•t—^
+	parameterCharacter_->drawIndex_ = static_cast<float>(animation_->GetAnimationIndex());
+
 	if (IsInvincible())
 	{
 		// “_–Å‚Ì1üŠú‚É‚©‚©‚éŠÔ

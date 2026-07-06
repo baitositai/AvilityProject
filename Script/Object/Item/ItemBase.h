@@ -73,6 +73,11 @@ protected:
 	// 型変換用のパラメータを返す関数
 	ParameterItem* GetParameterItemPtr() { return parameterItem_; }
 
+private:
+
 	// アイテムのパラメータ
 	ParameterItem* parameterItem_;
+
+	// 描画初期化
+	void InitDraw() override;
 };

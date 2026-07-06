@@ -63,6 +63,9 @@ public:
 	const ParameterItemTreasure& GetParameter() const { return *parameterItemTreasure_; }
 
 private:	
+
+	// 定数バッファサイズ
+	static constexpr int CONST_BUFFER_SIZE = 2;
 	
 	// 所有者のポインタ
 	const Player* owner_;
@@ -78,4 +81,7 @@ private:
 
 	// 追従座標の更新
 	void UpdateFollow();
+
+	// 描画初期化
+	void InitDraw() override;
 };

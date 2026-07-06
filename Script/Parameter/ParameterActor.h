@@ -1,4 +1,5 @@
 #pragma once
+#include <DxLib.h>
 #include <string>
 #include <vector>
 #include <unordered_map>
@@ -73,86 +74,44 @@ public:
 	/// <returns>下方向のベクトル</returns>	
 	Vector2F GetDown();
 
-	// テクスチャ
-	int texture_;
+	// 描画用情報
+	int texture_;			// テクスチャ
+	int* spriteTexture_;	// スプライト用テクスチャ
+	float scale_;			// 拡大率
+	float angle_;			// 角度
+	float drawIndex_;		// 描画番号
+	float alpha_;			// 透過値
+	bool direction_;		// 向き false 右 true 左
+	bool transparent_;		// 透過判定	
+	Vector2 drawPos_;		// 描画位置
+	Vector2 divisionNum_;	// 分割数	
+	Vector2 drawSize_;		// 描画サイズ
+	Vector2 drawHalfSize_;	// 描画ハーフサイズ
+	VECTOR color_;			// 描画用カラー	
+	std::string resourceKey_;// リソース取得用のキー
 
-	// スプライト用テクスチャ
-	int* spriteTexture_;
+	// 物理挙動用情報	
+	Vector2F pos_;			// 座標
+	Vector2 localPos_;		// 相対位置	
+	Vector2F moveAmount_;	// 移動量
+	Vector2F knockBackPower_;// ノックバックパワー
+	float weight_;			// 物体の重み
+	bool isGround_;			// 地面判定	
 
-	// 拡大率
-	float scale_;
+	// ステータス情報
+	int hp_;					// 体力
+	int hpMax_;					// 最大体力	
+	int attackPower_;			// 攻撃力
+	float attackBoostRate_;		// 攻撃力上昇率
+	float moveSpeed_;			// 移動速度
+	float moveSpeedBoostRate_;	// 移動速度上昇率
+	float gravityPower_;		// 重力
+	float gravityBoostRate_;	// 重力の上昇値
+	DIR gravityDir_;			// 重力方向
 
-	// 角度
-	float angle_;
-
-	// 向き false 右 true 左
-	bool direction_;
-
-	// 透過判定
-	bool transparent_;
-
-	// 相対位置
-	Vector2 localPos_;
-
-	// 描画位置
-	Vector2 drawPos_;
-
-	// 分割数
-	Vector2 divisionNum_;
-
-	// 移動速度
-	float moveSpeed_;
-
-	// 移動速度上昇率
-	float moveSpeedBoostRate_;
-
-	// 位置
-	Vector2F pos_;
-
-	// 移動量
-	Vector2F moveAmount_;
-
-	// 重力
-	float gravityPower_;
-
-	// 重力の上昇値
-	float gravityBoostRate_;
-
-	// 重力方向
-	DIR gravityDir_;
-
-	// 物体の重み
-	float weight_;
-
-	// 地面判定
-	bool isGround_;
-
-	// 落下判定
-	bool isFall_;
-
-	// ヒットサイズ
-	Vector2 hitSize_;
-
-	// ヒット半径
-	float hitRadius_;
-
-	// 体力
-	int hp_;
-
-	// 最大体力
-	int hpMax_;
-
-	// 攻撃力
-	int attackPower_;
-
-	// 攻撃力上昇率
-	float attackBoostRate_;
-
-	// ノックバックパワー
-	Vector2F knockBackPower_;
-
-	// リソース取得用のキー
-	std::string resourceKey_;
+	// 衝突判定用情報
+	float hitRadius_;		// ヒット半径
+	Vector2 hitSize_;		// ヒットサイズ
 
 	// コンポーネント用のキー配列
 	std::vector<std::string> componentkeys_;

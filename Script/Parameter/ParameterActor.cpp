@@ -3,10 +3,13 @@
 ParameterActor::ParameterActor() :
 	scale_(1.0f),
 	angle_(0.0f),
+	alpha_(0.0f),
+    drawIndex_(0.0f),
 	direction_(false), 
 	transparent_(true), 
 	localPos_({ 0, 0 }), 
 	drawPos_({ 0, 0 }), 
+    drawSize_({ 0, 0 }),
 	divisionNum_({ 0, 0 }), 
 	moveSpeed_(0.0f), 
 	moveSpeedBoostRate_(0.0f), 
@@ -17,7 +20,6 @@ ParameterActor::ParameterActor() :
 	gravityDir_(DIR::DOWN), 
 	weight_(0.0f),
 	isGround_(false), 
-	isFall_(false), 
 	hitSize_({ 0, 0 }), 
 	hitRadius_(0.0f),
     texture_(-1),
@@ -26,7 +28,8 @@ ParameterActor::ParameterActor() :
     hpMax_(-1),
     attackPower_(-1),
     attackBoostRate_(0.0f),
-    knockBackPower_({ 0.0f, 0.0f })
+    knockBackPower_({ 0.0f, 0.0f }),
+    color_({})
 {
 }
 
@@ -76,6 +79,14 @@ void ParameterActor::LoadParameter(const Json& parameter)
     {
         pos_.x = parameter["pos"].value("x", 0);
         pos_.y = parameter["pos"].value("y", 0);
+    }  
+
+    // êFÇÃê›íË
+    if (parameter.contains("color"))
+    {
+        color_.x = parameter["color"].value("r", 1.0f);
+        color_.y = parameter["color"].value("g", 1.0f);
+        color_.z = parameter["color"].value("b", 1.0f);
     }
 
     // ëÃóÕÇÃîΩâf

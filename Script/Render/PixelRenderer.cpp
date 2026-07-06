@@ -1,6 +1,9 @@
 #include "PixelRenderer.h"
 
-PixelRenderer::PixelRenderer(PixelMaterial& pixelMaterial) : pixelMaterial_(pixelMaterial)
+PixelRenderer::PixelRenderer(PixelMaterial& pixelMaterial) : 
+	pixelMaterial_(pixelMaterial),
+	indexes_(),
+	vertexs_()
 {
 }
 

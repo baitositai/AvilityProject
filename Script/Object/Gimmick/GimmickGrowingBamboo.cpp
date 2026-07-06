@@ -52,7 +52,7 @@ void GimmickGrowingBamboo::Update()
 
 void GimmickGrowingBamboo::Draw()
 {
-	parameterBamboo_->drawPos_ = GetDrawPos();
+	parameterBamboo_->drawPos_ = GetDrawCenterPos();
 
 	// ŠJŽnˆÊ’u‚ð’²®
 	parameterBamboo_->drawPos_.y += static_cast<float>(parameterBamboo_->hitSize_.y) / 2.0f - growLength_ / 2.0f;

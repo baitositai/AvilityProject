@@ -73,7 +73,11 @@ void ResourceManager::Init()
 			break;
 
 		case ResourceBase::RESOURCE_TYPE::TEXTUR:
-			resource = make_unique<ResourceTexture>(type, path, sceneIds);
+			divX = res["divX"].get<int>();
+			divY = res["divY"].get<int>();
+			sizeX = res["sizeX"].get<int>();
+			sizeY = res["sizeY"].get<int>();
+			resource = make_unique<ResourceTexture>(type, path, sceneIds, divX, divY, sizeX, sizeY);
 			break;
 
 		case ResourceBase::RESOURCE_TYPE::SPRITE:
@@ -162,7 +166,8 @@ void ResourceManager::SceneChangeResource(const int nextSceneId)
 	{
 		const auto& ids = it->second->GetSceneIds();
 
-		if (std::ranges::find(ids, 0) == ids.end())
+		// シーンIDが空、または0が含まれていない場合は解放する
+		if (ids.empty() || std::ranges::find(ids, 0) == ids.end())
 		{
 			it->second->Release();
 			it = loadedMap_.erase(it);
@@ -342,6 +347,72 @@ int* ResourceManager::GetHandles(const std::string& key)
 
 	// そのまま返す
 	return sprite->GetHandleIds();
+}
+
+ResourceSprite* ResourceManager::GetResourceSprite(const std::string& key)
+{
+	// 読み込み済みマップから探す
+	auto itLoaded = loadedMap_.find(key);
+
+	// 見つかった場合
+	if (itLoaded != loadedMap_.end())
+	{
+		// キャストして返す
+		return dynamic_cast<ResourceSprite*>(itLoaded->second);
+	}
+
+	// リソースマップから探す
+	auto itResource = resourcesMap_.find(key);
+
+	// 見つからない場合
+	if (itResource == resourcesMap_.end())
+	{
+		// 終了
+		return nullptr;
+	}
+
+	// リソースを取得して読み込み処理
+	ResourceBase* pRawResource = itResource->second.get();
+	pRawResource->Load();
+
+	// 読み込み済みマップに登録する
+	loadedMap_.emplace(key, pRawResource);
+
+	// 取得したリソースをキャストして返す
+	return dynamic_cast<ResourceSprite*>(pRawResource);
+}
+
+ResourceTexture* ResourceManager::GetResourceTexture(const std::string& key)
+{
+	// 読み込み済みマップから探す
+	auto itLoaded = loadedMap_.find(key);
+
+	// 見つかった場合
+	if (itLoaded != loadedMap_.end())
+	{
+		// キャストして返す
+		return dynamic_cast<ResourceTexture*>(itLoaded->second);
+	}
+
+	// リソースマップから探す
+	auto itResource = resourcesMap_.find(key);
+
+	// 見つからない場合
+	if (itResource == resourcesMap_.end())
+	{
+		// 終了
+		return nullptr;
+	}
+
+	// リソースを取得して読み込み処理
+	ResourceBase* pRawResource = itResource->second.get();
+	pRawResource->Load();
+
+	// 読み込み済みマップに登録する
+	loadedMap_.emplace(key, pRawResource);
+
+	// 取得したリソースをキャストして返す
+	return dynamic_cast<ResourceTexture*>(pRawResource);
 }
 
 ResourceSound* ResourceManager::GetResourceSound(const std::string& key)

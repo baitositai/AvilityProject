@@ -56,3 +56,8 @@ void GimmickTreasureChest::InitResource()
 {
 	ActorBase::InitResource();
 }
+
+void GimmickTreasureChest::InitDraw()
+{
+	ActorBase::InitDraw();
+}

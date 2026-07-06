@@ -7,6 +7,9 @@
 #include "../../Manager/Common/Camera.h"
 #include "../../Manager/Game/CollisionManager.h"
 #include "../../Manager/Game/UiManager.h"
+#include "../../Resource/ResourceTexture.h"
+#include "../../Render/PixelMaterial.h"
+#include "../../Render/PixelRenderer.h"
 #include "../OnHit/OnHitBase.h"
 #include "../Collider/ColliderBase.h"
 #include "../Parameter/ParameterActor.h"
@@ -43,6 +46,9 @@ void ActorBase::Init()
 
 	// UIの初期化
 	InitUi();
+
+	// 描画関係の初期化
+	InitDraw();
 	
 	// コンポーネント生成
 	CreateComponents();
@@ -73,23 +79,29 @@ void ActorBase::Update()
 }
 
 void ActorBase::Draw()
-{
-	// 描画位置を設定
-	Vector2F cameraPos = mainCamera.GetPos();
-	parameter_->drawPos_ = Vector2::AddVector2(Vector2::AddVector2(parameter_->pos_.ToVector2(), parameter_->localPos_), cameraPos.ToVector2());
-	
+{	
+	// 描画しない場合は無視
 	if (!isDraw_) return;
+	
+	// 中心位置に設定
+	parameter_->drawPos_ = GetDrawCenterPos();
 
-	// 描画
-	DrawRotaGraph(
-		parameter_->drawPos_.x,
-		parameter_->drawPos_.y,
-		parameter_->scale_,
-		parameter_->angle_,
-		parameter_->spriteTexture_[animation_->GetAnimationIndex()],
-		parameter_->transparent_,
-		parameter_->direction_
-	);
+	// 描画サイズを現在のスケールに合わせる
+	Vector2F nowSize = Vector2F::MulVector2FFloat(parameter_->drawSize_.ToVector2F(), parameter_->scale_);
+
+	// メッシュ生成
+	renderer_->MakeSquereVertex(parameter_->drawPos_, nowSize.ToVector2());
+
+	// X軸の反転
+	float isReverseX = parameter_->direction_ ? 1.0f : 0.0f;
+
+	// 定数バッファの更新
+	material_->SetConstBuf(0, FLOAT4{ parameter_->color_.x,parameter_->color_.y ,parameter_->color_.z, parameter_->alpha_ });
+	material_->SetConstBuf(1, FLOAT4{ isReverseX, 0.0f, parameter_->scale_, parameter_->angle_ });
+	material_->SetConstBuf(2, FLOAT4{ (float)parameter_->divisionNum_.x, (float)parameter_->divisionNum_.y , parameter_->drawIndex_, 0.0f });
+	
+	// 描画処理
+	renderer_->Draw();
 }
 
 void ActorBase::DebugDraw()
@@ -128,7 +140,39 @@ void ActorBase::InitResource()
 	}
 
 	// リソース取得
-	parameter_->spriteTexture_ = resMng_.GetHandles(parameter_->resourceKey_);
+	parameter_->texture_ = resMng_.GetHandle(parameter_->resourceKey_);
+}
+
+void ActorBase::InitDraw()
+{
+	// リソースの取得と同時に必要な情報を取得
+	const auto texture = resMng_.GetResourceTexture(parameter_->resourceKey_);
+	parameter_->drawSize_ = texture->GetSize();
+	parameter_->divisionNum_ = texture->GetDivsion();
+	parameter_->drawHalfSize_ = Vector2(parameter_->drawSize_.x / 2, parameter_->drawSize_.y / 2);
+
+	// X軸の反転
+	float isReverseX = parameter_->direction_ ? 1.0f : 0.0f;
+
+	// 基底クラスではスプライト画像を前提で用意
+	// マテリアルの生成
+	material_ = std::make_unique<PixelMaterial>(resMng_.GetHandle("standardSprite"), DEFAULT_CONST_BUFFER_SIZE);
+	material_->AddTextureBuf(parameter_->texture_);
+	material_->AddConstBuf(FLOAT4{ parameter_->color_.x, parameter_->color_.y,parameter_->color_.z, parameter_->alpha_ });
+	material_->AddConstBuf(FLOAT4{ isReverseX, 0.0f, parameter_->scale_, parameter_->angle_ });
+	material_->AddConstBuf(FLOAT4{ (float)parameter_->divisionNum_.x, (float)parameter_->divisionNum_.y, parameter_->drawIndex_, 0.0f });
+
+	// レンダラーの生成
+	renderer_ = std::make_unique<PixelRenderer>(*material_);
+
+	// 中心位置に設定
+	parameter_->drawPos_ = GetDrawCenterPos();
+
+	// 描画サイズを現在のスケールに合わせる
+	Vector2F nowSize = Vector2F::MulVector2FFloat(parameter_->drawSize_.ToVector2F(), parameter_->scale_);
+
+	// メッシュ生成
+	renderer_->MakeSquereVertex(parameter_->drawPos_, nowSize.ToVector2());
 }
 
 void ActorBase::InitUi()
@@ -289,10 +333,14 @@ void ActorBase::CreateComponents()
 	}
 }
 
-const Vector2 ActorBase::GetDrawPos() const
+const Vector2 ActorBase::GetDrawCenterPos() const
 {
+	// カメラ位置分オフセット
 	Vector2F cameraPos = mainCamera.GetPos();
-	return Vector2::AddVector2(Vector2::AddVector2(parameter_->pos_.ToVector2(), parameter_->localPos_), cameraPos.ToVector2());
+	Vector2 drawPos = Vector2::AddVector2(Vector2::AddVector2(parameter_->pos_.ToVector2(), parameter_->localPos_), cameraPos.ToVector2());
+
+	// 描画サイズの半分位置を位置をずらす
+	return Vector2::SubVector2(drawPos, parameter_->drawHalfSize_);
 }
 
 void ActorBase::OnHit(const std::weak_ptr<ColliderBase>& opponentCollider)

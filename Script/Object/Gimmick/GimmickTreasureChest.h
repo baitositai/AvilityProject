@@ -41,4 +41,7 @@ private:
 
 	// ƒpƒ‰ƒ[ƒ^î•ñ
 	ParameterGimmickTreasureChest* parameterTreasureChest_;
+
+	// •`‰æ‰Šú‰»
+	void InitDraw() override;
 };

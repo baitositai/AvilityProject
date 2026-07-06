@@ -98,25 +98,25 @@ void StageManager::InitParameter()
 	const auto jsonParameterMap = UtilityLoad::GetJsonMapArrayData("StageParameter");
 
 	// ロード生成
-	const auto jsonRoadParameter = jsonParameterMap.at("road").front();
+	const auto& jsonRoadParameter = jsonParameterMap.at("road").front();
 	auto parameterRoad = std::make_unique<ParameterStage>();
 	parameterRoad->LoadParameter(jsonRoadParameter);
 	templateParameterMap_.emplace(StageManager::TYPE::ROAD, std::move(parameterRoad));
 
 	// ボス生成
-	const auto jsonBossParameter = jsonParameterMap.at("boss").front();
+	const auto&jsonBossParameter = jsonParameterMap.at("boss").front();
 	auto parameterBoss = std::make_unique<ParameterStage>();
 	parameterBoss->LoadParameter(jsonBossParameter);
 	templateParameterMap_.emplace(StageManager::TYPE::BOSS, std::move(parameterBoss));
 
 	// イベント生成
-	const auto jsonEventParameter = jsonParameterMap.at("event").front();
+	const auto& jsonEventParameter = jsonParameterMap.at("event").front();
 	auto parameterEvent = std::make_unique<ParameterStage>();
 	parameterEvent->LoadParameter(jsonBossParameter);
 	templateParameterMap_.emplace(StageManager::TYPE::EVENT, std::move(parameterEvent));
 
 	// 車内生成
-	const auto jsonTrainParameter = jsonParameterMap.at("train").front();
+	const auto& jsonTrainParameter = jsonParameterMap.at("train").front();
 	auto parameterTrain = std::make_unique<ParameterStage>();
 	parameterTrain->LoadParameter(jsonTrainParameter);
 	templateParameterMap_.emplace(StageManager::TYPE::TRAIN, std::move(parameterTrain));

@@ -3,9 +3,12 @@
 #include <string>
 #include "../../Template/Singleton.h"
 #include "../../Resource/ResourceBase.h"
+#include "../../Common/Vector2.h"
 
 class ResourceBase;
 class ResourceSound;
+class ResourceSprite;
+class ResourceTexture;
 class ResourceEffect;
 
 class ResourceManager : public Singleton<ResourceManager>
@@ -62,6 +65,20 @@ public:
 	/// <param name="key">リソースキー</param>
 	/// <returns>リソースのハンドル(主にスプライト)</returns>
 	int* GetHandles(const std::string& key);
+
+	/// <summary>
+	/// 指定したキーのスプライトを返す
+	/// </summary>
+	/// <param name="key"></param>
+	/// <returns></returns>
+	ResourceSprite* GetResourceSprite(const std::string& key);
+
+	/// <summary>
+	/// 指定したキーのサウンドを返す
+	/// </summary>
+	/// <param name="key">リリースキー</param>
+	/// <returns>サウンドを返す</returns>
+	ResourceTexture* GetResourceTexture(const std::string& key);
 
 	/// <summary>
 	/// 指定したキーのサウンドを返す

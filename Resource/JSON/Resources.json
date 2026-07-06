@@ -31,7 +31,7 @@
     {
       "key": "player1",
       "sceneIds": [ 2, 3, 4, 5, 6 ],
-      "type": "sprite",
+      "type": "texture",
       "divX": 10,
       "divY": 9,
       "sizeX": 96,
@@ -223,7 +223,7 @@
     },
     {
       "key": "train",
-      "type": "sprite",
+      "type": "texture",
       "path": "Resource/Image/Train/Train.png",
       "divX": 16,
       "divY": 1,
@@ -451,35 +451,35 @@
     {
       "key": "bgmGame1",
       "path": "Resource/Sound/Bgm/BgmGame1.mp3",
-      "sceneIds": [ ],
+      "sceneIds": [],
       "soundType": "bgm",
       "type": "sound"
     },
     {
       "key": "bgmGame2",
       "path": "Resource/Sound/Bgm/BgmGame2.mp3",
-      "sceneIds": [ 3, 4 ],
+      "sceneIds": [],
       "soundType": "bgm",
       "type": "sound"
     },
     {
       "key": "bgmGame3",
       "path": "Resource/Sound/Bgm/BgmGame3.mp3",
-      "sceneIds": [ 3, 4 ],
+      "sceneIds": [],
       "soundType": "bgm",
       "type": "sound"
     },
     {
       "key": "bgmGame4",
       "path": "Resource/Sound/Bgm/BgmGame4.mp3",
-      "sceneIds": [ ],
+      "sceneIds": [],
       "soundType": "bgm",
       "type": "sound"
     },
     {
       "key": "bgmGame5",
       "path": "Resource/Sound/Bgm/BgmGame5.mp3",
-      "sceneIds": [  ],
+      "sceneIds": [],
       "soundType": "bgm",
       "type": "sound"
     },
@@ -650,6 +650,18 @@
       "path": "Resource/Image/Ui/HpGageBoss.png",
       "sceneIds": [ 4 ],
       "type": "texture"
+    },
+    {
+      "key": "standardTexture",
+      "path": "Resource/Shader/StandardTexture.cso",
+      "sceneIds": [ 0 ],
+      "type": "pixelShader"
+    },
+    {
+      "key": "standardSprite",
+      "path": "Resource/Shader/StandardSprite.cso",
+      "sceneIds": [ 0 ],
+      "type": "pixelShader"
     },
     {
       "key": "bossNamePlate",

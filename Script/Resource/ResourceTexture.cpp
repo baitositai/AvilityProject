@@ -1,8 +1,12 @@
 #include <DxLib.h>
 #include "ResourceTexture.h"
 
-ResourceTexture::ResourceTexture(const RESOURCE_TYPE type, const std::wstring& path, const std::vector<int>& sceneIds):
-	ResourceBase(type, path, sceneIds)
+ResourceTexture::ResourceTexture(const RESOURCE_TYPE type, const std::wstring& path, const std::vector<int>& sceneIds, const int divX, const int divY, const int sizeX, const int sizeY) :
+	ResourceBase(type, path, sceneIds),
+	divX_(divX),
+	divY_(divY),
+	sizeX_(sizeX),
+	sizeY_(sizeY)
 {
 }
 
@@ -18,4 +22,14 @@ void ResourceTexture::Load()
 void ResourceTexture::Release()
 {
 	DeleteGraph(handleId_);
+}
+
+const Vector2 ResourceTexture::GetDivsion() const
+{
+	return Vector2(divX_, divY_);
+}
+
+const Vector2 ResourceTexture::GetSize() const
+{
+	return Vector2(sizeX_, sizeY_);
 }

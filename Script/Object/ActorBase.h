@@ -21,6 +21,9 @@ class CollisionManager;
 class UiManager;
 class FactoryComponent;
 
+class PixelRenderer;
+class PixelMaterial;
+
 class ActorBase
 {
 public:	
@@ -206,6 +209,12 @@ protected:
 	// 衝突後処理
 	std::unique_ptr<OnHitBase> onHit_;
 
+	// マテリアル
+	std::unique_ptr<PixelMaterial> material_;
+
+	// レンダラー
+	std::unique_ptr<PixelRenderer> renderer_;
+
 	// 活動状態
 	bool isActive_;
 
@@ -221,6 +230,9 @@ protected:
 	// リソースの初期化
 	virtual void InitResource();
 
+	// 描画関係の初期化
+	virtual void InitDraw();
+
 	// UIの初期化
 	virtual void InitUi();
 
@@ -230,16 +242,17 @@ protected:
 	// コンポーネントの生成
 	virtual void CreateComponents();
 
+	// 描画位置を返す
+	const Vector2 GetDrawCenterPos() const;		
+	
 	// 型変換用のパラメータを返す関数
 	ParameterActor* GetParameterActorPtr() { return parameter_.get(); }	
 	
-protected:
-
-	// 描画位置を返す
-	const Vector2 GetDrawPos() const;
+	// 定数バッファ―サイズ
+	static constexpr int DEFAULT_CONST_BUFFER_SIZE = 3;
 
 private:
-	
+
 	// パラメータ
 	std::unique_ptr<ParameterActor> parameter_;
 };

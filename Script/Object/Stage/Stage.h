@@ -112,4 +112,7 @@ private:
 
 	// •`‰æ”ÍˆÍ‚Ìæ“¾
 	void GetDrawRange(Vector2& rangeMin, Vector2& rangeMax);
+
+	// •`‰æŠÖŒW‚Ì‰Šú‰»
+	void InitDraw() override {};
 };
