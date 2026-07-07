@@ -36,36 +36,36 @@
       "divY": 8,
       "sizeX": 144,
       "sizeY": 144,
-      "path": "Resource/Image/Player/Axion.png"
+      "path": "Resource/Image/Player/Player1.png"
     },
     {
       "key": "player2",
       "sceneIds": [ 2, 3, 4, 5, 6 ],
       "type": "texture",
-      "divX": 10,
-      "divY": 9,
-      "sizeX": 96,
-      "sizeY": 96,
+      "divX": 15,
+      "divY": 8,
+      "sizeX": 144,
+      "sizeY": 144,
       "path": "Resource/Image/Player/Player2.png"
     },
     {
       "key": "player3",
       "sceneIds": [ 2, 3, 4, 5, 6 ],
       "type": "texture",
-      "divX": 10,
-      "divY": 9,
-      "sizeX": 96,
-      "sizeY": 96,
+      "divX": 15,
+      "divY": 8,
+      "sizeX": 144,
+      "sizeY": 144,
       "path": "Resource/Image/Player/Player3.png"
     },
     {
       "key": "player4",
       "sceneIds": [ 2, 3, 4, 5, 6 ],
       "type": "texture",
-      "divX": 10,
-      "divY": 9,
-      "sizeX": 96,
-      "sizeY": 96,
+      "divX": 15,
+      "divY": 8,
+      "sizeX": 144,
+      "sizeY": 144,
       "path": "Resource/Image/Player/Player4.png"
     },
     {
