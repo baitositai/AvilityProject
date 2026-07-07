@@ -660,6 +660,12 @@
       "divY": 3,
       "sizeX": 300,
       "sizeY": 28
+    },
+    {
+      "key": "DropRock",
+      "path": "Resource/Image/Gimmick/DropRock.png",
+      "sceneIds": [ 4 ],
+      "type": "texture"
     }
   ]
 }

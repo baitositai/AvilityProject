@@ -331,6 +331,9 @@ void CollisionManager::InitTagMatrix()
 
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TELEPORT_EXIT)][static_cast<int>(CollisionTags::TAG::BAMBOO)] = true;						// テレポートと竹
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::BAMBOO)][static_cast<int>(CollisionTags::TAG::TELEPORT_EXIT)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::DROP_ROCK)][static_cast<int>(CollisionTags::TAG::STAGE)] = true;						// テレポートと竹
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::STAGE)][static_cast<int>(CollisionTags::TAG::DROP_ROCK)] = true;
 }
 
 void CollisionManager::InitColliderMatrix()

@@ -4,6 +4,7 @@
 #include "../Object/Gimmick/GimmickBamboo.h"
 #include "../Object/Gimmick/GimmickGrowingBamboo.h"
 #include "../Object/Gimmick/GimmickTreasureChest.h"
+#include "../Object/Gimmick/GimmickDropRock.h"
 #include "GimmickGenerator.h"
 
 GimmickGenerator::GimmickGenerator()
@@ -27,6 +28,10 @@ GimmickGenerator::GimmickGenerator()
 	createGimmickMap_.emplace(GimmickTypes::TYPE::GROWING_BAMBOO, [this]()
 		{
 			return CreateGimmickGrowingBamboo();
+		});
+	createGimmickMap_.emplace(GimmickTypes::TYPE::DROP_ROCK, [this]()
+		{
+			return CreateGimmickDropRock();
 		});
 }
 
@@ -68,6 +73,12 @@ void GimmickGenerator::InitParameter()
 	auto parameterGrowingBamboo = std::make_unique<ParameterGimmickGrowingBamboo>();
 	parameterGrowingBamboo->LoadParameter(jsonGrowingBambooParameter);
 	templateParameterMap_.emplace(GimmickTypes::TYPE::GROWING_BAMBOO, std::move(parameterGrowingBamboo));
+
+	//岩落とし
+	const auto jsonDropRockParameter = jsonParameterMap.at("dropRock").front();
+	auto parameterDropRock = std::make_unique<ParameterGimmick>();
+	parameterDropRock->LoadParameter(jsonDropRockParameter);
+	templateParameterMap_.emplace(GimmickTypes::TYPE::DROP_ROCK, std::move(parameterDropRock));
 }
 
 std::unique_ptr<GimmickBase> GimmickGenerator::Create(const GimmickTypes::TYPE type)
@@ -171,4 +182,22 @@ std::unique_ptr<GimmickTreasureChest> GimmickGenerator::CreateGimmickTreasureChe
 	// 生成したものを返す
 	auto parameter = std::make_unique<ParameterGimmickTreasureChest>(*parameterTreasureChest);
 	return std::make_unique<GimmickTreasureChest>(std::move(parameter));
+}
+
+std::unique_ptr<GimmickDropRock> GimmickGenerator::CreateGimmickDropRock()
+{
+	// 専用のパラメータにキャスト
+	auto parameterBase = templateParameterMap_.at(GimmickTypes::TYPE::DROP_ROCK).get();
+	auto parameterDropRock = dynamic_cast<ParameterGimmick*>(parameterBase);
+
+	// 空の場合
+	if (parameterDropRock == nullptr)
+	{
+		// 空で返す
+		return nullptr;
+	}
+
+	// 生成したものを返す
+	auto parameter = std::make_unique<ParameterGimmick>(*parameterDropRock);
+	return std::make_unique<GimmickDropRock>(std::move(parameter));
 }

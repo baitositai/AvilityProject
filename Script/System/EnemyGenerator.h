@@ -18,6 +18,7 @@ class EnemySamurai;
 // É{ÉX
 class EnemyMaid;
 class EnemyPanda;
+class EnemyGaiaGolem;
 
 class ParameterEnemy;
 enum class HABITAT_TYPE;
@@ -87,4 +88,5 @@ private:
 
 	std::unique_ptr<EnemyMaid> CreateEnemyMaid();
 	std::unique_ptr<EnemyPanda> CreateEnemyPanda();
+	std::unique_ptr<EnemyGaiaGolem> CreateEnemyGaiaGolem();
 };

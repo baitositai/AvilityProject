@@ -145,6 +145,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\OnHit\OnHitDropRock.cpp" />
+    <ClCompile Include="Script\Object\Gimmick\GimmickDropRock.cpp" />
+    <ClCompile Include="Script\Component\Logic\ComponentLogicDropRock.cpp" />
+    <ClCompile Include="Script\Parameter\Character\Enemy\ParameterEnemyGaiaGolem.cpp" />
+    <ClCompile Include="Script\Object\Character\Enemy\EnemyGaiaGolem.cpp" />
     <ClCompile Include="Script\Parameter\Character\Enemy\ParameterEnemyBoss.cpp" />
     <ClCompile Include="Script\Object\Character\Enemy\EnemyBoss.cpp" />
     <ClCompile Include="Script\Component\Logic\ComponentLogicPandaShot.cpp" />
@@ -370,6 +375,11 @@
     <ClCompile Include="Script\Ui\Enemy\UiBossHpBar.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\OnHit\OnHitDropRock.h" />
+    <ClInclude Include="Script\Object\Gimmick\GimmickDropRock.h" />
+    <ClInclude Include="Script\Component\Logic\ComponentLogicDropRock.h" />
+    <ClInclude Include="Script\Parameter\Character\Enemy\ParameterEnemyGaiaGolem.h" />
+    <ClInclude Include="Script\Object\Character\Enemy\EnemyGaiaGolem.h" />
     <ClInclude Include="Script\Parameter\Character\Enemy\ParameterEnemyBoss.h" />
     <ClInclude Include="Script\Object\Character\Enemy\EnemyBoss.h" />
     <ClInclude Include="Script\Component\Logic\ComponentLogicPandaShot.h" />

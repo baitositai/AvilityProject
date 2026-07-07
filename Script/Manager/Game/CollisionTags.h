@@ -31,6 +31,7 @@ public:
 		TARGET,						// ターゲット
 		TREASURE_CHEST,				// 宝箱
 		BAMBOO,						// 竹
+		DROP_ROCK,					// 岩落とし
 		MAX
 	};
 

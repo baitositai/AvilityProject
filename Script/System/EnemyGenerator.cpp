@@ -10,6 +10,7 @@
 
 #include "../../Object/Character/Enemy/EnemyMaid.h"
 #include "../../Object/Character/Enemy/EnemyPanda.h"
+#include "../../Object/Character/Enemy/EnemyGaiaGolem.h"
 
 #include "../Utility/UtilityLoad.h"
 #include "EnemyGenerator.h"
@@ -52,6 +53,10 @@ EnemyGenerator::EnemyGenerator()
 	createEnemyMap_.emplace(EnemyTypes::TYPE::PANDA, [this]()
 		{
 			return CreateEnemyPanda();
+		});
+	createEnemyMap_.emplace(EnemyTypes::TYPE::GAIA_GOLEM, [this]()
+		{
+			return CreateEnemyGaiaGolem();
 		});
 }
 
@@ -104,6 +109,11 @@ void EnemyGenerator::InitParameter()
 	auto parameterPanda = std::make_unique<ParameterEnemyPanda>();
 	parameterPanda->LoadParameter(jsonPandaParameter);
 	templateParameterMap_.emplace(EnemyTypes::TYPE::PANDA, std::move(parameterPanda));
+
+	const auto& jsonGaiaGolemParameter = jsonParameterMap.at("gaiaGolem").front();
+	auto parameterGaiaGolem = std::make_unique<ParameterEnemyGaiaGolem>();
+	parameterGaiaGolem->LoadParameter(jsonGaiaGolemParameter);
+	templateParameterMap_.emplace(EnemyTypes::TYPE::GAIA_GOLEM, std::move(parameterGaiaGolem));
 }
 
 std::unordered_map<EnemyTypes::TYPE, std::vector<std::unique_ptr<EnemyBase>>> EnemyGenerator::CreateEnemyMap(const Parameter& parameter)
@@ -261,4 +271,22 @@ std::unique_ptr<EnemyPanda> EnemyGenerator::CreateEnemyPanda()
 	// 生成したものを返す
 	auto parameter = std::make_unique<ParameterEnemyPanda>(*parameterPanda);
 	return std::make_unique<EnemyPanda>(std::move(parameter));
+}
+
+std::unique_ptr<EnemyGaiaGolem> EnemyGenerator::CreateEnemyGaiaGolem()
+{
+	// ガイアゴーレム用のパラメータにキャスト
+	auto parameterBase = templateParameterMap_.at(EnemyTypes::TYPE::GAIA_GOLEM).get();
+	auto parameterGaiaGolem = dynamic_cast<ParameterEnemyGaiaGolem*>(parameterBase);
+
+	// 空の場合
+	if (parameterGaiaGolem == nullptr)
+	{
+		// 空で返す
+		return nullptr;
+	}
+
+	// 生成したものを返す
+	auto parameter = std::make_unique<ParameterEnemyGaiaGolem>(*parameterGaiaGolem);
+	return std::make_unique<EnemyGaiaGolem>(std::move(parameter));
 }

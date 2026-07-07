@@ -76,5 +76,15 @@
       "move",
       "spriteAnimation"
     ]
+  },
+  "dropRock": {
+    "resourceKey": "",
+    "transparent": true,
+    "scale": 1.0,
+    "gravityPower": 0.3,
+    "componentKeys": [
+      "move",
+      "gravity"
+    ]
   }
 }
