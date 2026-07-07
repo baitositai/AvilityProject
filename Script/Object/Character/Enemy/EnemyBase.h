@@ -65,6 +65,12 @@ protected:
 
 private:
 
+	// 定数バッファ―サイズ
+	static constexpr int CONST_BUFFER_SIZE = 4;
+
 	// キャラクターのパラメータ
 	ParameterEnemy* parameterEnemy_;
+
+	// 描画初期化処理
+	virtual void InitDraw() override;
 };

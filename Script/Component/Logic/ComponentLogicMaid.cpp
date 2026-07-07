@@ -583,6 +583,7 @@ void ComponentLogicMaid::CreateAirSlash(const Vector2F& dir)
 	parameter->attackBoostRate_ = parameter_.attackBoostRate_;
 	parameter->componentkeys_ = { "spriteAnimation" };
 	parameter->tag_ = CollisionTags::TAG::ENEMY_ATTACK_NORMAL;
+	parameter->color_ = VECTOR{ 1.0f, 0.1f, 1.5f };
 	parameter->animationDataMap_.emplace("effect", Animation::Data(0, 3, 0.3));
 	std::unique_ptr<EffectAirslash> effect = std::make_unique<EffectAirslash>(std::move(parameter), dir);
 	spriteEffectManager_.Add(std::move(effect));

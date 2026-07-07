@@ -72,15 +72,22 @@ void ItemTreasure::Draw()
 	// メッシュ生成
 	renderer_->MakeSquereVertex(parameterItemTreasure_->drawPos_, nowSize);
 
+	// 画像サイズの取得
+	int graphSizeX, graphSizeY;
+	GetGraphSize(parameterItemTreasure_->texture_, &graphSizeX, &graphSizeY);
+
 	// X軸の反転
 	float isReverseX = parameterItemTreasure_->direction_ ? 1.0f : 0.0f;
 
 	// 定数バッファの更新
 	material_->SetConstBuf(0, FLOAT4{ parameterItemTreasure_->color_.x,parameterItemTreasure_->color_.y ,parameterItemTreasure_->color_.z, parameterItemTreasure_->alpha_ });
-	material_->SetConstBuf(1, FLOAT4{ isReverseX, 0.0f, parameterItemTreasure_->scale_, parameterItemTreasure_->angle_ });
+	material_->SetConstBuf(1, FLOAT4{ isReverseX, 0.0f, parameterItemTreasure_->angle_, 0.0f });
+	material_->SetConstBuf(2, FLOAT4{ (float)graphSizeX, (float)graphSizeY, 0.0f, 0.0f });
 
 	// 描画処理
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)UtilityCommon::ALPHA_MAX);
 	renderer_->Draw();
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 void ItemTreasure::InitResource()
@@ -202,12 +209,16 @@ void ItemTreasure::InitDraw()
 	// X軸の反転
 	float isReverseX = parameterItemTreasure_->direction_ ? 1.0f : 0.0f;
 
-	// 基底クラスではスプライト画像を前提で用意
+	// 画像サイズの取得
+	int graphSizeX, graphSizeY;
+	GetGraphSize(parameterItemTreasure_->texture_, &graphSizeX, &graphSizeY);
+
 	// マテリアルの生成
-	material_ = std::make_unique<PixelMaterial>(resMng_.GetHandle("standardTexture"), CONST_BUFFER_SIZE);
+	material_ = std::make_unique<PixelMaterial>(resMng_.GetHandle("standardTexture"), DEFAULT_CONST_BUFFER_SIZE);
 	material_->AddTextureBuf(parameterItemTreasure_->texture_);
 	material_->AddConstBuf(FLOAT4{ parameterItemTreasure_->color_.x, parameterItemTreasure_->color_.y,parameterItemTreasure_->color_.z, parameterItemTreasure_->alpha_ });
-	material_->AddConstBuf(FLOAT4{ isReverseX, 0.0f, parameterItemTreasure_->scale_, parameterItemTreasure_->angle_ });
+	material_->AddConstBuf(FLOAT4{ isReverseX, 0.0f, parameterItemTreasure_->angle_, 0.0f });
+	material_->AddConstBuf(FLOAT4{ (float)graphSizeX, (float)graphSizeY, 0.0f, 0.0f });
 
 	// レンダラーの生成
 	renderer_ = std::make_unique<PixelRenderer>(*material_);

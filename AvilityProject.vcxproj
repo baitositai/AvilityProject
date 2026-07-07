@@ -151,6 +151,7 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Component\State\ComponentStatePlayerAttack.cpp" />
     <ClCompile Include="Script\OnHit\OnHitEnemyMaid.cpp" />
     <ClCompile Include="Script\System\FoodShawer.cpp" />
     <ClCompile Include="Script\Component\Logic\ComponentLogicMaid.cpp" />
@@ -378,6 +379,7 @@
     <ClCompile Include="Script\Ui\Enemy\UiBossHpBar.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Component\State\ComponentStatePlayerAttack.h" />
     <ClInclude Include="Script\OnHit\OnHitEnemyMaid.h" />
     <ClInclude Include="Script\System\FoodShawer.h" />
     <ClInclude Include="Script\Component\Logic\ComponentLogicMaid.h" />
@@ -666,6 +668,12 @@
     <ClInclude Include="Script\Ui\Enemy\UiBossHpBar.h" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Script\Shader\Pixel\EnemySprite.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
     <FxCompile Include="Script\Shader\Pixel\StandardSprite.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>

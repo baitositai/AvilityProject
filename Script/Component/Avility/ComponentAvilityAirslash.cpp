@@ -70,15 +70,20 @@ void ComponentAvilityAirslash::CreateAirslash()
 		dirLeftSlash
 	};
 
+	// キャラクターサイズ調整
+	float scale = parameter_.scale_ - 2.0f;
+	if (scale < 1.0f) { scale = 1.0f; }
+
 	for (int i = 0; i < CREATE_NUM; i++)
 	{	
 		std::unique_ptr<ParameterEffect> parameter = std::make_unique<ParameterEffect>();
 		parameter->pos_ = parameter_.pos_;
 		parameter->gravityDir_ = parameter_.gravityDir_;
-		parameter->angle_ = std::atan2f(DIR[i].y, DIR[i].x);
-		parameter->hitRadius_ = 16.0f * parameter_.scale_;
+		parameter->angle_ = std::atan2f(-DIR[i].y, -DIR[i].x);
+		parameter->hitRadius_ = 16.0f * scale;
 		parameter->resourceKey_ = "airslash";
-		parameter->scale_ = parameter_.scale_;
+		parameter->direction_ = true;
+		parameter->scale_ = scale;
 		parameter->divisionNum_ = { 4, 1 };
 		parameter->transparent_ = true;
 		parameter->moveSpeed_ = 3.0f;

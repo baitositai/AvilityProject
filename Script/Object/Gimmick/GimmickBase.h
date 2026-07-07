@@ -86,5 +86,5 @@ private:
 	ParameterGimmick* parameterGimmick_;
 
 	// •`‰æ‰Šú‰»
-	void InitDraw();
+	void InitDraw() override;
 };

@@ -2,6 +2,7 @@
 #include "../../Manager/Common/ResourceManager.h"
 #include "../../Render/PixelMaterial.h"
 #include "../../Render/PixelRenderer.h"
+#include "../../Utility/UtilityCommon.h"
 #include "../Common/Animation.h"
 #include "GimmickBase.h"
 
@@ -56,14 +57,21 @@ void GimmickBase::Draw(void)
 	renderer_->MakeSquereVertex(parameterGimmick_->drawPos_, nowSize);
 
 	// X軸の反転
-	float isReverseX = parameterGimmick_->direction_ ? 1.0f : 0.0f;
+	float isReverseX = parameterGimmick_->direction_ ? 1.0f : 0.0f;	
+	
+	// 画像サイズの取得
+	int graphSizeX, graphSizeY;
+	GetGraphSize(parameterGimmick_->texture_, &graphSizeX, &graphSizeY);
 
 	// 定数バッファの更新
 	material_->SetConstBuf(0, FLOAT4{ parameterGimmick_->color_.x,parameterGimmick_->color_.y ,parameterGimmick_->color_.z, parameterGimmick_->alpha_ });
-	material_->SetConstBuf(1, FLOAT4{ isReverseX, 0.0f, parameterGimmick_->scale_, parameterGimmick_->angle_ });
+	material_->SetConstBuf(1, FLOAT4{ isReverseX, 0.0f, parameterGimmick_->angle_, 0.0f });
+	material_->SetConstBuf(2, FLOAT4{ (float)graphSizeX, (float)graphSizeY, 0.0f, 0.0f });
 
 	// 描画処理
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)UtilityCommon::ALPHA_MAX);
 	renderer_->Draw();
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 void GimmickBase::DebugDraw(void)
@@ -80,12 +88,17 @@ void GimmickBase::InitDraw()
 	// X軸の反転
 	float isReverseX = parameterGimmick_->direction_ ? 1.0f : 0.0f;
 
+	// 画像サイズの取得
+	int graphSizeX, graphSizeY;
+	GetGraphSize(parameterGimmick_->texture_, &graphSizeX, &graphSizeY);
+
 	// 基底クラスではスプライト画像を前提で用意
 	// マテリアルの生成
-	material_ = std::make_unique<PixelMaterial>(resMng_.GetHandle("standardTexture"), CONST_BUFFER_SIZE);
+	material_ = std::make_unique<PixelMaterial>(resMng_.GetHandle("standardTexture"), DEFAULT_CONST_BUFFER_SIZE);
 	material_->AddTextureBuf(parameterGimmick_->texture_);
 	material_->AddConstBuf(FLOAT4{ parameterGimmick_->color_.x, parameterGimmick_->color_.y,parameterGimmick_->color_.z, parameterGimmick_->alpha_ });
-	material_->AddConstBuf(FLOAT4{ isReverseX, 0.0f, parameterGimmick_->scale_, parameterGimmick_->angle_ });
+	material_->AddConstBuf(FLOAT4{ isReverseX, 0.0f, parameterGimmick_->angle_, (float)graphSizeX });
+	material_->AddConstBuf(FLOAT4{ (float)graphSizeY, 0.0f, 0.0f, 0.0f });
 
 	// レンダラーの生成
 	renderer_ = std::make_unique<PixelRenderer>(*material_);

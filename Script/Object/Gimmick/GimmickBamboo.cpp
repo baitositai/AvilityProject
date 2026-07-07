@@ -36,7 +36,6 @@ void GimmickBamboo::Update()
 	parameterBamboo_->moveAmount_ = Vector2F::MulVector2FFloat(parameterBamboo_->moveDir_, parameterBamboo_->moveSpeed_);
 
 	// 角度を決める（通常の2D座標系における移動方向の角度を出す）
-	// ※DXライブラリのY軸は下がプラスなので、通常の atan2f(y, x) で時計回りの角度になります
 	float targetAngle = std::atan2f(parameterBamboo_->moveDir_.y, parameterBamboo_->moveDir_.x);
 
 	parameterBamboo_->angle_ = targetAngle - (DX_PI_F / 2.0f);

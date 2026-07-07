@@ -22,6 +22,7 @@ class ComponentStateIdle;
 class ComponentStatePlayerDead;
 class ComponentStateEnemyDead;
 class ComponentStateEnter;
+class ComponentStatePlayerAttack;
 class ComponentStatePlayerSpawn;
 class ComponentStateDummy;
 
@@ -97,6 +98,7 @@ private:
 	std::unique_ptr<ComponentStatePlayerDead> CreateComponentStatePlayerDead(ActorBase& owner);
 	std::unique_ptr<ComponentStateEnemyDead> CreateComponentStateEnemyDead(ActorBase& owner);
 	std::unique_ptr<ComponentStateEnemyAlive> CreateComponentStateEnemyAlive(ActorBase& owner);
+	std::unique_ptr<ComponentStatePlayerAttack> CreateComponentStatePlayerAttack(ActorBase& owner);
 	std::unique_ptr<ComponentStatePlayerSpawn> CreateComponentStatePlayerSpawn(ActorBase& owner);
 	std::unique_ptr<ComponentStateDummy> CreateComponentStateDummy(ActorBase& owner);
 

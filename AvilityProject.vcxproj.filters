@@ -702,6 +702,9 @@
     <ClCompile Include="Script\OnHit\OnHitEnemyMaid.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Script\Component\State\ComponentStatePlayerAttack.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\Common\CharacterString.h">
@@ -1577,9 +1580,13 @@
     <ClInclude Include="Script\OnHit\OnHitEnemyMaid.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Script\Component\State\ComponentStatePlayerAttack.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Script\Shader\Pixel\StandardTexture.hlsl" />
     <FxCompile Include="Script\Shader\Pixel\StandardSprite.hlsl" />
+    <FxCompile Include="Script\Shader\Pixel\EnemySprite.hlsl" />
   </ItemGroup>
 </Project>

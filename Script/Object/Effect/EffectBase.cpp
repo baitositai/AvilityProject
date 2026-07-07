@@ -23,6 +23,15 @@ void EffectBase::Init()
 	animation_->Play(Animation::TYPE::EFFECT, false);
 }
 
+void EffectBase::Draw()
+{
+	// アニメーション番号の指定
+	parameterEffect_->drawIndex_ = animation_->GetAnimationIndex();
+
+	// 基底クラスの処理
+	ActorBase::Draw();
+}
+
 void EffectBase::DebugDraw()
 {
 	if (collider_)

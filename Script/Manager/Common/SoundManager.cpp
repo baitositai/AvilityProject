@@ -31,43 +31,12 @@ void SoundManager::SceneChangeResources()
 	// 新規リソースを追加
 	for (auto it = resourceMap.begin(); it != resourceMap.end(); )
 	{
-		//// 音源の種類を取得
-		//TYPE type = it->second->GetSoundType();
-
-		//// サウンドデータの格納
-		//SoundData soundData = {};
-		//soundData.playType = GetPlayType(type);		// 再生方法
-		//soundData.handle = it->second->GetHandle();	// ハンドル
-		//soundData.volume = 0;						// 音量
-
-		//// 音源の種類別に格納
-		//if (type == TYPE::BGM)
-		//{
-		//	// キーから列挙型値に変換
-		//	const BGM bgmKey = SoundType::KEY_BGM_MAP.at(it->first);
-
-		//	// 格納
-		//	tempBgmMap.emplace(bgmKey, soundData);
-		//}
-		//else if (type == TYPE::SE)
-		//{
-		//	// キーから列挙型値に変換
-		//	const SE seKey = SoundType::KEY_SE_MAP.at(it->first);
-
-		//	// 格納
-		//	tempSeMap.emplace(seKey, soundData);
-		//}
-
 		// 追加処理
 		Add(it->first, it->second);
 
 		// 次へ
 		++it;
 	}
-
-	// 読み込み済みマップを更新
-	//loadedBgmMap_ = tempBgmMap;
-	//loadedSeMap_ = tempSeMap;
 }
 
 void SoundManager::Update()

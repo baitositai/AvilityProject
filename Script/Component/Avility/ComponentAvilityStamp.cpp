@@ -5,6 +5,7 @@
 #include "../../Object/Character/Player.h"
 #include "../../Object/Common/Animation.h"
 #include "../../Collider/ColliderBox.h"
+#include "../../Utility/UtilityCommon.h"
 #include "ComponentAvilityStamp.h"
 #include "ComponentAvilityTeleport.h"
 
@@ -173,8 +174,7 @@ void ComponentAvilityStamp::ChangeStateStop()
 	parameter_.jumpPow_ = 0.0f;
 	parameter_.knockBackPower_ = Vector2F(0.0f, 0.0f);
 	parameter_.shotVec_ = Vector2F(0.0f, 0.0f);
-	Vector2F gravityDir = parameter_.GetDown();
-	parameter_.angle_ = std::atan2f(-gravityDir.x, gravityDir.y);
+	parameter_.angle_ = UtilityCommon::GetGravityDirRadAngle(parameter_.gravityDir_);
 }
 
 void ComponentAvilityStamp::ChangeStateActive()

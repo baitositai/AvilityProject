@@ -12,7 +12,7 @@ ParameterCharacter::ParameterCharacter() :
     jumpPowMax_(0.0f),
     defaultAttackDistance_(0.0f),
     defaultAttackRadius_(0.0f),
-    damageColor_({}),
+    damageColor_(VECTOR()),
     attackCollisionTag_(CollisionTags::TAG::NONE)
 {
 }
@@ -38,6 +38,7 @@ void ParameterCharacter::LoadParameter(const Json& parameter)
     defaultAttackRadius_ = parameter.value("defaultAttackRadius", 0.0f);
     defaultAttackDistance_ = parameter.value("defaultAttackDistance", 0.0f);
     defaultAttackStartFrame_ = parameter.value("defaultAttackStartFrame", -1);
+    defaultAttackSecondFrame_ = parameter.value("defaultAttackSecondFrame", -1);
     stateComponentKeys_ = parameter.value("stateComponentKeys", std::unordered_map<std::string, std::string>());
 
     // ノックバックパワーの読み込み
@@ -49,10 +50,11 @@ void ParameterCharacter::LoadParameter(const Json& parameter)
 
     if (parameter.contains("damageColor"))
     {
-        damageColor_.x = parameter["damageColor"].value("r", 0);
-        damageColor_.y = parameter["damageColor"].value("g", 0);
-        damageColor_.z = parameter["damageColor"].value("b", 0);
+        uiDamageColor_.x = parameter["damageColor"].value("r", 0);
+        uiDamageColor_.y = parameter["damageColor"].value("g", 0);
+        uiDamageColor_.z = parameter["damageColor"].value("b", 0);
     }
+
 
     // アニメーションデータの取得
     LoadParameterAnimation(parameter);

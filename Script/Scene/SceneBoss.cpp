@@ -35,7 +35,7 @@ SceneBoss::~SceneBoss()
 void SceneBoss::Init()
 {		
 	// ボス指定
-	bossType_ = EnemyTypes::TYPE::PANDA;
+	bossType_ = EnemyTypes::TYPE::MAID;
 
 	// ボス部屋の生成
 	stageMng_.Create(StageManager::TYPE::BOSS);

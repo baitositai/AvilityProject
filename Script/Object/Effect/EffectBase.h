@@ -23,6 +23,11 @@ public:
 	virtual void Init() override;
 
 	/// <summary>
+	/// 描画処理
+	/// </summary>
+	virtual void Draw() override;
+
+	/// <summary>
 	/// デバッグ描画
 	/// </summary>
 	virtual void DebugDraw() override;

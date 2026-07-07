@@ -96,10 +96,14 @@ void ActorBase::Draw()
 	// X軸の反転
 	float isReverseX = parameter_->direction_ ? 1.0f : 0.0f;
 
+	// 画像サイズの取得
+	int graphSizeX, graphSizeY;
+	GetGraphSize(parameter_->texture_ ,&graphSizeX, &graphSizeY);
+
 	// 定数バッファの更新
 	material_->SetConstBuf(0, FLOAT4{ parameter_->color_.x,parameter_->color_.y ,parameter_->color_.z, parameter_->alpha_ });
-	material_->SetConstBuf(1, FLOAT4{ isReverseX, 0.0f, parameter_->scale_, parameter_->angle_ });
-	material_->SetConstBuf(2, FLOAT4{ (float)parameter_->divisionNum_.x, (float)parameter_->divisionNum_.y , parameter_->drawIndex_, 0.0f });
+	material_->SetConstBuf(1, FLOAT4{ isReverseX, 0.0f, parameter_->angle_, parameter_->drawIndex_ });
+	material_->SetConstBuf(2, FLOAT4{ (float)parameter_->divisionNum_.x, (float)parameter_->divisionNum_.y , (float)graphSizeX, (float)graphSizeY });
 	
 	// 描画処理
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)UtilityCommon::ALPHA_MAX);
@@ -162,8 +166,8 @@ void ActorBase::InitDraw()
 	material_ = std::make_unique<PixelMaterial>(resMng_.GetHandle("standardSprite"), DEFAULT_CONST_BUFFER_SIZE);
 	material_->AddTextureBuf(parameter_->texture_);
 	material_->AddConstBuf(FLOAT4{ parameter_->color_.x, parameter_->color_.y,parameter_->color_.z, parameter_->alpha_ });
-	material_->AddConstBuf(FLOAT4{ isReverseX, 0.0f, parameter_->scale_, parameter_->angle_ });
-	material_->AddConstBuf(FLOAT4{ (float)parameter_->divisionNum_.x, (float)parameter_->divisionNum_.y, parameter_->drawIndex_, 0.0f });
+	material_->AddConstBuf(FLOAT4{ isReverseX, 0.0f, parameter_->angle_,parameter_->drawIndex_ });
+	material_->AddConstBuf(FLOAT4{ (float)parameter_->divisionNum_.x, (float)parameter_->divisionNum_.y, 0.0f, 0.0f });
 
 	// レンダラーの生成
 	renderer_ = std::make_unique<PixelRenderer>(*material_);

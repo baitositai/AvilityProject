@@ -68,13 +68,17 @@ void CharacterBase::Draw()
 		// 周期に基づいて角度を計算
 		float currentAngle = (nowTime % BLINK_CYCLE_MS) * DX_PI_F * 2.0f / static_cast<float>(BLINK_CYCLE_MS);
 
-		// サイン波を使って範囲変換
-		int alphaValue = static_cast<int>((sin(currentAngle) + 1.0f) * (UtilityCommon::ALPHA_MAX / 2.0f));
+		// 透過値の決定
+		float alphaValue = (sin(currentAngle) + 1.0f) * 0.5f;
 
-		// アルファ値を変更して点滅
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, alphaValue);
+		// シェーダに渡すアルファ値を一時的に上書きして点滅
+		float backupAlpha = parameterCharacter_->alpha_;
+		parameterCharacter_->alpha_ = alphaValue;
+
 		ActorBase::Draw();
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+		// 描画が終わったら元のアルファ値に戻す
+		parameterCharacter_->alpha_ = backupAlpha;
 	}
 	else
 	{
@@ -128,7 +132,7 @@ void CharacterBase::Damage(const int damage, const Vector2& hitPos)
 	parameterCharacter_->hp_ -= static_cast<float>(newDamage);
 
 	// ダメージUIの作成
-	uiMng_.Add(std::move(std::make_unique<UiDamage>(newDamage, hitPos, parameterCharacter_->damageColor_)));
+	uiMng_.Add(std::move(std::make_unique<UiDamage>(newDamage, hitPos, parameterCharacter_->uiDamageColor_)));
 
 	// 体力が0以下の場合
 	if (parameterCharacter_->hp_ <= 0)

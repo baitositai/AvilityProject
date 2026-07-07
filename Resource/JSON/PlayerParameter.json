@@ -4,48 +4,43 @@
     "animation": {
       "idle": {
         "no": 0,
-        "speed": 0.1,
-        "num": 6
-      },
-      "walk": {
-        "no": 1,
-        "speed": 0.1,
-        "num": 8
-      },
-      "brake": {
-        "no": 2,
-        "speed": 0.1,
-        "num": 4
-      },
-      "attack": {
-        "no": 3,
         "speed": 0.2,
         "num": 7
       },
+      "walk": {
+        "no": 1,
+        "speed": 0.2,
+        "num": 8
+      },
+      "dash": {
+        "no": 2,
+        "speed": 0.2,
+        "num": 12
+      },
       "jump": {
-        "no": 4,
-        "speed": 0.1,
-        "num": 6
+        "no": 3,
+        "speed": 0.2,
+        "num": 4
       },
       "fall": {
+        "no": 4,
+        "speed": 0.2,
+        "num": 4
+      },
+      "damage": {
         "no": 5,
-        "speed": 0.1,
-        "num": 6
+        "speed": 0.2,
+        "num": 3
       },
       "dead": {
         "no": 6,
         "speed": 0.1,
         "num": 10
       },
-      "damage": {
+      "attack": {
         "no": 7,
         "speed": 0.2,
-        "num": 4
-      },
-      "pause": {
-        "no": 8,
-        "speed": 0.1,
-        "num": 6
+        "num": 15
       }
     },
     "attackPower": 10,
@@ -67,32 +62,33 @@
     },
     "defaultAttackDistance": 30.0,
     "defaultAttackRadius": 20.0,
-    "defaultAttackStartFrame": 33,
+    "defaultAttackStartFrame": 108,
+    "defaultAttackSecondFrame": 114,
     "direction": false,
     "divisionNum": {
-      "x": 10,
-      "y": 9
+      "x": 15,
+      "y": 8
     },
     "gravityPower": 9.8,
     "hitBoxSize": {
-      "x": 48,
-      "y": 64
+      "x": 16,
+      "y": 18
     },
     "hp": 200,
     "invincibleTimeMax": 2.0,
     "jumpCount": 1,
     "jumpCountMax": 1,
-    "jumpPowerMax": 25.0,
+    "jumpPowerMax": 22.5,
     "localPos": {
       "x": 0,
       "y": 0
     },
     "moveSpeed": 2.0,
     "resourceKey": "player",
-    "scale": 1.0,
+    "scale": 3.0,
     "stateComponentKeys": {
       "alive": "playerProcess",
-      "attack": "attackDefault",
+      "attack": "playerAttack",
       "hit": "dummy",
       "dead": "playerDead",
       "spawn": "spawn",

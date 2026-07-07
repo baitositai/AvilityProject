@@ -38,7 +38,7 @@ public:
 private:
 
 	// Šg‘å—¦
-	static constexpr float SCALE = 2.0f;
+	static constexpr float SCALE = 1.0f;
 
 	// d—Í§Œäˆ—
 	void ProcessGravity();

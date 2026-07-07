@@ -37,7 +37,10 @@ Player::Player(std::unique_ptr<ParameterPlayer> parameter) :
 	
 	// 変数初期化
 	leaveInputTime_ = 0.0f;
-	speechBubble_ = nullptr;
+	speechBubble_ = nullptr;	
+	
+	// ヒットサイズ拡大
+	parameterPlayer_->hitSize_ = parameterPlayer_->GetScaleToHitSize();
 }
 
 Player::~Player()
@@ -46,6 +49,8 @@ Player::~Player()
 
 void Player::Init()
 {	
+
+
 	// コライダー
 	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::PLAYER, parameterPlayer_->pos_, parameterPlayer_->hitSize_, parameterPlayer_->angle_);
 

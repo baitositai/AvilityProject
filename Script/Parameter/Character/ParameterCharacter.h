@@ -57,6 +57,9 @@ public:
     // 通常攻撃開始フレーム
 	int defaultAttackStartFrame_;
 
+    // 通常攻撃2回目の判定フレーム
+	int defaultAttackSecondFrame_;
+
     // 通常攻撃の当たり判定距離
     float defaultAttackDistance_;
 
@@ -64,7 +67,10 @@ public:
     float defaultAttackRadius_;
 
     // ダメージカラー
-    IntVector3 damageColor_;
+    VECTOR damageColor_;
+
+    // UIダメージカラー
+    IntVector3 uiDamageColor_;
 
     // 攻撃用の衝突タグ
 	CollisionTags::TAG attackCollisionTag_;

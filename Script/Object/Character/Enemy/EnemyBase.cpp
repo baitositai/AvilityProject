@@ -1,9 +1,13 @@
 #include <DxLib.h>
 #include "../../../Utility/UtilityCommon.h"
 #include "../../../Manager/Common/SceneManager.h"
+#include "../../../Manager/Common/ResourceManager.h"
 #include "../../../Manager/Game/ItemManager.h"
 #include "../../../Collider/ColliderBox.h"
 #include "../../../OnHit/OnHitEnemy.h"
+#include "../../../Resource/ResourceTexture.h"
+#include "../../../Render/PixelMaterial.h"
+#include "../../../Render/PixelRenderer.h"
 #include "../../../Parameter/Character/Enemy/ParameterEnemy.h"
 #include "EnemyBase.h"
 
@@ -41,20 +45,24 @@ void EnemyBase::Init()
 
 void EnemyBase::Draw()
 {
-	// ダメージを受けている場合
-	if (damageDrawStep_ > 0)
+	if (damageDrawStep_ > 0.0f)
 	{
 		damageDrawStep_ -= scnMng_.GetDeltaTime();
-
-		// 赤くする
-		int red = static_cast<int>(255 * damageDrawStep_ / DAMAGE_DRAW_STEP_MAX);
-		SetDrawAddColor(red, 0, 0);
+		float damageRatio = damageDrawStep_ / DAMAGE_DRAW_STEP_MAX;
+		// 赤く光らせる
+		parameterEnemy_->damageColor_ = VECTOR(damageRatio, 0.0f, 0.0f);
 	}
+	else
+	{
+		// ダメージ色をなくす
+		parameterEnemy_->damageColor_ = VECTOR(0.0f, 0.0f, 0.0f);
+	}
+	// 追加の定数バッファの更新
+	material_->SetConstBuf(3, FLOAT4{ parameterEnemy_->damageColor_.x,parameterEnemy_->damageColor_.y,parameterEnemy_->damageColor_.z,0.0f });
+
 	// 基底クラスの描画
 	CharacterBase::Draw();
 
-	// 加算した値を戻す
-	SetDrawAddColor(0, 0, 0);
 }
 
 void EnemyBase::DropItem()
@@ -88,4 +96,37 @@ void EnemyBase::Damage(const int damage, const Vector2& hitPos)
 	
 	// ダメージを受けている場合はダメージ描画用のステップを設定
 	damageDrawStep_ = DAMAGE_DRAW_STEP_MAX;	
+}
+
+void EnemyBase::InitDraw()
+{
+	// リソースの取得と同時に必要な情報を取得
+	const auto texture = resMng_.GetResourceTexture(parameterEnemy_->resourceKey_);
+	parameterEnemy_->drawSize_ = texture->GetSize();
+	parameterEnemy_->divisionNum_ = texture->GetDivsion();
+	parameterEnemy_->drawHalfSize_ = Vector2(parameterEnemy_->drawSize_.x / 2, parameterEnemy_->drawSize_.y / 2);
+
+	// X軸の反転
+	float isReverseX = parameterEnemy_->direction_ ? 1.0f : 0.0f;
+
+	// 基底クラスではスプライト画像を前提で用意
+	// マテリアルの生成
+	material_ = std::make_unique<PixelMaterial>(resMng_.GetHandle("enemySprite"), CONST_BUFFER_SIZE);
+	material_->AddTextureBuf(parameterEnemy_->texture_);
+	material_->AddConstBuf(FLOAT4{ parameterEnemy_->color_.x, parameterEnemy_->color_.y,parameterEnemy_->color_.z, parameterEnemy_->alpha_ });
+	material_->AddConstBuf(FLOAT4{ isReverseX, 0.0f, parameterEnemy_->angle_,parameterEnemy_->drawIndex_ });
+	material_->AddConstBuf(FLOAT4{ (float)parameterEnemy_->divisionNum_.x, (float)parameterEnemy_->divisionNum_.y, 0.0f, 0.0f });
+	material_->AddConstBuf(FLOAT4{ 0.0f, 0.0f, 0.0f, 0.0f });
+
+	// レンダラーの生成
+	renderer_ = std::make_unique<PixelRenderer>(*material_);
+
+	// 描画サイズを現在のスケールに合わせる
+	Vector2 nowSize = Vector2F::MulVector2FFloat(parameterEnemy_->drawSize_.ToVector2F(), parameterEnemy_->scale_).ToVector2();
+
+	// 中心位置に設定
+	parameterEnemy_->drawPos_ = GetDrawCenterPos(nowSize);
+
+	// メッシュ生成
+	renderer_->MakeSquereVertex(parameterEnemy_->drawPos_, nowSize);
 }

@@ -190,10 +190,10 @@ void ResourceManager::SceneChangeResource(const int nextSceneId)
 	}
 }
 
-std::unordered_map<std::string, ResourceSound*>& ResourceManager::GetSceneSounds() const
+std::unordered_map<std::string, ResourceSound*> ResourceManager::GetSceneSounds() const
 {
 	// シーンリソースを格納するマップ
-	static std::unordered_map<std::string, ResourceSound*> sceneSounds;
+	std::unordered_map<std::string, ResourceSound*> sceneSounds;
 
 	// 空じゃないか確認
 	if (loadedMap_.empty())
@@ -233,7 +233,7 @@ std::unordered_map<std::string, ResourceSound*>& ResourceManager::GetSceneSounds
 	return sceneSounds;
 }
 
-std::unordered_map<std::string, ResourceEffect*>& ResourceManager::GetSceneEffects() const
+std::unordered_map<std::string, ResourceEffect*> ResourceManager::GetSceneEffects() const
 {
 	// シーンリソースを格納するマップ
 	static std::unordered_map<std::string, ResourceEffect*> sceneEffects;

@@ -527,7 +527,7 @@ float UtilityCommon::GetGravityDirRadAngle(const ParameterActor::DIR gravityDir)
         break;
 
     case ParameterActor::DIR::RIGHT:
-    angle = 270.0f;        
+        angle = 270.0f;
         break;
 
     case ParameterActor::DIR::LEFT:
