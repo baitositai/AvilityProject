@@ -1,3 +1,4 @@
+#include <cmath>
 #include <DxLib.h>
 #include "../../Application.h"
 #include "../../Manager/Common/SceneManager.h"
@@ -195,6 +196,12 @@ void ComponentLogicPandaShot::ChangeStateShot()
 	// 角度から単位ベクトルを計算
 	moveDir_.x = std::cos(angle);
 	moveDir_.y = std::sin(angle);
+
+	// 同時に竹を飛ばす
+	for (int i = 0; i < CREATE_BAMBOO_COUNT; i++)
+	{
+		CreateBamboo();
+	}
 }
 
 void ComponentLogicPandaShot::ProcessCollision(bool isXAxis)
@@ -278,4 +285,34 @@ void ComponentLogicPandaShot::ShotEnd()
 	parameter_.angle_ = 0.0f;	
 	owner_.SetColliderActive(true);
 	attackCollider_->SetIsActive(false);
+}
+
+void ComponentLogicPandaShot::CreateBamboo()
+{
+	// 所有者の前方向取得
+	Vector2F fornt = parameter_.GetFront();
+
+	// 竹の生成位置を決定
+	Vector2F localPos = Vector2F::MulVector2FFloat(fornt, 30.0f);
+	Vector2F pos = Vector2F::AddVector2F(parameter_.pos_, localPos);
+
+	// 360度の範囲をラジアンで定義
+	const float MAX_RADIAN = 2.0f * 3.14159265f;
+
+	// 0から最大ラジアンまでの範囲の乱数
+	std::uniform_real_distribution<float> convertAngle(0.0f, MAX_RADIAN);
+	float randomAngle = convertAngle(randomCountEngine_);
+
+	// 角度から移動方向ベクトルを計算
+	Vector2F moveDir = {};
+	moveDir.x = std::cos(randomAngle);
+	moveDir.y = std::sin(randomAngle);
+
+	// 竹生成
+	GimmickManager::CreateParameter createParameter = {};
+	createParameter.type = GimmickTypes::TYPE::BAMBOO;
+	createParameter.pos = parameter_.pos_;
+	createParameter.moveDir = moveDir;
+	createParameter.attackPower = 20;
+	gimmickManager_.Create(createParameter);
 }

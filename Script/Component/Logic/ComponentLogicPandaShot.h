@@ -1,4 +1,5 @@
 #pragma once
+#include <random>
 #include "ComponentLogicBase.h"
 
 class EnemyPanda;
@@ -55,6 +56,9 @@ private:
 		MAX
 	};
 
+	// 竹の生成数
+	static constexpr int CREATE_BAMBOO_COUNT = 5;
+
 	// 所有者
 	EnemyPanda& owner_;
 
@@ -86,6 +90,9 @@ private:
 	// 攻撃コライダー
 	std::shared_ptr<ColliderBox> attackCollider_;
 
+	// 乱数生成エンジン
+	std::mt19937 randomCountEngine_;
+
 	// 更新処理
 	void UpdateStart();
 	void UpdateReady();
@@ -107,4 +114,7 @@ private:
 
 	// 飛び回った後の処理
 	void ShotEnd();
+
+	// 竹の生成
+	void CreateBamboo();
 };
