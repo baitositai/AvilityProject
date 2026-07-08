@@ -39,7 +39,7 @@ void ComponentLogicDropRock::Create()
 		gimmickManager_.Create(createParameter);
 	}
 	// 待機アニメーション
-	owner_.GetAnimation().Play(Animation::TYPE::IDLE);
+	owner_.GetAnimation().Play(Animation::TYPE::ATTACK_2);
 
 	// 攻撃用コライダーの登録
 	//attackCollider_ = std::make_shared<ColliderCircle>(owner_, parameter_.attackCollisionTag_, attackPos_, parameter_.defaultAttackRadius_);
@@ -53,6 +53,11 @@ void ComponentLogicDropRock::Init()
 
 void ComponentLogicDropRock::Update()
 {
+	Animation& animation = owner_.GetAnimation();
+	if (animation.IsPlay())
+	{
+		isEnd_ = true;
+	}
 }
 
 void ComponentLogicDropRock::Remove()

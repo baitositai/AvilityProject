@@ -60,7 +60,7 @@ private:
 	static constexpr int ROCK_CREATE_NUM_MIN = 3;
 
 	//岩座標のY固定座標
-	static constexpr float ROCK_POS_Y = 100.0f;
+	static constexpr float ROCK_POS_Y = 180.0f;
 
 	//岩サイズ
 	static constexpr int ROCK_SIZE = 80;

@@ -59,7 +59,7 @@ private:
 	static constexpr float ROCK_SIZE = 50.0f;
 
 	//待機時間
-	static constexpr float WAIT_TIME = 1.0f;
+	static constexpr float WAIT_TIME = 3.0f;
 
 	// パラメータ情報
 	ParameterGimmick* parameterDropRock_;
@@ -71,14 +71,14 @@ private:
 	//待機時間
 	float waitCnt_;
 
-	// 衝突判定と押し出し処理の共通ロジック
-	void ProcessCollision(bool isXAxis);
-
 	//ヒット用半径の大きさ
 	float hitRadius_;
 
+	//生存状態
+	bool isDead_;
+
 	// 接地判定の共通ロジック
-	//void CheckGroundStatus(float moveVal, bool isXAxis);
+	void CheckGroundStatus(float moveVal, bool isXAxis);
 
 	//Drop待機状態
 	void ChangeCreate(void);

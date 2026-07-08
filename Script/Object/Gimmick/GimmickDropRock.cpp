@@ -1,4 +1,5 @@
 #include "../Manager/Common/SceneManager.h"
+#include "../Manager/Game/CollisionManager.h"
 #include "../../Parameter/Gimmick/ParameterGimmick.h"
 #include "../../OnHit/OnHitDropRock.h"
 #include "../Collider/ColliderCircle.h"
@@ -8,7 +9,8 @@ GimmickDropRock::GimmickDropRock(std::unique_ptr<ParameterGimmick> parameter):
 	GimmickBase(std::move(parameter)),
 	state_(STATE::NONE),
 	parameterDropRock_(),
-	hitRadius_(ROCK_SIZE)
+	hitRadius_(ROCK_SIZE),
+	isDead_(false)
 {
 	// パラメータ情報
 	parameterDropRock_ = dynamic_cast<ParameterGimmick*>(GetParameterGimmickPtr());
@@ -46,6 +48,7 @@ void GimmickDropRock::Init()
 	// 初期化
 	ActorBase::Init();
 
+	isDead_ = false;
 	waitCnt_ = 0.0f;
 	update_ = std::bind(&GimmickDropRock::UpdateWait, this);
 }
@@ -81,7 +84,37 @@ void GimmickDropRock::UpdateWait(void)
 
 void GimmickDropRock::UpdateDrop(void)
 {
+	CollisionManager::CollisionCheckParam checkParameter;
+	checkParameter.pos = parameterDropRock_->pos_.ToVector2();
+	checkParameter.size = parameterDropRock_->hitSize_;
+	checkParameter.isXAxis = false;
+	checkParameter.stepMove = parameterDropRock_->moveSpeed_;
+	CollisionManager::CollisionResult result = CollisionManager::GetInstance().CheckStageCollision(checkParameter);
+	if (result.isHit)
+	{
+		//ステージと当たったら消す
+		collider_->Delete();
+		isDead_ = true;
+		isDelete_ = true;
+	}
 	// コンポーネント有効
 	SetComponentActive("gravity", true);
 	SetComponentActive("move", true);
+}
+
+void GimmickDropRock::CheckGroundStatus(float moveVal, bool isXAxis)
+{
+	bool isGround = false;
+	if (isXAxis)
+	{
+		if ((moveVal > 0.0f && parameterDropRock_->gravityDir_ == ParameterActor::DIR::RIGHT) ||
+			(moveVal < 0.0f && parameterDropRock_->gravityDir_ == ParameterActor::DIR::LEFT)) isGround = true;
+	}
+	else
+	{
+		if ((moveVal > 0.0f && parameterDropRock_->gravityDir_ == ParameterActor::DIR::DOWN) ||
+			(moveVal < 0.0f && parameterDropRock_->gravityDir_ == ParameterActor::DIR::UP)) isGround = true;
+	}
+
+	if (isGround) parameterDropRock_->isGround_ = true;
 }

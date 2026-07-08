@@ -78,7 +78,7 @@
     ]
   },
   "dropRock": {
-    "resourceKey": "",
+    "resourceKey": "dropRock",
     "transparent": true,
     "scale": 1.0,
     "gravityPower": 0.3,
