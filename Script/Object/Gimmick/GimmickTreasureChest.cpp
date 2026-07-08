@@ -49,6 +49,7 @@ void GimmickTreasureChest::Update()
 
 void GimmickTreasureChest::Draw()
 {
+	parameterTreasureChest_->drawIndex_ = animation_->GetAnimationIndex();
 	ActorBase::Draw();
 }
 

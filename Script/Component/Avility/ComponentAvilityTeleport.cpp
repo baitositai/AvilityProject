@@ -162,7 +162,7 @@ void ComponentAvilityTeleport::ChangeStateMove()
 	parameter->angle_ = parameter_.angle_;
 	parameter->hitSize_ = { 96, 96 };
 	parameter->resourceKey_ = "teleportEnter";
-	parameter->scale_ = parameter_.scale_;
+	parameter->scale_ = parameter_.scale_ - 2.0f;
 	parameter->divisionNum_ = { 9, 1 };
 	parameter->transparent_ = true;
 	parameter->moveSpeed_ = 3.0f;
@@ -192,9 +192,9 @@ void ComponentAvilityTeleport::ChangeStateAppear()
 	std::unique_ptr<ParameterEffectTeleportExit> parameter = std::make_unique<ParameterEffectTeleportExit>();
 	parameter->pos_ = parameter_.pos_;
 	parameter->angle_ = parameter_.angle_;
-	parameter->hitSize_ = Vector2F(96.0f * parameter_.scale_, 96.0f * parameter_.scale_).ToVector2();
+	parameter->scale_ = parameter_.scale_ - 2.0f;
+	parameter->hitSize_ = Vector2F(96.0f * parameter->scale_, 96.0f * parameter->scale_).ToVector2();
 	parameter->resourceKey_ = "teleportExit";
-	parameter->scale_ = parameter_.scale_;
 	parameter->divisionNum_ = { 11, 1 };
 	parameter->transparent_ = true;
 	parameter->moveSpeed_ = 3.0f;

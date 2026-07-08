@@ -75,17 +75,21 @@ void EnemyBase::DropItem()
 	// ランダム確率でほかのアイテムも生成
 	int probability = GetRand(15);
 
-	if (probability < 3)
+	if (probability < 5)
 	{
 		itemManager.CreateFoodItem(static_cast<ItemTypes::FOOD_TYPE>(GetRand(ItemTypes::FOOD_TYPE_MAX - 1)), parameterEnemy_->pos_);
 	}
-	else if (probability == 3)
+	else if (5 <= probability < 8)
 	{
 		itemManager.CreateAvilityItem(static_cast<AvilityTypes::TYPE>(GetRand(AvilityTypes::AVILITY_TYPE_MAX - 1)), parameterEnemy_->pos_);
 	}
-	else if (probability == 4)
+	else if (8 <= probability < 10)
 	{
 		itemManager.CreateTreasureItem(static_cast<ItemTypes::TREASURE_TYPE>(GetRand(ItemTypes::TREASURE_TYPE_MAX - 1)), parameterEnemy_->pos_);
+	}
+	else if (10 <= probability < 14)
+	{
+		itemManager.CreatePotionItem(static_cast<ItemTypes::POTION_TYPE>(GetRand(ItemTypes::POTION_TYPE_MAX - 1)), parameterEnemy_->pos_);
 	}
 }
 

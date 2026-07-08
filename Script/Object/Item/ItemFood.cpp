@@ -1,4 +1,4 @@
-#include <math.h>
+#include "../../Utility/UtilityCommon.h"
 #include "ItemFood.h"
 
 ItemFood::ItemFood(std::unique_ptr<ParameterItemFood> parameter) :
@@ -22,6 +22,5 @@ void ItemFood::Init()
 	ItemBase::Init();
 
 	// Šp“x‚ðd—Í‚É‡‚í‚¹‚é
-	Vector2F gravityDir = GetParameter().GetGravityDirectionVector();
-	parameterItemFood_->angle_ = atan2f(gravityDir.y, gravityDir.x);
+	parameterItemFood_->angle_ = UtilityCommon::GetGravityDirRadAngle(parameterItemFood_->gravityDir_);
 }

@@ -26,6 +26,9 @@ SceneBoss::SceneBoss()
 
 	// 描画関数のセット
 	drawFunc_ = std::bind(&SceneBoss::LoadingDraw, this);
+
+	// 初期化
+	bossType_ = EnemyTypes::TYPE::MAX;
 }
 
 SceneBoss::~SceneBoss()
@@ -35,7 +38,7 @@ SceneBoss::~SceneBoss()
 void SceneBoss::Init()
 {		
 	// ボス指定
-	bossType_ = EnemyTypes::TYPE::PANDA;
+	bossType_ = EnemyTypes::BOSS_LIST[UtilityCommon::GetRandomCount(EnemyTypes::BOSS_MAX - 1, 0)];
 
 	// ボス部屋の生成
 	stageMng_.Create(StageManager::TYPE::BOSS);

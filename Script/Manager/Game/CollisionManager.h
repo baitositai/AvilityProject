@@ -30,7 +30,7 @@ public:
 		bool isHit;
 		float chipSize;
 		int chipIndex;
-		Vector2F normal; // ”½Ë‚Ég‚¤–@ü‚àˆê‚É•Ô‚·‚Æ•Ö—˜
+		Vector2F normal; 
 	};
 	
 	/// <summary>
