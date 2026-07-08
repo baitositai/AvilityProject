@@ -36,6 +36,9 @@ void ComponentStatePlayerProcess::Update()
 	// 通常攻撃の入力処理
 	ProcessInputAttack();
 
+	// 投げる処理
+	ProcessInputThrow();
+
 	// 重力方向に応じて移動量を変換
 	moveAmount_ = UtilityCommon::ConvertLocalToWorldByGravity(moveAmount_, parameter_.gravityDir_);
 
@@ -127,5 +130,27 @@ void ComponentStatePlayerProcess::ProcessInputAttack()
 		
 		// 横移動の値をなくす
 		moveAmount_.x = 0.0f;
+	}
+}
+
+void ComponentStatePlayerProcess::ProcessInputThrow()
+{
+	if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_THROW_ITEM, parameter_.padNo_) && !parameter_.isAction_)
+	{
+		// 投げる方向を取得
+		Vector2F throwDir = parameter_.GetFront();
+
+		// パッドの入力方向を取得
+		Vector2F overSize = inputManager_.GetKnockLStickSize(parameter_.padNo_).ToVector2F();
+
+		// 傾きがある場合
+		if (overSize.Length() > 0.0f)
+		{
+			// 正規化されたベクトルを受け取る
+			throwDir = overSize.Normalize();
+		}
+
+		// 投げる処理
+		owner_.ThrowItem(throwDir);
 	}
 }

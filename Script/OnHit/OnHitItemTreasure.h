@@ -25,5 +25,7 @@ private:
 
 	// ƒ^ƒO•ÊÕ“ËŒãˆ—
 	void OnHitPlayer(const std::weak_ptr<ColliderBase>& opponentCollider) override;
+	void OnHitEnemy(const std::weak_ptr<ColliderBase>& opponentCollider);
+	void OnHitGimmick(const std::weak_ptr<ColliderBase>& opponentCollider);
 };
 

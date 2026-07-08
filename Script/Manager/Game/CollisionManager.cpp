@@ -352,6 +352,24 @@ void CollisionManager::InitTagMatrix()
 
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ITEM_FOOD)][static_cast<int>(CollisionTags::TAG::ENEMY_MAID)] = true;						// アイテムとメイド
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_MAID)][static_cast<int>(CollisionTags::TAG::ITEM_FOOD)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ITEM_ATTACK_UP)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;						// プレイヤーと攻撃ポーション
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::ITEM_ATTACK_UP)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ITEM_SPEED_UP)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;						// プレイヤーと速度ポーション
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::ITEM_SPEED_UP)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ITEM_HPMAX_UP)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;						// プレイヤーと体力ポーション
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::ITEM_HPMAX_UP)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_BASE)][static_cast<int>(CollisionTags::TAG::ITEM_TREASURE)] = true;					// 敵とアイテム宝
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ITEM_TREASURE)][static_cast<int>(CollisionTags::TAG::ENEMY_BASE)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ENEMY_MAID)][static_cast<int>(CollisionTags::TAG::ITEM_TREASURE)] = true;					// 敵（メイド）とアイテム宝
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ITEM_TREASURE)][static_cast<int>(CollisionTags::TAG::ENEMY_MAID)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::BAMBOO)][static_cast<int>(CollisionTags::TAG::ITEM_TREASURE)] = true;						// 竹とアイテム宝
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ITEM_TREASURE)][static_cast<int>(CollisionTags::TAG::BAMBOO)] = true;
 }
 
 void CollisionManager::InitColliderMatrix()

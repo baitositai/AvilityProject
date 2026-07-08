@@ -52,6 +52,14 @@ void SceneTrain::Init()
 
 	// UIçÏê¨
 	uiMng_.CreateGameUi();
+
+
+	itemMng_.CreateTreasureItem(ItemTypes::TREASURE_TYPE::CLAY_WORK, Vector2F(250, 400));
+	itemMng_.CreateTreasureItem(ItemTypes::TREASURE_TYPE::CLAY_WORK, Vector2F(500, 400));
+	itemMng_.CreateTreasureItem(ItemTypes::TREASURE_TYPE::CLAY_WORK, Vector2F(700, 400));
+	itemMng_.CreateTreasureItem(ItemTypes::TREASURE_TYPE::CLAY_WORK, Vector2F(800, 400));
+	itemMng_.CreateTreasureItem(ItemTypes::TREASURE_TYPE::CLAY_WORK, Vector2F(900, 400));
+	itemMng_.CreateTreasureItem(ItemTypes::TREASURE_TYPE::CLAY_WORK, Vector2F(1000, 400));
 }
 
 void SceneTrain::SceneChangeReady()

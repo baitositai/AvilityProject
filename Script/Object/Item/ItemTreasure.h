@@ -46,9 +46,31 @@ public:
 	void FollowPlayer(Player& player);
 
 	/// <summary>
+	/// 投げる処理
+	/// </summary>
+	/// <param name="throwDir">投げられる方向</param>
+	void Throw(const Vector2F& throwDir, const int attackPower);
+
+	/// <summary>
 	/// 追従解除
 	/// </summary>
 	void FollowRemove();
+
+	/// <summary>
+	/// 投げのリセット
+	/// </summary>
+	void ResetThrow();
+
+	/// <summary>
+	/// プレイヤーが投げた分位置番号を調整
+	/// </summary>
+	void OffsetIndex();
+
+	/// <summary>
+	/// 投げ判定を返す
+	/// </summary>
+	/// <returns>投げ判定</returns>
+	const bool IsThrow() const { return isThrow_; }
 
 	/// <summary>
 	/// パラメーターを返す(変更可)
@@ -73,6 +95,9 @@ private:
 	// お宝の保持番号
 	int index_;
 
+	// 投げ判定
+	bool isThrow_;
+
 	// 重力方向のバックアップ
 	ParameterActor::DIR preGravityDir_;
 
@@ -84,4 +109,7 @@ private:
 
 	// 描画初期化
 	void InitDraw() override;
+
+	// 着地処理
+	void Landing() override;
 };

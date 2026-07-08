@@ -78,6 +78,13 @@ public:
 	void CreateTreasureItem(const ItemTypes::TREASURE_TYPE type, const Vector2F& pos);
 
 	/// <summary>
+	/// ポーションの生成
+	/// </summary>
+	/// <param name="type">種類</param>
+	/// <param name="pos">座標</param>
+	void CreatePotionItem(const ItemTypes::POTION_TYPE type, const Vector2F& pos);
+
+	/// <summary>
 	/// 金額分お金アイテムを生成
 	/// </summary>
 	/// <param name="moneyAmount">金額</param>

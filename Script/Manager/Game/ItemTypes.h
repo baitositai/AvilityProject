@@ -12,6 +12,7 @@ public:
 		FOOD,		// 食べ物
 		TREASURE,	// 宝
 		MONEY,		// お金
+		POTION,		// ポーション
 		MAX
 	};
 
@@ -78,6 +79,15 @@ public:
 		MAX
 	};
 
+	// ポーション種類
+	enum class POTION_TYPE
+	{
+		ATTACK_UP,
+		HPMAX_UP,
+		SPEED_UP,
+		MAX
+	};
+
 	// 食べ物の最大数
 	static constexpr int FOOD_TYPE_MAX = static_cast<int>(FOOD_TYPE::MAX);
 
@@ -87,6 +97,9 @@ public:
 	// お金の最大数
 	static constexpr int MONEY_TYPE_MAX = static_cast<int>(MONEY_TYPE::MAX);
 
+	// ポーション最大数
+	static constexpr int POTION_TYPE_MAX = static_cast<int>(POTION_TYPE::MAX);
+
 	// 食べ物の列挙型からstring型へ変換する用のマップ
 	static const std::unordered_map<FOOD_TYPE, std::string> FOOD_STRING_TO_ENUM_MAP;
 
@@ -95,4 +108,7 @@ public:
 
 	// お金の列挙型からstring型へ変換する用のマップ
 	static const std::unordered_map<MONEY_TYPE, std::string> MONEY_STRING_TO_ENUM_MAP;
+
+	// ポーションの列挙型からstringへ変換する用のマップ
+	static const std::unordered_map<POTION_TYPE, std::string> POTION_STRING_TO_ENUM_MAP;
 };

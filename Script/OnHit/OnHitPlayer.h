@@ -54,6 +54,9 @@ private:
 	void OnHitEnemy(const std::weak_ptr<ColliderBase>& opponentCollider);
 	void OnHitItemAvility(const std::weak_ptr<ColliderBase>& opponentCollider);
 	void OnHitItemFood(const std::weak_ptr<ColliderBase>& opponentCollider);
+	void OnHitItemAttackUp(const std::weak_ptr<ColliderBase>& opponentCollider);
+	void OnHitItemHpMaxUp(const std::weak_ptr<ColliderBase>& opponentCollider);
+	void OnHitItemSpeedUp(const std::weak_ptr<ColliderBase>& opponentCollider);
 	void OnHitItemTreasure(const std::weak_ptr<ColliderBase>& opponentCollider);
 	void OnHitDoor(const std::weak_ptr<ColliderBase>& opponentCollider);
 	void OnHitNextArea(const std::weak_ptr<ColliderBase>& opponentCollider);

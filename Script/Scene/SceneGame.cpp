@@ -61,9 +61,7 @@ void SceneGame::Init()
 	SceneBase::Init();	
 
 	// イベント関係の初期化
-	eventManager.Init();	
-	
-	itemMng_.CreateTreasureItem(ItemTypes::TREASURE_TYPE::STUFFED_TOY, stageMng_.GetBossDoorPos());
+	eventManager.Init();
 	
 	// プレイヤーの初期位置を決定
 	playerMng_.SetFirstPositions(stageMng_.GetPlayerFirstPositions());

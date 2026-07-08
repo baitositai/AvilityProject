@@ -84,6 +84,7 @@
       "y": 0
     },
     "moveSpeed": 2.0,
+    "moveSpeedLimit": 10.0,
     "resourceKey": "player",
     "scale": 3.0,
     "stateComponentKeys": {

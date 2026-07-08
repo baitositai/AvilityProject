@@ -151,6 +151,8 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Parameter\Item\ParameterItemPotion.cpp" />
+    <ClCompile Include="Script\Object\Item\ItemPotion.cpp" />
     <ClCompile Include="Script\Component\State\ComponentStatePlayerAttack.cpp" />
     <ClCompile Include="Script\OnHit\OnHitEnemyMaid.cpp" />
     <ClCompile Include="Script\System\FoodShawer.cpp" />
@@ -379,6 +381,8 @@
     <ClCompile Include="Script\Ui\Enemy\UiBossHpBar.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Parameter\Item\ParameterItemPotion.h" />
+    <ClInclude Include="Script\Object\Item\ItemPotion.h" />
     <ClInclude Include="Script\Component\State\ComponentStatePlayerAttack.h" />
     <ClInclude Include="Script\OnHit\OnHitEnemyMaid.h" />
     <ClInclude Include="Script\System\FoodShawer.h" />

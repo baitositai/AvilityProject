@@ -49,8 +49,6 @@ Player::~Player()
 
 void Player::Init()
 {	
-
-
 	// コライダー
 	collider_ = std::make_shared<ColliderBox>(*this, CollisionTags::TAG::PLAYER, parameterPlayer_->pos_, parameterPlayer_->hitSize_, parameterPlayer_->angle_);
 
@@ -173,6 +171,9 @@ void Player::Damage(const int damage, const Vector2& hitPos)
 	// 次回アニメーション設定
 	animation_->SetNextAnimationType(Animation::TYPE::IDLE);
 	
+	// 次のアクションを可能にする
+	parameterPlayer_->isAction_ = false;
+
 	// 基底クラスの処理
 	CharacterBase::Damage(damage, hitPos);
 
@@ -250,6 +251,31 @@ void Player::AttackAfter()
 	SetAllAvilityComponentActive(true);
 }
 
+void Player::ThrowItem(const Vector2F& throwDir)
+{
+	// リストが空の場合は処理しない
+	if (attachedTreasures_.empty() || parameterPlayer_->treasureList_.empty())
+	{
+		return;
+	}
+
+	// 先頭アイテムを取得
+	auto& item = attachedTreasures_.front();
+
+	// アイテムを投げる
+	item->Throw(throwDir, GetAttackPowerWithBoost());
+
+	// リストから先頭要素を削除
+	attachedTreasures_.erase(attachedTreasures_.begin());
+	parameterPlayer_->treasureList_.erase(parameterPlayer_->treasureList_.begin());
+
+	// 所有するアイテムの位置番号を調整
+	for (auto& item : attachedTreasures_)
+	{
+		item->OffsetIndex();
+	}
+}
+
 void Player::Heal(const int healHp)
 {
 	// HPの設定
@@ -266,6 +292,26 @@ void Player::Heal(const int healHp)
 void Player::AttachedItem(ItemTreasure* item)
 {
 	attachedTreasures_.push_back(item);
+}
+
+void Player::AttackPowerUp(const int addAttackPower)
+{
+	parameterPlayer_->attackPower_ += addAttackPower;
+}
+
+void Player::HpMaxUp(const int addHpMax)
+{
+	parameterPlayer_->hpMax_ += addHpMax;
+	Heal(addHpMax);
+}
+
+void Player::SpeedUp(const float addSpeed)
+{
+	parameterPlayer_->moveSpeed_ += addSpeed;
+	if (parameterPlayer_->moveSpeedLimit_ < parameterPlayer_->moveSpeed_)
+	{
+		parameterPlayer_->moveSpeed_ = parameterPlayer_->moveSpeedLimit_;
+	}
 }
 
 void Player::DetachItem()

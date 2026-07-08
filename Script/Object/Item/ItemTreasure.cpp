@@ -19,6 +19,7 @@ ItemTreasure::ItemTreasure(std::unique_ptr<ParameterItemTreasure> parameter) :
 	tag_ = CollisionTags::TAG::ITEM_TREASURE;
 	owner_ = nullptr;
 	index_ = -1;
+	isThrow_ = false;
 	preGravityDir_ = ParameterActor::DIR::MAX;
 }
 
@@ -136,8 +137,52 @@ void ItemTreasure::FollowPlayer(Player& player)
 	// 持っている間は持ち越しする
 	isCarryOver_ = true;
 
+	// 強制的に投げ解除
+	isThrow_ = false;
+
 	// 初期更新
 	UpdateFollow();
+}
+
+void ItemTreasure::Throw(const Vector2F& throwDir, const int attackPower)
+{
+	constexpr float THROW_POWER = 800.0f;
+	constexpr float ADD_THROW_POWER = 400.0f;
+	Vector2F thorwPower = { THROW_POWER, THROW_POWER };
+	Vector2F dir = throwDir;
+
+	// 上方向のみ補強
+	if(throwDir.y <= 0.0f) 
+	{
+		dir.y = -1.0f;
+		thorwPower.y += ADD_THROW_POWER;
+	}
+
+
+	// 投げる方向に向けてノックバックパワーを設定
+	parameterItemTreasure_->knockBackPower_ = {
+		thorwPower.x * dir.x,
+		thorwPower.y * dir.y
+	};
+
+	// 攻撃力を設定
+	parameterItemTreasure_->attackPower_ = attackPower;
+
+	// 追従解除
+	owner_ = nullptr;
+
+	// コンポーネント有効
+	SetComponentActive("gravity", true);
+	SetComponentActive("move", true);
+
+	// コライダー有効
+	collider_->SetIsActive(true);
+
+	// 持ち越し解除
+	isCarryOver_ = false;
+
+	// 投げ判定
+	isThrow_ = true;
 }
 
 void ItemTreasure::FollowRemove()
@@ -167,6 +212,21 @@ void ItemTreasure::FollowRemove()
 
 	// 持ち越し解除
 	isCarryOver_ = false;
+}
+
+void ItemTreasure::ResetThrow()
+{
+	isThrow_ = false;
+	parameterItemTreasure_->knockBackPower_ = {};
+}
+
+void ItemTreasure::OffsetIndex()
+{
+	index_--;
+	if (index_ < 0)
+	{
+		index_ = 0;
+	}
 }
 
 void ItemTreasure::UpdateFollow()
@@ -231,4 +291,10 @@ void ItemTreasure::InitDraw()
 
 	// メッシュ生成
 	renderer_->MakeSquereVertex(parameterItemTreasure_->drawPos_, nowSize);
+}
+
+void ItemTreasure::Landing()
+{
+	ActorBase::Landing();
+	isThrow_ = false;
 }

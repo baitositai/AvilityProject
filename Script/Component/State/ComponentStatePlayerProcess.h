@@ -54,4 +54,7 @@ private:
 
 	// UŒ‚“ü—Íˆ—
 	void ProcessInputAttack();
+
+	// “Š‚°‚éˆ—
+	void ProcessInputThrow();
 };

@@ -29,6 +29,7 @@ public:
 		PLAYER_DASH,			// ダッシュ
 		PLAYER_RESPAWN,			// リスポーン
 		PLAYER_GET_ITEM,		// アイテムを入手	
+		PLAYER_THROW_ITEM,		// アイテムを投げる
 
 		CAMERA_MOVE_RIGHT,		// カメラ右移動
 		CAMERA_MOVE_LEFT,		// カメラ左移動

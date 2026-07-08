@@ -69,6 +69,9 @@ public:
     // アイテムとの衝突判定
     bool isHitItem_;
 
+    // 移動速度上限
+    float moveSpeedLimit_;
+
     // 保持しているお宝情報
     std::vector<TreasureStatus> treasureList_;
 

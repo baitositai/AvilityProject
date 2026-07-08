@@ -26,6 +26,9 @@ public:
 		ITEM_TREASURE,				// アイテム:宝
 		ITEM_FOOD,					// アイテム:食べ物
 		ITEM_MONEY,					// アイテム:お金
+		ITEM_ATTACK_UP,				// アイテム:攻撃力上昇ポーション
+		ITEM_HPMAX_UP,				// アイテム:最大体力上昇ポーション
+		ITEM_SPEED_UP,				// アイテム:スピード上昇ポーション
 		TELEPORT_EXIT,				// テレポート
 		DOOR,						// ドア
 		CHANGE_NEXT_AREA,			// 次へ遷移するエリア

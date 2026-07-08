@@ -81,6 +81,12 @@ public:
 	void AttackAfter() override;
 
 	/// <summary>
+	/// アイテムを投げる処理
+	/// </summary>
+	/// <param name="throwDir">投げる方向</param>
+	void ThrowItem(const Vector2F& throwDir);
+
+	/// <summary>
 	/// 回復
 	/// </summary>
 	/// <param name="healHp">体力の回復量</param>
@@ -91,6 +97,24 @@ public:
 	/// </summary>
 	/// <param name="item">アイテム</param>
 	void AttachedItem(ItemTreasure* item);
+
+	/// <summary>
+	/// 攻撃力の上昇
+	/// </summary>
+	/// <param name="attackPower">攻撃力加算量</param>
+	void AttackPowerUp(const int addAttackPower);
+
+	/// <summary>
+	/// 最大体力を上昇
+	/// </summary>
+	/// <param name="addHpMax">最大体力加算量</param>
+	void HpMaxUp(const int addHpMax);
+
+	/// <summary>
+	/// 速度を上昇
+	/// </summary>
+	/// <param name="addSpeed">スピード加算量</param>
+	void SpeedUp(const float addSpeed);
 
 	/// <summary>
 	/// アイテムのデタッチ

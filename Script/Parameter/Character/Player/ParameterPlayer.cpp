@@ -23,6 +23,7 @@ void ParameterPlayer::LoadParameter(const Json& parameter)
     // プレイヤー固有パラメータの読み込み
     dashSpeed_ = parameter.value("dashSpeed", 0.0f);
     shotDamageInterval_ = parameter.value("shotDamageInterval", 0.0f);
+    moveSpeedLimit_ = parameter.value("moveSpeedLimit", 0.0f);
 
     // ショットベクトルの読み込み
     if (parameter.contains("shotVec"))

@@ -22,16 +22,19 @@ void InputManager::Init()
 	RegisterTrigger(TYPE::PLAYER_RESPAWN, { KEY_INPUT_RETURN }, { BTN::RB_RIGHT });
 
 	// ジャンプ
-	RegisterTrigger(TYPE::PLAYER_JUMP, { KEY_INPUT_SPACE }, { BTN::RB_RIGHT }, STICK::MAX, MOUSE::MAX, {}, { TYPE::AVILITY_STAMP_SUB });
+	RegisterTrigger(TYPE::PLAYER_JUMP, { KEY_INPUT_SPACE }, { BTN::RB_RIGHT }, STICK::MAX, MOUSE::MAX, {}, { });
 
 	// ダッシュ
 	RegisterTrigger(TYPE::PLAYER_DASH, { KEY_INPUT_LSHIFT }, { BTN::RB_DOWN });
 
 	// 通常攻撃
-	RegisterTrigger(TYPE::PLAYER_ATTACK, { KEY_INPUT_R }, { BTN::RB_TOP });
+	RegisterTrigger(TYPE::PLAYER_ATTACK, { KEY_INPUT_R }, { BTN::RB_LEFT });
 
 	// アイテム入手
-	RegisterTrigger(TYPE::PLAYER_GET_ITEM, { KEY_INPUT_SPACE }, { BTN::RB_RIGHT });
+	RegisterTrigger(TYPE::PLAYER_GET_ITEM, { KEY_INPUT_SPACE }, { BTN::RB_DOWN });
+
+	// アイテムを投げる
+	RegisterTrigger(TYPE::PLAYER_THROW_ITEM, { KEY_INPUT_Q }, { BTN::R_BUTTON, BTN::R_TRIGGER });
 
 	// アビリティ：重力方向の切り替え
 	RegisterTrigger(TYPE::AVILITY_GRAVITY_RIGHT, { KEY_INPUT_RIGHT }, { }, STICK::R_STICK_RIGHT);
@@ -40,9 +43,9 @@ void InputManager::Init()
 	RegisterTrigger(TYPE::AVILITY_GRAVITY_DOWN, { KEY_INPUT_DOWN }, { }, STICK::R_STICK_DOWN);
 	
 	// アビリティ：ショット
-	RegisterTrigger(TYPE::AVILITY_SHOT, { KEY_INPUT_E }, { BTN::RB_LEFT }, STICK::MAX, MOUSE::MAX, { TYPE::AVILITY_SHOT_SUB });
+	RegisterTrigger(TYPE::AVILITY_SHOT, { KEY_INPUT_E }, { BTN::RB_TOP }, STICK::MAX, MOUSE::MAX, { TYPE::AVILITY_SHOT_SUB });
 	RegisterTrigger(TYPE::AVILITY_SHOT_SUB, { KEY_INPUT_S }, { }, STICK::L_STICK_DOWN);
-	RegisterTrigger(TYPE::AVILITY_SHOT_CHARGE, { KEY_INPUT_E }, { BTN::RB_LEFT });
+	RegisterTrigger(TYPE::AVILITY_SHOT_CHARGE, { KEY_INPUT_E }, { BTN::RB_TOP });
 	RegisterTrigger(TYPE::AVILITY_SHOT_RIGHT, { KEY_INPUT_RIGHT }, {}, STICK::MAX);
 	RegisterTrigger(TYPE::AVILITY_SHOT_LEFT, { KEY_INPUT_LEFT }, {}, STICK::MAX);
 	
@@ -51,12 +54,12 @@ void InputManager::Init()
 	RegisterTrigger(TYPE::AVILITY_STAMP_SUB, { KEY_INPUT_S }, { }, STICK::L_STICK_DOWN);
 
 	// アビリティ：レーザー
-	RegisterTrigger(TYPE::AVILITY_LASER, { KEY_INPUT_E }, { BTN::RB_LEFT }, STICK::MAX, MOUSE::MAX, {}, { TYPE::AVILITY_SHOT_SUB, TYPE::AVILITY_TELEPORT_SUB });
+	RegisterTrigger(TYPE::AVILITY_LASER, { KEY_INPUT_E }, { BTN::RB_TOP }, STICK::MAX, MOUSE::MAX, {}, { TYPE::AVILITY_SHOT_SUB, TYPE::AVILITY_TELEPORT_SUB });
 
 	// アビリティ：テレポート
-	RegisterTrigger(TYPE::AVILITY_TELEPORT, { KEY_INPUT_E }, { BTN::RB_LEFT }, STICK::MAX, MOUSE::MAX, { TYPE::AVILITY_TELEPORT_SUB });
+	RegisterTrigger(TYPE::AVILITY_TELEPORT, { KEY_INPUT_E }, { BTN::RB_TOP }, STICK::MAX, MOUSE::MAX, { TYPE::AVILITY_TELEPORT_SUB });
 	RegisterTrigger(TYPE::AVILITY_TELEPORT_SUB, { KEY_INPUT_W }, { }, STICK::L_STICK_UP);
-	RegisterTrigger(TYPE::AVILITY_TELEPORT_HOLD, { KEY_INPUT_E }, { BTN::RB_LEFT });
+	RegisterTrigger(TYPE::AVILITY_TELEPORT_HOLD, { KEY_INPUT_E }, { BTN::RB_TOP });
 
 	// アビリティの選択
 	RegisterTrigger(TYPE::SELECT_AVILITY_FIRST, { KEY_INPUT_LEFT }, { BTN::LB_LEFT }, STICK::R_STICK_LEFT );

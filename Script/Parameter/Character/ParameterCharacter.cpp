@@ -5,6 +5,7 @@ ParameterCharacter::ParameterCharacter() :
     jumpCount_(-1),
     jumpCountMax_(-1),
     defaultAttackStartFrame_(-1),
+    defaultAttackSecondFrame_(-1),
     defenseRate_(0.0f),
     invincibleTimeMax_(0.0f),
     invincibleTime_(0.0f),
@@ -54,8 +55,6 @@ void ParameterCharacter::LoadParameter(const Json& parameter)
         uiDamageColor_.y = parameter["damageColor"].value("g", 0);
         uiDamageColor_.z = parameter["damageColor"].value("b", 0);
     }
-
-
     // アニメーションデータの取得
     LoadParameterAnimation(parameter);
 }

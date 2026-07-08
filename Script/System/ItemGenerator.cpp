@@ -4,6 +4,7 @@
 #include "../Object/Item/ItemMoney.h"
 #include "../Object/Item/ItemFood.h"
 #include "../Object/Item/ItemTreasure.h"
+#include "../Object/Item/ItemPotion.h"
 #include "../Manager/Game/PlayerManager.h"
 #include "ItemGenerator.h"
 
@@ -79,6 +80,13 @@ std::vector<std::unique_ptr<ItemMoney>> ItemGenerator::CreateMonies(const int mo
 	return moneyList;
 }
 
+std::unique_ptr<ItemPotion> ItemGenerator::CreatePotion(const ItemTypes::POTION_TYPE type)
+{
+	std::unique_ptr<ParameterItemPotion> parameter = std::make_unique<ParameterItemPotion>(*templatePotionParameterMap_.at(type));
+	std::unique_ptr<ItemPotion> item = std::make_unique<ItemPotion>(std::move(parameter));
+	return item;
+}
+
 std::vector<std::unique_ptr<ItemBase>> ItemGenerator::CreateTreasureChestItemList(const Vector2F& terasureChestPos)
 {
 	std::vector<std::unique_ptr<ItemBase>> itemList;
@@ -97,6 +105,9 @@ std::vector<std::unique_ptr<ItemBase>> ItemGenerator::CreateTreasureChestItemLis
 
 	// 一定の確率で宝物を生成
 	int createCountTreasure = 0 == GetRand(2) ? 1 : 0;
+
+	// 一定の確率で強化アイテムを生成
+	int createPowerUpItem = 0 == GetRand(1) ? 1 : 0;
 
 	// 各種生成
 	for (int i = 0; i < createCountAvility; i++) 
@@ -118,6 +129,13 @@ std::vector<std::unique_ptr<ItemBase>> ItemGenerator::CreateTreasureChestItemLis
 		// 種類の決定
 		ItemTypes::TREASURE_TYPE type = static_cast<ItemTypes::TREASURE_TYPE>(GetRand(ItemTypes::TREASURE_TYPE_MAX - 1));
 		auto item = CreateTreasure(type);
+		itemList.push_back(std::move(item));
+	}
+	for (int i = 0; i < createPowerUpItem; i++)
+	{
+		// 種類の決定
+		ItemTypes::POTION_TYPE type = static_cast<ItemTypes::POTION_TYPE>(GetRand(ItemTypes::POTION_TYPE_MAX - 1));
+		auto item = CreatePotion(type);
 		itemList.push_back(std::move(item));
 	}
 
@@ -192,5 +210,15 @@ void ItemGenerator::InitParameter()
 		auto parameterMoney = std::make_unique<ParameterItemMoney>();
 		parameterMoney->LoadParameter(jsonParameterMap, name);
 		templateMoneyParameterMap_.emplace(type, std::move(parameterMoney));
+	}
+
+	// ポーションの情報生成
+	for (int i = 0; i < ItemTypes::POTION_TYPE_MAX; i++)
+	{
+		ItemTypes::POTION_TYPE type = static_cast<ItemTypes::POTION_TYPE>(i);
+		std::string name = ItemTypes::POTION_STRING_TO_ENUM_MAP.at(type);
+		auto parameterPotion = std::make_unique<ParameterItemPotion>();
+		parameterPotion->LoadParameter(jsonParameterMap, name);
+		templatePotionParameterMap_.emplace(type, std::move(parameterPotion));
 	}
 }

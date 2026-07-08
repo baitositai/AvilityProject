@@ -56,3 +56,10 @@ const std::unordered_map<ItemTypes::MONEY_TYPE, std::string> ItemTypes::MONEY_ST
 	{ItemTypes::MONEY_TYPE::COIN, "coin"},
 	{ItemTypes::MONEY_TYPE::COIN_BAG, "coinBag"}
 };
+
+const std::unordered_map<ItemTypes::POTION_TYPE, std::string> ItemTypes::POTION_STRING_TO_ENUM_MAP =
+{
+	{ItemTypes::POTION_TYPE::ATTACK_UP, "potionAttackUp"},
+	{ItemTypes::POTION_TYPE::HPMAX_UP, "potionHpMaxUp"},
+	{ItemTypes::POTION_TYPE::SPEED_UP, "potionSpeedUp"}
+};

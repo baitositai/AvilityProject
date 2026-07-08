@@ -12,11 +12,13 @@ class ItemAvility;
 class ItemFood;
 class ItemTreasure;
 class ItemMoney;
+class ItemPotion;
 
 class ParameterItemAvility;
 class ParameterItemFood;
 class ParameterItemTreasure;
 class ParameterItemMoney;
+class ParameterItemPotion;
 
 class PlayerManager;
 
@@ -63,6 +65,13 @@ public:
 	std::vector<std::unique_ptr<ItemMoney>> CreateMonies(const int moneyAmount, const Vector2F& pos);
 
 	/// <summary>
+	/// ポーションの生成
+	/// </summary>
+	/// <param name="type">種類</param>
+	/// <returns>ポーション</returns>
+	std::unique_ptr<ItemPotion> CreatePotion(const ItemTypes::POTION_TYPE type);
+
+	/// <summary>
 	/// 宝箱用の複数アイテムを生成
 	/// </summary>
 	/// <returns>宝箱用アイテム</returns>
@@ -86,6 +95,7 @@ private:
 	std::unordered_map<ItemTypes::FOOD_TYPE, std::unique_ptr<ParameterItemFood>> templateFoodParameterMap_;
 	std::unordered_map<ItemTypes::TREASURE_TYPE, std::unique_ptr<ParameterItemTreasure>> templateTreasureParameterMap_;
 	std::unordered_map<ItemTypes::MONEY_TYPE, std::unique_ptr<ParameterItemMoney>> templateMoneyParameterMap_;
+	std::unordered_map<ItemTypes::POTION_TYPE, std::unique_ptr<ParameterItemPotion>> templatePotionParameterMap_;
 
 	// プレイヤー管理の参照
 	PlayerManager& playerManager_;

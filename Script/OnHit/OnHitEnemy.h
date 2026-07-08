@@ -31,6 +31,7 @@ protected:
 	void OnHitPlayerAvilityStamp(const std::weak_ptr<ColliderBase>& opponentCollider);
 	void OnHitPlayerAvilityShot(const std::weak_ptr<ColliderBase>& opponentCollider);
 	void OnHitOtherEnemy(const std::weak_ptr<ColliderBase>& opponentCollider);
+	void OnHitItemTreasure(const std::weak_ptr<ColliderBase>& opponentCollider);
 
 	// ‹–ìŠp‚ÌÕ“ËŒãˆ—
 	void OnHitEnemyViewToPlayer(const std::weak_ptr<ColliderBase>& opponentCollider);

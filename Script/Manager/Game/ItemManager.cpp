@@ -3,6 +3,7 @@
 #include "../../Object/Item/ItemMoney.h"
 #include "../../Object/Item/ItemFood.h"
 #include "../../Object/Item/ItemTreasure.h"
+#include "../../Object/Item/ItemPotion.h"
 #include "../../System/ItemGenerator.h"
 #include "ItemManager.h"
 
@@ -107,6 +108,21 @@ void ItemManager::CreateTreasureItem(const ItemTypes::TREASURE_TYPE type, const 
 
 	// Ši”[
 	itemMap_[ItemTypes::TYPE::TREASURE].push_back(std::move(item));
+}
+
+void ItemManager::CreatePotionItem(const ItemTypes::POTION_TYPE type, const Vector2F& pos)
+{
+	// ¶¬
+	auto item = itemGenerator_->CreatePotion(type);
+
+	// À•WÝ’è
+	item->GetParameter().pos_ = pos;
+
+	// ‰Šú‰»
+	item->Init();
+
+	// Ši”[
+	itemMap_[ItemTypes::TYPE::POTION].push_back(std::move(item));
 }
 
 void ItemManager::CreateMoneyItem(const int moneyAmount, const Vector2F& pos)

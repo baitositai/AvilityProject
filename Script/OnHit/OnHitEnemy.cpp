@@ -1,5 +1,6 @@
 #include "../../Collider/ColliderBase.h"
 #include "../../Object/Character/Enemy/EnemyBase.h"
+#include "../../Object/Item/ItemTreasure.h"
 #include "OnHitEnemy.h"
 
 OnHitEnemy::OnHitEnemy(EnemyBase& owner):
@@ -29,6 +30,10 @@ OnHitEnemy::OnHitEnemy(EnemyBase& owner):
 	onHitMap_.emplace(CollisionTags::TAG::ENEMY_BASE, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
 		{
 			return OnHitOtherEnemy(opponentCollider);
+		});
+	onHitMap_.emplace(CollisionTags::TAG::ITEM_TREASURE, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
+		{
+			return OnHitItemTreasure(opponentCollider);
 		});
 }
 
@@ -170,4 +175,20 @@ void OnHitEnemy::OnHitEnemyViewToPlayer(const std::weak_ptr<ColliderBase>& oppon
 
     // ターゲットの座標を設定
 	owner_.GetParameter().targetPos_ = &opponentCollider.lock()->GetPos();
+}
+
+void OnHitEnemy::OnHitItemTreasure(const std::weak_ptr<ColliderBase>& opponentCollider)
+{
+    // 衝突相手の所有者をキャストしてアイテムのインスタンスを取得
+    const auto& item = dynamic_cast<const ItemBase*>(&opponentCollider.lock()->GetOwner());
+
+    // アイテムのアビリティを取得
+    const auto& itemTreasure = dynamic_cast<const ItemTreasure*>(item);
+
+    // 投げられてる場合
+    if (itemTreasure->IsThrow())
+    {
+        // ダメージを受ける
+        Damage(opponentCollider);
+    }
 }

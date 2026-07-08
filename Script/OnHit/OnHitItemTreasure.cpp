@@ -8,6 +8,9 @@ OnHitItemTreasure::OnHitItemTreasure(ItemTreasure& owner) :
 	OnHitItemBase(owner),
 	owner_(owner)
 {
+	onHitMap_.emplace(CollisionTags::TAG::ENEMY_BASE, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitEnemy(opponentCollider); });
+	onHitMap_.emplace(CollisionTags::TAG::ENEMY_MAID, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitEnemy(opponentCollider); });
+	onHitMap_.emplace(CollisionTags::TAG::BAMBOO, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitGimmick(opponentCollider); });
 }
 
 OnHitItemTreasure::~OnHitItemTreasure()
@@ -27,5 +30,23 @@ void OnHitItemTreasure::OnHitPlayer(const std::weak_ptr<ColliderBase>& opponentC
 			// 衝突者を所有者として取得
 			owner_.FollowPlayer(*player);
 		}
+	}
+}
+void OnHitItemTreasure::OnHitEnemy(const std::weak_ptr<ColliderBase>& opponentCollider)
+{	
+	// 投げられてる場合
+	if (owner_.IsThrow())
+	{
+		owner_.ResetThrow();
+	}
+}
+
+void OnHitItemTreasure::OnHitGimmick(const std::weak_ptr<ColliderBase>& opponentCollider)
+{
+	// 投げられてる場合
+	if (owner_.IsThrow())
+	{
+		// 相手のオブジェクトを消す
+		opponentCollider.lock()->GetOwner().Delete();
 	}
 }
