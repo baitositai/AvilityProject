@@ -88,7 +88,7 @@ void GimmickDropRock::UpdateDrop(void)
 	checkParameter.pos = parameterDropRock_->pos_.ToVector2();
 	checkParameter.size = parameterDropRock_->hitSize_;
 	checkParameter.isXAxis = false;
-	checkParameter.stepMove = parameterDropRock_->moveSpeed_;
+	checkParameter.stepMove = parameterDropRock_->gravityPower_;
 	CollisionManager::CollisionResult result = CollisionManager::GetInstance().CheckStageCollision(checkParameter);
 	if (result.isHit)
 	{
