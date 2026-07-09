@@ -54,10 +54,10 @@ void SceneTrain::Init()
 	uiMng_.CreateGameUi();
 
 	/// ÉVÉáÉbÉvê∂ê¨
-	GimmickManager::CreateParameter shop = {};
-	shop.type = GimmickTypes::TYPE::SHOP;
-	shop.pos = Vector2F(970, 577);
-	gimmickMng_.Create(shop);
+	//GimmickManager::CreateParameter shop = {};
+	//shop.type = GimmickTypes::TYPE::SHOP;
+	//shop.pos = Vector2F(970, 577);
+	//gimmickMng_.Create(shop);
 }
 
 void SceneTrain::SceneChangeReady()

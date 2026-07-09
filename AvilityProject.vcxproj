@@ -151,6 +151,7 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Component\ComponentTextAnimation.cpp" />
     <ClCompile Include="Script\Scene\SceneShop.cpp" />
     <ClCompile Include="Script\Object\Gimmick\GimmickShop.cpp" />
     <ClCompile Include="Script\Parameter\Item\ParameterItemPotion.cpp" />
@@ -383,6 +384,7 @@
     <ClCompile Include="Script\Ui\Enemy\UiBossHpBar.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Component\ComponentTextAnimation.h" />
     <ClInclude Include="Script\Scene\SceneShop.h" />
     <ClInclude Include="Script\Object\Gimmick\GimmickShop.h" />
     <ClInclude Include="Script\Parameter\Item\ParameterItemPotion.h" />

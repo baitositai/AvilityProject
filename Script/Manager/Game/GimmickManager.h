@@ -78,6 +78,12 @@ public:
 	/// </summary>
 	void DebugDraw();
 
+	/// <summary>
+	/// ショップ位置を返す
+	/// </summary>
+	/// <returns>ショップ位置</returns>
+	const Vector2F GetShopPos() const;
+
 private:
 
 	// ギミック生成

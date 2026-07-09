@@ -3,7 +3,9 @@
 #include "SceneBase.h"
 #include "../Manager/Common/Input.h"
 #include "../Manager/Game/ItemTypes.h"
+#include "../Common/CharacterString.h"
 
+class ComponentTextAnimation;
 class BackGround;
 class ItemBase;
 class PixelMaterial;
@@ -83,6 +85,12 @@ private:
 
 	// 更新処理
 	std::function<void()> stateUpdate_;
+
+	// テキスト
+	CharacterString message_;
+
+	// テキストアニメーション
+	std::unique_ptr<ComponentTextAnimation> textAnimation_;
 
 	// 背景
 	std::unique_ptr<BackGround> backGround_[BACK_GROUND_NUM];

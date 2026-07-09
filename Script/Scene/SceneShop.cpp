@@ -7,12 +7,14 @@
 #include "../Manager/Common/SpriteEffectManager.h"
 #include "../Manager/Common/ScoreManager.h"
 #include "../Manager/Game/ItemManager.h"
+#include "../Manager/Game/GimmickManager.h"
 #include "../Manager/Game/UiManager.h"
 #include "../Factory/FactoryComponent.h"
 #include "../Utility/UtilityCommon.h"
 #include "../Render/PixelMaterial.h"
 #include "../Render/PixelRenderer.h"
 #include "../Object/Stage/BackGround.h"
+#include "../Component/ComponentTextAnimation.h"
 #include "SceneShop.h"
 
 SceneShop::SceneShop(const Input::JOYPAD_NO padNo) :
@@ -247,7 +249,9 @@ void SceneShop::Purchase()
 {
 	// ÉAÉCÉeÉÄÇí«â¡Ç∑ÇÈ
 	const Exhibits& exhibits = exhibits_[selectIndex_];
-	const Vector2F createPos = { 970.0f, 570.0f };
+	const Vector2F createPos = gimmickMng_.GetShopPos();
+
+	// ê∂ê¨
 	switch (exhibits.type)
 	{
 	case ItemTypes::TYPE::FOOD:

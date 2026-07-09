@@ -145,6 +145,21 @@ void GimmickManager::DebugDraw()
 	}
 }
 
+const Vector2F GimmickManager::GetShopPos() const
+{
+	// キーを探す
+	const auto it = gimmickListMap_.find(GimmickTypes::TYPE::SHOP);
+
+	// マップに存在しない場合
+	if (it == gimmickListMap_.end())
+	{
+		return Vector2F();
+	}
+
+	// 座標を返す
+	return gimmickListMap_.at(GimmickTypes::TYPE::SHOP).front()->GetParameter().pos_;
+}
+
 GimmickManager::GimmickManager()
 {
 	gimmickGenerator_ = std::make_unique<GimmickGenerator>();
