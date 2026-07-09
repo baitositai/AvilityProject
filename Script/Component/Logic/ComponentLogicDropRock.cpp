@@ -50,7 +50,7 @@ void ComponentLogicDropRock::Init()
 
 		rockPosX.push_back(createParameter.pos.x);
 
-		createParameter.attackPower = 40;
+		createParameter.attackPower = ATTACK_POINT;
 		gimmickManager_.Create(createParameter);
 	}
 }

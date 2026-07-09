@@ -68,6 +68,9 @@ private:
 	//ボス部屋の右端のX座標
 	static constexpr int BOSS_ROOM_RIGHT_X = 128;
 
+	//攻撃力
+	static constexpr int ATTACK_POINT = 40;
+
 	// 所有者
 	EnemyGaiaGolem& owner_;
 
