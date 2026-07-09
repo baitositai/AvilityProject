@@ -77,7 +77,4 @@ private:
 
 	// アイテムのパラメータ
 	ParameterItem* parameterItem_;
-
-	// 描画初期化
-	void InitDraw() override;
 };

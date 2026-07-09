@@ -4,6 +4,7 @@
 #include "../Object/Gimmick/GimmickBamboo.h"
 #include "../Object/Gimmick/GimmickGrowingBamboo.h"
 #include "../Object/Gimmick/GimmickTreasureChest.h"
+#include "../Object/Gimmick/GimmickShop.h"
 #include "GimmickGenerator.h"
 
 GimmickGenerator::GimmickGenerator()
@@ -27,6 +28,10 @@ GimmickGenerator::GimmickGenerator()
 	createGimmickMap_.emplace(GimmickTypes::TYPE::GROWING_BAMBOO, [this]()
 		{
 			return CreateGimmickGrowingBamboo();
+		});
+	createGimmickMap_.emplace(GimmickTypes::TYPE::SHOP, [this]()
+		{
+			return CreateGimmickShop();
 		});
 }
 
@@ -68,6 +73,12 @@ void GimmickGenerator::InitParameter()
 	auto parameterGrowingBamboo = std::make_unique<ParameterGimmickGrowingBamboo>();
 	parameterGrowingBamboo->LoadParameter(jsonGrowingBambooParameter);
 	templateParameterMap_.emplace(GimmickTypes::TYPE::GROWING_BAMBOO, std::move(parameterGrowingBamboo));
+
+	// 店生成
+	const auto jsonShopParameter = jsonParameterMap.at("shop").front();
+	auto parameterShop = std::make_unique<ParameterGimmick>();
+	parameterShop->LoadParameter(jsonShopParameter);
+	templateParameterMap_.emplace(GimmickTypes::TYPE::SHOP, std::move(parameterShop));
 }
 
 std::unique_ptr<GimmickBase> GimmickGenerator::Create(const GimmickTypes::TYPE type)
@@ -171,4 +182,21 @@ std::unique_ptr<GimmickTreasureChest> GimmickGenerator::CreateGimmickTreasureChe
 	// 生成したものを返す
 	auto parameter = std::make_unique<ParameterGimmickTreasureChest>(*parameterTreasureChest);
 	return std::make_unique<GimmickTreasureChest>(std::move(parameter));
+}
+
+std::unique_ptr<GimmickShop> GimmickGenerator::CreateGimmickShop()
+{
+	// 専用のパラメータにキャスト
+	auto parameterShop = templateParameterMap_.at(GimmickTypes::TYPE::SHOP).get();
+
+	// 空の場合
+	if (parameterShop == nullptr)
+	{
+		// 空で返す
+		return nullptr;
+	}
+
+	// 生成したものを返す
+	auto parameter = std::make_unique<ParameterGimmick>(*parameterShop);
+	return std::make_unique<GimmickShop>(std::move(parameter));
 }

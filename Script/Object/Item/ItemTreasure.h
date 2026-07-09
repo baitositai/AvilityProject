@@ -87,7 +87,7 @@ public:
 private:	
 
 	// 定数バッファサイズ
-	static constexpr int CONST_BUFFER_SIZE = 2;
+	static constexpr int CONST_BUFFER_SIZE = 1;
 	
 	// 所有者のポインタ
 	const Player* owner_;

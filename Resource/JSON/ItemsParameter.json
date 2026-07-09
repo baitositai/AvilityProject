@@ -1,31 +1,40 @@
 {
   "abilities": {
     "superman": {
-      "index": 0
+      "index": 0,
+      "amount": 2000
     },
     "airwalk": {
-      "index": 1
+      "index": 1,
+      "amount": 2000
     },
     "gravityControll": {
-      "index": 2
+      "index": 2,
+      "amount": 1500
     },
     "shot": {
-      "index": 3
+      "index": 3,
+      "amount": 3000
     },
     "airslash": {
-      "index": 4
+      "index": 4,
+      "amount": 1500
     },
     "metal": {
-      "index": 5
+      "index": 5,
+      "amount": 1000
     },
     "stamp": {
-      "index": 6
+      "index": 6,
+      "amount": 2000
     },
     "teleport": {
-      "index": 7
+      "index": 7,
+      "amount": 3000
     },
     "giant": {
-      "index": 8
+      "index": 8,
+      "amount": 2500
     }
   },
   "avilityCommon": {
@@ -61,147 +70,183 @@
   "foods": {
     "friedEgg": {
       "index": 0,
-      "healHp": 20
+      "healHp": 20,
+      "amount": 200
     },
     "waffle": {
       "index": 1,
-      "healHp": 25
+      "healHp": 25,
+      "amount": 250
     },
     "pineapple": {
       "index": 2,
-      "healHp": 40
+      "healHp": 40,
+      "amount": 400
     },
     "bacon": {
       "index": 3,
-      "healHp": 15
+      "healHp": 15,
+      "amount": 150
     },
     "beer": {
       "index": 4,
-      "healHp": 10
+      "healHp": 10,
+      "amount": 100
     },
     "steak": {
       "index": 5,
-      "healHp": 85
+      "healHp": 85,
+      "amount": 850
     },
     "cheese": {
       "index": 6,
-      "healHp": 30
+      "healHp": 30,
+      "amount": 300
     },
     "roastedChicken": {
       "index": 7,
-      "healHp": 80
+      "healHp": 80,
+      "amount": 800
     },
     "bread": {
       "index": 8,
-      "healHp": 25
+      "healHp": 25,
+      "amount": 250
     },
     "eggplant": {
       "index": 9,
-      "healHp": 15
+      "healHp": 15,
+      "amount": 150
     },
     "redChili": {
       "index": 10,
-      "healHp": 5
+      "healHp": 5,
+      "amount": 50
     },
     "greenChili": {
       "index": 11,
-      "healHp": 5
+      "healHp": 5,
+      "amount": 50
     },
     "tomato": {
       "index": 12,
-      "healHp": 12
+      "healHp": 12,
+      "amount": 120
     },
     "strawberry": {
       "index": 13,
-      "healHp": 15
+      "healHp": 15,
+      "amount": 150
     },
     "apple": {
       "index": 14,
-      "healHp": 18
+      "healHp": 18,
+      "amount": 180
     },
     "kiwi": {
       "index": 15,
-      "healHp": 20
+      "healHp": 20,
+      "amount": 200
     },
     "pumpkinPie": {
       "index": 16,
-      "healHp": 45
+      "healHp": 45,
+      "amount": 450
     },
     "cheesecake": {
       "index": 17,
-      "healHp": 50
+      "healHp": 50,
+      "amount": 500
     },
     "pretzel": {
       "index": 18,
-      "healHp": 15
+      "healHp": 15,
+      "amount": 150
     },
     "salami": {
       "index": 19,
-      "healHp": 35
+      "healHp": 35,
+      "amount": 350
     },
     "salmonFillet": {
       "index": 20,
-      "healHp": 55
+      "healHp": 55,
+      "amount": 550
     },
     "honeyJar": {
       "index": 21,
-      "healHp": 60
+      "healHp": 60,
+      "amount": 600
     },
     "jerky": {
       "index": 22,
-      "healHp": 40
+      "healHp": 40,
+      "amount": 400
     },
     "potato": {
       "index": 23,
-      "healHp": 15
+      "healHp": 15,
+      "amount": 150
     },
     "watermelon": {
       "index": 24,
-      "healHp": 30
+      "healHp": 30,
+      "amount": 300
     },
     "pancakes": {
       "index": 25,
-      "healHp": 35
+      "healHp": 35,
+      "amount": 350
     },
     "chickenLeg": {
       "index": 26,
-      "healHp": 45
+      "healHp": 45,
+      "amount": 450
     },
     "cherry": {
       "index": 27,
-      "healHp": 10
+      "healHp": 10,
+      "amount": 100
     },
     "chocolate": {
       "index": 28,
-      "healHp": 25
+      "healHp": 25,
+      "amount": 250
     },
     "sodaCan": {
       "index": 29,
-      "healHp": 20
+      "healHp": 20,
+      "amount": 200
     },
     "avocado": {
       "index": 30,
-      "healHp": 22
+      "healHp": 22,
+      "amount": 220
     },
     "meatSlice": {
       "index": 31,
-      "healHp": 50
+      "healHp": 50,
+      "amount": 500
     },
     "shrimp": {
       "index": 32,
-      "healHp": 30
+      "healHp": 30,
+      "amount": 300
     },
     "olive": {
       "index": 33,
-      "healHp": 8
+      "healHp": 8,
+      "amount": 80
     },
     "picklesJar": {
       "index": 34,
-      "healHp": 35
+      "healHp": 35,
+      "amount": 350
     },
     "bakedPotato": {
       "index": 35,
-      "healHp": 25
+      "healHp": 25,
+      "amount": 250
     }
   },
   "money": {
@@ -274,14 +319,17 @@
   "potions": {
     "potionAttackUp": {
       "index": 0,
+      "amount": 3000,
       "attackUp": 5
     },
     "potionHpMaxUp": {
       "index": 1,
+      "amount": 1000,
       "hpMaxUp": 20
     },
     "potionSpeedUp": {
       "index": 2,
+      "amount": 2000,
       "speedUp": 0.2
     }
   },

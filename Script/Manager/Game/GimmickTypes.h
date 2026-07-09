@@ -11,6 +11,7 @@ public:
 		TREASURE_CHEST,	// •ó” 
 		BAMBOO,			// ’|
 		GROWING_BAMBOO,	// L‚Ñ‚é’|
+		SHOP,			// ”ƒ‚¢•¨
 		MAX
 	};
 };

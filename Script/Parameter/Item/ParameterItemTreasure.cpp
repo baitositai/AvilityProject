@@ -1,8 +1,7 @@
 #include <Windows.h>
 #include "ParameterItemTreasure.h"
 
-ParameterItemTreasure::ParameterItemTreasure() :
-	amount_(-1)
+ParameterItemTreasure::ParameterItemTreasure()
 {
 	itemType_ = ItemTypes::TYPE::TREASURE;
 }

@@ -81,6 +81,12 @@ public:
 	void PopScene();
 
 	/// <summary>
+	/// サブシーンの生成準備
+	/// </summary>
+	/// <param name="subScene">サブシーン</param>
+	void SetReadySubScene(const std::shared_ptr<SceneBase> subScene);
+
+	/// <summary>
 	/// シーン遷移
 	/// </summary>
 	/// <param name="nextId">変更先のシーン</param>
@@ -135,6 +141,7 @@ public:
 
 private:
 
+	// シーンID
 	SCENE_ID sceneId_;
 	SCENE_ID waitSceneId_;
 
@@ -146,6 +153,9 @@ private:
 
 	// カメラ
 	std::unique_ptr<Camera> camera_;
+
+	// サブシーン受け取り用
+	std::shared_ptr<SceneBase> subScene_;
 
 	// スクリーン座標
 	Vector2 screenPos_;
@@ -181,5 +191,4 @@ private:
 
 	// フェード
 	void Fade();
-
 };

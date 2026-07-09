@@ -84,26 +84,15 @@ void ActorBase::Draw()
 	// 描画しない場合は無視
 	if (!isDraw_) return;
 
-	// 描画サイズを現在のスケールに合わせる
-	Vector2 nowSize = Vector2F::MulVector2FFloat(parameter_->drawSize_.ToVector2F(), parameter_->scale_).ToVector2();
-
 	// 中心位置に設定
-	parameter_->drawPos_ = GetDrawCenterPos(nowSize);
-	
+	parameter_->drawPos_ = GetDrawPos(parameter_->drawSize_);
+
 	// メッシュ生成
-	renderer_->MakeSquereVertex(parameter_->drawPos_, nowSize);
-
-	// X軸の反転
-	float isReverseX = parameter_->direction_ ? 1.0f : 0.0f;
-
-	// 画像サイズの取得
-	int graphSizeX, graphSizeY;
-	GetGraphSize(parameter_->texture_ ,&graphSizeX, &graphSizeY);
+	renderer_->MakeSquereVertex(parameter_->drawPos_, parameter_->drawSize_, parameter_->angle_, parameter_->scale_, parameter_->direction_);
 
 	// 定数バッファの更新
-	material_->SetConstBuf(0, FLOAT4{ parameter_->color_.x,parameter_->color_.y ,parameter_->color_.z, parameter_->alpha_ });
-	material_->SetConstBuf(1, FLOAT4{ isReverseX, 0.0f, parameter_->angle_, parameter_->drawIndex_ });
-	material_->SetConstBuf(2, FLOAT4{ (float)parameter_->divisionNum_.x, (float)parameter_->divisionNum_.y , (float)graphSizeX, (float)graphSizeY });
+	material_->SetConstBuf(0, FLOAT4{ parameter_->color_.x, parameter_->color_.y ,parameter_->color_.z, parameter_->alpha_ });
+	material_->SetConstBuf(1, FLOAT4{ (float)parameter_->divisionNum_.x, (float)parameter_->divisionNum_.y, parameter_->drawIndex_, 0.0f });
 	
 	// 描画処理
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)UtilityCommon::ALPHA_MAX);
@@ -158,28 +147,19 @@ void ActorBase::InitDraw()
 	parameter_->divisionNum_ = texture->GetDivsion();
 	parameter_->drawHalfSize_ = Vector2(parameter_->drawSize_.x / 2, parameter_->drawSize_.y / 2);
 
-	// X軸の反転
-	float isReverseX = parameter_->direction_ ? 1.0f : 0.0f;
-
 	// 基底クラスではスプライト画像を前提で用意
 	// マテリアルの生成
 	material_ = std::make_unique<PixelMaterial>(resMng_.GetHandle("standardSprite"), DEFAULT_CONST_BUFFER_SIZE);
+
+	// テクスチャの設定
 	material_->AddTextureBuf(parameter_->texture_);
+
+	// バッファーの設定
 	material_->AddConstBuf(FLOAT4{ parameter_->color_.x, parameter_->color_.y,parameter_->color_.z, parameter_->alpha_ });
-	material_->AddConstBuf(FLOAT4{ isReverseX, 0.0f, parameter_->angle_,parameter_->drawIndex_ });
-	material_->AddConstBuf(FLOAT4{ (float)parameter_->divisionNum_.x, (float)parameter_->divisionNum_.y, 0.0f, 0.0f });
+	material_->AddConstBuf(FLOAT4{ (float)parameter_->divisionNum_.x, (float)parameter_->divisionNum_.y, parameter_->drawIndex_, 0.0f });
 
 	// レンダラーの生成
 	renderer_ = std::make_unique<PixelRenderer>(*material_);
-
-	// 描画サイズを現在のスケールに合わせる
-	Vector2 nowSize = Vector2F::MulVector2FFloat(parameter_->drawSize_.ToVector2F(), parameter_->scale_).ToVector2();	
-	
-	// 中心位置に設定
-	parameter_->drawPos_ = GetDrawCenterPos(nowSize);
-
-	// メッシュ生成
-	renderer_->MakeSquereVertex(parameter_->drawPos_, nowSize);
 }
 
 void ActorBase::InitUi()
@@ -340,17 +320,12 @@ void ActorBase::CreateComponents()
 	}
 }
 
-const Vector2 ActorBase::GetDrawCenterPos(const Vector2& nowSize) const
+const Vector2 ActorBase::GetDrawPos(const Vector2& nowSize) const
 {
 	// カメラ位置分オフセット
 	Vector2F cameraPos = mainCamera.GetPos();
 	Vector2 drawPos = Vector2::AddVector2(Vector2::AddVector2(parameter_->pos_.ToVector2(), parameter_->localPos_), cameraPos.ToVector2());
-
-	// ハーフサイズ
-	Vector2 nowSizeHalf = Vector2(nowSize.x / 2, nowSize.y / 2);
-
-	// 描画サイズの半分位置を位置をずらす
-	return Vector2::SubVector2(drawPos, nowSizeHalf);
+	return drawPos;
 }
 
 void ActorBase::OnHit(const std::weak_ptr<ColliderBase>& opponentCollider)

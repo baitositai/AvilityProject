@@ -30,6 +30,7 @@ void ParameterItemAvility::LoadParameter(const Json& parameter, std::string& nam
 			{
 				const auto& jsonAvilityParameter = jsonAbilities.at(name);
 				spriteIndex_ = jsonAvilityParameter.value("index", -1);
+				amount_ = jsonAvilityParameter.value("amount", -1);
 			}
 		}
 	}

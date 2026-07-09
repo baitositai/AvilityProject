@@ -14,6 +14,7 @@
 #include "../Object/Character/Player.h"
 #include "../Collider/ColliderArray.h"
 #include "../Collider/ColliderBox.h"
+#include "../Scene/SceneShop.h"
 #include "OnHitPlayerStamp.h"
 #include "OnHitPlayerShot.h"
 #include "OnHitPlayer.h"
@@ -36,6 +37,7 @@ OnHitPlayer::OnHitPlayer(Player& owner) :
 	onHitMap_.emplace(CollisionTags::TAG::ENEMY_ATTACK_NORMAL, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitAttack(opponentCollider); });
 	onHitMap_.emplace(CollisionTags::TAG::BAMBOO, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitAttack(opponentCollider); });
 	onHitMap_.emplace(CollisionTags::TAG::CHANGE_NEXT_AREA, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitNextArea(opponentCollider); });
+	onHitMap_.emplace(CollisionTags::TAG::SHOP, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitShop(opponentCollider); });
 
     onHitPlayerStamp_ = std::make_unique<OnHitPlayerStamp>(owner_);
     onHitPlayerShot_ = std::make_unique<OnHitPlayerShot>(owner_);
@@ -206,6 +208,16 @@ void OnHitPlayer::OnHitNextArea(const std::weak_ptr<ColliderBase>& opponentColli
 
     // ‹D“J
     sndMng.PlaySe(SoundType::SE::TRAIN_WHISTLE);
+}
+
+void OnHitPlayer::OnHitShop(const std::weak_ptr<ColliderBase>& opponentCollider)
+{
+    auto padNo = owner_.GetParameter().padNo_;
+    if (InputManager::GetInstance().IsTrgDown(InputManager::TYPE::PLAYER_GET_ITEM, padNo))
+    {
+        // ƒVƒ‡ƒbƒv‚ðŠJ‚­
+        SceneManager::GetInstance().SetReadySubScene(std::make_shared<SceneShop>(padNo));
+    }
 }
 
 void OnHitPlayer::AvilityShot(const std::weak_ptr<ColliderBase>& opponentCollider, const Vector2F& normal)

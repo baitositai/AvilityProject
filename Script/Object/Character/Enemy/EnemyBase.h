@@ -66,7 +66,7 @@ protected:
 private:
 
 	// 定数バッファ―サイズ
-	static constexpr int CONST_BUFFER_SIZE = 4;
+	static constexpr int CONST_BUFFER_SIZE = 3;
 
 	// キャラクターのパラメータ
 	ParameterEnemy* parameterEnemy_;

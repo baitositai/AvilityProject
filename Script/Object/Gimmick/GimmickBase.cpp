@@ -47,26 +47,14 @@ void GimmickBase::Draw(void)
 	// 描画しない場合は無視
 	if (!isDraw_) return;
 
-	// 描画サイズを現在のスケールに合わせる
-	Vector2 nowSize = Vector2F::MulVector2FFloat(parameterGimmick_->drawSize_.ToVector2F(), parameterGimmick_->scale_).ToVector2();
-
 	// 中心位置に設定
-	parameterGimmick_->drawPos_ = GetDrawCenterPos(nowSize);
+	parameterGimmick_->drawPos_ = GetDrawPos(parameterGimmick_->drawSize_);
 
 	// メッシュ生成
-	renderer_->MakeSquereVertex(parameterGimmick_->drawPos_, nowSize);
-
-	// X軸の反転
-	float isReverseX = parameterGimmick_->direction_ ? 1.0f : 0.0f;	
-	
-	// 画像サイズの取得
-	int graphSizeX, graphSizeY;
-	GetGraphSize(parameterGimmick_->texture_, &graphSizeX, &graphSizeY);
+	renderer_->MakeSquereVertex(parameterGimmick_->drawPos_, parameterGimmick_->drawSize_, parameterGimmick_->angle_, parameterGimmick_->scale_, parameterGimmick_->direction_);
 
 	// 定数バッファの更新
 	material_->SetConstBuf(0, FLOAT4{ parameterGimmick_->color_.x,parameterGimmick_->color_.y ,parameterGimmick_->color_.z, parameterGimmick_->alpha_ });
-	material_->SetConstBuf(1, FLOAT4{ isReverseX, 0.0f, parameterGimmick_->angle_, 0.0f });
-	material_->SetConstBuf(2, FLOAT4{ (float)graphSizeX, (float)graphSizeY, 0.0f, 0.0f });
 
 	// 描画処理
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)UtilityCommon::ALPHA_MAX);
@@ -85,30 +73,11 @@ void GimmickBase::InitDraw()
 	parameterGimmick_->drawSize_ = parameterGimmick_->hitSize_;
 	parameterGimmick_->drawHalfSize_ = Vector2(parameterGimmick_->drawSize_.x / 2, parameterGimmick_->drawSize_.y / 2);
 
-	// X軸の反転
-	float isReverseX = parameterGimmick_->direction_ ? 1.0f : 0.0f;
-
-	// 画像サイズの取得
-	int graphSizeX, graphSizeY;
-	GetGraphSize(parameterGimmick_->texture_, &graphSizeX, &graphSizeY);
-
-	// 基底クラスではスプライト画像を前提で用意
 	// マテリアルの生成
-	material_ = std::make_unique<PixelMaterial>(resMng_.GetHandle("standardTexture"), DEFAULT_CONST_BUFFER_SIZE);
+	material_ = std::make_unique<PixelMaterial>(resMng_.GetHandle("standardTexture"), CONST_BUFFER_SIZE);
 	material_->AddTextureBuf(parameterGimmick_->texture_);
 	material_->AddConstBuf(FLOAT4{ parameterGimmick_->color_.x, parameterGimmick_->color_.y,parameterGimmick_->color_.z, parameterGimmick_->alpha_ });
-	material_->AddConstBuf(FLOAT4{ isReverseX, 0.0f, parameterGimmick_->angle_, (float)graphSizeX });
-	material_->AddConstBuf(FLOAT4{ (float)graphSizeY, 0.0f, 0.0f, 0.0f });
 
 	// レンダラーの生成
 	renderer_ = std::make_unique<PixelRenderer>(*material_);
-
-	// 描画サイズを現在のスケールに合わせる
-	Vector2 nowSize = Vector2F::MulVector2FFloat(parameterGimmick_->drawSize_.ToVector2F(), parameterGimmick_->scale_).ToVector2();
-
-	// 中心位置に設定
-	parameterGimmick_->drawPos_ = GetDrawCenterPos(nowSize);
-
-	// メッシュ生成
-	renderer_->MakeSquereVertex(parameterGimmick_->drawPos_, nowSize);
 }

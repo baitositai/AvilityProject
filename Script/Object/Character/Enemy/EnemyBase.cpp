@@ -57,8 +57,9 @@ void EnemyBase::Draw()
 		// ダメージ色をなくす
 		parameterEnemy_->damageColor_ = VECTOR(0.0f, 0.0f, 0.0f);
 	}
-	// 追加の定数バッファの更新
-	material_->SetConstBuf(3, FLOAT4{ parameterEnemy_->damageColor_.x,parameterEnemy_->damageColor_.y,parameterEnemy_->damageColor_.z,0.0f });
+
+	// マテリアルの設定
+	material_->SetConstBuf(2, FLOAT4{ parameterEnemy_->damageColor_.x,parameterEnemy_->damageColor_.y,parameterEnemy_->damageColor_.z, 0.0f });
 
 	// 基底クラスの描画
 	CharacterBase::Draw();
@@ -110,27 +111,13 @@ void EnemyBase::InitDraw()
 	parameterEnemy_->divisionNum_ = texture->GetDivsion();
 	parameterEnemy_->drawHalfSize_ = Vector2(parameterEnemy_->drawSize_.x / 2, parameterEnemy_->drawSize_.y / 2);
 
-	// X軸の反転
-	float isReverseX = parameterEnemy_->direction_ ? 1.0f : 0.0f;
-
-	// 基底クラスではスプライト画像を前提で用意
 	// マテリアルの生成
 	material_ = std::make_unique<PixelMaterial>(resMng_.GetHandle("enemySprite"), CONST_BUFFER_SIZE);
 	material_->AddTextureBuf(parameterEnemy_->texture_);
 	material_->AddConstBuf(FLOAT4{ parameterEnemy_->color_.x, parameterEnemy_->color_.y,parameterEnemy_->color_.z, parameterEnemy_->alpha_ });
-	material_->AddConstBuf(FLOAT4{ isReverseX, 0.0f, parameterEnemy_->angle_,parameterEnemy_->drawIndex_ });
-	material_->AddConstBuf(FLOAT4{ (float)parameterEnemy_->divisionNum_.x, (float)parameterEnemy_->divisionNum_.y, 0.0f, 0.0f });
+	material_->AddConstBuf(FLOAT4{ (float)parameterEnemy_->divisionNum_.x, (float)parameterEnemy_->divisionNum_.y, parameterEnemy_->drawIndex_, 0.0f});
 	material_->AddConstBuf(FLOAT4{ 0.0f, 0.0f, 0.0f, 0.0f });
 
 	// レンダラーの生成
 	renderer_ = std::make_unique<PixelRenderer>(*material_);
-
-	// 描画サイズを現在のスケールに合わせる
-	Vector2 nowSize = Vector2F::MulVector2FFloat(parameterEnemy_->drawSize_.ToVector2F(), parameterEnemy_->scale_).ToVector2();
-
-	// 中心位置に設定
-	parameterEnemy_->drawPos_ = GetDrawCenterPos(nowSize);
-
-	// メッシュ生成
-	renderer_->MakeSquereVertex(parameterEnemy_->drawPos_, nowSize);
 }

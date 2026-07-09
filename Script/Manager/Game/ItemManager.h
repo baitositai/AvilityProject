@@ -5,6 +5,7 @@
 #include "../../Manager/Game/ItemTypes.h"
 #include "../../Component/Avility/AvilityTypes.h"
 #include "../../Parameter/ParameterActor.h"
+#include "../../Scene/SceneShop.h"
 
 class ItemBase;
 class ItemGenerator;
@@ -106,7 +107,21 @@ public:
 	/// <returns>アイテム数</returns>
 	const int GetItemCount(const ItemTypes::TYPE type) const;
 
+	/// <summary>
+	/// 最も距離の近い食べ物を返す
+	/// </summary>
+	/// <param name="basePos">調べる位置</param>
+	/// <returns>食べ物</returns>
 	ItemBase* GetNearestFood(const Vector2F& basePos);
+
+	/// <summary>
+	/// 展示品をランダムで決定・情報を返す
+	/// </summary>
+	/// <param name="abilityNum">アビリティの生成数</param>
+	/// <param name="potionNum">ポーションの生成数</param>
+	/// <param name="foodNum">食べ物の生成数</param>
+	/// <returns>展示品の配列</returns>
+	std::vector<SceneShop::Exhibits> GetRandomExhibits(const int abilityNum, const int potionNum, const int foodNum);
 
 private:
 

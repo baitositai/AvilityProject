@@ -31,6 +31,7 @@ void ParameterItemFood::LoadParameter(const Json& parameter, std::string& name)
 				const auto& jsonFoodParameter = jsonFoods.at(name);
 				heal_ = jsonFoodParameter.value("healHp", -1);
 				spriteIndex_ = jsonFoodParameter.value("index", -1);
+				amount_ = jsonFoodParameter.value("amount", -1);
 			}
 		}
 	}

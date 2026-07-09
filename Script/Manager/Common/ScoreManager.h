@@ -27,6 +27,12 @@ public:
 	void AddScore(const int score);
 
 	/// <summary>
+	/// 合計スコアに加算
+	/// </summary>
+	/// <param name="score">加算スコア</param>
+	void AddTotalScore(const int score);
+
+	/// <summary>
 	/// 合計スコアに追加
 	/// </summary>
 	void AddTotalScore();
