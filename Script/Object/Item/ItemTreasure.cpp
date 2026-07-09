@@ -63,27 +63,15 @@ void ItemTreasure::Draw()
 {	
 	// 描画しない場合は無視
 	if (!isDraw_) return;
-		
-	// 描画サイズを現在のスケールに合わせる
-	Vector2 nowSize = Vector2F::MulVector2FFloat(parameterItemTreasure_->drawSize_.ToVector2F(), parameterItemTreasure_->scale_).ToVector2();
 
 	// 中心位置に設定
-	parameterItemTreasure_->drawPos_ = GetDrawCenterPos(nowSize);
+	parameterItemTreasure_->drawPos_ = GetDrawPos(parameterItemTreasure_->drawSize_);
 
 	// メッシュ生成
-	renderer_->MakeSquereVertex(parameterItemTreasure_->drawPos_, nowSize);
-
-	// 画像サイズの取得
-	int graphSizeX, graphSizeY;
-	GetGraphSize(parameterItemTreasure_->texture_, &graphSizeX, &graphSizeY);
-
-	// X軸の反転
-	float isReverseX = parameterItemTreasure_->direction_ ? 1.0f : 0.0f;
+	renderer_->MakeSquereVertex(parameterItemTreasure_->drawPos_, parameterItemTreasure_->drawSize_, parameterItemTreasure_->angle_, parameterItemTreasure_->scale_, parameterItemTreasure_->direction_);
 
 	// 定数バッファの更新
 	material_->SetConstBuf(0, FLOAT4{ parameterItemTreasure_->color_.x,parameterItemTreasure_->color_.y ,parameterItemTreasure_->color_.z, parameterItemTreasure_->alpha_ });
-	material_->SetConstBuf(1, FLOAT4{ isReverseX, 0.0f, parameterItemTreasure_->angle_, 0.0f });
-	material_->SetConstBuf(2, FLOAT4{ (float)graphSizeX, (float)graphSizeY, 0.0f, 0.0f });
 
 	// 描画処理
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)UtilityCommon::ALPHA_MAX);
@@ -266,31 +254,13 @@ void ItemTreasure::InitDraw()
 	parameterItemTreasure_->drawSize_ = parameterItemTreasure_->hitSize_;
 	parameterItemTreasure_->drawHalfSize_ = Vector2(parameterItemTreasure_->drawSize_.x / 2, parameterItemTreasure_->drawSize_.y / 2);
 
-	// X軸の反転
-	float isReverseX = parameterItemTreasure_->direction_ ? 1.0f : 0.0f;
-
-	// 画像サイズの取得
-	int graphSizeX, graphSizeY;
-	GetGraphSize(parameterItemTreasure_->texture_, &graphSizeX, &graphSizeY);
-
 	// マテリアルの生成
-	material_ = std::make_unique<PixelMaterial>(resMng_.GetHandle("standardTexture"), DEFAULT_CONST_BUFFER_SIZE);
+	material_ = std::make_unique<PixelMaterial>(resMng_.GetHandle("standardTexture"), CONST_BUFFER_SIZE);
 	material_->AddTextureBuf(parameterItemTreasure_->texture_);
 	material_->AddConstBuf(FLOAT4{ parameterItemTreasure_->color_.x, parameterItemTreasure_->color_.y,parameterItemTreasure_->color_.z, parameterItemTreasure_->alpha_ });
-	material_->AddConstBuf(FLOAT4{ isReverseX, 0.0f, parameterItemTreasure_->angle_, 0.0f });
-	material_->AddConstBuf(FLOAT4{ (float)graphSizeX, (float)graphSizeY, 0.0f, 0.0f });
 
 	// レンダラーの生成
 	renderer_ = std::make_unique<PixelRenderer>(*material_);
-
-	// 描画サイズを現在のスケールに合わせる
-	Vector2 nowSize = Vector2F::MulVector2FFloat(parameterItemTreasure_->drawSize_.ToVector2F(), parameterItemTreasure_->scale_).ToVector2();
-
-	// 中心位置に設定
-	parameterItemTreasure_->drawPos_ = GetDrawCenterPos(nowSize);
-
-	// メッシュ生成
-	renderer_->MakeSquereVertex(parameterItemTreasure_->drawPos_, nowSize);
 }
 
 void ItemTreasure::Landing()

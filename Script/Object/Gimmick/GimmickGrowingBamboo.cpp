@@ -56,7 +56,7 @@ void GimmickGrowingBamboo::Draw()
 	Vector2 nowSize = Vector2F::MulVector2FFloat(parameterBamboo_->drawSize_.ToVector2F(), parameterBamboo_->scale_).ToVector2();
 
 	// 中心位置に設定
-	parameterBamboo_->drawPos_ = GetDrawCenterPos(nowSize);
+	parameterBamboo_->drawPos_ = GetDrawPos(nowSize);
 
 	// 開始位置を調整
 	parameterBamboo_->drawPos_.y += static_cast<float>(parameterBamboo_->hitSize_.y) / 2.0f - growLength_ / 2.0f;

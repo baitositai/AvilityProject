@@ -370,6 +370,9 @@ void CollisionManager::InitTagMatrix()
 
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::BAMBOO)][static_cast<int>(CollisionTags::TAG::ITEM_TREASURE)] = true;						// 竹とアイテム宝
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ITEM_TREASURE)][static_cast<int>(CollisionTags::TAG::BAMBOO)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::SHOP)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;								// プレイヤーと店
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::SHOP)] = true;
 }
 
 void CollisionManager::InitColliderMatrix()

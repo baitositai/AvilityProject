@@ -23,9 +23,6 @@ public:
 	/// <param name="name">–¼‘O</param>
 	void LoadParameter(const Json& parameter, std::string& name);
 
-	// ‹àŠz
-	int amount_;
-
 	// Ží—Þ
 	ItemTypes::TREASURE_TYPE type_;
 };

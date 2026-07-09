@@ -83,8 +83,8 @@ public:
 	enum class POTION_TYPE
 	{
 		ATTACK_UP,
-		HPMAX_UP,
 		SPEED_UP,
+		HPMAX_UP,
 		MAX
 	};
 

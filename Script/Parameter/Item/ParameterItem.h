@@ -19,6 +19,9 @@ public:
 	// 描画番号
 	int spriteIndex_;
 
+	// 値段
+	int amount_;
+
 	// アイテムの種類
 	ItemTypes::TYPE itemType_;
 };

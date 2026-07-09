@@ -816,6 +816,46 @@
       "divY": 1,
       "sizeX": 48,
       "sizeY": 48
+    },
+    {
+      "key": "shop",
+      "path": "Resource/Image/Gimmick/Shop.png",
+      "sceneIds": [ 2 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 181,
+      "sizeY": 129
+    },
+    {
+      "key": "uiShop",
+      "path": "Resource/Image/Ui/UiShop.png",
+      "sceneIds": [ 2 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 107,
+      "sizeY": 64
+    },
+    {
+      "key": "backGroundShop",
+      "path": "Resource/Image/BackGround/BackGroundShop.png",
+      "sceneIds": [ 2 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 1280,
+      "sizeY": 720
+    },
+    {
+      "key": "arrow",
+      "path": "Resource/Image/Ui/Arrow.png",
+      "sceneIds": [ 2 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 64,
+      "sizeY": 64
     }
   ]
 }

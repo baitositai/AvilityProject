@@ -27,7 +27,7 @@ public:
 	~PixelRenderer(void);
 
 	// •`‰æ‹éŒ`‚Ì¶¬
-	void MakeSquereVertex(Vector2 pos, Vector2 size);
+	void MakeSquereVertex(const Vector2& pos, const Vector2& size, float angle = 0.0f, float scale = 1.0f, bool flipX = false, bool flipY = false);
 	void MakeSquereVertex(void);
 
 	// À•Wİ’è

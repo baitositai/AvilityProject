@@ -243,13 +243,13 @@ protected:
 	virtual void CreateComponents();
 
 	// 描画位置を返す
-	const Vector2 GetDrawCenterPos(const Vector2& nowSize) const;
+	const Vector2 GetDrawPos(const Vector2& nowSize) const;
 	
 	// 型変換用のパラメータを返す関数
 	ParameterActor* GetParameterActorPtr() { return parameter_.get(); }	
 	
 	// 定数バッファ―サイズ
-	static constexpr int DEFAULT_CONST_BUFFER_SIZE = 3;
+	static constexpr int DEFAULT_CONST_BUFFER_SIZE = 2;
 
 private:
 

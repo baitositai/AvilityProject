@@ -153,6 +153,13 @@ void SceneManager::Update()
 
 	// サウンドの更新
 	SoundManager::GetInstance().Update();
+
+	// サブシーンの確認と生成
+	if (subScene_ != nullptr)
+	{
+		PushScene(subScene_);
+		subScene_ = nullptr;
+	}
 }
 
 void SceneManager::Draw()
@@ -223,6 +230,11 @@ void SceneManager::PopScene()
 	}
 }
 
+void SceneManager::SetReadySubScene(const std::shared_ptr<SceneBase> subScene)
+{
+	subScene_ = subScene;
+}
+
 void SceneManager::Release()
 {
 	DeleteGraph(mainScreen_);
@@ -274,6 +286,7 @@ SceneManager::SceneManager()
 	scenes_.clear();
 	fader_ = nullptr;
 	camera_ = nullptr;
+	subScene_ = nullptr;
 	isSceneChanging_ = false;
 	deltaTime_ = 1.0f / 60.0f;	// デルタタイム
 	totalTime_ = -1.0f;

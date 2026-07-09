@@ -1,3 +1,4 @@
+#include <cmath>
 #include "PixelRenderer.h"
 
 PixelRenderer::PixelRenderer(PixelMaterial& pixelMaterial) : 
@@ -11,17 +12,13 @@ PixelRenderer::~PixelRenderer(void)
 {
 }
 
-void PixelRenderer::MakeSquereVertex(Vector2 pos, Vector2 size)
+void PixelRenderer::MakeSquereVertex(const Vector2& pos, const Vector2& size, float angle, float scale, bool flipX, bool flipY)
 {
-
 	pos_ = pos;
 	size_ = size;
 
-	int cnt = 0;
-	float sX = static_cast<float>(pos.x);
-	float sY = static_cast<float>(pos.y);
-	float eX = static_cast<float>(pos.x + size.x);
-	float eY = static_cast<float>(pos.y + size.y);
+	float halfW = static_cast<float>(size.x) / 2.0f;
+	float halfH = static_cast<float>(size.y) / 2.0f;
 
 	// ４頂点の初期化
 	for (int i = 0; i < 4; i++)
@@ -33,50 +30,52 @@ void PixelRenderer::MakeSquereVertex(Vector2 pos, Vector2 size)
 		vertexs_[i].sv = 0.0f;
 	}
 
+	// 反転と拡大率を考慮したローカル座標の係数
+	float flipXScale = flipX ? -1.0f : 1.0f;
+	float flipYScale = flipY ? -1.0f : 1.0f;
+
+	// 中心を原点(0, 0)とした時の各頂点の位置（反転と拡大縮小を適用）
+	float localX[4] = { -halfW * flipXScale * scale,  halfW * flipXScale * scale,  halfW * flipXScale * scale, -halfW * flipXScale * scale };
+	float localY[4] = { -halfH * flipYScale * scale, -halfH * flipYScale * scale,  halfH * flipYScale * scale,  halfH * flipYScale * scale };
+
+	// 回転用のサイン・コサインを計算
+	float sinAngle = std::sin(angle);
+	float cosAngle = std::cos(angle);
+
+	int cnt = 0;
+
 	// 左上
-	vertexs_[cnt].pos = VGet(sX, sY, 0.0f);
+	float rotX0 = localX[cnt] * cosAngle - localY[cnt] * sinAngle;
+	float rotY0 = localX[cnt] * sinAngle + localY[cnt] * cosAngle;
+	vertexs_[cnt].pos = VGet(static_cast<float>(pos.x) + rotX0, static_cast<float>(pos.y) + rotY0, 0.0f);
 	vertexs_[cnt].u = 0.0f;
 	vertexs_[cnt].v = 0.0f;
 	cnt++;
 
 	// 右上
-	vertexs_[cnt].pos = VGet(eX, sY, 0.0f);
+	float rotX1 = localX[cnt] * cosAngle - localY[cnt] * sinAngle;
+	float rotY1 = localX[cnt] * sinAngle + localY[cnt] * cosAngle;
+	vertexs_[cnt].pos = VGet(static_cast<float>(pos.x) + rotX1, static_cast<float>(pos.y) + rotY1, 0.0f);
 	vertexs_[cnt].u = 1.0f;
 	vertexs_[cnt].v = 0.0f;
 	cnt++;
 
 	// 右下
-	vertexs_[cnt].pos = VGet(eX, eY, 0.0f);
+	float rotX2 = localX[cnt] * cosAngle - localY[cnt] * sinAngle;
+	float rotY2 = localX[cnt] * sinAngle + localY[cnt] * cosAngle;
+	vertexs_[cnt].pos = VGet(static_cast<float>(pos.x) + rotX2, static_cast<float>(pos.y) + rotY2, 0.0f);
 	vertexs_[cnt].u = 1.0f;
 	vertexs_[cnt].v = 1.0f;
 	cnt++;
 
 	// 左下
-	vertexs_[cnt].pos = VGet(sX, eY, 0.0f);
+	float rotX3 = localX[cnt] * cosAngle - localY[cnt] * sinAngle;
+	float rotY3 = localX[cnt] * sinAngle + localY[cnt] * cosAngle;
+	vertexs_[cnt].pos = VGet(static_cast<float>(pos.x) + rotX3, static_cast<float>(pos.y) + rotY3, 0.0f);
 	vertexs_[cnt].u = 0.0f;
 	vertexs_[cnt].v = 1.0f;
 
-	/*
-	　～～～～～～
-		0-----1
-		|     |
-		|     |
-		3-----2
-	　～～～～～～
-		0-----1
-		|  ／
-		|／
-		3
-	　～～～～～～
-			  1
-		   ／ |
-		 ／   |
-		3-----2
-	　～～～～～～
-	*/
-
-
-	// 頂点インデックス
+	// 頂点インデックス（変更なし）
 	cnt = 0;
 	indexes_[cnt++] = 0;
 	indexes_[cnt++] = 1;
@@ -85,7 +84,6 @@ void PixelRenderer::MakeSquereVertex(Vector2 pos, Vector2 size)
 	indexes_[cnt++] = 1;
 	indexes_[cnt++] = 2;
 	indexes_[cnt++] = 3;
-
 }
 
 void PixelRenderer::MakeSquereVertex(void)
@@ -152,8 +150,14 @@ void PixelRenderer::Draw(void)
 	// テクスチャアドレスタイプを変更
 	SetTextureAddressModeUV(texAType, texAType);
 
+	// カリング無効
+	SetUseBackCulling(DX_CULLING_NONE);
+
 	// 描画
 	DrawPolygonIndexed2DToShader(vertexs_, NUM_VERTEX, indexes_, NUM_POLYGON);
+
+	// カリング有効
+	SetUseBackCulling(DX_CULLING_LEFT);
 
 	// テクスチャアドレスタイプを元に戻す
 	SetTextureAddressModeUV(DX_TEXADDRESS_CLAMP, DX_TEXADDRESS_CLAMP);

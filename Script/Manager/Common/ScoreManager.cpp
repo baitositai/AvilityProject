@@ -12,6 +12,15 @@ void ScoreManager::AddScore(const int score)
 	}
 }
 
+void ScoreManager::AddTotalScore(const int score)
+{
+	totalScore_ += score;
+	if (totalScore_ < 0)
+	{
+		totalScore_ = 0;
+	}
+}
+
 void ScoreManager::AddTotalScore()
 {
 	totalScore_ += score_;

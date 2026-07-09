@@ -5,6 +5,7 @@
 #include "../../Object/Item/ItemTreasure.h"
 #include "../../Object/Item/ItemPotion.h"
 #include "../../System/ItemGenerator.h"
+#include "../../Utility/UtilityCommon.h"
 #include "ItemManager.h"
 
 void ItemManager::Init()
@@ -274,6 +275,52 @@ ItemBase* ItemManager::GetNearestFood(const Vector2F& basePos)
 	}
 
 	return nearestFood;
+}
+
+std::vector<SceneShop::Exhibits> ItemManager::GetRandomExhibits(const int abilityNum, const int potionNum, const int foodNum)
+{
+	std::vector<SceneShop::Exhibits> exhibitsList;
+
+	for (int i = 0; i < abilityNum; i++)
+	{
+		SceneShop::Exhibits exhibits = {};
+		const auto& item = itemGenerator_->CreateAvility(static_cast<AvilityTypes::TYPE>(UtilityCommon::GetRandomCount(0, AvilityTypes::AVILITY_TYPE_MAX - 1)));
+		item->Init();
+		const auto& parameter = item->GetParameter();
+		exhibits.handle = parameter.texture_;
+		exhibits.drawIndex = parameter.spriteIndex_;
+		exhibits.amount = parameter.amount_;
+		exhibits.division = parameter.divisionNum_;
+		exhibits.type = ItemTypes::TYPE::AVILITY;
+		exhibitsList.push_back(exhibits);
+	}
+	for (int i = 0; i < potionNum; i++)
+	{
+		SceneShop::Exhibits exhibits = {};
+		const auto& item = itemGenerator_->CreatePotion(static_cast<ItemTypes::POTION_TYPE>(UtilityCommon::GetRandomCount(0, ItemTypes::POTION_TYPE_MAX - 1)));
+		item->Init();
+		const auto& parameter = item->GetParameter();
+		exhibits.handle = parameter.texture_;
+		exhibits.drawIndex = parameter.spriteIndex_;
+		exhibits.amount = parameter.amount_;
+		exhibits.division = parameter.divisionNum_;
+		exhibits.type = ItemTypes::TYPE::POTION;
+		exhibitsList.push_back(exhibits);
+	}
+	for (int i = 0; i < abilityNum; i++)
+	{
+		SceneShop::Exhibits exhibits = {};
+		const auto& item = itemGenerator_->CreateFood(static_cast<ItemTypes::FOOD_TYPE>(UtilityCommon::GetRandomCount(0, ItemTypes::FOOD_TYPE_MAX - 1)));
+		item->Init();
+		const auto& parameter = item->GetParameter();
+		exhibits.handle = parameter.texture_;
+		exhibits.drawIndex = parameter.spriteIndex_;
+		exhibits.amount = parameter.amount_;
+		exhibits.division = parameter.divisionNum_;
+		exhibitsList.push_back(exhibits);
+	}
+
+	return exhibitsList;
 }
 
 ItemManager::ItemManager()

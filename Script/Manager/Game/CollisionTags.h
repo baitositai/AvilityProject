@@ -35,6 +35,7 @@ public:
 		TARGET,						// ターゲット
 		TREASURE_CHEST,				// 宝箱
 		BAMBOO,						// 竹
+		SHOP,						// 店
 		MAX
 	};
 

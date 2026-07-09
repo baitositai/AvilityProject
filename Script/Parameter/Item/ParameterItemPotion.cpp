@@ -34,6 +34,7 @@ void ParameterItemPotion::LoadParameter(const Json& parameter, std::string& name
 				hpMaxUp_ = jsonPotionParameter.value("hpMaxUp", -1);
 				speedUp_ = jsonPotionParameter.value("speedUp", 0.0f);
 				spriteIndex_ = jsonPotionParameter.value("index", -1);
+				amount_ = jsonPotionParameter.value("amount", -1);
 
 				if (NAME_TAG_MAP.contains(name))
 				{

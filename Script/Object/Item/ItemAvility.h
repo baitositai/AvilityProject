@@ -30,6 +30,18 @@ public:
 	/// <returns></returns>
 	const int GetAvilityItemResourceIndex() const;
 
+	/// <summary>
+	/// パラメーターを返す(変更可)
+	/// </summary>
+	/// <returns>パラメータ</returns>
+	ParameterItemAvility& GetParameter() { return *parameterItemAvility_; }
+
+	/// <summary>
+	/// パラメータを返す
+	/// </summary>
+	/// <returns>パラメータ</returns>
+	const ParameterItemAvility& GetParameter() const { return *parameterItemAvility_; }
+
 private:
 
 	// パラメータ

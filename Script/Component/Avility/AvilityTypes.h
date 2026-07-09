@@ -8,16 +8,16 @@ public:
 
 	enum class TYPE
 	{
-		SHOT,			// ショット
-		//BOX,			// ボックス
-		STAMP,			// スタンプ
+		SUPERMAN,		// スーパーマン
+		AIRWALK,		// 空中歩行
 		GRAVITYCONTROLL,		// 重力変化
+		SHOT,			// ショット
+		AIRSLASH,		// 空中斬り
+		METAL,			// メタル
+		STAMP,			// スタンプ
 		TELEPORT,		// テレポート
 		GIANT,			// 巨大化
-		METAL,			// メタル
-		AIRWALK,		// 空中歩行
-		AIRSLASH,		// 空中斬り
-		SUPERMAN,		// スーパーマン
+		//BOX,			// ボックス
 		MAX
 	};
 

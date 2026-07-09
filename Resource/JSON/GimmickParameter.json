@@ -49,6 +49,20 @@
       "move"
     ]
   },
+  "shop": {
+    "resourceKey": "shop",
+    "transparent": true,
+    "gravityPower": 9.8,
+    "scale": 1.0,
+    "hitBoxSize": {
+      "x": 181,
+      "y": 129
+    },
+    "componentKeys": [
+      "gravity",
+      "move"
+    ]
+  },
   "treasureChest": {
     "resourceKey": "treasureChests",
     "transparent": true,

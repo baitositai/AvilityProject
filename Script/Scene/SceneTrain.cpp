@@ -37,7 +37,7 @@ void SceneTrain::Init()
 	stageMng_.Create(StageManager::TYPE::TRAIN);
 
 	// カメラ設定
-	mainCamera.ChangeMode(Camera::MODE::TRAIN_SHAKE);
+	mainCamera.ChangeMode(Camera::MODE::FIXED_POINT);
 	mainCamera.SetCameraPos(Vector2F(0.0f, 0.0f));
 
 	// 基底クラスの初期化処理
@@ -53,13 +53,11 @@ void SceneTrain::Init()
 	// UI作成
 	uiMng_.CreateGameUi();
 
-
-	itemMng_.CreateTreasureItem(ItemTypes::TREASURE_TYPE::CLAY_WORK, Vector2F(250, 400));
-	itemMng_.CreateTreasureItem(ItemTypes::TREASURE_TYPE::CLAY_WORK, Vector2F(500, 400));
-	itemMng_.CreateTreasureItem(ItemTypes::TREASURE_TYPE::CLAY_WORK, Vector2F(700, 400));
-	itemMng_.CreateTreasureItem(ItemTypes::TREASURE_TYPE::CLAY_WORK, Vector2F(800, 400));
-	itemMng_.CreateTreasureItem(ItemTypes::TREASURE_TYPE::CLAY_WORK, Vector2F(900, 400));
-	itemMng_.CreateTreasureItem(ItemTypes::TREASURE_TYPE::CLAY_WORK, Vector2F(1000, 400));
+	/// ショップ生成
+	GimmickManager::CreateParameter shop = {};
+	shop.type = GimmickTypes::TYPE::SHOP;
+	shop.pos = Vector2F(970, 577);
+	gimmickMng_.Create(shop);
 }
 
 void SceneTrain::SceneChangeReady()

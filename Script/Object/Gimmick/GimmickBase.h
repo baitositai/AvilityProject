@@ -80,7 +80,7 @@ protected:
 private:
 
 	// 定数バッファサイズ
-	static constexpr int CONST_BUFFER_SIZE = 2;
+	static constexpr int CONST_BUFFER_SIZE = 1;
 
 	// パラメータ情報
 	ParameterGimmick* parameterGimmick_;
