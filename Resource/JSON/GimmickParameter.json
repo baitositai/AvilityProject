@@ -80,7 +80,7 @@
   "dropRock": {
     "resourceKey": "dropRock",
     "transparent": true,
-    "scale": 1.0,
+    "scale": 0.3,
     "gravityPower": 0.3,
     "componentKeys": [
       "move",

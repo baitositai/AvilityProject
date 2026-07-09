@@ -15,6 +15,6 @@ OnHitDropRock::~OnHitDropRock()
 
 void OnHitDropRock::OnHitPlayer(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
-	// íœˆ—
+	//íœˆ—
 	owner_.Delete();
 }

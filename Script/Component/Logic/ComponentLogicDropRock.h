@@ -63,10 +63,10 @@ private:
 	static constexpr float ROCK_POS_Y = 180.0f;
 
 	//岩サイズ
-	static constexpr int ROCK_SIZE = 80;
+	static constexpr int ROCK_SIZE = 50;
 
-	//岩生成の範囲
-
+	//ボス部屋の右端のX座標
+	static constexpr int BOSS_ROOM_RIGHT_X = 128;
 
 	// 所有者
 	EnemyGaiaGolem& owner_;
@@ -75,9 +75,9 @@ private:
 	ParameterEnemyGaiaGolem& parameter_;
 
 	//ランダムに岩のY座標を決める(X座標は固定)
-	float SetRandomPosX(void);
+	float SetRandomPosX(const std::vector<float>rockPosX);
 
-	////岩のパラメータ(基本パラメータしか使用しない)
-	//std::list<std::unique_ptr<ParameterGimmick>> gimmickParameters_;
+	//生成した岩が、前に生成した岩の範囲内にあるかを判定
+	const bool IsRangeDropRock(const std::vector<float>rockPosX, const float currentPosX);
 };
 

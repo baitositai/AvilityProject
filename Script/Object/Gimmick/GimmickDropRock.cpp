@@ -46,7 +46,7 @@ void GimmickDropRock::Init()
 	onHit_ = std::make_unique<OnHitDropRock>(*this);
 
 	// ‰Šú‰»
-	ActorBase::Init();
+	GimmickBase::Init();
 
 	isDead_ = false;
 	waitCnt_ = 0.0f;
@@ -64,6 +64,7 @@ void GimmickDropRock::Update()
 void GimmickDropRock::Draw()
 {
 	collider_->DebugDraw();
+	GimmickBase::Draw();
 }
 
 void GimmickDropRock::ChangeCreate(void)
