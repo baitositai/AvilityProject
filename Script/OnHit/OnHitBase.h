@@ -8,6 +8,7 @@
 
 class ActorBase;
 class ColliderBase;
+class SoundManager;
 
 class OnHitBase
 {
@@ -44,6 +45,9 @@ public:
 	void ResetMoveAmount() { moveAmount_ = Vector2F(); }
 
 protected:
+
+	// サウンド管理クラス
+	SoundManager& soundManager_;
 
 	// 衝突後処理
 	void OnHitNone(const std::weak_ptr<ColliderBase>& opponentCollider) {};

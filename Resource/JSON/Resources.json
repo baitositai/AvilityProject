@@ -810,7 +810,7 @@
     {
       "key": "potions",
       "path": "Resource/Image/Item/Potions.png",
-      "sceneIds": [ 2,3,4 ],
+      "sceneIds": [ 2, 3, 4 ],
       "type": "texture",
       "divX": 3,
       "divY": 1,
@@ -861,7 +861,221 @@
       "key": "dropRock",
       "path": "Resource/Image/Gimmick/DropRock.png",
       "sceneIds": [ 4 ],
-      "type": "texture"
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 270,
+      "sizeY": 262
+    },
+    {
+      "key": "seAbilityShotCharge",
+      "path": "Resource/Sound/Se/SeAbilityShotCharge.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seAbilityShotStart",
+      "path": "Resource/Sound/Se/SeAbilityShotStart.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seAbilityStampCharge",
+      "path": "Resource/Sound/Se/SeAbilityStampCharge.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seAbilityStampLanding",
+      "path": "Resource/Sound/Se/SeAbilityStampLanding.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seAbilityTeleportEnter",
+      "path": "Resource/Sound/Se/SeAbilityTeleportEnter.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seAbilityTeleportExit",
+      "path": "Resource/Sound/Se/SeAbilityTeleportExit.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seApplause",
+      "path": "Resource/Sound/Se/SeApplause.mp3",
+      "sceneIds": [  ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seCancel",
+      "path": "Resource/Sound/Se/SeCancel.mp3",
+      "sceneIds": [ 0 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seCheers",
+      "path": "Resource/Sound/Se/SeCheers.mp3",
+      "sceneIds": [  ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seGetAbility",
+      "path": "Resource/Sound/Se/SeGetAbility.mp3",
+      "sceneIds": [ 3 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seGetMoney",
+      "path": "Resource/Sound/Se/SeGetMoney.mp3",
+      "sceneIds": [ 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seGetPotion",
+      "path": "Resource/Sound/Se/SeGetPotion.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seGetTreasure",
+      "path": "Resource/Sound/Se/SeGetTreasure.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seHeal",
+      "path": "Resource/Sound/Se/SeHeal.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seJump",
+      "path": "Resource/Sound/Se/SeJump.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seJumpLanding",
+      "path": "Resource/Sound/Se/SeJumpLanding.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seJumpSecond",
+      "path": "Resource/Sound/Se/SeJumpSecond.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "sePlayerAttackHit",
+      "path": "Resource/Sound/Se/SePlayerAttackHit.mp3",
+      "sceneIds": [ 3,4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "sePlayerDamage",
+      "path": "Resource/Sound/Se/SePlayerDamage.mp3",
+      "sceneIds": [ 3,4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "sePlayerDead",
+      "path": "Resource/Sound/Se/SePlayerDead.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seSwingAxe1",
+      "path": "Resource/Sound/Se/SeSwingAxe1.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seSwingAxe2",
+      "path": "Resource/Sound/Se/SeSwingAxe2.mp3",
+      "sceneIds": [ 2,3,4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seThrow",
+      "path": "Resource/Sound/Se/SeThrow.mp3",
+      "sceneIds": [ 2,3,4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seGrowingBamboo",
+      "path": "Resource/Sound/Se/SeGrowingBamboo.mp3",
+      "sceneIds": [  ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seOpenTreasureBox",
+      "path": "Resource/Sound/Se/SeOpenTreasureBox.mp3",
+      "sceneIds": [ 3 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seDoor",
+      "path": "Resource/Sound/Se/SeDoor.mp3",
+      "sceneIds": [ 3 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seAbilityGravityChange",
+      "path": "Resource/Sound/Se/SeAbilityGravityChange.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seAirSlash",
+      "path": "Resource/Sound/Se/SeAirSlash.mp3",
+      "sceneIds": [ 2,3,4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seDead",
+      "path": "Resource/Sound/Se/SeDead.mp3",
+      "sceneIds": [ 3,4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seEventStart",
+      "path": "Resource/Sound/Se/SeEventStart.mp3",
+      "sceneIds": [ 3 ],
+      "soundType": "se",
+      "type": "sound"
     }
   ]
 }

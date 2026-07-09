@@ -1,5 +1,6 @@
 #include "../../Manager/Common/SpriteEffectManager.h"
 #include "../../Manager/Common/InputManager.h"
+#include "../../Manager/Common/SoundManager.h"
 #include "../../Manager/Common/SceneManager.h"
 #include "../../Collider/ColliderBox.h"
 #include "../../Object/Character/Player.h"
@@ -155,6 +156,9 @@ void ComponentAvilityTeleport::ChangeStateMove()
 
 	// 移動制限時間を初期化
 	moveTimer_ = 0.0f;
+
+	// 効果音再生
+	soundManager_.PlaySe(SoundType::SE::ABILITY_TELEPORT_ENTER);
 	
 	// エフェクトを設定
 	std::unique_ptr<ParameterEffect> parameter = std::make_unique<ParameterEffect>();
@@ -187,6 +191,9 @@ void ComponentAvilityTeleport::ChangeStateAppear()
 
 	// 描画を非表示
 	owner_.SetIsDraw(true);
+
+	// 効果音再生
+	soundManager_.PlaySe(SoundType::SE::ABILITY_TELEPORT_EXIT);
 
 	// エフェクトを設定
 	std::unique_ptr<ParameterEffectTeleportExit> parameter = std::make_unique<ParameterEffectTeleportExit>();

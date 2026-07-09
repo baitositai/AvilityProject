@@ -6,6 +6,7 @@ class Player;
 class ParameterPlayer;
 class StageManager;
 class SceneManager;
+class SoundManager;
 class InputManager;
 class SpriteEffectManager;
 class CollisionManager;
@@ -71,6 +72,9 @@ protected:
 
 	// シーン管理クラス
 	SceneManager& sceneManager_;
+
+	// サウンド管理クラス
+	SoundManager& soundManager_;
 
 	// 入力管理クラスの参照
 	InputManager& inputManager_;	

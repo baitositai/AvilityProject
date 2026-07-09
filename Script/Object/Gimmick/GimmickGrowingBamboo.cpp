@@ -1,5 +1,6 @@
 #include <DxLib.h>
 #include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/SoundManager.h"
 #include "../../Collider/ColliderBox.h"
 #include "GimmickGrowingBamboo.h"
 
@@ -43,6 +44,9 @@ void GimmickGrowingBamboo::Init()
 
 	// ‰ŠúXVˆ—
 	update_ = std::bind(&GimmickGrowingBamboo::UpdateGrow, this);
+
+	// Œø‰Ê‰¹Ä¶
+	sndMng_.PlaySe(SoundType::SE::GROWING_BAMBOO);
 }
 
 void GimmickGrowingBamboo::Update()

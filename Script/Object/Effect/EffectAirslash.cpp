@@ -1,3 +1,4 @@
+#include "../../Manager/Common/SoundManager.h"
 #include "../../Manager/Common/SceneManager.h"
 #include "../../Collider/ColliderCircle.h"
 #include "../../OnHit/OnHitEffect.h"
@@ -28,6 +29,9 @@ void EffectAirslash::Init()
 
 	// Ä¶
 	animation_->Play(Animation::TYPE::EFFECT);
+
+	// Œø‰Ê‰¹Ä¶
+	sndMng_.PlaySe(SoundType::SE::AIRSLASH);
 }
 
 void EffectAirslash::Update()

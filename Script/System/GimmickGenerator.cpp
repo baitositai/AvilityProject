@@ -211,7 +211,6 @@ std::unique_ptr<GimmickShop> GimmickGenerator::CreateGimmickShop()
 	auto parameter = std::make_unique<ParameterGimmick>(*parameterShop);
 	return std::make_unique<GimmickShop>(std::move(parameter));
 }
-}
 
 std::unique_ptr<GimmickDropRock> GimmickGenerator::CreateGimmickDropRock()
 {

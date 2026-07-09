@@ -36,11 +36,6 @@ public:
 	void Update() override;
 
 	/// <summary>
-	/// 描画処理
-	/// </summary>
-	void Draw() override;
-
-	/// <summary>
 	/// パラメーターを返す(変更可)
 	/// </summary>
 	/// <returns>パラメータ</returns>
@@ -81,7 +76,6 @@ private:
 	void CheckGroundStatus(float moveVal, bool isXAxis);
 
 	//Drop待機状態
-	void ChangeCreate(void);
 	void UpdateWait(void);
 	void UpdateDrop(void);
 };

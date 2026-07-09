@@ -1,4 +1,5 @@
 #include "../../Manager/Common/InputManager.h"
+#include "../../Manager/Common/SoundManager.h"
 #include "../../Object/Character/Player.h"
 #include "../../Object/Common/Animation.h"
 #include "ComponentStatePlayerDead.h"
@@ -18,12 +19,18 @@ ComponentStatePlayerDead::~ComponentStatePlayerDead()
 void ComponentStatePlayerDead::Init()
 {
 	respownValue_ = 0;
-	update_ = std::bind(&ComponentStatePlayerDead::UpdateAnimation, this);
+	update_ = std::bind(&ComponentStatePlayerDead::UpdateStart, this);
 }
 
 void ComponentStatePlayerDead::Update()
 {
 	update_();
+}
+
+void ComponentStatePlayerDead::UpdateStart()
+{
+	soundManager_.PlaySe(SoundType::SE::DEAD);	
+	update_ = std::bind(&ComponentStatePlayerDead::UpdateAnimation, this);
 }
 
 void ComponentStatePlayerDead::UpdateAnimation()

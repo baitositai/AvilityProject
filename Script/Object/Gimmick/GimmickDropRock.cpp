@@ -61,16 +61,6 @@ void GimmickDropRock::Update()
 	ActorBase::Update();
 }
 
-void GimmickDropRock::Draw()
-{
-	collider_->DebugDraw();
-	GimmickBase::Draw();
-}
-
-void GimmickDropRock::ChangeCreate(void)
-{
-}
-
 void GimmickDropRock::UpdateWait(void)
 {
 	if (waitCnt_ > WAIT_TIME)

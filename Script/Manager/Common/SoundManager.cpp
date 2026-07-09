@@ -317,7 +317,7 @@ void SoundManager::Add(const std::string& key, ResourceSound* resource)
 SoundManager::SoundManager() :
 	resourceManager_(ResourceManager::GetInstance())
 {
-	defaultVolumeBgm_ = DEFAULT_VOLUME;
-	defaultVolumeSe_ = DEFAULT_VOLUME;
+	defaultVolumeBgm_ = DEFAULT_BGM_VOLUME;
+	defaultVolumeSe_ = DEFAULT_SE_VOLUME;
 	fadeSeMap_.clear();
 }

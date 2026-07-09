@@ -1,5 +1,6 @@
 #include <tgmath.h>
 #include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/SoundManager.h"
 #include "../../Manager/Common/InputManager.h"
 #include "../../Manager/Game/CollisionManager.h"
 #include "../../Object/Character/Player.h"
@@ -103,6 +104,9 @@ void ComponentAvilityStamp::UpdateActive()
 	{
 		// ’n–Ê‚É’…’n‚µ‚½‚çó‘Ô‚ğ“ü—Í‘Ò‚¿‚É‚·‚é
 		ChangeState(STATE::INPUT);
+
+		// Œø‰Ê‰¹Ä¶
+		soundManager_.PlaySe(SoundType::SE::ABILITY_STAMP_LANDING);
 	}
 }
 
@@ -175,6 +179,9 @@ void ComponentAvilityStamp::ChangeStateStop()
 	parameter_.knockBackPower_ = Vector2F(0.0f, 0.0f);
 	parameter_.shotVec_ = Vector2F(0.0f, 0.0f);
 	parameter_.angle_ = UtilityCommon::GetGravityDirRadAngle(parameter_.gravityDir_);
+
+	// Œø‰Ê‰¹Ä¶
+	soundManager_.PlaySe(SoundType::SE::ABILITY_STAMP_CHARGE);
 }
 
 void ComponentAvilityStamp::ChangeStateActive()

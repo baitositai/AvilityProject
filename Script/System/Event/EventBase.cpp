@@ -1,5 +1,6 @@
 #include "../../Application.h"
 #include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/SoundManager.h"
 #include "../../Manager/Common/Camera.h"
 #include "../../Manager/Game/EventManager.h"
 #include "../../Manager/Game/EnemyManager.h"
@@ -11,6 +12,7 @@ EventBase::EventBase(std::unique_ptr<ParameterEvent> parameter) :
 	eventManager_(EventManager::GetInstance()),
 	enemyManager_(EnemyManager::GetInstance()),
 	gimmickManager_(GimmickManager::GetInstance()),
+	soundManager_(SoundManager::GetInstance()),
 	parameter_(std::move(parameter))
 {
 	state_ = STATE::START;
@@ -70,6 +72,7 @@ void EventBase::UpdateStart()
 		screenTriggerPos.y <= TARGET_SCREEN_Y + OFFSET_Y)
 	{
 		ChangeState(STATE::CHALLENGE);
+		soundManager_.PlaySe(SoundType::SE::EVENT_START);
 	}
 }
 

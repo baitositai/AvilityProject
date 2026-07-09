@@ -1,3 +1,4 @@
+#include "../../../Manager/Common/SoundManager.h"
 #include "../../../OnHit/OnHitEnemyMaid.h"
 #include "../../../Collider/ColliderBox.h"
 #include "EnemyMaid.h"
@@ -43,4 +44,7 @@ void EnemyMaid::Heal(const int heal)
 		// ãŒÀ‚Éİ’è
 		parameterEnemyMaid_->hp_ = parameterEnemyMaid_->hpMax_;
 	}
+
+	// ƒTƒEƒ“ƒhÄ¶
+	sndMng_.PlaySe(SoundType::SE::HEAL);
 }

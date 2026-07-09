@@ -1,9 +1,11 @@
 #include "../Collider/ColliderBase.h"
 #include "../Object/ActorBase.h"
+#include "../Manager/Common/SoundManager.h"
 #include "OnHitBase.h"
 
 OnHitBase::OnHitBase(ActorBase& owner):
-    moveAmount_()
+    moveAmount_(),
+    soundManager_(SoundManager::GetInstance())
 {
     // Õ“Ë•¨•ÊŠÖ”‚Ì“o˜^
     onHitMap_.emplace(CollisionTags::TAG::NONE, [this](const std::weak_ptr<ColliderBase>& opponentCollider)

@@ -2,6 +2,8 @@
 #include "../ComponentBase.h"
 #include "../../Object/Character/CharacterBase.h"
 
+class SoundManager;
+
 class ComponentCharacterStateBase : public ComponentBase
 {
 public:
@@ -17,6 +19,7 @@ public:
 	/// </summary>
 	virtual ~ComponentCharacterStateBase() override;
 
-private:
+protected:
 
+	SoundManager& soundManager_;
 };

@@ -15,7 +15,8 @@ class SoundManager : public Singleton<SoundManager>
 public:
 
 	//デフォルトの音量
-	static constexpr int DEFAULT_VOLUME = 100;
+	static constexpr int DEFAULT_BGM_VOLUME = 75;
+	static constexpr int DEFAULT_SE_VOLUME = 60;
 	
 	/// <summary>
 	/// シーン遷移する際のリソースの変更
@@ -33,14 +34,14 @@ public:
 	/// <param name="key">BGMのキー</param>
 	/// <param name="topPos">再生位置を戻すか</param>
 	/// <param name="volume">音量</param>
-	void PlayBgm(const SoundType::BGM key, const bool topPos = true, const int volume = DEFAULT_VOLUME);
+	void PlayBgm(const SoundType::BGM key, const bool topPos = true, const int volume = DEFAULT_BGM_VOLUME);
 
 	/// <summary>
 	/// BGMの再生
 	/// </summary>
 	/// <param name="key">BGMのキー</param>
 	/// <param name="topPos">再生位置を戻すか</param>
-	void PlaySe(const SoundType::SE key, const bool topPos = true, const int volume = DEFAULT_VOLUME);
+	void PlaySe(const SoundType::SE key, const bool topPos = true, const int volume = DEFAULT_SE_VOLUME);
 
 	/// <summary>
 	/// BGMの停止

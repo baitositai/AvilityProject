@@ -1,5 +1,6 @@
 #include "../../Manager/Common/InputManager.h"
 #include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/SoundManager.h"
 #include "../../Manager/Common/SpriteEffectManager.h"
 #include "../../Manager/Game/CollisionManager.h"
 #include "../../Manager/Game/StageManager.h"
@@ -10,6 +11,7 @@ ComponentAvilityBase::ComponentAvilityBase(Player& owner) :
 	owner_(owner),
 	stageManager_(StageManager::GetInstance()),
 	sceneManager_(SceneManager::GetInstance()),
+	soundManager_(SoundManager::GetInstance()),
 	inputManager_(InputManager::GetInstance()),
 	effectManager_(SpriteEffectManager::GetInstance()),
 	collisionManager_(CollisionManager::GetInstance()),

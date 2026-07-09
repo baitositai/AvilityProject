@@ -1,3 +1,4 @@
+#include "../Manager/Common/SoundManager.h"
 #include "../Manager/Common/InputManager.h"
 #include "../Object/Item/ItemTreasure.h"
 #include "../Object/Character/Player.h"
@@ -29,6 +30,9 @@ void OnHitItemTreasure::OnHitPlayer(const std::weak_ptr<ColliderBase>& opponentC
 		{
 			// Õ“ËÒ‚ğŠ—LÒ‚Æ‚µ‚Äæ“¾
 			owner_.FollowPlayer(*player);
+
+			// Œø‰Ê‰¹Ä¶
+			soundManager_.PlaySe(SoundType::SE::GET_TREASURE);
 		}
 	}
 }

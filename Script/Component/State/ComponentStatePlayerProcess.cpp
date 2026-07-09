@@ -1,5 +1,6 @@
 #include "../../Manager/Common/InputManager.h"
 #include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/SoundManager.h"
 #include "../../Object/Character/Player.h"
 #include "../../Object/Common/Animation.h"
 #include "../../Utility/UtilityCommon.h"
@@ -105,6 +106,9 @@ void ComponentStatePlayerProcess::ProcessInputJump()
 
 			// ノックバック初期化
 			parameter_.knockBackPower_ = {};
+
+			// 効果音の再生
+			soundManager_.PlaySe(SoundType::SE::JUMP);
 		}
 	}
 }
@@ -130,6 +134,9 @@ void ComponentStatePlayerProcess::ProcessInputAttack()
 		
 		// 横移動の値をなくす
 		moveAmount_.x = 0.0f;
+
+		// 効果音の再生
+		soundManager_.PlaySe(SoundType::SE::SWING_AXE1);
 	}
 }
 
@@ -152,5 +159,8 @@ void ComponentStatePlayerProcess::ProcessInputThrow()
 
 		// 投げる処理
 		owner_.ThrowItem(throwDir);
+
+		// 効果音の再生
+		soundManager_.PlaySe(SoundType::SE::THROW);
 	}
 }

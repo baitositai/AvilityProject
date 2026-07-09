@@ -2,6 +2,7 @@
 #include "../../../Utility/UtilityCommon.h"
 #include "../../../Manager/Common/SceneManager.h"
 #include "../../../Manager/Common/ResourceManager.h"
+#include "../../../Manager/Common/SoundManager.h"
 #include "../../../Manager/Game/ItemManager.h"
 #include "../../../Collider/ColliderBox.h"
 #include "../../../OnHit/OnHitEnemy.h"
@@ -101,6 +102,9 @@ void EnemyBase::Damage(const int damage, const Vector2& hitPos)
 	
 	// ダメージを受けている場合はダメージ描画用のステップを設定
 	damageDrawStep_ = DAMAGE_DRAW_STEP_MAX;	
+
+	// サウンド再生
+	sndMng_.PlaySe(SoundType::SE::PLAYER_ATTACK_HIT);
 }
 
 void EnemyBase::InitDraw()

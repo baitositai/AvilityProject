@@ -1,4 +1,5 @@
 #include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/SoundManager.h"
 #include "../../Manager/Common/InputManager.h"
 #include "../../Object/Character/Player.h"
 #include "../../Utility/UtilityCommon.h"
@@ -60,6 +61,7 @@ void ComponentAvilityGravity::ProcessGravity()
 		parameter_.angle_ = UtilityCommon::GetGravityDirRadAngle(parameter_.gravityDir_);
 		coolTime_ = COOL_TIME;
 		parameter_.isGround_ = false;
+		soundManager_.PlaySe(SoundType::SE::ABILITY_GRAVITY_CHANGE);
 	}
 	else if (inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_GRAVITY_LEFT, parameter_.padNo_))
 	{
@@ -67,6 +69,7 @@ void ComponentAvilityGravity::ProcessGravity()
 		parameter_.angle_ = UtilityCommon::GetGravityDirRadAngle(parameter_.gravityDir_);
 		coolTime_ = COOL_TIME;
 		parameter_.isGround_ = false;
+		soundManager_.PlaySe(SoundType::SE::ABILITY_GRAVITY_CHANGE);
 	}
 	else if (inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_GRAVITY_UP, parameter_.padNo_))
 	{
@@ -74,6 +77,7 @@ void ComponentAvilityGravity::ProcessGravity()
 		parameter_.angle_ = UtilityCommon::GetGravityDirRadAngle(parameter_.gravityDir_);
 		coolTime_ = COOL_TIME;
 		parameter_.isGround_ = false;
+		soundManager_.PlaySe(SoundType::SE::ABILITY_GRAVITY_CHANGE);
 	}
 	else if (inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_GRAVITY_DOWN, parameter_.padNo_))
 	{
@@ -81,5 +85,6 @@ void ComponentAvilityGravity::ProcessGravity()
 		parameter_.angle_ = UtilityCommon::GetGravityDirRadAngle(parameter_.gravityDir_);
 		coolTime_ = COOL_TIME;
 		parameter_.isGround_ = false;
+		soundManager_.PlaySe(SoundType::SE::ABILITY_GRAVITY_CHANGE);
 	}
 }

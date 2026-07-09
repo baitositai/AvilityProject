@@ -54,6 +54,7 @@ private:
 	InputManager& inputManager_;
 
 	// ó‘Ô•ÊXVˆ—
+	void UpdateStart();
 	void UpdateAnimation();
 	void UpdateRespownAccept();
 };

@@ -107,6 +107,9 @@ void OnHitPlayer::OnHitItemAvility(const std::weak_ptr<ColliderBase>& opponentCo
         
         // アイテムの種類を獲得
         owner_.SetAvilityComponent(std::move(componentAvility));
+
+        // 効果音再生
+        soundManager_.PlaySe(SoundType::SE::GET_ABILITY);
     }
 }
 
@@ -139,6 +142,9 @@ void OnHitPlayer::OnHitItemAttackUp(const std::weak_ptr<ColliderBase>& opponentC
 
         // 攻撃力の上昇
         owner_.AttackPowerUp(itemPotion->GetParameter().attackUp_);
+
+        // 効果音再生
+        soundManager_.PlaySe(SoundType::SE::GET_POTION);
     }
 }
 
@@ -155,6 +161,9 @@ void OnHitPlayer::OnHitItemHpMaxUp(const std::weak_ptr<ColliderBase>& opponentCo
 
         // アイテムの種類を獲得
         owner_.HpMaxUp(itemPotion->GetParameter().hpMaxUp_);
+
+        // 効果音再生
+        soundManager_.PlaySe(SoundType::SE::GET_POTION);
     }
 }
 
@@ -171,6 +180,9 @@ void OnHitPlayer::OnHitItemSpeedUp(const std::weak_ptr<ColliderBase>& opponentCo
 
         // アイテムの種類を獲得
         owner_.SpeedUp(itemPotion->GetParameter().speedUp_);
+
+        // 効果音再生
+        soundManager_.PlaySe(SoundType::SE::GET_POTION);
     }
 }
 
@@ -188,6 +200,9 @@ void OnHitPlayer::OnHitDoor(const std::weak_ptr<ColliderBase>& opponentCollider)
 
         // 全てのアビリティ処理を無効
         owner_.SetAllAvilityComponentActive(false);
+
+        // 効果音再生
+        soundManager_.PlaySe(SoundType::SE::DOOR);
     }
 }
 
@@ -203,12 +218,11 @@ void OnHitPlayer::OnHitNextArea(const std::weak_ptr<ColliderBase>& opponentColli
     owner_.GetAnimation().Play(Animation::TYPE::WALK);
 
     // BGM停止
-    SoundManager& sndMng = SoundManager::GetInstance();
-    sndMng.StopBgm(SoundType::BGM::TRAIN);
-    sndMng.StopBgm(SoundType::BGM::TRAIN_ROOM);
+    soundManager_.StopBgm(SoundType::BGM::TRAIN);
+    soundManager_.StopBgm(SoundType::BGM::TRAIN_ROOM);
 
     // 汽笛
-    sndMng.PlaySe(SoundType::SE::TRAIN_WHISTLE);
+    soundManager_.PlaySe(SoundType::SE::TRAIN_WHISTLE);
 }
 
 void OnHitPlayer::OnHitShop(const std::weak_ptr<ColliderBase>& opponentCollider)

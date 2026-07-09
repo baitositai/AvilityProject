@@ -94,7 +94,7 @@
   "dropRock": {
     "resourceKey": "dropRock",
     "transparent": true,
-    "scale": 0.3,
+    "scale": 1.0,
     "gravityPower": 0.3,
     "componentKeys": [
       "move",

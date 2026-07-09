@@ -7,6 +7,7 @@
 
 class ParameterEvent;
 class SceneManager;
+class SoundManager;
 class EventManager;
 class EnemyManager;
 class GimmickManager;
@@ -85,6 +86,7 @@ protected:
 	EventManager& eventManager_;
 	EnemyManager& enemyManager_;
 	GimmickManager& gimmickManager_;
+	SoundManager& soundManager_;
 
 	// 型変換用のパラメータを返す関数
 	ParameterEvent* GetParameterEventPtr() { return parameter_.get(); }

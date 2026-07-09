@@ -1,5 +1,6 @@
 #include <DxLib.h>
 #include "../../Manager/Common/ResourceManager.h"
+#include "../../Manager/Common/SoundManager.h"
 #include "../../Manager/Game/UiManager.h"
 #include "../../Factory/FactoryComponent.h"
 #include "../../Utility/UtilityCommon.h"
@@ -200,11 +201,16 @@ void CharacterBase::SetJumpPow(const float jumpPow)
 
 void CharacterBase::Landing()
 {
+	if (parameterCharacter_->isGround_) { return; }
+
 	// ƒWƒƒƒ“ƒv‰ñ”‚ğ–ß‚·
 	parameterCharacter_->jumpCount_ = parameterCharacter_->jumpCountMax_;
 
 	// ’…’n”»’è
 	parameterCharacter_->isGround_ = true;
+
+	// Œø‰Ê‰¹‚ÌÄ¶
+	sndMng_.PlaySe(SoundType::SE::JUMP_LANDING);
 }
 
 const bool CharacterBase::IsInvincible() const

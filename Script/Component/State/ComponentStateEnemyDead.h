@@ -31,6 +31,8 @@ public:
 
 private:
 
+	bool isPlaySe_;
+
 	// Š—LÒ
 	EnemyBase& owner_;
 };

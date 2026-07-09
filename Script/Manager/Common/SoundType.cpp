@@ -16,10 +16,40 @@ const std::map<std::string, SoundType::BGM> SoundType::KEY_BGM_MAP =
 
 const std::map<std::string, SoundType::SE> SoundType::KEY_SE_MAP =
 {
-    {"seGameStart", SoundType::SE::GAME_START},
+	{"seGameStart", SoundType::SE::GAME_START},
 	{"seSelect", SoundType::SE::SELECT},
 	{"seTrainWhistle", SoundType::SE::TRAIN_WHISTLE},
-	{"seDecision", SoundType::SE::DECISION}
+	{"seDecision", SoundType::SE::DECISION},
+	{"seAbilityShotCharge", SoundType::SE::ABILITY_SHOT_CHARGE},
+	{"seAbilityShotStart", SoundType::SE::ABILITY_SHOT_START},
+	{"seAbilityStampCharge", SoundType::SE::ABILITY_STAMP_CHARGE},
+	{"seAbilityStampLanding", SoundType::SE::ABILITY_STAMP_LANDING},
+	{"seAbilityTeleportEnter", SoundType::SE::ABILITY_TELEPORT_ENTER},
+	{"seAbilityTeleportExit", SoundType::SE::ABILITY_TELEPORT_EXIT},
+	{"seAbilityGravityChange", SoundType::SE::ABILITY_GRAVITY_CHANGE},
+	{"seAirSlash", SoundType::SE::AIRSLASH},
+	{"seApplause", SoundType::SE::APPLAUSE},
+	{"seCancel", SoundType::SE::CANCEL},
+	{"seCheers", SoundType::SE::CHEERS},
+	{"seGetAbility", SoundType::SE::GET_ABILITY},
+	{"seGetMoney", SoundType::SE::GET_MONEY},
+	{"seGetPotion", SoundType::SE::GET_POTION},
+	{"seGetTreasure", SoundType::SE::GET_TREASURE},
+	{"seHeal", SoundType::SE::HEAL},
+	{"seJump", SoundType::SE::JUMP},
+	{"seJumpLanding", SoundType::SE::JUMP_LANDING},
+	{"seJumpSecond", SoundType::SE::JUMP_SECOND},
+	{"sePlayerAttackHit", SoundType::SE::PLAYER_ATTACK_HIT},
+	{"sePlayerDamage", SoundType::SE::PLAYER_DAMAGE},
+	{"sePlayerDead", SoundType::SE::PLAYER_DEAD},
+	{"seSwingAxe1", SoundType::SE::SWING_AXE1},
+	{"seSwingAxe2", SoundType::SE::SWING_AXE2},
+	{"seThrow", SoundType::SE::THROW},
+	{"seGrowingBamboo", SoundType::SE::GROWING_BAMBOO},
+	{"seOpenTreasureBox", SoundType::SE::OPEN_TREASURE_BOX},
+	{"seDead", SoundType::SE::DEAD},
+	{"seEventStart", SoundType::SE::EVENT_START},
+	{"seDoor", SoundType::SE::DOOR}
 };
 
 std::string SoundType::GetStringFromBGM(BGM bgmType)

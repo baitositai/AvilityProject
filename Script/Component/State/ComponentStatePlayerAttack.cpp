@@ -1,4 +1,5 @@
 #include "../../Manager/Common/InputManager.h"
+#include "../../Manager/Common/SoundManager.h"
 #include "../../Manager/Game/CollisionManager.h"
 #include "../../Object/Character/Player.h"
 #include "../../Object/ActorBase.h"
@@ -72,6 +73,7 @@ void ComponentStatePlayerAttack::Update()
 		// コライダーを活動状態へ
 		collider_->SetIsActive(true);
 		isAttackSecond_ = true;
+		soundManager_.PlaySe(SoundType::SE::SWING_AXE2);
 	}
 
 	// 攻撃者の前方向を取得

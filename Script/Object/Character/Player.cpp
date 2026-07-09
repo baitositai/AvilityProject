@@ -2,6 +2,7 @@
 #include "../../Manager/Common/SceneManager.h"
 #include "../../Manager/Common/Camera.h"
 #include "../../Manager/Common/InputManager.h"
+#include "../../Manager/Common/SoundManager.h"
 #include "../../Manager/Game/PlayerManager.h"
 #include "../../Manager/Game/GimmickManager.h"
 #include "../../Manager/Game/UiManager.h"
@@ -161,6 +162,9 @@ void Player::Dead()
 
 	// カメラシェイク
 	mainCamera.SetCameraShake(0.3f, 8.0f);
+
+	// サウンド再生
+	sndMng_.PlaySe(SoundType::SE::PLAYER_DEAD);
 }
 
 void Player::Damage(const int damage, const Vector2& hitPos)
@@ -182,6 +186,9 @@ void Player::Damage(const int damage, const Vector2& hitPos)
 
 	// アイテムのデタッチ
 	DetachItem();
+
+	// サウンド再生
+	sndMng_.PlaySe(SoundType::SE::PLAYER_DAMAGE);
 }
 
 void Player::Ready()
@@ -278,6 +285,9 @@ void Player::ThrowItem(const Vector2F& throwDir)
 
 void Player::Heal(const int healHp)
 {
+	// サウンド再生
+	sndMng_.PlaySe(SoundType::SE::HEAL);
+
 	// HPの設定
 	parameterPlayer_->hp_ += healHp;
 

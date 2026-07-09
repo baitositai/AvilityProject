@@ -3,6 +3,7 @@
 #include "../../Common/Vector2F.h"
 #include "../../Manager/Common/InputManager.h"
 #include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/SoundManager.h"
 #include "../../Manager/Game/CollisionManager.h"
 #include "../../Collider/ColliderBox.h"
 
@@ -162,6 +163,9 @@ void ComponentAvilityShot::ProcessInputShot()
 
 		// 攻撃判定有効
 		parameter_.isAction_ = true;
+
+		// 効果音再生
+		soundManager_.PlaySe(SoundType::SE::ABILITY_SHOT_CHARGE);
 	}
 }
 
@@ -269,6 +273,12 @@ void ComponentAvilityShot::ProcessInputCharge()
 
 		// インターバル初期化
 		parameter_.shotDamageInterval_ = -1.0f;
+
+		// 効果音停止
+		soundManager_.StopSe(SoundType::SE::ABILITY_SHOT_CHARGE);
+
+		// 効果音再生
+		soundManager_.PlaySe(SoundType::SE::ABILITY_SHOT_START);
 
 		// 状態遷移
 		currentState_ = "shot";
