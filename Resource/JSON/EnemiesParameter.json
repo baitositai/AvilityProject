@@ -713,5 +713,95 @@
         "probability": 1.0
       }
     }
+  },
+  "gaiaGolem": {
+    "componentKeys": [
+      "knockBack",
+      "invincible",
+      "gravity",
+      "move",
+      "spriteAnimation"
+    ],
+    "stateComponentKeys": {
+      "alive": "enemyAlive",
+      "attack": "attackDefault",
+      "hit": "dummy",
+      "dead": "enemyDead",
+      "spawn": "dummy",
+      "enter": "dummy"
+    },
+    "resourceKey": "gaiaGolem",
+    "scale": 3.0,
+    "angle": 0.0,
+    "direction": true,
+    "transparent": true,
+    "moveSpeed": 5.0,
+    "hp": 1000,
+    "bossUiNamePlateIndex": 2,
+    "attackPower": 50,
+    "gravityPower": 9.8,
+    "logicDelay": 1.0,
+    "defaultAttackDistance": 50.0,
+    "defaultAttackRadius": 50.0,
+    "defaultAttackStartFrame": 27,
+    "weight": 0.9,
+    "invincibleTimeMax": 2.0,
+    "attackStartDistance": 150.0,
+    "permissibleDistance": 10.0,
+    "eyeAngle": 70.0,
+    "eyeDistance": 700.0,
+    "spawnRate": 0.1,
+    "habitatType": "land",
+    "divisionNum": {
+      "x": 8,
+      "y": 5
+    },
+    "hitBoxSize": {
+      "x": 56,
+      "y": 56
+    },
+    "localPos": {
+      "x": 0,
+      "y": -114
+    },
+    "defaultAttackLoaclPos": {
+      "x": 50,
+      "y": 8
+    },
+    "animation": {
+      "idle": {
+        "no": 0,
+        "speed": 0.1,
+        "num": 8
+      },
+      "walk": {
+        "no": 1,
+        "speed": 0.1,
+        "num": 8
+      },
+      "dead": {
+        "no": 2,
+        "speed": 0.1,
+        "num": 5
+      },
+      "attack": {
+        "no": 3,
+        "speed": 0.1,
+        "num": 7
+      },
+      "attack2": {
+        "no": 4,
+        "speed": 0.1,
+        "num": 7
+      }
+    },
+    "logic": {
+      "patrol": {
+        "probability": 1.0
+      },
+      "dropRock": {
+        "probability": 1.5
+      }
+    }
   }
 }

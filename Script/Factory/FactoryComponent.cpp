@@ -37,12 +37,14 @@
 #include "../../Component/Logic/ComponentLogicBambooGrowing.h"
 #include "../../Component/Logic/ComponentLogicPandaShot.h"
 #include "../../Component/Logic/ComponentLogicMaid.h"
+#include "../../Component/Logic/ComponentLogicDropRock.h"
 
 #include "../../Object/Character/CharacterBase.h" 
 #include "../../Object/Character/Player.h" 
 #include "../../Object/Character/Enemy/EnemyBase.h" 
 #include "../../Object/Character/Enemy/EnemyPanda.h" 
 #include "../../Object/Character/Enemy/EnemyMaid.h" 
+#include "../../Object/Character/Enemy/EnemyGaiaGolem.h" 
 #include "../../Object/ActorBase.h" 
 
 #include "FactoryComponent.h"
@@ -324,6 +326,18 @@ std::unique_ptr<ComponentLogicMaid> FactoryComponent::CreateComponentLogicMaid(A
     return std::make_unique<ComponentLogicMaid>(*enemyPtr);
 }
 
+std::unique_ptr<ComponentLogicDropRock> FactoryComponent::CreateComponentLogicDropRock(ActorBase& owner)
+{
+    auto* enemyPtr = dynamic_cast<EnemyGaiaGolem*>(&owner);
+
+    if (enemyPtr == nullptr)
+    {
+        // ÉLÉÉÉXÉgÇ…é∏îsÇµÇΩèÍçánullptrÇï‘Ç∑
+        return nullptr;
+    }
+    return std::make_unique<ComponentLogicDropRock>(*enemyPtr);
+}
+
 std::unique_ptr<ComponentKnockBack> FactoryComponent::CreateComponentKnockBack(ActorBase& owner)
 {
     return std::make_unique<ComponentKnockBack>(owner);
@@ -599,6 +613,10 @@ FactoryComponent::FactoryComponent()
     componentCreateMap_.emplace("maid", [this](ActorBase& owner)
         {
             return CreateComponentLogicMaid(owner);
+        });
+    componentCreateMap_.emplace("dropRock", [this](ActorBase& owner)
+        {
+            return CreateComponentLogicDropRock(owner);
         });
     componentCreateMap_.emplace("debugCreateItemAvility", [this](ActorBase& owner)
         {

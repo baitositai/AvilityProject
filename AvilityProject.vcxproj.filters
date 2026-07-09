@@ -717,6 +717,21 @@
     <ClCompile Include="Script\Scene\SceneShop.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Script\Object\Character\Enemy\EnemyGaiaGolem.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Parameter\Character\Enemy\ParameterEnemyGaiaGolem.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Component\Logic\ComponentLogicDropRock.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Object\Gimmick\GimmickDropRock.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\OnHit\OnHitDropRock.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\Common\CharacterString.h">
@@ -1612,5 +1627,20 @@
     <FxCompile Include="Script\Shader\Pixel\StandardTexture.hlsl" />
     <FxCompile Include="Script\Shader\Pixel\StandardSprite.hlsl" />
     <FxCompile Include="Script\Shader\Pixel\EnemySprite.hlsl" />
+    <ClInclude Include="Script\Object\Character\Enemy\EnemyGaiaGolem.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Parameter\Character\Enemy\ParameterEnemyGaiaGolem.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Component\Logic\ComponentLogicDropRock.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Object\Gimmick\GimmickDropRock.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\OnHit\OnHitDropRock.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

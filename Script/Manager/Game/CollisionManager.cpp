@@ -373,6 +373,9 @@ void CollisionManager::InitTagMatrix()
 
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::SHOP)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;								// プレイヤーと店
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::SHOP)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::DROP_ROCK)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;						// テレポートと竹
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::DROP_ROCK)] = true;
 }
 
 void CollisionManager::InitColliderMatrix()

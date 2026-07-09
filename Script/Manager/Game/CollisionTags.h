@@ -36,6 +36,7 @@ public:
 		TREASURE_CHEST,				// •ó” 
 		BAMBOO,						// ’|
 		SHOP,						// “X
+		DROP_ROCK,					// Šâ—Ž‚Æ‚µ
 		MAX
 	};
 

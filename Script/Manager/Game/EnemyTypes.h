@@ -17,6 +17,7 @@ public:
 		// É{ÉX
 		MAID,
 		PANDA,
+		GAIA_GOLEM,
 
 		MAX,
 	};
