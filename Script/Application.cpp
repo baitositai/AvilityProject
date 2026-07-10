@@ -80,7 +80,7 @@ void Application::Run()
 
 #ifdef _DEBUG
 		// デバッグフレーム描画
-		fps_->Draw();
+		//fps_->Draw();
 #endif
 		ScreenFlip();
 
