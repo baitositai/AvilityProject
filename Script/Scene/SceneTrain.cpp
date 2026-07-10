@@ -77,7 +77,7 @@ void SceneTrain::NormalUpdate()
 	SceneBase::NormalUpdate();
 
 #ifdef _DEBUG	
-	DebugUpdate();
+	//DebugUpdate();
 #endif 
 }
 
@@ -87,7 +87,7 @@ void SceneTrain::NormalDraw()
 
 #ifdef _DEBUG
 	// デバッグ用の情報描画
-	DebugDraw();
+	//DebugDraw();
 #endif
 }
 

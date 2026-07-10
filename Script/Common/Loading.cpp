@@ -21,9 +21,9 @@ void Loading::Init()
 
 	//ローディング用文字列設定
 	constexpr int FONT_SIZE = 32;
-	const std::wstring& fontName = ResourceManager::GetInstance().GetFontName("fontBokutachi");
+	const std::wstring& fontName = ResourceManager::GetInstance().GetFontName("fontDot");
 	loadingString_.fontHandle = FontManager::GetInstance().CreateMyFont(fontName, FONT_SIZE, 0);
-	loadingString_.color = UtilityCommon::RED;
+	loadingString_.color = UtilityCommon::WHITE;
 	loadingString_.pos = { LOADING_STRING_POS_X, LOADING_STRING_POS_Y };
 	loadingString_.string = L"Now loading";
 }
