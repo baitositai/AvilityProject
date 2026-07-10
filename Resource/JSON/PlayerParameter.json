@@ -51,8 +51,7 @@
       "move",
       "spriteAnimation",
       "invincible",
-      "cameraRangeCheck",
-      "debugCreateItemAvility"
+      "cameraRangeCheck"
     ],
     "dashSpeed": 4.0,
     "damageColor": {
