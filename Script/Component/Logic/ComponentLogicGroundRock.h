@@ -50,9 +50,8 @@ private:
 
 	enum class STATE
 	{
-		NONE,
-		WAIT,
-		DROP,
+		ANIMATION,
+		THROW_GROUNDROCKIT,
 		END
 	};
 
@@ -73,6 +72,9 @@ private:
 	//攻撃力
 	static constexpr int ATTACK_POINT = 40;
 
+	//GroundRock生成タイミングのアニメーションインデックス
+	static constexpr int CREATE_GROUNDROCK_INDEX = 35;
+
 	// 所有者
 	EnemyGaiaGolem& owner_;
 
@@ -85,10 +87,11 @@ private:
 	//近接攻撃の座標
 	Vector2F attackPos_;
 
-	//ランダムに岩のY座標を決める(X座標は固定)
-	float SetRandomPosX(const std::vector<float>rockPosX);
+	//GroundRockを生成フラグ
+	bool isCreateGroundRock_;
 
-	//生成した岩が、前に生成した岩の範囲内にあるかを判定
-	const bool IsRangeDropRock(const std::vector<float>rockPosX, const float currentPosX);
+	//GroundRockの生成
+	void CreateGroundRock(void);
+
 };
 

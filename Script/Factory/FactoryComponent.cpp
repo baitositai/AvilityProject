@@ -633,7 +633,7 @@ FactoryComponent::FactoryComponent()
         });
     componentCreateMap_.emplace("groundRock", [this](ActorBase& owner)
         {
-            return CreateComponentLogicDropRock(owner);
+            return CreateComponentLogicGroundRock(owner);
         });
     componentCreateMap_.emplace("debugCreateItemAvility", [this](ActorBase& owner)
         {

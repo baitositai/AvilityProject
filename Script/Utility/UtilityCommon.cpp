@@ -391,6 +391,22 @@ float UtilityCommon::EaseInOutBack(float time, const float totalTime, const floa
     return distance * easedT + start;
 }
 
+float UtilityCommon::EaseQuadComeBack(float _time, const float _totalTime, const float _start, const float _end)
+{
+    // 補間係数
+    float t = _time / _totalTime;
+    float dis = _end - _start;
+    if (t < 0.0f) t = 0.0f;
+    if (t > 1.0f) t = 1.0f;
+
+    //以下、２次関数の計算
+    Vector2F graph_vertex = { 0.5f,0.5f };
+    float accel = -4.0f;
+    float pow = powf(t - graph_vertex.x, 2.0f);
+    float quad= (accel * pow) + graph_vertex.y;
+    return _start + dis * quad;
+}
+
 std::wstring UtilityCommon::GetWStringFromString(const std::string& str)
 {
     //根幹数を正しく使うには2回呼び出す必要がある

@@ -118,6 +118,7 @@ void GimmickManager::CreateBossDoor(const Vector2F& pos)
 	gimmickListMap_[GimmickTypes::TYPE::DOOR].push_back(std::move(door));
 }
 
+
 void GimmickManager::AllDeleteTarget()
 {
 	for (auto& target : gimmickListMap_.at(GimmickTypes::TYPE::TARGET))

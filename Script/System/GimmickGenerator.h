@@ -68,5 +68,5 @@ private:
 	std::unique_ptr<GimmickTreasureChest> CreateGimmickTreasureChest();
 	std::unique_ptr<GimmickShop> CreateGimmickShop();
 	std::unique_ptr<GimmickDropRock> CreateGimmickDropRock();
-	std::unique_ptr<GimmickDropRock> CreateGimmickGroundRock();
+	std::unique_ptr<GimmickGroundRock> CreateGimmickGroundRock();
 };

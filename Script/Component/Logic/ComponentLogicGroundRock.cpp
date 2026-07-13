@@ -34,6 +34,7 @@ void ComponentLogicGroundRock::Create()
 void ComponentLogicGroundRock::Init()
 {
 	ComponentLogicBase::Init();
+	isCreateGroundRock_ = false;
 
 	//待機アニメーション
 	owner_.GetAnimation().Play(Animation::TYPE::ATTACK_2, false);
@@ -43,20 +44,23 @@ void ComponentLogicGroundRock::Init()
 
 	// 攻撃のコライダー設定
 	attackCollider_->SetIsActive(true);
-
-	for (int i = 0; i < createRockNum; i++)
-	{
-		////岩生成
-		//GimmickManager::CreateParameter createParameter = {};
-		//createParameter.type = GimmickTypes::TYPE::DROP_ROCK;
-		//createParameter.pos = Vector2F::AddVector2F(owner_.GetParameter().pos_);
-		//createParameter.attackPower = ATTACK_POINT;
-		//gimmickManager_.Create(createParameter);
-	}
 }
 
 void ComponentLogicGroundRock::Update()
 {
+	Animation& animation = owner_.GetAnimation();
+	Vector2F dir = Vector2F::MulVector2FFloat(parameter_.GetFront(), parameter_.scale_);
+	attackPos_ = Vector2F::AddVector2F(parameter_.pos_, Vector2F::MulVector2FFloat(dir, parameter_.defaultAttackDistance_));
+	if (!animation.IsPlay())
+	{
+		isEnd_ = true;
+		attackCollider_->SetIsActive(false);
+	}
+	//一定のアニメーションインデックスになったら
+	else if (animation.GetAnimationIndex()== CREATE_GROUNDROCK_INDEX)
+	{
+		CreateGroundRock();
+	}
 }
 
 void ComponentLogicGroundRock::Remove()
@@ -65,4 +69,23 @@ void ComponentLogicGroundRock::Remove()
 
 void ComponentLogicGroundRock::AttackReset()
 {
+}
+
+void ComponentLogicGroundRock::CreateGroundRock(void)
+{
+	//すでに生成していたら処理を飛ばす
+	if (isCreateGroundRock_)return;
+
+	for (int i = 0; i < ROCK_CREATE_NUM_MIN; i++)
+	{
+		//岩生成
+		GimmickManager::CreateParameter createParameter = {};
+		createParameter.type = GimmickTypes::TYPE::GROUND_ROCK;
+		Vector2F enemyPos = owner_.GetParameter().pos_;
+		createParameter.pos = attackPos_;
+		createParameter.attackPower = ATTACK_POINT;
+		createParameter.moveDir = parameter_.direction_ ? Vector2F(-1.0f, 0.0f) : Vector2F(1.0f, 0.0f);
+		gimmickManager_.Create(createParameter);
+	}
+	isCreateGroundRock_ = true;
 }

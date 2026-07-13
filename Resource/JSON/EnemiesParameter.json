@@ -799,11 +799,8 @@
       "patrol": {
         "probability": 1.0
       },
-      "dropRock": {
-        "probability": 1.5
-      },
       "groundRock": {
-        "probability": 1.5
+        "probability": 3.0
       }
     }
   }

@@ -139,6 +139,16 @@ public:
 	/// <param name="_end">終了位置</param>
 	/// <returns>変化量</returns>
 	static float EaseInOutBack(float _time, const float _totalTime, const float _start, const float _end);
+
+	/// <summary>
+	/// 元に戻る二次関数的な動き
+	/// </summary>
+	/// <param name="_time">経過時間</param>
+	/// <param name="_totalTime">アニメーション総時間</param>
+	/// <param name="_start">開始位置</param>
+	/// <param name="_end">終了位置</param>
+	/// <returns></returns>
+	static float EaseQuadComeBack(float _time, const float _totalTime, const float _start, const float _end);
 	
 	/// <summary>
 	/// stringオブジェクトから(SJIS)からwstringオブジェクトに変換

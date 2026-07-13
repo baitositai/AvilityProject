@@ -9,6 +9,7 @@
 #include "../../Object/Gimmick/GimmickGroundRock.h"
 #include "../../Object/Common/Animation.h"
 #include "ComponentLogicDropRock.h"
+#include "ComponentLogicGroundRock.h"
 
 ComponentLogicDropRock::ComponentLogicDropRock(EnemyGaiaGolem& owner):
 	ComponentLogicBase(owner),
@@ -51,7 +52,7 @@ void ComponentLogicDropRock::Init()
 	{
 		//ä‚ê∂ê¨
 		GimmickManager::CreateParameter createParameter = {};
-		createParameter.type = GimmickTypes::TYPE::GROUND_ROCK;
+		createParameter.type = GimmickTypes::TYPE::DROP_ROCK;
 
 		createParameter.pos.y = ROCK_POS_Y;
 		if (i < playerNum) { createParameter.pos.x = playersPos[i].x; }

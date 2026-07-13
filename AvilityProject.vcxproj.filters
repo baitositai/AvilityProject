@@ -738,9 +738,6 @@
     <ClCompile Include="Script\Component\Logic\ComponentLogicGroundRock.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Script\Component\Logic\ComponentLogicRockWave.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Script\Component\ComponentTextAnimation.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -1641,9 +1638,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Script\Component\Logic\ComponentLogicGroundRock.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Script\Component\Logic\ComponentLogicRockWave.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Script\Component\ComponentTextAnimation.h">
