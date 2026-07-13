@@ -1,7 +1,9 @@
 #pragma once
 #include "ParameterGimmick.h"
-class ParameterGimmickDropRock :
+class ParameterGimmickGroundRock :
     public ParameterGimmick
 {
+public:
+private:
 };
 

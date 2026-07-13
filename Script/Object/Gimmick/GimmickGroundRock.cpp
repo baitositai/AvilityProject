@@ -59,7 +59,7 @@ void GimmickGroundRock::Update()
 	parameterGroundRock_->pos_.y -= jumpPow_;
 	parameterGroundRock_->pos_.x -= horizonSpd_;
 
-	//角度を開店
+	//角度を回転
 	parameterGroundRock_->angle_ += UtilityCommon::Deg2RadF(ANGLE_SPD);
 
 	// 基底クラスの処理
