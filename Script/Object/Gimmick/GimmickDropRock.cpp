@@ -21,20 +21,6 @@ GimmickDropRock::~GimmickDropRock()
 {
 }
 
-void GimmickDropRock::CreateRock(const Vector2F _createPos)
-{
-	parameterDropRock_->pos_ = _createPos;
-	parameterDropRock_->hitSize_ = Vector2(ROCK_SIZE, ROCK_SIZE);
-	// コライダー
-	collider_ = std::make_shared<ColliderCircle>(*this, CollisionTags::TAG::DROP_ROCK, parameterDropRock_->pos_, hitRadius_);
-
-	// 衝突後処理
-	onHit_ = std::make_unique<OnHitDropRock>(*this);
-
-	// 初期化
-	ActorBase::Init();
-}
-
 void GimmickDropRock::Init()
 {
 	parameterDropRock_->hitSize_ = Vector2(ROCK_SIZE, ROCK_SIZE);
@@ -50,6 +36,8 @@ void GimmickDropRock::Init()
 
 	isDead_ = false;
 	waitCnt_ = 0.0f;
+
+
 	update_ = std::bind(&GimmickDropRock::UpdateWait, this);
 }
 
@@ -91,6 +79,10 @@ void GimmickDropRock::UpdateDrop(void)
 	// コンポーネント有効
 	SetComponentActive("gravity", true);
 	SetComponentActive("move", true);
+}
+
+void GimmickDropRock::UpdateGroundRock()
+{
 }
 
 void GimmickDropRock::CheckGroundStatus(float moveVal, bool isXAxis)

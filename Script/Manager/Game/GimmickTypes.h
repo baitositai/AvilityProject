@@ -13,6 +13,7 @@ public:
 		GROWING_BAMBOO,	// L‚Ñ‚é’|
 		SHOP,			// ”ƒ‚¢•¨
 		DROP_ROCK,		// Šâ—Ž‚Æ‚µ
+		GROUND_ROCK,	// ’n–Ê‚©‚çŠâ‚ª”ò‚Ño‚Ä‚­‚éUŒ‚
 		MAX
 	};
 };

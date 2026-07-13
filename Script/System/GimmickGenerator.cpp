@@ -38,6 +38,10 @@ GimmickGenerator::GimmickGenerator()
 		{
 			return CreateGimmickDropRock();
 		});
+	createGimmickMap_.emplace(GimmickTypes::TYPE::GROUND_ROCK, [this]()
+		{
+			return CreateGimmickDropRock();
+		});
 }
 
 GimmickGenerator::~GimmickGenerator()
@@ -227,5 +231,23 @@ std::unique_ptr<GimmickDropRock> GimmickGenerator::CreateGimmickDropRock()
 
 	// 生成したものを返す
 	auto parameter = std::make_unique<ParameterGimmick>(*parameterDropRock);
+	return std::make_unique<GimmickDropRock>(std::move(parameter));
+}
+
+std::unique_ptr<GimmickDropRock> GimmickGenerator::CreateGimmickGroundRock()
+{
+	// 専用のパラメータにキャスト
+	auto parameterBase = templateParameterMap_.at(GimmickTypes::TYPE::GROUND_ROCK).get();
+	auto parameterGroundRock = dynamic_cast<ParameterGimmick*>(parameterBase);
+
+	// 空の場合
+	if (parameterGroundRock == nullptr)
+	{
+		// 空で返す
+		return nullptr;
+	}
+
+	// 生成したものを返す
+	auto parameter = std::make_unique<ParameterGimmick>(*parameterGroundRock);
 	return std::make_unique<GimmickDropRock>(std::move(parameter));
 }

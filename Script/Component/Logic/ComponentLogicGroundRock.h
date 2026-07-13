@@ -6,20 +6,20 @@ class ParameterGimmick;
 class ColliderCircle;
 class ParameterEnemyGaiaGolem;
 
-class ComponentLogicDropRock :
+class ComponentLogicGroundRock :
     public ComponentLogicBase
 {
 public:
 
-    /// <summary>
-    /// コンストラクタ
-    /// </summary>
-    ComponentLogicDropRock(EnemyGaiaGolem& owner);
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	ComponentLogicGroundRock(EnemyGaiaGolem& owner);
 
-    /// <summary>
-    /// デストラクタ
-    /// </summary>
-    ~ComponentLogicDropRock();
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
+	~ComponentLogicGroundRock() override;
 
 	/// <summary>
 	/// 生成処理
@@ -57,7 +57,9 @@ private:
 	};
 
 	//最小の岩の生成数
-	static constexpr int ROCK_CREATE_NUM_MIN = 3;
+	static constexpr int ROCK_CREATE_NUM_MIN = 2;
+
+	//岩の生成座標
 
 	//岩座標のY固定座標
 	static constexpr float ROCK_POS_Y = 180.0f;

@@ -38,6 +38,7 @@
 #include "../../Component/Logic/ComponentLogicPandaShot.h"
 #include "../../Component/Logic/ComponentLogicMaid.h"
 #include "../../Component/Logic/ComponentLogicDropRock.h"
+#include "../../Component/Logic/ComponentLogicGroundRock.h"
 
 #include "../../Object/Character/CharacterBase.h" 
 #include "../../Object/Character/Player.h" 
@@ -338,6 +339,18 @@ std::unique_ptr<ComponentLogicDropRock> FactoryComponent::CreateComponentLogicDr
     return std::make_unique<ComponentLogicDropRock>(*enemyPtr);
 }
 
+std::unique_ptr<ComponentLogicGroundRock> FactoryComponent::CreateComponentLogicGroundRock(ActorBase& owner)
+{
+    auto* enemyPtr = dynamic_cast<EnemyGaiaGolem*>(&owner);
+
+    if (enemyPtr == nullptr)
+    {
+        // ÉLÉÉÉXÉgÇ…é∏îsÇµÇΩèÍçánullptrÇï‘Ç∑
+        return nullptr;
+    }
+    return std::make_unique<ComponentLogicGroundRock>(*enemyPtr);
+}
+
 std::unique_ptr<ComponentKnockBack> FactoryComponent::CreateComponentKnockBack(ActorBase& owner)
 {
     return std::make_unique<ComponentKnockBack>(owner);
@@ -615,6 +628,10 @@ FactoryComponent::FactoryComponent()
             return CreateComponentLogicMaid(owner);
         });
     componentCreateMap_.emplace("dropRock", [this](ActorBase& owner)
+        {
+            return CreateComponentLogicDropRock(owner);
+        });
+    componentCreateMap_.emplace("groundRock", [this](ActorBase& owner)
         {
             return CreateComponentLogicDropRock(owner);
         });

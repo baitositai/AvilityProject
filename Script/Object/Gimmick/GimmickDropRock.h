@@ -20,12 +20,6 @@ public:
 	~GimmickDropRock() override;
 
 	/// <summary>
-	/// 岩生成
-	/// </summary>
-	/// <param name="_createPos"></param>
-	void CreateRock(const Vector2F _createPos);
-
-	/// <summary>
 	/// 初期化処理
 	/// </summary>
 	void Init() override;
@@ -61,6 +55,8 @@ private:
 
 	//状態
 	STATE state_;
+
+	//更新処理
 	std::function<void(void)> update_;
 
 	//待機時間
@@ -76,7 +72,12 @@ private:
 	void CheckGroundStatus(float moveVal, bool isXAxis);
 
 	//Drop待機状態
-	void UpdateWait(void);
-	void UpdateDrop(void);
+	void UpdateWait();
+	void UpdateDrop();
+
+	//地面から岩が出てくる攻撃
+	void UpdateGroundRock();
+
+
 };
 

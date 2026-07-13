@@ -801,6 +801,9 @@
       },
       "dropRock": {
         "probability": 1.5
+      },
+      "groundRock": {
+        "probability": 1.5
       }
     }
   }
