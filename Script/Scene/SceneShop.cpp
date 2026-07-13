@@ -327,8 +327,8 @@ void SceneShop::Purchase()
 	const Vector2F createPos = gimmickMng_.GetShopPos();
 
 	// ランダムに散らすためのオフセット計算
-	float offsetX = static_cast<float>(GetRand(80) - 40);
-	float offsetY = static_cast<float>(-(GetRand(40) + 10)); // 必ずマイナス値（ショップより上）にする
+	float offsetX = static_cast<float>(GetRand(250) - GetRand(250));
+	float offsetY = static_cast<float>(-(GetRand(50) + 10)); // 必ずマイナス値（ショップより上）にする
 
 	Vector2F randomizedPos;
 	randomizedPos.x = createPos.x + offsetX;

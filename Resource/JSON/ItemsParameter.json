@@ -2,19 +2,23 @@
   "abilities": {
     "superman": {
       "index": 0,
-      "amount": 2000
+      "amount": 2000,
+      "shopMessage": "スーパーマンのように強くなる"
     },
     "airwalk": {
       "index": 1,
-      "amount": 2000
+      "amount": 2000,
+      "shopMessage": "無限ジャンプで空を歩けるぞ"
     },
     "gravityControll": {
       "index": 2,
-      "amount": 1500
+      "amount": 1500,
+      "shopMessage": "上下左右自由に重力を切り替え"
     },
     "shot": {
       "index": 3,
-      "amount": 3000
+      "amount": 3000,
+      "shopMessage": "縦横無人にに飛び回る"
     },
     "airslash": {
       "index": 4,

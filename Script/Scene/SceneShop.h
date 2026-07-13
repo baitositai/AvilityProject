@@ -68,10 +68,12 @@ private:
 	{
 		ENTER,				// 入室
 		EXIT,				// 退室
-		AMOUNT_DISPLAY,		// 金額表示
 		INSUFFICIENT_FUNDS,	// 残額不足
 		CONFIRMATION,		// 確認
 		THANK_YOU,			// 感謝
+		ITEM_FOOD,			// 食べ物
+		ITEM_ABILITY,		// 能力
+		ITEM_POTION,		// ポーション
 		MAX
 	};
 
@@ -79,10 +81,12 @@ private:
 	std::unordered_map<TEXT_TYPE, std::wstring> TEXT_MAP = {
 		{ TEXT_TYPE::ENTER, L"いらっしゃいませ" },
 		{ TEXT_TYPE::EXIT, L"また来てな" },
-		{ TEXT_TYPE::AMOUNT_DISPLAY, L"%dGになります" },
 		{ TEXT_TYPE::INSUFFICIENT_FUNDS, L"お金が足り―ひん" },
 		{ TEXT_TYPE::CONFIRMATION, L"これを買いますか？" },
 		{ TEXT_TYPE::THANK_YOU, L"ありがとうございやした" },
+		{ TEXT_TYPE::ITEM_FOOD, L"体力が回復するぞ" },
+		{ TEXT_TYPE::ITEM_ABILITY, L"特別な力が手に入るぞ" },
+		{ TEXT_TYPE::ITEM_POTION, L"ステータスを強化するぞ" },
 	};
 
 	// 背景枚数
