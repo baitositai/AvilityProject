@@ -278,6 +278,12 @@ void SceneManager::StartFadeIn(const Fader::STATE fadeState)
 	isSceneChanging_ = false;
 }
 
+void SceneManager::SetShopScene(const Input::JOYPAD_NO padNo)
+{
+	sceneShop_->SetPadNo(padNo);
+	subScene_ = sceneShop_;
+}
+
 SceneManager::SceneManager()
 {
 	mainScreen_ = -1;
@@ -287,6 +293,7 @@ SceneManager::SceneManager()
 	fader_ = nullptr;
 	camera_ = nullptr;
 	subScene_ = nullptr;
+	sceneShop_ = nullptr;
 	isSceneChanging_ = false;
 	deltaTime_ = 1.0f / 60.0f;	// デルタタイム
 	totalTime_ = -1.0f;
@@ -318,6 +325,9 @@ void SceneManager::DoChangeScene(SCENE_ID sceneId)
 	// エフェクトを削除
 	SpriteEffectManager::GetInstance().Clear();
 
+	// 初期化
+	sceneShop_ = nullptr;
+
 	// シーン生成
 	switch (sceneId_)
 	{
@@ -327,10 +337,12 @@ void SceneManager::DoChangeScene(SCENE_ID sceneId)
 
 	case SCENE_ID::TRAIN:
 		CreateScene(std::make_shared<SceneTrain>());
+		sceneShop_ = std::make_shared<SceneShop>();
 		break;
 
 	case SCENE_ID::GAME:
 		CreateScene(std::make_shared<SceneGame>());
+		sceneShop_ = std::make_shared<SceneShop>();
 		break;
 
 	case SCENE_ID::BOSS:

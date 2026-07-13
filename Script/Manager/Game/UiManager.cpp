@@ -39,6 +39,7 @@ void UiManager::Draw(const LAYER layer)
 	}
 	for (const auto& ui : uiMap_[layer])
 	{
+		
 		ui->Draw();
 	}
 }
@@ -93,6 +94,18 @@ void UiManager::Clear()
 		}
 	}
 	uiMap_.clear();
+}
+
+void UiManager::SetAllIsActive(const bool isActive, const LAYER layer)
+{
+	if (uiMap_.empty())
+	{
+		return;
+	}
+	for (auto& ui : uiMap_.at(layer))
+	{
+		ui->SetIsActive(isActive);
+	}
 }
 
 UiManager::UiManager()

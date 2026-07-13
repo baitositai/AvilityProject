@@ -105,6 +105,7 @@ void SceneTitle::NormalUpdate()
 		sndMng_.PlaySe(SoundType::SE::DECISION);
 		sndMng_.StopBgm(SoundType::BGM::TRAIN);
 		scoreManager_.Clear();
+		scoreManager_.AddTotalScore(10000);	// ‰ŠúƒXƒRƒA
 		playerMng_.Create();
 		return;
 	}

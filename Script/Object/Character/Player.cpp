@@ -110,7 +110,7 @@ void Player::DebugDraw()
  	CharacterBase::DebugDraw();
 
 	// 選ぶやつのデバッグ描画
-	componentMap_["debugCreateItemAvility"]->DebugDraw();
+	//componentMap_["debugCreateItemAvility"]->DebugDraw();
 
 	// メッセージ
 	std::vector<std::wstring> mess(AVILITY_MAX, L"none");

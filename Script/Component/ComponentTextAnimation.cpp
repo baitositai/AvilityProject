@@ -62,7 +62,7 @@ void ComponentTextAnimation::Draw()
 	}
 
 	// ’†‰›‚¼‚ë‚¦‚Å•`‰æ
-	text_.DrawCenter();
+	text_.DrawFormatCenter();
 }
 
 bool ComponentTextAnimation::IsEnd()

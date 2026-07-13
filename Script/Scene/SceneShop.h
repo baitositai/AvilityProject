@@ -10,6 +10,8 @@ class BackGround;
 class ItemBase;
 class PixelMaterial;
 class PixelRenderer;
+class UiBase;
+class UiMoney;
 
 class SceneShop : public SceneBase
 {
@@ -28,8 +30,7 @@ public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	/// <param name="no">画面を操作するユーザー</param>
-	SceneShop(const Input::JOYPAD_NO padNo);
+	SceneShop();
 
 	/// <summary>
 	/// デストラクタ
@@ -46,6 +47,12 @@ public:
 	/// </summary>
 	void Init() override;
 
+	/// <summary>
+	/// PAD番号を指定
+	/// </summary>
+	/// <param name="padNo">画面を操作するユーザー</param>
+	void SetPadNo(const Input::JOYPAD_NO padNo) { padNo_ = padNo; }
+
 private:
 
 	// 状態
@@ -54,6 +61,28 @@ private:
 		SELECT,
 		CHECK,
 		MAX
+	};
+
+	// テキスト種類
+	enum class TEXT_TYPE
+	{
+		ENTER,				// 入室
+		EXIT,				// 退室
+		AMOUNT_DISPLAY,		// 金額表示
+		INSUFFICIENT_FUNDS,	// 残額不足
+		CONFIRMATION,		// 確認
+		THANK_YOU,			// 感謝
+		MAX
+	};
+
+	// テキストマップ
+	std::unordered_map<TEXT_TYPE, std::wstring> TEXT_MAP = {
+		{ TEXT_TYPE::ENTER, L"いらっしゃいませ" },
+		{ TEXT_TYPE::EXIT, L"また来てな" },
+		{ TEXT_TYPE::AMOUNT_DISPLAY, L"%dGになります" },
+		{ TEXT_TYPE::INSUFFICIENT_FUNDS, L"お金が足り―ひん" },
+		{ TEXT_TYPE::CONFIRMATION, L"これを買いますか？" },
+		{ TEXT_TYPE::THANK_YOU, L"ありがとうございやした" },
 	};
 
 	// 背景枚数
@@ -68,8 +97,11 @@ private:
 	// 品物の最大数
 	static constexpr int ITEM_MAX = ROW * COL;
 
+	// 矢印相対位置
+	const Vector2 ARROW_LOCAL_POS = { 64, 64 };
+
 	// パッド番号
-	const Input::JOYPAD_NO padNo_;
+	Input::JOYPAD_NO padNo_;
 
 	// 選択番号
 	int selectIndex_;
@@ -80,14 +112,30 @@ private:
 	// 矢印ハンドル
 	int arrowHandle_;
 
+	// SINフレーム
+	float frameCount_;
+
 	// 状態
 	STATE state_;
+
+	// 矢印位置
+	Vector2 arrowPos_;
+
+	// 持ち金
+	std::unique_ptr<UiMoney> myMoney_;
 
 	// 更新処理
 	std::function<void()> stateUpdate_;
 
-	// テキスト
+	// メッセージ
 	CharacterString message_;
+
+	// 金額
+	CharacterString amount_;
+
+	// はい、いいえ
+	CharacterString yes_;
+	CharacterString no_;
 
 	// テキストアニメーション
 	std::unique_ptr<ComponentTextAnimation> textAnimation_;
@@ -115,6 +163,8 @@ private:
 	void UpdateSelect();
 	void UpdateCheck();
 
+	void PurchaseCancel();
+
 	// 状態遷移処理
 	void ChangeState(const STATE state);
 	void ChangeStateSelect();
@@ -122,4 +172,7 @@ private:
 
 	// 購入処理
 	void Purchase();
+
+	// 確認時の描画
+	void DrawCheck();
 };

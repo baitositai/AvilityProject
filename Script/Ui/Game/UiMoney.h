@@ -33,6 +33,12 @@ public:
 	/// </summary>
 	void Draw() override;
 
+	/// <summary>
+	/// 座標位置の設定
+	/// </summary>
+	/// <param name="pos"></param>
+	void SetPos(const Vector2& pos) override;
+
 private:
 
 	// スコア管理クラス

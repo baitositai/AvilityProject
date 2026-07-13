@@ -8,17 +8,16 @@
 #include "../Manager/Common/ScoreManager.h"
 #include "../Manager/Game/ItemManager.h"
 #include "../Manager/Game/GimmickManager.h"
-#include "../Manager/Game/UiManager.h"
 #include "../Factory/FactoryComponent.h"
 #include "../Utility/UtilityCommon.h"
 #include "../Render/PixelMaterial.h"
 #include "../Render/PixelRenderer.h"
 #include "../Object/Stage/BackGround.h"
+#include "../Ui/Game/UiMoney.h"
 #include "../Component/ComponentTextAnimation.h"
 #include "SceneShop.h"
 
-SceneShop::SceneShop(const Input::JOYPAD_NO padNo) :
-	padNo_(padNo)
+SceneShop::SceneShop()
 {
 	// 処理の登録
 	updataFunc_ = std::bind(&SceneShop::NormalUpdate, this);
@@ -33,6 +32,8 @@ SceneShop::SceneShop(const Input::JOYPAD_NO padNo) :
 	selectIndex_ = -1;
 	arrowHandle_ = -1;
 	state_ = STATE::MAX;
+	padNo_ = Input::JOYPAD_NO::PAD1;
+	frameCount_ = 0.0f;
 	exhibits_ = itemMng_.GetRandomExhibits(2,2,2);
 }
 
@@ -83,6 +84,36 @@ void SceneShop::Init()
 
 	// 選択番号初期化
 	selectIndex_ = 0;
+
+	// テキスト生成
+	message_.fontHandle = fontMng_.CreateMyFont(resMng_.GetFontName("fontDot"), 48, 5);
+	message_.pos = { Application::SCREEN_HALF_X, 620 };
+	message_.string = TEXT_MAP[TEXT_TYPE::ENTER];
+	message_.color = UtilityCommon::WHITE;
+
+	amount_.fontHandle = fontMng_.CreateMyFont(resMng_.GetFontName("fontDot"), 32, 5);
+	amount_.string = L"%dG";
+	amount_.color = UtilityCommon::WHITE;
+
+	int checkFont = fontMng_.CreateMyFont(resMng_.GetFontName("fontDot"), 32, 5);
+	yes_.fontHandle = checkFont;
+	yes_.pos = { Application::SCREEN_HALF_X - 100, 680 };
+	yes_.string = L"YES";
+	yes_.color = UtilityCommon::WHITE;
+
+	no_.fontHandle = checkFont;
+	no_.pos = { Application::SCREEN_HALF_X + 100, 680 };
+	no_.string = L"NO";
+	no_.color = UtilityCommon::WHITE;
+
+	// アニメーション
+	textAnimation_ = std::make_unique<ComponentTextAnimation>(message_, 0.05f);
+	textAnimation_->Init();
+
+	// UIの追加
+	myMoney_ = std::make_unique<UiMoney>();
+	myMoney_->Init();
+	myMoney_->SetPos(Vector2{ 950, 48 });
 }
 
 void SceneShop::NormalUpdate()
@@ -92,6 +123,9 @@ void SceneShop::NormalUpdate()
 		backGround->Update();
 	}
 
+	textAnimation_->Update();
+	frameCount_ += scnMng_.GetDeltaTime();
+	myMoney_->Update();
 	stateUpdate_();
 }
 
@@ -103,6 +137,15 @@ void SceneShop::NormalDraw()
 		backGround->Draw();
 	}
 
+	// 毎フレーム変動しない共通の計算をループ外へ追い出す
+	const float SPACING_X = static_cast<float>(Application::SCREEN_SIZE_X) / static_cast<float>(COL + 1);
+	const float SPACING_Y = static_cast<float>(Application::SCREEN_SIZE_Y) / static_cast<float>(ROW + 1);
+	const Vector2 ITEM_SIZE = { 128, 128 };
+	const float HALF_ITEM_Y_PLUS_10 = (ITEM_SIZE.y / 2.0f) + 10.0f;
+
+	// サイン波のベース値（i を足す前の共通値）を事前に計算
+	const float BASE_WAVE_ANGLE = static_cast<float>(frameCount_) * 5.0f;
+
 	// 購入品の描画
 	for (int i = 0; i < ITEM_MAX; i++)
 	{
@@ -110,54 +153,75 @@ void SceneShop::NormalDraw()
 		auto& material = exhibitsMaterial_[i];
 		auto& renderer = exhibitsRenderer_[i];
 
-		// アイテムのサイズ
-		Vector2 size = { 128, 128 };
+		// テキストカラー
+		int color = UtilityCommon::WHITE;
 
-		// グリッド全体のサイズを計算
-		float totalWidth = size.x * (COL + 1);
-		float totalHeight = size.y * (ROW + 1);
-
-		// 画面内の余白を均等に分配するための隙間（間隔）を計算
-		float spacingX = static_cast<float>(Application::SCREEN_SIZE_X) / static_cast<float>(COL + 1);
-		float spacingY = static_cast<float>(Application::SCREEN_SIZE_Y) / static_cast<float>(ROW + 1);
-
-		// インデックスから行列の位置を計算
+		// 配置座標の計算
 		int column = i % COL;
 		int row = i / COL;
 
-		// 均等配置の座標計算
-		Vector2 pos;
-		pos.x = spacingX * (column + 1);
-		pos.y = spacingY * (row + 1);
+		Vector2 basePos;
+		basePos.x = SPACING_X * static_cast<float>(column + 1);
+		basePos.y = SPACING_Y * static_cast<float>(row + 1);
+
+		// 選択状態によるスケール変更
+		float scale = 1.0f;
+		if (selectIndex_ == i)
+		{
+			scale = 1.2f;
+			color = UtilityCommon::RED;
+		}
+
+		// アイテム位置を上下に揺らす
+		Vector2 itemPos = basePos;
+		itemPos.y += sinf(BASE_WAVE_ANGLE + static_cast<float>(i)) * 5.0f;
 
 		// 定数バッファの更新
 		material->SetConstBuf(0, FLOAT4{ 1.0f, 1.0f, 1.0f, 1.0f });
-		material->SetConstBuf(1, FLOAT4{ (float)exhibits.division.x, (float)exhibits.division.y, (float)exhibits.drawIndex, 0.0f });
-		
-		// メッシュ生成
-		renderer->MakeSquereVertex(pos, size);
-		
-		// 描画処理
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)UtilityCommon::ALPHA_MAX);
+		material->SetConstBuf(1, FLOAT4{ static_cast<float>(exhibits.division.x), static_cast<float>(exhibits.division.y),static_cast<float>(exhibits.drawIndex), 0.0f });
+		renderer->MakeSquereVertex(itemPos, ITEM_SIZE, 0.0f, scale);
+
+		// アイテム描画
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>(UtilityCommon::ALPHA_MAX));
 		renderer->Draw();
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
-		// 矢印を描画
+		// 金額の表示
+		Vector2 amountPos = basePos;
+		amountPos.y += HALF_ITEM_Y_PLUS_10;
+		amount_.pos = amountPos;
+		amount_.data1 = exhibits.amount;
+		amount_.color = color;
+		amount_.DrawFormatCenter();
+
+		// 矢印の描画 (選択中のみ)
 		if (selectIndex_ == i)
 		{
-			// 座標を調整
-			pos = Vector2::AddVector2(pos, Vector2(64, 64));
-
-			DrawRotaGraph(
-				pos.x,
-				pos.y,
-				1.0f,
-				0.0f,
-				arrowHandle_,
-				true
-			);
+			arrowPos_ = Vector2::AddVector2(amountPos, ARROW_LOCAL_POS);
 		}
 	}
+
+	// テキストメッセージの描画
+	textAnimation_->Draw();
+
+	// UIの描画
+	myMoney_->Draw();
+
+	// 状態が確認時のみ
+	if (state_ == STATE::CHECK)
+	{
+		DrawCheck();
+	}
+
+	// 矢印の描画
+	DrawRotaGraph(
+		arrowPos_.x,
+		arrowPos_.y,
+		1.0f,
+		0.0f,
+		arrowHandle_,
+		true
+	);
 }
 
 void SceneShop::UpdateSelect()
@@ -197,6 +261,8 @@ void SceneShop::UpdateSelect()
 		}
 		else
 		{
+			message_.string = TEXT_MAP.at(TEXT_TYPE::INSUFFICIENT_FUNDS);
+			textAnimation_->SetCharacterString(message_);
 			return;
 		}
 	}
@@ -206,8 +272,7 @@ void SceneShop::UpdateCheck()
 {
 	if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_CANCEL, padNo_))
 	{
-		// 状態を戻す
-		ChangeState(STATE::SELECT);
+		PurchaseCancel();
 		return;
 	}
 	else if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_LEFT, padNo_))
@@ -222,10 +287,18 @@ void SceneShop::UpdateCheck()
 	}
 	else if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_DECISION, padNo_))
 	{
-		Purchase(); 
-		ChangeState(STATE::SELECT);
+		isPurchase_ ? Purchase() : PurchaseCancel();
 		return;
 	}
+}
+
+void SceneShop::PurchaseCancel()
+{
+	// 状態を戻す
+	ChangeState(STATE::SELECT);
+
+	message_.string = TEXT_MAP.at(TEXT_TYPE::ENTER);
+	textAnimation_->SetCharacterString(message_);
 }
 
 void SceneShop::ChangeState(const STATE state)
@@ -241,6 +314,8 @@ void SceneShop::ChangeStateSelect()
 
 void SceneShop::ChangeStateCheck()
 {
+	message_.string = TEXT_MAP.at(TEXT_TYPE::CONFIRMATION);
+	textAnimation_->SetCharacterString(message_);
 	stateUpdate_ = std::bind(&SceneShop::UpdateCheck, this);
 	isPurchase_ = true;
 }
@@ -251,25 +326,60 @@ void SceneShop::Purchase()
 	const Exhibits& exhibits = exhibits_[selectIndex_];
 	const Vector2F createPos = gimmickMng_.GetShopPos();
 
+	// ランダムに散らすためのオフセット計算
+	float offsetX = static_cast<float>(GetRand(80) - 40);
+	float offsetY = static_cast<float>(-(GetRand(40) + 10)); // 必ずマイナス値（ショップより上）にする
+
+	Vector2F randomizedPos;
+	randomizedPos.x = createPos.x + offsetX;
+	randomizedPos.y = createPos.y + offsetY;
+
 	// 生成
 	switch (exhibits.type)
 	{
 	case ItemTypes::TYPE::FOOD:
-		itemMng_.CreateFoodItem(static_cast<ItemTypes::FOOD_TYPE>(exhibits.drawIndex), createPos);
+		itemMng_.CreateFoodItem(static_cast<ItemTypes::FOOD_TYPE>(exhibits.drawIndex), randomizedPos);
 		break;
 
 	case ItemTypes::TYPE::AVILITY:
-		itemMng_.CreateAvilityItem(static_cast<AvilityTypes::TYPE>(exhibits.drawIndex), createPos);
+		itemMng_.CreateAvilityItem(static_cast<AvilityTypes::TYPE>(exhibits.drawIndex), randomizedPos);
 		break;
 
 	case ItemTypes::TYPE::POTION:
-		itemMng_.CreatePotionItem(static_cast<ItemTypes::POTION_TYPE>(exhibits.drawIndex), createPos);
+		itemMng_.CreatePotionItem(static_cast<ItemTypes::POTION_TYPE>(exhibits.drawIndex), randomizedPos);
 		break;
 
 	default:
 		break;
-	}	
+	}
 	
 	// 金額を減らす
 	scoreManager_.AddTotalScore(-exhibits.amount);
+
+	// 状態遷移
+	ChangeState(STATE::SELECT);
+
+	// テキスト処理
+	message_.string = TEXT_MAP.at(TEXT_TYPE::THANK_YOU);
+	textAnimation_->SetCharacterString(message_);
+}
+
+void SceneShop::DrawCheck()
+{
+	Vector2 basePos = {};
+	if (isPurchase_)
+	{
+		yes_.color = UtilityCommon::RED;
+		arrowPos_ = Vector2::AddVector2(yes_.pos, ARROW_LOCAL_POS);
+		no_.color = UtilityCommon::WHITE;
+	}
+	else
+	{
+		no_.color = UtilityCommon::RED;
+		arrowPos_ = Vector2::AddVector2(no_.pos, ARROW_LOCAL_POS);
+		yes_.color = UtilityCommon::WHITE;
+	}
+
+	yes_.DrawCenter();
+	no_.DrawCenter();
 }

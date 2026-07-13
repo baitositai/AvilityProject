@@ -228,10 +228,10 @@ void OnHitPlayer::OnHitNextArea(const std::weak_ptr<ColliderBase>& opponentColli
 void OnHitPlayer::OnHitShop(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
     auto padNo = owner_.GetParameter().padNo_;
-    if (InputManager::GetInstance().IsTrgDown(InputManager::TYPE::PLAYER_GET_ITEM, padNo))
+    if (InputManager::GetInstance().IsTrgDown(InputManager::TYPE::PLAYER_ENTER_DOOR, padNo))
     {
         // ショップを開く
-        SceneManager::GetInstance().SetReadySubScene(std::make_shared<SceneShop>(padNo));
+        SceneManager::GetInstance().SetShopScene(padNo);
     }
 }
 

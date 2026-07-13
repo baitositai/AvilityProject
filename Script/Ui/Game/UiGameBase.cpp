@@ -17,9 +17,11 @@ UiGameBase::~UiGameBase()
 
 void UiGameBase::Draw()
 {
-	UiBase::Draw();
-
-	DrawNumber();
+	if (isActive_)
+	{
+		UiBase::Draw();
+		DrawNumber();
+	}
 }
 
 void UiGameBase::InitNumber()
@@ -28,7 +30,7 @@ void UiGameBase::InitNumber()
 	numberSize_ = { 32,32 };
 	numberScale_ = 0.25f;
 	numberStartDrawPos_ = pos_;
-	numberStartDrawPos_.x = 350;
+	numberStartDrawPos_.x += 160;
 }
 
 void UiGameBase::DrawNumber()

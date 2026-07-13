@@ -33,6 +33,8 @@ SceneTrain::~SceneTrain()
 
 void SceneTrain::Init()
 {
+	auto& coll = CollisionManager::GetInstance();
+
 	// 乗客室の生成
 	stageMng_.Create(StageManager::TYPE::TRAIN);
 
@@ -53,11 +55,12 @@ void SceneTrain::Init()
 	// UI作成
 	uiMng_.CreateGameUi();
 
-	/// ショップ生成
-	//GimmickManager::CreateParameter shop = {};
-	//shop.type = GimmickTypes::TYPE::SHOP;
-	//shop.pos = Vector2F(970, 577);
-	//gimmickMng_.Create(shop);
+	// ショップ生成
+	GimmickManager::CreateParameter shopParameter = {};
+	shopParameter.type = GimmickTypes::TYPE::SHOP;
+	shopParameter.pos = { 977, 570 };
+
+	gimmickMng_.Create(shopParameter);
 }
 
 void SceneTrain::SceneChangeReady()
@@ -87,7 +90,7 @@ void SceneTrain::NormalDraw()
 
 #ifdef _DEBUG
 	// デバッグ用の情報描画
-	//DebugDraw();
+	DebugDraw();
 #endif
 }
 

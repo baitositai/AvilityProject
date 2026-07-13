@@ -5,11 +5,13 @@
 #include "../../Template/Singleton.h"
 #include "../../Common/Fader.h"
 #include "../../Common/Vector2.h"
+#include "../../Manager/Common/Input.h"
 
 //カメラのマクロ
 #define mainCamera SceneManager::GetInstance().GetCamera()
 
 class SceneBase;
+class SceneShop;
 class Fader;
 class Camera;
 
@@ -139,6 +141,17 @@ public:
 	/// <returns>カメラ</returns>
 	Camera& GetCamera() { return *camera_; }
 
+	/// <summary>
+	/// ショップシーンを返す
+	/// </summary>
+	/// <returns>ショップシーン</returns>
+	const std::shared_ptr<SceneShop> GetSceneShop() const { return sceneShop_; }
+
+	/// <summary>
+	/// ショップ画面の設定
+	/// </summary>
+	void SetShopScene(const Input::JOYPAD_NO padNo);
+
 private:
 
 	// シーンID
@@ -156,6 +169,9 @@ private:
 
 	// サブシーン受け取り用
 	std::shared_ptr<SceneBase> subScene_;
+
+	// ショップ
+	std::shared_ptr<SceneShop> sceneShop_;
 
 	// スクリーン座標
 	Vector2 screenPos_;

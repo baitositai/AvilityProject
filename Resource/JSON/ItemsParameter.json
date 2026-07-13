@@ -323,12 +323,12 @@
       "attackUp": 5
     },
     "potionHpMaxUp": {
-      "index": 1,
+      "index": 2,
       "amount": 1000,
       "hpMaxUp": 20
     },
     "potionSpeedUp": {
-      "index": 2,
+      "index": 1,
       "amount": 2000,
       "speedUp": 0.2
     }

@@ -58,6 +58,13 @@ public:
 	/// </summary>
 	void Clear();
 
+	/// <summary>
+	/// 活動状態の設定
+	/// </summary>
+	/// <param name="isActive">活動状態</param>
+	/// <param name="layer">レイヤー</param>
+	void SetAllIsActive(const bool isActive, const LAYER layer = LAYER::UI);
+
 private:
 
 	// UIリスト

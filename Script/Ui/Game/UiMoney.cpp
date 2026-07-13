@@ -46,3 +46,10 @@ void UiMoney::Draw()
 	// •`‰æˆ—
 	UiGameBase::Draw();
 }
+
+void UiMoney::SetPos(const Vector2& pos)
+{
+	pos_ = pos;
+	numberStartDrawPos_ = pos_;
+	numberStartDrawPos_.x += 160;
+}

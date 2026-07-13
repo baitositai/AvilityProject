@@ -201,14 +201,13 @@ void CharacterBase::SetJumpPow(const float jumpPow)
 
 void CharacterBase::Landing()
 {
-	if (parameterCharacter_->isGround_) { return; }
-
 	// ƒWƒƒƒ“ƒv‰ñ”‚ğ–ß‚·
 	parameterCharacter_->jumpCount_ = parameterCharacter_->jumpCountMax_;
 
 	// ’…’n”»’è
 	parameterCharacter_->isGround_ = true;
-
+	
+	if (parameterCharacter_->isGround_) { return; }
 	// Œø‰Ê‰¹‚ÌÄ¶
 	sndMng_.PlaySe(SoundType::SE::JUMP_LANDING);
 }

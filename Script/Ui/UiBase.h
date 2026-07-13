@@ -36,6 +36,12 @@ public:
 	/// íœˆ—
 	/// </summary>
 	virtual void Delete();
+	
+	/// <summary>
+	/// À•WˆÊ’u‚Ìİ’è
+	/// </summary>
+	/// <param name="pos"></param>
+	virtual void SetPos(const Vector2& pos) { pos_ = pos; }
 
 	/// <summary>
 	/// Šˆ“®ó‘Ô‚Ìİ’è
