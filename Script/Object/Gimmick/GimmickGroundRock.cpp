@@ -1,16 +1,17 @@
-#include "../Manager/Common/SceneManager.h"
 #include "../Utility/UtilityCommon.h"
+#include "../Manager/Common/SceneManager.h"
 #include "../Manager/Game/CollisionManager.h"
-#include "../../Parameter/Gimmick/ParameterGimmick.h"
+#include "../Manager/Common/Camera.h"
+#include "../../Parameter/Gimmick/ParameterGimmickGroundRock.h"
 #include "../../OnHit/OnHitGroundRock.h"
 #include "../Collider/ColliderCircle.h"
 #include "GimmickGroundRock.h"
 
-GimmickGroundRock::GimmickGroundRock(std::unique_ptr<ParameterGimmick> parameter):
+GimmickGroundRock::GimmickGroundRock(std::unique_ptr<ParameterGimmickGroundRock> parameter):
 	GimmickBase(std::move(parameter))
 {
 	// パラメータ情報
-	parameterGroundRock_ = dynamic_cast<ParameterGimmick*>(GetParameterGimmickPtr());
+	parameterGroundRock_ = dynamic_cast<ParameterGimmickGroundRock*>(GetParameterGimmickPtr());
 	assert(parameterGroundRock_ != nullptr);
 }
 
@@ -26,7 +27,6 @@ void GimmickGroundRock::Init()
 	parameterGroundRock_->angle_ = UtilityCommon::Deg2RadF(std::rand() % static_cast<int>(ANGLE_MAX));
 	// 衝突後処理
 	onHit_ = std::make_unique<OnHitGroundRock>(*this);
-	horizonSpd_ = JUMP_SPD_MIN + std::rand() % static_cast<int>((JUMP_SPD_MAX - JUMP_SPD_MIN));
 	//ジャンプ力セット
 	jumpPow_ = 30.0f;
 	velocity_ = 20.0f;
@@ -48,6 +48,7 @@ void GimmickGroundRock::Update()
 		//ステージと当たったら消す
 		collider_->Delete();
 		isDelete_ = true;
+		scnMng_.GetCamera().SetCameraShake(CAMERA_SHAKE_TIME, CAMERA_SHAKE_POWER);
 		return;
 	}
 	// コンポーネント有効
@@ -57,7 +58,7 @@ void GimmickGroundRock::Update()
 	jumpPow_ = velocity_;
 	//放物線上に移動
 	parameterGroundRock_->pos_.y -= jumpPow_;
-	parameterGroundRock_->pos_.x -= horizonSpd_;
+	parameterGroundRock_->pos_.x -= parameterGroundRock_->horizonSpd_;
 
 	//角度を回転
 	parameterGroundRock_->angle_ += UtilityCommon::Deg2RadF(ANGLE_SPD);

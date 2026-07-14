@@ -1,5 +1,6 @@
 #include "../Manager/Common/SceneManager.h"
 #include "../Manager/Game/CollisionManager.h"
+#include "../Manager/Common/Camera.h"
 #include "../../Parameter/Gimmick/ParameterGimmick.h"
 #include "../../OnHit/OnHitDropRock.h"
 #include "../Collider/ColliderCircle.h"
@@ -75,6 +76,7 @@ void GimmickDropRock::UpdateDrop(void)
 		collider_->Delete();
 		isDead_ = true;
 		isDelete_ = true;
+		scnMng_.GetCamera().SetCameraShake(CAMERA_SHAKE_TIME, CAMERA_SHAKE_POWER);
 	}
 	// コンポーネント有効
 	SetComponentActive("gravity", true);

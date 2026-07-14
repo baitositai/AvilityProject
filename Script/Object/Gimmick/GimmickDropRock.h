@@ -50,6 +50,10 @@ private:
 	//待機時間
 	static constexpr float WAIT_TIME = 3.0f;
 
+	//カメラシェイク関連
+	static constexpr int CAMERA_SHAKE_TIME = 0.2f;
+	static constexpr int CAMERA_SHAKE_POWER = 2.0f;
+
 	// パラメータ情報
 	ParameterGimmick* parameterDropRock_;
 

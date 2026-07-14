@@ -1,6 +1,7 @@
 #pragma once
 #include "ComponentLogicBase.h"
 
+class Camera;
 class EnemyGaiaGolem;
 class ParameterGimmick;
 class ColliderCircle;
@@ -58,7 +59,9 @@ private:
 	//最小の岩の生成数
 	static constexpr int ROCK_CREATE_NUM_MIN = 2;
 
-	//岩の生成座標
+	//カメラシェイク関連
+	static constexpr int CAMERA_SHAKE_TIME = 0.2f;
+	static constexpr int CAMERA_SHAKE_POWER = 6.0f;
 
 	//岩座標のY固定座標
 	static constexpr float ROCK_POS_Y = 180.0f;
@@ -75,8 +78,16 @@ private:
 	//GroundRock生成タイミングのアニメーションインデックス
 	static constexpr int CREATE_GROUNDROCK_INDEX = 35;
 
+	//速度横移動速度最大
+	static constexpr float JUMP_SPD_MIN = 2.0f;
+	static constexpr float JUMP_SPD_MID = 7.0f;
+	static constexpr float JUMP_SPD_MAX = 15.0f;
+
 	// 所有者
 	EnemyGaiaGolem& owner_;
+
+	//カメラ
+	Camera& camera_;
 
 	// 所有者のパラメータ
 	ParameterEnemyGaiaGolem& parameter_;
@@ -93,5 +104,7 @@ private:
 	//GroundRockの生成
 	void CreateGroundRock(void);
 
+	//水平方向の速度をランダムに決める
+	float SetRandomHorizonSpd(std::array<int, ROCK_CREATE_NUM_MIN>&_horizonSpd,const int _createIndex );
 };
 

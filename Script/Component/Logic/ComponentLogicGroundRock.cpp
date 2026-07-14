@@ -1,5 +1,6 @@
 #include "../../Application.h"
 #include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/Camera.h"
 #include "../../Manager/Game/CollisionManager.h"
 #include "../../Manager/Game/GimmickManager.h"
 #include "../../Manager/Game/PlayerManager.h"
@@ -13,7 +14,8 @@ ComponentLogicGroundRock::ComponentLogicGroundRock(EnemyGaiaGolem& owner):
 	ComponentLogicBase(owner),
 	owner_(owner),
 	parameter_(owner_.GetParameter()),
-	attackPos_({})
+	attackPos_({}),
+	camera_(SceneManager::GetInstance().GetCamera())
 {
 }
 
@@ -60,6 +62,7 @@ void ComponentLogicGroundRock::Update()
 	else if (animation.GetAnimationIndex()== CREATE_GROUNDROCK_INDEX)
 	{
 		CreateGroundRock();
+		camera_.SetCameraShake(CAMERA_SHAKE_TIME, CAMERA_SHAKE_POWER);
 	}
 }
 
@@ -76,6 +79,7 @@ void ComponentLogicGroundRock::CreateGroundRock(void)
 	//‚·‚Å‚É¶¬‚µ‚Ä‚¢‚½‚çˆ—‚ğ”ò‚Î‚·
 	if (isCreateGroundRock_)return;
 
+	std::array<int, ROCK_CREATE_NUM_MIN> horizontalSpd = { -1,-1 };
 	for (int i = 0; i < ROCK_CREATE_NUM_MIN; i++)
 	{
 		//Šâ¶¬
@@ -84,8 +88,24 @@ void ComponentLogicGroundRock::CreateGroundRock(void)
 		Vector2F enemyPos = owner_.GetParameter().pos_;
 		createParameter.pos = attackPos_;
 		createParameter.attackPower = ATTACK_POINT;
-		createParameter.moveDir = parameter_.direction_ ? Vector2F(-1.0f, 0.0f) : Vector2F(1.0f, 0.0f);
-		gimmickManager_.Create(createParameter);
+		horizontalSpd[i] = SetRandomHorizonSpd(horizontalSpd,i);
+		horizontalSpd[i] = parameter_.direction_ ? horizontalSpd[i] : -horizontalSpd[i];
+		gimmickManager_.CreateGroundRock(createParameter, horizontalSpd[i]);
 	}
 	isCreateGroundRock_ = true;
+}
+
+float ComponentLogicGroundRock::SetRandomHorizonSpd(std::array<int, ROCK_CREATE_NUM_MIN>& _horizonSpd, const int _createIndex)
+{
+	int randomSpd = 0.0f;
+	//’Z‹——£‚©‚ç’†‹——£‚Ì”ÍˆÍ‚É“Í‚­‚æ‚¤‚É‘¬“x‚ğw’è
+	if (_createIndex == 0) 
+	{ 
+		randomSpd = JUMP_SPD_MIN + std::rand() % (static_cast<int>(JUMP_SPD_MID) - static_cast<int>(JUMP_SPD_MIN)); 
+	}
+	else
+	{
+		randomSpd = JUMP_SPD_MID + std::rand() % (static_cast<int>(JUMP_SPD_MAX) - static_cast<int>(JUMP_SPD_MID));
+	}
+	return static_cast<float>(randomSpd);
 }

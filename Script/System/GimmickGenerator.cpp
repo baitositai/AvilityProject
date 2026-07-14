@@ -7,6 +7,7 @@
 #include "../Object/Gimmick/GimmickShop.h"
 #include "../Object/Gimmick/GimmickDropRock.h"
 #include "../Object/Gimmick/GimmickGroundRock.h"
+#include "../Parameter/Gimmick/ParameterGimmickGroundRock.h"
 #include "GimmickGenerator.h"
 
 GimmickGenerator::GimmickGenerator()
@@ -98,7 +99,7 @@ void GimmickGenerator::InitParameter()
 
 	//岩落とし
 	const auto jsonGroundRockParameter = jsonParameterMap.at("groundRock").front();
-	auto parameterGroundRock = std::make_unique<ParameterGimmick>();
+	auto parameterGroundRock = std::make_unique<ParameterGimmickGroundRock>();
 	parameterGroundRock->LoadParameter(jsonGroundRockParameter);
 	templateParameterMap_.emplace(GimmickTypes::TYPE::GROUND_ROCK, std::move(parameterGroundRock));
 }
@@ -245,7 +246,7 @@ std::unique_ptr<GimmickGroundRock> GimmickGenerator::CreateGimmickGroundRock()
 {
 	// 専用のパラメータにキャスト
 	auto parameterBase = templateParameterMap_.at(GimmickTypes::TYPE::GROUND_ROCK).get();
-	auto parameterGroundRock = dynamic_cast<ParameterGimmick*>(parameterBase);
+	auto parameterGroundRock = dynamic_cast<ParameterGimmickGroundRock*>(parameterBase);
 
 	// 空の場合
 	if (parameterGroundRock == nullptr)
@@ -255,6 +256,6 @@ std::unique_ptr<GimmickGroundRock> GimmickGenerator::CreateGimmickGroundRock()
 	}
 
 	// 生成したものを返す
-	auto parameter = std::make_unique<ParameterGimmick>(*parameterGroundRock);
+	auto parameter = std::make_unique<ParameterGimmickGroundRock>(*parameterGroundRock);
 	return std::make_unique<GimmickGroundRock>(std::move(parameter));
 }

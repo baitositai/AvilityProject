@@ -1,5 +1,8 @@
 #pragma once
 #include "GimmickBase.h"
+
+class ParameterGimmickGroundRock;
+
 class GimmickGroundRock :
     public GimmickBase
 {
@@ -9,7 +12,7 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="parameter">パラメータ情報</param>
-	GimmickGroundRock(std::unique_ptr<ParameterGimmick> parameter);
+	GimmickGroundRock(std::unique_ptr<ParameterGimmickGroundRock> parameter);
 
 	/// <summary>
 	/// デストラクタ
@@ -38,6 +41,10 @@ private:
 	static constexpr float JUMP_SPD_MIN = 3.0f;
 	static constexpr float JUMP_SPD_MAX = 10.0f;
 
+	//カメラシェイク関連
+	static constexpr int CAMERA_SHAKE_TIME = 0.2f;
+	static constexpr int CAMERA_SHAKE_POWER = 2.0f;
+
 	//角度最大
 	static constexpr float ANGLE_MAX = 360.0f;
 
@@ -45,7 +52,7 @@ private:
 	static constexpr float ANGLE_SPD = 10.0f;
 
 	// パラメータ情報
-	ParameterGimmick* parameterGroundRock_;
+	ParameterGimmickGroundRock* parameterGroundRock_;
 
 	//更新処理
 	std::function<void(void)> update_;
@@ -58,8 +65,8 @@ private:
 
 	float velocity_;
 
-	//横移動速度
-	float horizonSpd_;
+	////横移動速度
+	//float horizonSpd_;
 	// 接地判定の共通ロジック
 	void CheckGroundStatus(float moveVal, bool isXAxis);
 };
