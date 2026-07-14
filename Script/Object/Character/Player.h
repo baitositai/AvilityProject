@@ -184,6 +184,16 @@ public:
 
 private:
 
+	// アウトラインの色
+	static constexpr FLOAT4 PLATYER1_COLOR = { 0.0f, 0.0f, 1.0f, 1.0f };
+	static constexpr FLOAT4 PLATYER2_COLOR = { 1.0f, 0.0f, 0.0f, 1.0f };
+	static constexpr FLOAT4 PLATYER3_COLOR = { 0.0f, 1.0f, 0.0f, 1.0f };
+	static constexpr FLOAT4 PLATYER4_COLOR = { 1.0f, 1.0f, 0.0f, 1.0f };
+	std::vector<FLOAT4> PLAYER_OUTLINE_COLORS;
+
+	// 定数バッファ―サイズ
+	static constexpr int PLAYER_CONST_BUFFER_SIZE = 3;
+
 	// 退出用入力時間
 	float leaveInputTime_;
 
@@ -207,6 +217,9 @@ private:
 
 	// 選択用で保持する予備
 	std::unique_ptr<ComponentAvilityBase> spareAvilityComponent_;
+
+	// 描画関係の初期化
+	void InitDraw() override;
 
 	// UIの初期化
 	void InitUi() override;

@@ -69,6 +69,16 @@
       "path": "Resource/Image/Player/Player4.png"
     },
     {
+      "key": "playerNormal",
+      "sceneIds": [ 2, 3, 4, 5, 6 ],
+      "type": "texture",
+      "divX": 15,
+      "divY": 8,
+      "sizeX": 144,
+      "sizeY": 144,
+      "path": "Resource/Image/Player/PlayerNormal.png"
+    },
+    {
       "key": "clone",
       "sceneIds": [ 3 ],
       "type": "texture",
@@ -788,6 +798,12 @@
     {
       "key": "standardSprite",
       "path": "Resource/Shader/StandardSprite.cso",
+      "sceneIds": [ 0 ],
+      "type": "pixelShader"
+    },
+    {
+      "key": "PlayerSprite",
+      "path": "Resource/Shader/PlayerSprite.cso",
       "sceneIds": [ 0 ],
       "type": "pixelShader"
     },
