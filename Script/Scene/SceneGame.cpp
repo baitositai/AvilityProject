@@ -73,11 +73,21 @@ void SceneGame::Init()
 	Vector2 stageSize = stageMng_.GetStageSize();
 	mainCamera.SetCameraLimit(Vector2F{ 0.0f, 0.0f }, stageSize.ToVector2F());
 
+	// 電車追加
+	GimmickManager::CreateParameter trainParameter = {};
+	trainParameter.type = GimmickTypes::TYPE::TRAIN;
+	gimmickMng_.Create(trainParameter);
+
 	// UI作成
 	uiMng_.CreateGameUi();
 
 	// サウンド再生
 	sndMng_.PlayBgm(SoundType::BGM::GAME1);
+
+	for (const auto& pos : stageMng_.GetEventTriggerPositions())
+	{
+		itemMng_.CreateTreasureItem(static_cast<ItemTypes::TREASURE_TYPE>(GetRand(ItemTypes::TREASURE_TYPE_MAX - 1)), pos);
+	}
 }
 
 void SceneGame::NormalUpdate()
@@ -107,7 +117,7 @@ void SceneGame::NormalDraw()
 
 #ifdef _DEBUG
 	// デバッグ用の情報描画
-	//DebugDraw();
+	DebugDraw();
 #endif
 }
 

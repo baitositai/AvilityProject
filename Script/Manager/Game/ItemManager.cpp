@@ -291,6 +291,7 @@ std::vector<SceneShop::Exhibits> ItemManager::GetRandomExhibits(const int abilit
 		exhibits.drawIndex = parameter.spriteIndex_;
 		exhibits.amount = parameter.amount_;
 		exhibits.division = parameter.divisionNum_;
+		exhibits.message = parameter.shopMessage_;
 		exhibits.type = ItemTypes::TYPE::AVILITY;
 		exhibitsList.push_back(exhibits);
 		item->Delete();
@@ -305,6 +306,7 @@ std::vector<SceneShop::Exhibits> ItemManager::GetRandomExhibits(const int abilit
 		exhibits.drawIndex = parameter.spriteIndex_;
 		exhibits.amount = parameter.amount_;
 		exhibits.division = parameter.divisionNum_;
+		exhibits.message = parameter.shopMessage_;
 		exhibits.type = ItemTypes::TYPE::POTION;
 		exhibitsList.push_back(exhibits);
 		item->Delete();
@@ -318,7 +320,8 @@ std::vector<SceneShop::Exhibits> ItemManager::GetRandomExhibits(const int abilit
 		exhibits.handle = parameter.texture_;
 		exhibits.drawIndex = parameter.spriteIndex_;
 		exhibits.amount = parameter.amount_;
-		exhibits.division = parameter.divisionNum_;		
+		exhibits.division = parameter.divisionNum_;
+		exhibits.message = parameter.shopMessage_;
 		exhibits.type = ItemTypes::TYPE::FOOD;
 		exhibitsList.push_back(exhibits);
 		item->Delete();

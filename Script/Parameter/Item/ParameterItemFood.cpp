@@ -1,5 +1,6 @@
 #include <Windows.h>
 #include "ParameterItemFood.h"
+#include "../../Utility/UtilityCommon.h"
 
 ParameterItemFood::ParameterItemFood() :
 	heal_(-1)
@@ -15,6 +16,7 @@ void ParameterItemFood::LoadParameter(const Json& parameter, std::string& name)
 {
 	// 食べ物共通のパラメータ読み込み
 	const auto& jsonCommonParameter = parameter.at("foodCommon").front();
+	shopMessage_ = UtilityCommon::ConvertUtf8ToSjis((jsonCommonParameter.value("shopMessage", "").c_str()));
 	ParameterActor::LoadParameter(jsonCommonParameter);
 
 	// 個別のパラメータ読み込み

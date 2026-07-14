@@ -151,6 +151,8 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Parameter\Gimmick\ParameterGimmickTrain.cpp" />
+    <ClCompile Include="Script\Object\Gimmick\GimmickTrain.cpp" />
     <ClCompile Include="Script\Component\Logic\ComponentLogicRockWave.cpp" />
     <ClCompile Include="Script\Component\ComponentTextAnimation.cpp" />
     <ClCompile Include="Script\Scene\SceneShop.cpp" />
@@ -390,6 +392,8 @@
     <ClCompile Include="Script\Ui\Enemy\UiBossHpBar.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Parameter\Gimmick\ParameterGimmickTrain.h" />
+    <ClInclude Include="Script\Object\Gimmick\GimmickTrain.h" />
     <ClInclude Include="Script\Component\Logic\ComponentLogicRockWave.h" />
     <ClInclude Include="Script\Component\ComponentTextAnimation.h" />
     <ClInclude Include="Script\Scene\SceneShop.h" />

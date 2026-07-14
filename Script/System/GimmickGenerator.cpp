@@ -6,6 +6,7 @@
 #include "../Object/Gimmick/GimmickTreasureChest.h"
 #include "../Object/Gimmick/GimmickShop.h"
 #include "../Object/Gimmick/GimmickDropRock.h"
+#include "../Object/Gimmick/GimmickTrain.h"
 #include "GimmickGenerator.h"
 
 GimmickGenerator::GimmickGenerator()
@@ -38,6 +39,10 @@ GimmickGenerator::GimmickGenerator()
 		{
 			return CreateGimmickDropRock();
 		});
+	createGimmickMap_.emplace(GimmickTypes::TYPE::TRAIN, [this]()
+		{
+			return CreateGimmickTrain();
+		});
 }
 
 GimmickGenerator::~GimmickGenerator()
@@ -50,46 +55,52 @@ void GimmickGenerator::InitParameter()
 	const auto jsonParameterMap = UtilityLoad::GetJsonMapArrayData("GimmickParameter");
 
 	// ドア生成
-	const auto jsonDoorParameter = jsonParameterMap.at("door").front();
+	const auto& jsonDoorParameter = jsonParameterMap.at("door").front();
 	auto parameterDoor = std::make_unique<ParameterGimmick>();
 	parameterDoor->LoadParameter(jsonDoorParameter);
 	templateParameterMap_.emplace(GimmickTypes::TYPE::DOOR, std::move(parameterDoor));
 
 	// ターゲット生成
-	const auto jsonTargetParameter = jsonParameterMap.at("target").front();
+	const auto& jsonTargetParameter = jsonParameterMap.at("target").front();
 	auto parameterTarget = std::make_unique<ParameterGimmickTarget>();
 	parameterTarget->LoadParameter(jsonTargetParameter);
 	templateParameterMap_.emplace(GimmickTypes::TYPE::TARGET, std::move(parameterTarget));
 
 	// 宝箱生成
-	const auto jsonTreasureChestParameter = jsonParameterMap.at("treasureChest").front();
+	const auto& jsonTreasureChestParameter = jsonParameterMap.at("treasureChest").front();
 	auto parameterTreasureChest = std::make_unique<ParameterGimmickTreasureChest>();
 	parameterTreasureChest->LoadParameter(jsonTreasureChestParameter);
 	templateParameterMap_.emplace(GimmickTypes::TYPE::TREASURE_CHEST, std::move(parameterTreasureChest));
 
 	// 竹生成
-	const auto jsonBambooParameter = jsonParameterMap.at("bamboo").front();
+	const auto& jsonBambooParameter = jsonParameterMap.at("bamboo").front();
 	auto parameterBamboo = std::make_unique<ParameterGimmickBamboo>();
 	parameterBamboo->LoadParameter(jsonBambooParameter);
 	templateParameterMap_.emplace(GimmickTypes::TYPE::BAMBOO, std::move(parameterBamboo));
 
 	// 成長する竹生成
-	const auto jsonGrowingBambooParameter = jsonParameterMap.at("growingBamboo").front();
+	const auto& jsonGrowingBambooParameter = jsonParameterMap.at("growingBamboo").front();
 	auto parameterGrowingBamboo = std::make_unique<ParameterGimmickGrowingBamboo>();
 	parameterGrowingBamboo->LoadParameter(jsonGrowingBambooParameter);
 	templateParameterMap_.emplace(GimmickTypes::TYPE::GROWING_BAMBOO, std::move(parameterGrowingBamboo));
 
 	// 店生成
-	const auto jsonShopParameter = jsonParameterMap.at("shop").front();
+	const auto& jsonShopParameter = jsonParameterMap.at("shop").front();
 	auto parameterShop = std::make_unique<ParameterGimmick>();
 	parameterShop->LoadParameter(jsonShopParameter);
 	templateParameterMap_.emplace(GimmickTypes::TYPE::SHOP, std::move(parameterShop));
 
 	//岩落とし
-	const auto jsonDropRockParameter = jsonParameterMap.at("dropRock").front();
+	const auto& jsonDropRockParameter = jsonParameterMap.at("dropRock").front();
 	auto parameterDropRock = std::make_unique<ParameterGimmick>();
 	parameterDropRock->LoadParameter(jsonDropRockParameter);
 	templateParameterMap_.emplace(GimmickTypes::TYPE::DROP_ROCK, std::move(parameterDropRock));
+
+	// 電車
+	const auto& jsonTrainParameter = jsonParameterMap.at("train").front();
+	auto parameterTrain = std::make_unique<ParameterGimmickTrain>();
+	parameterTrain->LoadParameter(jsonTrainParameter);
+	templateParameterMap_.emplace(GimmickTypes::TYPE::TRAIN, std::move(parameterTrain));
 }
 
 std::unique_ptr<GimmickBase> GimmickGenerator::Create(const GimmickTypes::TYPE type)
@@ -228,4 +239,22 @@ std::unique_ptr<GimmickDropRock> GimmickGenerator::CreateGimmickDropRock()
 	// 生成したものを返す
 	auto parameter = std::make_unique<ParameterGimmick>(*parameterDropRock);
 	return std::make_unique<GimmickDropRock>(std::move(parameter));
+}
+
+std::unique_ptr<GimmickTrain> GimmickGenerator::CreateGimmickTrain()
+{
+	// 専用のパラメータにキャスト
+	auto parameterBase = templateParameterMap_.at(GimmickTypes::TYPE::TRAIN).get();
+	auto parameterTrain = dynamic_cast<ParameterGimmickTrain*>(parameterBase);
+
+	// 空の場合
+	if (parameterTrain == nullptr)
+	{
+		// 空で返す
+		return nullptr;
+	}
+
+	// 生成したものを返す
+	auto parameter = std::make_unique<ParameterGimmickTrain>(*parameterTrain);
+	return std::make_unique<GimmickTrain>(std::move(parameter));
 }

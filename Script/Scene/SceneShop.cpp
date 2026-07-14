@@ -226,31 +226,33 @@ void SceneShop::NormalDraw()
 
 void SceneShop::UpdateSelect()
 {
+	bool isPushed = false;
+
 	if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_CANCEL, padNo_))
 	{
 		//ƒV[ƒ“‚ð–ß‚·
 		scnMng_.PopScene();
-		return;
+		isPushed = true;
 	}
 	else if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_DOWN, padNo_))
 	{
 		selectIndex_ = UtilityCommon::WrapStepIndex(selectIndex_, COL, 0, ITEM_MAX);
-		return;
+		isPushed = true;
 	}
 	else if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_UP, padNo_))
 	{
 		selectIndex_ = UtilityCommon::WrapStepIndex(selectIndex_, -COL, 0, ITEM_MAX);
-		return;
+		isPushed = true;
 	}
 	else if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_LEFT, padNo_))
 	{
 		selectIndex_ = UtilityCommon::WrapStepIndex(selectIndex_, -1, 0, ITEM_MAX);
-		return;
+		isPushed = true;
 	}
 	else if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_RIGHT, padNo_))
 	{
 		selectIndex_ = UtilityCommon::WrapStepIndex(selectIndex_, 1, 0, ITEM_MAX);
-		return;
+		isPushed = true;
 	}
 	else if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_DECISION, padNo_))
 	{
@@ -265,6 +267,12 @@ void SceneShop::UpdateSelect()
 			textAnimation_->SetCharacterString(message_);
 			return;
 		}
+	}
+
+	if (isPushed)
+	{
+		message_.string = UtilityCommon::GetWStringFromString(exhibits_[selectIndex_].message);
+		textAnimation_->SetCharacterString(message_);
 	}
 }
 

@@ -371,11 +371,20 @@ void CollisionManager::InitTagMatrix()
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::BAMBOO)][static_cast<int>(CollisionTags::TAG::ITEM_TREASURE)] = true;						// 竹とアイテム宝
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ITEM_TREASURE)][static_cast<int>(CollisionTags::TAG::BAMBOO)] = true;
 
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TARGET)][static_cast<int>(CollisionTags::TAG::ITEM_TREASURE)] = true;						// ターゲットとアイテム宝
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ITEM_TREASURE)][static_cast<int>(CollisionTags::TAG::TARGET)] = true;
+
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::SHOP)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;								// プレイヤーと店
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::SHOP)] = true;
 
-	collTagMatrix_[static_cast<int>(CollisionTags::TAG::DROP_ROCK)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;						// テレポートと竹
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::DROP_ROCK)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;							// テレポートと竹
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::DROP_ROCK)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ITEM_TREASURE)][static_cast<int>(CollisionTags::TAG::TREASURE_CHEST)] = true;				// 宝箱とアイテム宝
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TREASURE_CHEST)][static_cast<int>(CollisionTags::TAG::ITEM_TREASURE)] = true;
+
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ITEM_TREASURE)][static_cast<int>(CollisionTags::TAG::TRAIN)] = true;						// 電車とアイテム宝
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TRAIN)][static_cast<int>(CollisionTags::TAG::ITEM_TREASURE)] = true;
 }
 
 void CollisionManager::InitColliderMatrix()

@@ -123,6 +123,12 @@ public:
 	/// <returns>ƒ‚[ƒh‚ğ•Ô‚·</returns>
 	const MODE GetMode() const { return mode_; }
 
+	/// <summary>
+	/// ’â~”»’è‚ğ•Ô‚·
+	/// </summary>
+	/// <returns>’â~”»’è</returns>
+	const bool IsStop() const { return isStop_; }
+
 private:
 
 	// —h‚êŠÔ

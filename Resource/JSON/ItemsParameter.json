@@ -3,7 +3,7 @@
     "superman": {
       "index": 0,
       "amount": 2000,
-      "shopMessage": "スーパーマンのように強くなる"
+      "shopMessage": "スーパーマンのように強くなるぞ"
     },
     "airwalk": {
       "index": 1,
@@ -13,32 +13,37 @@
     "gravityControll": {
       "index": 2,
       "amount": 1500,
-      "shopMessage": "上下左右自由に重力を切り替え"
+      "shopMessage": "上下左右自由に重力を切り替えれるぞ"
     },
     "shot": {
       "index": 3,
       "amount": 3000,
-      "shopMessage": "縦横無人にに飛び回る"
+      "shopMessage": "縦横無尽にに飛び回る。私が大砲よ"
     },
     "airslash": {
       "index": 4,
-      "amount": 1500
+      "amount": 1500,
+      "shopMessage": "ジャンプと同時に衝撃波を出すぞ"
     },
     "metal": {
       "index": 5,
-      "amount": 1000
+      "amount": 1000,
+      "shopMessage": "体がメタルになって重くなるぞ"
     },
     "stamp": {
       "index": 6,
-      "amount": 2000
+      "amount": 2000,
+      "shopMessage": "地面に向かって勢いよく落ちるぞ"
     },
     "teleport": {
       "index": 7,
-      "amount": 3000
+      "amount": 3000,
+      "shopMessage": "瞬間移動。出現時に攻撃もできるぞ"
     },
     "giant": {
       "index": 8,
-      "amount": 2500
+      "amount": 2500,
+      "shopMessage": "でっかくなって強くなるぞ"
     }
   },
   "avilityCommon": {
@@ -59,6 +64,7 @@
   "foodCommon": {
     "gravityPower": 9.8,
     "transparent": true,
+    "shopMessage": "食べると体力を回復するぞ",
     "hitBoxSize": {
       "x": 48,
       "y": 48
@@ -324,17 +330,20 @@
     "potionAttackUp": {
       "index": 0,
       "amount": 3000,
-      "attackUp": 5
+      "attackUp": 5,
+      "shopMessage": "攻撃力が上がるぞ"
     },
     "potionHpMaxUp": {
       "index": 2,
       "amount": 1000,
-      "hpMaxUp": 20
+      "hpMaxUp": 20,
+      "shopMessage": "体力の上限が上がるぞ"
     },
     "potionSpeedUp": {
       "index": 1,
       "amount": 2000,
-      "speedUp": 0.2
+      "speedUp": 0.2,
+      "shopMessage": "移動速度が上がるぞ"
     }
   },
   "treasure": {

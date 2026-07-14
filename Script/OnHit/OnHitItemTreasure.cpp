@@ -1,4 +1,5 @@
 #include "../Manager/Common/SoundManager.h"
+#include "../Manager/Common/ScoreManager.h"
 #include "../Manager/Common/InputManager.h"
 #include "../Object/Item/ItemTreasure.h"
 #include "../Object/Character/Player.h"
@@ -12,6 +13,8 @@ OnHitItemTreasure::OnHitItemTreasure(ItemTreasure& owner) :
 	onHitMap_.emplace(CollisionTags::TAG::ENEMY_BASE, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitEnemy(opponentCollider); });
 	onHitMap_.emplace(CollisionTags::TAG::ENEMY_MAID, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitEnemy(opponentCollider); });
 	onHitMap_.emplace(CollisionTags::TAG::BAMBOO, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitGimmick(opponentCollider); });
+	onHitMap_.emplace(CollisionTags::TAG::TARGET, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitTarget(opponentCollider); });
+	onHitMap_.emplace(CollisionTags::TAG::TRAIN, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitTrain(opponentCollider); });
 }
 
 OnHitItemTreasure::~OnHitItemTreasure()
@@ -52,5 +55,28 @@ void OnHitItemTreasure::OnHitGimmick(const std::weak_ptr<ColliderBase>& opponent
 	{
 		// 相手のオブジェクトを消す
 		opponentCollider.lock()->GetOwner().Delete();
+	}
+}
+
+void OnHitItemTreasure::OnHitTarget(const std::weak_ptr<ColliderBase>& opponentCollider)
+{
+	// 投げられてる場合
+	if (owner_.IsThrow())
+	{
+		// 相手のオブジェクトを消す
+		opponentCollider.lock()->GetOwner().Delete();
+	}
+}
+
+void OnHitItemTreasure::OnHitTrain(const std::weak_ptr<ColliderBase>& opponentCollider)
+{
+	// 投げられてる場合
+	if (owner_.IsThrow())
+	{
+		// スコアを加算
+		ScoreManager::GetInstance().AddScore(owner_.GetParameter().amount_);
+
+		// 自身を消す
+		owner_.Delete();
 	}
 }

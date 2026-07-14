@@ -22,6 +22,9 @@ public:
 	// 値段
 	int amount_;
 
+	// ショップメッセージ
+	std::string shopMessage_;
+
 	// アイテムの種類
 	ItemTypes::TYPE itemType_;
 };

@@ -1,3 +1,4 @@
+#include "../../Utility/UtilityCommon.h"
 #include "ParameterItemPotion.h"
 
 ParameterItemPotion::ParameterItemPotion() :
@@ -35,7 +36,7 @@ void ParameterItemPotion::LoadParameter(const Json& parameter, std::string& name
 				speedUp_ = jsonPotionParameter.value("speedUp", 0.0f);
 				spriteIndex_ = jsonPotionParameter.value("index", -1);
 				amount_ = jsonPotionParameter.value("amount", -1);
-
+				shopMessage_ = UtilityCommon::ConvertUtf8ToSjis((jsonPotionParameter.value("shopMessage", "").c_str()));
 				if (NAME_TAG_MAP.contains(name))
 				{
 					tag_ = NAME_TAG_MAP.at(name);

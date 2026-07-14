@@ -63,42 +63,62 @@
       "move"
     ]
   },
-  "treasureChest": {
-    "resourceKey": "treasureChests",
+  "train": {
+    "resourceKey": "train",
     "transparent": true,
-    "scale": 1.0,
-    "moveSpeed": 2.0,
-    "hitRadius": 48.0,
-    "gravityPower": 9.8,
+    "scale": 4.5,
+    "moveSpeed": 5.0,
     "hitBoxSize": {
-      "x": 110,
-      "y": 75
+      "x": 192,
+      "y": 32
     },
-    "divisionNum": {
-      "x": 8,
-      "y": 2
-    },
+    "componentKeys": [
+      "spriteAnimation"
+    ],
     "animation": {
       "walk": {
         "no": 0,
-        "speed": 0.1,
-        "num": 8
+        "speed": 0.3,
+        "num": 15
       }
-    },
-    "componentKeys": [
-      "gravity",
-      "move",
-      "spriteAnimation"
-    ]
+    }
   },
-  "dropRock": {
-    "resourceKey": "dropRock",
-    "transparent": true,
-    "scale": 2.0,
-    "gravityPower": 0.3,
-    "componentKeys": [
-      "move",
-      "gravity"
-    ]
+    "treasureChest": {
+      "resourceKey": "treasureChests",
+      "transparent": true,
+      "scale": 1.0,
+      "moveSpeed": 2.0,
+      "hitRadius": 48.0,
+      "gravityPower": 9.8,
+      "hitBoxSize": {
+        "x": 110,
+        "y": 75
+      },
+      "divisionNum": {
+        "x": 8,
+        "y": 2
+      },
+      "animation": {
+        "walk": {
+          "no": 0,
+          "speed": 0.1,
+          "num": 8
+        }
+      },
+      "componentKeys": [
+        "gravity",
+        "move",
+        "spriteAnimation"
+      ]
+    },
+    "dropRock": {
+      "resourceKey": "dropRock",
+      "transparent": true,
+      "scale": 2.0,
+      "gravityPower": 0.3,
+      "componentKeys": [
+        "move",
+        "gravity"
+      ]
+    }
   }
-}
