@@ -23,6 +23,18 @@ void EffectBase::Init()
 	animation_->Play(Animation::TYPE::EFFECT, false);
 }
 
+void EffectBase::Update()
+{
+	// 基底クラスの処理
+	ActorBase::Update();
+
+	// ループ予定、またはアニメーションが再生されている場合、終了
+	if (parameterEffect_->isLoop_ || animation_->IsPlay()) return;
+	
+	// 削除
+	Delete();
+}
+
 void EffectBase::Draw()
 {
 	// アニメーション番号の指定

@@ -1,7 +1,8 @@
 #include "ParameterEffect.h"
 
 ParameterEffect::ParameterEffect() :
-	 tag_(CollisionTags::TAG::MAX)
+	 tag_(CollisionTags::TAG::MAX),
+	isLoop_(false)
 {
 }
 

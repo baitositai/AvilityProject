@@ -1,9 +1,12 @@
 #pragma once
 #include <vector>
+#include <string>
 #include <unordered_map>
 #include "../../Template/Singleton.h"
+#include "../../Common/Vector2F.h"
 
 class EffectBase;
+class ActorBase;
 
 class SpriteEffectManager : public Singleton<SpriteEffectManager>
 {
@@ -11,6 +14,19 @@ class SpriteEffectManager : public Singleton<SpriteEffectManager>
 	friend class Singleton<SpriteEffectManager>;
 
 public:
+
+	// 生成情報
+	struct CreateParameter
+	{
+		Vector2F pos = {};
+		float scale = 1.0f;
+		float angle = 0.0f;
+		float animationSpeed = 0.0f;
+		float animationNum = -1;
+		bool direction = false;
+		std::string resourceKey = "";
+		ActorBase* target = nullptr;
+	};
 
 	/// <summary>
 	/// 初期化
@@ -37,6 +53,12 @@ public:
 	/// </summary>
 	/// <param name="effect">エフェクト</param>
 	void Add(std::unique_ptr<EffectBase> effect);
+
+	/// <summary>
+	/// 生成
+	/// </summary>
+	/// <param name="parameter">パラメータ情報</param>
+	void Create(const CreateParameter createParameter);
 
 	/// <summary>
 	/// 中身を空にする

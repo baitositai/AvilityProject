@@ -5,6 +5,7 @@
 #include "../../Manager/Common/InputManager.h"
 #include "../../Manager/Common/SceneManager.h"
 #include "../../Manager/Common/SoundManager.h"
+#include "../../Manager/Common/SpriteEffectManager.h"
 #include "../../Manager/Common/Camera.h"
 #include "../../Manager/Game/CollisionManager.h"
 #include "../../Manager/Game/UiManager.h"
@@ -23,10 +24,15 @@ ActorBase::ActorBase(std::unique_ptr<ParameterActor> parameter) :
 	sndMng_(SoundManager::GetInstance()),
 	resMng_(ResourceManager::GetInstance()),
 	collMng_(CollisionManager::GetInstance()),
+	effectMng_(SpriteEffectManager::GetInstance()),
 	facCom_(FactoryComponent::GetInstance()),
 	uiMng_(UiManager::GetInstance())
 {
-	if (!parameter_) { parameter_ = std::make_unique<ParameterActor>(); }	// •K‚¸À‘Ô‚ğ‚Â
+	// •K‚¸À‘Ô‚ğ‚Â
+	if (!parameter_)
+	{ 
+		parameter_ = std::make_unique<ParameterActor>(); 
+	}	
 	isActive_ = true;
 	isDelete_ = false;
 	isDraw_ = true;

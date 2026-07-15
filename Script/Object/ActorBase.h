@@ -19,6 +19,7 @@ class ResourceManager;
 class SoundManager;
 class CollisionManager;
 class UiManager;
+class SpriteEffectManager;
 class FactoryComponent;
 
 class PixelRenderer;
@@ -192,6 +193,7 @@ protected:
 	SoundManager& sndMng_;
 	CollisionManager& collMng_;
 	UiManager& uiMng_;
+	SpriteEffectManager& effectMng_;
 	FactoryComponent& facCom_;
 
 	// アニメーション

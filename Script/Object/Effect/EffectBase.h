@@ -23,6 +23,11 @@ public:
 	virtual void Init() override;
 
 	/// <summary>
+	/// XVˆ—
+	/// </summary>
+	virtual void Update() override;
+
+	/// <summary>
 	/// •`‰æˆ—
 	/// </summary>
 	virtual void Draw() override;

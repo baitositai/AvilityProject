@@ -1,5 +1,8 @@
+#include "../../Manager/Common/ResourceManager.h"
+#include "../../Resource/ResourceTexture.h"
 #include "../../Object/ActorBase.h"
 #include "../../Object/Effect/EffectBase.h"
+#include "../../Object/Effect/EffectTargetFollow.h"
 #include "SpriteEffectManager.h"
 
 void SpriteEffectManager::Init()
@@ -41,6 +44,55 @@ void SpriteEffectManager::Add(std::unique_ptr<EffectBase> effect)
 
 	// 追加
 	effectList_.emplace_back(std::move(effect));
+}
+
+void SpriteEffectManager::Create(const CreateParameter createParameter)
+{
+	// パラメータ定義
+	std::unique_ptr<ParameterEffect> parameter = std::make_unique<ParameterEffect>();
+
+	// パラメータ設定
+	parameter->pos_ = createParameter.pos;
+	parameter->angle_ = createParameter.angle;
+	parameter->scale_ = createParameter.scale;
+	parameter->resourceKey_ = createParameter.resourceKey;
+	parameter->direction_ = createParameter.direction;
+	parameter->transparent_ = true;
+	parameter->componentkeys_ = { "spriteAnimation" };
+
+	// アニメーション数が指定されてない場合
+	int animationNum = createParameter.animationNum;
+	if (animationNum <= -1)
+	{
+		// アニメーション数を取得
+		const Vector2 animationDiv = ResourceManager::GetInstance().GetResourceTexture(parameter->resourceKey_)->GetDivsion();
+		animationNum = animationDiv.x * animationDiv.y;
+	}
+
+	// アニメーション設定
+	parameter->animationDataMap_.emplace("effect", Animation::Data{0, animationNum - 1, createParameter.animationSpeed});
+
+	// ターゲットがいる場合
+	if (createParameter.target)
+	{
+		// ターゲットの設定
+		std::unique_ptr<EffectTargetFollow> effectTarget = std::make_unique<EffectTargetFollow>(std::move(parameter));
+		effectTarget->SetTarget(createParameter.target);
+		
+		// 格納
+		effectList_.push_back(std::move(effectTarget));
+	}
+	else
+	{
+		// エフェクト生成
+		std::unique_ptr<EffectBase> effect = std::make_unique<EffectBase>(std::move(parameter));
+
+		// 格納
+		effectList_.push_back(std::move(effect));
+	}
+
+	// エフェクト初期化
+	effectList_.back()->Init();
 }
 
 void SpriteEffectManager::Clear()

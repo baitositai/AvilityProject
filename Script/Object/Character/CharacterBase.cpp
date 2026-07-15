@@ -1,5 +1,6 @@
 #include <DxLib.h>
 #include "../../Manager/Common/ResourceManager.h"
+#include "../../Manager/Common/SpriteEffectManager.h"
 #include "../../Manager/Common/SoundManager.h"
 #include "../../Manager/Game/UiManager.h"
 #include "../../Factory/FactoryComponent.h"
@@ -204,12 +205,21 @@ void CharacterBase::Landing()
 	// ジャンプ回数を戻す
 	parameterCharacter_->jumpCount_ = parameterCharacter_->jumpCountMax_;
 
-	// 着地判定
-	parameterCharacter_->isGround_ = true;
-	
 	if (parameterCharacter_->isGround_) { return; }
+
 	// 効果音の再生
 	sndMng_.PlaySe(SoundType::SE::JUMP_LANDING);
+
+	// エフェクト
+	SpriteEffectManager::CreateParameter parameter;
+	parameter.pos = parameterCharacter_->GetFootPos();
+	parameter.angle = parameterCharacter_->angle_;
+	parameter.resourceKey = "effectLanding";
+	parameter.animationSpeed = 0.2f;
+	effectMng_.Create(parameter);	
+	
+	// 着地判定
+	parameterCharacter_->isGround_ = true;
 }
 
 const bool CharacterBase::IsInvincible() const
