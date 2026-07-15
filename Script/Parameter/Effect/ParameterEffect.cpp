@@ -2,7 +2,8 @@
 
 ParameterEffect::ParameterEffect() :
 	 tag_(CollisionTags::TAG::MAX),
-	isLoop_(false)
+	isLoop_(false),
+	id_(-1)
 {
 }
 

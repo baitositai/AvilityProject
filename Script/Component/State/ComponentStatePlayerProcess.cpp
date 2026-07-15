@@ -1,6 +1,7 @@
 #include "../../Manager/Common/InputManager.h"
 #include "../../Manager/Common/SceneManager.h"
 #include "../../Manager/Common/SoundManager.h"
+#include "../../Manager/Common/SpriteEffectManager.h"
 #include "../../Object/Character/Player.h"
 #include "../../Object/Common/Animation.h"
 #include "../../Utility/UtilityCommon.h"
@@ -10,7 +11,8 @@ ComponentStatePlayerProcess::ComponentStatePlayerProcess(Player& owner) :
 	ComponentCharacterStateBase(owner),
 	owner_(owner),
 	parameter_(owner.GetParameter()),
-	inputManager_(InputManager::GetInstance())
+	inputManager_(InputManager::GetInstance()),
+	effectManager_(SpriteEffectManager::GetInstance())
 {
 	velocityY_ = 0.0f;
 	isGround_ = false;
@@ -67,6 +69,21 @@ void ComponentStatePlayerProcess::ProcessInputMove()
 		moveAmount_.x = -moveSpeed;
 		parameter_.direction_ = true;
 	}
+	
+	// ダッシュ入力時最初にエフェクトを発生
+	if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_DASH, parameter_.padNo_) && parameter_.isGround_)
+	{
+		// エフェクト再生
+		SpriteEffectManager::CreateParameter parameter;
+		Vector2F halfSize = Vector2(parameter_.hitSize_.x / 2, parameter_.hitSize_.y / 2).ToVector2F();
+		parameter.pos = Vector2F::AddVector2F(parameter_.GetFootPos(), Vector2F::MulVector2F(halfSize, parameter_.GetBack()));
+		parameter.pos = Vector2F::AddVector2F(parameter.pos, Vector2F::MulVector2FFloat(parameter_.GetUp(), 20.0f));
+		parameter.direction = parameter_.direction_;
+		parameter.angle = parameter_.angle_;
+		parameter.resourceKey = "dashSmoke";
+		parameter.animationSpeed = 0.3f;
+		effectManager_.Create(parameter);
+	}
 
 	// 地面にいる場合
 	if (isGround_)
@@ -109,6 +126,15 @@ void ComponentStatePlayerProcess::ProcessInputJump()
 
 			// 効果音の再生
 			soundManager_.PlaySe(SoundType::SE::JUMP);
+
+			// エフェクト再生
+			SpriteEffectManager::CreateParameter parameter;
+			parameter.pos = parameter_.GetFootPos();
+			parameter.pos = Vector2F::AddVector2F(parameter.pos, Vector2F::MulVector2FFloat(parameter_.GetUp(), 10.0f));
+			parameter.angle = parameter_.angle_;
+			parameter.resourceKey = "effectJump";
+			parameter.animationSpeed = 0.2f;
+			effectManager_.Create(parameter);
 		}
 	}
 }

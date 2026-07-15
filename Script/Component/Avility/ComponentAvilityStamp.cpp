@@ -2,6 +2,7 @@
 #include "../../Manager/Common/SceneManager.h"
 #include "../../Manager/Common/Camera.h"
 #include "../../Manager/Common/SoundManager.h"
+#include "../../Manager/Common/SpriteEffectManager.h"
 #include "../../Manager/Common/InputManager.h"
 #include "../../Manager/Game/CollisionManager.h"
 #include "../../Object/Character/Player.h"
@@ -111,6 +112,15 @@ void ComponentAvilityStamp::UpdateActive()
 
 		// 効果音再生
 		soundManager_.PlaySe(SoundType::SE::ABILITY_STAMP_LANDING);
+
+		// エフェクト再生
+		SpriteEffectManager::CreateParameter parameter;
+		parameter.pos = parameter_.GetFootPos();
+		parameter.pos = Vector2F::AddVector2F(parameter.pos, Vector2F::MulVector2FFloat(parameter_.GetUp(), 20.0f));
+		parameter.angle = parameter_.angle_;
+		parameter.resourceKey = "stampLanding";
+		parameter.animationSpeed = 0.3f;
+		effectManager_.Create(parameter);
 	}
 }
 
@@ -186,6 +196,15 @@ void ComponentAvilityStamp::ChangeStateStop()
 
 	// 効果音再生
 	soundManager_.PlaySe(SoundType::SE::ABILITY_STAMP_CHARGE);
+
+	// エフェクト再生
+	SpriteEffectManager::CreateParameter parameter;
+	parameter.pos = parameter_.pos_;
+	parameter.angle = parameter_.angle_;
+	parameter.resourceKey = "stampCharge";
+	parameter.animationSpeed = 0.3f;
+	effectManager_.Create(parameter);
+
 }
 
 void ComponentAvilityStamp::ChangeStateActive()

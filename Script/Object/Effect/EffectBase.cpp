@@ -20,7 +20,7 @@ void EffectBase::Init()
 	ActorBase::Init();
 
 	// Ä¶
-	animation_->Play(Animation::TYPE::EFFECT, false);
+	animation_->Play(Animation::TYPE::EFFECT, parameterEffect_->isLoop_);
 }
 
 void EffectBase::Update()

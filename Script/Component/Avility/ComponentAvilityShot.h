@@ -71,6 +71,9 @@ private:
 	Vector2 defaultSize_;	// 通常
 	Vector2 nowSize_;		// 現在
 
+	// エフェクト管理番号
+	int effectId_;
+
 	// 重力方向
 	ParameterActor::DIR gravityDir_;
 

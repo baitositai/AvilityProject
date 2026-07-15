@@ -25,6 +25,9 @@ public:
 	// コライダータグ
 	CollisionTags::TAG tag_;
 
+	// 番号
+	int id_;
+
 	// ループ判定
 	bool isLoop_;
 };

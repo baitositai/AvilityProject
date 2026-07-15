@@ -11,6 +11,8 @@ void SpriteEffectManager::Init()
 	{
 		effect->Init();
 	}
+
+	nextId_ = 0;
 }
 
 void SpriteEffectManager::Update()
@@ -46,8 +48,10 @@ void SpriteEffectManager::Add(std::unique_ptr<EffectBase> effect)
 	effectList_.emplace_back(std::move(effect));
 }
 
-void SpriteEffectManager::Create(const CreateParameter createParameter)
-{
+int SpriteEffectManager::Create(const CreateParameter createParameter)
+{	
+	nextId_++;
+
 	// パラメータ定義
 	std::unique_ptr<ParameterEffect> parameter = std::make_unique<ParameterEffect>();
 
@@ -57,8 +61,10 @@ void SpriteEffectManager::Create(const CreateParameter createParameter)
 	parameter->scale_ = createParameter.scale;
 	parameter->resourceKey_ = createParameter.resourceKey;
 	parameter->direction_ = createParameter.direction;
+	parameter->isLoop_ = createParameter.isLoop;
 	parameter->transparent_ = true;
 	parameter->componentkeys_ = { "spriteAnimation" };
+	parameter->id_ = nextId_;
 
 	// アニメーション数が指定されてない場合
 	int animationNum = createParameter.animationNum;
@@ -93,6 +99,21 @@ void SpriteEffectManager::Create(const CreateParameter createParameter)
 
 	// エフェクト初期化
 	effectList_.back()->Init();
+
+	return nextId_;
+}
+
+void SpriteEffectManager::Delete(const int id)
+{
+	auto iterator = std::find_if(effectList_.begin(), effectList_.end(), [id](const auto& effect)
+		{
+			return effect->GetParameter().id_ == id;
+		});
+
+	if (iterator != effectList_.end())
+	{
+		(*iterator)->Delete();
+	}
 }
 
 void SpriteEffectManager::Clear()
@@ -113,6 +134,7 @@ void SpriteEffectManager::Sweep()
 
 SpriteEffectManager::SpriteEffectManager()
 {
+	nextId_ = -1;
 }
 
 SpriteEffectManager::~SpriteEffectManager()

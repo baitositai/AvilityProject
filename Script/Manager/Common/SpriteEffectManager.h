@@ -24,6 +24,7 @@ public:
 		float animationSpeed = 0.0f;
 		float animationNum = -1;
 		bool direction = false;
+		bool isLoop = false;
 		std::string resourceKey = "";
 		ActorBase* target = nullptr;
 	};
@@ -57,8 +58,15 @@ public:
 	/// <summary>
 	/// 生成
 	/// </summary>
-	/// <param name="parameter">パラメータ情報</param>
-	void Create(const CreateParameter createParameter);
+	/// <param name="createParameter">パラメータ情報</param>
+	/// <returns>生成ID</returns>
+	int Create(const CreateParameter createParameter);
+
+	/// <summary>
+	/// 削除処理
+	/// </summary>
+	/// <param name="id">エフェクト番号</param>
+	void Delete(const int id);
 
 	/// <summary>
 	/// 中身を空にする
@@ -71,6 +79,9 @@ public:
 	void Sweep();
 
 private:
+
+	// エフェクトID
+	int nextId_;
 
 	// エフェクトリスト
 	std::vector<std::unique_ptr<EffectBase>> effectList_;

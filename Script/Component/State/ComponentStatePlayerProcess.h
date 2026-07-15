@@ -3,6 +3,7 @@
 #include "../Common/Vector2F.h"
 
 class InputManager;
+class SpriteEffectManager;
 class Player;
 class ParameterPlayer;
 
@@ -30,6 +31,9 @@ private:
 
 	// 入力管理クラスの参照
 	InputManager& inputManager_;
+
+	// エフェクト管理クラスの参照
+	SpriteEffectManager& effectManager_;
 
 	// 所有者
 	Player& owner_;

@@ -3,6 +3,7 @@
 #include "../../Common/Vector2F.h"
 #include "../../Manager/Common/InputManager.h"
 #include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/SpriteEffectManager.h"
 #include "../../Manager/Common/Camera.h"
 #include "../../Manager/Common/SoundManager.h"
 #include "../../Manager/Game/CollisionManager.h"
@@ -22,6 +23,7 @@ ComponentAvilityShot::ComponentAvilityShot(Player& owner)
 	chageTime_(0.0f),
 	shotVec_({}),
 	shotAngle_(0.0f),
+	effectId_(-1),
 	isReflected_(false),
 	gravityDir_(ParameterActor::DIR::MAX)
 {
@@ -167,6 +169,15 @@ void ComponentAvilityShot::ProcessInputShot()
 
 		// 効果音再生
 		soundManager_.PlaySe(SoundType::SE::ABILITY_SHOT_CHARGE);
+
+		// エフェクト再生
+		SpriteEffectManager::CreateParameter parameter;
+		parameter.pos = parameter_.pos_;
+		parameter.angle = parameter_.angle_;
+		parameter.resourceKey = "shotCharge";
+		parameter.animationSpeed = 0.3f;
+		parameter.isLoop = true;
+		effectId_ = effectManager_.Create(parameter);
 	}
 }
 
@@ -287,6 +298,9 @@ void ComponentAvilityShot::ProcessInputCharge()
 		// 状態遷移
 		currentState_ = "shot";
 		currentStateFunction_ = stateFunctionMap_[currentState_];
+
+		// チャージエフェクトを削除
+		effectManager_.Delete(effectId_);
 	}
 }
 
