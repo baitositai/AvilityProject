@@ -42,8 +42,8 @@ private:
 	static constexpr float JUMP_SPD_MAX = 10.0f;
 
 	//カメラシェイク関連
-	static constexpr int CAMERA_SHAKE_TIME = 0.2f;
-	static constexpr int CAMERA_SHAKE_POWER = 2.0f;
+	static constexpr float CAMERA_SHAKE_TIME = 0.2f;
+	static constexpr float CAMERA_SHAKE_POWER = 2.0f;
 
 	//角度最大
 	static constexpr float ANGLE_MAX = 360.0f;

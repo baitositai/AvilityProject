@@ -1,5 +1,6 @@
 #include <tgmath.h>
 #include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/Camera.h"
 #include "../../Manager/Common/SoundManager.h"
 #include "../../Manager/Common/InputManager.h"
 #include "../../Manager/Game/CollisionManager.h"
@@ -104,6 +105,9 @@ void ComponentAvilityStamp::UpdateActive()
 	{
 		// 地面に着地したら状態を入力待ちにする
 		ChangeState(STATE::INPUT);
+
+		//カメラシェイク
+		SceneManager::GetInstance().GetCamera().SetCameraShake(CAMERA_SHAKE_TIME, CAMERA_SHAKE_POWER);
 
 		// 効果音再生
 		soundManager_.PlaySe(SoundType::SE::ABILITY_STAMP_LANDING);

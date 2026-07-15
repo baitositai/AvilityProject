@@ -51,6 +51,10 @@ private:
 	// ショット時間
 	static constexpr float SHOT_TIME = 3.5f;
 
+	//カメラシェイク関連
+	static constexpr float CAMERA_SHAKE_TIME = 0.3f;	//シェイク時間
+	static constexpr float CAMERA_SHAKE_POWER = 3.0f;	//シェイク力
+
 	// 衝突管理クラス
 	CollisionManager& collisionManager_;
 

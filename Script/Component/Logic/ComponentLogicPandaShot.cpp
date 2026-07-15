@@ -3,6 +3,7 @@
 #include "../../Application.h"
 #include "../../Manager/Common/SceneManager.h"
 #include "../../Manager/Game/CollisionManager.h"
+#include "../../Manager/Common/Camera.h"
 #include "../../Manager/Game/GimmickManager.h"
 #include "../../Collider/ColliderBox.h"
 #include "../../Object/Common/Animation.h"
@@ -106,6 +107,7 @@ void ComponentLogicPandaShot::UpdateCharge()
 	timer_ -= sceneManager_.GetDeltaTime();
 	if (timer_ < 0.0f)
 	{
+		sceneManager_.GetCamera().SetCameraShake(CAMERA_SHAKE_TIME, CAMERA_SHAKE_POWER);
 		ChangeState(STATE::SHOT);
 	}
 }
