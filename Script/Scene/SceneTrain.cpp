@@ -80,7 +80,7 @@ void SceneTrain::NormalUpdate()
 	SceneBase::NormalUpdate();
 
 #ifdef _DEBUG	
-	//DebugUpdate();
+	DebugUpdate();
 #endif 
 }
 

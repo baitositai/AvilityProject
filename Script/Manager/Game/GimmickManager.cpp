@@ -1,6 +1,7 @@
 #include "../../Utility/UtilityLoad.h"
 #include "../../Object/Gimmick/GimmickDoor.h"
 #include "../../Object/Gimmick/GimmickTarget.h"
+#include "../../Parameter/Gimmick/ParameterGimmickGroundRock.h"
 #include "../../System/GimmickGenerator.h"
 #include "GimmickManager.h"
 
@@ -116,6 +117,28 @@ void GimmickManager::CreateBossDoor(const Vector2F& pos)
 
 	// Ši”[
 	gimmickListMap_[GimmickTypes::TYPE::DOOR].push_back(std::move(door));
+}
+
+void GimmickManager::CreateGroundRock(const CreateParameter& _parameter,const float _horizontalSpd)
+{
+	//GroundRock¶¬
+	auto groundRock = gimmickGenerator_->Create(GimmickTypes::TYPE::GROUND_ROCK);
+
+	//…•½•ûŒü‚ğİ’è
+	auto& parameter = dynamic_cast<ParameterGimmickGroundRock&>(groundRock->GetParameter());
+	parameter.pos_ = _parameter.pos;
+	parameter.moveDir_ = _parameter.moveDir;
+
+	//‘¬“x‚ğİ’è‚Å‚«‚é‚æ‚¤‚É‚·‚é
+	parameter.horizonSpd_ = _horizontalSpd;
+	if (_parameter.hp > -1) { parameter.hp_ = _parameter.hp; }
+	if (_parameter.attackPower > -1) { parameter.attackPower_ = _parameter.attackPower; }
+
+	//‰Šú‰»
+	groundRock->Init();
+
+	// Ši”[
+	gimmickListMap_[GimmickTypes::TYPE::GROUND_ROCK].push_back(std::move(groundRock));
 }
 
 void GimmickManager::AllDeleteTarget()

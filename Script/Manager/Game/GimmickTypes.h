@@ -14,6 +14,7 @@ public:
 		SHOP,			// ”ƒ‚¢•¨
 		DROP_ROCK,		// Šâ—Ž‚Æ‚µ
 		TRAIN,			// “dŽÔ
+		GROUND_ROCK,	// ’n–Ê‚©‚çŠâ‚ª”ò‚Ño‚Ä‚­‚éUŒ‚
 		MAX
 	};
 };

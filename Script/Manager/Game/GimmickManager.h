@@ -63,6 +63,12 @@ public:
 	void CreateBossDoor(const Vector2F& pos);
 
 	/// <summary>
+	/// ボス部屋ドアの生成
+	/// </summary>
+	/// <param name="pos">座標位置</param>
+	void CreateGroundRock(const CreateParameter& _parameter,const float _horizontalSpd);
+
+	/// <summary>
 	/// ターゲットをすべて消す
 	/// </summary>
 	void AllDeleteTarget();

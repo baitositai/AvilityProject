@@ -1,25 +1,26 @@
 #pragma once
 #include "ComponentLogicBase.h"
 
+class Camera;
 class EnemyGaiaGolem;
 class ParameterGimmick;
 class ColliderCircle;
 class ParameterEnemyGaiaGolem;
 
-class ComponentLogicDropRock :
+class ComponentLogicGroundRock :
     public ComponentLogicBase
 {
 public:
 
-    /// <summary>
-    /// コンストラクタ
-    /// </summary>
-    ComponentLogicDropRock(EnemyGaiaGolem& owner);
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	ComponentLogicGroundRock(EnemyGaiaGolem& owner);
 
-    /// <summary>
-    /// デストラクタ
-    /// </summary>
-    ~ComponentLogicDropRock();
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
+	~ComponentLogicGroundRock() override;
 
 	/// <summary>
 	/// 生成処理
@@ -50,14 +51,17 @@ private:
 
 	enum class STATE
 	{
-		NONE,
-		WAIT,
-		DROP,
+		ANIMATION,
+		THROW_GROUNDROCKIT,
 		END
 	};
 
 	//最小の岩の生成数
-	static constexpr int ROCK_CREATE_NUM_MIN = 3;
+	static constexpr int ROCK_CREATE_NUM_MIN = 2;
+
+	//カメラシェイク関連
+	static constexpr int CAMERA_SHAKE_TIME = 0.2f;
+	static constexpr int CAMERA_SHAKE_POWER = 6.0f;
 
 	//岩座標のY固定座標
 	static constexpr float ROCK_POS_Y = 180.0f;
@@ -71,8 +75,19 @@ private:
 	//攻撃力
 	static constexpr int ATTACK_POINT = 40;
 
+	//GroundRock生成タイミングのアニメーションインデックス
+	static constexpr int CREATE_GROUNDROCK_INDEX = 35;
+
+	//速度横移動速度最大
+	static constexpr float JUMP_SPD_MIN = 2.0f;
+	static constexpr float JUMP_SPD_MID = 7.0f;
+	static constexpr float JUMP_SPD_MAX = 15.0f;
+
 	// 所有者
 	EnemyGaiaGolem& owner_;
+
+	//カメラ
+	Camera& camera_;
 
 	// 所有者のパラメータ
 	ParameterEnemyGaiaGolem& parameter_;
@@ -83,10 +98,13 @@ private:
 	//近接攻撃の座標
 	Vector2F attackPos_;
 
-	//ランダムに岩のY座標を決める(X座標は固定)
-	float SetRandomPosX(const std::vector<float>rockPosX);
+	//GroundRockを生成フラグ
+	bool isCreateGroundRock_;
 
-	//生成した岩が、前に生成した岩の範囲内にあるかを判定
-	const bool IsRangeDropRock(const std::vector<float>rockPosX, const float currentPosX);
+	//GroundRockの生成
+	void CreateGroundRock(void);
+
+	//水平方向の速度をランダムに決める
+	float SetRandomHorizonSpd(std::array<int, ROCK_CREATE_NUM_MIN>&_horizonSpd,const int _createIndex );
 };
 

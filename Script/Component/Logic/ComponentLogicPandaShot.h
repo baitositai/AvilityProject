@@ -59,6 +59,10 @@ private:
 	// 竹の生成数
 	static constexpr int CREATE_BAMBOO_COUNT = 5;
 
+	//カメラシェイク関連
+	static constexpr float CAMERA_SHAKE_TIME = 0.3f;	//シェイク時間
+	static constexpr float CAMERA_SHAKE_POWER =3.0f;	//シェイク力
+
 	// 所有者
 	EnemyPanda& owner_;
 

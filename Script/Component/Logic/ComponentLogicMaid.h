@@ -78,6 +78,10 @@ private:
 	// テレポート時間
 	static constexpr float TEREPORT_TIME = 0.5f;
 
+	//カメラシェイク関連
+	static constexpr float CAMERA_SHAKE_TIME = 0.3f;	//シェイク時間
+	static constexpr float CAMERA_SHAKE_POWER = 3.0f;	//シェイク力
+
 	enum class STATE
 	{
 		COLLECT,	// 集める

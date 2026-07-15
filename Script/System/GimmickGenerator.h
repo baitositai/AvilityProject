@@ -15,6 +15,7 @@ class GimmickTreasureChest;
 class GimmickShop;
 class GimmickDropRock;
 class GimmickTrain;
+class GimmickGroundRock;
 
 class ParameterGimmick;
 
@@ -69,4 +70,5 @@ private:
 	std::unique_ptr<GimmickShop> CreateGimmickShop();
 	std::unique_ptr<GimmickDropRock> CreateGimmickDropRock();
 	std::unique_ptr<GimmickTrain> CreateGimmickTrain();
+	std::unique_ptr<GimmickGroundRock> CreateGimmickGroundRock();
 };

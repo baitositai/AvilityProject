@@ -1,6 +1,7 @@
 #include <DxLib.h>
 #include "../../Application.h"
 #include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/Camera.h"
 #include "../../Manager/Common/SpriteEffectManager.h"
 #include "../../Manager/Game/CollisionManager.h"
 #include "../../Manager/Game/ItemManager.h"
@@ -266,6 +267,9 @@ void ComponentLogicMaid::UpdateStamp()
 	{
 		// 状態遷移
 		ChangeState(STATE::COLLECT);
+
+		//カメラシェイク
+		SceneManager::GetInstance().GetCamera().SetCameraShake(CAMERA_SHAKE_TIME, CAMERA_SHAKE_POWER);
 	
 		// 重力をもとに戻す
 		parameter_.gravityPower_ -= ADD_GRAVITY;

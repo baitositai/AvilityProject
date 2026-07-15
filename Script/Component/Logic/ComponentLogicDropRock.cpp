@@ -6,13 +6,16 @@
 #include "../../Collider/ColliderCircle.h"
 #include "../../Object/Character/Enemy/EnemyGaiaGolem.h"
 #include "../../Object/Gimmick/GimmickDropRock.h"
+#include "../../Object/Gimmick/GimmickGroundRock.h"
 #include "../../Object/Common/Animation.h"
 #include "ComponentLogicDropRock.h"
+#include "ComponentLogicGroundRock.h"
 
 ComponentLogicDropRock::ComponentLogicDropRock(EnemyGaiaGolem& owner):
 	ComponentLogicBase(owner),
 	owner_(owner),
-	parameter_(owner_.GetParameter())
+	parameter_(owner_.GetParameter()),
+	attackPos_({})
 {
 }
 
@@ -22,19 +25,26 @@ ComponentLogicDropRock::~ComponentLogicDropRock()
 
 void ComponentLogicDropRock::Create()
 {
-	// 攻撃用コライダーの登録
-	//attackCollider_ = std::make_shared<ColliderCircle>(owner_, parameter_.attackCollisionTag_, attackPos_, parameter_.defaultAttackRadius_);
-	//attackCollider_->SetIsActive(false);
-	//collisionManager_.Add(attackCollider_);
+	// //攻撃用コライダーの登録
+	//// コライダーを複製して攻撃コライダーとして登録
+	//// 攻撃用コライダーの登録
+	attackCollider_ = std::make_shared<ColliderCircle>(owner_, parameter_.attackCollisionTag_, attackPos_, parameter_.defaultAttackRadius_);
+	attackCollider_->SetIsActive(false);
+	collisionManager_.Add(attackCollider_);
 }
 
 void ComponentLogicDropRock::Init()
 {
+	ComponentLogicBase::Init();
+
 	//待機アニメーション
-	owner_.GetAnimation().Play(Animation::TYPE::ATTACK_2);
+	owner_.GetAnimation().Play(Animation::TYPE::ATTACK,false);
 	int createRockNum = ROCK_CREATE_NUM_MIN;
 	const int playerNum = playerManager_.GetPlayerNum();
 	std::vector<Vector2F> playersPos = playerManager_.GetPlayersPos();
+
+	// 攻撃のコライダー設定
+	attackCollider_->SetIsActive(true);
 
 	std::vector<float>rockPosX;
 	if (playerNum > ROCK_CREATE_NUM_MIN)createRockNum = playerNum;
@@ -58,9 +68,12 @@ void ComponentLogicDropRock::Init()
 void ComponentLogicDropRock::Update()
 {
 	Animation& animation = owner_.GetAnimation();
-	if (animation.IsPlay())
+	Vector2F dir = Vector2F::MulVector2FFloat(parameter_.GetFront(), parameter_.scale_);
+	attackPos_ = Vector2F::AddVector2F(parameter_.pos_, Vector2F::MulVector2FFloat(dir, parameter_.defaultAttackDistance_));
+	if (!animation.IsPlay())
 	{
 		isEnd_ = true;
+		attackCollider_->SetIsActive(false);
 	}
 }
 

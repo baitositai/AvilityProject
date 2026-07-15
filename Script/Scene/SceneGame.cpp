@@ -106,7 +106,7 @@ void SceneGame::NormalUpdate()
 	EventManager::GetInstance().Update();
 
 #ifdef _DEBUG	
-	//DebugUpdate();
+	DebugUpdate();
 #endif 
 }
 
