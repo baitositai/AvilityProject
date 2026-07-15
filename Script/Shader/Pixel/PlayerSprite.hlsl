@@ -10,7 +10,8 @@ cbuffer ConstantBuffer : register(b4)
     float2 g_division;
     float g_draw_index;
     float dummy;
-    float4 g_outline_color;
+    float3 g_outline_color;
+    float isMetal;
 };
 
 float4 main(PS_INPUT PSInput) : SV_TARGET
@@ -58,15 +59,26 @@ float4 main(PS_INPUT PSInput) : SV_TARGET
     
     // カラー合成
     mainColor.rgb = (mainColor.rgb * g_color) + (float3(1.0f, 1.0f, 1.0f) * specular);
+    
+    if (isMetal >= 1.0f)
+    {
+     
+    // 灰色にする
     //float gray = dot(mainColor.rgb, float3(0.299f, 0.587f, 0.114f));
-    //mainColor.rgb = float3(gray, gray, gray);
+        float gray = (mainColor.r + mainColor.g + mainColor.b) / 3.0f;
+        gray *= 2.0f;
+        mainColor.rgb = float3(gray, gray, gray);
+       
+    }
+    
+    // 彩度を保つために、saturateで0～1の範囲にとどめる
     mainColor.rgb = saturate(mainColor.rgb);
 
     // --- ライティング処理ここまで ---
 
     // 透過・アウトライン合成
     mainColor.a *= g_alpha;
-    mainColor.rgb = lerp(mainColor.rgb, g_outline_color.rgb, outlineFactor);
+    mainColor.rgb = lerp(mainColor.rgb, g_outline_color, outlineFactor);
     mainColor.a = max(mainColor.a, maxNeighborAlpha * g_alpha);
     
     if (mainColor.a <= 0.0f)

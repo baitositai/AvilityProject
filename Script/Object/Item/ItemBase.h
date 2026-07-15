@@ -73,7 +73,7 @@ protected:
 	// 型変換用のパラメータを返す関数
 	ParameterItem* GetParameterItemPtr() { return parameterItem_; }
 
-private:
+//private:
 
 	// アイテムのパラメータ
 	ParameterItem* parameterItem_;

@@ -498,6 +498,20 @@ const int Player::GetTotalLootTreasuresMoney() const
 	return total;
 }
 
+void Player::SetMaterialBuf(const int index, FLOAT4 buf)
+{
+	material_->SetConstBuf(index, buf);
+}
+
+VECTOR Player::GetOutlineColor() const
+{
+	return PLAYER_OUTLINE_COLORS.at(
+		static_cast<std::vector<DxLib::VECTOR, std::allocator<DxLib::VECTOR>>::size_type>(
+			static_cast<int>(GetParameter().padNo_)
+		) - 1
+	);
+}
+
 void Player::InitDraw()
 {
 	// リソースの取得と同時に必要な情報を取得
@@ -516,7 +530,16 @@ void Player::InitDraw()
 	// バッファーの設定
 	material_->AddConstBuf(FLOAT4{ GetParameter().color_.x, GetParameter().color_.y,GetParameter().color_.z, GetParameter().alpha_ });
 	material_->AddConstBuf(FLOAT4{ (float)GetParameter().divisionNum_.x, (float)GetParameter().divisionNum_.y, GetParameter().drawIndex_, 0.0f });
-	material_->AddConstBuf(PLAYER_OUTLINE_COLORS.at(static_cast<std::vector<DxLib::FLOAT4, std::allocator<DxLib::FLOAT4>>::size_type>(static_cast<int>(GetParameter().padNo_)) - 1));
+	VECTOR outlineColor = PLAYER_OUTLINE_COLORS.at(
+		static_cast<std::vector<DxLib::VECTOR, std::allocator<DxLib::VECTOR>>::size_type>(
+			static_cast<int>(GetParameter().padNo_)
+		) - 1
+	);
+	material_->AddConstBuf(FLOAT4{
+		outlineColor.x,
+		outlineColor.y,
+		outlineColor.z,
+		0.0f });
 
 	// テクスチャの設定
 	material_->AddTextureBuf(resMng_.GetHandle("playerNormal"));

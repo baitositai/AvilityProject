@@ -802,6 +802,12 @@
       "type": "pixelShader"
     },
     {
+      "key": "ItemSprite",
+      "path": "Resource/Shader/ItemSprite.cso",
+      "sceneIds": [ 0 ],
+      "type": "pixelShader"
+    },
+    {
       "key": "PlayerSprite",
       "path": "Resource/Shader/PlayerSprite.cso",
       "sceneIds": [ 0 ],

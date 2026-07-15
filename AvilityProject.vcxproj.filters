@@ -1655,5 +1655,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <FxCompile Include="Script\Shader\Pixel\PlayerSprite.hlsl" />
+    <FxCompile Include="Script\Shader\Pixel\ItemSprite.hlsl" />
   </ItemGroup>
 </Project>

@@ -19,6 +19,11 @@ public:
 	~ItemAvility() override;
 
 	/// <summary>
+	/// 描画処理
+	/// </summary>
+	void Draw() override;
+
+	/// <summary>
 	/// 生成するコンポーネントの名前を返す
 	/// </summary>
 	/// <returns>コンポーネント名前</returns>
@@ -43,6 +48,9 @@ public:
 	const ParameterItemAvility& GetParameter() const { return *parameterItemAvility_; }
 
 private:
+
+	// 描画関係の初期化
+	void InitDraw() override;
 
 	// パラメータ
 	ParameterItemAvility* parameterItemAvility_;
