@@ -1253,6 +1253,16 @@
       "divY": 1,
       "sizeX": 140,
       "sizeY": 50
+    },
+    {
+      "key": "rockLanding",
+      "path": "Resource/Image/Effect/RockSmoke.png",
+      "sceneIds": [4],
+      "type": "texture",
+      "divX":11,
+      "divY": 1,
+      "sizeX": 64,
+      "sizeY": 64
     }
   ]
 }

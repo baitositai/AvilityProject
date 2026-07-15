@@ -1,7 +1,9 @@
 #include "../Manager/Common/SceneManager.h"
 #include "../Manager/Game/CollisionManager.h"
+#include "../Manager/Common/SpriteEffectManager.h"
 #include "../Manager/Common/Camera.h"
 #include "../../Parameter/Gimmick/ParameterGimmick.h"
+#include "../../Parameter/Effect/ParameterEffect.h"
 #include "../../OnHit/OnHitDropRock.h"
 #include "../Collider/ColliderCircle.h"
 #include "GimmickDropRock.h"
@@ -24,6 +26,7 @@ GimmickDropRock::~GimmickDropRock()
 
 void GimmickDropRock::Init()
 {
+	//ロックサイズのヒットサイズ設定
 	parameterDropRock_->hitSize_ = Vector2(ROCK_SIZE, ROCK_SIZE);
 
 	// コライダー
@@ -37,7 +40,6 @@ void GimmickDropRock::Init()
 
 	isDead_ = false;
 	waitCnt_ = 0.0f;
-
 
 	update_ = std::bind(&GimmickDropRock::UpdateWait, this);
 }
@@ -77,6 +79,13 @@ void GimmickDropRock::UpdateDrop(void)
 		isDead_ = true;
 		isDelete_ = true;
 		scnMng_.GetCamera().SetCameraShake(CAMERA_SHAKE_TIME, CAMERA_SHAKE_POWER);
+
+		//エフェクト再生
+		SpriteEffectManager::CreateParameter parameter = {};
+		parameter.pos = parameterDropRock_->pos_;
+		parameter.scale = parameterDropRock_->scale_;
+		parameter.resourceKey = "rockLanding";
+		effectMng_.Create(parameter);
 	}
 	// コンポーネント有効
 	SetComponentActive("gravity", true);
@@ -84,6 +93,10 @@ void GimmickDropRock::UpdateDrop(void)
 }
 
 void GimmickDropRock::UpdateGroundRock()
+{
+}
+
+void GimmickDropRock::PlayEffect(void)
 {
 }
 

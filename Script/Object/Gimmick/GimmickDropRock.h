@@ -82,6 +82,7 @@ private:
 	//地面から岩が出てくる攻撃
 	void UpdateGroundRock();
 
-
+	//エフェクトの再生
+	void PlayEffect(void);
 };
 

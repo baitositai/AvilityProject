@@ -39,7 +39,7 @@ void SceneBoss::Init()
 {		
 	// ボス指定
 	//bossType_ = EnemyTypes::BOSS_LIST[UtilityCommon::GetRandomCount(EnemyTypes::BOSS_MAX - 1, 0)];
-	bossType_ = EnemyTypes::BOSS_LIST[0];
+	bossType_ = EnemyTypes::BOSS_LIST[2];
 
 	// ボス部屋の生成
 	stageMng_.Create(StageManager::TYPE::BOSS);
