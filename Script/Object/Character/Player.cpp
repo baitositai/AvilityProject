@@ -21,12 +21,25 @@
 #include "../../Ui/SpeechBubble/UiSpeechBubbleSelectAvility.h"
 #include "../Item/ItemTreasure.h"
 #include "../Common/Animation.h"
+
+#include "../../Manager/Common/ResourceManager.h"
+#include "../../Resource/ResourceTexture.h"
+#include "../../Render/PixelMaterial.h"
+#include "../../Render/PixelRenderer.h"
+
 #include "Player.h"
 
 Player::Player(std::unique_ptr<ParameterPlayer> parameter) :
 	CharacterBase(std::move(parameter)),
 	playerManager_(PlayerManager::GetInstance())
 {		
+	// クラス外で定義
+	PLAYER_OUTLINE_COLORS.clear();
+	PLAYER_OUTLINE_COLORS.push_back(Player::PLATYER1_COLOR);
+	PLAYER_OUTLINE_COLORS.push_back(Player::PLATYER2_COLOR);
+	PLAYER_OUTLINE_COLORS.push_back(Player::PLATYER3_COLOR);
+	PLAYER_OUTLINE_COLORS.push_back(Player::PLATYER4_COLOR);
+
 	// プレイヤー用のパラメータ
 	parameterPlayer_ = dynamic_cast<ParameterPlayer*>(GetParameterCharacterPtr());
 	assert(parameterPlayer_ != nullptr);
@@ -495,6 +508,56 @@ const int Player::GetTotalLootTreasuresMoney() const
 		total += treasure.amount;
 	}
 	return total;
+}
+
+void Player::SetMaterialBuf(const int index, FLOAT4 buf)
+{
+	material_->SetConstBuf(index, buf);
+}
+
+VECTOR Player::GetOutlineColor() const
+{
+	return PLAYER_OUTLINE_COLORS.at(
+		static_cast<std::vector<DxLib::VECTOR, std::allocator<DxLib::VECTOR>>::size_type>(
+			static_cast<int>(GetParameter().padNo_)
+		) - 1
+	);
+}
+
+void Player::InitDraw()
+{
+	// リソースの取得と同時に必要な情報を取得
+	const auto texture = resMng_.GetResourceTexture(GetParameter().resourceKey_);
+	GetParameter().drawSize_ = texture->GetSize();
+	GetParameter().divisionNum_ = texture->GetDivsion();
+	GetParameter().drawHalfSize_ = Vector2(GetParameter().drawSize_.x / 2, GetParameter().drawSize_.y / 2);
+
+	// 基底クラスではスプライト画像を前提で用意
+	// マテリアルの生成
+	material_ = std::make_unique<PixelMaterial>(resMng_.GetHandle("PlayerSprite"), PLAYER_CONST_BUFFER_SIZE);
+
+	// テクスチャの設定
+	material_->AddTextureBuf(GetParameter().texture_);
+
+	// バッファーの設定
+	material_->AddConstBuf(FLOAT4{ GetParameter().color_.x, GetParameter().color_.y,GetParameter().color_.z, GetParameter().alpha_ });
+	material_->AddConstBuf(FLOAT4{ (float)GetParameter().divisionNum_.x, (float)GetParameter().divisionNum_.y, GetParameter().drawIndex_, 0.0f });
+	VECTOR outlineColor = PLAYER_OUTLINE_COLORS.at(
+		static_cast<std::vector<DxLib::VECTOR, std::allocator<DxLib::VECTOR>>::size_type>(
+			static_cast<int>(GetParameter().padNo_)
+		) - 1
+	);
+	material_->AddConstBuf(FLOAT4{
+		outlineColor.x,
+		outlineColor.y,
+		outlineColor.z,
+		0.0f });
+
+	// テクスチャの設定
+	material_->AddTextureBuf(resMng_.GetHandle("playerNormal"));
+
+	// レンダラーの生成
+	renderer_ = std::make_unique<PixelRenderer>(*material_);
 }
 
 void Player::InitUi()

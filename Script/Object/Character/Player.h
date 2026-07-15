@@ -182,7 +182,23 @@ public:
 	/// <returns>アビリティリソース番号</returns>
 	const std::vector<int>& GetAvilityItemResourceIndexs() const { return avilityItemResourceIndexs_; }
 
+	// マテリアルの設定
+	void SetMaterialBuf(const int index, FLOAT4 buf);
+
+	// アウトラインカラーの取得
+	VECTOR GetOutlineColor() const;
+
 private:
+
+	// アウトラインの色
+	static constexpr VECTOR PLATYER1_COLOR = { 0.0f, 0.0f, 1.0f };
+	static constexpr VECTOR PLATYER2_COLOR = { 1.0f, 0.0f, 0.0f };
+	static constexpr VECTOR PLATYER3_COLOR = { 0.0f, 1.0f, 0.0f };
+	static constexpr VECTOR PLATYER4_COLOR = { 1.0f, 1.0f, 0.0f };
+	std::vector<VECTOR> PLAYER_OUTLINE_COLORS;
+
+	// 定数バッファ―サイズ
+	static constexpr int PLAYER_CONST_BUFFER_SIZE = 3;
 
 	// 退出用入力時間
 	float leaveInputTime_;
@@ -207,6 +223,9 @@ private:
 
 	// 選択用で保持する予備
 	std::unique_ptr<ComponentAvilityBase> spareAvilityComponent_;
+
+	// 描画関係の初期化
+	void InitDraw() override;
 
 	// UIの初期化
 	void InitUi() override;

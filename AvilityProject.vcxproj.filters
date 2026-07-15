@@ -1682,6 +1682,12 @@
     </ClInclude>
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Script\Component\Logic\ComponentLogicRockWave.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Component\ComponentTextAnimation.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Script\Shader\Pixel\StandardTexture.hlsl" />
@@ -1702,5 +1708,7 @@
     <ClInclude Include="Script\OnHit\OnHitDropRock.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <FxCompile Include="Script\Shader\Pixel\PlayerSprite.hlsl" />
+    <FxCompile Include="Script\Shader\Pixel\ItemSprite.hlsl" />
   </ItemGroup>
 </Project>
