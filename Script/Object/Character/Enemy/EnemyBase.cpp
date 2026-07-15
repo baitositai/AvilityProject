@@ -3,6 +3,7 @@
 #include "../../../Manager/Common/SceneManager.h"
 #include "../../../Manager/Common/ResourceManager.h"
 #include "../../../Manager/Common/SoundManager.h"
+#include "../../../Manager/Common/SpriteEffectManager.h"
 #include "../../../Manager/Game/ItemManager.h"
 #include "../../../Collider/ColliderBox.h"
 #include "../../../OnHit/OnHitEnemy.h"
@@ -105,6 +106,15 @@ void EnemyBase::Damage(const int damage, const Vector2& hitPos)
 
 	// サウンド再生
 	sndMng_.PlaySe(SoundType::SE::PLAYER_ATTACK_HIT);
+
+	// エフェクト再生
+	SpriteEffectManager::CreateParameter parameter;
+	Vector2 effectPos = hitPos;
+	parameter.pos = effectPos.ToVector2F();
+	parameter.angle = parameterEnemy_->angle_;
+	parameter.resourceKey = "effectHit";
+	parameter.animationSpeed = 0.2f;
+	effectMng_.Create(parameter);
 }
 
 void EnemyBase::InitDraw()

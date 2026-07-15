@@ -3,6 +3,7 @@
 #include "../../Manager/Common/Camera.h"
 #include "../../Manager/Common/InputManager.h"
 #include "../../Manager/Common/SoundManager.h"
+#include "../../Manager/Common/SpriteEffectManager.h"
 #include "../../Manager/Game/PlayerManager.h"
 #include "../../Manager/Game/GimmickManager.h"
 #include "../../Manager/Game/UiManager.h"
@@ -189,6 +190,17 @@ void Player::Damage(const int damage, const Vector2& hitPos)
 
 	// サウンド再生
 	sndMng_.PlaySe(SoundType::SE::PLAYER_DAMAGE);
+
+	// エフェクト再生
+	SpriteEffectManager::CreateParameter parameter;
+	Vector2 effectPos = hitPos;
+	parameter.pos = effectPos.ToVector2F();
+	parameter.angle = parameterPlayer_->angle_;
+	parameter.direction = parameterPlayer_->direction_;
+	parameter.resourceKey = "effectDamage";
+	parameter.animationSpeed = 0.3f;
+	effectMng_.Create(parameter);
+
 }
 
 void Player::Ready()
