@@ -56,21 +56,19 @@ private:
 
 	// パラメータ情報
 	ParameterGimmick* parameterDropRock_;
-
 	//状態
 	STATE state_;
-
 	//更新処理
 	std::function<void(void)> update_;
-
 	//待機時間
 	float waitCnt_;
-
 	//ヒット用半径の大きさ
 	float hitRadius_;
-
 	//生存状態
 	bool isDead_;
+
+	//点滅用のカウント(フレーム)
+	int blinkFrame_;
 
 	// 接地判定の共通ロジック
 	void CheckGroundStatus(float moveVal, bool isXAxis);
@@ -82,6 +80,7 @@ private:
 	//地面から岩が出てくる攻撃
 	void UpdateGroundRock();
 
-
+	//エフェクトの再生
+	void PlayEffect(const std::string& _res);
 };
 

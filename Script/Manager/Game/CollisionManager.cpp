@@ -380,6 +380,9 @@ void CollisionManager::InitTagMatrix()
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::DROP_ROCK)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;							// テレポートと竹
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::DROP_ROCK)] = true;
 
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::GROUND_ROCK)][static_cast<int>(CollisionTags::TAG::PLAYER)] = true;							// テレポートと竹
+	collTagMatrix_[static_cast<int>(CollisionTags::TAG::PLAYER)][static_cast<int>(CollisionTags::TAG::GROUND_ROCK)] = true;
+
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::ITEM_TREASURE)][static_cast<int>(CollisionTags::TAG::TREASURE_CHEST)] = true;				// 宝箱とアイテム宝
 	collTagMatrix_[static_cast<int>(CollisionTags::TAG::TREASURE_CHEST)][static_cast<int>(CollisionTags::TAG::ITEM_TREASURE)] = true;
 

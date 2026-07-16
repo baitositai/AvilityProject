@@ -38,6 +38,7 @@ public:
 		SHOP,						// “X
 		TRAIN,						// “dŽÔ
 		DROP_ROCK,					// Šâ—Ž‚Æ‚µ
+		GROUND_ROCK,				// ’n–Ê‚©‚ço‚éŠâ
 		MAX
 	};
 

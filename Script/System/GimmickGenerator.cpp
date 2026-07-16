@@ -45,6 +45,10 @@ GimmickGenerator::GimmickGenerator()
 		{
 			return CreateGimmickTrain();
 		});
+	createGimmickMap_.emplace(GimmickTypes::TYPE::GROUND_ROCK, [this]()
+		{
+			return CreateGimmickGroundRock();
+		});
 }
 
 GimmickGenerator::~GimmickGenerator()
@@ -104,7 +108,7 @@ void GimmickGenerator::InitParameter()
 	parameterTrain->LoadParameter(jsonTrainParameter);
 	templateParameterMap_.emplace(GimmickTypes::TYPE::TRAIN, std::move(parameterTrain));
 
-	//岩落とし
+	//地面からグラウンドロック
 	const auto jsonGroundRockParameter = jsonParameterMap.at("groundRock").front();
 	auto parameterGroundRock = std::make_unique<ParameterGimmickGroundRock>();
 	parameterGroundRock->LoadParameter(jsonGroundRockParameter);

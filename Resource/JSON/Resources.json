@@ -1325,6 +1325,46 @@
       "divY": 1,
       "sizeX": 96,
       "sizeY": 96
+    },
+    {
+      "key": "rockLanding",
+      "path": "Resource/Image/Effect/RockSmoke.png",
+      "sceneIds": [4],
+      "type": "texture",
+      "divX":11,
+      "divY": 1,
+      "sizeX": 64,
+      "sizeY": 64
+    },
+    {
+      "key": "rockCreate",
+      "path": "Resource/Image/Effect/RockCreate.png",
+      "sceneIds": [ 4 ],
+      "type": "texture",
+      "divX": 12,
+      "divY": 1,
+      "sizeX": 64,
+      "sizeY": 64
+    },
+    {
+      "key": "rockBreak",
+      "path": "Resource/Image/Effect/RockBreak.png",
+      "sceneIds": [ 4 ],
+      "type": "texture",
+      "divX": 12,
+      "divY": 1,
+      "sizeX": 64,
+      "sizeY": 64
+    },
+    {
+      "key": "damageGolem",
+      "path": "Resource/Image/Effect/GolemDamage.png",
+      "sceneIds": [ 4 ],
+      "type": "texture",
+      "divX": 6,
+      "divY": 1,
+      "sizeX": 64,
+      "sizeY": 64
     }
   ]
 }
