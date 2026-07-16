@@ -9,18 +9,34 @@ cbuffer ConstantBuffer : register(b4)
     float g_alpha;
     float2 g_division;
     float g_draw_index;
-    float dummy;
+    float g_time;
     float3 g_outline_color;
     float isMetal;
 };
 
+// 後光（バックグロー）の設定
+static const float3 GLOW_COLOR = float3(0.3f, 0.9f, 1.0f); // 後光の色（シアン・水色）
+static const float GLOW_INTENSITY = 4.0f; // 後光の明るさ
+
+// ★後光の太さ（ここを大きく引き上げました！元の 0.012f → 0.035f）
+static const float GLOW_THICKNESS = 0.035f;
+
+// アニメーションのスピードと変化幅
+static const float PULSE_SPEED = 8.0f;
+static const float PULSE_RANGE = 0.15f; // パルスによる太さの伸縮幅
+
 float4 main(PS_INPUT PSInput) : SV_TARGET
 {
-    // 1. アニメーション適用後の正確なUVを取得
-    float2 currentFrameUv = ApplySpriteAnimation(PSInput.uv, g_division, g_draw_index);
+    // 1. 元のUV（0.0 ~ 1.0）
+    float2 localUV = PSInput.uv;
+    
+    // 2. アニメーション適用後の正確なUVを取得
+    float2 currentFrameUv = ApplySpriteAnimation(localUV, g_division, g_draw_index);
+    
+    // 3. 元のテクスチャサンプリング
     float4 mainColor = tex.Sample(texSampler, currentFrameUv);
     
-    // アウトライン処理（既存）
+    // 4. キャラ本来のアウトライン処理（既存）
     float2 texelSize = (1.0f / g_division) * 0.005f;
     float alphaTop = tex.Sample(texSampler, currentFrameUv + float2(0.0f, -texelSize.y)).a;
     float alphaBottom = tex.Sample(texSampler, currentFrameUv + float2(0.0f, texelSize.y)).a;
@@ -29,11 +45,7 @@ float4 main(PS_INPUT PSInput) : SV_TARGET
     float maxNeighborAlpha = max(max(alphaTop, alphaBottom), max(alphaLeft, alphaRight));
     float outlineFactor = saturate(maxNeighborAlpha - mainColor.a);
 
-    // --- ここから【超微小ボカシ】ドット絵専用なめらかライティング ---
-    
-    // 【修正の肝】巨大なテクスチャに対して大きすぎるボカシをかけるのをやめ、
-    // 画面の1ピクセル未満の極めてわずかな微分値（0.2倍）だけで滑らかに補間させます。
-    // これにより、キャラの形を一切崩さずに、ドットの角のジャギーだけが綺麗に消えます。
+    // --- 【超微小ボカシ】ドット絵専用なめらかライティング ---
     float2 dx = ddx(currentFrameUv) * 0.2f;
     float2 dy = ddy(currentFrameUv) * 0.2f;
     float4 normalMapColor = normalTex.SampleGrad(texSampler, currentFrameUv, dx, dy);
@@ -48,13 +60,7 @@ float4 main(PS_INPUT PSInput) : SV_TARGET
     // ディフューズ（陰影）の計算
     float ndl = saturate(dot(normal, lightDir));
     
-    // ドット絵本来の色味（服のグレーや斧の水色）を潰さないよう、
-    // ライトの影響度を少しマイルド（0.5～1.2）にブレンドします
-    //float lightingFactor = lerp(0.5f, 1.2f, ndl);
-    
     // スペキュラ（左上の光沢ハイライト）
-    // 法線が極小範囲で滑らかになったため、powを「5.0f」にすることで
-    // ドットの形にならず、かつチカチカしない綺麗な光の筋がのります
     float specular = pow(ndl, 5.0f) * 0.6f;
     
     // カラー合成
@@ -62,13 +68,9 @@ float4 main(PS_INPUT PSInput) : SV_TARGET
     
     if (isMetal >= 1.0f)
     {
-     
-    // 灰色にする
-    //float gray = dot(mainColor.rgb, float3(0.299f, 0.587f, 0.114f));
         float gray = (mainColor.r + mainColor.g + mainColor.b) / 3.0f;
         gray *= 2.0f;
         mainColor.rgb = float3(gray, gray, gray);
-       
     }
     
     // 彩度を保つために、saturateで0～1の範囲にとどめる
@@ -77,12 +79,58 @@ float4 main(PS_INPUT PSInput) : SV_TARGET
     // --- ライティング処理ここまで ---
 
     // 透過・アウトライン合成
-    mainColor.a *= g_alpha;
-    mainColor.rgb = lerp(mainColor.rgb, g_outline_color, outlineFactor);
-    mainColor.a = max(mainColor.a, maxNeighborAlpha * g_alpha);
+    float charAlpha = mainColor.a * g_alpha;
+    float3 charRGB = lerp(mainColor.rgb, g_outline_color, outlineFactor);
+    float finalCharAlpha = max(charAlpha, maxNeighborAlpha * g_alpha);
+
+    // ----------------------------------------------------
+    // ★ キャラクターの形に沿った後光（シルエット型）の計算
+    // ----------------------------------------------------
+    float loopedTime = fmod(g_time * PULSE_SPEED, 6.283185f);
+    float sinWave = sin(loopedTime);
+    float pulseFactor = pow(abs(sinWave), 2.0f) * sign(sinWave);
     
-    if (mainColor.a <= 0.0f)
+    // 伸縮するオフセット幅
+    float currentThickness = GLOW_THICKNESS * (1.0f + pulseFactor * PULSE_RANGE);
+    float2 glowOffset = (1.0f / g_division) * currentThickness;
+
+    // 【12方向サンプリング】
+    // A. キャラクターのキワ（隙間）を埋めるための近距離サンプリング（内周4方向）
+    float2 innerOffset = glowOffset * 0.4f;
+    float i1 = tex.Sample(texSampler, currentFrameUv + float2(0.0f, -innerOffset.y)).a;
+    float i2 = tex.Sample(texSampler, currentFrameUv + float2(0.0f, innerOffset.y)).a;
+    float i3 = tex.Sample(texSampler, currentFrameUv + float2(-innerOffset.x, 0.0f)).a;
+    float i4 = tex.Sample(texSampler, currentFrameUv + float2(innerOffset.x, 0.0f)).a;
+    float innerGlow = (i1 + i2 + i3 + i4) * 0.25f;
+
+    // B. 大きく外側へ広げるための遠距離サンプリング（外周8方向）
+    float o1 = tex.Sample(texSampler, currentFrameUv + float2(0.0f, -glowOffset.y)).a;
+    float o2 = tex.Sample(texSampler, currentFrameUv + float2(0.0f, glowOffset.y)).a;
+    float o3 = tex.Sample(texSampler, currentFrameUv + float2(-glowOffset.x, 0.0f)).a;
+    float o4 = tex.Sample(texSampler, currentFrameUv + float2(glowOffset.x, 0.0f)).a;
+    
+    float o5 = tex.Sample(texSampler, currentFrameUv + float2(-glowOffset.x * 0.7f, -glowOffset.y * 0.7f)).a;
+    float o6 = tex.Sample(texSampler, currentFrameUv + float2(glowOffset.x * 0.7f, -glowOffset.y * 0.7f)).a;
+    float o7 = tex.Sample(texSampler, currentFrameUv + float2(-glowOffset.x * 0.7f, glowOffset.y * 0.7f)).a;
+    float o8 = tex.Sample(texSampler, currentFrameUv + float2(glowOffset.x * 0.7f, glowOffset.y * 0.7f)).a;
+    float outerGlow = (o1 + o2 + o3 + o4 + o5 + o6 + o7 + o8) * 0.125f;
+
+    // 内周と外周をブレンドして、滑らかで繋がったグラデーション後光を作成
+    float glowMask = max(innerGlow, outerGlow);
+    
+    // pow の値を下げて (1.5 -> 1.0) 光の減衰をなだらかにし、より広く大きく見えるようにします
+    glowMask = saturate(pow(glowMask, 1.0f));
+    
+    float3 glowEffect = GLOW_COLOR * glowMask * GLOW_INTENSITY;
+
+    // ----------------------------------------------------
+    // ★ 最終合成
+    // ----------------------------------------------------
+    float3 finalRGB = lerp(glowEffect * g_alpha, charRGB, finalCharAlpha);
+    float finalAlpha = max(finalCharAlpha, glowMask * g_alpha);
+    
+    if (finalAlpha <= 0.0f)
         discard;
-    
-    return mainColor;
+        
+    return float4(finalRGB, finalAlpha);
 }

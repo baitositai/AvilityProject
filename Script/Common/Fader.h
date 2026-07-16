@@ -2,6 +2,9 @@
 #include <functional>
 #include <unordered_map>
 
+class PixelRenderer;
+class PixelMaterial;
+
 class Fader
 {
 public:
@@ -64,6 +67,12 @@ public:
 
 private:
 
+	// マテリアル
+	std::unique_ptr<PixelMaterial> material_;
+
+	// レンダラー
+	std::unique_ptr<PixelRenderer> renderer_;
+
 	// フェード最大値
 	static constexpr float MAX_ALPHA = 255.0f;
 
@@ -106,5 +115,5 @@ private:
 
 	// 各種描画処理
 	void DrawNone() {};
-	void DrawFade();
+	void DrawFade() const;
 };

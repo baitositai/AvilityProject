@@ -25,6 +25,20 @@ Fader::~Fader()
 void Fader::Init()
 {
 	SetFade(STATE::NONE);
+
+	//// 基底クラスではスプライト画像を前提で用意
+	//// マテリアルの生成
+	//material_ = std::make_unique<PixelMaterial>(resMng_.GetHandle("standardSprite"), DEFAULT_CONST_BUFFER_SIZE);
+
+	//// テクスチャの設定
+	//material_->AddTextureBuf(parameter_->texture_);
+
+	//// バッファーの設定
+	//material_->AddConstBuf(FLOAT4{ parameter_->color_.x, parameter_->color_.y,parameter_->color_.z, parameter_->alpha_ });
+	//material_->AddConstBuf(FLOAT4{ (float)parameter_->divisionNum_.x, (float)parameter_->divisionNum_.y, parameter_->drawIndex_, 0.0f });
+
+	//// レンダラーの生成
+	//renderer_ = std::make_unique<PixelRenderer>(*material_);
 }
 
 void Fader::Update()
@@ -53,6 +67,19 @@ void Fader::SetFade(const STATE state)
 
 	// 状態ごとの処理を実行
 	setMap_[state]();
+
+	//// メッシュ生成
+	//renderer_->MakeSquereVertex(parameter_->drawPos_, parameter_->drawSize_, parameter_->angle_, parameter_->scale_, parameter_->direction_);
+
+	//// 定数バッファの更新
+	//material_->SetConstBuf(0, FLOAT4{ parameter_->color_.x, parameter_->color_.y ,parameter_->color_.z, parameter_->alpha_ });
+	//material_->SetConstBuf(1, FLOAT4{ (float)parameter_->divisionNum_.x, (float)parameter_->divisionNum_.y, parameter_->drawIndex_
+	//	, SceneManager::GetInstance().GetTotalTime() });
+
+	//// 描画処理
+	//SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)UtilityCommon::ALPHA_MAX);
+	//renderer_->Draw();
+	//SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 void Fader::RegisterStateSetFunction(const STATE state, const std::function<void()> function)
@@ -147,7 +174,7 @@ void Fader::UpdateFadeIn()
 	}
 }
 
-void Fader::DrawFade()
+void Fader::DrawFade() const
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)alpha_);
 	DrawBox(
