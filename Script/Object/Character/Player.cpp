@@ -427,6 +427,7 @@ void Player::SetAvilityComponent(std::unique_ptr<ComponentAvilityBase> component
 
 	// Ši”[
 	component->Create();
+
 	avilityComponents_.push_back(std::move(component));
 	SetAvilityResourceIndexs();
 }

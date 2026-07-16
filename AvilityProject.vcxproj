@@ -395,6 +395,8 @@
     <ClCompile Include="Script\Ui\Game\UiDamage.cpp" />
     <ClCompile Include="Script\Ui\Enemy\UiBossHpBar.cpp" />
     <ClCompile Include="Script\Ui\Player\UiPlayerNum.cpp" />
+    <ClCompile Include="Script\Ui\Game\UIButtonExpand.cpp" />
+    <ClCompile Include="Script\Ui\Player\UiPlayerGetItemMessage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\Object\Effect\EffectTargetFollow.h" />
@@ -702,6 +704,8 @@
     <ClInclude Include="Script\Ui\Game\UiDamage.h" />
     <ClInclude Include="Script\Ui\Enemy\UiBossHpBar.h" />
     <ClInclude Include="Script\Ui\Player\UiPlayerNum.h" />
+    <ClInclude Include="Script\Ui\Game\UIButtonExpand.h" />
+    <ClInclude Include="Script\Ui\Player\UiPlayerGetItemMessage.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Script\Shader\Pixel\EnemySprite.hlsl">

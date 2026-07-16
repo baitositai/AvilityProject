@@ -1,6 +1,7 @@
 #include "../../Ui/UiBase.h"
 #include "../../Ui/Game/UiMoney.h"
 #include "../../Ui/Game/UiPlayerLeft.h"
+#include "../../Ui/Game/UiButtonExpand.h"
 #include "UiManager.h"
 
 void UiManager::Init()
@@ -61,6 +62,7 @@ void UiManager::CreateGameUi()
 {
 	Add(std::move(std::make_unique<UiMoney>()));
 	Add(std::move(std::make_unique<UiPlayerLeft>()));
+	Add(std::move(std::make_unique<UIButtonExpand>()));
 }
 
 void UiManager::Sweep()
