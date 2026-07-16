@@ -23,6 +23,12 @@ public:
 	/// </summary>
 	/// <returns>パラメータ</returns>
 	ParameterEnemyGaiaGolem& GetParameter() { return *parameterEnemyGaiaGolem_; }
+	
+	/// <summary>
+	/// 更新
+	/// </summary>
+	/// <param name=""></param>
+	void Update(void) override;
 private:
 
 	//固有のパラメータ

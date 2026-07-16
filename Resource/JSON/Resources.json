@@ -1263,6 +1263,26 @@
       "divY": 1,
       "sizeX": 64,
       "sizeY": 64
+    },
+    {
+      "key": "rockCreate",
+      "path": "Resource/Image/Effect/RockCreate.png",
+      "sceneIds": [ 4 ],
+      "type": "texture",
+      "divX": 12,
+      "divY": 1,
+      "sizeX": 64,
+      "sizeY": 64
+    },
+    {
+      "key": "rockBreak",
+      "path": "Resource/Image/Effect/RockBreak.png",
+      "sceneIds": [ 4 ],
+      "type": "texture",
+      "divX": 12,
+      "divY": 1,
+      "sizeX": 64,
+      "sizeY": 64
     }
   ]
 }
