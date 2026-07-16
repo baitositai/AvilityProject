@@ -14,6 +14,7 @@
 #include "../../Parameter/Character/Player/ParameterPlayer.h"
 #include "../../Ui/Player/UiPlayerHpBar.h"
 #include "../../Ui/Player/UiPlayerIcon.h"
+#include "../../Ui/Player/UiPlayerNum.h"
 #include "../../Ui/Player/UiPlayerAvilitySlot.h"
 #include "../../Ui/Player/UiPlayerMessages.h"
 #include "../../Ui/Player/UiPlayerSelectAvility.h"
@@ -493,6 +494,9 @@ void Player::InitUi()
 
 	auto icon = std::make_unique<UiPlayerIcon>(*this);
 	uiMng_.Add(std::move(icon));
+
+	auto numIcon = std::make_unique<UiPlayerNum>(*this);
+	uiMng_.Add(std::move(numIcon));
 
 	auto slot = std::make_unique<UiPlayerAvilitySlot>(*this);
 	uiMng_.Add(std::move(slot));

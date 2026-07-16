@@ -1283,6 +1283,16 @@
       "divY": 1,
       "sizeX": 64,
       "sizeY": 64
+    },
+    {
+      "key": "damageGolem",
+      "path": "Resource/Image/Effect/GolemDamage.png",
+      "sceneIds": [ 4 ],
+      "type": "texture",
+      "divX": 6,
+      "divY": 1,
+      "sizeX": 64,
+      "sizeY": 64
     }
   ]
 }

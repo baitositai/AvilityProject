@@ -394,8 +394,9 @@
     <ClCompile Include="Script\Ui\Player\UiPlayerSelectAvility.cpp" />
     <ClCompile Include="Script\Ui\Game\UiDamage.cpp" />
     <ClCompile Include="Script\Ui\Enemy\UiBossHpBar.cpp" />
+    <ClCompile Include="Script\Ui\Player\UiPlayerNum.cpp" />
   </ItemGroup>
-	<ItemGroup>
+  <ItemGroup>
     <ClInclude Include="Script\Object\Effect\EffectTargetFollow.h" />
     <ClInclude Include="Script\Parameter\Gimmick\ParameterGimmickTrain.h" />
     <ClInclude Include="Script\Object\Gimmick\GimmickTrain.h" />
@@ -700,6 +701,7 @@
     <ClInclude Include="Script\Ui\Player\UiPlayerSelectAvility.h" />
     <ClInclude Include="Script\Ui\Game\UiDamage.h" />
     <ClInclude Include="Script\Ui\Enemy\UiBossHpBar.h" />
+    <ClInclude Include="Script\Ui\Player\UiPlayerNum.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Script\Shader\Pixel\EnemySprite.hlsl">
