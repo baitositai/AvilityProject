@@ -18,8 +18,7 @@ void UiPlayerNum::Init()
 
 	//プレイヤーに追従させる
 	const ParameterPlayer& ownerParam = owner_.GetParameter();
-	Vector2F ownerPos = ownerParam.pos_;
-	pos_ = ownerPos.ToVector2();
+	pos_ = owner_.GetParameter().drawPos_;
 	pos_.y += DRAW_LOCAL_POS_Y;
 
 	scale_ = 0.5f;
@@ -32,10 +31,13 @@ void UiPlayerNum::Init()
 void UiPlayerNum::Update()
 {
 	// 所有者が死んでいた場合終了
-	if (CheckOwnerDead()) { return; }
+	if (owner_.GetParameter().hp_<=0)
+	{
+		isActive_ = false;
+		return; 
+	}
 	// プレイヤーの活動状況に応じて活動状態を変更
 	isActive_ = owner_.IsActive();
-	Vector2F ownerPos = owner_.GetParameter().pos_;
-	pos_ = ownerPos.ToVector2();
+	pos_ = owner_.GetParameter().drawPos_;
 	pos_.y += DRAW_LOCAL_POS_Y;
 }
