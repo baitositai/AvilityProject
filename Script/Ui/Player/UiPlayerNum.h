@@ -30,10 +30,5 @@ private:
 
     //ローカル座標
     static constexpr float DRAW_LOCAL_POS_Y = -60.0f;
-
-    //描画色
-    int red_;
-    int green_;
-    int blue_;
 };
 
