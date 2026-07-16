@@ -8,8 +8,8 @@ public:
 
 	enum class TYPE
 	{
-		TIME_LIMIT_DEFEAT_ALL,
 		TARGET_DESTROY,
+		TIME_LIMIT_DEFEAT_ALL,
 		TREASURE_CHEST,
 		MAX
 	};

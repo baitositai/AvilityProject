@@ -5,6 +5,10 @@
 #include "../../Manager/Game/EventManager.h"
 #include "../../Manager/Game/EnemyManager.h"
 #include "../../Manager/Game/GimmickManager.h"
+#include "../../Manager/Game/UiManager.h"
+#include "../../Ui/Event/UiMission.h"
+#include "../../Ui/Event/UiMissionMessage.h"
+#include "../../Ui/Common/UiTimer.h"
 #include "EventBase.h"
 
 EventBase::EventBase(std::unique_ptr<ParameterEvent> parameter) :
@@ -13,11 +17,14 @@ EventBase::EventBase(std::unique_ptr<ParameterEvent> parameter) :
 	enemyManager_(EnemyManager::GetInstance()),
 	gimmickManager_(GimmickManager::GetInstance()),
 	soundManager_(SoundManager::GetInstance()),
+	uiManager_(UiManager::GetInstance()),
 	parameter_(std::move(parameter))
 {
 	state_ = STATE::START;
 	isDelete_ = false;
 	triggerPos_ = {};
+	eventType_ = EventTypes::TYPE::MAX;	
+	timeLimit_ = 0.0f;
 
 	stateMap_.emplace(STATE::START, std::bind(&EventBase::ChangeStateStart, this));
 	stateMap_.emplace(STATE::CHALLENGE, std::bind(&EventBase::ChangeStateChallenge, this));
@@ -104,4 +111,13 @@ void EventBase::ChangeStateChallenge()
 void EventBase::ChangeStateEnd()
 {
 	update_ = std::bind(&EventBase::UpdateEnd, this);
+}
+
+void EventBase::CreateUi()
+{
+	auto mission = std::make_unique<UiMission>(*this);
+	uiManager_.Add(std::move(mission));
+	
+	auto missionMessage = std::make_unique<UiMissionMessage>(*this);
+	uiManager_.Add(std::move(missionMessage));
 }

@@ -395,6 +395,10 @@
     <ClCompile Include="Script\Ui\Game\UiDamage.cpp" />
     <ClCompile Include="Script\Ui\Enemy\UiBossHpBar.cpp" />
     <ClCompile Include="Script\Ui\Player\UiPlayerNum.cpp" />
+    <ClCompile Include="Script\Ui\Event\UiMission.cpp" />
+    <ClCompile Include="Script\Ui\Event\UiMissionMessage.cpp" />
+    <ClCompile Include="Script\Ui\Event\UiEventBase.cpp" />
+    <ClCompile Include="Script\Ui\Common\UiTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\Object\Effect\EffectTargetFollow.h" />
@@ -702,6 +706,10 @@
     <ClInclude Include="Script\Ui\Game\UiDamage.h" />
     <ClInclude Include="Script\Ui\Enemy\UiBossHpBar.h" />
     <ClInclude Include="Script\Ui\Player\UiPlayerNum.h" />
+    <ClInclude Include="Script\Ui\Event\UiMission.h" />
+    <ClInclude Include="Script\Ui\Event\UiMissionMessage.h" />
+    <ClInclude Include="Script\Ui\Event\UiEventBase.h" />
+    <ClInclude Include="Script\Ui\Common\UiTimer.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Script\Shader\Pixel\EnemySprite.hlsl">

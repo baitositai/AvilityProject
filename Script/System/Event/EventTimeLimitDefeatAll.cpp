@@ -13,8 +13,7 @@ EventTimeLimitDefeatAll::EventTimeLimitDefeatAll(std::unique_ptr<ParameterEventT
 {
 	parameterPtr_ = dynamic_cast<ParameterEventTimeLimitDefeatAll*>(GetParameterEventPtr());
 	assert(parameterPtr_ != nullptr);
-
-	timeLimit_ = 0.0f;
+	eventType_ = EventTypes::TYPE::TIME_LIMIT_DEFEAT_ALL;
 }
 
 EventTimeLimitDefeatAll::~EventTimeLimitDefeatAll()
@@ -89,23 +88,17 @@ void EventTimeLimitDefeatAll::UpdateChallenge()
 {
 	// イベントで出現した敵が空の場合
 	if (enemyManager_.IsEmptyEventEnemies())
-	{
-		// 敵の生成処理
-		CreateEnemies();
-
+	{		
 		// 生成リストが空の場合
 		if (createEnemiesList_.empty())
 		{
-			// 宝箱出現
-			GimmickManager::CreateParameter createParameter = {};
-			createParameter.type = GimmickTypes::TYPE::TREASURE_CHEST;
-			createParameter.pos = triggerPos_;
-			gimmickManager_.Create(createParameter);
-
 			// 状態遷移
 			ChangeState(STATE::END);
 			return;
 		}
+		
+		// 敵の生成処理
+		CreateEnemies();
 	}
 
 	// 制限時間処理
@@ -136,6 +129,9 @@ void EventTimeLimitDefeatAll::ChangeStateChallenge()
 	// 基底クラスの処理
 	EventBase::ChangeStateChallenge();
 
+	// UIの作成
+	CreateUi();
+
 	// カメラ停止
 	CameraStop();
 
@@ -153,4 +149,10 @@ void EventTimeLimitDefeatAll::ChangeStateEnd()
 
 	// 時間制限を設ける
 	timeLimit_ = parameterPtr_->endTime_;
+
+	// 宝箱出現
+	GimmickManager::CreateParameter createParameter = {};
+	createParameter.type = GimmickTypes::TYPE::TREASURE_CHEST;
+	createParameter.pos = triggerPos_;
+	gimmickManager_.Create(createParameter);
 }

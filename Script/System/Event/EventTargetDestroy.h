@@ -35,9 +35,6 @@ private:
 	// パラメータ
 	ParameterEventTargetDestroy* parameterPtr_;
 
-	// 制限時間
-	float timeLimit_;
-
 	// ターゲットの生成
 	void CreateTargets();	
 	

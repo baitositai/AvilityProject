@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include "../../Common/Vector2F.h"
 #include "../../Parameter/Event/ParameterEvent.h"
+#include "../../Manager/Game/EventTypes.h"
 
 class ParameterEvent;
 class SceneManager;
@@ -11,6 +12,7 @@ class SoundManager;
 class EventManager;
 class EnemyManager;
 class GimmickManager;
+class UiManager;
 
 class EventBase
 {
@@ -48,6 +50,18 @@ public:
 	/// <returns>削除判定</returns>
 	const bool IsDelete() const { return isDelete_; }
 
+	/// <summary>
+	/// 時間を返す
+	/// </summary>
+	/// <returns>時間</returns>
+	const float GetTimer() const { return timeLimit_; }
+
+	/// <summary>
+	/// イベント種類を返す
+	/// </summary>
+	/// <returns>イベント種類</returns>
+	const EventTypes::TYPE GetType() const { return eventType_; }
+
 protected:
 
 	// カメラとの判定用
@@ -63,8 +77,14 @@ protected:
 		END,			// 終了
 	};
 
+	// 制限時間
+	float timeLimit_;
+
 	// イベントの削除判定
 	bool isDelete_;
+
+	// イベントの種類
+	EventTypes::TYPE eventType_;
 
 	// イベント発生トリガー位置
 	Vector2F triggerPos_;
@@ -87,6 +107,7 @@ protected:
 	EnemyManager& enemyManager_;
 	GimmickManager& gimmickManager_;
 	SoundManager& soundManager_;
+	UiManager& uiManager_;
 
 	// 型変換用のパラメータを返す関数
 	ParameterEvent* GetParameterEventPtr() { return parameter_.get(); }
@@ -107,4 +128,7 @@ protected:
 	virtual void ChangeStateStart();
 	virtual void ChangeStateChallenge();
 	virtual void ChangeStateEnd();
+
+	// UIの生成
+	void CreateUi();
 };

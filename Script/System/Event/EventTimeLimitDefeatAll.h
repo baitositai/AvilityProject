@@ -43,9 +43,6 @@ private:
 	// 敵の生成リスト
 	std::list<std::vector<ETYPE>> createEnemiesList_;
 
-	// 制限時間
-	float timeLimit_;
-
 	// 敵の生成リストの生成
 	void CreateEnemyList();
 

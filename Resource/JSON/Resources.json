@@ -1355,6 +1355,26 @@
       "divY": 1,
       "sizeX": 64,
       "sizeY": 64
+    },
+    {
+      "key": "uiMission",
+      "path": "Resource/Image/Ui/Mission.png",
+      "sceneIds": [ 3 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 546,
+      "sizeY": 116
+    },
+    {
+      "key": "uiMissionMessage",
+      "path": "Resource/Image/Ui/MissionMessage.png",
+      "sceneIds": [ 3 ],
+      "type": "sprite",
+      "divX": 1,
+      "divY": 4,
+      "sizeX": 705,
+      "sizeY": 255
     }
   ]
 }

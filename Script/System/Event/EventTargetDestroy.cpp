@@ -12,8 +12,7 @@ EventTargetDestroy::EventTargetDestroy(std::unique_ptr<ParameterEventTargetDestr
 {
 	parameterPtr_ = dynamic_cast<ParameterEventTargetDestroy*>(GetParameterEventPtr());
 	assert(parameterPtr_ != nullptr);
-
-	timeLimit_ = 0.0f;
+	eventType_ = EventTypes::TYPE::TARGET_DESTROY;
 }
 
 EventTargetDestroy::~EventTargetDestroy()
@@ -180,6 +179,9 @@ void EventTargetDestroy::ChangeStateChallenge()
 {
 	// 基底クラスの処理
 	EventBase::ChangeStateChallenge();
+
+	// UIの作成
+	CreateUi();
 
 	// ターゲットの生成
 	CreateTargets();

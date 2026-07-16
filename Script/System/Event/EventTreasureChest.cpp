@@ -6,6 +6,7 @@ EventTreasureChest::EventTreasureChest(std::unique_ptr<ParameterEvent> parameter
 	EventBase(std::move(parameter))
 {
 	timeLimit_ = 0.0f;
+	eventType_ = EventTypes::TYPE::TREASURE_CHEST;
 }
 
 EventTreasureChest::~EventTreasureChest()
