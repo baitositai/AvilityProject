@@ -43,6 +43,14 @@ void EnemyBase::Init()
 
 	// 基底クラスの初期化
 	CharacterBase::Init();
+
+	// エフェクト生成
+	SpriteEffectManager::CreateParameter parameter;
+	parameter.pos = parameterEnemy_->pos_;
+	parameter.angle = parameterEnemy_->angle_;
+	parameter.resourceKey = "effectEnemySpawn";
+	parameter.animationSpeed = 0.15f;
+	SpriteEffectManager::GetInstance().Create(parameter);
 }
 
 void EnemyBase::Draw()

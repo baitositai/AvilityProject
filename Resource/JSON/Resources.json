@@ -1109,7 +1109,7 @@
     {
       "key": "effectDamage",
       "path": "Resource/Image/Effect/Damage.png",
-      "sceneIds": [ 3,4 ],
+      "sceneIds": [ 3, 4 ],
       "type": "texture",
       "divX": 7,
       "divY": 1,
@@ -1119,7 +1119,7 @@
     {
       "key": "dashSmoke",
       "path": "Resource/Image/Effect/DashSmoke.png",
-      "sceneIds": [ 2,3,4 ],
+      "sceneIds": [ 2, 3, 4 ],
       "type": "texture",
       "divX": 12,
       "divY": 1,
@@ -1129,7 +1129,7 @@
     {
       "key": "effectDiscovery",
       "path": "Resource/Image/Effect/DashSmoke.png",
-      "sceneIds": [ 2,3,4 ],
+      "sceneIds": [ 2, 3, 4 ],
       "type": "texture",
       "divX": 7,
       "divY": 1,
@@ -1139,7 +1139,7 @@
     {
       "key": "effectDiscovery",
       "path": "Resource/Image/Effect/DashSmoke.png",
-      "sceneIds": [ 2,3,4 ],
+      "sceneIds": [ 2, 3, 4 ],
       "type": "texture",
       "divX": 6,
       "divY": 1,
@@ -1148,8 +1148,8 @@
     },
     {
       "key": "effectEnemyDead",
-      "path": "Resource/Image/Effect/DashSmoke.png",
-      "sceneIds": [ 3,4 ],
+      "path": "Resource/Image/Effect/EnemyDead.png",
+      "sceneIds": [ 3, 4 ],
       "type": "texture",
       "divX": 9,
       "divY": 1,
@@ -1159,19 +1159,9 @@
     {
       "key": "effectEnemySpawn",
       "path": "Resource/Image/Effect/EnemySpawn.png",
-      "sceneIds": [ 3,4 ],
-      "type": "texture",
-      "divX": 9,
-      "divY": 1,
-      "sizeX": 120,
-      "sizeY": 120
-    },
-    {
-      "key": "effectRespawn",
-      "path": "Resource/Image/Effect/Respawn.png",
       "sceneIds": [ 3, 4 ],
       "type": "texture",
-      "divX": 10,
+      "divX": 8,
       "divY": 1,
       "sizeX": 96,
       "sizeY": 96
@@ -1329,9 +1319,9 @@
     {
       "key": "rockLanding",
       "path": "Resource/Image/Effect/RockSmoke.png",
-      "sceneIds": [4],
+      "sceneIds": [ 4 ],
       "type": "texture",
-      "divX":11,
+      "divX": 11,
       "divY": 1,
       "sizeX": 64,
       "sizeY": 64
