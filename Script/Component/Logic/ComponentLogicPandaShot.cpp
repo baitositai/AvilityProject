@@ -2,8 +2,10 @@
 #include <DxLib.h>
 #include "../../Application.h"
 #include "../../Manager/Common/SceneManager.h"
-#include "../../Manager/Game/CollisionManager.h"
 #include "../../Manager/Common/Camera.h"
+#include "../../Manager/Common/SpriteEffectManager.h"
+#include "../../Manager/Common/SoundManager.h"
+#include "../../Manager/Game/CollisionManager.h"
 #include "../../Manager/Game/GimmickManager.h"
 #include "../../Collider/ColliderBox.h"
 #include "../../Object/Common/Animation.h"
@@ -16,6 +18,7 @@ ComponentLogicPandaShot::ComponentLogicPandaShot(EnemyPanda& owner) :
 	owner_(owner),
 	parameter_(owner.GetParameter())
 {
+	effectId_ = -1;
 	reflectCount_ = -1;
 	timer_ = 0.0f;
 	state_ = STATE::START;
@@ -65,6 +68,13 @@ void ComponentLogicPandaShot::Remove()
 
 void ComponentLogicPandaShot::AttackReset()
 {
+	// エフェクトを止める
+	if (effectId_ > -1 && parameter_.hp_ <= 0)
+	{
+		spriteEffectManager_.Delete(effectId_);
+	}
+	
+	// 攻撃判定を消す
 	attackCollider_->SetIsActive(false);
 }
 
@@ -166,10 +176,27 @@ void ComponentLogicPandaShot::ChangeStateCharge()
 
 	// チャージタイム設定
 	timer_ = 5.0f;
+
+	// 効果音再生
+	soundManager_.PlaySe(SoundType::SE::ABILITY_SHOT_CHARGE);
+
+	// エフェクト再生
+	SpriteEffectManager::CreateParameter parameter;
+	parameter.pos = parameter_.pos_;
+	parameter.angle = parameter_.angle_;
+	parameter.resourceKey = "shotCharge";
+	parameter.animationSpeed = 0.3f;
+	parameter.isLoop = true;
+	parameter.target = &owner_;
+	effectId_ = spriteEffectManager_.Create(parameter);
 }
 
 void ComponentLogicPandaShot::ChangeStateShot()
 {
+	// エフェクトを止める
+	spriteEffectManager_.Delete(effectId_);
+
+	// 更新処理変更
 	update_ = std::bind(&ComponentLogicPandaShot::UpdateShot, this);
 
 	// 自身の当たり判定を無効

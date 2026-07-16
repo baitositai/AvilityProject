@@ -55,6 +55,8 @@ void GimmickTrain::Draw()
 {
 	if (isDraw_)
 	{
+		// 描画番号の付与
+		parameterTrain_->drawIndex_ = static_cast<float>(animation_->GetAnimationIndex());
 		ActorBase::Draw();
 	}
 }
@@ -119,6 +121,9 @@ void GimmickTrain::ChangeStateWait()
 
 	// 時間設定
 	timer_ = static_cast<float>(UtilityCommon::GetRandomCount(WAIT_TIME_MAX, WAIT_TIME_MIN));
+
+	// コライダー非活動状態
+	collider_->SetIsActive(false);
 }
 
 void GimmickTrain::ChangeStatePassing()
@@ -136,4 +141,7 @@ void GimmickTrain::ChangeStatePassing()
 
 	// 効果音再生
 	sndMng_.PlaySe(SoundType::SE::TRAIN_WHISTLE);
+
+	// コライダー非活動状態
+	collider_->SetIsActive(true);
 }

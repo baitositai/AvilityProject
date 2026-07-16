@@ -317,6 +317,7 @@
       "y": 48
     },
     "hitRadius": 24,
+    "scale": 0.5,
     "transparent": true,
     "gravityPower": 9.8,
     "resourceKey": "potions",

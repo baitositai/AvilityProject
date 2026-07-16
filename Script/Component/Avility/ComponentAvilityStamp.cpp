@@ -115,8 +115,7 @@ void ComponentAvilityStamp::UpdateActive()
 
 		// エフェクト再生
 		SpriteEffectManager::CreateParameter parameter;
-		parameter.pos = parameter_.GetFootPos();
-		parameter.pos = Vector2F::AddVector2F(parameter.pos, Vector2F::MulVector2FFloat(parameter_.GetUp(), 20.0f));
+		parameter.pos = Vector2F::AddVector2F(parameter_.GetFootPos(), Vector2F::MulVector2FFloat(parameter_.GetUp(), 20.0f));
 		parameter.angle = parameter_.angle_;
 		parameter.resourceKey = "stampLanding";
 		parameter.animationSpeed = 0.3f;

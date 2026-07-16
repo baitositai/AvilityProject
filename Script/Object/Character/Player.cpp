@@ -308,22 +308,6 @@ void Player::ThrowItem(const Vector2F& throwDir)
 	}
 }
 
-void Player::Heal(const int healHp)
-{
-	// サウンド再生
-	sndMng_.PlaySe(SoundType::SE::HEAL);
-
-	// HPの設定
-	parameterPlayer_->hp_ += healHp;
-
-	// 最大HPを超えていた場合
-	if (parameterPlayer_->hpMax_ < parameterPlayer_->hp_)
-	{
-		// 上限に設定
-		parameterPlayer_->hp_ = parameterPlayer_->hpMax_;
-	}
-}
-
 void Player::AttachedItem(ItemTreasure* item)
 {
 	attachedTreasures_.push_back(item);
@@ -332,12 +316,30 @@ void Player::AttachedItem(ItemTreasure* item)
 void Player::AttackPowerUp(const int addAttackPower)
 {
 	parameterPlayer_->attackPower_ += addAttackPower;
+	// エフェクト再生
+	SpriteEffectManager::CreateParameter parameter;
+	parameter.pos = parameterPlayer_->pos_;
+	parameter.angle = parameterPlayer_->angle_;
+	parameter.direction = parameterPlayer_->direction_;
+	parameter.resourceKey = "attackUp";
+	parameter.animationSpeed = 0.3f;
+	parameter.target = this;
+	effectMng_.Create(parameter);
 }
 
 void Player::HpMaxUp(const int addHpMax)
 {
 	parameterPlayer_->hpMax_ += addHpMax;
-	Heal(addHpMax);
+	parameterPlayer_->hp_ += addHpMax;
+	// エフェクト再生
+	SpriteEffectManager::CreateParameter parameter;
+	parameter.pos = parameterPlayer_->pos_;
+	parameter.angle = parameterPlayer_->angle_;
+	parameter.direction = parameterPlayer_->direction_;
+	parameter.resourceKey = "hpUp";
+	parameter.animationSpeed = 0.3f;
+	parameter.target = this;
+	effectMng_.Create(parameter);
 }
 
 void Player::SpeedUp(const float addSpeed)
@@ -347,6 +349,14 @@ void Player::SpeedUp(const float addSpeed)
 	{
 		parameterPlayer_->moveSpeed_ = parameterPlayer_->moveSpeedLimit_;
 	}
+	SpriteEffectManager::CreateParameter parameter;
+	parameter.pos = parameterPlayer_->pos_;
+	parameter.angle = parameterPlayer_->angle_;
+	parameter.direction = parameterPlayer_->direction_;
+	parameter.resourceKey = "speedUp";
+	parameter.animationSpeed = 0.3f;
+	parameter.target = this;
+	effectMng_.Create(parameter);
 }
 
 void Player::DetachItem()

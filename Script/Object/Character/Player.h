@@ -87,12 +87,6 @@ public:
 	void ThrowItem(const Vector2F& throwDir);
 
 	/// <summary>
-	/// 回復
-	/// </summary>
-	/// <param name="healHp">体力の回復量</param>
-	void Heal(const int healHp);
-
-	/// <summary>
 	/// アイテムのアタッチ
 	/// </summary>
 	/// <param name="item">アイテム</param>

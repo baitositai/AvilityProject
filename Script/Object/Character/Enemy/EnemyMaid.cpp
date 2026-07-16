@@ -1,4 +1,5 @@
 #include "../../../Manager/Common/SoundManager.h"
+#include "../../../Manager/Common/SpriteEffectManager.h"
 #include "../../../OnHit/OnHitEnemyMaid.h"
 #include "../../../Collider/ColliderBox.h"
 #include "EnemyMaid.h"
@@ -31,20 +32,4 @@ void EnemyMaid::Init()
 
 	// 基底クラスの初期化
 	CharacterBase::Init();
-}
-
-void EnemyMaid::Heal(const int heal)
-{
-	// HPの設定
-	parameterEnemyMaid_->hp_ += heal;
-
-	// 最大HPを超えていた場合
-	if (parameterEnemyMaid_->hpMax_ < parameterEnemyMaid_->hp_)
-	{
-		// 上限に設定
-		parameterEnemyMaid_->hp_ = parameterEnemyMaid_->hpMax_;
-	}
-
-	// サウンド再生
-	sndMng_.PlaySe(SoundType::SE::HEAL);
 }

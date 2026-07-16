@@ -146,6 +146,7 @@ void ComponentLogicBambooGrowing::ChangeStateGrowing()
 
 	// ˆê‚Â–Ú‚Ì’|‚Ì¶¬ˆÊ’u
 	createBambooPos_ = Vector2F::AddVector2F(parameter_.GetFootPos(), Vector2F::MulVector2FFloat(parameter_.GetFront(), parameter_.defaultAttackDistance_));
+	createBambooPos_.y -= CREATE_OFFSET_Y;
 }
 
 void ComponentLogicBambooGrowing::CreateBamboo()

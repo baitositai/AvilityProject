@@ -96,6 +96,12 @@ void ComponentAvilityShot::Init()
 	shotAngle_ = 0.0f;
 
 	parameter_.shotVec_ = {};
+
+	// エフェクトを止める
+	if (effectId_ > -1)
+	{
+		effectManager_.Delete(effectId_);
+	}
 }
 
 void ComponentAvilityShot::Update()
@@ -177,6 +183,7 @@ void ComponentAvilityShot::ProcessInputShot()
 		parameter.resourceKey = "shotCharge";
 		parameter.animationSpeed = 0.3f;
 		parameter.isLoop = true;
+		parameter.target = &owner_;
 		effectId_ = effectManager_.Create(parameter);
 	}
 }
@@ -301,6 +308,7 @@ void ComponentAvilityShot::ProcessInputCharge()
 
 		// チャージエフェクトを削除
 		effectManager_.Delete(effectId_);
+		effectId_ = -1;
 	}
 }
 

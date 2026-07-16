@@ -38,7 +38,7 @@ void UiPlayerAvilitySlot::Draw()
 		DrawRotaGraph(
 			pos_.x + i * 32,
 			pos_.y,
-			0.75f,
+			0.375f,
 			0.0f,
 			avilitySlotHandle_[avilities[i]],
 			true

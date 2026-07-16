@@ -95,6 +95,9 @@ private:
 	// お宝の保持番号
 	int index_;
 
+	// エフェクト番号
+	int effectId_;
+
 	// 投げ判定
 	bool isThrow_;
 

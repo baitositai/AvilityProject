@@ -1,5 +1,6 @@
 #include <DxLib.h>
 #include "../../Manager/Common/ResourceManager.h"
+#include "../../Manager/Common/SpriteEffectManager.h"
 #include "../../OnHit/OnHitItemTreasure.h"
 #include "../../Collider/ColliderBox.h"
 #include "../../Object/Character/Player.h"
@@ -19,6 +20,7 @@ ItemTreasure::ItemTreasure(std::unique_ptr<ParameterItemTreasure> parameter) :
 	tag_ = CollisionTags::TAG::ITEM_TREASURE;
 	owner_ = nullptr;
 	index_ = -1;
+	effectId_ = -1;
 	isThrow_ = false;
 	preGravityDir_ = ParameterActor::DIR::MAX;
 }
@@ -43,6 +45,16 @@ void ItemTreasure::Init()
 	{
 		collider_->SetIsActive(false);
 	}
+
+	// エフェクト再生
+	SpriteEffectManager::CreateParameter parameter;
+	parameter.pos = parameterItemTreasure_->pos_;
+	parameter.angle = parameterItemTreasure_->angle_;
+	parameter.resourceKey = "sparkle";
+	parameter.animationSpeed = 0.1f;
+	parameter.isLoop = true;
+	parameter.target = this;
+	effectMng_.Create(parameter);
 }
 
 void ItemTreasure::Update()

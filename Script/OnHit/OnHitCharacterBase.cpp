@@ -20,14 +20,6 @@ OnHitCharacterBase::OnHitCharacterBase(CharacterBase& owner) :
     //    {
     //        return OnHitAvilityBox(opponentCollider);
     //    });
-    onHitMap_.emplace(CollisionTags::TAG::AIRSLASH, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
-        {
-            return OnHitAttack(opponentCollider);
-        });
-    onHitMap_.emplace(CollisionTags::TAG::TELEPORT_EXIT, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
-        {
-            return OnHitAttack(opponentCollider);
-        });
 }
 
 

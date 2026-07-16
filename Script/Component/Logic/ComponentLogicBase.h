@@ -8,6 +8,7 @@ class GimmickManager;
 class ItemManager;
 class PlayerManager;
 class SpriteEffectManager;
+class SoundManager;
 
 class ComponentLogicBase : public ComponentBase
 {
@@ -92,4 +93,7 @@ protected:
 
 	// エフェクト管理クラス
 	SpriteEffectManager& spriteEffectManager_;
+
+	// サウンド管理クラス
+	SoundManager& soundManager_;
 };

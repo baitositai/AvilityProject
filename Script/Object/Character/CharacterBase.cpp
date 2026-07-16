@@ -148,6 +148,30 @@ void CharacterBase::Damage(const int damage, const Vector2& hitPos)
 	AttackReset();
 }
 
+void CharacterBase::Heal(const int heal)
+{
+	// エフェクト再生
+	SpriteEffectManager::CreateParameter parameter;
+	parameter.pos = parameterCharacter_->pos_;
+	parameter.angle = parameterCharacter_->angle_;
+	parameter.resourceKey = "effectHeal";
+	parameter.animationSpeed = 0.3f;
+	effectMng_.Create(parameter);
+
+	// HPの設定
+	parameterCharacter_->hp_ += heal;
+
+	// 最大HPを超えていた場合
+	if (parameterCharacter_->hpMax_ < parameterCharacter_->hp_)
+	{
+		// 上限に設定
+		parameterCharacter_->hp_ = parameterCharacter_->hpMax_;
+	}
+
+	// サウンド再生
+	sndMng_.PlaySe(SoundType::SE::HEAL);
+}
+
 void CharacterBase::Dead()
 {
 	// 体力を0にする

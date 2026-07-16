@@ -1,5 +1,6 @@
 #include "../../Manager/Common/SceneManager.h"
 #include "../../Manager/Common/SpriteEffectManager.h"
+#include "../../Manager/Common/SoundManager.h"
 #include "../../Manager/Game/CollisionManager.h"
 #include "../../Manager/Game/ItemManager.h"
 #include "../../Manager/Game/PlayerManager.h"
@@ -14,7 +15,8 @@ ComponentLogicBase::ComponentLogicBase(EnemyBase& owner) :
 	itemManager_(ItemManager::GetInstance()),
 	gimmickManager_(GimmickManager::GetInstance()),
 	spriteEffectManager_(SpriteEffectManager::GetInstance()),
-	playerManager_(PlayerManager::GetInstance())
+	playerManager_(PlayerManager::GetInstance()),
+	soundManager_(SoundManager::GetInstance())
 {
 	// コンストラクタは変数の初期化のみ
 	isEnd_ = false;

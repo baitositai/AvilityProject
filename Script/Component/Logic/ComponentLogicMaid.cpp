@@ -2,6 +2,7 @@
 #include "../../Application.h"
 #include "../../Manager/Common/SceneManager.h"
 #include "../../Manager/Common/Camera.h"
+#include "../../Manager/Common/SoundManager.h"
 #include "../../Manager/Common/SpriteEffectManager.h"
 #include "../../Manager/Game/CollisionManager.h"
 #include "../../Manager/Game/ItemManager.h"
@@ -270,6 +271,18 @@ void ComponentLogicMaid::UpdateStamp()
 
 		//カメラシェイク
 		SceneManager::GetInstance().GetCamera().SetCameraShake(CAMERA_SHAKE_TIME, CAMERA_SHAKE_POWER);
+
+		// 効果音再生
+		soundManager_.PlaySe(SoundType::SE::ABILITY_STAMP_LANDING);
+
+		// エフェクト再生
+		SpriteEffectManager::CreateParameter parameter;
+		parameter.pos = parameter_.GetFootPos();
+		parameter.pos = Vector2F::AddVector2F(parameter.pos, Vector2F::MulVector2FFloat(parameter_.GetUp(), 20.0f));
+		parameter.angle = parameter_.angle_;
+		parameter.resourceKey = "stampLanding";
+		parameter.animationSpeed = 0.3f;
+		spriteEffectManager_.Create(parameter);
 	
 		// 重力をもとに戻す
 		parameter_.gravityPower_ -= ADD_GRAVITY;
@@ -350,8 +363,17 @@ void ComponentLogicMaid::UpdateTeleport()
 	timer_ -= sceneManager_.GetDeltaTime();
 	if (timer_ < 0.0f)
 	{
+		// 効果音再生
+		soundManager_.PlaySe(SoundType::SE::ABILITY_TELEPORT_EXIT);
+
 		// エフェクト再生
-		
+		SpriteEffectManager::CreateParameter parameter;
+		parameter.pos = parameter_.pos_;
+		parameter.angle = parameter_.angle_;
+		parameter.resourceKey = "teleportExit";
+		parameter.animationSpeed = 0.2f;
+		spriteEffectManager_.Create(parameter);
+
 		// 描画
 		owner_.SetIsDraw(true);
 
@@ -433,6 +455,17 @@ void ComponentLogicMaid::ChangeStateStampReady()
 
 	// 衝突判定を行うために無理やり移動量を追加
 	parameter_.moveAmount_.x += 0.1f;
+
+	// 効果音再生
+	soundManager_.PlaySe(SoundType::SE::ABILITY_STAMP_CHARGE);
+
+	// エフェクト
+	SpriteEffectManager::CreateParameter parameter;
+	parameter.pos = parameter_.pos_;
+	parameter.angle = parameter_.angle_;
+	parameter.resourceKey = "stampCharge";
+	parameter.animationSpeed = 0.3f;
+	spriteEffectManager_.Create(parameter);
 }
 
 void ComponentLogicMaid::ChangeStateStamp()
@@ -479,6 +512,12 @@ void ComponentLogicMaid::ChangeStateTeleport()
 	update_ = std::bind(&ComponentLogicMaid::UpdateTeleport, this);
 
 	// 移動前位置でエフェクト再生
+	SpriteEffectManager::CreateParameter parameter;
+	parameter.pos = parameter_.pos_;
+	parameter.angle = parameter_.angle_;
+	parameter.resourceKey = "teleportEnter";
+	parameter.animationSpeed = 0.2f;
+	spriteEffectManager_.Create(parameter);
 
 	// 移動
 	parameter_.pos_ = { 150.0f, Application::SCREEN_SIZE_Y - 180 };

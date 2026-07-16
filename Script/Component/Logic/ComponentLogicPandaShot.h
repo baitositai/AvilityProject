@@ -97,6 +97,9 @@ private:
 	// 乱数生成エンジン
 	std::mt19937 randomCountEngine_;
 
+	// エフェクト番号
+	int effectId_;
+
 	// 更新処理
 	void UpdateStart();
 	void UpdateReady();

@@ -70,6 +70,12 @@ public:
 	virtual void DebugDraw() override;	
 
 	/// <summary>
+	/// ‘Ì—Í‰ñ•œ
+	/// </summary>
+	/// <param name="hp">‰ñ•œ—Ê</param>
+	virtual void Heal(const int hp);
+
+	/// <summary>
 	/// €–Sˆ—
 	/// </summary>	
 	virtual void Dead();

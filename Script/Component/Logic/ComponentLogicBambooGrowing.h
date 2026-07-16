@@ -56,6 +56,8 @@ private:
 
 	// í|ÇÃê∂ê¨à íuÇ∏ÇÁÇµíl
 	static constexpr int CREATE_OFFSET_X = 48;
+	static constexpr int CREATE_OFFSET_Y = 43;
+	
 
 	enum class STATE
 	{

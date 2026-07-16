@@ -61,7 +61,7 @@ void ParameterCharacter::LoadParameter(const Json& parameter)
 
 const Vector2F ParameterCharacter::GetFootPos() 
 {
-    Vector2F footPos = pos_;
-    footPos.y += static_cast<float>(hitSize_.y / 2);
+    Vector2F halfSize = Vector2(hitSize_.x / 2, hitSize_.y / 2).ToVector2F();
+    Vector2F footPos = Vector2F::AddVector2F(pos_, Vector2F::MulVector2F(GetDown(), halfSize));
     return footPos;
 }

@@ -43,12 +43,32 @@ OnHitEnemy::~OnHitEnemy()
 
 void OnHitEnemy::Update(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
+    auto collider = opponentCollider.lock();
+
+    // 中身の確認
+    if (!collider)
+    {
+        // 無効なポインタの場合は何もしない
+        return;
+    }
+
 	// 自身のタグ別に処理を呼び分ける
     switch (opponentCollider.lock()->GetPartnerTag())
     {
     case CollisionTags::TAG::ENEMY_BASE:
-		// 基底クラスの共通処理
-        OnHitCharacterBase::Update(opponentCollider);
+        // 登録されていない場合
+        if (onHitMap_.count(collider->GetTag()) == 0)
+        {
+            // 処理を行わずに終了
+            return;
+        }
+
+        if (collider->GetTag() == CollisionTags::TAG::TELEPORT_EXIT) {
+            collider->GetHitPos();
+        }
+
+        // 衝突物別の処理へ
+        onHitMap_[collider->GetTag()](opponentCollider);
         break;
 
     case CollisionTags::TAG::ENEMY_VIEW:
