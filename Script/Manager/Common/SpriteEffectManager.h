@@ -21,7 +21,7 @@ public:
 		Vector2F pos = {};
 		float scale = 1.0f;
 		float angle = 0.0f;
-		float animationSpeed = 0.0f;
+		float animationSpeed = 0.1f;
 		float animationNum = -1;
 		bool direction = false;
 		std::string resourceKey = "";

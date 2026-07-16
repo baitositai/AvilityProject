@@ -85,6 +85,7 @@ void GimmickDropRock::UpdateDrop(void)
 		parameter.pos = parameterDropRock_->pos_;
 		parameter.scale = parameterDropRock_->scale_;
 		parameter.resourceKey = "rockLanding";
+		parameter.animationSpeed = 0.2f;
 		effectMng_.Create(parameter);
 	}
 	// コンポーネント有効
