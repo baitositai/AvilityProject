@@ -814,6 +814,12 @@
       "type": "pixelShader"
     },
     {
+      "key": "Fade",
+      "path": "Resource/Shader/Fade.cso",
+      "sceneIds": [ 0 ],
+      "type": "pixelShader"
+    },
+    {
       "key": "enemySprite",
       "path": "Resource/Shader/EnemySprite.cso",
       "sceneIds": [ 3, 4 ],

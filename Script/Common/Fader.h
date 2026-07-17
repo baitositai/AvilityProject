@@ -76,6 +76,9 @@ private:
 	// フェード最大値
 	static constexpr float MAX_ALPHA = 255.0f;
 
+	// フェード画像
+	int fadeImage_;
+
 	// 透明度
 	float alpha_;
 
