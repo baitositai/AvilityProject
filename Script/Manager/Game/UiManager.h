@@ -5,6 +5,7 @@
 #include "../../Template/Singleton.h"
 
 class UiBase;
+class UiPlayerGetItemMessage;
 
 class UiManager : public Singleton<UiManager>
 {
@@ -42,6 +43,12 @@ public:
 	/// <param name="ui">UI</param>
 	/// <param name="layer">レイヤー種類</param>
 	void Add(std::unique_ptr<UiBase> ui, const LAYER layer = LAYER::UI);
+
+	/// <summary>
+	/// アイテム取得時にUIを追加する
+	/// </summary>
+	/// <param name="ui"></param>
+	void AddGetItemMessageUI(std::unique_ptr<UiPlayerGetItemMessage> ui, const LAYER layer = LAYER::UI);
 
 	/// <summary>
 	/// ゲーム画面用のUIを作成

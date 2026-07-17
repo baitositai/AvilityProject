@@ -19,6 +19,7 @@
 #include "../../Ui/Player/UiPlayerAvilitySlot.h"
 #include "../../Ui/Player/UiPlayerMessages.h"
 #include "../../Ui/Player/UiPlayerSelectAvility.h"
+#include "../../Ui/Player/UiPlayerGetItemMessage.h"
 #include "../../Ui/SpeechBubble/UiSpeechBubbleSelectAvility.h"
 #include "../Item/ItemTreasure.h"
 #include "../Common/Animation.h"
@@ -427,6 +428,10 @@ void Player::SetAvilityComponent(std::unique_ptr<ComponentAvilityBase> component
 
 	// 格納
 	component->Create();
+
+	//アビリティの取得メッセージを出す
+	std::unique_ptr<UiPlayerGetItemMessage> avilityMessage = std::make_unique<UiPlayerGetItemMessage>(*this, component->GetType());
+	uiMng_.Add(std::move(avilityMessage));
 
 	avilityComponents_.push_back(std::move(component));
 	SetAvilityResourceIndexs();

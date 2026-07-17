@@ -12,7 +12,7 @@ public:
     /// コンストラクタ
     /// </summary>
     /// <param name="owner">所有者</param>
-    UiPlayerGetItemMessage(const Player& owner);
+    UiPlayerGetItemMessage(const Player& owner, const AvilityTypes::TYPE& getAvilitytype);
 
     /// <summary>
     /// デストラクタ

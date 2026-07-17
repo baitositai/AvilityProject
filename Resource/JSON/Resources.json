@@ -33,7 +33,7 @@
       "sceneIds": [ 0 ],
       "type": "font",
       "path": "Resource/Font/Kinkakuji-Normal.otf",
-      "fontName": "Kinkakuji Normal"
+      "fontName": "金畫字 Normal"
     },
     {
       "key": "player1",

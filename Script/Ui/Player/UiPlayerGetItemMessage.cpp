@@ -1,8 +1,11 @@
+#include "../../Utility/UtilityCommon.h"
 #include "../../Manager/Common/ResourceManager.h"
+#include "../../Manager/Common/FontManager.h"
 #include "../../Manager/Common/SceneManager.h"
+#include "../Object/Character/Player.h"
 #include "UiPlayerGetItemMessage.h"
 
-UiPlayerGetItemMessage::UiPlayerGetItemMessage(const Player& owner):
+UiPlayerGetItemMessage::UiPlayerGetItemMessage(const Player& owner, const AvilityTypes::TYPE& getAvilitytype):
 	UiPlayerBase(owner),
 	drawCnt_()
 {
@@ -15,6 +18,8 @@ UiPlayerGetItemMessage::UiPlayerGetItemMessage(const Player& owner):
 	abilityStr_.emplace(AvilityTypes::TYPE::STAMP, L"スタンプ");
 	abilityStr_.emplace(AvilityTypes::TYPE::SUPERMAN, L"スーパーマン");
 	abilityStr_.emplace(AvilityTypes::TYPE::TELEPORT, L"テレポート");
+
+	characterString_.string = abilityStr_[getAvilitytype] + GET_AVILITY_MESSAGE_COMMON;
 }
 
 UiPlayerGetItemMessage::~UiPlayerGetItemMessage()
@@ -23,14 +28,16 @@ UiPlayerGetItemMessage::~UiPlayerGetItemMessage()
 
 void UiPlayerGetItemMessage::Init()
 {
-	drawCnt_ = 3.0f;
-	handle_ = resourceManager_.GetHandle("fontKinkakuji");
-	characterString_.fontHandle = handle_;
+	drawCnt_ = 5.0f;
+	const std::wstring fontName = resourceManager_.GetFontName("fontKinkakuji");
+	characterString_.fontHandle = FontManager::GetInstance().CreateMyFont(fontName, 32, 1);
+	characterString_.color = UtilityCommon::WHITE;
+	characterString_.pos = owner_.GetParameter().drawPos_;
 }
 
 void UiPlayerGetItemMessage::Update()
 {
-	if (drawCnt_ < 0)
+	if (drawCnt_ < 0.0f)
 	{
 		isDelete_ = true;
 		drawCnt_ = 0.0f;
@@ -38,6 +45,7 @@ void UiPlayerGetItemMessage::Update()
 		return;
 	}
 	drawCnt_ -= SceneManager::GetInstance().GetDeltaTime();
+	characterString_.pos = owner_.GetParameter().drawPos_;
 }
 
 void UiPlayerGetItemMessage::Draw()
@@ -46,9 +54,4 @@ void UiPlayerGetItemMessage::Draw()
 	{
 		characterString_.DrawCenter();
 	}
-}
-
-void UiPlayerGetItemMessage::AddAvilityMessage(const AvilityTypes::TYPE& getAvilitytype)
-{
-	characterString_.string = abilityStr_[getAvilitytype] + GET_AVILITY_MESSAGE_COMMON;
 }
