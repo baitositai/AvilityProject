@@ -19,6 +19,7 @@ ItemBase::ItemBase(std::unique_ptr<ParameterItem> parameter) :
 	// 初期化
 	tag_ = CollisionTags::TAG::MAX;
 	isCarryOver_ = false;
+	deleteTimer_ = 0.0f;
 }
 
 ItemBase::~ItemBase()
@@ -35,6 +36,9 @@ void ItemBase::Init()
 
 	// 基底クラスの処理
 	ActorBase::Init();
+
+	// 削除時間を設定
+	deleteTimer_ = DELETE_TIME;
 }
 
 void ItemBase::Update()
@@ -51,8 +55,36 @@ void ItemBase::Draw()
 	// 描画用の番号を付与
 	parameterItem_->drawIndex_ = (float)parameterItem_->spriteIndex_;
 
-	// 基底クラスの描画
-	ActorBase::Draw();
+	// 点滅処理
+	if (deleteTimer_ < BLINK_START_TIME)
+	{
+		// 点滅の1周期にかかる時間
+		constexpr int BLINK_CYCLE_MS = 200;
+
+		// 現在の時間を取得
+		int nowTime = GetNowCount();
+
+		// 周期に基づいて角度を計算
+		float currentAngle = (nowTime % BLINK_CYCLE_MS) * DX_PI_F * 2.0f / static_cast<float>(BLINK_CYCLE_MS);
+
+		// 透過値の決定
+		float alphaValue = (sin(currentAngle) + 1.0f) * 0.5f;
+
+		// シェーダに渡すアルファ値を一時的に上書きして点滅
+		float backupAlpha = parameterItem_->alpha_;
+		parameterItem_->alpha_ = alphaValue;
+
+		// 描画処理
+		ActorBase::Draw();
+
+		// 描画が終わったら元のアルファ値に戻す
+		parameterItem_->alpha_ = backupAlpha;
+	}
+	else
+	{
+		// 描画処理
+		ActorBase::Draw();
+	}
 }
 
 void ItemBase::DebugDraw()
@@ -68,4 +100,17 @@ const bool ItemBase::IsCarryOver() const
 void ItemBase::SetIsCarryOver(const bool isCarry)
 {
 	isCarryOver_ = isCarry;
+}
+
+void ItemBase::CountDeleteTime()
+{
+	// 持ち越す場合無視
+	if (isCarryOver_) return;
+
+	// タイマーカウント
+	deleteTimer_ -= scnMng_.GetDeltaTime();
+	if (deleteTimer_ < 0.0f)
+	{
+		isDelete_ = true;
+	}
 }

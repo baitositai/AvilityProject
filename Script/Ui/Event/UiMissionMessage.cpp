@@ -28,7 +28,7 @@ void UiMissionMessage::Init()
 	// タイマー
 	uiTimer_ = std::make_unique<UiTimer>();
 	uiTimer_->Init();
-	uiTimer_->SetParameter(Vector2(Application::SCREEN_HALF_X, 285), static_cast<int>(eventBase_.GetTimer()), 0.375f);
+	uiTimer_->SetParameter(Vector2(Application::SCREEN_HALF_X, 295), static_cast<int>(eventBase_.GetTimer()), 0.375f);
 }
 
 void UiMissionMessage::Update()
@@ -38,13 +38,14 @@ void UiMissionMessage::Update()
 	// タイマーの削除
 	if (isDelete_)
 	{
+		isActive_ = false;
 		uiTimer_->Delete();
 	}
 }
 
 void UiMissionMessage::Draw()
 {
-	if (isActive_)
+	if (isActive_ || !eventBase_.IsDeleteUi())
 	{
 		DrawRotaGraph(
 			pos_.x,

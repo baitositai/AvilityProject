@@ -24,6 +24,12 @@ public:
 	//正規化する
 	Vector2 Normalize(void) const;
 
+	// 演算子オーバーロード
+	Vector2 operator+(const Vector2& other) const;
+	Vector2 operator-(const Vector2& other) const;
+	Vector2 operator*(const Vector2& other) const;
+	Vector2 operator*(const float other) const;
+
 	//長さを求める
 	float Length(void) const;
 

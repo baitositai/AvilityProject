@@ -51,6 +51,12 @@ public:
 	const bool IsDelete() const { return isDelete_; }
 
 	/// <summary>
+	/// UIの削除判定
+	/// </summary>
+	/// <returns>UIの削除判定</returns>
+	const bool IsDeleteUi() const { return isDeleteUi_; }
+
+	/// <summary>
 	/// 時間を返す
 	/// </summary>
 	/// <returns>時間</returns>
@@ -82,6 +88,9 @@ protected:
 
 	// イベントの削除判定
 	bool isDelete_;
+
+	// UIの削除判定
+	bool isDeleteUi_;
 
 	// イベントの種類
 	EventTypes::TYPE eventType_;

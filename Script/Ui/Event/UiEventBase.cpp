@@ -12,7 +12,7 @@ UiEventBase::~UiEventBase()
 
 void UiEventBase::Update()
 {
-	if (eventBase_.IsDelete())
+	if (eventBase_.IsDeleteUi())
 	{
 		Delete();
 	}

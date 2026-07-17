@@ -1,6 +1,8 @@
+#include <DxLib.h>
 #include "../../Object/ActorBase.h"
 #include "UtilityCommon.h"
 #include "UtilityCollision.h"
+#include "Utility2D.h"
 
 bool UtilityCollision::IsHitArrayToCircle(
 	const std::vector<std::vector<int>>& arrayOfArrays,
@@ -115,7 +117,56 @@ bool UtilityCollision::IsHitBoxToBox(
 	const float degAngle2,
 	Vector2& hitPos)
 {
-	return false;
+	float radAngle1 = degAngle1 * DX_PI_F / 180.0f;
+	float radAngle2 = degAngle2 * DX_PI_F / 180.0f;
+
+	Vector2 centerPos1 = (boxTopPos1 + boxBotmPos1) * 0.5f;
+	Vector2 centerPos2 = (boxTopPos2 + boxBotmPos2) * 0.5f;
+
+	Vector2 halfSize1 = (boxBotmPos1 - boxTopPos1) * 0.5f;
+	Vector2 halfSize2 = (boxBotmPos2 - boxTopPos2) * 0.5f;
+
+	Vector2 axes1[2];
+	axes1[0] = Vector2(cosf(radAngle1), sinf(radAngle1));
+	axes1[1] = Vector2(-sinf(radAngle1), cosf(radAngle1));
+
+	Vector2 axes2[2];
+	axes2[0] = Vector2(cosf(radAngle2), sinf(radAngle2));
+	axes2[1] = Vector2(-sinf(radAngle2), cosf(radAngle2));
+
+	Vector2 axes[4] =
+	{
+		axes1[0],
+		axes1[1],
+		axes2[0],
+		axes2[1]
+	};
+
+	Vector2 toCenter = centerPos2 - centerPos1;
+
+	for (int i = 0; i < 4; ++i)
+	{
+		Vector2 currentAxis = axes[i];
+
+		float centerProjection = fabsf(Utility2D::Dot(toCenter, currentAxis));
+
+		float extents1 =
+			fabsf(Utility2D::Dot(axes1[0], currentAxis)) * halfSize1.x +
+			fabsf(Utility2D::Dot(axes1[1], currentAxis)) * halfSize1.y;
+
+		float extents2 =
+			fabsf(Utility2D::Dot(axes2[0], currentAxis)) * halfSize2.x +
+			fabsf(Utility2D::Dot(axes2[1], currentAxis)) * halfSize2.y;
+
+		if (centerProjection > extents1 + extents2)
+		{
+			return false;
+		}
+	}
+
+	hitPos = (centerPos1 + centerPos2) * 0.5f;
+
+	return true;
 }
 
 bool UtilityCollision::IsHitBoxToLine(

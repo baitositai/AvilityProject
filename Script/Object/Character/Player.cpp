@@ -375,6 +375,7 @@ void Player::DetachItem()
 
 void Player::SetAvilityComponent(std::unique_ptr<ComponentAvilityBase> component)
 {
+
 	// 中身が空の場合
 	if (!component)
 	{
@@ -429,6 +430,9 @@ void Player::SetAvilityComponent(std::unique_ptr<ComponentAvilityBase> component
 	component->Create();
 	avilityComponents_.push_back(std::move(component));
 	SetAvilityResourceIndexs();
+
+	// エフェクト生成
+	CreateEffectGetAbility();
 }
 
 void Player::SetAvilityActive(const AvilityTypes::TYPE avilityType, const bool isActive)
@@ -659,6 +663,9 @@ void Player::SelectAvility()
 			spareAvilityComponent_->Create();
 			avilityComponents_[index] = std::move(spareAvilityComponent_);
 			parameterPlayer_->selectAvilityTime_ = 0.0f;
+
+			// エフェクト生成
+			CreateEffectGetAbility();
 		}
 
 		// 時間に達した場合
@@ -708,4 +715,16 @@ void Player::SetAvilityResourceIndexs()
 	{
 		avilityItemResourceIndexs_.push_back(avility->GetAvilityResourceIndex());
 	}
+}
+
+void Player::CreateEffectGetAbility()
+{
+	// エフェクトの再生
+	SpriteEffectManager::CreateParameter parameter;
+	parameter.pos = parameterPlayer_->pos_;
+	parameter.angle = parameterPlayer_->angle_;
+	parameter.resourceKey = "getAbility";
+	parameter.animationSpeed = 0.3f;
+	parameter.target = this;
+	SpriteEffectManager::GetInstance().Create(parameter);
 }

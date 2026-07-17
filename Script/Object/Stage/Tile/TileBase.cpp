@@ -47,3 +47,12 @@ void TileBase::DebugDraw()
 	);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
+
+void TileBase::SetId(const int id)
+{
+	parameter_.id = id;
+	if (parameter_.id == -1)
+	{
+		parameter_.type = TYPE::NONE;
+	}
+}

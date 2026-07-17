@@ -29,6 +29,11 @@ public:
 	/// </summary>
 	virtual void Update() override;
 
+	/// <summary>
+	/// 描画処理
+	/// </summary>
+	void Draw() override;
+
 protected:
 
 	// シーン管理クラス

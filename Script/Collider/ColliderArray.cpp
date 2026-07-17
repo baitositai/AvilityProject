@@ -2,11 +2,12 @@
 #include "../Utility/UtilityCommon.h"
 #include "ColliderArray.h"
 
-ColliderArray::ColliderArray(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos, const std::vector<std::vector<int>>& arrayOfArrays, const Vector2& chipSize) :
+ColliderArray::ColliderArray(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos, const std::vector<std::vector<int>>& arrayOfArrays, const std::vector<int>& passIndexs, const Vector2& chipSize) :
 	ColliderBase(owner, tag, followPos),
 	arrayOfArrays_(arrayOfArrays),
+	passIndexes_(passIndexs),
 	chipSize_(chipSize)
-{
+{	
 	type_ = ColliderType::TYPE::ARRAY;
 	result_ = {};
 }

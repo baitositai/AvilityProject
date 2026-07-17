@@ -58,13 +58,19 @@ private:
 	static constexpr float CHANGE_TIME = 0.3f;
 
 	// 終了後の無敵時間
-	static constexpr float FINISH_INVICIBLE_TIME = 0.05f;
+	static constexpr float FINISH_INVICIBLE_TIME = 0.02f;
+
+	// 入力のクールタイム
+	static constexpr float COOL_TIME = 0.5f;
 
 	// 移動制限用タイマー
 	float moveTimer_;
 
 	// 状態遷移用タイマー
 	float changeTimer_;
+
+	// クールタイム
+	float coolTimer_;
 
 	// 状態
 	STATE state_;

@@ -1372,9 +1372,31 @@
       "key": "uiMissionMessage",
       "path": "Resource/Image/Ui/MissionMessage.png",
       "sceneIds": [ 3 ],
-      "sizeX": 705,
-      "sizeY": 255,
-      "type": "sprite"
+      "type": "sprite",
+      "divX": 1,
+      "divY": 4,
+      "sizeX": 708,
+      "sizeY": 64
+    },
+    {
+      "key": "treasureThrowHit",
+      "path": "Resource/Image/Effect/TreasureThrowHit.png",
+      "sceneIds": [ 3,4 ],
+      "type": "texture",
+      "divX": 12,
+      "divY": 1,
+      "sizeX": 64,
+      "sizeY": 64
+    },
+    {
+      "key": "getAbility",
+      "path": "Resource/Image/Effect/GetAbility.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 9,
+      "divY": 1,
+      "sizeX": 256,
+      "sizeY": 144
     }
   ]
 }

@@ -2,6 +2,7 @@
 #include <vector>
 #include "../Common/Vector2.h"
 #include "../Collider/ColliderArray.h"
+#include "../Parameter/ParameterActor.h"
 
 class UtilityCollision
 {

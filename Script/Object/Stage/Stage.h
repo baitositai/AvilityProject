@@ -87,7 +87,8 @@ private:
 	static constexpr int LIST_TYPE_MAX = static_cast<int>(LIST_TYPE::MAX);
 
 	// 生成位置インデックス
-	static constexpr int LIST_TYPE_INDEXS[LIST_TYPE_MAX] = { -10001, -10002, -10003, -10004, -10005 };
+	static constexpr int LIST_TYPE_INDEXS[LIST_TYPE_MAX] = { 255, 256, 257, 258, 259 };
+	const std::vector<int> PASS_PLATFORM_INDEXS = { 151, 152, 153 };
 
 	// ステージサイズ
 	Vector2 stageSize_;

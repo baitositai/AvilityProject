@@ -13,6 +13,7 @@ ComponentAvilityTeleport::ComponentAvilityTeleport(Player& owner) :
 {
 	moveTimer_ = 0.0f;
 	changeTimer_ = 0.0f;
+	coolTimer_ = 0.0f;
 	type_ = AvilityTypes::TYPE::TELEPORT;
 	state_ = STATE::INPUT;
 	update_ = std::bind(&ComponentAvilityTeleport::UpdateInput, this);
@@ -48,13 +49,18 @@ void ComponentAvilityTeleport::Remove()
 
 void ComponentAvilityTeleport::UpdateInput()
 {
-	if (inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_TELEPORT, parameter_.padNo_) && !parameter_.isAction_)
+	coolTimer_ -= sceneManager_.GetDeltaTime();
+	if (coolTimer_ <= 0.0f &&
+		inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_TELEPORT, parameter_.padNo_) && !parameter_.isAction_)
 	{
 		// 状態遷移
 		ChangeState(STATE::MOVE);
 
 		// 攻撃を有効
 		parameter_.isAction_ = true;
+
+		// クールタイムを戻す
+		coolTimer_ = COOL_TIME;
 	}
 }
 

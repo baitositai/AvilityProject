@@ -25,6 +25,7 @@ EventBase::EventBase(std::unique_ptr<ParameterEvent> parameter) :
 	triggerPos_ = {};
 	eventType_ = EventTypes::TYPE::MAX;	
 	timeLimit_ = 0.0f;
+	isDeleteUi_ = false;
 
 	stateMap_.emplace(STATE::START, std::bind(&EventBase::ChangeStateStart, this));
 	stateMap_.emplace(STATE::CHALLENGE, std::bind(&EventBase::ChangeStateChallenge, this));

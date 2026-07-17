@@ -9,7 +9,6 @@ UiTimer::UiTimer()
 	numberHandle_ = nullptr;
 	defaultNumberSize_ = {};
 	numberSize_ = {};
-	numberScale_ = -1.0f;
 }
 
 UiTimer::~UiTimer()
@@ -45,7 +44,7 @@ void UiTimer::Draw()
 		DrawRotaGraph(
 			numberStartDrawPos_.x + i * numberSize_.x,
 			numberStartDrawPos_.y,
-			numberScale_,
+			scale_,
 			0.0f,
 			numberHandle_[index],
 			true

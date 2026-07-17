@@ -31,8 +31,9 @@ public:
 	/// <param name="tag">タグ</param>
 	/// <param name="followPos">追従対象の座標</param>
 	/// <param name="arrayOfArrays">衝突判定を行う配列</param>
+	/// <param name="passIndexs">すり抜け床配列</param>
 	/// <param name="chipSize">チップサイズ</param>
-	ColliderArray(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos, const std::vector<std::vector<int>>& arrayOfArrays, const Vector2& chipSize);
+	ColliderArray(ActorBase& owner, const CollisionTags::TAG tag, Vector2F& followPos, const std::vector<std::vector<int>>& arrayOfArrays, const std::vector<int>& passIndexs, const Vector2& chipSize);
 
 	/// <summary>
 	/// デストラクタ
@@ -96,6 +97,9 @@ private:
 
 	// 衝突判定を行う配列
 	std::vector<std::vector<int>> arrayOfArrays_;
+
+	// 上からすり抜ける床の配列
+	std::vector<int> passIndexes_;
 
 	// チップサイズ
 	Vector2 chipSize_;
