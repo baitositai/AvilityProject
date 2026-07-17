@@ -241,4 +241,7 @@ private:
 
 	// アビリティリソース番号の設定
 	void SetAvilityResourceIndexs();
+
+	// アビリティ取得エフェクトの生成
+	void CreateEffectGetAbility();
 };

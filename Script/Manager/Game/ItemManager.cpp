@@ -6,6 +6,8 @@
 #include "../../Object/Item/ItemPotion.h"
 #include "../../System/ItemGenerator.h"
 #include "../../Utility/UtilityCommon.h"
+#include "../Manager/Common/Camera.h"
+#include "../Manager/Common/SceneManager.h"
 #include "ItemManager.h"
 
 void ItemManager::Init()
@@ -29,7 +31,14 @@ void ItemManager::Update()
 	{
 		for (auto& item : itemList.second)
 		{
-			item->Update();
+			// ƒJƒƒ‰”ÍˆÍ“à‚Ìê‡
+			auto& parameter = item->GetParameter();
+			bool isInScreen = mainCamera.IsInScreenCircle(parameter.pos_, parameter.hitRadius_);
+			if (isInScreen)
+			{
+				item->Update();
+			}
+			item->SetIsActive(isInScreen);
 		}
 	}
 }

@@ -178,7 +178,10 @@ void EventTargetDestroy::UpdateEnd()
 void EventTargetDestroy::ChangeStateChallenge()
 {
 	// Šî’êƒNƒ‰ƒX‚Ìˆ—
-	EventBase::ChangeStateChallenge();
+	EventBase::ChangeStateChallenge();	
+	
+	// §ŒÀŽžŠÔ‚ÌÝ’è
+	timeLimit_ = parameterPtr_->challengeTime_;
 
 	// UI‚Ìì¬
 	CreateUi();
@@ -188,9 +191,6 @@ void EventTargetDestroy::ChangeStateChallenge()
 
 	// ƒJƒƒ‰‚Ì’âŽ~
 	CameraStop();
-
-	// §ŒÀŽžŠÔ‚ÌÝ’è
-	timeLimit_ = parameterPtr_->challengeTime_;
 }
 
 void EventTargetDestroy::ChangeStateEnd()
@@ -200,4 +200,6 @@ void EventTargetDestroy::ChangeStateEnd()
 
 	// §ŒÀŽžŠÔ‚ÌÝ’è
 	timeLimit_ = parameterPtr_->endTime_;
+
+	isDeleteUi_ = true;
 }

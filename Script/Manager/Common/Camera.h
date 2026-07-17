@@ -10,6 +10,9 @@ class Camera
 {
 public:
 
+	// カリング許容距離
+	static constexpr float CULLING_OFFSET = 200.0f;
+
 	// カメラの移動速度
 	static constexpr float CAMERA_MOVE_SPEED = 5.0f;
 
@@ -128,6 +131,23 @@ public:
 	/// </summary>
 	/// <returns>停止判定</returns>
 	const bool IsStop() const { return isStop_; }
+
+	/// <summary>
+	/// ボックスがカメラ範囲内か返す
+	/// </summary>
+	/// <param name="pos">座標</param>
+	/// <param name="hitBox">サイズ</param>
+	/// <param name="angle">角度</param>
+	/// <returns>trueの場合スクリーン内</returns>
+	const bool IsInScreenBox(Vector2F& pos, const Vector2& hitBox, const float angle) const;
+
+	/// <summary>
+	/// サークルがカメラ範囲内か返す
+	/// </summary>
+	/// <param name="pos">座標位置</param>
+	/// <param name="radius">半径</param>
+	/// <returns>trueの場合スクリーン内</returns>
+	const bool IsInScreenCircle(Vector2F& pos, const float radius) const;
 
 private:
 

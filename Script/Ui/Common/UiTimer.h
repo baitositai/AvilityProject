@@ -47,9 +47,6 @@ private:
 	// 数字画像ハンドル
 	int* numberHandle_;
 
-	// 数字の拡大率
-	float numberScale_;
-
 	// 数字描画開始位置
 	Vector2 numberStartDrawPos_;
 

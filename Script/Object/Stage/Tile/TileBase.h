@@ -10,6 +10,7 @@ public:
 	{
 		NONE,		// なし
 		BLOCK,		// ブロック
+		PASS,		// 通り抜ける足場
 	};
 
 	// パラメータ
@@ -48,6 +49,12 @@ public:
 	/// デバッグ描画
 	/// </summary>
 	virtual void DebugDraw();
+
+	/// <summary>
+	/// IDの設定
+	/// </summary>
+	/// <param name="id">ID</param>
+	void SetId(const int id);
 
 private:
 

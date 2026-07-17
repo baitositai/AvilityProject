@@ -92,6 +92,12 @@ void EventTimeLimitDefeatAll::UpdateChallenge()
 		// 生成リストが空の場合
 		if (createEnemiesList_.empty())
 		{
+			// 時間内に敵を倒せたので宝箱を出現
+			GimmickManager::CreateParameter createParameter = {};
+			createParameter.type = GimmickTypes::TYPE::TREASURE_CHEST;
+			createParameter.pos = triggerPos_;
+			gimmickManager_.Create(createParameter);
+
 			// 状態遷移
 			ChangeState(STATE::END);
 			return;
@@ -127,7 +133,10 @@ void EventTimeLimitDefeatAll::UpdateEnd()
 void EventTimeLimitDefeatAll::ChangeStateChallenge()
 {	
 	// 基底クラスの処理
-	EventBase::ChangeStateChallenge();
+	EventBase::ChangeStateChallenge();	
+	
+	// 時間制限を設ける
+	timeLimit_ = parameterPtr_->challengeTime_;
 
 	// UIの作成
 	CreateUi();
@@ -137,9 +146,6 @@ void EventTimeLimitDefeatAll::ChangeStateChallenge()
 
 	// 敵生成リスト生成
 	CreateEnemyList();
-
-	// 時間制限を設ける
-	timeLimit_ = parameterPtr_->challengeTime_;
 }
 
 void EventTimeLimitDefeatAll::ChangeStateEnd()
@@ -150,9 +156,6 @@ void EventTimeLimitDefeatAll::ChangeStateEnd()
 	// 時間制限を設ける
 	timeLimit_ = parameterPtr_->endTime_;
 
-	// 宝箱出現
-	GimmickManager::CreateParameter createParameter = {};
-	createParameter.type = GimmickTypes::TYPE::TREASURE_CHEST;
-	createParameter.pos = triggerPos_;
-	gimmickManager_.Create(createParameter);
+	// Ui削除
+	isDeleteUi_ = true;
 }

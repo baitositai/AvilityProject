@@ -60,7 +60,7 @@ private:
 	static constexpr float STOP_TIME = 0.5f;	
 
 	// ジャンプ入力後から特定の時間後にスタンプを受け付ける
-	static constexpr float INPUT_ENABLE_TIME = 0.1f;
+	static constexpr float INPUT_ENABLE_TIME = 0.3f;
 
 	//カメラシェイク関連
 	static constexpr float CAMERA_SHAKE_TIME = 0.3f;	//シェイク時間

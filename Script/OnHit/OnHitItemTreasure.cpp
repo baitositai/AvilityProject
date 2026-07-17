@@ -1,6 +1,7 @@
 #include "../Manager/Common/SoundManager.h"
 #include "../Manager/Common/ScoreManager.h"
 #include "../Manager/Common/InputManager.h"
+#include "../Manager/Common/SpriteEffectManager.h"	
 #include "../Object/Item/ItemTreasure.h"
 #include "../Object/Character/Player.h"
 #include "../Collider/ColliderBase.h"
@@ -73,6 +74,14 @@ void OnHitItemTreasure::OnHitTrain(const std::weak_ptr<ColliderBase>& opponentCo
 	// 投げられてる場合
 	if (owner_.IsThrow())
 	{
+		// エフェクトの再生
+		SpriteEffectManager::CreateParameter parameter;
+		parameter.pos = owner_.GetParameter().pos_;
+		parameter.resourceKey = "treasureThrowHit";
+		parameter.scale = 1.5f;
+		parameter.animationSpeed = 0.3f;
+		SpriteEffectManager::GetInstance().Create(parameter);
+
 		// スコアを加算
 		ScoreManager::GetInstance().AddScore(owner_.GetParameter().amount_);
 

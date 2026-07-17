@@ -36,6 +36,7 @@ void Stage::Init()
 		CollisionTags::TAG::STAGE,
 		parameterStage_->pos_, 
 		parameterStage_->tileIndexs_,
+		PASS_PLATFORM_INDEXS,
 		parameterStage_->chipSize_);
 
 	// ステージ専用のコライダーの設定
@@ -147,8 +148,20 @@ void Stage::SetStage()
 			TileBase::Parameter parameter;
 			parameter.handle = -1 < parameterStage_->tileIndexs_[y][x] ? handles[parameterStage_->tileIndexs_[y][x]] : -1;
 			parameter.id = parameterStage_->tileIndexs_[y][x];
-			parameter.type = static_cast<TileBase::TYPE>(parameterStage_->tileIndexs_[y][x]);
 			parameter.position = Vector2(static_cast<int>(x * TileBase::SIZE_TILE), static_cast<int>(y * TileBase::SIZE_TILE));
+			parameter.type = TileBase::TYPE::NONE;
+
+			// 種類の設定
+			if (UtilityCommon::FindIndex(PASS_PLATFORM_INDEXS, parameter.id))
+			{
+				parameter.type = TileBase::TYPE::PASS;
+			}
+			else if (parameter.id != -1)
+			{
+				parameter.type = TileBase::TYPE::BLOCK;
+			}
+
+			//parameter.type = static_cast<TileBase::TYPE>(parameterStage_->tileIndexs_[y][x]);
 			tileRow.push_back(std::make_unique<TileBase>(parameter));
 		}
 		tiles_.push_back(std::move(tileRow));
@@ -178,7 +191,7 @@ void Stage::SetStage()
 		for (int x = 0; x < tileNums_.x; x++)
 		{
 			// 指定外のインデックスの場合
-			if (-1 <= parameterStage_->tileIndexs_[y][x])
+			if (-1 == parameterStage_->tileIndexs_[y][x])
 			{
 				// 次へ
 				continue;
@@ -188,6 +201,9 @@ void Stage::SetStage()
 				// 指定のインデックスと一致してる場合
 				if (LIST_TYPE_INDEXS[i] == parameterStage_->tileIndexs_[y][x])
 				{
+					// 描画用IDの設定
+					tiles_[y][x]->SetId(-1);
+
 					// 登録
 					areaListMap_[static_cast<LIST_TYPE>(i)].push_back(
 						Vector2(x * parameterStage_->chipSize_.x, y * parameterStage_->chipSize_.y).ToVector2F());

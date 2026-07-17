@@ -3,6 +3,8 @@
 #include "../../Object/Gimmick/GimmickTarget.h"
 #include "../../Parameter/Gimmick/ParameterGimmickGroundRock.h"
 #include "../../System/GimmickGenerator.h"
+#include "../Manager/Common/Camera.h"
+#include "../Manager/Common/SceneManager.h"
 #include "GimmickManager.h"
 
 void GimmickManager::Init()
@@ -26,7 +28,14 @@ void GimmickManager::Update()
 	{
 		for (auto& gimmick : gimmickList.second)
 		{
-			gimmick->Update();
+			// ƒJƒƒ‰”ÍˆÍ“à‚Ìê‡
+			auto& parameter = gimmick->GetParameter();
+			bool isInScreen = mainCamera.IsInScreenBox(parameter.pos_, parameter.hitSize_, parameter.angle_);
+			if (isInScreen)
+			{
+				gimmick->Update();
+			}
+			gimmick->SetIsActive(isInScreen);
 		}
 	}
 }

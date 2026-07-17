@@ -21,6 +21,7 @@ ComponentAvilityShot::ComponentAvilityShot(Player& owner)
 	inputManager_(InputManager::GetInstance()),
 	moveAmount_({}),
 	chageTime_(0.0f),
+	coolTimer_(0.0f),
 	shotVec_({}),
 	shotAngle_(0.0f),
 	effectId_(-1),
@@ -148,8 +149,11 @@ void ComponentAvilityShot::ProcessInputShot()
 	// 横向きにしか撃てないようにするため、縦の入力は無視する
 	const float moveSpeed = parameter_.moveSpeed_;
 
+	// クールタイム減算
+	coolTimer_ -= sceneManager_.GetDeltaTime();
+
 	//　ショット入力があったらCharge開始(現在Qキー)
-	if (inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_SHOT, parameter_.padNo_) && !parameter_.isAction_)
+	if (coolTimer_ <= 0.0f && inputManager_.IsTrgDown(InputManager::TYPE::AVILITY_SHOT, parameter_.padNo_) && !parameter_.isAction_)
 	{
 		// 影響を与えるコンポーネントを無効にする
 		owner_.SetStateComponentActive(Player::STATE::ALIVE, false);

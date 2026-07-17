@@ -36,6 +36,26 @@ Vector2 Vector2::Normalize(void) const
 	return (len != 0) ? Vector2(x / len, y / len) : Vector2(0, 0);
 }
 
+Vector2 Vector2::operator+(const Vector2& other) const
+{
+	return Vector2(x + other.x, y + other.y);
+}
+
+Vector2 Vector2::operator-(const Vector2& other) const
+{
+	return Vector2(x - other.x, y - other.y);
+}
+
+Vector2 Vector2::operator*(const Vector2& other) const
+{
+	return Vector2(x * other.x, y * other.y);
+}
+
+Vector2 Vector2::operator*(const float other) const
+{
+	return Vector2(x * other, y * other);
+}
+
 float Vector2::Length(void) const
 {
 	return std::sqrt(x * x + y * y);

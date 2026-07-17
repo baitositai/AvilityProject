@@ -55,6 +55,9 @@ void ItemTreasure::Init()
 	parameter.isLoop = true;
 	parameter.target = this;
 	effectMng_.Create(parameter);
+
+	// 削除時間を設定
+	deleteTimer_ = DELETE_TIME;
 }
 
 void ItemTreasure::Update()
@@ -69,12 +72,35 @@ void ItemTreasure::Update()
 
 	// 基底クラスの処理
 	ActorBase::Update();
+
+	// 削除時間のカウント
+	CountDeleteTime();
 }
 
 void ItemTreasure::Draw()
 {	
 	// 描画しない場合は無視
 	if (!isDraw_) return;
+	
+	// シェーダに渡すアルファ値を一時的に上書きして点滅
+	float backupAlpha = parameterItem_->alpha_;
+
+	// 点滅処理
+	if (deleteTimer_ < BLINK_START_TIME)
+	{
+		// 点滅の1周期にかかる時間
+		constexpr int BLINK_CYCLE_MS = 200;
+
+		// 現在の時間を取得
+		int nowTime = GetNowCount();
+
+		// 周期に基づいて角度を計算
+		float currentAngle = (nowTime % BLINK_CYCLE_MS) * DX_PI_F * 2.0f / static_cast<float>(BLINK_CYCLE_MS);
+
+		// 透過値の決定
+		float alphaValue = (sin(currentAngle) + 1.0f) * 0.5f;
+		parameterItem_->alpha_ = alphaValue;
+	}
 
 	// 中心位置に設定
 	parameterItemTreasure_->drawPos_ = GetDrawPos(parameterItemTreasure_->drawSize_);
@@ -89,6 +115,9 @@ void ItemTreasure::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)UtilityCommon::ALPHA_MAX);
 	renderer_->Draw();
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+	// 描画が終わったら元のアルファ値に戻す
+	parameterItem_->alpha_ = backupAlpha;
 }
 
 void ItemTreasure::InitResource()
@@ -142,6 +171,9 @@ void ItemTreasure::FollowPlayer(Player& player)
 
 	// 初期更新
 	UpdateFollow();
+
+	// 削除時間リセット
+	deleteTimer_ = DELETE_TIME;
 }
 
 void ItemTreasure::Throw(const Vector2F& throwDir, const int attackPower)

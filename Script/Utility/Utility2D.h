@@ -19,6 +19,13 @@ public:
 	/// <returns>内積結果</returns>
 	static float Dot(const Vector2F& v1, const Vector2F& v2);
 
+	/// <summary>
+	/// 内積を求める
+	/// </summary>
+	/// <param name="v1">ベクトル1</param>
+	/// <param name="v2">ベクトル2</param>
+	/// <returns>内積結果</returns>
+	static float Dot(const Vector2& v1, const Vector2& v2);
 
 	/// <summary>
 	/// ワールド座標をマップ座標へ

@@ -3,6 +3,7 @@
 #include "../../Application.h"
 #include "../../Manager/Common/InputManager.h"
 #include "../../Manager/Common/SceneManager.h"
+#include "../../Utility/UtilityCollision.h"
 #include "Camera.h"
 
 Camera::Camera() :
@@ -76,6 +77,32 @@ void Camera::ResetCameraPos()
 {
 	// オフセットを減算
 	pos_ = Vector2F::SubVector2F(pos_, offset_);
+}
+
+const bool Camera::IsInScreenBox(Vector2F& pos, const Vector2& hitBox, const float angle) const
+{
+	// 画面の左上、右下を取得
+	const Vector2 leftTop = Vector2F(-pos_.x - CULLING_OFFSET, -pos_.y - CULLING_OFFSET).ToVector2();
+	const Vector2 rightBottom = Vector2F(-pos_.x + Application::SCREEN_SIZE_X + CULLING_OFFSET, -pos_.y + Application::SCREEN_SIZE_Y + CULLING_OFFSET).ToVector2();
+
+	// ターゲットの左上、右下
+	const Vector2 targetPos = pos.ToVector2();
+	const Vector2 targetHalfSize = Vector2(hitBox.x / 2, hitBox.y / 2);
+	const Vector2 targetLeftTop = targetPos - targetHalfSize;
+	const Vector2 targetRightBottom = targetPos + targetHalfSize;
+
+	Vector2 hitPos = {};
+	return UtilityCollision::IsHitBoxToBox(leftTop, rightBottom, 0.0f, targetLeftTop, targetRightBottom, angle, hitPos);
+}
+
+const bool Camera::IsInScreenCircle(Vector2F& pos, const float radius) const
+{
+	// 画面の左上、右下を取得
+	const Vector2 leftTop = Vector2F(-pos_.x - CULLING_OFFSET, -pos_.y - CULLING_OFFSET).ToVector2();
+	const Vector2 rightBottom = Vector2F(-pos_.x + Application::SCREEN_SIZE_X + CULLING_OFFSET, -pos_.y + Application::SCREEN_SIZE_Y + CULLING_OFFSET).ToVector2();
+
+	Vector2 hitPos = {};
+	return UtilityCollision::IsHitCircleToBox(pos.ToVector2(), radius, leftTop, rightBottom, hitPos);
 }
 
 void Camera::UpdateModeFree()

@@ -11,6 +11,8 @@
 #include "../../System/EnemyGenerator.h"
 #include "../Common/ResourceManager.h"
 #include "../Manager/Game/StageManager.h"
+#include "../Manager/Common/Camera.h"
+#include "../Manager/Common/SceneManager.h"
 #include "EnemyManager.h"
 
 void EnemyManager::Init()
@@ -37,7 +39,15 @@ void EnemyManager::Update()
 	{
 		for (auto& enemy : enemiesList.second)
 		{
-			enemy->Update();
+			// ƒJƒƒ‰”ÍˆÍ“à‚Ìê‡
+			auto& parameter = enemy->GetParameter();
+			bool isInScreen = mainCamera.IsInScreenBox(parameter.pos_, parameter.hitSize_, parameter.angle_);
+			if (isInScreen)
+			{
+				enemy->Update();
+			}
+			enemy->SetIsActive(isInScreen);
+			
 		}
 	}
 }

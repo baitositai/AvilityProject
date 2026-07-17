@@ -62,7 +62,19 @@ public:
 	/// <returns>パラメータ</returns>
 	const ParameterItem& GetParameter() const { return *parameterItem_; }
 
-protected:
+protected:	
+	
+	// 削除時間
+	static constexpr float DELETE_TIME = 30.0f;	
+
+	// 点滅開始時間
+	static constexpr float BLINK_START_TIME = 5.0f;
+	
+	// アイテムのパラメータ
+	ParameterItem* parameterItem_;
+
+	// 削除用タイマー
+	float deleteTimer_;
 
 	// 持ち越し判定
 	bool isCarryOver_;
@@ -73,8 +85,6 @@ protected:
 	// 型変換用のパラメータを返す関数
 	ParameterItem* GetParameterItemPtr() { return parameterItem_; }
 
-//private:
-
-	// アイテムのパラメータ
-	ParameterItem* parameterItem_;
+	// 削除タイマーのカウント
+	void CountDeleteTime();
 };

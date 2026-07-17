@@ -48,6 +48,9 @@ public:
 
 private:
 
+	// 入力のクールタイム
+	static constexpr float COOL_TIME = 0.5f;
+
 	// ショット時間
 	static constexpr float SHOT_TIME = 3.5f;
 
@@ -102,4 +105,7 @@ private:
 	float chageTime_;
 	Vector2F shotVec_;
 	float shotAngle_;
+
+	// クールタイム
+	float coolTimer_;
 };
