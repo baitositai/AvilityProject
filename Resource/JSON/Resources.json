@@ -822,7 +822,7 @@
     {
       "key": "bossNamePlate",
       "path": "Resource/Image/Ui/BossNamePlate.png",
-      "sceneIds": [ 4 ],
+      "sceneIds": [ 3, 4 ],
       "type": "sprite",
       "divX": 1,
       "divY": 3,
@@ -1367,14 +1367,14 @@
       "sizeY": 116
     },
     {
+      "divX": 1,
+      "divY": 4,
       "key": "uiMissionMessage",
       "path": "Resource/Image/Ui/MissionMessage.png",
       "sceneIds": [ 3 ],
-      "type": "sprite",
-      "divX": 1,
-      "divY": 4,
       "sizeX": 705,
-      "sizeY": 255
+      "sizeY": 255,
+      "type": "sprite"
     }
   ]
 }

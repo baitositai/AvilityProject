@@ -7,6 +7,7 @@
 #include "../Manager/Common/FontManager.h"
 #include "../Manager/Common/SpriteEffectManager.h"
 #include "../Manager/Common/ScoreManager.h"
+#include "../Manager/Common/ResourceManager.h"
 #include "../Manager/Game/GameManager.h"
 #include "../Manager/Game/PlayerManager.h"
 #include "../Manager/Game/CollisionManager.h"
@@ -117,7 +118,7 @@ void SceneGame::NormalDraw()
 
 #ifdef _DEBUG
 	// デバッグ用の情報描画
-	//DebugDraw();
+	DebugDraw();
 #endif
 }
 
@@ -192,4 +193,8 @@ void SceneGame::DebugDraw()
 			UtilityCommon::RED,
 			true);
 	}
+
+	DrawRotaGraph(
+		100, 100, 1.0f, 0.0f, resMng_.GetHandles("bossNamePlate")[0], true, false
+		);
 }

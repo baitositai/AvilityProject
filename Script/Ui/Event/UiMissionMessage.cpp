@@ -7,7 +7,8 @@
 
 UiMissionMessage::UiMissionMessage(const EventBase& event) :
 	UiEventBase(event)
-{ 
+{
+	messageHandle_ = nullptr;
 }
 
 
