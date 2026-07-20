@@ -119,6 +119,9 @@ void CollisionManager::Add(std::shared_ptr<ColliderBase> collider)
 
 CollisionManager::CollisionResult CollisionManager::CheckStageCollision(const CollisionCheckParam& parameter)
 {
+	// ステージのコライダーがない場合
+	if (!stageCollider_) { return CollisionManager::CollisionResult{}; }
+
 	CollisionResult resultReturn;
 	resultReturn.isHit = false;
 	resultReturn.chipSize = 0.0f;
@@ -146,7 +149,7 @@ CollisionManager::CollisionResult CollisionManager::CheckStageCollision(const Co
 			checkPos.x += otherSizeVal * offset;
 		}
 
-		auto result = IsHitStage(checkPos);
+		auto result = stageCollider_->CheckHitMapChip(checkPos, parameter.isXAxis, parameter.stepMove);
 
 		if (result.hit)
 		{
@@ -178,7 +181,7 @@ ColliderArray::Result CollisionManager::IsHitStage(const Vector2& checkPos)
 	if (!stageCollider_) { return result; }
 
 	// 判定
-	result = stageCollider_->CheckHitMapChip(checkPos);
+	result = stageCollider_->CheckHitMapChip(checkPos, false, 0.0f);
 
 	// 判定結果を返す
 	return result;

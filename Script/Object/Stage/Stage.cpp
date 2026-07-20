@@ -132,85 +132,105 @@ void Stage::DebugDraw()
 
 void Stage::SetStage()
 {
-	// ステージの初期化
+	// ステージ初期化
 	ClearStage();
 
-	// テクスチャ取得
+	// パラメーターが空の場合
+	if (parameterStage_ == nullptr)
+	{
+		// 無視
+		return;
+	}
+
+	// リソース取得
 	int* handles = resMng_.GetHandles(parameterStage_->resourceKey_);
 
-	// タイルの生成
-	for (size_t y = 0; y < parameterStage_->tileIndexs_.size(); y++)
+	// 配列初期化
+	areaListMap_.clear();
+	tiles_.clear();
+
+	// タイル配列が空の場合
+	const auto& tileIndexs = parameterStage_->tileIndexs_;
+	if (tileIndexs.empty())
 	{
+		// 無視
+		return;
+	}
+
+	// 高さを設定
+	size_t height = tileIndexs.size();
+	tiles_.reserve(height);
+
+	for (size_t y = 0; y < height; ++y)
+	{
+		// 横幅の設定
 		std::vector<std::unique_ptr<TileBase>> tileRow;
-		for (size_t x = 0; x < parameterStage_->tileIndexs_[y].size(); x++)
+		size_t width = tileIndexs[y].size();
+		tileRow.reserve(width);
+
+		for (size_t x = 0; x < width; ++x)
 		{
-			// タイルのパラメータを設定
 			TileBase::Parameter parameter;
-			parameter.handle = -1 < parameterStage_->tileIndexs_[y][x] ? handles[parameterStage_->tileIndexs_[y][x]] : -1;
-			parameter.id = parameterStage_->tileIndexs_[y][x];
+			int tileId = tileIndexs[y][x];
+
+			parameter.id = tileId;
 			parameter.position = Vector2(static_cast<int>(x * TileBase::SIZE_TILE), static_cast<int>(y * TileBase::SIZE_TILE));
 			parameter.type = TileBase::TYPE::NONE;
 
-			// 種類の設定
-			if (UtilityCommon::FindIndex(PASS_PLATFORM_INDEXS, parameter.id))
+			// 天井無視の番号を設定
+			if (UtilityCommon::FindIndex(PASS_PLATFORM_INDEXS, tileId))
 			{
 				parameter.type = TileBase::TYPE::PASS;
 			}
-			else if (parameter.id != -1)
+			// リスト番号を設定
+			else if (UtilityCommon::FindIndex(LIST_TYPE_INDEXS, tileId))
+			{
+				parameter.type = TileBase::TYPE::NONE;
+
+				for (int i = 0; i < LIST_TYPE_MAX; ++i)
+				{
+					if (LIST_TYPE_INDEXS[i] == tileId)
+					{
+						LIST_TYPE listType = static_cast<LIST_TYPE>(i);
+						Vector2F pos = Vector2(static_cast<int>(x * parameterStage_->chipSize_.x), static_cast<int>(y * parameterStage_->chipSize_.y)).ToVector2F();
+						areaListMap_[listType].push_back(pos);
+						break;
+					}
+				}
+
+				parameterStage_->tileIndexs_[y][x] = -1;
+			}
+			// 壁の設定
+			else if (tileId != -1)
 			{
 				parameter.type = TileBase::TYPE::BLOCK;
 			}
 
-			//parameter.type = static_cast<TileBase::TYPE>(parameterStage_->tileIndexs_[y][x]);
+			// リソースの割り当て
+			int currentId = parameterStage_->tileIndexs_[y][x];
+			parameter.handle = (handles != nullptr && currentId > -1) ? handles[currentId] : -1;
+
+			// タイルを格納
 			tileRow.push_back(std::make_unique<TileBase>(parameter));
 		}
+
+		// タイル配列を格納
 		tiles_.push_back(std::move(tileRow));
 	}
 
-	// タイル数の設定
-	tileNums_.x = static_cast<int>(parameterStage_->tileIndexs_[0].size());
-	tileNums_.y = static_cast<int>(parameterStage_->tileIndexs_.size());
+	// 高さ、幅分のタイル数を設定
+	tileNums_.x = static_cast<int>(tileIndexs[0].size());
+	tileNums_.y = static_cast<int>(height);
 
-	// ステージの幅と高さの設定
+	// ステージサイズを設定
 	stageSize_.x = tileNums_.x * TileBase::SIZE_TILE;
 	stageSize_.y = tileNums_.y * TileBase::SIZE_TILE;
 
-	// コライダーの情報も再登録
+	// コライダーの再登録
 	auto colliderArray = std::dynamic_pointer_cast<ColliderArray>(collider_);
-	if (colliderArray == nullptr) return;
-	colliderArray->SetArrayOfArrays(parameterStage_->tileIndexs_);
-
-	if (!areaListMap_.empty())
+	if (colliderArray != nullptr)
 	{
-		areaListMap_.clear();
-	}
-
-	// 生成リストの登録
-	for (int y = 0; y < tileNums_.y; y++)
-	{
-		for (int x = 0; x < tileNums_.x; x++)
-		{
-			// 指定外のインデックスの場合
-			if (-1 == parameterStage_->tileIndexs_[y][x])
-			{
-				// 次へ
-				continue;
-			}
-			for (int i = 0; i < LIST_TYPE_MAX; i++)
-			{
-				// 指定のインデックスと一致してる場合
-				if (LIST_TYPE_INDEXS[i] == parameterStage_->tileIndexs_[y][x])
-				{
-					// 描画用IDの設定
-					tiles_[y][x]->SetId(-1);
-
-					// 登録
-					areaListMap_[static_cast<LIST_TYPE>(i)].push_back(
-						Vector2(x * parameterStage_->chipSize_.x, y * parameterStage_->chipSize_.y).ToVector2F());
-					break;
-				}
-			}
-		}
+		colliderArray->SetArrayOfArrays(parameterStage_->tileIndexs_);
 	}
 }
 

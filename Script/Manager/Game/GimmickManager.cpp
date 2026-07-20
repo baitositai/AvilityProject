@@ -124,6 +124,9 @@ void GimmickManager::CreateBossDoor(const Vector2F& pos)
 	parameter.pos_ = pos;
 	parameter.pos_.y -= parameter.hitSize_.y / 2;
 
+	// ƒhƒA‰Šú‰»
+	door->Init();
+
 	// Ši”[
 	gimmickListMap_[GimmickTypes::TYPE::DOOR].push_back(std::move(door));
 }

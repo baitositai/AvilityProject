@@ -586,6 +586,20 @@
       "type": "sound"
     },
     {
+      "key": "bgmBossBattleBamboo",
+      "path": "Resource/Sound/Bgm/BgmBossBattleBamboo.mp3",
+      "sceneIds": [ ],
+      "soundType": "bgm",
+      "type": "sound"
+    },
+    {
+      "key": "bgmBossBattleMaid",
+      "path": "Resource/Sound/Bgm/BgmBossBattleMaid.mp3",
+      "sceneIds": [],
+      "soundType": "bgm",
+      "type": "sound"
+    },
+    {
       "key": "bgmTrainRoom",
       "path": "Resource/Sound/Bgm/BgmTrainRoom.mp3",
       "sceneIds": [ 2 ],
@@ -1367,8 +1381,6 @@
       "sizeY": 116
     },
     {
-      "divX": 1,
-      "divY": 4,
       "key": "uiMissionMessage",
       "path": "Resource/Image/Ui/MissionMessage.png",
       "sceneIds": [ 3 ],

@@ -18,19 +18,19 @@ public:
 	// 判定に必要なオブジェクトの情報
 	struct CollisionCheckParam
 	{
-		Vector2 pos;
-		Vector2 size;
-		bool isXAxis;
-		float stepMove;
+		Vector2 pos = {};
+		Vector2 size = {};
+		bool isXAxis = false;
+		float stepMove = 0.0f;
 	};
 
 	// 判定結果を返す構造体
 	struct CollisionResult
 	{
-		bool isHit;
-		float chipSize;
-		int chipIndex;
-		Vector2F normal; 
+		bool isHit = false;
+		float chipSize = 0.0f;
+		int chipIndex = -1;
+		Vector2F normal = {};
 	};
 	
 	/// <summary>

@@ -39,7 +39,7 @@ void SceneTrain::Init()
 	stageMng_.Create(StageManager::TYPE::TRAIN);
 
 	// ƒJƒƒ‰İ’è
-	mainCamera.ChangeMode(Camera::MODE::FIXED_POINT);
+	mainCamera.ChangeMode(Camera::MODE::TRAIN_SHAKE);
 	mainCamera.SetCameraPos(Vector2F(0.0f, 0.0f));
 
 	// Šî’êƒNƒ‰ƒX‚Ì‰Šú‰»ˆ—

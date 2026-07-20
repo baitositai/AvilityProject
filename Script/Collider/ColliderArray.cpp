@@ -7,7 +7,7 @@ ColliderArray::ColliderArray(ActorBase& owner, const CollisionTags::TAG tag, Vec
 	arrayOfArrays_(arrayOfArrays),
 	passIndexes_(passIndexs),
 	chipSize_(chipSize)
-{	
+{
 	type_ = ColliderType::TYPE::ARRAY;
 	result_ = {};
 }
@@ -30,13 +30,13 @@ std::shared_ptr<ColliderBase> ColliderArray::Clone() const
 	return std::make_shared<ColliderArray>(*this);
 }
 
-ColliderArray::Result ColliderArray::CheckHitMapChip(const Vector2& worldPos) const
+ColliderArray::Result ColliderArray::CheckHitMapChip(const Vector2& worldPos, bool isXAxis, float stepMove) const
 {
 	Result result{};
 
 	// マップ座標に変換
-	int mapX = worldPos.x / chipSize_.x;
-	int mapY = worldPos.y / chipSize_.y;
+	int mapX = static_cast<int>(worldPos.x / chipSize_.x);
+	int mapY = static_cast<int>(worldPos.y / chipSize_.y);
 
 	// インデックスが配列の範囲内か確認
 	if (mapY < 0 || mapY >= static_cast<int>(arrayOfArrays_.size()) ||
@@ -45,17 +45,50 @@ ColliderArray::Result ColliderArray::CheckHitMapChip(const Vector2& worldPos) co
 		return result;
 	}
 
-	// 結果
-	result.hit = -1 < arrayOfArrays_[mapY][mapX];
+	int chipIndex = arrayOfArrays_[mapY][mapX];
 
-	// 衝突している場合
-	if (result.hit)
+	// 空白チップなら当たり判定なし
+	if (chipIndex <= -1)
 	{
-		// 押し出し用のチップ情報を格納
-		result.chipSize = chipSize_;
-		result.hitChipIndex = { mapX, mapY };
+		return result;
 	}
 
-	// 結果を返す
+	// すり抜け床かどうかチェック
+	bool isPassFloor = false;
+	for (int passIndex : passIndexes_)
+	{
+		if (chipIndex == passIndex)
+		{
+			isPassFloor = true;
+			break;
+		}
+	}
+
+	if (isPassFloor)
+	{
+		if (isXAxis)
+		{
+			return result;
+		}
+
+		if (stepMove <= 0.0f)
+		{
+			return result;
+		}
+
+		float previousBottomY = worldPos.y - stepMove;
+		float floorTopY = static_cast<float>(mapY * chipSize_.y);
+
+		if (previousBottomY > floorTopY + 1.0f)
+		{
+			return result;
+		}
+	}
+
+	// 衝突フラグを立てる
+	result.hit = true;
+	result.chipSize = chipSize_;
+	result.hitChipIndex = { mapX, mapY };
+
 	return result;
 }

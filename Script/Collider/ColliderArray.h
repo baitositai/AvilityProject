@@ -47,11 +47,13 @@ public:
 	std::shared_ptr<ColliderBase> Clone() const override;
 
 	/// <summary>
-	/// 指定した座標が衝突しているか判定
+	/// 座標が衝突しているか判定
 	/// </summary>
-	/// <param name="worldPos">座標</param>
-	/// <returns>判定結果</returns>
-	Result CheckHitMapChip(const Vector2& worldPos) const;
+	/// <param name="worldPos">ワールド座標</param>
+	/// <param name="isXAxis">横軸判定</param>
+	/// <param name="stepMove">移動量</param>
+	/// <returns>衝突結果</returns>
+	Result CheckHitMapChip(const Vector2& worldPos, bool isXAxis, float stepMove) const;
 
 	/// <summary>
 	/// 衝突判定を行う配列を設定
@@ -98,7 +100,7 @@ private:
 	// 衝突判定を行う配列
 	std::vector<std::vector<int>> arrayOfArrays_;
 
-	// 上からすり抜ける床の配列
+	// 下からすり抜ける床の配列
 	std::vector<int> passIndexes_;
 
 	// チップサイズ

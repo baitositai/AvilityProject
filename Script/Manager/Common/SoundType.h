@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <map>
+#include "../Game/EnemyTypes.h"
 
 class SoundType
 {
@@ -27,6 +28,8 @@ public:
 		GAME5,
 		RESULT,
 		GAMEOVER,
+		BOSS_MAID,
+		BOSS_BAMBOO,
 		MAX
 	};
 
@@ -76,7 +79,14 @@ public:
 	// SEの種類を管理
 	static const std::map<std::string, SE> KEY_SE_MAP;
 
+	// ボス種類別にBGMを返す
+	static const std::map<EnemyTypes::TYPE, BGM> BOSS_SOUND_MAP;
+
 	// string型を入手する
 	static std::string GetStringFromBGM(const BGM bgmType);
 	static std::string GetStringFromSE(const SE seType);
+
+	// ランダムでゲームBGMを設定
+	static const BGM GetRandomGameBgm();
+
 };

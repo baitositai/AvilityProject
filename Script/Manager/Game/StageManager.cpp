@@ -141,7 +141,7 @@ void StageManager::CreateStageRoad()
 
 	// ステージ生成
 	stage_ = std::make_unique<Stage>(std::move(parameter));
-	stage_->Init();
+	//stage_->Init();
 
 	// 背景生成
 	CreateBackGround();

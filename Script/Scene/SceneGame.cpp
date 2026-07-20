@@ -49,17 +49,17 @@ void SceneGame::Init()
 	// ステージ生成
 	stageMng_.Create(StageManager::TYPE::ROAD);
 
+	// 基底クラスの処理
+	SceneBase::Init();	
+
 	// 敵の生成処理
 	enemyMng_.Generator(stageMng_.GetEnemyAreaPositions());	
 
-	// ボス部屋の生成
+	// ボス部屋用のドアの生成
 	gimmickMng_.CreateBossDoor(stageMng_.GetBossDoorPos());
 	
 	// イベントの生成
 	eventManager.Create(stageMng_.GetEventTriggerPositions());
-
-	// 基底クラスの処理
-	SceneBase::Init();	
 
 	// イベント関係の初期化
 	eventManager.Init();
@@ -83,12 +83,8 @@ void SceneGame::Init()
 	uiMng_.CreateGameUi();
 
 	// サウンド再生
-	sndMng_.PlayBgm(SoundType::BGM::GAME1);
-
-	for (const auto& pos : stageMng_.GetEventTriggerPositions())
-	{
-		itemMng_.CreateTreasureItem(static_cast<ItemTypes::TREASURE_TYPE>(GetRand(ItemTypes::TREASURE_TYPE_MAX - 1)), pos);
-	}
+	sndMng_.PlayBgm(SoundType::BGM::BOSS_BAMBOO);
+	//sndMng_.PlayBgm(SoundType::GetRandomGameBgm());
 }
 
 void SceneGame::NormalUpdate()

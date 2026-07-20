@@ -1,3 +1,5 @@
+#include <vector>
+#include <DxLib.h>
 #include "SoundType.h"
 
 // 文字列からenum の対応表
@@ -11,6 +13,8 @@ const std::map<std::string, SoundType::BGM> SoundType::KEY_BGM_MAP =
 	{"bgmGame3", SoundType::BGM::GAME3},
 	{"bgmGame4", SoundType::BGM::GAME4},
 	{"bgmGame5", SoundType::BGM::GAME5},
+	{"bgmBossBattleBamboo", SoundType::BGM::BOSS_BAMBOO},
+	{"bgmBossBattleMaid", SoundType::BGM::BOSS_MAID},
 	{"bgmResult", SoundType::BGM::RESULT}
 };
 
@@ -52,6 +56,13 @@ const std::map<std::string, SoundType::SE> SoundType::KEY_SE_MAP =
 	{"seDoor", SoundType::SE::DOOR}
 };
 
+const std::map<EnemyTypes::TYPE, SoundType::BGM> SoundType::BOSS_SOUND_MAP =
+{
+	{EnemyTypes::TYPE::GAIA_GOLEM, SoundType::BGM::BOSS_MAID },
+	{EnemyTypes::TYPE::MAID, SoundType::BGM::BOSS_MAID },
+	{EnemyTypes::TYPE::PANDA, SoundType::BGM::BOSS_BAMBOO },
+};
+
 std::string SoundType::GetStringFromBGM(BGM bgmType)
 {
     // マップの中身をループして一致する値を探す
@@ -76,4 +87,18 @@ std::string SoundType::GetStringFromSE(SE seType)
         }
     }
     return "";
+}
+
+const SoundType::BGM SoundType::GetRandomGameBgm()
+{
+	const std::vector<BGM> BGM_LIST =
+	{
+		BGM::GAME1,
+		BGM::GAME2,
+		BGM::GAME3,
+		BGM::GAME4,
+		BGM::GAME5
+	};
+	const int RANDOM_COUNT = GetRand(static_cast<int>(BGM_LIST.size()) - 1);
+	return BGM_LIST[RANDOM_COUNT];
 }

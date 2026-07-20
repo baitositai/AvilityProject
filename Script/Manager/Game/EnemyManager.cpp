@@ -110,7 +110,18 @@ void EnemyManager::Generator(const std::vector<Vector2F>& createPositionList)
 	parameter.createEnemyTypeList = { TYPE::CLONE, TYPE::MUSHROOM, TYPE::SAMURAI, TYPE::SLIME, TYPE::SNAKE, TYPE::SLIME, TYPE::HAT };
 
 	// ¶¬‚µ‚ÄŠi”[
-	enemiesMap_ = enemyGenerator_->CreateEnemyMap(parameter);
+	auto addEnemyMap = enemyGenerator_->CreateEnemyMap(parameter);
+	for (auto& enemies : addEnemyMap)
+	{
+		for (auto& enemy : enemies.second)
+		{
+			// ‰Šú‰»
+			enemy->Init();
+
+			// “G‚ğŠi”[
+			enemiesMap_[enemies.first].push_back(std::move(enemy));
+		}
+	}
 }
 
 void EnemyManager::Create(const EnemyTypes::TYPE type, const Vector2F& pos)

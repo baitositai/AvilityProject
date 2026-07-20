@@ -64,7 +64,8 @@ void SceneBoss::Init()
 	sndMng_.StopBgm(SoundType::BGM::GAME1);
 
 	// ÉTÉEÉìÉhçƒê∂
-	sndMng_.PlayBgm(SoundType::BGM::GAME2);
+	sndMng_.PlayBgm(SoundType::BOSS_SOUND_MAP.at(bossType_));
+	sndMng_.PlayBgm(SoundType::BGM::BOSS_BAMBOO);
 
 	// UIçÏê¨
 	uiMng_.CreateGameUi();
