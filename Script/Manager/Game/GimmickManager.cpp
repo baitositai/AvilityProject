@@ -31,11 +31,15 @@ void GimmickManager::Update()
 			// ƒJƒƒ‰”ÍˆÍ“à‚Ìê‡
 			auto& parameter = gimmick->GetParameter();
 			bool isInScreen = mainCamera.IsInScreenBox(parameter.pos_, parameter.hitSize_, parameter.angle_);
-			if (isInScreen)
+			if (isInScreen || !gimmick->IsCulling())
 			{
 				gimmick->Update();
+				gimmick->SetIsActive(true);
 			}
-			gimmick->SetIsActive(isInScreen);
+			else
+			{
+				gimmick->SetIsActive(false);
+			}
 		}
 	}
 }

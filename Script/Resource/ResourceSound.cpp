@@ -32,7 +32,14 @@ void ResourceSound::Release()
 const int ResourceSound::GetHandle()
 {
 	int sound = DuplicateSoundMem(handleId_);
-	duplicateSounds_.push_back(sound);
+	if (sound != -1)
+	{
+		duplicateSounds_.push_back(sound);
+	}
+	else
+	{
+		return handleId_;
+	}
 	return sound;
 }
 

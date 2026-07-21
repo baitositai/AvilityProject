@@ -83,8 +83,7 @@ void SceneGame::Init()
 	uiMng_.CreateGameUi();
 
 	// ÉTÉEÉìÉhçƒê∂
-	sndMng_.PlayBgm(SoundType::BGM::BOSS_BAMBOO);
-	//sndMng_.PlayBgm(SoundType::GetRandomGameBgm());
+	sndMng_.PlayBgm(SoundType::GetRandomGameBgm());
 }
 
 void SceneGame::NormalUpdate()

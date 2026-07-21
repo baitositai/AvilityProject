@@ -34,6 +34,7 @@ ActorBase::ActorBase(std::unique_ptr<ParameterActor> parameter) :
 		parameter_ = std::make_unique<ParameterActor>(); 
 	}	
 	isActive_ = true;
+	isCulling_ = true;
 	isDelete_ = false;
 	isDraw_ = true;
 }

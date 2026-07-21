@@ -20,6 +20,7 @@ GimmickTrain::GimmickTrain(std::unique_ptr<ParameterGimmickTrain> parameter) :
 	// ‰Šúî•ñ
 	state_ = STATE::MAX;
 	timer_ = 0.0f;
+	isCulling_ = false;
 }
 
 GimmickTrain::~GimmickTrain()

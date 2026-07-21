@@ -150,6 +150,12 @@ public:
 	const bool IsDelete() const { return isDelete_; }
 
 	/// <summary>
+	/// カリング判定を行うか
+	/// </summary>
+	/// <returns>カリング判定</returns>
+	const bool IsCulling() const { return isCulling_; }
+
+	/// <summary>
 	/// 削除フラグをtrueにする
 	/// </summary>
 	/// <param name="_isDelete"></param>
@@ -225,6 +231,9 @@ protected:
 
 	// 描画判定
 	bool isDraw_;
+
+	// カリングを行うか
+	bool isCulling_;
 
 	// アニメーションの初期化
 	virtual void InitAnimation();
