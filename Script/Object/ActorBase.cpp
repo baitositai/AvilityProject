@@ -99,7 +99,8 @@ void ActorBase::Draw()
 
 	// 定数バッファの更新
 	material_->SetConstBuf(0, FLOAT4{ parameter_->color_.x, parameter_->color_.y ,parameter_->color_.z, parameter_->alpha_ });
-	material_->SetConstBuf(1, FLOAT4{ (float)parameter_->divisionNum_.x, (float)parameter_->divisionNum_.y, parameter_->drawIndex_, 0.0f });
+	material_->SetConstBuf(1, FLOAT4{ (float)parameter_->divisionNum_.x, (float)parameter_->divisionNum_.y, parameter_->drawIndex_
+		, SceneManager::GetInstance().GetTotalTime() });
 	
 	// 描画処理
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)UtilityCommon::ALPHA_MAX);

@@ -1710,5 +1710,6 @@
     </ClInclude>
     <FxCompile Include="Script\Shader\Pixel\PlayerSprite.hlsl" />
     <FxCompile Include="Script\Shader\Pixel\ItemSprite.hlsl" />
+    <FxCompile Include="Script\Shader\Pixel\Fade.hlsl" />
   </ItemGroup>
 </Project>
