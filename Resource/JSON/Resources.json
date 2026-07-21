@@ -588,7 +588,7 @@
     {
       "key": "bgmBossBattleBamboo",
       "path": "Resource/Sound/Bgm/BgmBossBattleBamboo.mp3",
-      "sceneIds": [ ],
+      "sceneIds": [],
       "soundType": "bgm",
       "type": "sound"
     },
@@ -1399,7 +1399,7 @@
     {
       "key": "treasureThrowHit",
       "path": "Resource/Image/Effect/TreasureThrowHit.png",
-      "sceneIds": [ 3,4 ],
+      "sceneIds": [ 3, 4 ],
       "type": "texture",
       "divX": 12,
       "divY": 1,
@@ -1415,6 +1415,26 @@
       "divY": 1,
       "sizeX": 256,
       "sizeY": 144
+    },
+    {
+      "key": "uiPlayerAnnhilationMessage",
+      "path": "Resource/Image/Ui/PlayerAnnhilationMessage.png",
+      "sceneIds": [ 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 740,
+      "sizeY": 100
+    },
+    {
+      "key": "uiTrainTime",
+      "path": "Resource/Image/Ui/TrainTime.png",
+      "sceneIds": [ 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 1456,
+      "sizeY": 360
     }
   ]
 }

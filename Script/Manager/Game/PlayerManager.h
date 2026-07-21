@@ -6,6 +6,7 @@
 class Player;
 class ParameterPlayer;
 class PlayerNewAccept;
+class PlayerCheckAnnihilation;
 
 class PlayerManager : public Singleton<PlayerManager>
 {
@@ -124,13 +125,28 @@ public:
 	/// <returns>右を向いている場合は true、そうでない場合は false を返します。</returns>
 	bool IsLookRight(const Vector2F& pos) const;
 
+	/// <summary>
+	/// 全滅判定を返す
+	/// </summary>
+	/// <returns>全滅判定</returns>
+	const bool IsPlayerAnnihilation() const { return isPlayerAnnihilation_; }
+
 private:
 
 	// プレイヤー残機
 	int playersLeft_;
 
+	// ゲームオーバー用カウントダウン
+	float gameOverCountDown_;
+
+	// 全滅判定
+	bool isPlayerAnnihilation_;
+
 	// 入力受付用の処理クラス
 	std::unique_ptr<PlayerNewAccept> playerNewAccept_;
+
+	// 全滅カウントダウン処理クラス
+	std::unique_ptr<PlayerCheckAnnihilation> playerCheckAnnihilation_;
 
 	// テンプレートとなるパラメータ
 	std::unique_ptr<ParameterPlayer> templateParameter_;

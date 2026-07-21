@@ -2,8 +2,10 @@
 #include "../../Manager/Common/SceneManager.h"
 #include "../../Manager/Common/Camera.h"
 #include "../../Manager/Common/SoundManager.h"
+#include "../../Manager/Game/UiManager.h"
 #include "../../Collider/ColliderBox.h"
 #include "../../Utility/UtilityCommon.h"
+#include "../../Ui/Game/UiTrainTime.h"
 #include "GimmickTrain.h"
 
 GimmickTrain::GimmickTrain(std::unique_ptr<ParameterGimmickTrain> parameter) :
@@ -145,4 +147,7 @@ void GimmickTrain::ChangeStatePassing()
 
 	// コライダー非活動状態
 	collider_->SetIsActive(true);
+
+	// UIの生成
+	UiManager::GetInstance().Add(std::move(std::make_unique<UiTrainTime>()));
 }

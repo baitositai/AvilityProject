@@ -66,7 +66,7 @@ void UiTimer::SetParameter(const Vector2& pos, const int drawCount, const float 
 	numberSize_ = Vector2F::MulVector2FFloat(defaultNumberSize_.ToVector2F(), scale_).ToVector2();
 
 	// ’†S‚É•`‰æ‚·‚é‚æ‚¤‚ÉˆÊ’u‚ğ’²®
-	int digitCount = UtilityCommon::GetDigitCount(drawCount_);
+	int digitCount = UtilityCommon::GetDigitCount(drawCount_) - 1;
 	numberStartDrawPos_.x = pos_.x - numberSize_.x * digitCount / 2;
-	numberStartDrawPos_.y = pos_.y - numberSize_.y / 2;
+	numberStartDrawPos_.y = pos_.y;
 }

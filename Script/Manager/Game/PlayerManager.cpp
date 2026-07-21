@@ -11,6 +11,7 @@
 #include "../../Object/Common/Animation.h"
 #include "../../Parameter/Character/Player/ParameterPlayer.h"
 #include "../../System/PlayerNewAccept.h"
+#include "../../System/PlayerCheckAnnihilation.h"
 #include "../Common/ResourceManager.h"
 #include "../Game/GameManager.h"
 #include "PlayerManager.h"
@@ -58,16 +59,30 @@ void PlayerManager::Init()
 	playerNewAccept_ = std::make_unique<PlayerNewAccept>();
 	playerNewAccept_->Init(static_cast<int>(playerList_.size()));
 
+	// プレイヤーの全滅カウントダウン処理
+	playerCheckAnnihilation_ = std::make_unique<PlayerCheckAnnihilation>();
+	playerCheckAnnihilation_->Init();
+
 	// プレイヤー残機
 	playersLeft_ = PLAYER_LEFT;
 }
 
 void PlayerManager::Update()
 {
+	// 全滅判定を有効
+	isPlayerAnnihilation_ = true;
+
 	// プレイヤー処理
 	for (const auto& player : playerList_)
 	{
 		player->Update();
+
+		// 生存している場合
+		if (player->GetState() != Player::STATE::DEAD)
+		{
+			// 判定を無効
+			isPlayerAnnihilation_ = false;
+		}
 	}
 
 	// プレイヤーの新規受付処理
@@ -75,6 +90,9 @@ void PlayerManager::Update()
 
 	// プレイヤーの退出処理
 	LeavePlayer();
+
+	// カウントダウン処理
+	playerCheckAnnihilation_->Update();
 }
 
 void PlayerManager::Draw()
@@ -319,6 +337,7 @@ bool PlayerManager::IsLookRight(const Vector2F& pos) const
 PlayerManager::PlayerManager()
 {	
 	playersLeft_ = -1;	
+	isPlayerAnnihilation_ = false;
 
 	// 初回のみ外部データを読み込んでテンプレートを作成
 	if (!templateParameter_)

@@ -1,33 +1,28 @@
 #pragma once
 #include <memory>
-#include "UiEventBase.h"
-#include "../../Manager/Game/EventTypes.h"
+#include "UiGameBase.h"
 
 class UiTimer;
+class PlayerCheckAnnihilation;
 
-class UiMissionMessage : public UiEventBase
+class UiPlayerAnnhilation : public UiGameBase
 {
 public:
 
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	UiMissionMessage(const EventBase& event);
+	UiPlayerAnnhilation(const PlayerCheckAnnihilation& owner);
 
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~UiMissionMessage() override;
-
+	~UiPlayerAnnhilation() override;
+	
 	/// <summary>
-	/// 初期化
+	/// 初期化処理
 	/// </summary>
 	void Init() override;
-
-	/// <summary>
-	/// 更新処理
-	/// </summary>
-	void Update() override;
 
 	/// <summary>
 	/// 描画処理
@@ -36,8 +31,9 @@ public:
 
 private:
 
-	int* messageHandle_;
+	// 所有者
+	const PlayerCheckAnnihilation& owner_;
 
+	// タイマー
 	std::unique_ptr<UiTimer> uiTimer_;
-
 };

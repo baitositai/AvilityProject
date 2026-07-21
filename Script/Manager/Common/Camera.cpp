@@ -57,6 +57,9 @@ void Camera::ChangeMode(const MODE mode)
 	// カメラのモード
 	mode_ = mode;
 
+	// 初期化
+	isStop_ = false;
+
 	// カメラ別モードの設定
 	changeStateMap_.at(mode)();
 }
@@ -171,6 +174,12 @@ void Camera::UpdateModeScroll()
 	{
 		// 次の移動へ
 		scrollMoves_.erase(scrollMoves_.begin());
+
+		// 次がない場合
+		if (scrollMoves_.empty())
+		{
+			isStop_ = true;
+		}
 	}
 }
 

@@ -188,8 +188,4 @@ void SceneGame::DebugDraw()
 			UtilityCommon::RED,
 			true);
 	}
-
-	DrawRotaGraph(
-		100, 100, 1.0f, 0.0f, resMng_.GetHandles("bossNamePlate")[0], true, false
-		);
 }

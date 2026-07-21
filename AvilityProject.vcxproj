@@ -151,6 +151,7 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\System\PlayerCheckAnnihilation.cpp" />
     <ClCompile Include="Script\Object\Effect\EffectTargetFollow.cpp" />
     <ClCompile Include="Script\Parameter\Gimmick\ParameterGimmickTrain.cpp" />
     <ClCompile Include="Script\Object\Gimmick\GimmickTrain.cpp" />
@@ -399,8 +400,11 @@
     <ClCompile Include="Script\Ui\Event\UiMissionMessage.cpp" />
     <ClCompile Include="Script\Ui\Event\UiEventBase.cpp" />
     <ClCompile Include="Script\Ui\Common\UiTimer.cpp" />
+    <ClCompile Include="Script\Ui\Game\UiPlayerAnnhilation.cpp" />
+    <ClCompile Include="Script\Ui\Game\UiTrainTime.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\System\PlayerCheckAnnihilation.h" />
     <ClInclude Include="Script\Object\Effect\EffectTargetFollow.h" />
     <ClInclude Include="Script\Parameter\Gimmick\ParameterGimmickTrain.h" />
     <ClInclude Include="Script\Object\Gimmick\GimmickTrain.h" />
@@ -710,6 +714,8 @@
     <ClInclude Include="Script\Ui\Event\UiMissionMessage.h" />
     <ClInclude Include="Script\Ui\Event\UiEventBase.h" />
     <ClInclude Include="Script\Ui\Common\UiTimer.h" />
+    <ClInclude Include="Script\Ui\Game\UiPlayerAnnhilation.h" />
+    <ClInclude Include="Script\Ui\Game\UiTrainTime.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Script\Shader\Pixel\EnemySprite.hlsl">
