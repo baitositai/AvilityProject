@@ -94,7 +94,7 @@ void SceneBoss::NormalDraw()
 
 #ifdef _DEBUG
 	// デバッグ用の情報描画
-	DebugDraw();
+	//DebugDraw();
 #endif
 }
 
