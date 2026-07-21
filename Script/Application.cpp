@@ -1,6 +1,7 @@
 #include <DxLib.h>
 #include <time.h>
-#include <EffekseerForDXLib.h>
+#include <EffekseerForDXLib.h>、
+#include "resource.h" 
 #include "Manager/Common/SceneManager.h"
 #include "Manager/Common/InputManager.h"
 #include "Manager/Common/ResourceManager.h"
@@ -21,7 +22,10 @@ bool Application::Init()
 {
 
 	// アプリケーションの初期設定
-	SetWindowText(L"AvilityProject");
+	SetWindowText(L"LOOTRAIN");
+
+	// アイコン画像の設定
+	SetWindowIconID(IDI_ICON1);
 
 	// ウィンドウサイズ
 	SetGraphMode(SCREEN_SIZE_X, SCREEN_SIZE_Y, COLOR_DEPTH);

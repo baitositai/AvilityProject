@@ -406,6 +406,8 @@
     <ClCompile Include="Script\Ui\Player\UiPlayerGetItemMessage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Script\resource.h" />
     <ClInclude Include="Script\System\PlayerCheckAnnihilation.h" />
     <ClInclude Include="Script\Object\Effect\EffectTargetFollow.h" />
     <ClInclude Include="Script\Parameter\Gimmick\ParameterGimmickTrain.h" />
@@ -758,6 +760,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="AvilityProject.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
