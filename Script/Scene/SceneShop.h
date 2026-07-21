@@ -158,10 +158,10 @@ private:
 	std::vector<std::unique_ptr<PixelRenderer>> exhibitsRenderer_;
 
 	//更新関数
-	void NormalUpdate()override;
+	void NormalUpdate() override;
 
 	//描画関数
-	void NormalDraw()override;
+	void NormalDraw() override;
 
 	// 状態別更新処理
 	void UpdateSelect();

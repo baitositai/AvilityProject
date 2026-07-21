@@ -588,7 +588,7 @@
     {
       "key": "bgmBossBattleBamboo",
       "path": "Resource/Sound/Bgm/BgmBossBattleBamboo.mp3",
-      "sceneIds": [ ],
+      "sceneIds": [],
       "soundType": "bgm",
       "type": "sound"
     },
@@ -888,6 +888,16 @@
       "divY": 1,
       "sizeX": 1280,
       "sizeY": 720
+    },
+    {
+      "key": "pauseSprite",
+      "path": "Resource/Image/Ui/PauseSprite.png",
+      "sceneIds": [ 0 ],
+      "type": "sprite",
+      "divX": 1,
+      "divY": 4,
+      "sizeX": 498,
+      "sizeY": 72
     },
     {
       "key": "arrow",
@@ -1399,7 +1409,7 @@
     {
       "key": "treasureThrowHit",
       "path": "Resource/Image/Effect/TreasureThrowHit.png",
-      "sceneIds": [ 3,4 ],
+      "sceneIds": [ 3, 4 ],
       "type": "texture",
       "divX": 12,
       "divY": 1,

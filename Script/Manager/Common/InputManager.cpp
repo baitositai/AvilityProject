@@ -77,7 +77,7 @@ void InputManager::Init()
 	RegisterTrigger(TYPE::SELECT_LEFT, { KEY_INPUT_A }, { }, STICK::L_STICK_LEFT);
 	RegisterTrigger(TYPE::SELECT_UP, { KEY_INPUT_W }, { }, STICK::L_STICK_UP);
 	RegisterTrigger(TYPE::SELECT_DOWN, { KEY_INPUT_S }, { }, STICK::L_STICK_DOWN);
-	RegisterTrigger(TYPE::SELECT_DECISION, { KEY_INPUT_SPACE }, { BTN::RB_RIGHT }, STICK::MAX, MOUSE::CLICK_LEFT);
+	RegisterTrigger(TYPE::SELECT_DECISION, { KEY_INPUT_SPACE }, { BTN::RB_RIGHT }, STICK::MAX/*, MOUSE::CLICK_LEFT*/);
 	RegisterTrigger(TYPE::SELECT_CANCEL, { KEY_INPUT_BACK }, { BTN::RB_DOWN });
 	RegisterTrigger(TYPE::PAUSE, { KEY_INPUT_BACK }, { BTN::SELECT });
 

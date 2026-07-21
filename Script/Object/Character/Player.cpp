@@ -29,6 +29,7 @@
 #include "../../Render/PixelRenderer.h"
 
 #include "Player.h"
+#include "../../Scene/ScenePause.h"
 
 Player::Player(std::unique_ptr<ParameterPlayer> parameter) :
 	CharacterBase(std::move(parameter)),
@@ -86,7 +87,7 @@ void Player::Update()
 	if (!isActive_) {
 		int i = 0;
 	};
-
+	
 	// ó‘Ô•Êˆ—
 	UpdateComponentState();
 

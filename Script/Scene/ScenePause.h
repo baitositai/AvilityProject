@@ -3,6 +3,8 @@
 #include <unordered_map>
 #include "SceneBase.h"
 
+#include "../Manager/Common/InputManager.h"
+
 class ScenePause : public SceneBase
 {
 public:
@@ -11,6 +13,7 @@ public:
 	enum class LIST
 	{
 		RESUME,		// 続ける
+		NONE,		// なし
 		TITLE,		// タイトルに戻る
 		GAME_END,   // ゲームの終了
 		MAX
@@ -21,26 +24,27 @@ public:
 
 	// コンストラクタ
 	ScenePause();
+	ScenePause(Input::JOYPAD_NO PadNo);
 
 	// デストラクタ
 	~ScenePause() override;
 
 	//読み込み処理
-	void Load()override {};
+	void Load() override {};
 
 	//初期化処理
-	void Init()override {};
+	void Init() override {};
 
 	//更新関数
-	void NormalUpdate()override;
+	void NormalUpdate() override;
 
 	//描画関数
-	void NormalDraw()override;
+	void NormalDraw() override;
 
 private:
 	
 	//画面のアルファ値
-	static constexpr int PAUSE_ALPHA = 128; 
+	static constexpr int PAUSE_ALPHA = 196; // 64,128,196
 
 	//フォントサイズ
 	static constexpr int FONT_SIZE = 56;
@@ -56,11 +60,17 @@ private:
 	std::wstring pasueList_[LIST_MAX] =
 	{
 		L"つづける",
+		L"NONE",
 		L"タイトルへ戻る",
 		L"ゲーム終了"
 	};
 
+	int* handleIds_;
+
 	//リスト選択テーブル
 	std::unordered_map<LIST, std::function<void()>> listFuncTable_;
+
+	// 操作プレイヤーコントローラー
+	Input::JOYPAD_NO PadNo_;
 };
 
