@@ -540,6 +540,7 @@ void Player::InitDraw()
 		outlineColor.y,
 		outlineColor.z,
 		0.0f });
+	material_->AddConstBuf(FLOAT4{ 0.0f,0.0f,0.0f,0.0f });
 
 	// テクスチャの設定
 	material_->AddTextureBuf(resMng_.GetHandle("playerNormal"));

@@ -19,9 +19,12 @@ void ComponentAvilitySuperman::Create()
 
 void ComponentAvilitySuperman::Init()
 {	
+	owner_.SetMaterialBuf(3, FLOAT4{ 1.0f,0.0f,0.0f,0.0f });
 }
 
 void ComponentAvilitySuperman::Remove()
 {
+	owner_.SetMaterialBuf(3, FLOAT4{ 0.0f,0.0f,0.0f,0.0f });
+
 	ComponentAvilityBase::Remove();
 }

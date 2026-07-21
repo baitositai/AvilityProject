@@ -198,7 +198,7 @@ private:
 	std::vector<VECTOR> PLAYER_OUTLINE_COLORS;
 
 	// 定数バッファ―サイズ
-	static constexpr int PLAYER_CONST_BUFFER_SIZE = 3;
+	static constexpr int PLAYER_CONST_BUFFER_SIZE = 4;
 
 	// 退出用入力時間
 	float leaveInputTime_;

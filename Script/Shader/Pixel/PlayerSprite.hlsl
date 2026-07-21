@@ -12,6 +12,9 @@ cbuffer ConstantBuffer : register(b4)
     float g_time;
     float3 g_outline_color;
     float isMetal;
+    float isSuper;
+    float3 g_dummy;
+ 
 };
 
 // 後光（バックグロー）の設定
@@ -83,54 +86,71 @@ float4 main(PS_INPUT PSInput) : SV_TARGET
     float3 charRGB = lerp(mainColor.rgb, g_outline_color, outlineFactor);
     float finalCharAlpha = max(charAlpha, maxNeighborAlpha * g_alpha);
 
-    // ----------------------------------------------------
-    // ★ キャラクターの形に沿った後光（シルエット型）の計算
-    // ----------------------------------------------------
-    float loopedTime = fmod(g_time * PULSE_SPEED, 6.283185f);
-    float sinWave = sin(loopedTime);
-    float pulseFactor = pow(abs(sinWave), 2.0f) * sign(sinWave);
+    if (isSuper >= 1.0f)
+    {
+        // ----------------------------------------------------
+        // ★ キャラクターの形に沿った後光（シルエット型）の計算
+        // ----------------------------------------------------
+        float loopedTime = fmod(g_time * PULSE_SPEED, 6.283185f);
+        float sinWave = sin(loopedTime);
+        float pulseFactor = pow(abs(sinWave), 2.0f) * sign(sinWave);
     
-    // 伸縮するオフセット幅
-    float currentThickness = GLOW_THICKNESS * (1.0f + pulseFactor * PULSE_RANGE);
-    float2 glowOffset = (1.0f / g_division) * currentThickness;
+        // 伸縮するオフセット幅
+        float currentThickness = GLOW_THICKNESS * (1.0f + pulseFactor * PULSE_RANGE);
+        float2 glowOffset = (1.0f / g_division) * currentThickness;
 
-    // 【12方向サンプリング】
-    // A. キャラクターのキワ（隙間）を埋めるための近距離サンプリング（内周4方向）
-    float2 innerOffset = glowOffset * 0.4f;
-    float i1 = tex.Sample(texSampler, currentFrameUv + float2(0.0f, -innerOffset.y)).a;
-    float i2 = tex.Sample(texSampler, currentFrameUv + float2(0.0f, innerOffset.y)).a;
-    float i3 = tex.Sample(texSampler, currentFrameUv + float2(-innerOffset.x, 0.0f)).a;
-    float i4 = tex.Sample(texSampler, currentFrameUv + float2(innerOffset.x, 0.0f)).a;
-    float innerGlow = (i1 + i2 + i3 + i4) * 0.25f;
+        // 【12方向サンプリング】
+        // A. キャラクターのキワ（隙間）を埋めるための近距離サンプリング（内周4方向）
+        float2 innerOffset = glowOffset * 0.4f;
+        float i1 = tex.Sample(texSampler, currentFrameUv + float2(0.0f, -innerOffset.y)).a;
+        float i2 = tex.Sample(texSampler, currentFrameUv + float2(0.0f, innerOffset.y)).a;
+        float i3 = tex.Sample(texSampler, currentFrameUv + float2(-innerOffset.x, 0.0f)).a;
+        float i4 = tex.Sample(texSampler, currentFrameUv + float2(innerOffset.x, 0.0f)).a;
+        float innerGlow = (i1 + i2 + i3 + i4) * 0.25f;
 
-    // B. 大きく外側へ広げるための遠距離サンプリング（外周8方向）
-    float o1 = tex.Sample(texSampler, currentFrameUv + float2(0.0f, -glowOffset.y)).a;
-    float o2 = tex.Sample(texSampler, currentFrameUv + float2(0.0f, glowOffset.y)).a;
-    float o3 = tex.Sample(texSampler, currentFrameUv + float2(-glowOffset.x, 0.0f)).a;
-    float o4 = tex.Sample(texSampler, currentFrameUv + float2(glowOffset.x, 0.0f)).a;
+        // B. 大きく外側へ広げるための遠距離サンプリング（外周8方向）
+        float o1 = tex.Sample(texSampler, currentFrameUv + float2(0.0f, -glowOffset.y)).a;
+        float o2 = tex.Sample(texSampler, currentFrameUv + float2(0.0f, glowOffset.y)).a;
+        float o3 = tex.Sample(texSampler, currentFrameUv + float2(-glowOffset.x, 0.0f)).a;
+        float o4 = tex.Sample(texSampler, currentFrameUv + float2(glowOffset.x, 0.0f)).a;
     
-    float o5 = tex.Sample(texSampler, currentFrameUv + float2(-glowOffset.x * 0.7f, -glowOffset.y * 0.7f)).a;
-    float o6 = tex.Sample(texSampler, currentFrameUv + float2(glowOffset.x * 0.7f, -glowOffset.y * 0.7f)).a;
-    float o7 = tex.Sample(texSampler, currentFrameUv + float2(-glowOffset.x * 0.7f, glowOffset.y * 0.7f)).a;
-    float o8 = tex.Sample(texSampler, currentFrameUv + float2(glowOffset.x * 0.7f, glowOffset.y * 0.7f)).a;
-    float outerGlow = (o1 + o2 + o3 + o4 + o5 + o6 + o7 + o8) * 0.125f;
+        float o5 = tex.Sample(texSampler, currentFrameUv + float2(-glowOffset.x * 0.7f, -glowOffset.y * 0.7f)).a;
+        float o6 = tex.Sample(texSampler, currentFrameUv + float2(glowOffset.x * 0.7f, -glowOffset.y * 0.7f)).a;
+        float o7 = tex.Sample(texSampler, currentFrameUv + float2(-glowOffset.x * 0.7f, glowOffset.y * 0.7f)).a;
+        float o8 = tex.Sample(texSampler, currentFrameUv + float2(glowOffset.x * 0.7f, glowOffset.y * 0.7f)).a;
+        float outerGlow = (o1 + o2 + o3 + o4 + o5 + o6 + o7 + o8) * 0.125f;
 
-    // 内周と外周をブレンドして、滑らかで繋がったグラデーション後光を作成
-    float glowMask = max(innerGlow, outerGlow);
+        // 内周と外周をブレンドして、滑らかで繋がったグラデーション後光を作成
+        float glowMask = max(innerGlow, outerGlow);
     
-    // pow の値を下げて (1.5 -> 1.0) 光の減衰をなだらかにし、より広く大きく見えるようにします
-    glowMask = saturate(pow(glowMask, 1.0f));
+        // pow の値を下げて (1.5 -> 1.0) 光の減衰をなだらかにし、より広く大きく見えるようにします
+        glowMask = saturate(pow(glowMask, 1.0f));
     
-    float3 glowEffect = GLOW_COLOR * glowMask * GLOW_INTENSITY;
+        // g_outline_color を白と混ぜて淡い色にする
+        float colorSoftness = 0.5f; // 0.0で元の色、1.0で完全に白（0.3～0.6程度で調整）
+        //float3 softGlowColor = lerp(g_outline_color, float3(1.0f, 1.0f, 1.0f), colorSoftness);
+        float3 softGlowColor = float3(0.8f,0.8f,0.8f);
 
-    // ----------------------------------------------------
-    // ★ 最終合成
-    // ----------------------------------------------------
-    float3 finalRGB = lerp(glowEffect * g_alpha, charRGB, finalCharAlpha);
-    float finalAlpha = max(finalCharAlpha, glowMask * g_alpha);
+        // 乗算する強度（GLOW_INTENSITY）も少し抑えめに調整できるように分離
+        float currentGlowIntensity = 2.0f; // 元の 4.0f から少し下げることで濃さを抑制
+        
+        float3 glowEffect = softGlowColor * glowMask * currentGlowIntensity;
     
-    if (finalAlpha <= 0.0f)
+        // ----------------------------------------------------
+        // ★ 最終合成
+        // ----------------------------------------------------
+        float3 finalRGB = lerp(glowEffect * g_alpha, charRGB, finalCharAlpha);
+        float finalAlpha = max(finalCharAlpha, glowMask * g_alpha);
+    
+        if (finalAlpha <= 0.0f)
+            discard;
+        
+        return float4(finalRGB, finalAlpha); 
+    }
+    
+    if (finalCharAlpha <= 0.0f)
         discard;
         
-    return float4(finalRGB, finalAlpha);
+    return float4(charRGB, finalCharAlpha);
+
 }
