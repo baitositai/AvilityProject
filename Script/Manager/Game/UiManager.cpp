@@ -59,7 +59,7 @@ void UiManager::Add(std::unique_ptr<UiBase> ui, const LAYER layer)
 	}
 }
 
-void UiManager::AddGetItemMessageUI(std::unique_ptr<UiPlayerGetItemMessage> ui, const LAYER layer = LAYER::UI)
+void UiManager::AddGetItemMessageUI(std::unique_ptr<UiPlayerGetItemMessage> ui, const LAYER layer)
 {
 	for (const auto& ui : uiMap_)
 	{

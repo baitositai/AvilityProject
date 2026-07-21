@@ -327,6 +327,11 @@ void Player::AttackPowerUp(const int addAttackPower)
 	parameter.animationSpeed = 0.3f;
 	parameter.target = this;
 	effectMng_.Create(parameter);
+
+	// メッセージを出す
+	std::unique_ptr<UiPlayerGetItemMessage> message = std::make_unique<UiPlayerGetItemMessage>(*this, UiPlayerGetItemMessage::TYPE::ATTACK_UP);
+	message->SetPower(parameterPlayer_->attackPower_);
+	uiMng_.Add(std::move(message));
 }
 
 void Player::HpMaxUp(const int addHpMax)
@@ -342,6 +347,11 @@ void Player::HpMaxUp(const int addHpMax)
 	parameter.animationSpeed = 0.3f;
 	parameter.target = this;
 	effectMng_.Create(parameter);
+
+	// メッセージを出す
+	std::unique_ptr<UiPlayerGetItemMessage> message = std::make_unique<UiPlayerGetItemMessage>(*this, UiPlayerGetItemMessage::TYPE::LIFE_UP);
+	message->SetPower(parameterPlayer_->hpMax_);
+	uiMng_.Add(std::move(message));
 }
 
 void Player::SpeedUp(const float addSpeed)
@@ -359,6 +369,10 @@ void Player::SpeedUp(const float addSpeed)
 	parameter.animationSpeed = 0.3f;
 	parameter.target = this;
 	effectMng_.Create(parameter);
+
+	// メッセージを出す
+	std::unique_ptr<UiPlayerGetItemMessage> message = std::make_unique<UiPlayerGetItemMessage>(*this, UiPlayerGetItemMessage::TYPE::SPEED_UP);
+	uiMng_.Add(std::move(message));
 }
 
 void Player::DetachItem()
@@ -431,7 +445,8 @@ void Player::SetAvilityComponent(std::unique_ptr<ComponentAvilityBase> component
 	component->Create();
 
 	//アビリティの取得メッセージを出す
-	std::unique_ptr<UiPlayerGetItemMessage> avilityMessage = std::make_unique<UiPlayerGetItemMessage>(*this, component->GetType());
+	std::unique_ptr<UiPlayerGetItemMessage> avilityMessage = std::make_unique<UiPlayerGetItemMessage>(*this, UiPlayerGetItemMessage::TYPE::ABILITY);
+	avilityMessage->SetAbilityType(component->GetType());
 	uiMng_.Add(std::move(avilityMessage));
 
 	avilityComponents_.push_back(std::move(component));
@@ -529,6 +544,13 @@ const int Player::GetTotalLootTreasuresMoney() const
 		total += treasure.amount;
 	}
 	return total;
+}
+
+const Vector2 Player::GetItemMessageDisplayPos() const
+{
+	Vector2 halfSize =  Vector2(parameterPlayer_->hitSize_.x / 2, parameterPlayer_->hitSize_.y / 2);
+	Vector2 headAmount = Vector2F::MulVector2F(parameterPlayer_->GetUp(), halfSize.ToVector2F()).ToVector2();
+	return parameterPlayer_->pos_.ToVector2() + headAmount;
 }
 
 void Player::SetMaterialBuf(const int index, FLOAT4 buf)

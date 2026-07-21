@@ -176,6 +176,12 @@ public:
 	/// <returns>アビリティリソース番号</returns>
 	const std::vector<int>& GetAvilityItemResourceIndexs() const { return avilityItemResourceIndexs_; }
 
+	/// <summary>
+	/// アイテム取得メッセージの表示位置を返す
+	/// </summary>
+	/// <returns>アイテム取得メッセージの表示位置</returns>
+	const Vector2 GetItemMessageDisplayPos() const;
+
 	// マテリアルの設定
 	void SetMaterialBuf(const int index, FLOAT4 buf);
 

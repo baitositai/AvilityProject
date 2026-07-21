@@ -44,7 +44,7 @@ private:
 	static constexpr float ALPHA_SPEED = 5.0f;
 
 	// 削除時間
-	static constexpr float DELETE_TIME = 3.0f;
+	static constexpr float DELETE_TIME = 2.0f;
 
 	// シーン管理クラス
 	SceneManager& sceneManager_;
