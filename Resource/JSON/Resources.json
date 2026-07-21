@@ -29,6 +29,13 @@
       "fontName": "KazukiReiwa"
     },
     {
+      "key": "fontKinkakuji",
+      "sceneIds": [ 0 ],
+      "type": "font",
+      "path": "Resource/Font/Kinkakuji-Normal.otf",
+      "fontName": "金畫字 Normal"
+    },
+    {
       "key": "player1",
       "sceneIds": [ 2, 3, 4, 5, 6 ],
       "type": "texture",
@@ -1435,6 +1442,16 @@
       "divY": 1,
       "sizeX": 1456,
       "sizeY": 360
+    },
+    {
+      "key": "buttonExpand",
+      "path": "Resource/Image/Ui/ButtonExPand.png",
+      "sceneIds": [ 2, 3, 4, 5, 6 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 222,
+      "sizeY": 119
     }
   ]
 }

@@ -1,6 +1,8 @@
 #include "../../Ui/UiBase.h"
 #include "../../Ui/Game/UiMoney.h"
 #include "../../Ui/Game/UiPlayerLeft.h"
+#include "../../Ui/Game/UiButtonExpand.h"
+#include "../../Ui/Player/UiPlayerGetItemMessage.h"
 #include "UiManager.h"
 
 void UiManager::Init()
@@ -57,10 +59,30 @@ void UiManager::Add(std::unique_ptr<UiBase> ui, const LAYER layer)
 	}
 }
 
+void UiManager::AddGetItemMessageUI(std::unique_ptr<UiPlayerGetItemMessage> ui, const LAYER layer = LAYER::UI)
+{
+	for (const auto& ui : uiMap_)
+	{
+		auto& uiArray = ui.second;
+		auto it = std::find_if(uiArray.begin(), uiArray.end(), [&](const auto& p)
+			{
+				auto message = dynamic_cast<UiPlayerGetItemMessage*>(p.get());
+				return message != nullptr;
+			});
+
+		////“¯‚¶UI‚ªŒ©‚Â‚©‚Á‚½‚çã‘‚«‚·‚é
+		//if (it != uiArray.end())
+		//{
+		//	*it = std::move(ui);
+		//}
+	}
+}
+
 void UiManager::CreateGameUi()
 {
 	Add(std::move(std::make_unique<UiMoney>()));
 	Add(std::move(std::make_unique<UiPlayerLeft>()));
+	Add(std::move(std::make_unique<UIButtonExpand>()));
 }
 
 void UiManager::Sweep()

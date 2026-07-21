@@ -402,6 +402,8 @@
     <ClCompile Include="Script\Ui\Common\UiTimer.cpp" />
     <ClCompile Include="Script\Ui\Game\UiPlayerAnnhilation.cpp" />
     <ClCompile Include="Script\Ui\Game\UiTrainTime.cpp" />
+    <ClCompile Include="Script\Ui\Game\UIButtonExpand.cpp" />
+    <ClCompile Include="Script\Ui\Player\UiPlayerGetItemMessage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\System\PlayerCheckAnnihilation.h" />
@@ -716,6 +718,8 @@
     <ClInclude Include="Script\Ui\Common\UiTimer.h" />
     <ClInclude Include="Script\Ui\Game\UiPlayerAnnhilation.h" />
     <ClInclude Include="Script\Ui\Game\UiTrainTime.h" />
+    <ClInclude Include="Script\Ui\Game\UIButtonExpand.h" />
+    <ClInclude Include="Script\Ui\Player\UiPlayerGetItemMessage.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Script\Shader\Pixel\EnemySprite.hlsl">
