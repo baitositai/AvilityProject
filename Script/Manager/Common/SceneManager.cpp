@@ -8,7 +8,9 @@
 #include "../../Scene/SceneResult.h"
 #include "../../Scene/SceneGameOver.h"
 #include "../../Scene/SceneBoss.h"
+#include "../../Scene/ScenePause.h"
 #include "../../Common/Loading.h"
+#include "../Common/InputManager.h"
 #include "../Common/ResourceManager.h"
 #include "../Common/SoundManager.h"
 #include "../Common/FontManager.h"
@@ -28,6 +30,8 @@
 
 void SceneManager::Init()
 {
+	pausePadNo_ = -1;
+
 	//シーンID初期化
 	sceneId_ = SCENE_ID::TITLE;
 	waitSceneId_ = SCENE_ID::NONE;
@@ -148,6 +152,47 @@ void SceneManager::Update()
 	// シーンごとの更新
 	scenes_.back()->Update();	
 	
+	// (仮)pauseシーンの設定
+	// 接続されているパッドを走査して、ポーズボタンが押されたパッドを探す
+	// 1. ポーズ判定を行う対象のパッドリストを定義
+	static const Input::JOYPAD_NO padList[] = {
+		Input::JOYPAD_NO::KEY_PAD1, // キーボード + PAD1
+		Input::JOYPAD_NO::PAD1,
+		Input::JOYPAD_NO::PAD2,
+		Input::JOYPAD_NO::PAD3,
+		Input::JOYPAD_NO::PAD4,
+	};
+
+	// 2. 定義したリストをループしてポーズキーの押下をチェック
+	for (auto pad : padList)
+	{
+		if (InputManager::GetInstance().IsTrgDown(InputManager::TYPE::PAUSE, pad))
+		{
+			if (pausePadNo_ == -1)
+			{
+				pausePadNo_ = static_cast<int>(pad);
+				mainCamera.Stop();
+				auto scene = std::make_shared<ScenePause>(pad);
+				PushScene(scene);
+			}
+			else
+			{
+				if (pad == padList[pausePadNo_])
+				{
+					pausePadNo_ = -1;
+					SoundManager::GetInstance().PlaySe(SoundType::SE::CANCEL);
+					mainCamera.Restart();
+					//シーンを戻す
+					PopScene();
+				}
+			}
+
+			// 最初に見つかった時点でループ脱出
+			break;						
+		}
+	}
+
+
 	// カメラ更新
 	camera_->Update();
 
@@ -235,7 +280,7 @@ void SceneManager::SetReadySubScene(const std::shared_ptr<SceneBase> subScene)
 	subScene_ = subScene;
 }
 
-void SceneManager::Release()
+void SceneManager::Release() const
 {
 	DeleteGraph(mainScreen_);
 

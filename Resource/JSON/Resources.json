@@ -897,6 +897,16 @@
       "sizeY": 720
     },
     {
+      "key": "pauseSprite",
+      "path": "Resource/Image/Ui/PauseSprite.png",
+      "sceneIds": [ 0 ],
+      "type": "sprite",
+      "divX": 1,
+      "divY": 4,
+      "sizeX": 498,
+      "sizeY": 72
+    },
+    {
       "key": "arrow",
       "path": "Resource/Image/Ui/Arrow.png",
       "sceneIds": [ 2 ],

@@ -61,7 +61,7 @@ public:
 	/// <summary>
 	/// リソースの破棄
 	/// </summary>
-	void Release();
+	void Release() const;
 
 	/// <summary>
 	/// 先頭の（Updateが呼ばれる）シーンを切り替える
@@ -152,6 +152,8 @@ public:
 	/// </summary>
 	void SetShopScene(const Input::JOYPAD_NO padNo);
 
+	void ResetPausePadNo() { pausePadNo_ = -1; }
+
 private:
 
 	// シーンID
@@ -191,6 +193,9 @@ private:
 
 	//経過時間
 	float totalTime_;
+
+	// ポーズ、ポーズしているコントローラー判定に使用
+	int pausePadNo_;
 	
 	// デフォルトコンストラクタをprivateにして、
 	// 外部から生成できない様にする
