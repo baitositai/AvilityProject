@@ -119,6 +119,13 @@ void Player::Delete()
 
 void Player::DebugDraw()
 {
+	bool isAction = !GetParameter().isAction_; // 反転した状態
+
+	// 描画
+	DrawFormatString(300, 10, UtilityCommon::BLUE,
+		L"isAction: %ls",
+		isAction ? L"true" : L"false"); // bool判定で文字列を切り替え
+
 	// カメラ範囲のデバッグ描画
 	//componentMap_["cameraRangeCheck"]->DebugDraw();
 
@@ -193,6 +200,9 @@ void Player::Damage(const int damage, const Vector2& hitPos)
 	
 	// 次のアクションを可能にする
 	parameterPlayer_->isAction_ = false;
+
+	// アビリティコンポーネントすべてを稼働させる
+	SetAllAvilityComponentActive(true);
 
 	// 基底クラスの処理
 	CharacterBase::Damage(damage, hitPos);
@@ -282,6 +292,7 @@ void Player::AttackAfter()
 {
 	CharacterBase::AttackAfter();
 
+	// アビリティコンポーネントすべてを稼働させる
 	SetAllAvilityComponentActive(true);
 }
 
