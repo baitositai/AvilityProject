@@ -145,8 +145,13 @@ void EnemyManager::CreateEventEnemy(const EnemyTypes::TYPE type, const Vector2F&
 	EnemyBase* enemyPtr = enemy.get();
 
 	// 位置調整
-	enemy->GetParameter().pos_ = pos;
+	auto& param = enemy->GetParameter();
+	param.pos_ = pos;
 
+	// ロジックの変更
+	param.logicMap_.clear();
+	param.logicMap_.emplace("chase", 1.0f);
+	
 	// 初期化
 	enemy->Init();
 

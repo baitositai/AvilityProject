@@ -67,6 +67,9 @@ public:
 	int defaultAttackStartFrame3_;
 	int defaultAttackStartFrame4_;
 
+	// アウトラインの倍率
+	float outLineRate_;
+
 	// 移動種類
 	HABITAT_TYPE habitatType_;
 

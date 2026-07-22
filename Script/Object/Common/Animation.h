@@ -88,6 +88,8 @@ public:
 	/// <param name="nextType">次回再生予定のアニメーション種類</param>
 	void SetNextAnimationType(const TYPE nextType, const bool isNextLoop = true);
 
+	void SetAnimationSpeed(const std::string stringType, const float speed = 1.0f);
+
 	/// <summary>
 	/// ループ判定を返す
 	/// </summary>

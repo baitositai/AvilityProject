@@ -33,6 +33,7 @@
 
 #include "../../Component/Logic/ComponentLogicBase.h"
 #include "../../Component/Logic/ComponentLogicPatrol.h"
+#include "../../Component/Logic/ComponentLogicChase.h"
 #include "../../Component/Logic/ComponentLogicBambooThrowing.h"
 #include "../../Component/Logic/ComponentLogicBambooGrowing.h"
 #include "../../Component/Logic/ComponentLogicPandaShot.h"
@@ -277,6 +278,18 @@ std::unique_ptr<ComponentLogicPatrol> FactoryComponent::CreateComponentLogicPatr
         return nullptr;
     }
     return std::make_unique<ComponentLogicPatrol>(*enemyPtr);
+}
+
+std::unique_ptr<ComponentLogicChase> FactoryComponent::CreateComponentLogicChase(ActorBase& owner)
+{
+    auto* enemyPtr = dynamic_cast<EnemyBase*>(&owner);
+
+    if (enemyPtr == nullptr)
+    {
+        // ÉLÉÉÉXÉgÇ…é∏îsÇµÇΩèÍçánullptrÇï‘Ç∑
+        return nullptr;
+    }
+    return std::make_unique<ComponentLogicChase>(*enemyPtr);
 }
 
 std::unique_ptr<ComponentLogicBambooThrowing> FactoryComponent::CreateComponentLogicBambooThrowing(ActorBase& owner)
@@ -610,6 +623,10 @@ FactoryComponent::FactoryComponent()
     componentCreateMap_.emplace("patrol", [this](ActorBase& owner)
         {
             return CreateComponentLogicPatrol(owner);
+        });
+    componentCreateMap_.emplace("chase", [this](ActorBase& owner)
+        {
+            return CreateComponentLogicChase(owner);
         });
     componentCreateMap_.emplace("bambooThrowing", [this](ActorBase& owner)
         {

@@ -20,11 +20,13 @@ void ComponentAvilitySuperman::Create()
 void ComponentAvilitySuperman::Init()
 {	
 	owner_.SetMaterialBuf(3, FLOAT4{ 1.0f,0.0f,0.0f,0.0f });
+	owner_.GetAnimation().SetAnimationSpeed("attack", 0.4);
 }
 
 void ComponentAvilitySuperman::Remove()
 {
 	owner_.SetMaterialBuf(3, FLOAT4{ 0.0f,0.0f,0.0f,0.0f });
+	owner_.GetAnimation().SetAnimationSpeed("attack", 0.2);
 
 	ComponentAvilityBase::Remove();
 }

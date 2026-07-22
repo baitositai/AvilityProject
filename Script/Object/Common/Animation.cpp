@@ -77,6 +77,22 @@ void Animation::SetNextAnimationType(const TYPE nextType, const bool isNextLoop)
     isNextLoop_ = isNextLoop;
 }
 
+void Animation::SetAnimationSpeed(const std::string stringType, const float speed)
+{
+    // 対応表から検索
+    auto it = animationNameMap_.find(stringType);
+
+    // 対応する名前が見つからなかったら処理を抜ける
+    if (it == animationNameMap_.end())
+    {
+        return;
+    }
+
+    TYPE type = it->second;
+
+    animationMap_[type].animationSpeed = speed;
+}
+
 const Animation::Data Animation::GetAnimationData() const
 {
     // 現在の種類のデータがあるか探索

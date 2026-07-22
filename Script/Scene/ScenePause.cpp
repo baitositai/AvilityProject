@@ -112,16 +112,16 @@ ScenePause::~ScenePause()
 
 void ScenePause::NormalUpdate()
 {
-	if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_CANCEL, PadNo_))
-	{
-		SoundManager::GetInstance().PlaySe(SoundType::SE::CANCEL);
+	//if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_CANCEL, PadNo_))
+	//{
+	//	SoundManager::GetInstance().PlaySe(SoundType::SE::CANCEL);
 
-		//シーンを戻す
-		scnMng_.ResetPausePadNo();
-		scnMng_.PopScene();
-		mainCamera.Restart();
-		return;
-	}
+	//	//シーンを戻す
+	//	scnMng_.ResetPausePadNo();
+	//	scnMng_.PopScene();
+	//	mainCamera.Restart();
+	//	return;
+	//}
 	if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_DOWN, PadNo_))
 	{
 		selectIndex_ = UtilityCommon::WrapStepIndex(selectIndex_, 1, 0, LIST_MAX);

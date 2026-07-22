@@ -265,6 +265,7 @@
     <ClCompile Include="Script\Ui\Game\UiNewPlayer.cpp" />
     <ClCompile Include="Script\Ui\Train\UiBossSilhouette.cpp" />
     <ClCompile Include="Script\Manager\Game\EnemyTypes.cpp" />
+    <ClCompile Include="Script\Component\Logic\ComponentLogicChase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\System\PlayerCheckAnnihilation.h" />
@@ -585,6 +586,7 @@
     <ClInclude Include="Script\resource.h" />
     <ClInclude Include="Script\Ui\Game\UiNewPlayer.h" />
     <ClInclude Include="Script\Ui\Train\UiBossSilhouette.h" />
+    <ClInclude Include="Script\Component\Logic\ComponentLogicChase.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AvilityProject.rc" />
