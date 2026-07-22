@@ -14,19 +14,30 @@ cbuffer ConstantBuffer : register(b4)
     float isMetal;
     float isSuper;
     float3 g_dummy;
- 
 };
 
 // 後光（バックグロー）の設定
 static const float3 GLOW_COLOR = float3(0.3f, 0.9f, 1.0f); // 後光の色（シアン・水色）
 static const float GLOW_INTENSITY = 4.0f; // 後光の明るさ
 
-// ★後光の太さ（ここを大きく引き上げました！元の 0.012f → 0.035f）
+// ★後光の太さ
 static const float GLOW_THICKNESS = 0.035f;
 
 // アニメーションのスピードと変化幅
 static const float PULSE_SPEED = 8.0f;
 static const float PULSE_RANGE = 0.15f; // パルスによる太さの伸縮幅
+
+// ----------------------------------------------------
+// ★ 色相 (0.0 ～ 1.0) を RGB カラーに変換するヘルパー関数
+// ----------------------------------------------------
+float3 HueToRGB(float hue)
+{
+    hue = frac(hue); // 0.0～1.0 に収める
+    float r = abs(hue * 6.0f - 3.0f) - 1.0f;
+    float g = 2.0f - abs(hue * 6.0f - 2.0f);
+    float b = 2.0f - abs(hue * 6.0f - 4.0f);
+    return saturate(float3(r, g, b));
+}
 
 float4 main(PS_INPUT PSInput) : SV_TARGET
 {
@@ -126,13 +137,24 @@ float4 main(PS_INPUT PSInput) : SV_TARGET
         // pow の値を下げて (1.5 -> 1.0) 光の減衰をなだらかにし、より広く大きく見えるようにします
         glowMask = saturate(pow(glowMask, 1.0f));
     
-        // g_outline_color を白と混ぜて淡い色にする
-        float colorSoftness = 0.5f; // 0.0で元の色、1.0で完全に白（0.3～0.6程度で調整）
-        //float3 softGlowColor = lerp(g_outline_color, float3(1.0f, 1.0f, 1.0f), colorSoftness);
-        float3 softGlowColor = float3(0.8f,0.8f,0.8f);
+        // ----------------------------------------------------
+        // ★ 虹色（レインボー）オーラカラーの計算
+        // ----------------------------------------------------
+        float rainbowSpeed = 0.5f; // 虹が変化するスピード
+        float rainbowScale = 2.0f; // グラデーションの密度（波の細かさ）
 
-        // 乗算する強度（GLOW_INTENSITY）も少し抑えめに調整できるように分離
-        float currentGlowIntensity = 2.0f; // 元の 4.0f から少し下げることで濃さを抑制
+        // UV座標（斜め方向）+ 時間(g_time) で色相を計算
+        float hue = frac((currentFrameUv.x + currentFrameUv.y) * rainbowScale + g_time * rainbowSpeed);
+        
+        // 色相を RGB カラーに変換
+        float3 rainbowColor = HueToRGB(hue);
+
+        // 白と混ぜて色合いの濃さを調整（0.0: 鮮やかな原色, 0.3: 自然なオーラ, 0.6: パステル調）
+        float colorSoftness = 0.2f;
+        float3 softGlowColor = lerp(rainbowColor, float3(1.0f, 1.0f, 1.0f), colorSoftness);
+
+        // 乗算する強度
+        float currentGlowIntensity = 2.0f;
         
         float3 glowEffect = softGlowColor * glowMask * currentGlowIntensity;
     
@@ -145,12 +167,11 @@ float4 main(PS_INPUT PSInput) : SV_TARGET
         if (finalAlpha <= 0.0f)
             discard;
         
-        return float4(finalRGB, finalAlpha); 
+        return float4(finalRGB, finalAlpha);
     }
     
     if (finalCharAlpha <= 0.0f)
         discard;
         
     return float4(charRGB, finalCharAlpha);
-
 }

@@ -69,7 +69,8 @@ void EnemyBase::Draw()
 	}
 
 	// マテリアルの設定
-	material_->SetConstBuf(2, FLOAT4{ parameterEnemy_->damageColor_.x,parameterEnemy_->damageColor_.y,parameterEnemy_->damageColor_.z, 0.0f });
+	material_->SetConstBuf(2, FLOAT4{ parameterEnemy_->damageColor_.x,parameterEnemy_->damageColor_.y,parameterEnemy_->damageColor_.z
+		, parameterEnemy_->outLineRate_ });
 
 	// 基底クラスの描画
 	CharacterBase::Draw();
