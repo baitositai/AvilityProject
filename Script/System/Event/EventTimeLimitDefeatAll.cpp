@@ -58,7 +58,7 @@ void EventTimeLimitDefeatAll::CreateEnemyList()
 
 void EventTimeLimitDefeatAll::CreateEnemies()
 {
-	const Vector2 RIGHT_TOP = { Application::SCREEN_SIZE_X - parameterPtr_->createLeftTopPos_.x - parameterPtr_->createRange_.x, parameterPtr_->createLeftTopPos_.y };	// 右の生成範囲トップ位置
+ 	const Vector2 RIGHT_TOP = { Application::SCREEN_SIZE_X - parameterPtr_->createLeftTopPos_.x - parameterPtr_->createRange_.x, parameterPtr_->createLeftTopPos_.y };	// 右の生成範囲トップ位置
 	Vector2 pos = {};							// 生成位置
 	Vector2F cameraPosF = mainCamera.GetPos();	// カメラ位置
 	Vector2 cameraPos = cameraPosF.ToVector2();

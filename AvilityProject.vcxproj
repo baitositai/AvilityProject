@@ -151,6 +151,7 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Component\Logic\ComponentLogicChase.cpp" />
     <ClCompile Include="Script\System\PlayerCheckAnnihilation.cpp" />
     <ClCompile Include="Script\Object\Effect\EffectTargetFollow.cpp" />
     <ClCompile Include="Script\Parameter\Gimmick\ParameterGimmickTrain.cpp" />
@@ -406,6 +407,7 @@
     <ClCompile Include="Script\Ui\Player\UiPlayerGetItemMessage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Component\Logic\ComponentLogicChase.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Script\resource.h" />
     <ClInclude Include="Script\System\PlayerCheckAnnihilation.h" />

@@ -484,7 +484,7 @@
       }
     },
     "logic": {
-      "patrol": {
+      "chase": {
         "probability": 1.0
       }
     }
@@ -700,7 +700,7 @@
       }
     },
     "logic": {
-      "patrol": {
+      "chase": {
         "probability": 2.0
       },
       "bambooThrowing": {

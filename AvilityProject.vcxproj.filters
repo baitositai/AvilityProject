@@ -262,6 +262,7 @@
     <ClCompile Include="Script\Ui\Game\UiTrainTime.cpp" />
     <ClCompile Include="Script\Ui\Game\UIButtonExpand.cpp" />
     <ClCompile Include="Script\Ui\Player\UiPlayerGetItemMessage.cpp" />
+    <ClCompile Include="Script\Component\Logic\ComponentLogicChase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\System\PlayerCheckAnnihilation.h" />
@@ -580,6 +581,7 @@
     <ClInclude Include="Script\Ui\Player\UiPlayerGetItemMessage.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Script\resource.h" />
+    <ClInclude Include="Script\Component\Logic\ComponentLogicChase.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AvilityProject.rc" />
