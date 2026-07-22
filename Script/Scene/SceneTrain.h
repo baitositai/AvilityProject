@@ -33,11 +33,16 @@ private:
 	// ポーズ画面
 	//std::shared_ptr<ScenePause> ScenePause_;
 
+	int bossIndex_;
+
 	// 更新関数
 	void NormalUpdate() override;
 
 	// 描画関数
 	void NormalDraw() override;
+
+	// ボスの種類を決定
+	void SelectBossType();
 
 	//デバッグ処理
 	void DebugUpdate();

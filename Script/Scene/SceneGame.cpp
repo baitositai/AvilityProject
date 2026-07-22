@@ -39,7 +39,9 @@ SceneGame::~SceneGame()
 {
 	// 管理クラスの解放
 	EventManager::GetInstance().Destroy();
-	//GameManager::GetInstance().Destroy();
+	
+	// BGMの停止
+	//sndMng_.StopBgm(soundType_);
 }
 
 void SceneGame::Init()
@@ -54,6 +56,9 @@ void SceneGame::Init()
 
 	// 敵の生成処理
 	enemyMng_.Generator(stageMng_.GetEnemyAreaPositions());	
+
+	// アイテムの生成処理
+	itemMng_.CreateItemList(stageMng_.GetItemCreatePositions());
 
 	// ボス部屋用のドアの生成
 	gimmickMng_.CreateBossDoor(stageMng_.GetBossDoorPos());
@@ -83,7 +88,8 @@ void SceneGame::Init()
 	uiMng_.CreateGameUi();
 
 	// サウンド再生
-	sndMng_.PlayBgm(SoundType::GetRandomGameBgm());
+	soundType_ = SoundType::GetRandomGameBgm();
+	sndMng_.PlayBgm(soundType_);
 }
 
 void SceneGame::NormalUpdate()

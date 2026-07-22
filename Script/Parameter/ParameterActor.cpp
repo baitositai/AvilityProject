@@ -11,6 +11,7 @@ ParameterActor::ParameterActor() :
 	drawPos_({ 0, 0 }), 
     drawSize_({ 0, 0 }),
 	divisionNum_({ 0, 0 }), 
+    criticalRate_(0.0f),
 	moveSpeed_(0.0f), 
 	moveSpeedBoostRate_(0.0f), 
 	pos_({ 0.0f, 0.0f }), 
@@ -44,6 +45,8 @@ void ParameterActor::LoadParameter(const Json& parameter)
     attackPower_ = parameter.value("attackPower", -1);
     scale_ = parameter.value("scale", 1.0f);
     angle_ = parameter.value("angle", 0.0f);
+    criticalRate_ = parameter.value("criticalRate", 0.0f);
+    criticalDamageRate_ = parameter.value("criticalDamageRate", 0.0f);
     direction_ = parameter.value("direction", false);
     transparent_ = parameter.value("transparent", false);
     moveSpeed_ = parameter.value("moveSpeed", 0.0f);

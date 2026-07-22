@@ -2,6 +2,7 @@
 #include "../../Ui/Game/UiMoney.h"
 #include "../../Ui/Game/UiPlayerLeft.h"
 #include "../../Ui/Game/UiButtonExpand.h"
+#include "../../Ui/Game/UiNewPlayer.h"
 #include "../../Ui/Player/UiPlayerGetItemMessage.h"
 #include "UiManager.h"
 
@@ -69,12 +70,6 @@ void UiManager::AddGetItemMessageUI(std::unique_ptr<UiPlayerGetItemMessage> ui, 
 				auto message = dynamic_cast<UiPlayerGetItemMessage*>(p.get());
 				return message != nullptr;
 			});
-
-		////“¯‚¶UI‚ªŒ©‚Â‚©‚Á‚½‚çã‘‚«‚·‚é
-		//if (it != uiArray.end())
-		//{
-		//	*it = std::move(ui);
-		//}
 	}
 }
 
@@ -83,6 +78,7 @@ void UiManager::CreateGameUi()
 	Add(std::move(std::make_unique<UiMoney>()));
 	Add(std::move(std::make_unique<UiPlayerLeft>()));
 	Add(std::move(std::make_unique<UIButtonExpand>()));
+	Add(std::move(std::make_unique<UiNewPlayer>()));
 }
 
 void UiManager::Sweep()

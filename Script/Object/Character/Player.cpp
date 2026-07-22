@@ -562,7 +562,7 @@ const Vector2 Player::GetItemMessageDisplayPos() const
 {
 	Vector2 halfSize =  Vector2(parameterPlayer_->hitSize_.x / 2, parameterPlayer_->hitSize_.y / 2);
 	Vector2 headAmount = Vector2F::MulVector2F(parameterPlayer_->GetUp(), halfSize.ToVector2F()).ToVector2();
-	return parameterPlayer_->pos_.ToVector2() + headAmount;
+	return parameterPlayer_->drawPos_ + headAmount;
 }
 
 void Player::SetMaterialBuf(const int index, FLOAT4 buf)

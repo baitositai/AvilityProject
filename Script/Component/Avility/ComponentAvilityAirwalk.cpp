@@ -15,16 +15,14 @@ ComponentAvilityAirwalk::~ComponentAvilityAirwalk()
 void ComponentAvilityAirwalk::Create()
 {
 	ComponentAvilityBase::Create();
+	parameter_.jumpCountMax_ += ADD_JUMP_COUNT;
 }
 
 void ComponentAvilityAirwalk::Init()
 {
 }
 
-void ComponentAvilityAirwalk::Update()
+void ComponentAvilityAirwalk::Remove()
 {
-	if (parameter_.jumpCount_ < 1)
-	{
-		parameter_.jumpCount_++;
-	}
+	parameter_.jumpCountMax_ -= ADD_JUMP_COUNT;
 }

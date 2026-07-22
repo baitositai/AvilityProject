@@ -24,4 +24,7 @@ void ItemPotion::Init()
 
 	// Šî’êƒNƒ‰ƒX‚Ìˆ—
 	ActorBase::Init();
+
+	// íœŠÔ‚ğİ’è
+	deleteTimer_ = DELETE_TIME;
 }

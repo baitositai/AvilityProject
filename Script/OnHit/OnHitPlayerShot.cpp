@@ -28,6 +28,6 @@ void OnHitPlayerShot::Update(const std::weak_ptr<ColliderBase>& opponentCollider
 
 		// “G‚Ìƒ_ƒ[ƒWˆ—
 		auto opponent = opponentCollider.lock();
-		opponent->GetOwner().Damage(owner_.GetAttackPowerWithBoost(), opponent->GetHitPos());
+		opponent->GetOwner().Damage(owner_.GiveDamage(), opponent->GetHitPos());
 	}
 }

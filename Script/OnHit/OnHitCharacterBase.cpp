@@ -112,7 +112,7 @@ bool OnHitCharacterBase::Damage(const std::weak_ptr<ColliderBase>& opponentColli
     if(damage < 0)
     {
         // UŒ‚ŽÒ‚ÌUŒ‚—Í‚ðƒ_ƒ[ƒW—Ê‚Æ‚·‚é
-        damage = opponentCollider.lock()->GetOwner().GetAttackPowerWithBoost();
+        damage = opponentCollider.lock()->GetOwner().GiveDamage();
 	}
     // ƒ_ƒ[ƒW‚ð—^‚¦‚é
     owner_.Damage(damage, opponentCollider.lock()->GetHitPos());

@@ -33,12 +33,13 @@ SceneBoss::SceneBoss()
 
 SceneBoss::~SceneBoss()
 {
+	//sndMng_.StopBgm(SoundType::BOSS_SOUND_MAP.at(bossType_));
 }
 
 void SceneBoss::Init()
 {		
 	// ボス指定
-	bossType_ = EnemyTypes::BOSS_LIST[UtilityCommon::GetRandomCount(EnemyTypes::BOSS_MAX - 1, 0)];
+	bossType_ = enemyMng_.GetBossEnemyType();
 
 	// ボス部屋の生成
 	stageMng_.Create(StageManager::TYPE::BOSS);
@@ -59,12 +60,8 @@ void SceneBoss::Init()
 	// プレイヤーの初期位置を決定
 	playerMng_.SetFirstPositions(stageMng_.GetPlayerFirstPositions());
 
-	// ゲームシーン用のBMGを停止
-	sndMng_.StopBgm(SoundType::BGM::GAME1);
-
 	// サウンド再生
 	sndMng_.PlayBgm(SoundType::BOSS_SOUND_MAP.at(bossType_));
-	sndMng_.PlayBgm(SoundType::BGM::BOSS_BAMBOO);
 
 	// UI作成
 	uiMng_.CreateGameUi();

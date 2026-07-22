@@ -50,8 +50,14 @@ private:
 	// 地面判定
 	bool isGround_;
 
+	// 移動入力判定
+	bool isPushed_;
+
 	// 移動入力処理
 	void ProcessInputMove();
+
+	// ダッシュエフェクトの生成
+	void CreateDashEffect();
 
 	// ジャンプ入力処理
 	void ProcessInputJump();

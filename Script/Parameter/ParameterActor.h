@@ -103,6 +103,8 @@ public:
 	int hpMax_;					// 最大体力	
 	int attackPower_;			// 攻撃力
 	float attackBoostRate_;		// 攻撃力上昇率
+	float criticalRate_;		// クリティカル率
+	float criticalDamageRate_;	// クリティカル時のダメージ上昇率
 	float moveSpeed_;			// 移動速度
 	float moveSpeedBoostRate_;	// 移動速度上昇率
 	float gravityPower_;		// 重力

@@ -82,6 +82,11 @@ const std::vector<Vector2F>& StageManager::GetEventTriggerPositions() const
 	return stage_->GetAreaListMap(Stage::LIST_TYPE::EVENT);
 }
 
+const std::vector<Vector2F>& StageManager::GetItemCreatePositions() const
+{
+	return stage_->GetAreaListMap(Stage::LIST_TYPE::ITEM_CREATE_AREA);
+}
+
 const Vector2& StageManager::GetStageSize() const
 {
 	return stage_->GetStageSize();
@@ -177,6 +182,11 @@ void StageManager::CreateStageTrain()
 	auto back = std::make_unique<BackGround>();
 	back->SetType(BackGround::TYPE::FIX);
 	back->SetResource("guestRoom");
+	backGrounds_.push_back(std::move(back));
+
+	back = std::make_unique<BackGround>();
+	back->SetType(BackGround::TYPE::FIX);
+	back->SetResource("guestRoomDeco");
 	backGrounds_.push_back(std::move(back));
 }
 

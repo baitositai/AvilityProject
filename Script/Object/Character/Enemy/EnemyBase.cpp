@@ -83,22 +83,33 @@ void EnemyBase::DropItem()
 	// アイテムを生成する
 	itemManager.CreateMoneyItem(parameterEnemy_->dropMoney_, parameterEnemy_->pos_);
 
-	// ランダム確率でほかのアイテムも生成
-	int probability = GetRand(15);
+	// 各アイテムのドロップ重み（数値を変更するだけで確率を簡単に調整できます）
+	const int WEIGHT_FOOD = 5;
+	const int WEIGHT_AVILITY = 3;
+	const int WEIGHT_TREASURE = 2;
+	const int WEIGHT_POTION = 4;
+	const int WEIGHT_NONE = 2; // アイテムなしの確率
 
-	if (probability < 5)
+	// 重みの合計値を計算
+	const int TOTAL_WEIGHT = WEIGHT_FOOD + WEIGHT_AVILITY + WEIGHT_TREASURE + WEIGHT_POTION + WEIGHT_NONE;
+
+	// 範囲でランダム値を獲得
+	int randValue = GetRand(TOTAL_WEIGHT - 1);
+
+	// 累積確率による判定
+	if (randValue < WEIGHT_FOOD)
 	{
 		itemManager.CreateFoodItem(static_cast<ItemTypes::FOOD_TYPE>(GetRand(ItemTypes::FOOD_TYPE_MAX - 1)), parameterEnemy_->pos_);
 	}
-	else if (5 <= probability < 8)
+	else if ((randValue -= WEIGHT_FOOD) < WEIGHT_AVILITY)
 	{
 		itemManager.CreateAvilityItem(static_cast<AvilityTypes::TYPE>(GetRand(AvilityTypes::AVILITY_TYPE_MAX - 1)), parameterEnemy_->pos_);
 	}
-	else if (8 <= probability < 10)
+	else if ((randValue -= WEIGHT_AVILITY) < WEIGHT_TREASURE)
 	{
 		itemManager.CreateTreasureItem(static_cast<ItemTypes::TREASURE_TYPE>(GetRand(ItemTypes::TREASURE_TYPE_MAX - 1)), parameterEnemy_->pos_);
 	}
-	else if (10 <= probability < 14)
+	else if ((randValue -= WEIGHT_TREASURE) < WEIGHT_POTION)
 	{
 		itemManager.CreatePotionItem(static_cast<ItemTypes::POTION_TYPE>(GetRand(ItemTypes::POTION_TYPE_MAX - 1)), parameterEnemy_->pos_);
 	}

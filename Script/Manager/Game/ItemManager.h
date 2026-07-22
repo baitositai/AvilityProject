@@ -97,6 +97,12 @@ public:
 	void CreateTreasureChestItems(const Vector2F& tresureChestPos);
 
 	/// <summary>
+	/// アイテム群の生成
+	/// </summary>
+	/// <param name="itemList">生成リスト</param>
+	void CreateItemList(const std::vector<Vector2F>& itemList);
+
+	/// <summary>
 	/// デバッグ描画
 	/// </summary>
 	void DebugDraw();

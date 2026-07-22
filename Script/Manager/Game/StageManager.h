@@ -85,6 +85,12 @@ public:
 	/// </summary>
 	/// <returns>イベント発生位置リスト</returns>
 	const std::vector<Vector2F>& GetEventTriggerPositions() const;	
+	
+	/// <summary>
+	/// アイテム生成位置を返す
+	/// </summary>
+	/// <returns>アイテム生成位置リスト</returns>
+	const std::vector<Vector2F>& GetItemCreatePositions() const;	
 
 private:
 

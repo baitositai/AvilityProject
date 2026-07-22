@@ -21,6 +21,7 @@ public:
         float moveSpeedBoostRate = 0.0f;
         float gravityBoostRate = 0.0f;
         float defenceRate = 0.0f;
+        float criticalRate = 0.0f;
     };
 
     /// <summary>

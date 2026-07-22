@@ -21,7 +21,7 @@ void ParameterPlayer::LoadParameter(const Json& parameter)
      ParameterCharacter::LoadParameter(parameter);
 
     // プレイヤー固有パラメータの読み込み
-    dashSpeed_ = parameter.value("dashSpeed", 0.0f);
+    dashSpeed_ = parameter.value("dashAddSpeed", 0.0f);
     shotDamageInterval_ = parameter.value("shotDamageInterval", 0.0f);
     moveSpeedLimit_ = parameter.value("moveSpeedLimit", 0.0f);
 
@@ -45,6 +45,7 @@ void ParameterPlayer::SetAvilityBoost(const AvilityTypes::TYPE type)
     moveSpeedBoostRate_ += status.moveSpeedBoostRate;
     gravityBoostRate_ += status.gravityBoostRate;
     defenseRate_ += status.defenceRate;
+    criticalRate_ += status.criticalRate;
 }
 
 void ParameterPlayer::RemoveAvilityBoost(const AvilityTypes::TYPE type)
@@ -55,7 +56,8 @@ void ParameterPlayer::RemoveAvilityBoost(const AvilityTypes::TYPE type)
     attackBoostRate_ -= status.attackBoostRate;
     moveSpeedBoostRate_ -= status.moveSpeedBoostRate;
     gravityBoostRate_ -= status.gravityBoostRate;
-    defenseRate_ -= status.defenceRate;
+    defenseRate_ -= status.defenceRate;    
+    criticalRate_ -= status.criticalRate;
 }
 
 void ParameterPlayer::LoadAvilityBoostParameter(const Json& parameter)
@@ -76,6 +78,7 @@ void ParameterPlayer::LoadAvilityBoostParameter(const Json& parameter)
         status.moveSpeedBoostRate = avilityParameter.value("moveSpeedBoostRate", 0.0f);
         status.gravityBoostRate = avilityParameter.value("gravityBoostRate", 0.0f);
         status.defenceRate = avilityParameter.value("defenceRate", 0.0f);
+        status.criticalRate = avilityParameter.value("criticalRate", 0.0f);
 
         // 格納
         avilityBoostStatusMap_.emplace(type, status);

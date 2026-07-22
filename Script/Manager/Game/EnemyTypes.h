@@ -37,4 +37,7 @@ public:
 		TYPE::PANDA,
 		TYPE::GAIA_GOLEM
 	};
+
+	// ƒ{ƒXŽí—Þ‚ðƒ‰ƒ“ƒ_ƒ€‚ÅŒˆ’è‚·‚é
+	static TYPE GetRandomBossType();
 };

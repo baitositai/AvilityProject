@@ -94,6 +94,10 @@ void InputManager::Init()
 	// シーン遷移
 	RegisterTrigger(TYPE::SCENE_CHANGE, { KEY_INPUT_SPACE }, { BTN::RB_RIGHT, BTN::START });
 
+	// ボス選択
+	RegisterTrigger(TYPE::BOSS_SELECT_LEFT, { KEY_INPUT_LEFT }, { BTN::LB_LEFT });
+	RegisterTrigger(TYPE::BOSS_SELECT_RIGHT, { KEY_INPUT_RIGHT }, { BTN::LB_RIGHT });
+
 	// デバッグ操作
 	RegisterTrigger(TYPE::DEBUG_SCENE_CHANGE, { KEY_INPUT_RSHIFT }, { });
 	RegisterTrigger(TYPE::DEBUG_CAMERA_CHANGE, { KEY_INPUT_TAB }, { });

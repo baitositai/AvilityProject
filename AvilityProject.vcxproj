@@ -151,6 +151,7 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Manager\Game\EnemyTypes.cpp" />
     <ClCompile Include="Script\System\PlayerCheckAnnihilation.cpp" />
     <ClCompile Include="Script\Object\Effect\EffectTargetFollow.cpp" />
     <ClCompile Include="Script\Parameter\Gimmick\ParameterGimmickTrain.cpp" />
@@ -404,6 +405,8 @@
     <ClCompile Include="Script\Ui\Game\UiTrainTime.cpp" />
     <ClCompile Include="Script\Ui\Game\UIButtonExpand.cpp" />
     <ClCompile Include="Script\Ui\Player\UiPlayerGetItemMessage.cpp" />
+    <ClCompile Include="Script\Ui\Game\UiNewPlayer.cpp" />
+    <ClCompile Include="Script\Ui\Train\UiBossSilhouette.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
@@ -722,6 +725,8 @@
     <ClInclude Include="Script\Ui\Game\UiTrainTime.h" />
     <ClInclude Include="Script\Ui\Game\UIButtonExpand.h" />
     <ClInclude Include="Script\Ui\Player\UiPlayerGetItemMessage.h" />
+    <ClInclude Include="Script\Ui\Game\UiNewPlayer.h" />
+    <ClInclude Include="Script\Ui\Train\UiBossSilhouette.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Script\Shader\Pixel\EnemySprite.hlsl">

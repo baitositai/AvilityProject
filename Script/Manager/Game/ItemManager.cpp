@@ -156,6 +156,43 @@ void ItemManager::CreateTreasureChestItems(const Vector2F& tresureChestPos)
 	}
 }
 
+void ItemManager::CreateItemList(const std::vector<Vector2F>& itemList)
+{
+	// 各アイテムのドロップ重み（数値を変更するだけで確率を簡単に調整できます）
+	const int WEIGHT_FOOD = 5;
+	const int WEIGHT_AVILITY = 3;
+	const int WEIGHT_TREASURE = 2;
+	const int WEIGHT_POTION = 4;
+	const int WEIGHT_NONE = 2; // アイテムなしの確率
+
+	// 重みの合計値を計算
+	const int TOTAL_WEIGHT = WEIGHT_FOOD + WEIGHT_AVILITY + WEIGHT_TREASURE + WEIGHT_POTION + WEIGHT_NONE;
+
+	for (const Vector2F& pos : itemList)
+	{
+		// 範囲でランダム値を獲得
+		int randValue = GetRand(TOTAL_WEIGHT - 1);
+
+		// 累積確率による判定
+		if (randValue < WEIGHT_FOOD)
+		{
+			CreateFoodItem(static_cast<ItemTypes::FOOD_TYPE>(GetRand(ItemTypes::FOOD_TYPE_MAX - 1)), pos);
+		}
+		else if ((randValue -= WEIGHT_FOOD) < WEIGHT_AVILITY)
+		{
+			CreateAvilityItem(static_cast<AvilityTypes::TYPE>(GetRand(AvilityTypes::AVILITY_TYPE_MAX - 1)), pos);
+		}
+		else if ((randValue -= WEIGHT_AVILITY) < WEIGHT_TREASURE)
+		{
+			CreateTreasureItem(static_cast<ItemTypes::TREASURE_TYPE>(GetRand(ItemTypes::TREASURE_TYPE_MAX - 1)), pos);
+		}
+		else if ((randValue -= WEIGHT_TREASURE) < WEIGHT_POTION)
+		{
+			CreatePotionItem(static_cast<ItemTypes::POTION_TYPE>(GetRand(ItemTypes::POTION_TYPE_MAX - 1)), pos);
+		}
+	}
+}
+
 void ItemManager::DebugDraw()
 {
 	for (auto& itemList : itemMap_)

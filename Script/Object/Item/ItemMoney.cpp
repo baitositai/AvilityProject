@@ -30,6 +30,9 @@ void ItemMoney::Init()
 	ActorBase::Init();
 
 	animation_->Play(Animation::TYPE::IDLE);
+
+	// íœŠÔ‚ğİ’è
+	deleteTimer_ = DELETE_TIME;
 }
 
 void ItemMoney::Draw()

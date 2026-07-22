@@ -52,10 +52,11 @@
       "spriteAnimation",
       "invincible",
       "cameraRangeCheck",
-
       "debugCreateItemAvility"
     ],
-    "dashSpeed": 4.0,
+    "criticalRate": 0.05,
+    "criticalDamageRate": 1.5,
+    "dashAddSpeed": 2.0,
     "damageColor": {
       "r": 0,
       "g": -255,
@@ -78,7 +79,7 @@
     "hp": 200,
     "invincibleTimeMax": 2.0,
     "jumpCount": 1,
-    "jumpCountMax": 1,
+    "jumpCountMax": 2,
     "jumpPowerMax": 22.5,
     "localPos": {
       "x": 0,
@@ -103,55 +104,64 @@
         "attackBoostRate": 0,
         "moveSpeedBoostRate": 0,
         "gravityBoostRate": 0,
-        "defenceRate": 0
+        "defenceRate": 0,
+        "criticalRate": 0.0
       },
       "airwalk": {
         "attackBoostRate": 0,
-        "moveSpeedBoostRate": 0,
+        "moveSpeedBoostRate": 0.05,
         "gravityBoostRate": 0,
-        "defenceRate": 0
+        "defenceRate": 0,
+        "criticalRate": 0.0
       },
       "giant": {
-        "attackBoostRate": 0.8,
+        "attackBoostRate": 0.3,
         "moveSpeedBoostRate": 0,
         "gravityBoostRate": 0.05,
-        "defenceRate": 0.25
+        "defenceRate": 0.25,
+        "criticalRate": 0.02
       },
       "gravityControll": {
         "attackBoostRate": 0.1,
         "moveSpeedBoostRate": 0,
         "gravityBoostRate": 0,
-        "defenceRate": 0.1
+        "defenceRate": 0.1,
+        "criticalRate": 0.02
       },
       "metal": {
-        "attackBoostRate": 0,
+        "attackBoostRate": 0.3,
         "moveSpeedBoostRate": -0.5,
         "gravityBoostRate": 0.2,
-        "defenceRate": 0.25
+        "defenceRate": 0.25,
+        "criticalRate": 0.1
       },
       "shot": {
-        "attackBoostRate": 0.5,
+        "attackBoostRate": 0.0,
         "moveSpeedBoostRate": 0.1,
         "gravityBoostRate": 0,
-        "defenceRate": 0
+        "defenceRate": 0,
+        "criticalRate": 0.0
       },
       "stamp": {
-        "attackBoostRate": 0.75,
+        "attackBoostRate": 0.0,
         "moveSpeedBoostRate": 0,
         "gravityBoostRate": 0,
-        "defenceRate": 0
+        "defenceRate": 0,
+        "criticalRate": 0.0
       },
       "superman": {
-        "attackBoostRate": 0.75,
+        "attackBoostRate": 0.3,
         "moveSpeedBoostRate": 1,
         "gravityBoostRate": 0,
-        "defenceRate": 0
+        "defenceRate": 0,
+        "criticalRate": 0.02
       },
       "teleport": {
-        "attackBoostRate": 0.3,
+        "attackBoostRate": 0.0,
         "moveSpeedBoostRate": 0.2,
         "gravityBoostRate": 0,
-        "defenceRate": 0
+        "defenceRate": 0,
+        "criticalRate": 0.0
       }
     }
   }

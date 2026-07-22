@@ -83,6 +83,9 @@ public:
 
 		SCENE_CHANGE,			// シーン遷移
 
+		BOSS_SELECT_RIGHT,		// ボス選択右
+		BOSS_SELECT_LEFT,		// ボス選択左
+
 		DEBUG_CREATE_ITEM_AVILITY,	// デバッグ用アビリティアイテム生成
 		DEBUG_SELECT_RIGHT_ITEM_AVILITY,	// デバッグ用アビリティアイテム選択
 		DEBUG_SELECT_LEFT_ITEM_AVILITY,	// デバッグ用アビリティアイテム選択

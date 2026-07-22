@@ -16,6 +16,7 @@ ComponentStatePlayerProcess::ComponentStatePlayerProcess(Player& owner) :
 {
 	velocityY_ = 0.0f;
 	isGround_ = false;
+	isPushed_ = false;
 }
 
 ComponentStatePlayerProcess::~ComponentStatePlayerProcess()
@@ -53,36 +54,38 @@ void ComponentStatePlayerProcess::Update()
 void ComponentStatePlayerProcess::ProcessInputMove()
 {
 	// ダッシュの入力判定に応じて速度を変更
-	float moveSpeed = inputManager_.IsNew(InputManager::TYPE::PLAYER_DASH, parameter_.padNo_) ? parameter_.dashSpeed_ : parameter_.moveSpeed_;
-
-	// ダッシュ上昇率を乗算
-	moveSpeed *= 1 + parameter_.moveSpeedBoostRate_;
+	float moveSpeed = parameter_.moveSpeed_ * (1 + parameter_.moveSpeedBoostRate_);
+	moveSpeed += inputManager_.IsNew(InputManager::TYPE::PLAYER_DASH, parameter_.padNo_) ? parameter_.dashSpeed_ : 0;
 
 	// 左右移動
 	if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_RIGHT, parameter_.padNo_))
 	{
 		moveAmount_.x = moveSpeed;
 		parameter_.direction_ = false;
+		// ダッシュ入力時最初にエフェクトを発生
+		if (!isPushed_)
+		{
+			// エフェクト再生
+			CreateDashEffect();
+			isPushed_ = true;
+		}
 	}
 	else if (inputManager_.IsNew(InputManager::TYPE::PLAYER_MOVE_LEFT, parameter_.padNo_))
 	{
 		moveAmount_.x = -moveSpeed;
 		parameter_.direction_ = true;
+		// ダッシュ入力時最初にエフェクトを発生
+		if (!isPushed_)
+		{
+			// エフェクト再生
+			CreateDashEffect();
+			isPushed_ = true;
+		}
 	}
-	
-	// ダッシュ入力時最初にエフェクトを発生
-	if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_DASH, parameter_.padNo_) && parameter_.isGround_)
+	else if (inputManager_.IsTrgUp(InputManager::TYPE::PLAYER_MOVE_RIGHT, parameter_.padNo_) ||
+			inputManager_.IsTrgUp(InputManager::TYPE::PLAYER_MOVE_LEFT, parameter_.padNo_))
 	{
-		// エフェクト再生
-		SpriteEffectManager::CreateParameter parameter;
-		Vector2F halfSize = Vector2(parameter_.hitSize_.x / 2, parameter_.hitSize_.y / 2).ToVector2F();
-		parameter.pos = Vector2F::AddVector2F(parameter_.GetFootPos(), Vector2F::MulVector2F(halfSize, parameter_.GetBack()));
-		parameter.pos = Vector2F::AddVector2F(parameter.pos, Vector2F::MulVector2FFloat(parameter_.GetUp(), 20.0f));
-		parameter.direction = parameter_.direction_;
-		parameter.angle = parameter_.angle_;
-		parameter.resourceKey = "dashSmoke";
-		parameter.animationSpeed = 0.3f;
-		effectManager_.Create(parameter);
+		isPushed_ = false;
 	}
 
 	// 地面にいる場合
@@ -100,6 +103,19 @@ void ComponentStatePlayerProcess::ProcessInputMove()
 			owner_.GetAnimation().Play(Animation::TYPE::IDLE);
 		}
 	}
+}
+
+void ComponentStatePlayerProcess::CreateDashEffect()
+{
+	SpriteEffectManager::CreateParameter parameter;
+	Vector2F halfSize = Vector2(parameter_.hitSize_.x / 2, parameter_.hitSize_.y / 2).ToVector2F();
+	parameter.pos = Vector2F::AddVector2F(parameter_.GetFootPos(), Vector2F::MulVector2F(halfSize, parameter_.GetBack()));
+	parameter.pos = Vector2F::AddVector2F(parameter.pos, Vector2F::MulVector2FFloat(parameter_.GetUp(), 20.0f));
+	parameter.direction = parameter_.direction_;
+	parameter.angle = parameter_.angle_;
+	parameter.resourceKey = "dashSmoke";
+	parameter.animationSpeed = 0.3f;
+	effectManager_.Create(parameter);
 }
 
 void ComponentStatePlayerProcess::ProcessInputJump()

@@ -33,7 +33,7 @@ void UiPlayerGetItemMessage::Init()
 	alpha_ = UtilityCommon::ALPHA_MAX;
 	const std::wstring fontName = resourceManager_.GetFontName("fontKinkakuji");
 	characterString_.fontHandle = FontManager::GetInstance().CreateMyFont(fontName, 32, 1);
-	characterString_.color = UtilityCommon::WHITE;
+	characterString_.color = TEXT_COLOR[static_cast<int>(owner_.GetParameter().padNo_) - 1];
 
 	// プレイヤー頭部の位置を取得
 	characterString_.pos = owner_.GetItemMessageDisplayPos();
@@ -80,7 +80,7 @@ void UiPlayerGetItemMessage::Draw()
 	if (isActive_)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)alpha_);
-		characterString_.DrawCenter();		
+		characterString_.DrawFormatCenter();		
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 }

@@ -391,6 +391,16 @@
       "sizeY": 736
     },
     {
+      "key": "guestRoomDeco",
+      "path": "Resource/Image/BackGround/GuestRoomDecoration.png",
+      "sceneIds": [ 2 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 1280,
+      "sizeY": 736
+    },
+    {
       "key": "guestRoomChips",
       "path": "Resource/Image/Stage/GuestRoomChips.png",
       "sceneIds": [ 2 ],
@@ -1462,6 +1472,36 @@
       "divY": 1,
       "sizeX": 222,
       "sizeY": 119
+    },
+    {
+      "key": "newPlayer",
+      "path": "Resource/Image/Ui/NewPlayer.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 128,
+      "sizeY": 128
+    },
+    {
+      "key": "respawnMessage",
+      "path": "Resource/Image/Ui/RespawnMessage.png",
+      "sceneIds": [ 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 128,
+      "sizeY": 128
+    },
+    {
+      "key": "bossSilhouette",
+      "path": "Resource/Image/Ui/BossSilhouette.png",
+      "sceneIds": [ 2 ],
+      "type": "sprite",
+      "divX": 3,
+      "divY": 1,
+      "sizeX": 96,
+      "sizeY": 96
     }
   ]
 }

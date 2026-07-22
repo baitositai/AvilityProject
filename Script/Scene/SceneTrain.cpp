@@ -13,8 +13,10 @@
 #include "../Manager/Game/StageManager.h"
 #include "../Manager/Game/ItemManager.h"
 #include "../Manager/Game/UiManager.h"
+#include "../Manager/Common/InputManager.h"
 #include "../Factory/FactoryComponent.h"
 #include "../Utility/UtilityCommon.h"
+#include "../Ui/Train/UiBossSilhouette.h"
 #include "ScenePause.h"
 #include "SceneTrain.h"
 
@@ -25,6 +27,8 @@ SceneTrain::SceneTrain()
 
 	// 描画関数のセット
 	drawFunc_ = std::bind(&SceneTrain::LoadingDraw, this);
+
+	bossIndex_ = -1;
 }
 
 SceneTrain::~SceneTrain()
@@ -54,13 +58,17 @@ void SceneTrain::Init()
 
 	// UI作成
 	uiMng_.CreateGameUi();
+	uiMng_.Add(std::make_unique<UiBossSilhouette>(), UiManager::LAYER::SPEECH_BUBBLE);
 
 	// ショップ生成
 	GimmickManager::CreateParameter shopParameter = {};
 	shopParameter.type = GimmickTypes::TYPE::SHOP;
 	shopParameter.pos = { 977, 570 };
-
 	gimmickMng_.Create(shopParameter);
+
+	// ボスのシルエットの決定
+	bossIndex_ = UtilityCommon::GetRandomCount(EnemyTypes::BOSS_MAX - 1, 0);
+	enemyMng_.SetBossEnemyType(EnemyTypes::BOSS_LIST[bossIndex_]);
 }
 
 void SceneTrain::SceneChangeReady()
@@ -79,6 +87,8 @@ void SceneTrain::NormalUpdate()
 {
 	SceneBase::NormalUpdate();
 
+	SelectBossType();
+
 #ifdef _DEBUG	
 	DebugUpdate();
 #endif 
@@ -92,6 +102,29 @@ void SceneTrain::NormalDraw()
 	// デバッグ用の情報描画
 	//DebugDraw();
 #endif
+}
+
+void SceneTrain::SelectBossType()
+{
+	const int playerCount = playerMng_.GetPlayerNum();
+	for (int i = 0; i < playerCount; i++)
+	{
+		Input::JOYPAD_NO padNo = static_cast<Input::JOYPAD_NO>(i + 1);
+		int pre = bossIndex_;
+		if (inputMng_.IsTrgDown(InputManager::TYPE::BOSS_SELECT_RIGHT, padNo))
+		{
+			bossIndex_ = UtilityCommon::WrapStepIndex(bossIndex_, 1, 0, EnemyTypes::BOSS_MAX);
+		}
+		else if (inputMng_.IsTrgDown(InputManager::TYPE::BOSS_SELECT_LEFT, padNo))
+		{
+			bossIndex_ = UtilityCommon::WrapStepIndex(bossIndex_, -1, 0, EnemyTypes::BOSS_MAX);
+		}
+
+		if (pre != bossIndex_)
+		{
+			enemyMng_.SetBossEnemyType(EnemyTypes::BOSS_LIST[bossIndex_]);
+		}
+	}
 }
 
 void SceneTrain::DebugUpdate()

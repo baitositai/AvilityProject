@@ -209,6 +209,22 @@ void ActorBase::Damage(const int damage, const Vector2& hitPos)
 	}
 }
 
+int ActorBase::GiveDamage()
+{
+	int baseDamage = GetAttackPowerWithBoost();
+	bool isCritical = false;
+
+	// クリティカル判定
+	float randValue = static_cast<float>(GetRand(9999)) / 10000.0f;
+	if (randValue < parameter_->criticalRate_)
+	{
+		isCritical = true;
+		baseDamage = static_cast<int>(static_cast<float>(baseDamage) * parameter_->criticalDamageRate_);
+	}
+
+	return baseDamage;
+}
+
 void ActorBase::AddComponent(const std::string& name, std::unique_ptr<ComponentBase> component)
 {
 	// 同名のコンポーネントが既に存在するかチェック

@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include "SceneBase.h"
+#include "../Manager/Common/SoundType.h"
 
 class ScenePause;
 
@@ -27,6 +28,9 @@ private:
 
 	//ポーズ画面
 	//std::shared_ptr<ScenePause> ScenePause_;
+
+	// 再生しているBGM種類
+	SoundType::BGM soundType_;
 
 	// 更新関数
 	void NormalUpdate() override;

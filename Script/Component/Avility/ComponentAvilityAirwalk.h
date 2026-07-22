@@ -26,7 +26,11 @@ public:
 	void Init() override;
 
 	/// <summary>
-	/// XVˆ—
+	/// æ‚èŠO‚µˆ—
 	/// </summary>
-	void Update() override;
+	void Remove() override;
+
+private:
+
+	static constexpr int ADD_JUMP_COUNT = 3;
 };

@@ -71,6 +71,12 @@ public:
 	void SetIsStop(const bool isStop) { isStop_ = isStop; }
 
 	/// <summary>
+	/// ボスの指定
+	/// </summary>
+	/// <param name="type">ボス種類</param>
+	void SetBossEnemyType(const EnemyTypes::TYPE type) { createBossEnemyType_ = type; }
+
+	/// <summary>
 	/// ボスを撃破できたか
 	/// </summary>
 	/// <returns>trueは撃破、falseは生存</returns>
@@ -82,10 +88,19 @@ public:
 	/// <returns>trueの場合空</returns>
 	const bool IsEmptyEventEnemies();
 
+	/// <summary>
+	/// ボスの種類を返す
+	/// </summary>
+	/// <returns>ボス種類</returns>
+	const EnemyTypes::TYPE GetBossEnemyType() const { return createBossEnemyType_; }
+
 private:
 
 	// 更新の停止
 	bool isStop_;
+
+	// 生成するボスのタイプ
+	EnemyTypes::TYPE createBossEnemyType_;
 
 	// 敵の生成に関するジェネレーター
 	std::unique_ptr<EnemyGenerator> enemyGenerator_;

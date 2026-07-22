@@ -71,6 +71,14 @@ private:
     // 削除時間
     static constexpr float DELETE_TIME = 2.0f;
 
+    // テキストカラーをパッド番号別に指定
+    const std::vector<int> TEXT_COLOR = {
+        0xafeeee,
+        0xffb6c1,
+        0x98fb98,
+        0xffd700
+    };
+
     // 種類
     TYPE type_;
 

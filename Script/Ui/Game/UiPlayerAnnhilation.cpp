@@ -17,7 +17,7 @@ UiPlayerAnnhilation::~UiPlayerAnnhilation()
 void UiPlayerAnnhilation::Init()
 {
 	// 描画位置の設定
-	pos_ = { Application::SCREEN_HALF_X, 150 };
+	pos_ = { Application::SCREEN_HALF_X, 200 };
 
 	// リソース取得
 	handle_ = resourceManager_.GetHandle("uiPlayerAnnhilationMessage");
@@ -28,7 +28,7 @@ void UiPlayerAnnhilation::Init()
 	// タイマー
 	uiTimer_ = std::make_unique<UiTimer>();
 	uiTimer_->Init();
-	uiTimer_->SetParameter(Vector2(Application::SCREEN_HALF_X, Application::SCREEN_HALF_Y), owner_.GetTimer(), 2.0f);
+	uiTimer_->SetParameter(Vector2(Application::SCREEN_HALF_X, Application::SCREEN_HALF_Y + 50), owner_.GetTimer(), 2.0f);
 
 	// 活動判定
 	isActive_ = false;
