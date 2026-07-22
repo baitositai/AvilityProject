@@ -37,7 +37,7 @@ const std::unordered_map<ItemTypes::FOOD_TYPE, std::string> ItemTypes::FOOD_STRI
 	{ItemTypes::FOOD_TYPE::SHRIMP, "shrimp"},
 	{ItemTypes::FOOD_TYPE::OLIVE, "olive"},
 	{ItemTypes::FOOD_TYPE::PICKLES_JAR, "picklesJar"},
-	{ItemTypes::FOOD_TYPE::BAKED_POTATO, "baked_potato"}
+	{ItemTypes::FOOD_TYPE::BAKED_POTATO, "bakedPotato"}
 };
 
 const std::unordered_map<ItemTypes::TREASURE_TYPE, std::string> ItemTypes::TREASURE_STRING_TO_ENUM_MAP =
