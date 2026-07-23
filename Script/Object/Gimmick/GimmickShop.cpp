@@ -1,4 +1,6 @@
+#include "../../Manager/Game/UiManager.h"
 #include "../../Collider/ColliderBox.h"
+#include "../../Ui/Shop/UiShop.h"
 #include "GimmickShop.h"
 
 GimmickShop::GimmickShop(std::unique_ptr<ParameterGimmick> parameter) :
@@ -19,4 +21,7 @@ void GimmickShop::Init()
 
 	// Šî’êƒNƒ‰ƒX‚Ìˆ—
 	GimmickBase::Init();
+
+	// UI‚Ì¶¬
+	uiMng_.Add(std::move(std::make_unique<UiShop>(*this)), UiManager::LAYER::SPEECH_BUBBLE);
 }

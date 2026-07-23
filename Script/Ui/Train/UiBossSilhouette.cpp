@@ -1,8 +1,8 @@
 #include <DxLib.h>
-#include "../Manager/Common/SceneManager.h"
-#include "../Manager/Common/Camera.h"
-#include "../Manager/Common/ResourceManager.h"
-#include "../Manager/Game/EnemyManager.h"
+#include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/Camera.h"
+#include "../../Manager/Common/ResourceManager.h"
+#include "../../Manager/Game/EnemyManager.h"
 #include "UiBossSilhouette.h"
 
 UiBossSilhouette::UiBossSilhouette() :
