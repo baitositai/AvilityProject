@@ -56,19 +56,11 @@ private:
 	//ポーズリストの選択
 	int selectIndex_;
 
-	//選択リスト
-	std::wstring pasueList_[LIST_MAX] =
-	{
-		L"つづける",
-		L"NONE",
-		L"タイトルへ戻る",
-		L"ゲーム終了"
-	};
-
-	int* handleIds_;
-
 	//リスト選択テーブル
 	std::unordered_map<LIST, std::function<void()>> listFuncTable_;
+
+	// 選択UI画像
+	int* handleIds_;
 
 	// 操作プレイヤーコントローラー
 	Input::JOYPAD_NO PadNo_;

@@ -7,6 +7,17 @@ class SceneResult : public SceneBase
 {
 public:
 
+	//ポーズリスト
+	enum class LIST
+	{
+		RESUME,		// 続ける
+		TITLE,		// タイトルに戻る
+		MAX
+	};
+
+	//リスト
+	static constexpr int LIST_MAX = static_cast<int>(LIST::MAX);
+
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
@@ -24,15 +35,40 @@ public:
 
 private:
 
-	// スコアテキスト
-	CharacterString scoreText_;
+	//ポーズリストの選択
+	int selectIndex_;
+
+	//リスト選択テーブル
+	std::unordered_map<LIST, std::function<void()>> listFuncTable_;
+	std::unordered_map<LIST, Image> listImage_;
+
+	// 変動用スコア
+	float score_;
+
+	// スコア画像
+	int* handleIds_;
+	Image gold_; 
+
+	Image rank_;
+	Image result_;
+	Image totalScoreEarned_;
+
+	// 演出時間
+	float resulTime_;
 
 	// 背景
-	Image backGround_;
+	std::unique_ptr<BackGround> backGround_[9];
+
+	// 地面
+	std::unique_ptr<BackGround> ground_;
 
 	// 更新関数
 	void NormalUpdate() override;
+	void SecondUpdate();
 
 	// 描画関数
 	void NormalDraw() override;
+	void SecondDraw();
+
+	void ScoreDraw();
 };
