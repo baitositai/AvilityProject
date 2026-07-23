@@ -44,13 +44,13 @@ public:
 	/// 右上座標の相対位置を返す
 	/// </summary>
 	/// <returns>右上座標の相対位置</returns>
-	const Vector2F& GetAABBMin() const;
+	Vector2F GetAABBMin() const;
 
 	/// <summary>
 	/// 左下座標の相対位置を返す
 	/// </summary>
 	/// <returns>左下座標の相対位置</returns>
-	const Vector2F& GetAABBMax() const;
+	Vector2F GetAABBMax() const;
 
 	/// <summary>
 	/// デバッグ描画
@@ -60,12 +60,12 @@ public:
 	/// @brief OBB(回転矩形)のローカル軸の取得
 	/// @param angle 向いている角度
 	/// @return 矩形が向いている右方向
-	const Vector2F& GetAxisX(void)const;
+	Vector2F GetAxisX(void)const;
 
 	/// @brief OBB(回転矩形)のローカル軸の取得
 	/// @param angle 向いている角度
 	/// @return 矩形が向いている上方向
-	const Vector2F& GetAxisY(void)const;
+	Vector2F GetAxisY(void)const;
 
 	/// <summary>
 	/// 軸上で相手と重なっているかを返す

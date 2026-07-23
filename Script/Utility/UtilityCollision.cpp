@@ -1,4 +1,5 @@
 #include <DxLib.h>
+#include <algorithm>
 #include "../../Object/ActorBase.h"
 #include "UtilityCommon.h"
 #include "UtilityCollision.h"
@@ -77,25 +78,34 @@ bool UtilityCollision::IsHitCircleToBox(
 	const Vector2& boxBotmPos,
 	Vector2& hitPos)
 {
-	// 四角形の範囲内で円の中心に最も近い座標を特定する
-	float closestX = (std::max)(boxTopPos.x, (std::min)(circlePos.x, boxBotmPos.x));
-	float closestY = (std::max)(boxTopPos.y, (std::min)(circlePos.y, boxBotmPos.y));
+	// 座標の上下左右関係が逆転していても安全なように最小値・最大値を求める
+	float minX = std::min<float>(boxTopPos.x, boxBotmPos.x);
+	float maxX = std::max<float>(boxTopPos.x, boxBotmPos.x);
+	float minY = std::min<float>(boxTopPos.y, boxBotmPos.y);
+	float maxY = std::max<float>(boxTopPos.y, boxBotmPos.y);
 
-	// 最短地点と円の中心との距離の2乗を計算する
-	float diffX = circlePos.x - closestX;
-	float diffY = circlePos.y - closestY;
-	float distanceSq = (diffX * diffX) + (diffY * diffY);
+	// clampの型を明示的に指定する
+	float closestX = std::clamp<float>(circlePos.x, minX, maxX);
+	float closestY = std::clamp<float>(circlePos.y, minY, maxY);
 
-	// 距離の2乗が半径の2乗以下なら衝突している
-	if (distanceSq <= (radius * radius))
-	{
-		// ボックス上の最も近い点を衝突位置とする
-		hitPos.x = closestX;
-		hitPos.y = closestY;
-		return true;
-	}
+    // 最短地点と円の中心との距離の2乗を計算する
+    float diffX = circlePos.x - closestX;
+    float diffY = circlePos.y - closestY;
+    float distanceSq = (diffX * diffX) + (diffY * diffY);
 
-	return false;
+    // わずかな浮動小数点誤差を許容するための許容値
+    const float EPSILON = 0.00001f;
+
+    // 距離の2乗が半径の2乗以下なら衝突している
+    if (distanceSq <= (radius * radius) + EPSILON)
+    {
+        // ボックス上の最も近い点を衝突位置とする
+        hitPos.x = closestX;
+        hitPos.y = closestY;
+        return true;
+    }
+
+    return false;
 }
 
 bool UtilityCollision::IsHitCircleToLine(

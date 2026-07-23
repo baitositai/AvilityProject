@@ -32,6 +32,12 @@ void ScoreManager::Clear()
 	score_ = 0;
 }
 
+void ScoreManager::Handover()
+{
+	totalScore_ += score_;
+	score_ = 0;
+}
+
 ScoreManager::ScoreManager()
 {
 	totalScore_ = 0;

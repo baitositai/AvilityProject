@@ -36,9 +36,7 @@ SceneResult::SceneResult()
 		{
 			scnMng_.ChangeScene(SceneManager::SCENE_ID::TRAIN);
 			sndMng_.StopBgm(SoundType::BGM::RESULT);
-			playerMng_.AllDetachItem();
-			playerMng_.Clear();
-			itemMng_.SetAllIsCarry(true);
+			scoreManager_.Handover();
 		}},
 		{LIST::TITLE,[this]()
 		{

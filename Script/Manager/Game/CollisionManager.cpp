@@ -59,11 +59,11 @@ void CollisionManager::Update()
 			const auto& tag1 = colliders_[i]->GetTag();
 			const auto& tag2 = colliders_[j]->GetTag();
 			
-			//if(tag1 == CollisionTags::TAG::TARGET && tag2 == CollisionTags::TAG::PLAYER_ATTACK_NORMAL ||
-			//	tag1 == CollisionTags::TAG::PLAYER_ATTACK_NORMAL && tag2 == CollisionTags::TAG::TARGET)
-			//{
-			//	int a = 0;
-			//}
+			if(tag1 == CollisionTags::TAG::ITEM_AVILITY && tag2 == CollisionTags::TAG::PLAYER ||
+				tag1 == CollisionTags::TAG::PLAYER && tag2 == CollisionTags::TAG::ITEM_AVILITY)
+			{
+				int a = 0;
+			}
 
 			// è’ìÀîªíËÇ™ïsóvÇ»ëgÇ›çáÇÌÇπÇÃèÍçá
 			if (!collTagMatrix_[static_cast<int>(tag1)][static_cast<int>(tag2)])

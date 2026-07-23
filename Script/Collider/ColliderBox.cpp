@@ -23,7 +23,7 @@ const Vector2& ColliderBox::GetBoxHalfSize() const
 	return Vector2(boxSize_.x / 2, boxSize_.y / 2);
 }
 
-const Vector2F& ColliderBox::GetAABBMin() const
+Vector2F ColliderBox::GetAABBMin() const
 {
 	auto vertices = GetRotatedVertices();
 
@@ -44,7 +44,7 @@ const Vector2F& ColliderBox::GetAABBMin() const
 	return Vector2F(minX, minY);
 }
 
-const Vector2F& ColliderBox::GetAABBMax() const
+Vector2F ColliderBox::GetAABBMax() const
 {
 	auto vertices = GetRotatedVertices();
 
@@ -120,14 +120,14 @@ void ColliderBox::DebugDraw()
 	DrawCircle(v[2].x + offsetX, v[2].y + offsetY, RADIUS, UtilityCommon::PINK, true);   // ‰E‰º‘Š“–
 }
 
-const Vector2F& ColliderBox::GetAxisX(void)const
+Vector2F ColliderBox::GetAxisX(void) const
 {
 	return Vector2F(std::cos(radAngle_), std::sin(radAngle_));
 }
 
-const Vector2F& ColliderBox::GetAxisY(void)const
+Vector2F ColliderBox::GetAxisY(void) const
 {
-	return Vector2F(-std::sin(radAngle_),std::cos(radAngle_));
+	return Vector2F(-std::sin(radAngle_), std::cos(radAngle_));
 }
 
 bool ColliderBox::OverlapOnAxis(const std::weak_ptr<ColliderBox>& opponent, const Vector2F& axis)

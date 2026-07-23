@@ -33,6 +33,8 @@ SceneGame::SceneGame()
 	// ŠÇ—ƒNƒ‰ƒX‚Ì¶¬
 	EventManager::CreateInstance();
 	//GameManager::CreateInstance();
+
+	soundType_ = SoundType::BGM::GAME1;
 }
 
 SceneGame::~SceneGame()

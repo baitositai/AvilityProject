@@ -47,6 +47,11 @@ public:
 	/// </summary>
 	void Clear();
 
+	/// <summary>
+	/// スコア引継ぎ
+	/// </summary>
+	void Handover();
+
 private:
 
 	// ゲームスコア
