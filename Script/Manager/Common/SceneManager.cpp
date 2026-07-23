@@ -166,7 +166,7 @@ void SceneManager::Update()
 	// 2. 定義したリストをループしてポーズキーの押下をチェック
 	for (auto pad : padList)
 	{
-		if (InputManager::GetInstance().IsTrgDown(InputManager::TYPE::PAUSE, pad))
+		if (InputManager::GetInstance().IsTrgDown(InputManager::TYPE::PAUSE, pad) && !isSceneChanging_)
 		{
 			if (pausePadNo_ == -1)
 			{
@@ -188,7 +188,7 @@ void SceneManager::Update()
 			}
 
 			// 最初に見つかった時点でループ脱出
-			break;						
+			break;
 		}
 	}
 
