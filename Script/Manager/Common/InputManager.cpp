@@ -19,7 +19,7 @@ void InputManager::Init()
 	RegisterTrigger(TYPE::PLAYER_MOVE_DOWN, { KEY_INPUT_S }, { }, STICK::L_STICK_DOWN);
 
 	// リスポーン
-	RegisterTrigger(TYPE::PLAYER_RESPAWN, { KEY_INPUT_RETURN }, { BTN::RB_RIGHT });
+	RegisterTrigger(TYPE::PLAYER_RESPAWN, { KEY_INPUT_RETURN }, { BTN::RB_RIGHT, BTN::RB_DOWN });
 
 	// ジャンプ
 	RegisterTrigger(TYPE::PLAYER_JUMP, { KEY_INPUT_SPACE }, { BTN::RB_RIGHT }, STICK::MAX, MOUSE::MAX, {}, { });

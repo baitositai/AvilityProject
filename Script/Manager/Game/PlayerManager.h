@@ -86,6 +86,12 @@ public:
 	/// </summary>
 	/// <param name="addLeft">追加残機</param>
 	void AddPlayersLeft(const int addLeft = DEFAULT_ADD_PLAYER_LEFT);
+	
+	/// <summary>
+	/// 全プレイヤーの活動状態を指定
+	/// </summary>
+	/// <param name="isActive">活動状態</param>
+	void SetAllIsActive(const bool isActive);
 
 	/// <summary>
 	/// プレイヤー残機を返す

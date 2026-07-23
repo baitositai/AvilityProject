@@ -60,6 +60,11 @@ public:
 	void CreateEventEnemy(const EnemyTypes::TYPE type, const Vector2F& pos);
 
 	/// <summary>
+	/// イベントで発生した敵を全削除
+	/// </summary>
+	void DestroyEventEnemy();
+
+	/// <summary>
 	/// 削除
 	/// </summary>
 	void Clear();	

@@ -3,9 +3,12 @@
 #include <functional>
 #include <unordered_map>	
 #include "../../Template/Singleton.h"
+#include "../../Ui/Game/UiExplanations.h"
+#include "../../Component/Avility/AvilityTypes.h"
 
 class UiBase;
 class UiPlayerGetItemMessage;
+class UiExplanations;
 
 class UiManager : public Singleton<UiManager>
 {
@@ -71,11 +74,21 @@ public:
 	/// <param name="isActive">活動状態</param>
 	/// <param name="layer">レイヤー</param>
 	void SetAllIsActive(const bool isActive, const LAYER layer = LAYER::UI);
+	
+	/// <summary>
+	/// 説明UIの設定
+	/// </summary>
+	/// <param name="type">説明UIの種類</param>
+	/// <param name="abilityType">アビリティ種類</param>
+	void SetExplanationType(const UiExplanations::TYPE type, const AvilityTypes::TYPE abilityType = AvilityTypes::TYPE::MAX);
 
 private:
 
 	// UIリスト
 	std::unordered_map<LAYER, std::vector<std::unique_ptr<UiBase>>> uiMap_;
+
+	// 説明用
+	std::unique_ptr<UiExplanations> uiExplanations_;
 	
 	// コンストラクタ
 	UiManager();

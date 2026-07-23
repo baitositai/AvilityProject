@@ -90,6 +90,13 @@ void SceneGame::Init()
 	// サウンド再生
 	soundType_ = SoundType::GetRandomGameBgm();
 	sndMng_.PlayBgm(soundType_);
+
+	// 操作説明UIの表示
+	uiMng_.SetExplanationType(UiExplanations::TYPE::MOVE);
+	uiMng_.SetExplanationType(UiExplanations::TYPE::DASH);
+	uiMng_.SetExplanationType(UiExplanations::TYPE::JUMP);
+	uiMng_.SetExplanationType(UiExplanations::TYPE::THROW);
+	uiMng_.SetExplanationType(UiExplanations::TYPE::ATTACK);
 }
 
 void SceneGame::NormalUpdate()
@@ -106,6 +113,9 @@ void SceneGame::NormalUpdate()
 
 	// イベント関係の更新
 	EventManager::GetInstance().Update();
+
+	// 削除処理
+	SceneBase::Sweep();
 
 #ifdef _DEBUG	
 	DebugUpdate();

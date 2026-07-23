@@ -51,8 +51,13 @@ void SceneBoss::Init()
 	mainCamera.ChangeMode(Camera::MODE::FIXED_POINT);
 	mainCamera.SetCameraPos(Vector2F(0.0f, 0.0f));
 
-	// 基底クラスの初期化処理
-	SceneBase::Init();	
+	// 各種オブジェクトらの初期化
+	stageMng_.Init();
+	playerMng_.Init();
+	enemyMng_.Init();
+	collisionMng_.Init();
+	gimmickMng_.Init();
+	uiMng_.Init();
 
 	// 敵の更新を戻す
 	enemyMng_.SetIsStop(false);
@@ -65,11 +70,15 @@ void SceneBoss::Init()
 
 	// UI作成
 	uiMng_.CreateGameUi();
+
+	// プレイヤーが持つアイテムを追従するためアイテムのみ初期化
+	itemMng_.Init();
 }
 
 void SceneBoss::NormalUpdate()
 {
 	SceneBase::NormalUpdate();
+	SceneBase::Sweep();
 
 	// ボスを撃破できた場合
 	if (enemyMng_.IsBossDestroy(bossType_))

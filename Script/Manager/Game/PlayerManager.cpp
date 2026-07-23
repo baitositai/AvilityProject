@@ -75,6 +75,11 @@ void PlayerManager::Update()
 	// プレイヤー処理
 	for (const auto& player : playerList_)
 	{
+		if (!player->IsActive())
+		{
+			continue;
+		}
+
 		player->Update();
 
 		// 生存している場合
@@ -184,6 +189,14 @@ void PlayerManager::AddPlayersLeft(const int addLeft)
 
 		// 残機は0へ
 		playersLeft_ = 0;
+	}
+}
+
+void PlayerManager::SetAllIsActive(const bool isActive)
+{
+	for (auto& player : playerList_)
+	{
+		player->SetIsActive(isActive);
 	}
 }
 

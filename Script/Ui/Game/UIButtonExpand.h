@@ -3,6 +3,7 @@
 class UIButtonExpand : public UiGameBase
 {
 public:
+
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
@@ -22,7 +23,7 @@ public:
 private:
 
 	//ボタン座標
-	static constexpr int BUTTON_EXPAND_POS_X = 1150;
+	static constexpr int BUTTON_EXPAND_POS_X = 1140;
 	static constexpr int BUTTON_EXPAND_POS_Y = 80;
 };
 

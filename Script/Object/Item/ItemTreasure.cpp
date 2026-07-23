@@ -58,6 +58,11 @@ void ItemTreasure::Init()
 
 	// íœŠÔ‚ğİ’è
 	deleteTimer_ = DELETE_TIME;
+
+	if (owner_)
+	{
+		UpdateFollow();
+	}
 }
 
 void ItemTreasure::Update()

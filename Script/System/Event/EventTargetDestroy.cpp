@@ -96,7 +96,7 @@ void EventTargetDestroy::CreateTargetRandom()
 		};
 
 		// ギミック管理に格納
-				// ギミック生成
+		// ギミック生成
 		GimmickManager::CreateParameter createParameter = {};
 		createParameter.type = GimmickTypes::TYPE::TARGET;
 		createParameter.pos = pos.ToVector2F();

@@ -8,6 +8,9 @@
 
 void UiManager::Init()
 {
+	uiExplanations_ = std::make_unique<UiExplanations>();
+	uiExplanations_->Init();
+
 	if (uiMap_.empty())
 	{
 		return;
@@ -26,6 +29,7 @@ void UiManager::Update()
 	{
 		return;
 	}
+	if (uiExplanations_) { uiExplanations_->Update(); }
 	for (const auto& uiList : uiMap_)
 	{
 		for (const auto& ui : uiList.second)
@@ -45,6 +49,7 @@ void UiManager::Draw(const LAYER layer)
 		
 		ui->Draw();
 	}
+	if (uiExplanations_) { uiExplanations_->Draw(); }
 }
 
 void UiManager::Add(std::unique_ptr<UiBase> ui, const LAYER layer)
@@ -123,6 +128,19 @@ void UiManager::SetAllIsActive(const bool isActive, const LAYER layer)
 	for (auto& ui : uiMap_.at(layer))
 	{
 		ui->SetIsActive(isActive);
+	}
+}
+
+void UiManager::SetExplanationType(const UiExplanations::TYPE type, const AvilityTypes::TYPE abilityType)
+{
+	if (uiExplanations_)
+	{
+		uiExplanations_->Add(type, abilityType);
+		
+		if (uiExplanations_->IsDelete())
+		{
+			uiExplanations_ = nullptr;
+		}
 	}
 }
 

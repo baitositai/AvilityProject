@@ -53,6 +53,15 @@ private:
 	static constexpr int LOADING_STRING_POS_X = Application::SCREEN_SIZE_X - 300;	//「now loading......」の座標X
 	static constexpr int LOADING_STRING_POS_Y = Application::SCREEN_SIZE_Y - 40;	//「now loading......」の座標Y
 
+	static constexpr int TRAIN_POS_X = 1100;
+	static constexpr int TRAIN_POS_Y = 640;
+	static constexpr float ANIMATION_SPEED = 0.2f;
+
+	// 電車用ハンドル
+	int* trainHandles_;
+	int animationNum_;
+	float animationStep_;
+
 	// ローディング経過時間
 	float loadingTime_;
 
@@ -63,7 +72,10 @@ private:
 	CharacterString loadingString_;
 
 	//「now loading......」の描画
-	void DrawNowLoading(void);
+	void DrawNowLoading();
+
+	// 電車部分の描画
+	void DrawTrain();
 
 	// コンストラクタ
 	Loading();

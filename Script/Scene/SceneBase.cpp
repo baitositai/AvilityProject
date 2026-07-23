@@ -121,7 +121,10 @@ void SceneBase::NormalUpdate()
 	effectMng_.Update();
 	uiMng_.Update();
 	collisionMng_.Update();
+}
 
+void SceneBase::Sweep()
+{
 	// íœˆ—
 	playerMng_.Sweep();
 	enemyMng_.Sweep();

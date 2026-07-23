@@ -5,11 +5,14 @@
 #include "../Manager/Common/SoundManager.h"
 #include "../Manager/Common/FontManager.h"
 #include "../Manager/Common/EffectManager.h"
+#include "../Resource/ResourceSprite.h"
 #include "../Utility/UtilityCommon.h"
 #include "Loading.h"
 
 void Loading::Init()
 {
+	auto& resourceManager = ResourceManager::GetInstance();
+
 	// シーン内のリソースを読み込む
 	ResourceManager::GetInstance().SceneChangeResource(static_cast<int>(SceneManager::GetInstance().GetSceneID()));
 
@@ -21,11 +24,16 @@ void Loading::Init()
 
 	//ローディング用文字列設定
 	constexpr int FONT_SIZE = 32;
-	const std::wstring& fontName = ResourceManager::GetInstance().GetFontName("fontDot");
+	const std::wstring& fontName = resourceManager.GetFontName("fontKinkakuji");
 	loadingString_.fontHandle = FontManager::GetInstance().CreateMyFont(fontName, FONT_SIZE, 0);
 	loadingString_.color = UtilityCommon::WHITE;
 	loadingString_.pos = { LOADING_STRING_POS_X, LOADING_STRING_POS_Y };
-	loadingString_.string = L"Now loading";
+	loadingString_.string = L"NowLoading";
+
+	// 電車用のリソースの設定
+	const auto& sprite = resourceManager.GetResourceSprite("loadingTrain");
+	trainHandles_ = sprite->GetHandleIds();
+	animationNum_ = sprite->GetDivsion().x;
 }
 
 void Loading::Update()
@@ -46,8 +54,11 @@ void Loading::Update()
 
 void Loading::Draw()
 {
-	// NowLoadingの描画
+	// テキストの描画
 	DrawNowLoading();
+
+	// 電車の描画
+	DrawTrain();
 }
 
 void Loading::StartASyncLoad() 
@@ -82,9 +93,26 @@ void Loading::DrawNowLoading(void)
 	loadingString_.Draw();
 }
 
+void Loading::DrawTrain()
+{
+	animationStep_ += ANIMATION_SPEED;
+	int animationIndex = (int)animationStep_ % animationNum_;
+
+	DrawRotaGraph(
+		TRAIN_POS_X,
+		TRAIN_POS_Y,
+		1.0f,
+		0.0f,
+		trainHandles_[animationIndex],
+		true
+		);
+}
+
 Loading::Loading()
 {
 	loadingTime_ = 0.0f;
+	animationStep_ = 0.0f;
+	animationNum_ = -1;
 	isLoading_ = false;
 }
 

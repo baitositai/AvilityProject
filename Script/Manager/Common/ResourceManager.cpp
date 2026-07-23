@@ -343,7 +343,7 @@ int* ResourceManager::GetHandles(const std::string& key)
 	loadedMap_.emplace(key, resPtr);
 
 	// ”h¶Œ^‚ÉƒLƒƒƒXƒg
-	auto sprite = dynamic_cast<ResourceSprite*>(it->second);
+	auto sprite = dynamic_cast<ResourceSprite*>(resPtr);
 
 	// ‚»‚Ì‚Ü‚Ü•Ô‚·
 	return sprite->GetHandleIds();

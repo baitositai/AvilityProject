@@ -461,6 +461,9 @@ void Player::SetAvilityComponent(std::unique_ptr<ComponentAvilityBase> component
 	avilityMessage->SetAbilityType(component->GetType());
 	uiMng_.Add(std::move(avilityMessage));
 
+	// ‘€ìà–¾‚ðo‚·
+	uiMng_.SetExplanationType(UiExplanations::TYPE::ABILITY, component->GetType());
+
 	avilityComponents_.push_back(std::move(component));
 	SetAvilityResourceIndexs();
 
@@ -700,6 +703,9 @@ void Player::SelectAvility()
 		// ‘I‘ð‚µ‚½ê‡
 		if (index > -1)
 		{
+			// ‘€ìà–¾‚ðo‚·
+			uiMng_.SetExplanationType(UiExplanations::TYPE::ABILITY, spareAvilityComponent_->GetType());
+
 			avilityComponents_[index]->Remove();
 			spareAvilityComponent_->Create();
 			avilityComponents_[index] = std::move(spareAvilityComponent_);

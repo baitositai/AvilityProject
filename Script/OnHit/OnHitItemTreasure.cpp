@@ -82,8 +82,11 @@ void OnHitItemTreasure::OnHitTrain(const std::weak_ptr<ColliderBase>& opponentCo
 		parameter.animationSpeed = 0.3f;
 		SpriteEffectManager::GetInstance().Create(parameter);
 
+		// 電車ボーナスでスコアを1.2倍にする
+		float score = static_cast<float>(owner_.GetParameter().amount_) * 1.2f;
+
 		// スコアを加算
-		ScoreManager::GetInstance().AddScore(owner_.GetParameter().amount_);
+		ScoreManager::GetInstance().AddScore(static_cast<int>(score));
 
 		// 自身を消す
 		owner_.Delete();

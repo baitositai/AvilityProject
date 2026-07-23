@@ -89,6 +89,9 @@ void SceneTrain::NormalUpdate()
 
 	SelectBossType();
 
+	// íœˆ—
+	SceneBase::Sweep();
+
 #ifdef _DEBUG	
 	DebugUpdate();
 #endif 

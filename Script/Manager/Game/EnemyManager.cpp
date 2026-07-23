@@ -162,6 +162,15 @@ void EnemyManager::CreateEventEnemy(const EnemyTypes::TYPE type, const Vector2F&
 	eventEnemyList_.push_back(enemyPtr);
 }
 
+void EnemyManager::DestroyEventEnemy()
+{
+	for (auto& eventEnemy : eventEnemyList_)
+	{
+		eventEnemy->Delete();
+	}
+	eventEnemyList_.clear();
+}
+
 void EnemyManager::Clear()
 {
 	if (enemiesMap_.empty())
@@ -215,6 +224,7 @@ const bool EnemyManager::IsEmptyEventEnemies()
 
 EnemyManager::EnemyManager()
 {
+	createBossEnemyType_ = EnemyTypes::TYPE::MAX;
 	isStop_ = false;
 	enemyGenerator_ = std::make_unique<EnemyGenerator>();
 	enemyGenerator_->InitParameter();

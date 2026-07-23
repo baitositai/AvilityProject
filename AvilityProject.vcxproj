@@ -409,6 +409,7 @@
     <ClCompile Include="Script\Ui\Game\UiNewPlayer.cpp" />
     <ClCompile Include="Script\Ui\Train\UiBossSilhouette.cpp" />
     <ClCompile Include="Script\Ui\Player\UiPlayerRespawnMessage.cpp" />
+    <ClCompile Include="Script\Ui\Game\UiExplanations.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\Component\Logic\ComponentLogicChase.h" />
@@ -731,6 +732,7 @@
     <ClInclude Include="Script\Ui\Game\UiNewPlayer.h" />
     <ClInclude Include="Script\Ui\Train\UiBossSilhouette.h" />
     <ClInclude Include="Script\Ui\Player\UiPlayerRespawnMessage.h" />
+    <ClInclude Include="Script\Ui\Game\UiExplanations.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Script\Shader\Pixel\EnemySprite.hlsl">

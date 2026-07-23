@@ -251,12 +251,12 @@
       "sizeY": 64
     },
     {
-      "key": "carriage",
-      "type": "texture",
-      "path": "Resource/Image/Train/Carriage.png",
+      "key": "loadingTrain",
+      "type": "sprite",
+      "path": "Resource/Image/Train/LoadingTrain.png",
       "divX": 16,
       "divY": 1,
-      "sceneIds": [ 1, 2, 3, 4 ],
+      "sceneIds": [ 0 ],
       "sizeX": 256,
       "sizeY": 64
     },
@@ -1502,6 +1502,16 @@
       "divY": 1,
       "sizeX": 96,
       "sizeY": 96
+    },
+    {
+      "key": "explanations",
+      "path": "Resource/Image/Ui/Explanations.png",
+      "sceneIds": [ 2, 3 ],
+      "type": "sprite",
+      "divX": 5,
+      "divY": 3,
+      "sizeX": 128,
+      "sizeY": 128
     }
   ]
 }

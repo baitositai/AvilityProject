@@ -1,6 +1,7 @@
 #include "../../Manager/Common/SceneManager.h"
 #include "../../Manager/Game/GameManager.h"
-#include "../../Manager/Game//EnemyManager.h"
+#include "../../Manager/Game/EnemyManager.h"
+#include "../../Manager/Game/PlayerManager.h"
 #include "../../Object/Common/Animation.h"
 #include "../../Object/Character/CharacterBase.h"
 #include "ComponentStateEnter.h"
@@ -65,8 +66,11 @@ void ComponentStateEnter::ChangeStateWait()
 {
 	update_ = std::bind(&ComponentStateEnter::UpdateWait, this);	
 	animationTime_ = 0.0f;
+	owner_.SetColliderActive(false);
 	owner_.GetAnimation().Play(Animation::TYPE::WALK);	
 	EnemyManager::GetInstance().SetIsStop(true);
+	PlayerManager::GetInstance().SetAllIsActive(false);
+	owner_.SetIsActive(true);
 }
 
 void ComponentStateEnter::ChangeStateEnd()

@@ -50,6 +50,11 @@ public:
 	virtual void Update();
 
 	/// <summary>
+	/// íœˆ—
+	/// </summary>
+	void Sweep();
+
+	/// <summary>
 	/// •`‰æˆ—
 	/// </summary>
 	virtual void Draw();

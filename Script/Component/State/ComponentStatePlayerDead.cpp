@@ -31,7 +31,9 @@ void ComponentStatePlayerDead::Update()
 
 void ComponentStatePlayerDead::UpdateStart()
 {
-	soundManager_.PlaySe(SoundType::SE::DEAD);	
+	soundManager_.PlaySe(SoundType::SE::DEAD);				
+	// UI表示
+	UiManager::GetInstance().Add(std::make_unique<UiPlayerRespawnMessage>(owner_));
 	update_ = std::bind(&ComponentStatePlayerDead::UpdateAnimation, this);
 }
 
@@ -44,9 +46,6 @@ void ComponentStatePlayerDead::UpdateAnimation()
 		// プレイヤーの場合は処理を無視
 		if (owner_.GetType() == CharacterBase::TYPE::PLAYER)
 		{
-			// UI表示
-			UiManager::GetInstance().Add(std::make_unique<UiPlayerRespawnMessage>(owner_));
-
 			// 更新処理を変更
 			update_ = std::bind(&ComponentStatePlayerDead::UpdateRespownAccept, this);
 			return;

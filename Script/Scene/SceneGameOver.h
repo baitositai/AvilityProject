@@ -23,7 +23,11 @@ public:
 
 private:
 
+	// 背景
 	Image backGround_;
+
+	// キー入力
+	Image pleaseButton_;
 
 	// 更新関数
 	void NormalUpdate() override;

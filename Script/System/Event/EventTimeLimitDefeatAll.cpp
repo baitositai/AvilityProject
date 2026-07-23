@@ -58,25 +58,33 @@ void EventTimeLimitDefeatAll::CreateEnemyList()
 
 void EventTimeLimitDefeatAll::CreateEnemies()
 {
- 	const Vector2 RIGHT_TOP = { Application::SCREEN_SIZE_X - parameterPtr_->createLeftTopPos_.x - parameterPtr_->createRange_.x, parameterPtr_->createLeftTopPos_.y };	// 右の生成範囲トップ位置
-	Vector2 pos = {};							// 生成位置
-	Vector2F cameraPosF = mainCamera.GetPos();	// カメラ位置
+	// カメラのワールド位置を取得
+	Vector2F cameraPosF = mainCamera.GetPos();
 	Vector2 cameraPos = cameraPosF.ToVector2();
-	bool dir = true;							// 方向
-	
+
+	// 画面内の左上 / 右上からのオフセット領域（パラメータから取得）
+	const Vector2 LEFT_TOP_OFFSET = parameterPtr_->createLeftTopPos_;
+	const Vector2 RIGHT_TOP_OFFSET = {
+		Application::SCREEN_SIZE_X - parameterPtr_->createLeftTopPos_.x - parameterPtr_->createRange_.x,
+		parameterPtr_->createLeftTopPos_.y
+	};
+
+	Vector2 pos = {};	// ワールド生成位置
+	bool dir = true;	// 方向
+
 	auto& enemyList = createEnemiesList_.front();
 	for (auto& type : enemyList)
 	{
-		// 方向を指定してトップを決定
-		const Vector2 top = dir ? parameterPtr_->createLeftTopPos_ : RIGHT_TOP;
+		// 方向を指定してオフセットを決定
+		const Vector2 offset = dir ? LEFT_TOP_OFFSET : RIGHT_TOP_OFFSET;
 
-		// 生成位置を決定
+		// カメラ位置（画面左上）+ オフセット + ランダム範囲 でワールド座標を算出
 		pos = {
-			top.x + GetRand(parameterPtr_->createRange_.x) - cameraPos.x,
-			top.y + GetRand(parameterPtr_->createRange_.y) - cameraPos.y
+			-cameraPos.x + offset.x + GetRand(parameterPtr_->createRange_.x),
+			-cameraPos.y + offset.y + GetRand(parameterPtr_->createRange_.y)
 		};
 
-		// 敵の生成
+		// 敵の生成（ワールド座標を渡す）
 		enemyManager_.CreateEventEnemy(type, pos.ToVector2F());
 	}
 
@@ -111,6 +119,9 @@ void EventTimeLimitDefeatAll::UpdateChallenge()
 	timeLimit_ -= sceneManager_.GetDeltaTime();
 	if (timeLimit_ <= 0)
 	{
+		// イベントで発生した敵をすべて削除
+		enemyManager_.DestroyEventEnemy();	
+
 		// 状態遷移
 		ChangeState(STATE::END);
 	}
