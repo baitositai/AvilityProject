@@ -112,16 +112,7 @@ ScenePause::~ScenePause()
 
 void ScenePause::NormalUpdate()
 {
-	//if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_CANCEL, PadNo_))
-	//{
-	//	SoundManager::GetInstance().PlaySe(SoundType::SE::CANCEL);
-
-	//	//シーンを戻す
-	//	scnMng_.ResetPausePadNo();
-	//	scnMng_.PopScene();
-	//	mainCamera.Restart();
-	//	return;
-	//}
+	// Pauseボタンでの更新はSceneManagerにて行っている
 	if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_DOWN, PadNo_))
 	{
 		selectIndex_ = UtilityCommon::WrapStepIndex(selectIndex_, 1, 0, LIST_MAX);
@@ -143,7 +134,7 @@ void ScenePause::NormalUpdate()
 void ScenePause::NormalDraw()
 {
 	static constexpr int MARGINT = 0;
-	static constexpr int OFFSET_Y = 200;
+	static constexpr int OFFSET_Y = 160;
 	static constexpr int TEXT_MARGINT = 100;
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, PAUSE_ALPHA);
@@ -158,43 +149,20 @@ void ScenePause::NormalDraw()
 
 	for (int i = 0; i < LIST_MAX; ++i)
 	{
-		//カラーを設定
-		int color = UtilityCommon::BLACK;
-		if (i == selectIndex_)
-		{
-			color = UtilityCommon::RED; // 選択中は赤色
-		}
-
 		//座標位置を設定
-		int posX = static_cast<int>(Application::SCREEN_HALF_X - pasueList_[i].length() * FONT_SIZE / 2);
+		int posX = Application::SCREEN_HALF_X;
 		int posY = Application::SCREEN_HALF_Y - OFFSET_Y + TEXT_MARGINT * i;
-
-		//文字列を描画
-		/*DrawFormatStringToHandle(
-			posX,
-			posY,
-			color,
-			pauseFont_,
-			pasueList_[i].c_str());*/
-
-		//int posX = static_cast<int>(Application::SCREEN_HALF_X - pasueList_[i].length() * FONT_SIZE / 2);
-		posY = Application::SCREEN_HALF_Y - 160 + TEXT_MARGINT * i;
 
 		if (i == selectIndex_)
 		{
 			// 選択中の場合は赤色強調（赤成分:255, 緑成分:100, 青成分:100）
 			// ※画像の色合いに合わせて RGB の値を調整してください
-			//SetDrawBright(255, 0, 0);
 			SetDrawAddColor( 0, -255, -255);
 		}
 
-		DrawRotaGraph(Application::SCREEN_HALF_X, posY, 1.0f, 0.0f, handleIds_[i], true);
+		DrawRotaGraph(posX, posY, 1.0f, 0.0f, handleIds_[i], true);
 
 		// 描画モードや輝度を元に戻しておく
-		//SetDrawBright(255, 255, 255);
 		SetDrawAddColor(0, 0, 0);
 	}
-
-	// 描画モードや輝度を元に戻しておく
-	//SetDrawBright(255, 255, 255);
 }

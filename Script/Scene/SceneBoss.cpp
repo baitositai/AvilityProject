@@ -84,7 +84,7 @@ void SceneBoss::NormalUpdate()
 
 #ifdef _DEBUG
 	// デバッグ用の更新処理
-	//DebugUpdate();
+	DebugUpdate();
 #endif
 }
 
