@@ -27,6 +27,7 @@ ItemTreasure::ItemTreasure(std::unique_ptr<ParameterItemTreasure> parameter) :
 
 ItemTreasure::~ItemTreasure()
 {
+
 }
 
 void ItemTreasure::Init()
