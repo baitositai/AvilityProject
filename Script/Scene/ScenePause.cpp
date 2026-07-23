@@ -28,7 +28,7 @@ ScenePause::ScenePause()
 		{
 			// ポーズを解除して前のシーンに戻る
 			scnMng_.PopScene();
-			mainCamera.Restart();
+			mainCamera.PauseRestart();
 		}},
 		{LIST::NONE,[this]()
 		{
@@ -80,7 +80,7 @@ ScenePause::ScenePause(Input::JOYPAD_NO PadNo)
 			// ポーズを解除して前のシーンに戻る
 			scnMng_.ResetPausePadNo();
 			scnMng_.PopScene();
-			mainCamera.Restart();
+			mainCamera.PauseRestart();
 		}},
 		{LIST::NONE,[this]()
 		{

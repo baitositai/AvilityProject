@@ -54,11 +54,13 @@ public:
 	/// 停止
 	/// </summary>
 	void Stop() { isStop_ = true; }
+	void PauseStop() { isPauseStop_ = true; }
 
 	/// <summary>
 	/// 再スタート
 	/// </summary>
 	void Restart() { isStop_ = false; }
+	void PauseRestart() { isPauseStop_ = false; }
 
 	/// <summary>
 	/// カメラモードの変更
@@ -131,6 +133,7 @@ public:
 	/// </summary>
 	/// <returns>停止判定</returns>
 	const bool IsStop() const { return isStop_; }
+	const bool IsPauseStop() const { return isPauseStop_; }
 
 	/// <summary>
 	/// ボックスがカメラ範囲内か返す
@@ -162,6 +165,7 @@ private:
 
 	// 停止判定
 	bool isStop_;
+	bool isPauseStop_;
 
 	// オフセット
 	Vector2F offset_;

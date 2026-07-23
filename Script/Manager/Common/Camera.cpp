@@ -12,6 +12,7 @@ Camera::Camera() :
 {	
 	// 変数の初期化
 	isStop_ = false;
+	isPauseStop_ = false;
 	shakePower_ = 0.0f;
 	shakeTime_ = 0.0f;
 	shakeTrainTime_ = 0.0f;
@@ -46,7 +47,7 @@ void Camera::Update()
 	CameraShake();
 	
 	// カメラのモードに応じた更新処理
-	if (!isStop_) { updateFunction_(); }
+	if (!isStop_ && !isPauseStop_) { updateFunction_(); }
 
 	// カメラの移動制限
 	LimitCameraMove();
@@ -59,6 +60,7 @@ void Camera::ChangeMode(const MODE mode)
 
 	// 初期化
 	isStop_ = false;
+	isPauseStop_ = false;
 
 	// カメラ別モードの設定
 	changeStateMap_.at(mode)();

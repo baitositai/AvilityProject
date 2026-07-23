@@ -171,7 +171,7 @@ void SceneManager::Update()
 			if (pausePadNo_ == -1)
 			{
 				pausePadNo_ = static_cast<int>(pad);
-				mainCamera.Stop();
+				mainCamera.PauseStop();
 				auto scene = std::make_shared<ScenePause>(pad);
 				PushScene(scene);
 			}
@@ -181,7 +181,7 @@ void SceneManager::Update()
 				{
 					pausePadNo_ = -1;
 					SoundManager::GetInstance().PlaySe(SoundType::SE::CANCEL);
-					mainCamera.Restart();
+					mainCamera.PauseRestart();
 					//ƒV[ƒ“‚ğ–ß‚·
 					PopScene();
 				}
