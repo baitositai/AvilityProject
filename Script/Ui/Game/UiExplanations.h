@@ -6,6 +6,7 @@
 #include "../UiBase.h"
 
 class SceneManager;
+class SoundManager;
 
 class UiExplanations : public UiBase
 {
@@ -52,6 +53,8 @@ private:
 	static constexpr float END_POS = 1216.0f;
 
 	SceneManager& sceneManager_;
+	SoundManager& soundManager_;
+
 
 	int* handles_;
 	int index_;

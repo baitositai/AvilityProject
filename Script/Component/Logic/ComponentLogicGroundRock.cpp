@@ -1,4 +1,5 @@
 #include "../../Application.h"
+#include "../../Manager/Common/SoundManager.h"
 #include "../../Manager/Common/SceneManager.h"
 #include "../../Manager/Common/Camera.h"
 #include "../../Manager/Game/CollisionManager.h"
@@ -17,6 +18,7 @@ ComponentLogicGroundRock::ComponentLogicGroundRock(EnemyGaiaGolem& owner):
 	attackPos_({}),
 	camera_(SceneManager::GetInstance().GetCamera())
 {
+	isCreateGroundRock_ = false;
 }
 
 ComponentLogicGroundRock::~ComponentLogicGroundRock()
@@ -43,6 +45,7 @@ void ComponentLogicGroundRock::Init()
 	int createRockNum = ROCK_CREATE_NUM_MIN;
 	const int playerNum = playerManager_.GetPlayerNum();
 	std::vector<Vector2F> playersPos = playerManager_.GetPlayersPos();
+	soundManager_.PlaySe(SoundType::SE::GOLEM_ATTACK);
 
 	// 攻撃のコライダー設定
 	attackCollider_->SetIsActive(true);

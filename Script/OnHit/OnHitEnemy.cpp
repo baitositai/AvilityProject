@@ -1,11 +1,13 @@
 #include "../../Collider/ColliderBase.h"
 #include "../../Object/Character/Enemy/EnemyBase.h"
 #include "../../Object/Item/ItemTreasure.h"
+#include "../../Manager/Common/SceneManager.h"
 #include "OnHitEnemy.h"
 
 OnHitEnemy::OnHitEnemy(EnemyBase& owner):
 	owner_(owner),
-	OnHitCharacterBase(owner)
+	OnHitCharacterBase(owner),
+    sceneManager_(SceneManager::GetInstance())
 {
 	onHitMap_.emplace(CollisionTags::TAG::PLAYER_ATTACK_NORMAL, [this](const std::weak_ptr<ColliderBase>& opponentCollider)
 		{
@@ -35,6 +37,7 @@ OnHitEnemy::OnHitEnemy(EnemyBase& owner):
 		{
 			return OnHitItemTreasure(opponentCollider);
 		});
+    shotDamageInterval_ = 0.0f;
 }
 
 OnHitEnemy::~OnHitEnemy()
@@ -107,17 +110,15 @@ void OnHitEnemy::OnHitPlayerAvilityStamp(const std::weak_ptr<ColliderBase>& oppo
 
 void OnHitEnemy::OnHitPlayerAvilityShot(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
-    //// 衝突者が無敵のときは無視
-    //if (owner_.IsInvincible()
-    //    || opponentCollider.lock()->GetPartnerTag() == CollisionTags::TAG::PLAYER_ATTACK_NORMAL
-    //    || opponentCollider.lock()->GetPartnerTag() == CollisionTags::TAG::PLAYER_AVILITY_SHOT
-    //    )
-    //{
-    //    return;
-    //}
+    float& shotDamageInterval = owner_.GetParameter().shotDamageInterval_;
+    if (shotDamageInterval <= 0.0f)
+    {
+        // ダメージ処理
+        Damage(opponentCollider);
 
-    //// ダメージ処理
-    //Damage(opponentCollider);
+        // インターバル時間の設定
+        shotDamageInterval = SHOT_DAMAGE_INTERVAL;
+    }
 }
 
 void OnHitEnemy::OnHitOtherEnemy(const std::weak_ptr<ColliderBase>& opponentCollider)

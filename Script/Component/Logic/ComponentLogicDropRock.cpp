@@ -1,5 +1,6 @@
 #include "../../Application.h"
 #include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/SoundManager.h"
 #include "../../Manager/Game/CollisionManager.h"
 #include "../../Manager/Game/GimmickManager.h"
 #include "../../Manager/Game/PlayerManager.h"
@@ -63,6 +64,8 @@ void ComponentLogicDropRock::Init()
 		createParameter.attackPower = ATTACK_POINT;
 		gimmickManager_.Create(createParameter);
 	}
+	soundManager_.PlaySe(SoundType::SE::ALARM);		
+	soundManager_.PlaySe(SoundType::SE::GOLEM_ATTACK);
 }
 
 void ComponentLogicDropRock::Update()

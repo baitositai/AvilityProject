@@ -1,3 +1,4 @@
+#include "../../Manager/Common/SoundManager.h"
 #include "../../Collider/ColliderBox.h"
 #include "../../OnHit/OnHitTreasureChest.h"
 #include "../Common/Animation.h"
@@ -32,6 +33,9 @@ void GimmickTreasureChest::Init()
 
 	// И╩ТuВЁТ▓Ро
 	parameterTreasureChest_->pos_.y -= parameterTreasureChest_->hitSize_.y / 2;
+
+	// М°Й╩Й╣Н─Р╢
+	sndMng_.PlaySe(SoundType::SE::TREASURE_BOX);
 }
 
 void GimmickTreasureChest::Update()

@@ -59,6 +59,9 @@ public:
 	// ロジックの遅延
 	float logicDelay_;
 
+	// ショットダメージ用インターバル
+	float shotDamageInterval_;
+
 	// 落とす金額
 	int dropMoney_;
 

@@ -1,5 +1,6 @@
 #include "../../../Collider/ColliderBox.h"
 #include "../../../OnHit/OnHitEnemyPanda.h"
+#include "../../../Manager/Common/SoundManager.h"
 #include "../../Common/Animation.h"
 #include "EnemyPanda.h"
 
@@ -75,6 +76,9 @@ void EnemyPanda::Defence()
 	
 	// アニメーション処理
 	animation_->Play(Animation::TYPE::DEFENCE, false);
+
+	// 効果音再生
+	sndMng_.PlaySe(SoundType::SE::SWORDS_CLASH);
 
 	// 後ろ方向に少し引き下がる
 	parameterEnemyPanda_->knockBackPower_ = Vector2F::MulVector2FFloat(parameterEnemyPanda_->GetBack(), 30.0f);

@@ -2,6 +2,7 @@
 #include "OnHitCharacterBase.h"
 
 class EnemyBase;
+class SceneManager;
 
 class OnHitEnemy : public OnHitCharacterBase
 {
@@ -37,6 +38,14 @@ protected:
 	void OnHitEnemyViewToPlayer(const std::weak_ptr<ColliderBase>& opponentCollider);
 
 private:
+
+	static constexpr float SHOT_DAMAGE_INTERVAL = 0.1f;
+
+	// シーンの参照
+	SceneManager& sceneManager_;
+
+	// ショットでのダメージインターバル
+	float shotDamageInterval_;
 
 	// 所有者
 	EnemyBase& owner_;

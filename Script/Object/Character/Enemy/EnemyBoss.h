@@ -35,5 +35,11 @@ private:
 
 	// UIの初期化
 	virtual void InitUi() override;
+
+	// アイテムのドロップ
+	void DropItem() override;
+
+	// 死亡処理
+	void Dead() override;
 };
 

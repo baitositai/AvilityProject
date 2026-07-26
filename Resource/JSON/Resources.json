@@ -1,32 +1,11 @@
 {
   "resources": [
     {
-      "key": "fontBokutachi",
-      "sceneIds": [ 0 ],
-      "type": "font",
-      "path": "Resource/Font/Bokutachi.otf",
-      "fontName": "ぼくたちのゴシック"
-    },
-    {
       "key": "fontDot",
       "sceneIds": [ 0 ],
       "type": "font",
       "path": "Resource/Font/Dot.otf",
       "fontName": "ベストテンDOT"
-    },
-    {
-      "key": "fontHanazome",
-      "sceneIds": [ 0 ],
-      "type": "font",
-      "path": "Resource/Font/Hanazome.ttf",
-      "fontName": "はなぞめフォント"
-    },
-    {
-      "key": "fontKazuki",
-      "sceneIds": [ 0 ],
-      "type": "font",
-      "path": "Resource/Font/KazukiReiwa.ttf",
-      "fontName": "KazukiReiwa"
     },
     {
       "key": "fontKinkakuji",
@@ -154,7 +133,7 @@
     },
     {
       "key": "bgmResult",
-      "path": "Resource/Sound/Bgm/BgmResult.mp3",
+      "path": "Resource/Sound/Bgm/BgmResult.wav",
       "sceneIds": [ 5, 6 ],
       "soundType": "bgm",
       "type": "sound"
@@ -1214,6 +1193,174 @@
       "type": "sound"
     },
     {
+      "key": "seDisplayExplanation",
+      "path": "Resource/Sound/Se/SeDisplayExplanation.mp3",
+      "sceneIds": [ 2,3 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seAlarm",
+      "path": "Resource/Sound/Se/SeAlarm.mp3",
+      "sceneIds": [],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seRockDestroy",
+      "path": "Resource/Sound/Se/SeRockDestroy.mp3",
+      "sceneIds": [],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seBossDestroy",
+      "path": "Resource/Sound/Se/SeBossDestroy.mp3",
+      "sceneIds": [ 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seRapidFire",
+      "path": "Resource/Sound/Se/SeRapidFire.mp3",
+      "sceneIds": [ 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "sePlayerRespawn",
+      "path": "Resource/Sound/Se/SePlayerRespawn.mp3",
+      "sceneIds": [ 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seFailue",
+      "path": "Resource/Sound/Se/SeFailue.mp3",
+      "sceneIds": [ 3 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seTreasureBox",
+      "path": "Resource/Sound/Se/SeTreasureBox.mp3",
+      "sceneIds": [ 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seRank",
+      "path": "Resource/Sound/Se/SeRank.mp3",
+      "sceneIds": [ 5 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seGameParticipation",
+      "path": "Resource/Sound/Se/SeGameParticipation.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seGameLeave",
+      "path": "Resource/Sound/Se/SeGameLeave.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seGameOver",
+      "path": "Resource/Sound/Se/SeGameOver.mp3",
+      "sceneIds": [ 6 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seTextAnimation",
+      "path": "Resource/Sound/Se/SeTextAnimation.mp3",
+      "sceneIds": [ 2 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seShopEnter",
+      "path": "Resource/Sound/Se/SeShopEnter.mp3",
+      "sceneIds": [ 2 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "sePurchase",
+      "path": "Resource/Sound/Se/SePurchase.mp3",
+      "sceneIds": [ 2 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seGolemAttack",
+      "path": "Resource/Sound/Se/SeGolemAttack.mp3",
+      "sceneIds": [  ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seReady",
+      "path": "Resource/Sound/Se/SeReady.mp3",
+      "sceneIds": [ 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seGo",
+      "path": "Resource/Sound/Se/SeGo.mp3",
+      "sceneIds": [ 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seGong",
+      "path": "Resource/Sound/Se/SeGong.mp3",
+      "sceneIds": [ 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seSwordsClash",
+      "path": "Resource/Sound/Se/SeSwordsClash.mp3",
+      "sceneIds": [],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seBambooThrow",
+      "path": "Resource/Sound/Se/SeBambooThrow.mp3",
+      "sceneIds": [],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seTargetDestroy",
+      "path": "Resource/Sound/Se/SeTargetDestroy.mp3",
+      "sceneIds": [ 3 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seDrumRoll",
+      "path": "Resource/Sound/Se/SeDrumRoll.mp3",
+      "sceneIds": [ 3 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seDrumRollEnd",
+      "path": "Resource/Sound/Se/SeDrumRollEnd.mp3",
+      "sceneIds": [ 3 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
       "key": "effectDamage",
       "path": "Resource/Image/Effect/Damage.png",
       "sceneIds": [ 3, 4 ],
@@ -1582,6 +1729,46 @@
       "divY": 1,
       "sizeX": 107,
       "sizeY": 64
+    },
+    {
+      "key": "readyBar",
+      "path": "Resource/Image/Ui/ReadyBar.png",
+      "sceneIds": [ 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 687,
+      "sizeY": 16
+    },
+    {
+      "key": "ready",
+      "path": "Resource/Image/Ui/Ready.png",
+      "sceneIds": [ 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 621,
+      "sizeY": 216
+    },
+    {
+      "key": "go",
+      "path": "Resource/Image/Ui/Go.png",
+      "sceneIds": [ 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 356,
+      "sizeY": 221
+    },
+    {
+      "key": "startMessages",
+      "path": "Resource/Image/Ui/StartMessages.png",
+      "sceneIds": [ 2, 3 ],
+      "type": "sprite",
+      "divX": 1,
+      "divY": 2,
+      "sizeX": 443,
+      "sizeY": 50
     }
   ]
 }
