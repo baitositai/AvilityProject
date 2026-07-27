@@ -51,8 +51,7 @@
       "move",
       "spriteAnimation",
       "invincible",
-      "cameraRangeCheck",
-      "debugCreateItemAvility"
+      "cameraRangeCheck"
     ],
     "criticalRate": 0.05,
     "criticalDamageRate": 1.5,

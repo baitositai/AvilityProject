@@ -31,7 +31,7 @@ void SceneGameOver::Init()
 	backGround_.handleId = resMng_.GetHandle("gameOver");
 	backGround_.size = { Application::SCREEN_SIZE_X, Application::SCREEN_SIZE_Y };
 
-	sndMng_.PlayBgm(SoundType::BGM::RESULT);
+	sndMng_.PlaySe(SoundType::SE::GAME_OVER);
 
 	pleaseButton_.handleId = resMng_.GetHandle("pleaseButton");
 	pleaseButton_.pos = { Application::SCREEN_HALF_X, Application::SCREEN_HALF_Y + 170 };
@@ -43,7 +43,7 @@ void SceneGameOver::NormalUpdate()
 	if (inputMng_.IsTrgDown(InputManager::TYPE::SCENE_CHANGE))
 	{
 		scnMng_.ChangeScene(SceneManager::SCENE_ID::TITLE);
-		sndMng_.StopBgm(SoundType::BGM::RESULT);
+		sndMng_.PlaySe(SoundType::SE::DECISION);
 		playerMng_.AllDetachItem();
 		playerMng_.Clear();
 		itemMng_.SetAllIsCarry(false);

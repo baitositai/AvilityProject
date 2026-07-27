@@ -51,6 +51,13 @@ public:
 	/// <param name="type">種類</param>
 	/// <param name="pos">生成位置</param>
 	void Create(const EnemyTypes::TYPE type, const Vector2F& pos);
+
+	/// <summary>
+	/// ボス生成処理
+	/// </summary>
+	/// <param name="type"></param>
+	/// <param name="pos"></param>
+	void CreateBoss(const EnemyTypes::TYPE type, const Vector2F& pos);
 	
 	/// <summary>
 	/// イベント用の敵生成処理

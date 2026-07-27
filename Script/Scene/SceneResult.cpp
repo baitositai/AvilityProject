@@ -37,6 +37,8 @@ SceneResult::SceneResult()
 			scnMng_.ChangeScene(SceneManager::SCENE_ID::TRAIN);
 			sndMng_.StopBgm(SoundType::BGM::RESULT);
 			scoreManager_.Handover();
+			playerMng_.AllDetachItem();
+			itemMng_.SetAllIsCarry(false);
 		}},
 		{LIST::TITLE,[this]()
 		{
@@ -114,6 +116,8 @@ void SceneResult::Init()
 	result_.handleId = resMng_.GetHandle("result");
 	totalScoreEarned_.handleId = resMng_.GetHandle("totalScoreEarned");
 	rank_.scale = 0.0f;
+
+	sndMng_.PlaySe(SoundType::SE::DRUM_ROLL);
 }
 
 void SceneResult::NormalUpdate()
@@ -134,6 +138,8 @@ void SceneResult::NormalUpdate()
 	// スコアの描画が終わったらランクを表示する
 	if (static_cast<int>(score_) >= targetScore)
 	{
+		sndMng_.PlaySe(SoundType::SE::RANK);
+
 		rank_.scale = 1.2f;
 
 		resulTime_ = 0.0f;
@@ -154,7 +160,9 @@ void SceneResult::NormalUpdate()
 		// 目標値との差が1未満になったら強制的に到達させる
 		if (targetScore - score_ < 1.0f)
 		{
-			score_ = static_cast<float>(targetScore);
+			score_ = static_cast<float>(targetScore);	
+			sndMng_.PlaySe(SoundType::SE::DRUM_ROLL_END);
+			sndMng_.StopSe(SoundType::SE::DRUM_ROLL);
 		}
 	}
 }
@@ -172,16 +180,18 @@ void SceneResult::SecondUpdate()
 	if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_RIGHT))
 	{
 		selectIndex_ = UtilityCommon::WrapStepIndex(selectIndex_, 1, 0, LIST_MAX);
+		sndMng_.PlaySe(SoundType::SE::SELECT);
 		return;
 	}
 	else if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_LEFT))
 	{
 		selectIndex_ = UtilityCommon::WrapStepIndex(selectIndex_, -1, 0, LIST_MAX);
+		sndMng_.PlaySe(SoundType::SE::SELECT);
 		return;
 	}
 	else if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_DECISION))
 	{
-		SoundManager::GetInstance().PlaySe(SoundType::SE::DECISION);
+		sndMng_.PlaySe(SoundType::SE::DECISION);
 		listFuncTable_[static_cast<LIST>(selectIndex_)]();
 		return;
 	}

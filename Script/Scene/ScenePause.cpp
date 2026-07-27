@@ -116,16 +116,19 @@ void ScenePause::NormalUpdate()
 	if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_DOWN, PadNo_))
 	{
 		selectIndex_ = UtilityCommon::WrapStepIndex(selectIndex_, 1, 0, LIST_MAX);
+		sndMng_.PlaySe(SoundType::SE::SELECT);
 		return;
 	}
 	else if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_UP, PadNo_))
 	{
 		selectIndex_ = UtilityCommon::WrapStepIndex(selectIndex_, -1, 0, LIST_MAX);
+		sndMng_.PlaySe(SoundType::SE::SELECT);
 		return;
 	}
 	else if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_DECISION, PadNo_))
 	{
 		SoundManager::GetInstance().PlaySe(SoundType::SE::DECISION);
+		sndMng_.PlaySe(SoundType::SE::DECISION);
 		listFuncTable_[static_cast<LIST>(selectIndex_)]();
 		return;
 	}

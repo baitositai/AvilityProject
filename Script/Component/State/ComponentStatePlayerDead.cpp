@@ -63,6 +63,8 @@ void ComponentStatePlayerDead::UpdateRespownAccept()
 	// リスポーン処理受付
 	if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_RESPAWN, owner_.GetParameter().padNo_))
 	{
+		// 効果音再生
+		soundManager_.PlaySe(SoundType::SE::RAPID_FIRE);
 		respownValue_++;
 		if (respownValue_ > RESPAWN_CONDITION_INPUT_COUNT)
 		{

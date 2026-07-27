@@ -153,6 +153,7 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\System\GameStart.cpp" />
     <ClCompile Include="Script\Manager\Game\EnemyTypes.cpp" />
     <ClCompile Include="Script\Component\Logic\ComponentLogicChase.cpp" />
     <ClCompile Include="Script\System\PlayerCheckAnnihilation.cpp" />
@@ -415,6 +416,7 @@
     <ClCompile Include="Script\Ui\Shop\UiShop.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\System\GameStart.h" />
     <ClInclude Include="Script\Component\Logic\ComponentLogicChase.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Script\resource.h" />

@@ -1,4 +1,5 @@
 #include "../Manager/Common/SceneManager.h"
+#include "../Manager/Common/SoundManager.h"
 #include "../Manager/Game/CollisionManager.h"
 #include "../Manager/Common/SpriteEffectManager.h"
 #include "../Manager/Common/Camera.h"
@@ -101,6 +102,8 @@ void GimmickDropRock::UpdateDrop(void)
 		parameter.resourceKey = "rockLanding";
 		parameter.animationSpeed = 0.2f;
 		effectMng_.Create(parameter);
+
+		sndMng_.PlaySe(SoundType::SE::ROCK_DESTROY);
 	}
 	// コンポーネント有効
 	SetComponentActive("gravity", true);

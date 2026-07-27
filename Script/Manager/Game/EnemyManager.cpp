@@ -10,6 +10,7 @@
 #include "../../Object/Common/Animation.h"
 #include "../../System/EnemyGenerator.h"
 #include "../Common/ResourceManager.h"
+#include "../Manager/Game/PlayerManager.h"
 #include "../Manager/Game/StageManager.h"
 #include "../Manager/Common/Camera.h"
 #include "../Manager/Common/SceneManager.h"
@@ -134,6 +135,47 @@ void EnemyManager::Create(const EnemyTypes::TYPE type, const Vector2F& pos)
 
 	// 格納
 	enemiesMap_[type].push_back(std::move(enemy));
+}
+
+void EnemyManager::CreateBoss(const EnemyTypes::TYPE type, const Vector2F& pos)
+{
+	const int playerNum = PlayerManager::GetInstance().GetPlayerNum();
+
+	// 生成
+	auto enemy = enemyGenerator_->CreateEnemy(type);
+
+	// イベント管理用に生ポインタで保持
+	EnemyBase* enemyPtr = enemy.get();
+
+	// 位置調整
+	auto& param = enemy->GetParameter();
+	param.pos_ = pos;
+
+	// プレイヤー人数に応じたステータス補正
+	// 2人目以降は1人増えるごとにHP50%、攻撃力20%加算
+	constexpr float HP_SCALE_PER_PLAYER = 0.5f;
+	constexpr float ATTACK_SCALE_PER_PLAYER = 0.2f;
+
+	float hpRate = 1.0f + (playerNum - 1) * HP_SCALE_PER_PLAYER;
+	float attackRate = 1.0f + (playerNum - 1) * ATTACK_SCALE_PER_PLAYER;
+
+	// パラメータの設定
+	param.hpMax_ = static_cast<int>(param.hpMax_ * hpRate);
+	param.hp_ = param.hpMax_;
+	param.attackPower_ = static_cast<int>(param.attackPower_ * attackRate);
+
+	// ロジックの変更
+	param.logicMap_.clear();
+	param.logicMap_.emplace("chase", 1.0f);
+
+	// 初期化
+	enemy->Init();
+
+	// 格納
+	enemiesMap_[type].push_back(std::move(enemy));
+
+	// イベント側でも監視対象として登録
+	eventEnemyList_.push_back(enemyPtr);
 }
 
 void EnemyManager::CreateEventEnemy(const EnemyTypes::TYPE type, const Vector2F& pos)

@@ -117,7 +117,7 @@ void ComponentLogicPandaShot::UpdateCharge()
 	timer_ -= sceneManager_.GetDeltaTime();
 	if (timer_ < 0.0f)
 	{
-		sceneManager_.GetCamera().SetCameraShake(CAMERA_SHAKE_TIME, CAMERA_SHAKE_POWER);
+		mainCamera.SetCameraShake(CAMERA_SHAKE_TIME, CAMERA_SHAKE_POWER);
 		ChangeState(STATE::SHOT);
 	}
 }
@@ -204,6 +204,9 @@ void ComponentLogicPandaShot::ChangeStateShot()
 
 	// UŒ‚”»’è‚ğ—LŒø
 	attackCollider_->SetIsActive(true);
+
+	// Œø‰Ê‰¹Ä¶
+	soundManager_.PlaySe(SoundType::SE::ABILITY_SHOT_START);
 
 	// ”½Ë‰ñ”‰Šú‰»
 	reflectCount_ = 0;

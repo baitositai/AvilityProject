@@ -53,7 +53,31 @@ const std::map<std::string, SoundType::SE> SoundType::KEY_SE_MAP =
 	{"seOpenTreasureBox", SoundType::SE::OPEN_TREASURE_BOX},
 	{"seDead", SoundType::SE::DEAD},
 	{"seEventStart", SoundType::SE::EVENT_START},
-	{"seDoor", SoundType::SE::DOOR}
+	{"seDoor", SoundType::SE::DOOR},
+	{"seDisplayExplanation", SoundType::SE::DISPLAY_EXPLANATION },
+	{"seAlarm", SoundType::SE::ALARM},
+	{"seRockDestroy", SoundType::SE::ROCK_DESTROY},
+	{"seBossDestroy", SoundType::SE::BOSS_DESTROY},
+	{"seRapidFire", SoundType::SE::RAPID_FIRE},
+	{"sePlayerRespawn", SoundType::SE::PLAYER_RESPAWN},
+	{"seFailue", SoundType::SE::FAILUE},
+	{"seTreasureBox", SoundType::SE::TREASURE_BOX},
+	{"seRank", SoundType::SE::RANK},
+	{"seGameParticipation", SoundType::SE::GAME_PARTICIPATION},
+	{"seGameLeave", SoundType::SE::GAME_LEAVE},
+	{"seTextAnimation", SoundType::SE::TEXT_ANIMATION},
+	{"seShopEnter", SoundType::SE::SHOP_ENTER},
+	{"sePurchase", SoundType::SE::PURCHASE},
+	{"seGolemAttack", SoundType::SE::GOLEM_ATTACK},
+	{"seReady", SoundType::SE::READY},
+	{"seGo", SoundType::SE::GO},
+	{"seGong", SoundType::SE::GONG},
+	{"seSwordsClash", SoundType::SE::SWORDS_CLASH},
+	{"seTargetDestroy", SoundType::SE::TARGET_DESTROY},
+	{"seDrumRoll", SoundType::SE::DRUM_ROLL},
+	{"seDrumRollEnd", SoundType::SE::DRUM_ROLL_END},
+	{"seBambooThrow", SoundType::SE::BAMBOO_THROW},
+	{"seGameOver", SoundType::SE::GAME_OVER}
 };
 
 const std::map<EnemyTypes::TYPE, SoundType::BGM> SoundType::BOSS_SOUND_MAP =

@@ -3,7 +3,7 @@
 #include "SceneBase.h"
 #include "../Manager/Common/SoundType.h"
 
-class ScenePause;
+class GameStart;
 
 class SceneGame : public SceneBase
 {
@@ -26,8 +26,11 @@ public:
 
 private:
 
-	//ポーズ画面
-	//std::shared_ptr<ScenePause> ScenePause_;
+	// ゲーム開始
+	std::unique_ptr<GameStart> gameStart_;
+
+	// 更新処理
+	std::function<void()> gameUpdate_;
 
 	// 再生しているBGM種類
 	SoundType::BGM soundType_;
@@ -37,6 +40,10 @@ private:
 
 	// 描画関数
 	void NormalDraw() override;
+
+	// 更新処理
+	void UpdateGameStart();
+	void UpdateGameMain();
 
 	//デバッグ処理
 	void DebugUpdate() override;

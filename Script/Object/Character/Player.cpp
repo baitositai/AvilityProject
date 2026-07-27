@@ -270,6 +270,9 @@ void Player::Ready()
 
 void Player::Spawn()
 {
+	// Œø‰Ê‰¹Ä¶
+	sndMng_.PlaySe(SoundType::SE::PLAYER_RESPAWN);
+
 	// ó‘Ô‘JˆÚ
 	ChangeState(CharacterBase::STATE::ALIVE);
 
