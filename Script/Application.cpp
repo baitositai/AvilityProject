@@ -29,7 +29,7 @@ bool Application::Init()
 
 	// ウィンドウサイズ
 	SetGraphMode(SCREEN_SIZE_X, SCREEN_SIZE_Y, COLOR_DEPTH);
-	ChangeWindowMode(false);
+	ChangeWindowMode(true);
 
 	// FPS初期化
 	fps_ = std::make_unique<FpsControl>(FPS_RATE);
