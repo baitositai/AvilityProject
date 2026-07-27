@@ -67,6 +67,7 @@ void ActorBase::Init()
 
 void ActorBase::Update()
 {
+	// ‹ó‚Ìê‡–³‹
 	if (componentList_.empty()) return;
 
 	for (auto& component : componentList_)
