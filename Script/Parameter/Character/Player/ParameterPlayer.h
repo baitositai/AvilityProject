@@ -7,6 +7,15 @@
 class ParameterPlayer : public ParameterCharacter
 {
 public:
+
+    enum class HEAD_UI
+    {
+        PAD_NO,             // パッド番号
+        ITEM_GET,           // アイテム取得
+        ENTER_DOOR,         // ドアに入る
+        OPEN_TREASURE_CHEST, // 宝箱を開ける
+        MAX
+    };
     
     struct TreasureStatus
     {
@@ -72,6 +81,9 @@ public:
 
     // 移動速度上限
     float moveSpeedLimit_;
+
+    // 頭部に表示するUI
+    HEAD_UI headUi_;
 
     // 保持しているお宝情報
     std::vector<TreasureStatus> treasureList_;

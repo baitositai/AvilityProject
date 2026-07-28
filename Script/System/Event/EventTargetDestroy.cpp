@@ -146,8 +146,9 @@ void EventTargetDestroy::UpdateChallenge()
 		createParameter.pos = triggerPos_;
 		gimmickManager_.Create(createParameter);
 
-		// ŠÔ§ŒÀ‚ğ0‚É‚·‚é
-		timeLimit_ = 0.0f;
+		// ó‘Ô‘JˆÚ
+		ChangeState(STATE::END);
+		return;
 	}
 
 	// §ŒÀŠÔˆ—

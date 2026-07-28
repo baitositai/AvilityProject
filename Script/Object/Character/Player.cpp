@@ -759,7 +759,11 @@ void Player::GameLeave()
 
 void Player::UpdateAfter()
 {
+	// アイテムとの衝突判定を無効
 	parameterPlayer_->isHitItem_ = false;
+
+	// 表示するUIをパッド番号にする
+	parameterPlayer_->headUi_ = ParameterPlayer::HEAD_UI::PAD_NO;
 }
 
 void Player::SetAvilityResourceIndexs()

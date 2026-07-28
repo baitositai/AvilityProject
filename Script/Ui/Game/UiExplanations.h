@@ -48,9 +48,9 @@ private:
 	static constexpr int EXPLANATION_NUM = 11;
 	static constexpr float DISPLAY_TIME = 3.0f;
 	static constexpr float MOVE_TIME = 1.0f;
-	static constexpr int POS_Y = 204;
-	static constexpr float START_POS = 1472.0f;
-	static constexpr float END_POS = 1216.0f;
+	static constexpr int POS_Y = 236;
+	static constexpr float START_POS = 1376.0f;
+	static constexpr float END_POS = 1184.0f;
 
 	SceneManager& sceneManager_;
 	SoundManager& soundManager_;

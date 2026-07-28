@@ -95,3 +95,12 @@ void OnHitItemTreasure::OnHitTrain(const std::weak_ptr<ColliderBase>& opponentCo
 		owner_.Delete();
 	}
 }
+
+void OnHitItemTreasure::OnHitEnemyMaid(const std::weak_ptr<ColliderBase>& opponentCollider)
+{
+	// “Š‚°‚ç‚ê‚Ä‚éê‡
+	if (owner_.IsThrow())
+	{
+		owner_.ResetThrow();
+	}
+}
