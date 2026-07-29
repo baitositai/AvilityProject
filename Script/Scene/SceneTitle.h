@@ -41,11 +41,16 @@ private:
 	// メニュー数
 	static constexpr int MENU_COUNT_MAX = 4;
 
-	// メニュー位置
+	// メニュー項目位置
 	static constexpr int MENU_POS_X = 950;
 	static constexpr int MENU_SELECT_POS_X = 900;
 	static constexpr int MENU_POS_Y_START = 120;
 	static constexpr int MENU_POS_Y_OFFSET = 130;
+
+	// メニューUI位置
+	static constexpr int UI_MENU_POS_X = 275;
+	static constexpr int UI_MENU_POS_Y = 180;
+	static constexpr int UI_EXPLANATIONS_POS_Y = 300;
 
 	// 選択番号
 	int selectMenuIndex_;
@@ -58,6 +63,12 @@ private:
 
 	// キー入力
 	Image pleaseButton_;
+
+	// メニュー
+	Image uiMenu_;
+
+	// 説明
+	Sprite uiExplantions_;
 
 	// メニュー画像
 	std::array<Image, MENU_COUNT_MAX> menus_;

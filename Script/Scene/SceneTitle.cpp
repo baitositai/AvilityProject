@@ -103,6 +103,14 @@ void SceneTitle::Init()
 		menus_[i].pos = Vector2(MENU_POS_X, MENU_POS_Y_START + i * MENU_POS_Y_OFFSET);
 	}
 	selectMenuIndex_ = 0;
+
+	// メニューUIの設定
+	uiMenu_.handleId = resMng_.GetHandle("menu");
+	uiMenu_.pos = Vector2(UI_MENU_POS_X, UI_MENU_POS_Y);
+
+	// メニュー説明の設定
+	uiExplantions_.handleIds = resMng_.GetHandles("titleMenuExplanations");
+	uiExplantions_.pos = Vector2(UI_MENU_POS_X, UI_EXPLANATIONS_POS_Y);
 }
 
 void SceneTitle::NormalUpdate()
@@ -199,6 +207,10 @@ void SceneTitle::DrawSelect()
 		menu.DrawRota();
 		index++;
 	}
+
+	uiExplantions_.index = selectMenuIndex_;
+	uiExplantions_.DrawRota();
+	uiMenu_.DrawRota();
 }
 
 void SceneTitle::ChangeMenuGame()

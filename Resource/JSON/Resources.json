@@ -1809,6 +1809,36 @@
       "divY": 1,
       "sizeX": 128,
       "sizeY": 128
+    },
+    {
+      "key": "titleMenuExplanations",
+      "path": "Resource/Image/Ui/TitleMenuExplanations.png",
+      "sceneIds": [ 1 ],
+      "type": "sprite",
+      "divX": 1,
+      "divY": 4,
+      "sizeX": 473,
+      "sizeY": 120
+    },
+    {
+      "key": "uiOpen",
+      "path": "Resource/Image/Ui/UiOpen.png",
+      "sceneIds": [ 2, 3 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 128,
+      "sizeY": 128
+    },
+    {
+      "key": "menu",
+      "path": "Resource/Image/Ui/Menu.png",
+      "sceneIds": [ 1 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 451,
+      "sizeY": 150
     }
   ]
 }
