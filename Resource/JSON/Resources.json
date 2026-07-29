@@ -1771,6 +1771,16 @@
       "sizeY": 50
     },
     {
+      "key": "uiTitle",
+      "path": "Resource/Image/Ui/UiTitle.png",
+      "sceneIds": [ 1 ],
+      "type": "sprite",
+      "divX": 1,
+      "divY": 4,
+      "sizeX": 555,
+      "sizeY": 120
+    },
+    {
       "key": "uiGetItem",
       "path": "Resource/Image/Ui/UiGetItem.png",
       "sceneIds": [ 2, 3 ],

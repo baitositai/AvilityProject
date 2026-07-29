@@ -71,7 +71,7 @@ void Application::Run()
 	auto& sceneManager = SceneManager::GetInstance();
 
 	// ゲームループ
-	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0 && !isGameEnd_)
+	while (ProcessMessage() == 0 && !isGameEnd_)
 	{
 		// 入力更新処理
 		inputManager.Update();

@@ -1,6 +1,8 @@
 #pragma once
+#include <functional>
 #include <unordered_map>
 #include "../../Common/Image.h"
+#include "../../Common/Sprite.h"
 #include "SceneBase.h"
 
 class Train;
@@ -28,6 +30,27 @@ public:
 
 private:
 
+	enum class MENU
+	{
+		START,
+		TUTORIAL,
+		ABILITY_TRIAL,
+		BACK,
+	};
+
+	// メニュー数
+	static constexpr int MENU_COUNT_MAX = 4;
+
+	// メニュー位置
+	static constexpr int MENU_POS_X = 950;
+	static constexpr int MENU_SELECT_POS_X = 900;
+	static constexpr int MENU_POS_Y_START = 120;
+	static constexpr int MENU_POS_Y_OFFSET = 130;
+
+	// 選択番号
+	int selectMenuIndex_;
+
+	// 透過率
 	float alphaRate_;
 
 	// タイトルロゴ
@@ -35,6 +58,14 @@ private:
 
 	// キー入力
 	Image pleaseButton_;
+
+	// メニュー画像
+	std::array<Image, MENU_COUNT_MAX> menus_;
+
+	// 処理
+	std::function<void()> updateTitleFunc_;
+	std::function<void()> drawTitleFunc_;
+	std::unordered_map<MENU, std::function<void()>> changeMap_;
 
 	// トレイン
 	std::unique_ptr<Train> train_;
@@ -50,4 +81,18 @@ private:
 
 	// 描画関数
 	void NormalDraw() override;
+
+	// 更新処理
+	void UpdateMain();
+	void UpdateSelect();
+
+	// 描画処理
+	void DrawMain();
+	void DrawSelect();
+
+	// メニュー遷移処理
+	void ChangeMenuGame();
+	void ChangeMenuTutorial();
+	void ChangeMenuAbilityTrial();
+	void ChangeMenuBack();
 };

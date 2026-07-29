@@ -89,6 +89,12 @@ public:
 	void SetBossEnemyType(const EnemyTypes::TYPE type) { createBossEnemyType_ = type; }
 
 	/// <summary>
+	/// サンドバッグとなる敵を生成
+	/// </summary>
+	/// <param name="pos">座標</param>
+	void CreateSandBagEnemy(const Vector2F& pos);
+
+	/// <summary>
 	/// ボスを撃破できたか
 	/// </summary>
 	/// <returns>trueは撃破、falseは生存</returns>

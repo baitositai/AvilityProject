@@ -79,7 +79,9 @@ void InputManager::Init()
 	RegisterTrigger(TYPE::SELECT_DOWN, { KEY_INPUT_S }, { }, STICK::L_STICK_DOWN);
 	RegisterTrigger(TYPE::SELECT_DECISION, { KEY_INPUT_SPACE }, { BTN::RB_RIGHT }, STICK::MAX/*, MOUSE::CLICK_LEFT*/);
 	RegisterTrigger(TYPE::SELECT_CANCEL, { KEY_INPUT_BACK }, { BTN::RB_DOWN });
-	RegisterTrigger(TYPE::PAUSE, { KEY_INPUT_BACK }, { BTN::SELECT });
+
+	// ポーズ機能
+	RegisterTrigger(TYPE::PAUSE, { KEY_INPUT_ESCAPE }, { BTN::SELECT });
 
 	// 新規プレイヤー参加
 	RegisterTrigger(TYPE::ACCEPT_NEW_PLAYER, { }, { BTN::RB_RIGHT }, STICK::MAX, MOUSE::MAX, { TYPE::ACCEPT_NEW_PLAYER_SUB });

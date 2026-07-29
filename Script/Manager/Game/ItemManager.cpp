@@ -84,7 +84,7 @@ void ItemManager::CreateAvilityItem(const AvilityTypes::TYPE type, const Vector2
 	item->Init();
 
 	// 格納
-	itemMap_[ItemTypes::TYPE::AVILITY].push_back(std::move(item));
+	itemMap_[ItemTypes::TYPE::ABILITY].push_back(std::move(item));
 }
 
 void ItemManager::CreateFoodItem(const ItemTypes::FOOD_TYPE type, const Vector2F& pos, const ParameterActor::DIR fallDir)
@@ -338,7 +338,7 @@ std::vector<SceneShop::Exhibits> ItemManager::GetRandomExhibits(const int abilit
 		exhibits.amount = parameter.amount_;
 		exhibits.division = parameter.divisionNum_;
 		exhibits.message = parameter.shopMessage_;
-		exhibits.type = ItemTypes::TYPE::AVILITY;
+		exhibits.type = ItemTypes::TYPE::ABILITY;
 		exhibitsList.push_back(exhibits);
 		item->Delete();
 	}
@@ -374,6 +374,70 @@ std::vector<SceneShop::Exhibits> ItemManager::GetRandomExhibits(const int abilit
 	}
 
 	return exhibitsList;
+}
+
+void ItemManager::CreateAbilityTrial(const std::vector<Vector2F>& itemList)
+{
+	if (itemList.size() < static_cast<size_t>(AvilityTypes::AVILITY_TYPE_MAX))
+	{
+		return;
+	}
+
+	for (int i = 0; i < AvilityTypes::AVILITY_TYPE_MAX; i++)
+	{
+		// 種類取得
+		AvilityTypes::TYPE type = static_cast<AvilityTypes::TYPE>(i);
+
+		// アイテムの生成
+		CreateAvilityItem(type, itemList[i]);
+
+		// 座標の登録
+		abilityTrialPositionMap_[type] = itemList[i];
+	}
+}
+
+void ItemManager::CheckAbilityTrial()
+{
+	// 各アビリティが存在するかどうかを管理する配列
+	std::vector<bool> hasAbilityArray(AvilityTypes::AVILITY_TYPE_MAX, false);
+
+	// 存在するアビリティアイテムをチェック
+	auto& abilityItemList = itemMap_[ItemTypes::TYPE::ABILITY];
+	for (const auto& item : abilityItemList)
+	{
+		if (item == nullptr)
+		{
+			continue;
+		}
+
+		// 生ポインタを取得してキャスト
+		ItemAvility* itemAbility = dynamic_cast<ItemAvility*>(item.get());
+		if (itemAbility != nullptr)
+		{
+			auto type = itemAbility->GetParameter().type_;
+			int index = static_cast<int>(type);
+			if (index >= 0 && index < AvilityTypes::AVILITY_TYPE_MAX)
+			{
+				hasAbilityArray[index] = true;
+			}
+		}
+	}
+
+	// 存在しないアビリティアイテムを再生成
+	for (int i = 0; i < AvilityTypes::AVILITY_TYPE_MAX; i++)
+	{
+		if (!hasAbilityArray[i])
+		{
+			AvilityTypes::TYPE type = static_cast<AvilityTypes::TYPE>(i);
+
+			// 登録された座標が存在する場合のみ生成
+			auto it = abilityTrialPositionMap_.find(type);
+			if (it != abilityTrialPositionMap_.end())
+			{
+				CreateAvilityItem(type, it->second);
+			}
+		}
+	}
 }
 
 ItemManager::ItemManager()

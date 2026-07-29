@@ -8,7 +8,7 @@ public:
 
 	enum class TYPE
 	{
-		AVILITY,	// アビリティ
+		ABILITY,	// アビリティ
 		FOOD,		// 食べ物
 		TREASURE,	// 宝
 		MONEY,		// お金

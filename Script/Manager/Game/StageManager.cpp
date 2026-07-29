@@ -59,6 +59,14 @@ void StageManager::Create(const TYPE type)
 	case TYPE::BOSS:
 		CreateStageRoom();
 		break;
+
+	case TYPE::ABILITY_TRIAL:
+		CreateStageAbilityTrial();
+		break;
+
+	case TYPE::TUTORIAL:
+		CreateStageTutorial();
+		break;
 	}
 }
 
@@ -125,6 +133,12 @@ void StageManager::InitParameter()
 	auto parameterTrain = std::make_unique<ParameterStage>();
 	parameterTrain->LoadParameter(jsonTrainParameter);
 	templateParameterMap_.emplace(StageManager::TYPE::TRAIN, std::move(parameterTrain));
+
+	// アビリティ生成
+	const auto& jsonAbilityParameter = jsonParameterMap.at("abilityTrial").front();
+	auto parameterAbility = std::make_unique<ParameterStage>();
+	parameterAbility->LoadParameter(jsonAbilityParameter);
+	templateParameterMap_.emplace(StageManager::TYPE::ABILITY_TRIAL, std::move(parameterAbility));
 }
 
 void StageManager::CreateStageRoad()
@@ -188,6 +202,28 @@ void StageManager::CreateStageTrain()
 	back->SetType(BackGround::TYPE::FIX);
 	back->SetResource("guestRoomDeco");
 	backGrounds_.push_back(std::move(back));
+}
+
+void StageManager::CreateStageAbilityTrial()
+{
+	// ステージパラメータ
+	std::unique_ptr<ParameterStage> parameter = std::make_unique<ParameterStage>(std::move(*templateParameterMap_.at(type_)));
+
+	// タイルチップサイズを保持
+	tileChipSize_ = parameter->chipSize_;
+
+	// タイル配列を設定
+	parameter->tileIndexs_ = UtilityLoad::LoadCSVData(parameter->path_);
+
+	// ステージ生成
+	stage_ = std::make_unique<StageTrain>(std::move(parameter));
+
+	// 背景生成
+	CreateBackGround();
+}
+
+void StageManager::CreateStageTutorial()
+{
 }
 
 void StageManager::CreateStageRoom()

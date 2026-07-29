@@ -23,10 +23,12 @@ public:
 	enum class TYPE
 	{
 		NONE,	
-		TRAIN,	// 電車
-		BOSS,	// ボス部屋
-		ROAD,	// ロード
-		EVENT,	// イベント
+		TRAIN,			// 電車
+		BOSS,			// ボス部屋
+		ROAD,			// ロード
+		EVENT,			// イベント
+		ABILITY_TRIAL,	// 能力お試し部屋
+		TUTORIAL,		// チュートリアル
 		MAX,
 	};
 
@@ -102,6 +104,8 @@ private:
 		{ TYPE::ROAD, "road" },
 		{ TYPE::BOSS, "boss" },
 		{ TYPE::EVENT, "event" },
+		{ TYPE::ABILITY_TRIAL, "abilityTrial" },
+		{ TYPE::TUTORIAL, "tutorial" },
 	};
 
 	// 種類
@@ -120,11 +124,13 @@ private:
 	std::unordered_map<TYPE, std::unique_ptr<ParameterStage>> templateParameterMap_;
 
 	// 各種ステージ生成処理
-	void CreateStageRoad();		// 自動生成の場合
-	void CreateStageTrain();	// 電車シーンの場合
-	void CreateStageRoom();		// 決められた部屋の場合
-	void CreateStageCommon();	// 共通処理
-	void CreateBackGround();	// 背景
+	void CreateStageRoad();			// 自動生成の場合
+	void CreateStageTrain();		// 電車シーンの場合
+	void CreateStageAbilityTrial();	// 能力お試しの場合
+	void CreateStageTutorial();		// チュートリアルの場合
+	void CreateStageRoom();			// 決められた部屋の場合
+	void CreateStageCommon();		// 共通処理
+	void CreateBackGround();		// 背景
 
 	// パラメータ関係の初期化
 	void InitParameter();

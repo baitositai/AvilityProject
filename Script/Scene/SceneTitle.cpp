@@ -18,12 +18,18 @@
 
 SceneTitle::SceneTitle()
 {
-	// 更新関数のセット
+	// 処理の登録
 	updataFunc_ = std::bind(&SceneTitle::LoadingUpdate, this);
-
-	// 描画関数のセット
 	drawFunc_ = std::bind(&SceneTitle::LoadingDraw, this);
+	updateTitleFunc_ = std::bind(&SceneTitle::UpdateMain, this);
+	drawTitleFunc_ = std::bind(&SceneTitle::DrawMain, this);
+	changeMap_.emplace(MENU::TUTORIAL, std::bind(&SceneTitle::ChangeMenuTutorial, this));
+	changeMap_.emplace(MENU::START, std::bind(&SceneTitle::ChangeMenuGame, this));
+	changeMap_.emplace(MENU::ABILITY_TRIAL, std::bind(&SceneTitle::ChangeMenuAbilityTrial, this));
+	changeMap_.emplace(MENU::BACK, std::bind(&SceneTitle::ChangeMenuBack, this));
 
+	// 変数の初期化
+	selectMenuIndex_ = -1;
 	alphaRate_ = 0.0f;
 }
 
@@ -87,6 +93,16 @@ void SceneTitle::Init()
 
 	// SE再生
 	sndMng_.PlaySe(SoundType::SE::TRAIN_WHISTLE);
+
+	// メニュー項目設定
+	int* handles = resMng_.GetHandles("uiTitle");
+	for (int i = 0; i < MENU_COUNT_MAX; i++)
+	{
+		menus_[i].handleId = handles[i];
+		menus_[i].scale = 1.0f;
+		menus_[i].pos = Vector2(MENU_POS_X, MENU_POS_Y_START + i * MENU_POS_Y_OFFSET);
+	}
+	selectMenuIndex_ = 0;
 }
 
 void SceneTitle::NormalUpdate()
@@ -97,18 +113,7 @@ void SceneTitle::NormalUpdate()
 	{
 		backGround->Update();
 	}
-
-	// シーン遷移
-	if (inputMng_.IsTrgDown(InputManager::TYPE::SCENE_CHANGE))
-	{
-		scnMng_.ChangeScene(SceneManager::SCENE_ID::TRAIN);
-		sndMng_.PlaySe(SoundType::SE::DECISION);
-		sndMng_.StopBgm(SoundType::BGM::TRAIN);
-		scoreManager_.Clear();
-		scoreManager_.AddTotalScore(10000);	// 初期スコア
-		playerMng_.Create();
-		return;
-	}
+	updateTitleFunc_();
 }
 
 void SceneTitle::NormalDraw()
@@ -119,6 +124,47 @@ void SceneTitle::NormalDraw()
 	}
 	ground_->Draw();
 	train_->Draw();
+	drawTitleFunc_();
+}
+
+void SceneTitle::UpdateMain()
+{
+	// シーン遷移
+	if (inputMng_.IsTrgDown(InputManager::TYPE::SCENE_CHANGE))
+	{
+		sndMng_.PlaySe(SoundType::SE::DECISION);
+		updateTitleFunc_ = std::bind(&SceneTitle::UpdateSelect, this);
+		drawTitleFunc_ = std::bind(&SceneTitle::DrawSelect, this);
+		return;
+	}
+
+}
+
+void SceneTitle::UpdateSelect()
+{
+	if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_DOWN))
+	{
+		selectMenuIndex_ = UtilityCommon::WrapStepIndex(selectMenuIndex_, 1, 0, MENU_COUNT_MAX);
+		sndMng_.PlaySe(SoundType::SE::SELECT);
+		return;
+	}
+	else if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_UP))
+	{
+		selectMenuIndex_ = UtilityCommon::WrapStepIndex(selectMenuIndex_, -1, 0, MENU_COUNT_MAX);
+		sndMng_.PlaySe(SoundType::SE::SELECT);
+		return;
+	}
+	else if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_DECISION))
+	{
+		SoundManager::GetInstance().PlaySe(SoundType::SE::DECISION);
+		sndMng_.PlaySe(SoundType::SE::DECISION);
+		changeMap_[static_cast<MENU>(selectMenuIndex_)]();
+		return;
+	}
+}
+
+void SceneTitle::DrawMain()
+{
 	titleLogo_.DrawRota();
 
 	// 点滅の1周期にかかる時間
@@ -136,4 +182,55 @@ void SceneTitle::NormalDraw()
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alphaValue);
 	pleaseButton_.DrawRota();
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+}
+
+void SceneTitle::DrawSelect()
+{
+	int index = 0;
+	for (auto& menu : menus_)
+	{
+		menu.pos.x = MENU_POS_X;
+		menu.scale = 1.0f;
+		if (index == selectMenuIndex_)
+		{
+			menu.pos.x = MENU_SELECT_POS_X;
+			menu.scale = 1.05f;
+		}
+		menu.DrawRota();
+		index++;
+	}
+}
+
+void SceneTitle::ChangeMenuGame()
+{
+	scnMng_.ChangeScene(SceneManager::SCENE_ID::TRAIN);
+	sndMng_.PlaySe(SoundType::SE::DECISION);
+	sndMng_.StopBgm(SoundType::BGM::TRAIN);
+	scoreManager_.Clear();
+	scoreManager_.AddTotalScore(10000);	// 初期スコア
+	playerMng_.Create();
+}
+
+void SceneTitle::ChangeMenuTutorial()
+{
+	scnMng_.ChangeScene(SceneManager::SCENE_ID::TRAIN);
+	sndMng_.PlaySe(SoundType::SE::DECISION);
+	sndMng_.StopBgm(SoundType::BGM::TRAIN);
+	scoreManager_.Clear();
+	playerMng_.Create();
+}
+
+void SceneTitle::ChangeMenuAbilityTrial()
+{
+	scnMng_.ChangeScene(SceneManager::SCENE_ID::ABILITYROOM);
+	sndMng_.PlaySe(SoundType::SE::DECISION);
+	sndMng_.StopBgm(SoundType::BGM::TRAIN);
+	scoreManager_.Clear();
+	playerMng_.Create();
+}
+
+void SceneTitle::ChangeMenuBack()
+{
+	updateTitleFunc_ = std::bind(&SceneTitle::UpdateMain, this);
+	drawTitleFunc_ = std::bind(&SceneTitle::DrawMain, this);
 }

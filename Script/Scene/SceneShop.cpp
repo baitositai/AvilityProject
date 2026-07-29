@@ -361,7 +361,7 @@ void SceneShop::Purchase()
 		itemMng_.CreateFoodItem(static_cast<ItemTypes::FOOD_TYPE>(exhibits.drawIndex), randomizedPos);
 		break;
 
-	case ItemTypes::TYPE::AVILITY:
+	case ItemTypes::TYPE::ABILITY:
 		itemMng_.CreateAvilityItem(static_cast<AvilityTypes::TYPE>(exhibits.drawIndex), randomizedPos);
 		break;
 

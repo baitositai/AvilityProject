@@ -144,9 +144,6 @@ void EnemyManager::CreateBoss(const EnemyTypes::TYPE type, const Vector2F& pos)
 	// 生成
 	auto enemy = enemyGenerator_->CreateEnemy(type);
 
-	// イベント管理用に生ポインタで保持
-	EnemyBase* enemyPtr = enemy.get();
-
 	// 位置調整
 	auto& param = enemy->GetParameter();
 	param.pos_ = pos;
@@ -164,18 +161,11 @@ void EnemyManager::CreateBoss(const EnemyTypes::TYPE type, const Vector2F& pos)
 	param.hp_ = param.hpMax_;
 	param.attackPower_ = static_cast<int>(param.attackPower_ * attackRate);
 
-	// ロジックの変更
-	param.logicMap_.clear();
-	param.logicMap_.emplace("chase", 1.0f);
-
 	// 初期化
 	enemy->Init();
 
 	// 格納
 	enemiesMap_[type].push_back(std::move(enemy));
-
-	// イベント側でも監視対象として登録
-	eventEnemyList_.push_back(enemyPtr);
 }
 
 void EnemyManager::CreateEventEnemy(const EnemyTypes::TYPE type, const Vector2F& pos)
@@ -234,6 +224,33 @@ void EnemyManager::Clear()
 		enemiesList.second.clear();
 	}
 	enemiesMap_.clear();
+}
+
+void EnemyManager::CreateSandBagEnemy(const Vector2F& pos)
+{
+	// 生成
+	auto enemy = enemyGenerator_->CreateEnemy(EnemyTypes::TYPE::GAIA_GOLEM);
+
+	// 位置調整
+	auto& param = enemy->GetParameter();
+	param.pos_ = pos;
+
+	// パラメータの設定
+	param.hpMax_ = 9999;
+	param.hp_ = param.hpMax_;
+	param.attackPower_ = 0;
+
+	// ロジックの変更
+	param.logicMap_.clear();
+
+	// 初期化
+	enemy->Init();
+
+	// アニメーションを再生
+	enemy->GetAnimation().Play(Animation::TYPE::IDLE);
+
+	// 格納
+	enemiesMap_[EnemyTypes::TYPE::GAIA_GOLEM].push_back(std::move(enemy));
 }
 
 const bool EnemyManager::IsBossDestroy(const EnemyTypes::TYPE type) const

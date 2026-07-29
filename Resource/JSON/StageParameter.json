@@ -55,5 +55,21 @@
       "x": 32,
       "y": 32
     }
+  },
+  "abilityTrial": {
+    "resourceKey": "groundChipsDungeon",
+    "path": "AbilityRoom.",
+    "localPos": {
+      "x": 0,
+      "y": 550
+    },
+    "hitBoxSize": {
+      "x": 64,
+      "y": 180
+    },
+    "chipSize": {
+      "x": 32,
+      "y": 32
+    }
   }
 }

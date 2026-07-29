@@ -267,6 +267,10 @@
     <ClCompile Include="Script\Manager\Game\EnemyTypes.cpp" />
     <ClCompile Include="Script\Component\Logic\ComponentLogicChase.cpp" />
     <ClCompile Include="Script\Ui\Player\UiPlayerRespawnMessage.cpp" />
+    <ClCompile Include="Script\System\GameStart.cpp" />
+    <ClCompile Include="Script\Ui\Game\UiExplanations.cpp" />
+    <ClCompile Include="Script\Ui\Shop\UiShop.cpp" />
+    <ClCompile Include="Script\Scene\SceneAbilityTrial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\System\PlayerCheckAnnihilation.h" />
@@ -589,6 +593,10 @@
     <ClInclude Include="Script\Ui\Train\UiBossSilhouette.h" />
     <ClInclude Include="Script\Component\Logic\ComponentLogicChase.h" />
     <ClInclude Include="Script\Ui\Player\UiPlayerRespawnMessage.h" />
+    <ClInclude Include="Script\System\GameStart.h" />
+    <ClInclude Include="Script\Ui\Game\UiExplanations.h" />
+    <ClInclude Include="Script\Ui\Shop\UiShop.h" />
+    <ClInclude Include="Script\Scene\SceneAbilityTrial.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AvilityProject.rc" />
