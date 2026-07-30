@@ -1,3 +1,4 @@
+#include "../../Manager/Common/SoundManager.h"
 #include "../../Manager/Common/SpriteEffectManager.h"
 #include "../Object/Gimmick/GimmickDropRock.h"
 #include "OnHitDropRock.h"
@@ -27,4 +28,6 @@ void OnHitDropRock::OnHitPlayer(const std::weak_ptr<ColliderBase>& opponentColli
 	parameter.resourceKey = "rockBreak";
 	parameter.animationSpeed = 0.2f;
 	SpriteEffectManager::GetInstance().Create(parameter);
+
+	soundManager_.PlaySe(SoundType::SE::ROCK_DESTROY);
 }

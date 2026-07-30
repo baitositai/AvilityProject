@@ -134,7 +134,11 @@ void Player::DebugDraw()
  	CharacterBase::DebugDraw();
 
 	// 選ぶやつのデバッグ描画
-	componentMap_["debugCreateItemAvility"]->DebugDraw();
+	auto it = componentMap_.find("debugCreateItemAvility");
+	if (it != componentMap_.end() && it->second != nullptr)
+	{
+		it->second->DebugDraw();
+	}
 
 	// メッセージ
 	std::vector<std::wstring> mess(AVILITY_MAX, L"none");
@@ -270,6 +274,9 @@ void Player::Ready()
 
 void Player::Spawn()
 {
+	// 効果音再生
+	sndMng_.PlaySe(SoundType::SE::PLAYER_RESPAWN);
+
 	// 状態遷移
 	ChangeState(CharacterBase::STATE::ALIVE);
 
@@ -752,7 +759,11 @@ void Player::GameLeave()
 
 void Player::UpdateAfter()
 {
+	// アイテムとの衝突判定を無効
 	parameterPlayer_->isHitItem_ = false;
+
+	// 表示するUIをパッド番号にする
+	parameterPlayer_->headUi_ = ParameterPlayer::HEAD_UI::PAD_NO;
 }
 
 void Player::SetAvilityResourceIndexs()

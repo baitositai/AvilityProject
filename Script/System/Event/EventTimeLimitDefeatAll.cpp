@@ -2,6 +2,7 @@
 #include <cassert>
 #include "../../Application.h"
 #include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/SoundManager.h"
 #include "../../Manager/Common/Camera.h"
 #include "../../Manager/Game/EventManager.h"
 #include "../../Manager/Game/EnemyManager.h"
@@ -120,7 +121,10 @@ void EventTimeLimitDefeatAll::UpdateChallenge()
 	if (timeLimit_ <= 0)
 	{
 		// ƒCƒxƒ“ƒg‚Å”­¶‚µ‚½“G‚ð‚·‚×‚Äíœ
-		enemyManager_.DestroyEventEnemy();	
+		enemyManager_.DestroyEventEnemy();
+
+		// Œø‰Ê‰¹Ä¶
+		soundManager_.PlaySe(SoundType::SE::FAILUE);
 
 		// ó‘Ô‘JˆÚ
 		ChangeState(STATE::END);

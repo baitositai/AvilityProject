@@ -142,7 +142,7 @@ void ComponentLogicMaid::UpdateCollect()
 	}
 
 	// 発見判定
-	if(parameter_.isDiscover_)
+	if (parameter_.isDiscover_)
 	{
 		// 攻撃
 		Attack();
@@ -152,7 +152,7 @@ void ComponentLogicMaid::UpdateCollect()
 
 		// 視野コライダー判定を無効
 		colliderFan_->SetIsActive(false);
-		
+
 		// ターゲットの発見判定をリセット
 		parameter_.isDiscover_ = false;
 		return;
@@ -168,46 +168,76 @@ void ComponentLogicMaid::UpdateCollect()
 	// 一番近い食べ物を取得
 	const ItemBase* targetFood = itemManager_.GetNearestFood(parameter_.pos_);
 
-	// 存在する場合
 	if (targetFood)
-	{	
-		// ターゲットへの方向を取得
-		moveDir = Vector2F::SubVector2F(targetFood->GetParameter().pos_, parameter_.pos_);
+	{
+		// ターゲットへのベクトルと重力方向を取得
+		Vector2F diff = Vector2F::SubVector2F(targetFood->GetParameter().pos_, parameter_.pos_);
+		distance = diff.Length();
 
-		// ターゲットの重力方向を取得
-		gravityDir = targetFood->GetParameter().gravityDir_;	
+		if (distance > 0.0f)
+		{
+			moveDir = Vector2F(diff.x / distance, diff.y / distance);
+		}
+
+		gravityDir = targetFood->GetParameter().gravityDir_;
 	}
 	else
 	{
 		// 最も現在地から近いプレイヤーを取得
 		const Player* nearestPlayer = playerManager_.GetNearestPlayer(parameter_.pos_);
 
-		// 存在する場合
-		if (nearestPlayer && !isSpecialAttack_)
+		if (nearestPlayer)
 		{
-			// プレイヤーのパラメータを取得
 			auto& playerParameter = nearestPlayer->GetParameter();
 
-			// プレイヤーまでの方向を取得
-			moveDir = Vector2F::SubVector2F(playerParameter.pos_, parameter_.pos_).Normalize();
+			// プレイヤーへのベクトルと重力方向を取得
+			Vector2F diff = Vector2F::SubVector2F(playerParameter.pos_, parameter_.pos_);
+			distance = diff.Length();
 
-			// エアースラッシュ生成
+			if (distance > 0.0f)
+			{
+				moveDir = Vector2F(diff.x / distance, diff.y / distance);
+			}
+
+			// 特殊攻撃（未実行の場合のみ1回発動し、移動自体は継続する）
 			if (!isSpecialAttack_)
 			{
 				CreateAirSlash(moveDir);
-
-				// 攻撃状態へ
 				Attack();
-
-				// 攻撃判定
 				isSpecialAttack_ = true;
-				return;
 			}
 
-			// ターゲットの重力方向を取得
 			gravityDir = playerParameter.gravityDir_;
 		}
-	}			
+	}
+
+	// ターゲットに向かって移動
+	if (distance > 0.01f)
+	{
+		Vector2F velocity = Vector2F::MulVector2FFloat(moveDir, parameter_.moveSpeed_);
+		parameter_.moveAmount_ = velocity;
+	}
+
+	// タイマーが0未満で、重力方向が変化している場合
+	if (timer_ < 0.0f && parameter_.gravityDir_ != gravityDir)
+	{
+		// スタンプへ切り替えるタイマーをリセット
+		timer_ = CHANGE_GRAVITY_TIME;
+
+		// 状態遷移
+		ChangeState(STATE::JUMP);
+
+		// 重力方向の更新
+		nextGravityDir_ = gravityDir;
+
+		// 攻撃判定オフ
+		isSpecialAttack_ = false;
+	}
+	else
+	{
+		// タイマーを減算
+		timer_ -= sceneManager_.GetDeltaTime();
+	}	
 	
 	// ベクトルの長さを計算して距離を求める
 	distance = moveDir.Length();

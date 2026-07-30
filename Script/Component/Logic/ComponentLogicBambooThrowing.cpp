@@ -1,5 +1,6 @@
 #include <random>
 #include <cmath>
+#include "../../Manager/Common/SoundManager.h"
 #include "../../Manager/Game/CollisionManager.h"
 #include "../../Manager/Game/GimmickManager.h"
 #include "../../Collider/ColliderCircle.h"
@@ -129,6 +130,9 @@ void ComponentLogicBambooThrowing::ChangeStateThrow()
 
 void ComponentLogicBambooThrowing::CreateBamboo()
 {
+	// Œø‰Ê‰¹Ä¶
+	soundManager_.PlaySe(SoundType::SE::BAMBOO_THROW);
+
 	// Š—LÒ‚Ì‘O•ûŒüæ“¾
 	Vector2F fornt = parameter_.GetFront();
 

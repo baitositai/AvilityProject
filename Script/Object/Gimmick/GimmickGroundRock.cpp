@@ -1,5 +1,6 @@
 #include "../Utility/UtilityCommon.h"
 #include "../Manager/Common/SceneManager.h"
+#include "../Manager/Common/SoundManager.h"
 #include "../Manager/Common/Camera.h"
 #include "../Manager/Common/SpriteEffectManager.h"
 #include "../Manager/Game/CollisionManager.h"
@@ -62,6 +63,8 @@ void GimmickGroundRock::Update()
 		parameter.resourceKey = "rockBreak";
 		parameter.animationSpeed = 0.2f;
 		effectMng_.Create(parameter);
+
+		sndMng_.PlaySe(SoundType::SE::ROCK_DESTROY);
 
 		return;
 	}

@@ -12,6 +12,7 @@ ComponentStateEnemyAlive::ComponentStateEnemyAlive(EnemyBase& owner) :
     // 変数の初期化
     currentLogic_ = nullptr;
     delayTimer_ = 0.0f;
+    state_ = STATE::MAX;
 
     // 状態遷移処理
     changeStateMap_.emplace(STATE::INTERVAL, std::bind(&ComponentStateEnemyAlive::ChangeStateInterval, this));
@@ -53,7 +54,13 @@ void ComponentStateEnemyAlive::Init()
 
 void ComponentStateEnemyAlive::Update()
 {
+    // 更新処理
     update_();
+
+    // ショットダメージインターバル
+    float& shotDamageInterval = owner_.GetParameter().shotDamageInterval_;
+    shotDamageInterval -= sceneManager_.GetDeltaTime();
+    if (shotDamageInterval < 0.0f) { shotDamageInterval = 0.0f; }
 }
 
 void ComponentStateEnemyAlive::Remove()

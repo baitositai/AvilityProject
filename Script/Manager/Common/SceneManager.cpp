@@ -9,6 +9,7 @@
 #include "../../Scene/SceneGameOver.h"
 #include "../../Scene/SceneBoss.h"
 #include "../../Scene/ScenePause.h"
+#include "../../Scene/SceneAbilityTrial.h"
 #include "../../Common/Loading.h"
 #include "../Common/InputManager.h"
 #include "../Common/ResourceManager.h"
@@ -156,7 +157,6 @@ void SceneManager::Update()
 	// 接続されているパッドを走査して、ポーズボタンが押されたパッドを探す
 	// 1. ポーズ判定を行う対象のパッドリストを定義
 	static const Input::JOYPAD_NO padList[] = {
-		Input::JOYPAD_NO::KEY_PAD1, // キーボード + PAD1
 		Input::JOYPAD_NO::PAD1,
 		Input::JOYPAD_NO::PAD2,
 		Input::JOYPAD_NO::PAD3,
@@ -331,6 +331,7 @@ void SceneManager::SetShopScene(const Input::JOYPAD_NO padNo)
 
 SceneManager::SceneManager()
 {
+	pausePadNo_ = -1;
 	mainScreen_ = -1;
 	sceneId_ = SCENE_ID::NONE;
 	waitSceneId_ = SCENE_ID::NONE;
@@ -361,10 +362,13 @@ void SceneManager::DoChangeScene(SCENE_ID sceneId)
 	sceneId_ = sceneId;
 
 	// 現在のシーンを解放（空チェックあり）
-	if (!scenes_.empty() && scenes_.back() != nullptr)
+	while (!scenes_.empty())
 	{
-		scenes_.back().reset();
-		scenes_.pop_back(); // シーンを使い終わったのでリストからも削除
+		if (scenes_.back() != nullptr)
+		{
+			scenes_.back().reset();
+		}
+		scenes_.pop_back();
 	}
 
 	// エフェクトを削除
@@ -400,6 +404,10 @@ void SceneManager::DoChangeScene(SCENE_ID sceneId)
 
 	case SCENE_ID::GAMEOVER:
 		CreateScene(std::make_shared<SceneGameOver>());
+		break;
+
+	case SCENE_ID::ABILITYROOM:
+		CreateScene(std::make_shared<SceneAbilityTrial>());
 		break;
 	}
 

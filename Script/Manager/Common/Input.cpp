@@ -6,7 +6,6 @@ Input::Input(void)
 	mouseInput_ = -1;	
 	
 	//ÉLÅ[ÇÃìoò^
-	Add(KEY_INPUT_SPACE);
 	Add(KEY_INPUT_N);
 	Add(KEY_INPUT_Z);
 	Add(KEY_INPUT_W);
@@ -19,15 +18,17 @@ Input::Input(void)
 	Add(KEY_INPUT_R);
 	Add(KEY_INPUT_Q);
 	Add(KEY_INPUT_P);
+	Add(KEY_INPUT_SPACE);
 	Add(KEY_INPUT_DOWN);
 	Add(KEY_INPUT_UP);
 	Add(KEY_INPUT_RIGHT);
 	Add(KEY_INPUT_LEFT);
 	Add(KEY_INPUT_RETURN);
 	Add(KEY_INPUT_TAB);
+	Add(KEY_INPUT_ESCAPE);
+	Add(KEY_INPUT_BACK);
 	Add(KEY_INPUT_C);
 	Add(KEY_INPUT_V);
-	Add(KEY_INPUT_BACK);
 	Add(KEY_INPUT_0);
 	Add(KEY_INPUT_1);
 	Add(KEY_INPUT_2);
@@ -38,7 +39,6 @@ Input::Input(void)
 	Add(KEY_INPUT_7);
 	Add(KEY_INPUT_8);
 	Add(KEY_INPUT_9);
-	Add(KEY_INPUT_BACK);
 }
 
 Input::~Input(void)

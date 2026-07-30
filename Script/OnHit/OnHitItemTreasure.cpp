@@ -82,6 +82,9 @@ void OnHitItemTreasure::OnHitTrain(const std::weak_ptr<ColliderBase>& opponentCo
 		parameter.animationSpeed = 0.3f;
 		SpriteEffectManager::GetInstance().Create(parameter);
 
+		// 効果音再生
+		soundManager_.PlaySe(SoundType::SE::PURCHASE);
+
 		// 電車ボーナスでスコアを1.2倍にする
 		float score = static_cast<float>(owner_.GetParameter().amount_) * 1.2f;
 
@@ -90,5 +93,14 @@ void OnHitItemTreasure::OnHitTrain(const std::weak_ptr<ColliderBase>& opponentCo
 
 		// 自身を消す
 		owner_.Delete();
+	}
+}
+
+void OnHitItemTreasure::OnHitEnemyMaid(const std::weak_ptr<ColliderBase>& opponentCollider)
+{
+	// 投げられてる場合
+	if (owner_.IsThrow())
+	{
+		owner_.ResetThrow();
 	}
 }

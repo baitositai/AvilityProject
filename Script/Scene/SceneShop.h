@@ -179,7 +179,4 @@ private:
 
 	// 確認時の描画
 	void DrawCheck();
-
-	// 品物に表示するメッセージを変更
-	void ChangeItemMessage();
 };

@@ -29,13 +29,14 @@ public:
 	// ÉVÅ[Éìä«óùóp
 	enum class SCENE_ID
 	{
-		NONE	= 0,
-		TITLE	= 1,
-		TRAIN	= 2,
-		GAME	= 3,
-		BOSS	= 4,
-		RESULT	= 5,
-		GAMEOVER= 6,
+		NONE = 0,
+		TITLE = 1,
+		TRAIN = 2,
+		GAME = 3,
+		BOSS = 4,
+		RESULT = 5,
+		GAMEOVER = 6,
+		ABILITYROOM = 7,
 	};
 
 	/// <summary>

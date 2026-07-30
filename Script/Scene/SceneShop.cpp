@@ -86,16 +86,16 @@ void SceneShop::Init()
 	selectIndex_ = 0;
 
 	// テキスト生成
-	message_.fontHandle = fontMng_.CreateMyFont(resMng_.GetFontName("fontDot"), 48, 5);
+	message_.fontHandle = fontMng_.CreateMyFont(resMng_.GetFontName("fontKinkakuji"), 48, 5);
 	message_.pos = { Application::SCREEN_HALF_X, 620 };
 	message_.string = TEXT_MAP[TEXT_TYPE::ENTER];
 	message_.color = UtilityCommon::WHITE;
 
-	amount_.fontHandle = fontMng_.CreateMyFont(resMng_.GetFontName("fontDot"), 32, 5);
+	amount_.fontHandle = fontMng_.CreateMyFont(resMng_.GetFontName("fontKinkakuji"), 32, 5);
 	amount_.string = L"%dG";
 	amount_.color = UtilityCommon::WHITE;
 
-	int checkFont = fontMng_.CreateMyFont(resMng_.GetFontName("fontDot"), 32, 5);
+	int checkFont = fontMng_.CreateMyFont(resMng_.GetFontName("fontKinkakuji"), 32, 5);
 	yes_.fontHandle = checkFont;
 	yes_.pos = { Application::SCREEN_HALF_X - 100, 680 };
 	yes_.string = L"YES";
@@ -114,6 +114,9 @@ void SceneShop::Init()
 	myMoney_ = std::make_unique<UiMoney>();
 	myMoney_->Init();
 	myMoney_->SetPos(Vector2{ 950, 48 });
+
+	// 入店音
+	sndMng_.PlaySe(SoundType::SE::SHOP_ENTER);
 }
 
 void SceneShop::NormalUpdate()
@@ -232,7 +235,8 @@ void SceneShop::UpdateSelect()
 	{
 		//シーンを戻す
 		scnMng_.PopScene();
-		isPushed = true;
+		sndMng_.PlaySe(SoundType::SE::CANCEL);
+		return;
 	}
 	else if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_DOWN, padNo_))
 	{
@@ -258,19 +262,22 @@ void SceneShop::UpdateSelect()
 	{
 		if (scoreManager_.GetTotalScore() >= exhibits_[selectIndex_].amount)
 		{
-			ChangeState(STATE::CHECK);
+			ChangeState(STATE::CHECK);	
+			sndMng_.PlaySe(SoundType::SE::DECISION);
 			return;
 		}
 		else
 		{
 			message_.string = TEXT_MAP.at(TEXT_TYPE::INSUFFICIENT_FUNDS);
 			textAnimation_->SetCharacterString(message_);
+			sndMng_.PlaySe(SoundType::SE::FAILUE);
 			return;
 		}
 	}
 
 	if (isPushed)
 	{
+		sndMng_.PlaySe(SoundType::SE::SELECT);
 		message_.string = UtilityCommon::GetWStringFromString(exhibits_[selectIndex_].message);
 		textAnimation_->SetCharacterString(message_);
 	}
@@ -286,11 +293,13 @@ void SceneShop::UpdateCheck()
 	else if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_LEFT, padNo_))
 	{
 		isPurchase_ = true;
+		sndMng_.PlaySe(SoundType::SE::SELECT);
 		return;
 	}
 	else if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_RIGHT, padNo_))
 	{
 		isPurchase_ = false;
+		sndMng_.PlaySe(SoundType::SE::SELECT);
 		return;
 	}
 	else if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_DECISION, padNo_))
@@ -304,6 +313,7 @@ void SceneShop::PurchaseCancel()
 {
 	// 状態を戻す
 	ChangeState(STATE::SELECT);
+	sndMng_.PlaySe(SoundType::SE::CANCEL);
 
 	message_.string = TEXT_MAP.at(TEXT_TYPE::ENTER);
 	textAnimation_->SetCharacterString(message_);
@@ -330,6 +340,8 @@ void SceneShop::ChangeStateCheck()
 
 void SceneShop::Purchase()
 {
+	sndMng_.PlaySe(SoundType::SE::PURCHASE);
+
 	// アイテムを追加する
 	const Exhibits& exhibits = exhibits_[selectIndex_];
 	const Vector2F createPos = gimmickMng_.GetShopPos();
@@ -349,7 +361,7 @@ void SceneShop::Purchase()
 		itemMng_.CreateFoodItem(static_cast<ItemTypes::FOOD_TYPE>(exhibits.drawIndex), randomizedPos);
 		break;
 
-	case ItemTypes::TYPE::AVILITY:
+	case ItemTypes::TYPE::ABILITY:
 		itemMng_.CreateAvilityItem(static_cast<AvilityTypes::TYPE>(exhibits.drawIndex), randomizedPos);
 		break;
 

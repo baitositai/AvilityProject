@@ -129,7 +129,21 @@ public:
 	/// <returns>展示品の配列</returns>
 	std::vector<SceneShop::Exhibits> GetRandomExhibits(const int abilityNum, const int potionNum, const int foodNum);
 
+	/// <summary>
+	/// 能力お試し部屋のアイテム生成
+	/// </summary>
+	/// <param name="itemList">座標リスト</param>
+	void CreateAbilityTrial(const std::vector<Vector2F>& itemList);
+
+	/// <summary>
+	/// 能力お試し部屋のチェック処理
+	/// </summary>
+	void CheckAbilityTrial();
+
 private:
+
+	// 座標リスト
+	std::unordered_map<AvilityTypes::TYPE, Vector2F> abilityTrialPositionMap_;
 
 	// アイテムのリスト
 	std::unordered_map<ItemTypes::TYPE, std::vector<std::unique_ptr<ItemBase>>> itemMap_;

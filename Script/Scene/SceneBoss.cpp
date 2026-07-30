@@ -16,16 +16,16 @@
 #include "../Manager/Game/UiManager.h"
 #include "../Factory/FactoryComponent.h"
 #include "../Utility/UtilityCommon.h"
+#include "../System/GameStart.h"
 #include "ScenePause.h"
 #include "SceneBoss.h"
 
 SceneBoss::SceneBoss()
 {
-	// 更新関数のセット
+	// 処理の登録
 	updataFunc_ = std::bind(&SceneBoss::LoadingUpdate, this);
-
-	// 描画関数のセット
-	drawFunc_ = std::bind(&SceneBoss::LoadingDraw, this);
+	drawFunc_ = std::bind(&SceneBoss::LoadingDraw, this);		
+	gameUpdate_ = std::bind(&SceneBoss::UpdateGameStart, this);
 
 	// 初期化
 	bossType_ = EnemyTypes::TYPE::MAX;
@@ -73,19 +73,33 @@ void SceneBoss::Init()
 
 	// プレイヤーが持つアイテムを追従するためアイテムのみ初期化
 	itemMng_.Init();
+
+	// ゲーム開始処理
+	gameStart_ = std::make_unique<GameStart>(1);
+	gameStart_->Init();
+
+	sceneChangeTimer_ = SCENE_CHANGE_DELAY;
+	isSceneChanges_ = false;
 }
 
 void SceneBoss::NormalUpdate()
 {
+	gameUpdate_();
 	SceneBase::NormalUpdate();
 	SceneBase::Sweep();
 
 	// ボスを撃破できた場合
 	if (enemyMng_.IsBossDestroy(bossType_))
 	{
-		sndMng_.StopBgm(SoundType::BGM::GAME2);
-		scnMng_.ChangeScene(SceneManager::SCENE_ID::RESULT);
-		return;
+
+		sceneChangeTimer_ -= scnMng_.GetDeltaTime();
+		if (sceneChangeTimer_ < 0.0f && !isSceneChanges_)
+		{
+			isSceneChanges_ = true;
+			sndMng_.StopBgm(SoundType::BGM::GAME2);
+			scnMng_.ChangeScene(SceneManager::SCENE_ID::RESULT);
+			return;
+		}
 	}
 
 #ifdef _DEBUG
@@ -97,11 +111,25 @@ void SceneBoss::NormalUpdate()
 void SceneBoss::NormalDraw()
 {
 	SceneBase::NormalDraw();
-
+	if (gameStart_) { gameStart_->Draw(); }
 #ifdef _DEBUG
 	// デバッグ用の情報描画
-	//DebugDraw();
+	DebugDraw();
 #endif
+}
+
+void SceneBoss::UpdateGameStart()
+{
+	gameStart_->Update();
+	if (gameStart_->IsEnd())
+	{
+		gameStart_ = nullptr;
+		gameUpdate_ = std::bind(&SceneBoss::UpdateGameMain, this);
+	}
+}
+
+void SceneBoss::UpdateGameMain()
+{
 }
 
 void SceneBoss::DebugUpdate()

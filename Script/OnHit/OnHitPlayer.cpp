@@ -39,6 +39,7 @@ OnHitPlayer::OnHitPlayer(Player& owner) :
 	onHitMap_.emplace(CollisionTags::TAG::DROP_ROCK, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitAttack(opponentCollider); });
 	onHitMap_.emplace(CollisionTags::TAG::CHANGE_NEXT_AREA, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitNextArea(opponentCollider); });
 	onHitMap_.emplace(CollisionTags::TAG::SHOP, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitShop(opponentCollider); });
+	onHitMap_.emplace(CollisionTags::TAG::TREASURE_CHEST, [this](const std::weak_ptr<ColliderBase>& opponentCollider) { return OnHitShop(opponentCollider); });
 
     onHitPlayerStamp_ = std::make_unique<OnHitPlayerStamp>(owner_);
     onHitPlayerShot_ = std::make_unique<OnHitPlayerShot>(owner_);
@@ -91,7 +92,9 @@ void OnHitPlayer::OnHitEnemy(const std::weak_ptr<ColliderBase>& opponentCollider
 
 void OnHitPlayer::OnHitItemAvility(const std::weak_ptr<ColliderBase>& opponentCollider)
 {	
-    owner_.GetParameter().isHitItem_ = true;
+    auto& parameter = owner_.GetParameter();
+    parameter.headUi_ = ParameterPlayer::HEAD_UI::ITEM_GET;
+    parameter.isHitItem_ = true;
     if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_GET_ITEM, owner_.GetParameter().padNo_))
     {
         // 衝突相手の所有者をキャストしてアイテムのインスタンスを取得
@@ -115,7 +118,9 @@ void OnHitPlayer::OnHitItemAvility(const std::weak_ptr<ColliderBase>& opponentCo
 
 void OnHitPlayer::OnHitItemFood(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
-    owner_.GetParameter().isHitItem_ = true;
+    auto& parameter = owner_.GetParameter();
+    parameter.headUi_ = ParameterPlayer::HEAD_UI::ITEM_GET;
+    parameter.isHitItem_ = true;
     if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_GET_ITEM, owner_.GetParameter().padNo_))
     {
         // 衝突相手の所有者をキャストしてアイテムのインスタンスを取得
@@ -131,7 +136,9 @@ void OnHitPlayer::OnHitItemFood(const std::weak_ptr<ColliderBase>& opponentColli
 
 void OnHitPlayer::OnHitItemAttackUp(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
-    owner_.GetParameter().isHitItem_ = true;
+    auto& parameter = owner_.GetParameter();
+    parameter.headUi_ = ParameterPlayer::HEAD_UI::ITEM_GET;
+    parameter.isHitItem_ = true;
     if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_GET_ITEM, owner_.GetParameter().padNo_))
     {
         // 衝突相手の所有者をキャストしてアイテムのインスタンスを取得
@@ -150,7 +157,9 @@ void OnHitPlayer::OnHitItemAttackUp(const std::weak_ptr<ColliderBase>& opponentC
 
 void OnHitPlayer::OnHitItemHpMaxUp(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
-    owner_.GetParameter().isHitItem_ = true;
+    auto& parameter = owner_.GetParameter();
+    parameter.headUi_ = ParameterPlayer::HEAD_UI::ITEM_GET;
+    parameter.isHitItem_ = true;
     if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_GET_ITEM, owner_.GetParameter().padNo_))
     {
         // 衝突相手の所有者をキャストしてアイテムのインスタンスを取得
@@ -169,7 +178,9 @@ void OnHitPlayer::OnHitItemHpMaxUp(const std::weak_ptr<ColliderBase>& opponentCo
 
 void OnHitPlayer::OnHitItemSpeedUp(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
-    owner_.GetParameter().isHitItem_ = true;
+    auto& parameter = owner_.GetParameter();
+    parameter.headUi_ = ParameterPlayer::HEAD_UI::ITEM_GET;
+    parameter.isHitItem_ = true;
     if (inputManager_.IsTrgDown(InputManager::TYPE::PLAYER_GET_ITEM, owner_.GetParameter().padNo_))
     {
         // 衝突相手の所有者をキャストしてアイテムのインスタンスを取得
@@ -188,11 +199,15 @@ void OnHitPlayer::OnHitItemSpeedUp(const std::weak_ptr<ColliderBase>& opponentCo
 
 void OnHitPlayer::OnHitItemTreasure(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
-    owner_.GetParameter().isHitItem_ = true;
+    auto& parameter = owner_.GetParameter();
+    parameter.headUi_ = ParameterPlayer::HEAD_UI::ITEM_GET;
+    parameter.isHitItem_ = true;
 }
 
 void OnHitPlayer::OnHitDoor(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
+    auto& parameter = owner_.GetParameter();
+    parameter.headUi_ = ParameterPlayer::HEAD_UI::ENTER_DOOR;
     if (InputManager::GetInstance().IsTrgDown(InputManager::TYPE::PLAYER_ENTER_DOOR, owner_.GetParameter().padNo_))
     {
         // 入室状態へ遷移
@@ -227,12 +242,19 @@ void OnHitPlayer::OnHitNextArea(const std::weak_ptr<ColliderBase>& opponentColli
 
 void OnHitPlayer::OnHitShop(const std::weak_ptr<ColliderBase>& opponentCollider)
 {
-    auto padNo = owner_.GetParameter().padNo_;
+    auto& parameter = owner_.GetParameter();
+    auto padNo = parameter.padNo_;
+    parameter.headUi_ = ParameterPlayer::HEAD_UI::ENTER_DOOR;
     if (InputManager::GetInstance().IsTrgDown(InputManager::TYPE::PLAYER_ENTER_DOOR, padNo))
     {
         // ショップを開く
         SceneManager::GetInstance().SetShopScene(padNo);
     }
+}
+
+void OnHitPlayer::OnHitTreasureChest(const std::weak_ptr<ColliderBase>& opponentCollider)
+{
+    owner_.GetParameter().headUi_ = ParameterPlayer::HEAD_UI::OPEN_TREASURE_CHEST;
 }
 
 void OnHitPlayer::AvilityShot(const std::weak_ptr<ColliderBase>& opponentCollider, const Vector2F& normal)

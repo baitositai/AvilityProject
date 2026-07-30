@@ -2,11 +2,13 @@
 #include "../../Application.h"
 #include "../../Manager/Common/ResourceManager.h"
 #include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/SoundManager.h"
 #include "../../Utility/UtilityCommon.h"
 #include "UiExplanations.h"
 
 UiExplanations::UiExplanations() :
-    sceneManager_(SceneManager::GetInstance())
+    sceneManager_(SceneManager::GetInstance()),
+    soundManager_(SoundManager::GetInstance())
 {
 	for (int i = 0; i < EXPLANATION_NUM; i++)
 	{
@@ -109,6 +111,7 @@ void UiExplanations::Add(const TYPE type, const AvilityTypes::TYPE abilityType)
         index_ = indexList_.front();
         indexList_.erase(indexList_.begin());
         update_ = std::bind(&UiExplanations::UpdateEnter, this);
+        //soundManager_.PlaySe(SoundType::SE::DISPLAY_EXPLANATION);
     }
 }
 
@@ -162,6 +165,7 @@ void UiExplanations::UpdateExit()
             index_ = indexList_.front();
             indexList_.erase(indexList_.begin());
             update_ = std::bind(&UiExplanations::UpdateEnter, this);
+            //soundManager_.PlaySe(SoundType::SE::DISPLAY_EXPLANATION);
         }
     }
 }

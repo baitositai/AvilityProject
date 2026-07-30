@@ -67,7 +67,7 @@ private:
 	static constexpr float STOP_TIME = 0.4f;
 
 	// ’Ç‰Ád—Í—Ê
-	static constexpr float ADD_GRAVITY = 18.0f;
+	static constexpr float ADD_GRAVITY = 16.0f;
 
 	// UŒ‚‰ñ”
 	static constexpr int SPECIAL_ATTACK_COUNT = 30;

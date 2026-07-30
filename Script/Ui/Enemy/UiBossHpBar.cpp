@@ -7,6 +7,7 @@
 UiBossHpBar::UiBossHpBar(EnemyBoss& owner) :
 	owner_(owner)
 {
+	namePlateHandle_ = -1;
 	hpBarPos_ = {};
 	hpBarSize_ = {};
 	preHp_ = -1;

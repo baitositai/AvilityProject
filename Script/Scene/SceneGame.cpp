@@ -19,16 +19,16 @@
 #include "../Manager/Game/EventManager.h"
 #include "../Factory/FactoryComponent.h"
 #include "../Utility/UtilityCommon.h"
+#include "../System/GameStart.h"
 #include "ScenePause.h"
 #include "SceneGame.h"
 
 SceneGame::SceneGame()
 {
-	// 更新関数のセット
+	// 処理の登録
 	updataFunc_ = std::bind(&SceneGame::LoadingUpdate, this);
-
-	// 描画関数のセット
 	drawFunc_ = std::bind(&SceneGame::LoadingDraw, this);
+	gameUpdate_ = std::bind(&SceneGame::UpdateGameStart, this);
 
 	// 管理クラスの生成
 	EventManager::CreateInstance();
@@ -99,16 +99,15 @@ void SceneGame::Init()
 	uiMng_.SetExplanationType(UiExplanations::TYPE::JUMP);
 	uiMng_.SetExplanationType(UiExplanations::TYPE::THROW);
 	uiMng_.SetExplanationType(UiExplanations::TYPE::ATTACK);
+
+	// ゲーム開始処理
+	gameStart_ = std::make_unique<GameStart>(0);
+	gameStart_->Init();
 }
 
 void SceneGame::NormalUpdate()
 {
-	// ポーズ画面
-	//if (inputMng_.IsTrgDown(InputManager::TYPE::PAUSE))
-	//{
-	//	scnMng_.PushScene(ScenePause_);
-	//	return;
-	//}
+	gameUpdate_();
 
 	// 基底クラスの処理
 	SceneBase::NormalUpdate();
@@ -128,11 +127,26 @@ void SceneGame::NormalDraw()
 {	
 	// 基底クラスの処理
 	SceneBase::NormalDraw();
+	if (gameStart_) { gameStart_->Draw(); }
 
 #ifdef _DEBUG
 	// デバッグ用の情報描画
-	//DebugDraw();
+	DebugDraw();
 #endif
+}
+
+void SceneGame::UpdateGameStart()
+{
+	gameStart_->Update();
+	if (gameStart_->IsEnd())
+	{
+		gameStart_ = nullptr;
+		gameUpdate_ = std::bind(&SceneGame::UpdateGameMain, this);
+	}
+}
+
+void SceneGame::UpdateGameMain()
+{
 }
 
 void SceneGame::DebugUpdate()

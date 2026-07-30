@@ -351,6 +351,7 @@ PlayerManager::PlayerManager()
 {	
 	playersLeft_ = -1;	
 	isPlayerAnnihilation_ = false;
+	gameOverCountDown_ = 0.0f;
 
 	// 初回のみ外部データを読み込んでテンプレートを作成
 	if (!templateParameter_)

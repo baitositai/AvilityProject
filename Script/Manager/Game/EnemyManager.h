@@ -51,6 +51,13 @@ public:
 	/// <param name="type">種類</param>
 	/// <param name="pos">生成位置</param>
 	void Create(const EnemyTypes::TYPE type, const Vector2F& pos);
+
+	/// <summary>
+	/// ボス生成処理
+	/// </summary>
+	/// <param name="type"></param>
+	/// <param name="pos"></param>
+	void CreateBoss(const EnemyTypes::TYPE type, const Vector2F& pos);
 	
 	/// <summary>
 	/// イベント用の敵生成処理
@@ -80,6 +87,12 @@ public:
 	/// </summary>
 	/// <param name="type">ボス種類</param>
 	void SetBossEnemyType(const EnemyTypes::TYPE type) { createBossEnemyType_ = type; }
+
+	/// <summary>
+	/// サンドバッグとなる敵を生成
+	/// </summary>
+	/// <param name="pos">座標</param>
+	void CreateSandBagEnemy(const Vector2F& pos);
 
 	/// <summary>
 	/// ボスを撃破できたか

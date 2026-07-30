@@ -26,30 +26,28 @@ void ComponentTextAnimation::Init()
 
 void ComponentTextAnimation::Update()
 {
-	// 文字数を達していた場合
-	if (charPerFrame_ >= length_)
+	// 全ての文字を表示し切っている場合は何もしない
+	if (charNum_ >= length_)
 	{
-		// 終了
 		return;
 	}
 
 	// ステップの更新
 	step_ += sceneManager_.GetDeltaTime();
 
-	// 目標のフレーム数に達していた場合
-	if (step_ > charPerFrame_)
+	// 1文字進める時間を超えた場合
+	if (step_ >= charPerFrame_)
 	{
 		// 一文字増やす
 		charNum_++;
 
-		// ステップを初期化
-		step_ = 0.0f;
+		// 余分に経過した時間を持ち越して初期化
+		step_ -= charPerFrame_;
 
 		// 効果音の再生
-		//SoundManager::GetInstance().PlaySe(SoundType::SE::KEBOARD);
+		soundManager_.PlaySe(SoundType::SE::TEXT_ANIMATION);
 	}
 }
-
 void ComponentTextAnimation::Draw()
 {
 	// 現在の表示すべき文字列を取得
