@@ -139,6 +139,12 @@ void StageManager::InitParameter()
 	auto parameterAbility = std::make_unique<ParameterStage>();
 	parameterAbility->LoadParameter(jsonAbilityParameter);
 	templateParameterMap_.emplace(StageManager::TYPE::ABILITY_TRIAL, std::move(parameterAbility));
+
+	// チュートリアル生成
+	const auto& jsonTutorialParameter = jsonParameterMap.at("tutorial").front();
+	auto parameterTutorial = std::make_unique<ParameterStage>();
+	parameterTutorial->LoadParameter(jsonTutorialParameter);
+	templateParameterMap_.emplace(StageManager::TYPE::TUTORIAL, std::move(parameterTutorial));
 }
 
 void StageManager::CreateStageRoad()
@@ -224,6 +230,9 @@ void StageManager::CreateStageAbilityTrial()
 
 void StageManager::CreateStageTutorial()
 {
+	// 共通処理
+	CreateStageCommon();
+	CreateBackGround();
 }
 
 void StageManager::CreateStageRoom()

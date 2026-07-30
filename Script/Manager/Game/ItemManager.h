@@ -140,6 +140,13 @@ public:
 	/// </summary>
 	void CheckAbilityTrial();
 
+	/// <summary>
+	/// チュートリアル用アビリティのアイテムの生成
+	/// </summary>
+	/// <param name="type">アビリティの種類</param>
+	/// <param name="pos">座標</param>
+	void CheckTutorialAbilityItem(const AvilityTypes::TYPE type, const Vector2F& pos);
+
 private:
 
 	// 座標リスト

@@ -31,6 +31,12 @@ public:
 	/// </summary>
 	void Draw() override;
 
+	/// <summary>
+	/// パラメーターを返す(変更可)
+	/// </summary>
+	/// <returns>パラメータ</returns>
+	ParameterGimmickTrain& GetParameter() { return *parameterTrain_; }
+
 private:
 
 	// 状態
@@ -40,10 +46,6 @@ private:
 		PASSING,
 		MAX
 	};
-
-	// 待機時間
-	static constexpr int WAIT_TIME_MAX = 50;
-	static constexpr int WAIT_TIME_MIN = 40;
 
 	// パラメータ情報
 	ParameterGimmickTrain* parameterTrain_;

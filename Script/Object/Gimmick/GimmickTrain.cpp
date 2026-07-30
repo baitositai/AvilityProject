@@ -123,7 +123,7 @@ void GimmickTrain::ChangeStateWait()
 	isDraw_ = false;
 
 	// 時間設定
-	timer_ = static_cast<float>(UtilityCommon::GetRandomCount(WAIT_TIME_MAX, WAIT_TIME_MIN));
+	timer_ = static_cast<float>(UtilityCommon::GetRandomCount(parameterTrain_->waitTimeMax_, parameterTrain_->waitTimeMin_));
 
 	// コライダー非活動状態
 	collider_->SetIsActive(false);

@@ -21,8 +21,7 @@ public:
 	/// <param name="parameter">ƒpƒ‰ƒ[ƒ^</param>
 	void LoadParameter(const Json& parameter) override;
 
-private:
-
-
+	float waitTimeMax_;
+	float waitTimeMin_;
 
 };

@@ -1,6 +1,7 @@
 #include "../../Utility/UtilityLoad.h"
 #include "../../Object/Gimmick/GimmickDoor.h"
 #include "../../Object/Gimmick/GimmickTarget.h"
+#include "../../Object/Gimmick/GimmickTrain.h"
 #include "../../Parameter/Gimmick/ParameterGimmickGroundRock.h"
 #include "../../System/GimmickGenerator.h"
 #include "../Manager/Common/Camera.h"
@@ -197,6 +198,22 @@ const Vector2F GimmickManager::GetShopPos() const
 
 	// À•W‚ğ•Ô‚·
 	return gimmickListMap_.at(GimmickTypes::TYPE::SHOP).front()->GetParameter().pos_;
+}
+
+void GimmickManager::CreateTutorialTrain()
+{
+	auto train = gimmickGenerator_->Create(GimmickTypes::TYPE::TRAIN);
+
+	//…•½•ûŒü‚ğİ’è
+	auto& parameter = dynamic_cast<ParameterGimmickTrain&>(train->GetParameter());
+	parameter.waitTimeMax_ = 3;
+	parameter.waitTimeMin_ = 3;
+
+	//‰Šú‰»
+	train->Init();
+
+	// Ši”[
+	gimmickListMap_[GimmickTypes::TYPE::TRAIN].push_back(std::move(train));
 }
 
 GimmickManager::GimmickManager()

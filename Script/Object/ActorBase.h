@@ -162,6 +162,12 @@ public:
 	const bool IsCulling() const { return isCulling_; }
 
 	/// <summary>
+	/// •`‰æ”»’è‚ğ•Ô‚·
+	/// </summary>
+	/// <returns>•`‰æ”»’è</returns>
+	const bool IsDraw() const { return isDraw_; }
+
+	/// <summary>
 	/// íœƒtƒ‰ƒO‚ğtrue‚É‚·‚é
 	/// </summary>
 	/// <param name="_isDelete"></param>

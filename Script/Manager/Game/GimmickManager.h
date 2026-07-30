@@ -90,6 +90,11 @@ public:
 	/// <returns>ショップ位置</returns>
 	const Vector2F GetShopPos() const;
 
+	/// <summary>
+	/// チュートリアル用の電車の生成
+	/// </summary>
+	void CreateTutorialTrain();
+
 private:
 
 	// ギミック生成

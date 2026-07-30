@@ -225,7 +225,7 @@ void SceneTitle::ChangeMenuGame()
 
 void SceneTitle::ChangeMenuTutorial()
 {
-	scnMng_.ChangeScene(SceneManager::SCENE_ID::TRAIN);
+	scnMng_.ChangeScene(SceneManager::SCENE_ID::TUTORIAL);
 	sndMng_.PlaySe(SoundType::SE::DECISION);
 	sndMng_.StopBgm(SoundType::BGM::TRAIN);
 	scoreManager_.Clear();

@@ -1839,6 +1839,13 @@
       "divY": 1,
       "sizeX": 451,
       "sizeY": 150
+    },
+    {
+      "key": "seSuccess",
+      "path": "Resource/Sound/Se/SeSuccess.mp3",
+      "sceneIds": [ 8 ],
+      "soundType": "se",
+      "type": "sound"
     }
   ]
 }

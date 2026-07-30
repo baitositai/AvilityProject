@@ -116,6 +116,8 @@
     "transparent": true,
     "scale": 4.5,
     "moveSpeed": 5.0,
+    "waitTimeMax": 50.0,
+    "waitTimeMin": 40.0,
     "hitBoxSize": {
       "x": 192,
       "y": 32

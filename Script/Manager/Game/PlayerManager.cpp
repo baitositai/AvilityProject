@@ -275,6 +275,38 @@ const std::vector<Vector2F> PlayerManager::GetPlayersPos() const
 	return playersPos;
 }
 
+const bool PlayerManager::IsJumpPlayer() const
+{
+	// プレイヤー1がジャンプをしたかを判定
+	return !playerList_.front()->GetParameter().isGround_;
+}
+
+const bool PlayerManager::IsAbilityTutorialClear(const AvilityTypes::TYPE abilityType)
+{
+	const auto& player = playerList_.front();
+	const auto& parameter = player->GetParameter();
+	bool flag = false;
+	switch (abilityType)
+	{
+	case AvilityTypes::TYPE::STAMP:
+		flag = parameter.gravityPower_ > 14.0f;
+		break;
+
+	case AvilityTypes::TYPE::SHOT:
+		flag = parameter.shotTime_ > 0.0f;
+		break;
+
+	case AvilityTypes::TYPE::TELEPORT:
+		flag = !player->IsDraw();
+		break;
+
+	case AvilityTypes::TYPE::GRAVITYCONTROLL:
+		flag = parameter.gravityDir_ != ParameterActor::DIR::DOWN;
+		break;
+	}
+	return flag;
+}
+
 const Player* PlayerManager::GetNearestPlayer(const Vector2F& pos) const
 {
 	// 空の場合は即終了

@@ -194,6 +194,28 @@ void EnemyManager::CreateEventEnemy(const EnemyTypes::TYPE type, const Vector2F&
 	eventEnemyList_.push_back(enemyPtr);
 }
 
+void EnemyManager::CreateTutorialEnemy(const Vector2F& pos)
+{
+	// 生成
+	auto enemy = enemyGenerator_->CreateEnemy(EnemyTypes::TYPE::SLIME);
+
+	// 位置調整
+	auto& param = enemy->GetParameter();
+	param.pos_ = pos;
+
+	// ロジックの変更
+	param.logicMap_.clear();
+
+	// 初期化
+	enemy->Init();
+
+	// アニメーションを再生
+	enemy->GetAnimation().Play(Animation::TYPE::IDLE);
+
+	// 格納
+	enemiesMap_[EnemyTypes::TYPE::SLIME].push_back(std::move(enemy));
+}
+
 void EnemyManager::DestroyEventEnemy()
 {
 	for (auto& eventEnemy : eventEnemyList_)
