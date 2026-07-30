@@ -95,6 +95,11 @@ public:
 	/// </summary>
 	void CreateTutorialTrain();
 
+	/// <summary>
+	/// 電車を消す
+	/// </summary>
+	void DeleteTrain();
+
 private:
 
 	// ギミック生成

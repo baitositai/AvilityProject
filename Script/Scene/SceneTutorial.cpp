@@ -288,6 +288,9 @@ void SceneTutorial::UpdateStepWorkAction()
 
 		// ¬Œ÷‰¹‚ğ–Â‚ç‚·
 		sndMng_.PlaySe(SoundType::SE::SUCCESS);
+
+		// “dÔ‚ğÁ‚·
+		gimmickMng_.DeleteTrain();
 	}
 }
 

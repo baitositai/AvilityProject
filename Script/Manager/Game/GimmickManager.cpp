@@ -216,6 +216,15 @@ void GimmickManager::CreateTutorialTrain()
 	gimmickListMap_[GimmickTypes::TYPE::TRAIN].push_back(std::move(train));
 }
 
+void GimmickManager::DeleteTrain()
+{
+	for (auto& train : gimmickListMap_[GimmickTypes::TYPE::TRAIN])
+	{
+		train->Delete();
+	}
+	gimmickListMap_[GimmickTypes::TYPE::TRAIN].clear();
+}
+
 GimmickManager::GimmickManager()
 {
 	gimmickGenerator_ = std::make_unique<GimmickGenerator>();

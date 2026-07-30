@@ -2,47 +2,47 @@
   "abilities": {
     "superman": {
       "index": 0,
-      "amount": 2000,
+      "amount": 30000,
       "shopMessage": "スーパーマンのように強くなるぞ"
     },
     "airwalk": {
       "index": 1,
-      "amount": 2000,
+      "amount": 20000,
       "shopMessage": "無限ジャンプで空を歩けるぞ"
     },
     "gravityControll": {
       "index": 2,
-      "amount": 1500,
+      "amount": 15000,
       "shopMessage": "上下左右自由に重力を切り替えれるぞ"
     },
     "shot": {
       "index": 3,
-      "amount": 3000,
+      "amount": 30000,
       "shopMessage": "縦横無尽にに飛び回る。私が大砲よ"
     },
     "airslash": {
       "index": 4,
-      "amount": 1500,
+      "amount": 15000,
       "shopMessage": "ジャンプと同時に衝撃波を出すぞ"
     },
     "metal": {
       "index": 5,
-      "amount": 1000,
+      "amount": 10000,
       "shopMessage": "体がメタルになって重くなるぞ"
     },
     "stamp": {
       "index": 6,
-      "amount": 2000,
+      "amount": 30000,
       "shopMessage": "地面に向かって勢いよく落ちるぞ"
     },
     "teleport": {
       "index": 7,
-      "amount": 3000,
+      "amount": 20000,
       "shopMessage": "瞬間移動。出現時に攻撃もできるぞ"
     },
     "giant": {
       "index": 8,
-      "amount": 2500,
+      "amount": 25000,
       "shopMessage": "でっかくなって強くなるぞ"
     }
   },
@@ -81,182 +81,182 @@
     "friedEgg": {
       "index": 0,
       "healHp": 20,
-      "amount": 200
+      "amount": 2000
     },
     "waffle": {
       "index": 1,
       "healHp": 25,
-      "amount": 250
+      "amount": 2500
     },
     "pineapple": {
       "index": 2,
       "healHp": 40,
-      "amount": 400
+      "amount": 4000
     },
     "bacon": {
       "index": 3,
       "healHp": 15,
-      "amount": 150
+      "amount": 1500
     },
     "beer": {
       "index": 4,
       "healHp": 10,
-      "amount": 100
+      "amount": 1000
     },
     "steak": {
       "index": 5,
       "healHp": 85,
-      "amount": 850
+      "amount": 8500
     },
     "cheese": {
       "index": 6,
       "healHp": 30,
-      "amount": 300
+      "amount": 3000
     },
     "roastedChicken": {
       "index": 7,
       "healHp": 80,
-      "amount": 800
+      "amount": 8000
     },
     "bread": {
       "index": 8,
       "healHp": 25,
-      "amount": 250
+      "amount": 2500
     },
     "eggplant": {
       "index": 9,
       "healHp": 15,
-      "amount": 150
+      "amount": 1500
     },
     "redChili": {
       "index": 10,
       "healHp": 5,
-      "amount": 50
+      "amount": 500
     },
     "greenChili": {
       "index": 11,
       "healHp": 5,
-      "amount": 50
+      "amount": 500
     },
     "tomato": {
       "index": 12,
       "healHp": 12,
-      "amount": 120
+      "amount": 1200
     },
     "strawberry": {
       "index": 13,
       "healHp": 15,
-      "amount": 150
+      "amount": 1500
     },
     "apple": {
       "index": 14,
       "healHp": 18,
-      "amount": 180
+      "amount": 1800
     },
     "kiwi": {
       "index": 15,
       "healHp": 20,
-      "amount": 200
+      "amount": 2000
     },
     "pumpkinPie": {
       "index": 16,
       "healHp": 45,
-      "amount": 450
+      "amount": 4500
     },
     "cheesecake": {
       "index": 17,
       "healHp": 50,
-      "amount": 500
+      "amount": 5000
     },
     "pretzel": {
       "index": 18,
       "healHp": 15,
-      "amount": 150
+      "amount": 1500
     },
     "salami": {
       "index": 19,
       "healHp": 35,
-      "amount": 350
+      "amount": 3500
     },
     "salmonFillet": {
       "index": 20,
       "healHp": 55,
-      "amount": 550
+      "amount": 5500
     },
     "honeyJar": {
       "index": 21,
       "healHp": 60,
-      "amount": 600
+      "amount": 6000
     },
     "jerky": {
       "index": 22,
       "healHp": 40,
-      "amount": 400
+      "amount": 4000
     },
     "potato": {
       "index": 23,
       "healHp": 15,
-      "amount": 150
+      "amount": 1500
     },
     "watermelon": {
       "index": 24,
       "healHp": 30,
-      "amount": 300
+      "amount": 3000
     },
     "pancakes": {
       "index": 25,
       "healHp": 35,
-      "amount": 350
+      "amount": 3500
     },
     "chickenLeg": {
       "index": 26,
       "healHp": 45,
-      "amount": 450
+      "amount": 4500
     },
     "cherry": {
       "index": 27,
       "healHp": 10,
-      "amount": 100
+      "amount": 1000
     },
     "chocolate": {
       "index": 28,
       "healHp": 25,
-      "amount": 250
+      "amount": 2500
     },
     "sodaCan": {
       "index": 29,
       "healHp": 20,
-      "amount": 200
+      "amount": 2000
     },
     "avocado": {
       "index": 30,
       "healHp": 22,
-      "amount": 220
+      "amount": 2200
     },
     "meatSlice": {
       "index": 31,
       "healHp": 50,
-      "amount": 500
+      "amount": 5000
     },
     "shrimp": {
       "index": 32,
       "healHp": 30,
-      "amount": 300
+      "amount": 3000
     },
     "olive": {
       "index": 33,
       "healHp": 8,
-      "amount": 80
+      "amount": 800
     },
     "picklesJar": {
       "index": 34,
       "healHp": 35,
-      "amount": 350
+      "amount": 3500
     },
     "bakedPotato": {
       "index": 35,
       "healHp": 25,
-      "amount": 250
+      "amount": 2500
     }
   },
   "money": {
@@ -330,19 +330,19 @@
   "potions": {
     "potionAttackUp": {
       "index": 0,
-      "amount": 3000,
+      "amount": 30000,
       "attackUp": 5,
       "shopMessage": "攻撃力が上がるぞ"
     },
     "potionHpMaxUp": {
       "index": 2,
-      "amount": 1000,
+      "amount": 10000,
       "hpMaxUp": 20,
       "shopMessage": "体力の上限が上がるぞ"
     },
     "potionSpeedUp": {
       "index": 1,
-      "amount": 2000,
+      "amount": 20000,
       "speedUp": 0.2,
       "shopMessage": "移動速度が上がるぞ"
     }

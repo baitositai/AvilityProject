@@ -219,7 +219,7 @@ void SceneTitle::ChangeMenuGame()
 	sndMng_.PlaySe(SoundType::SE::DECISION);
 	sndMng_.StopBgm(SoundType::BGM::TRAIN);
 	scoreManager_.Clear();
-	scoreManager_.AddTotalScore(10000);	// 初期スコア
+	scoreManager_.AddTotalScore(100000);	// 初期スコア
 	playerMng_.Create();
 }
 
