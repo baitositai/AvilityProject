@@ -46,9 +46,6 @@ void ComponentLogicGroundRock::Init()
 	const int playerNum = playerManager_.GetPlayerNum();
 	std::vector<Vector2F> playersPos = playerManager_.GetPlayersPos();
 	soundManager_.PlaySe(SoundType::SE::GOLEM_ATTACK);
-
-	// 攻撃のコライダー設定
-	attackCollider_->SetIsActive(true);
 }
 
 void ComponentLogicGroundRock::Update()
@@ -65,6 +62,8 @@ void ComponentLogicGroundRock::Update()
 	else if (animation.GetAnimationIndex()== CREATE_GROUNDROCK_INDEX)
 	{
 		CreateGroundRock();
+		// 攻撃のコライダー設定
+		attackCollider_->SetIsActive(true);
 		camera_.SetCameraShake(CAMERA_SHAKE_TIME, CAMERA_SHAKE_POWER);
 	}
 }

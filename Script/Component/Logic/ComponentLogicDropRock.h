@@ -71,6 +71,10 @@ private:
 	//攻撃力
 	static constexpr int ATTACK_POINT = 40;
 
+	//近接攻撃開始アニメーションインデックス
+	static constexpr int SHORT_ATTACK_ANIM_INDEX = 29;
+
+
 	// 所有者
 	EnemyGaiaGolem& owner_;
 

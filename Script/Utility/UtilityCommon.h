@@ -149,7 +149,37 @@ public:
 	/// <param name="_end">終了位置</param>
 	/// <returns></returns>
 	static float EaseQuadComeBack(float _time, const float _totalTime, const float _start, const float _end);
+
+	/// <summary>
+	/// 最初バックして急激に速度を上げるようなイージング
+	/// </summary>
+	/// <param name="_time">経過時間</param>
+	/// <param name="_totalTime">アニメーション総時間</param>
+	/// <param name="_start">開始位置</param>
+	/// <param name="_end">終了位置</param>
+	/// <returns></returns>
+	static float EaseInBack(float _time, const float _totalTime, const float _start, const float _end);
 	
+	/// <summary>
+	/// 最後にバックするようなイージング
+	/// </summary>
+	/// <param name="_time">経過時間</param>
+	/// <param name="_totalTime">アニメーション総時間</param>
+	/// <param name="_start">開始位置</param>
+	/// <param name="_end">終了位置</param>
+	/// <returns></returns>
+	static float EaseOutBack(float _time, const float _totalTime, const float _start, const float _end);
+
+	/// <summary>
+	/// 跳ねるようなイージング
+	/// </summary>
+	/// <param name="_time">経過時間</param>
+	/// <param name="_totalTime">アニメーション総時間</param>
+	/// <param name="_start">開始位置</param>
+	/// <param name="_end">終了位置</param>
+	/// <returns></returns>
+	static float EaseBounce(float _time, const float _totalTime, const float _start, const float _end);
+
 	/// <summary>
 	/// stringオブジェクトから(SJIS)からwstringオブジェクトに変換
 	/// </summary>

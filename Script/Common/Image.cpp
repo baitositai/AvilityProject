@@ -27,6 +27,13 @@ const Vector2 Image::GetCenterPos() const
 	);
 }
 
+const Vector2 Image::GetScaledImageSize() const
+{
+	Vector2 imgSize = Vector2();
+	GetGraphSize(handleId, &imgSize.x, &imgSize.y);
+	return Vector2(imgSize.x*scale, imgSize.y*scale);
+}
+
 const void Image::Draw() const
 {
 	DrawGraph(
