@@ -1,6 +1,7 @@
 #pragma once
 #include <functional>
 #include <unordered_map>
+#include <array>
 #include "../../Common/Image.h"
 #include "../../Common/Sprite.h"
 #include "SceneBase.h"

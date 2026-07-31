@@ -29,7 +29,14 @@ bool Application::Init()
 
 	// ウィンドウサイズ
 	SetGraphMode(SCREEN_SIZE_X, SCREEN_SIZE_Y, COLOR_DEPTH);
-	ChangeWindowMode(true);
+
+	// ウィンドウ設定
+	isWindowMode_ = false;
+#ifdef _DEBUG
+	isWindowMode_ = true;
+#endif
+
+	ChangeWindowMode(isWindowMode_);
 
 	// FPS初期化
 	fps_ = std::make_unique<FpsControl>(FPS_RATE);
@@ -122,9 +129,19 @@ void Application::GameEnd()
 	isGameEnd_ = true;
 }
 
+void Application::SetWindowMode(const bool isWindowMode)
+{
+	// 変数の設定
+	isWindowMode_ = isWindowMode;
+
+	// 設定の適用
+	ChangeWindowMode(isWindowMode_);
+}
+
 Application::Application()
 {
 	isGameEnd_ = false;
+	isWindowMode_ = false;
 	fps_ = nullptr;
 }
 

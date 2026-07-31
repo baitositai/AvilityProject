@@ -1195,7 +1195,7 @@
     {
       "key": "seDisplayExplanation",
       "path": "Resource/Sound/Se/SeDisplayExplanation.mp3",
-      "sceneIds": [ 2,3 ],
+      "sceneIds": [ 2, 3 ],
       "soundType": "se",
       "type": "sound"
     },
@@ -1300,7 +1300,7 @@
     {
       "key": "seGolemAttack",
       "path": "Resource/Sound/Se/SeGolemAttack.mp3",
-      "sceneIds": [  ],
+      "sceneIds": [],
       "soundType": "se",
       "type": "sound"
     },
@@ -1846,6 +1846,46 @@
       "sceneIds": [ 8 ],
       "soundType": "se",
       "type": "sound"
+    },
+    {
+      "key": "triangle",
+      "path": "Resource/Image/Ui/Triangle.png",
+      "sceneIds": [],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 64,
+      "sizeY": 64
+    },
+    {
+      "key": "triangle",
+      "path": "Resource/Image/Ui/Triangle.png",
+      "sceneIds": [],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 64,
+      "sizeY": 64
+    },
+    {
+      "key": "settings",
+      "path": "Resource/Image/Ui/Settings.png",
+      "sceneIds": [  ],
+      "type": "sprite",
+      "divX": 1,
+      "divY": 5,
+      "sizeX": 320,
+      "sizeY": 64
+    },
+    {
+      "key": "screenMode",
+      "path": "Resource/Image/Ui/ScreenMode.png",
+      "sceneIds": [  ],
+      "type": "sprite",
+      "divX": 1,
+      "divY": 2,
+      "sizeX": 449,
+      "sizeY": 64
     }
   ]
 }

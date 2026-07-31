@@ -271,6 +271,8 @@
     <ClCompile Include="Script\Ui\Game\UiExplanations.cpp" />
     <ClCompile Include="Script\Ui\Shop\UiShop.cpp" />
     <ClCompile Include="Script\Scene\SceneAbilityTrial.cpp" />
+    <ClCompile Include="Script\Scene\SceneTutorial.cpp" />
+    <ClCompile Include="Script\Scene\SceneSetting.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\System\PlayerCheckAnnihilation.h" />
@@ -597,6 +599,8 @@
     <ClInclude Include="Script\Ui\Game\UiExplanations.h" />
     <ClInclude Include="Script\Ui\Shop\UiShop.h" />
     <ClInclude Include="Script\Scene\SceneAbilityTrial.h" />
+    <ClInclude Include="Script\Scene\SceneTutorial.h" />
+    <ClInclude Include="Script\Scene\SceneSetting.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AvilityProject.rc" />
