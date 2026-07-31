@@ -74,6 +74,16 @@ private:
 	//ボタン説明のイージング時間
 	static constexpr float MENU_EXPLANATIONS_NAME_EASE_TIME = 1.5f;
 
+	//粘土細工のイージング時間
+	static constexpr float CLAYWORK_EASE_TIME = 5.0f;
+
+	//花形イージングのパラメーター
+	static constexpr float HALF_RADIUS_NUM = 5.0f;
+	static constexpr float SMALL_RADIUS = 5.0f;
+
+	//矢印座標のイージング始端位置のローカルY
+	static constexpr float ARROW_EASE_LOCAL_Y = 20.0f;
+
 	// 選択番号
 	int selectMenuIndex_;
 
@@ -93,6 +103,10 @@ private:
 	// 説明
 	Sprite uiExplanations_;
 	EasingParameter uiExplanationsEaseParam_;
+
+	//ねんど細工の画像
+	Image arrow_;
+	EasingParameter arrowEaseParam_;
 
 	// メニュー画像
 	std::array<Image, MENU_COUNT_MAX> menus_;

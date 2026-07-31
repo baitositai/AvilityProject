@@ -121,11 +121,18 @@ void SceneTitle::Init()
 
 	// メニュー説明の設定
 	uiExplanations_.handleIds = resMng_.GetHandles("titleMenuExplanations");
-	Vector2 initUiExplantionsPos = Vector2(-uiExplanations_.GetScaledImageSize().x,
+	Vector2 initUiExplanationsPos = Vector2(-uiExplanations_.GetScaledImageSize().x,
 		-uiExplanations_.GetScaledImageSize().y);
-	uiExplanations_.pos = initUiExplantionsPos;
-	uiExplanationsEaseParam_.startPos = initUiExplantionsPos;
+	uiExplanations_.pos = initUiExplanationsPos;
+	uiExplanationsEaseParam_.startPos = initUiExplanationsPos;
 	uiExplanationsEaseParam_.goalPos= Vector2(UI_MENU_POS_X, UI_EXPLANATIONS_POS_Y);
+
+	arrow_.handleId = resMng_.GetHandle("arrow");
+	arrow_.pos = menus_[selectMenuIndex_].pos;
+	arrow_.pos.x -= menus_[selectMenuIndex_].GetScaledImageSize().x / 2;
+	arrow_.isFlipX = true;
+
+	arrowEaseParam_.startPos = arrow_.pos;
 
 }
 
@@ -191,6 +198,10 @@ void SceneTitle::EaseMenuAndExplanations(void)
 		, MENU_NAME_EASE_TIME
 		, uiMenuEaseParam_.startPos.y
 		, uiMenuEaseParam_.goalPos.y);
+
+	arrow_.pos = menus_[selectMenuIndex_].pos;
+	arrow_.pos.x -= menus_[selectMenuIndex_].GetScaledImageSize().x / 2;
+	arrow_.pos.y = arrowEaseParam_.startPos.y + ARROW_EASE_LOCAL_Y;
 }
 
 void SceneTitle::UpdateMain()
@@ -221,6 +232,7 @@ void SceneTitle::UpdateEaseTitle()
 		updateTitleFunc_ = std::bind(&SceneTitle::UpdateSelectEase, this);
 		drawTitleFunc_ = std::bind(&SceneTitle::DrawSelect, this);
 		titleEaseCnt_ = TITLE_EASE_TIME;
+
 		return;
 	}
 	float imgSize= titleLogo_.GetScaledImageSize().x;
@@ -249,12 +261,16 @@ void SceneTitle::UpdateSelect()
 	{
 		selectMenuIndex_ = UtilityCommon::WrapStepIndex(selectMenuIndex_, 1, 0, MENU_COUNT_MAX);
 		sndMng_.PlaySe(SoundType::SE::SELECT);
+		arrowEaseParam_.startPos = menus_[selectMenuIndex_].pos;
+		arrowEaseParam_.startPos.x -= menus_[selectMenuIndex_].GetScaledImageSize().x / 2;
 		return;
 	}
 	else if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_UP))
 	{
 		selectMenuIndex_ = UtilityCommon::WrapStepIndex(selectMenuIndex_, -1, 0, MENU_COUNT_MAX);
 		sndMng_.PlaySe(SoundType::SE::SELECT);
+		arrowEaseParam_.startPos = menus_[selectMenuIndex_].pos;
+		arrowEaseParam_.startPos.x -= menus_[selectMenuIndex_].GetScaledImageSize().x / 2;
 		return;
 	}
 	else if (inputMng_.IsTrgDown(InputManager::TYPE::SELECT_DECISION))
@@ -264,6 +280,16 @@ void SceneTitle::UpdateSelect()
 		changeMap_[static_cast<MENU>(selectMenuIndex_)]();
 		return;
 	}
+
+	//選択しているメニューに粘土細工の画像をイージングさせる
+	Vector2F clayWorkPos = UtilityCommon::EaseEpiCycloid(arrowEaseParam_.easeCnt, CLAYWORK_EASE_TIME, arrowEaseParam_.startPos.ToVector2F(), 5.0f, 3.0f);
+	arrow_.pos = clayWorkPos.ToVector2();
+	arrowEaseParam_.easeCnt += scnMng_.GetDeltaTime();
+	if (arrowEaseParam_.easeCnt >= CLAYWORK_EASE_TIME)
+	{
+		arrowEaseParam_.easeCnt = 0.0f;
+	}
+
 }
 
 void SceneTitle::UpdateSelectEase()
@@ -277,6 +303,8 @@ void SceneTitle::UpdateSelectEase()
 	if (menuIt == menuEasingParams_.end())
 	{
 		updateTitleFunc_ = std::bind(&SceneTitle::UpdateSelect, this);
+		arrowEaseParam_.startPos = arrow_.pos;
+		arrow_.pos = arrowEaseParam_.startPos;
 		return;
 	}
 
@@ -353,8 +381,6 @@ void SceneTitle::UpdateSelectEaseBack()
 
 	uiExplanationsEaseParam_.easeCnt -= scnMng_.GetDeltaTime();
 	uiMenuEaseParam_.easeCnt -= scnMng_.GetDeltaTime();
-
-
 }
 
 void SceneTitle::DrawMain()
@@ -397,6 +423,8 @@ void SceneTitle::DrawSelect()
 	uiExplanations_.index = selectMenuIndex_;
 	uiExplanations_.DrawRota();
 	uiMenu_.DrawRota();
+
+	arrow_.DrawRota();
 }
 
 void SceneTitle::ChangeMenuGame()

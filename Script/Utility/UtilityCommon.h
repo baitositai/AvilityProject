@@ -181,6 +181,16 @@ public:
 	static float EaseBounce(float _time, const float _totalTime, const float _start, const float _end);
 
 	/// <summary>
+	/// エピサイクロイド曲線に沿った補間位置を計算します。
+	/// </summary>
+	/// <param name="start">開始位置</param>
+	/// <param name="t">補間パラメータ。通常 0?1 の範囲で曲線上の位置を指定します。</param>
+	/// <param name="halfRadiusNum">エピサイクロイドの大きさや周期に影響を与える係数（正の値を想定）。</param>
+	/// <param name="smallRadius">エピサイクロイドを生成する小円の半径（局所的な振幅を制御します）。</param>
+	/// <returns>start を起点とした、t に対応するエピサイクロイド上の位置を表す Vector2F。</returns>
+	static Vector2F EaseEpiCycloid(float _time, const float _totalTime, const Vector2F& start, const float halfRadiusNum, const float smallRadius);
+
+	/// <summary>
 	/// stringオブジェクトから(SJIS)からwstringオブジェクトに変換
 	/// </summary>
 	/// <param name="str"></param>stringオブジェクト

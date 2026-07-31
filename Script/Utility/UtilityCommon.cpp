@@ -463,6 +463,20 @@ float UtilityCommon::EaseBounce(float _time, const float _totalTime, const float
     return _start + dis * ease;
 }
 
+Vector2F UtilityCommon::EaseEpiCycloid(float _time, const float _totalTime, const Vector2F& start, const float halfRadiusNum, const float smallRadius)
+{
+    float t = _time / _totalTime;
+    if (t < 0.0f) t = 0.0f;
+    if (t > 1.0f) t = 1.0f;
+
+    float rad = DX_TWO_PI_F * t;
+    float baseRadius = smallRadius * halfRadiusNum;
+    Vector2F ret = {};
+    ret.x = (baseRadius + smallRadius) * cos(rad) - smallRadius * cos(((baseRadius + smallRadius) / smallRadius) * rad);
+    ret.y = (baseRadius + smallRadius) * sin(rad) - smallRadius * sin(((baseRadius + smallRadius) / smallRadius) * rad);
+    return Vector2F::AddVector2F(start, ret);
+}
+
 std::wstring UtilityCommon::GetWStringFromString(const std::string& str)
 {
     //根幹数を正しく使うには2回呼び出す必要がある
