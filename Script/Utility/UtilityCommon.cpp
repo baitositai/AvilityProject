@@ -407,6 +407,76 @@ float UtilityCommon::EaseQuadComeBack(float _time, const float _totalTime, const
     return _start + dis * quad;
 }
 
+float UtilityCommon::EaseInBack(float _time, const float _totalTime, const float _start, const float _end)
+{
+    // 補間係数
+    float t = _time / _totalTime;
+    float dis = _end - _start;
+    if (t < 0.0f) t = 0.0f;
+    if (t > 1.0f) t = 1.0f;
+    const float c1 = 1.70158;
+    const float c3 = c1 + 1;
+    float ease = c3 * t * t * t - c1 * t * t;
+
+    return _start + dis * ease;
+}
+
+float UtilityCommon::EaseOutBack(float _time, const float _totalTime, const float _start, const float _end)
+{
+    float t = _time / _totalTime;
+    float dis = _end - _start;
+    if (t < 0.0f) t = 0.0f;
+    if (t > 1.0f) t = 1.0f;
+    const float c1= 1.70158;
+    const float c3= c1 + 1.0f;
+    float ease = 1.0f + c3 * pow(t - 1.0f, 3.0f) + c1 * pow(t - 1.0f, 2.0f);
+    return _start + dis * ease;
+}
+
+float UtilityCommon::EaseBounce(float _time, const float _totalTime, const float _start, const float _end)
+{
+    float t = _time / _totalTime;
+    float dis = _end - _start;
+    if (t < 0.0f) t = 0.0f;
+    if (t > 1.0f) t = 1.0f;
+
+    const float d1 = 2.75f;
+    const float n1 = 7.5625;
+    float ease = 0.0f;
+    if (t < 1.0f / d1)
+    {
+        ease = n1 * t * t;
+    }
+    else if (1.0f / d1 <= t && t < 2.0f / d1)
+    {
+        ease = n1 * (t -= 1.5 / d1) * t + 0.75;
+
+    }
+    else if (2.0f / d1 <= t && t < 2.5f / d1)
+    {
+        ease = n1 * (t -= 2.25 / d1) * t + 0.9375;
+    }
+    else
+    {
+        ease = n1 * (t -= 2.625 / d1) * t + 0.984375;
+    }
+    return _start + dis * ease;
+}
+
+Vector2F UtilityCommon::EaseEpiCycloid(float _time, const float _totalTime, const Vector2F& start, const float halfRadiusNum, const float smallRadius)
+{
+    float t = _time / _totalTime;
+    if (t < 0.0f) t = 0.0f;
+    if (t > 1.0f) t = 1.0f;
+
+    float rad = DX_TWO_PI_F * t;
+    float baseRadius = smallRadius * halfRadiusNum;
+    Vector2F ret = {};
+    ret.x = (baseRadius + smallRadius) * cos(rad) - smallRadius * cos(((baseRadius + smallRadius) / smallRadius) * rad);
+    ret.y = (baseRadius + smallRadius) * sin(rad) - smallRadius * sin(((baseRadius + smallRadius) / smallRadius) * rad);
+    return Vector2F::AddVector2F(start, ret);
+}
+
 std::wstring UtilityCommon::GetWStringFromString(const std::string& str)
 {
     //根幹数を正しく使うには2回呼び出す必要がある

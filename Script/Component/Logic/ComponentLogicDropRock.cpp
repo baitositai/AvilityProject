@@ -44,9 +44,6 @@ void ComponentLogicDropRock::Init()
 	const int playerNum = playerManager_.GetPlayerNum();
 	std::vector<Vector2F> playersPos = playerManager_.GetPlayersPos();
 
-	// 攻撃のコライダー設定
-	attackCollider_->SetIsActive(true);
-
 	std::vector<float>rockPosX;
 	if (playerNum > ROCK_CREATE_NUM_MIN)createRockNum = playerNum;
 	for (int i = 0; i < createRockNum; i++)
@@ -73,6 +70,11 @@ void ComponentLogicDropRock::Update()
 	Animation& animation = owner_.GetAnimation();
 	Vector2F dir = Vector2F::MulVector2FFloat(parameter_.GetFront(), parameter_.scale_);
 	attackPos_ = Vector2F::AddVector2F(parameter_.pos_, Vector2F::MulVector2FFloat(dir, parameter_.defaultAttackDistance_));
+
+	if (animation.GetAnimationIndex() >= SHORT_ATTACK_ANIM_INDEX)
+	{
+		attackCollider_->SetIsActive(true);
+	}
 	if (!animation.IsPlay())
 	{
 		isEnd_ = true;

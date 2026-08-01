@@ -14,6 +14,10 @@ class SoundManager : public Singleton<SoundManager>
 
 public:
 
+	// 最大音量
+	static constexpr int MAX_BGM_VOLUME = 100;
+	static constexpr int MAX_SE_VOLUME = 100;
+
 	//デフォルトの音量
 	static constexpr int DEFAULT_BGM_VOLUME = 75;
 	static constexpr int DEFAULT_SE_VOLUME = 60;
@@ -111,6 +115,18 @@ public:
 	/// <param name="se">SEの種類</param>
 	/// <returns>trueの場合再生中,falseの場合非再生中</returns>
 	bool IsCheckPlaySe(const SoundType::SE se) const;
+
+	/// <summary>
+	/// BGM音量を返す
+	/// </summary>
+	/// <returns>BGM音量</returns>
+	const int GetBgmVolume() const { return defaultVolumeBgm_; }
+
+	/// <summary>
+	/// SE音量を返す
+	/// </summary>
+	/// <returns>SE音量</returns>
+	const int GetSeVolume() const { return defaultVolumeSe_; }
 
 private:
 

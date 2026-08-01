@@ -37,6 +37,7 @@ public:
 		RESULT = 5,
 		GAMEOVER = 6,
 		ABILITYROOM = 7,
+		TUTORIAL = 8,
 	};
 
 	/// <summary>

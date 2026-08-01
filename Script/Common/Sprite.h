@@ -49,6 +49,12 @@ struct Sprite
 	const Vector2 GetCenterPos() const;
 
 	/// <summary>
+	/// スケールを考慮した画像サイズの取得
+	/// </summary>
+	/// <returns></returns>
+	const Vector2 GetScaledImageSize() const;
+
+	/// <summary>
 	/// 通常描画
 	/// </summary>
 	const void Draw() const;

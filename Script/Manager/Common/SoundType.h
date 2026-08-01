@@ -94,6 +94,7 @@ public:
 		DRUM_ROLL_END,
 		BAMBOO_THROW,
 		GAME_OVER,
+		SUCCESS,
 		MAX
 	};
 

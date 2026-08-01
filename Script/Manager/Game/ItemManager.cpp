@@ -440,6 +440,14 @@ void ItemManager::CheckAbilityTrial()
 	}
 }
 
+void ItemManager::CheckTutorialAbilityItem(const AvilityTypes::TYPE type, const Vector2F& pos)
+{
+	if (itemMap_[ItemTypes::TYPE::ABILITY].empty())
+	{
+		CreateAvilityItem(type, pos);
+	}
+}
+
 ItemManager::ItemManager()
 {
 	// ƒAƒCƒeƒ€¶¬ˆ—‚Ì¶¬

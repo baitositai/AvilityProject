@@ -29,6 +29,13 @@ const Vector2 Sprite::GetCenterPos() const
 	);
 }
 
+const Vector2 Sprite::GetScaledImageSize() const
+{
+	Vector2 imgSize = Vector2();
+	GetGraphSize(handleIds[index], &imgSize.x, &imgSize.y);
+	return Vector2(imgSize.x * scale, imgSize.y * scale);
+}
+
 const void Sprite::Draw() const
 {
 	DrawGraph(

@@ -67,6 +67,12 @@ public:
 	void CreateEventEnemy(const EnemyTypes::TYPE type, const Vector2F& pos);
 
 	/// <summary>
+	/// チュートリアル用の敵を生成
+	/// </summary>
+	/// <param name="pos">生成位置</param>
+	void CreateTutorialEnemy(const Vector2F& pos);
+
+	/// <summary>
 	/// イベントで発生した敵を全削除
 	/// </summary>
 	void DestroyEventEnemy();

@@ -60,6 +60,18 @@ public:
 	/// </summary>
 	void GameEnd();
 
+	/// <summary>
+	/// ウィンドウモードの設定
+	/// </summary>
+	/// <param name="isWindowMode">ウィンドウモードの判定</param>
+	void SetWindowMode(const bool isWindowMode);
+
+	/// <summary>
+	/// ウィンドウモードの判定を返す
+	/// </summary>
+	/// <returns>ウィンドウモードの判定</returns>
+	const bool GetWindowMode() const { return isWindowMode_; }
+
 private:
 
 	// カラービット数
@@ -70,6 +82,9 @@ private:
 
 	// ゲームの終了判定
 	bool isGameEnd_;
+
+	// ウィンドウモード
+	bool isWindowMode_;
 
 	// FPS
 	std::unique_ptr<FpsControl> fps_;

@@ -77,7 +77,8 @@ const std::map<std::string, SoundType::SE> SoundType::KEY_SE_MAP =
 	{"seDrumRoll", SoundType::SE::DRUM_ROLL},
 	{"seDrumRollEnd", SoundType::SE::DRUM_ROLL_END},
 	{"seBambooThrow", SoundType::SE::BAMBOO_THROW},
-	{"seGameOver", SoundType::SE::GAME_OVER}
+	{"seGameOver", SoundType::SE::GAME_OVER},
+	{"seSuccess", SoundType::SE::SUCCESS}
 };
 
 const std::map<EnemyTypes::TYPE, SoundType::BGM> SoundType::BOSS_SOUND_MAP =

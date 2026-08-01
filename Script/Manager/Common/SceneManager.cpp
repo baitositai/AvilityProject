@@ -10,6 +10,7 @@
 #include "../../Scene/SceneBoss.h"
 #include "../../Scene/ScenePause.h"
 #include "../../Scene/SceneAbilityTrial.h"
+#include "../../Scene/SceneTutorial.h"
 #include "../../Common/Loading.h"
 #include "../Common/InputManager.h"
 #include "../Common/ResourceManager.h"
@@ -408,6 +409,10 @@ void SceneManager::DoChangeScene(SCENE_ID sceneId)
 
 	case SCENE_ID::ABILITYROOM:
 		CreateScene(std::make_shared<SceneAbilityTrial>());
+		break;
+
+	case SCENE_ID::TUTORIAL:
+		CreateScene(std::make_shared<SceneTutorial>());
 		break;
 	}
 

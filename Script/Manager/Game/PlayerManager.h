@@ -2,6 +2,7 @@
 #include <vector>
 #include "../../Template/Singleton.h"
 #include "../../Common/Vector2F.h"
+#include "../../Component/Avility/AvilityTypes.h"
 
 class Player;
 class ParameterPlayer;
@@ -116,6 +117,19 @@ public:
 	/// </summary>
 	/// <returns>プレイヤーらの位置</returns>
 	const std::vector<Vector2F> GetPlayersPos() const;
+
+	/// <summary>
+	/// ジャンプしたか返す
+	/// </summary>
+	/// <returns>ジャンプをしたらtrue</returns>
+	const bool IsJumpPlayer() const;
+
+	/// <summary>
+	/// チュートリアル用アビリティの操作が確認できたか返す
+	/// </summary>
+	/// <param name="abilityType">アビリティ種類</param>
+	/// <returns>クリアできたら返す</returns>
+	const bool IsAbilityTutorialClear(const AvilityTypes::TYPE abilityType);
 
 	/// <summary>
 	/// 最も近いプレイヤーのポインタを返す
