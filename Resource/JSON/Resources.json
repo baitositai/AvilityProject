@@ -512,7 +512,7 @@
     {
       "key": "clayWork",
       "path": "Resource/Image/Item/ClayWork.png",
-      "sceneIds": [1, 2, 3, 4 ],
+      "sceneIds": [2, 3, 4 ],
       "type": "texture",
       "divX": 1,
       "divY": 1,

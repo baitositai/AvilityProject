@@ -110,6 +110,16 @@ public:
 	static int WrapStepIndex(const int index, const int step, const int min, const int max);
 
 	/// <summary>
+	/// 線形イージング
+	/// </summary>
+	/// <param name="_time">経過時間</param>
+	/// <param name="_totalTime">アニメーション総時間</param>
+	/// <param name="_start">開始位置</param>
+	/// <param name="_end">終了位置</param>
+	/// <returns>変化量</returns>
+	static float EaseLerping(float _time, const float _totalTime, const float _start, const float _end);
+
+	/// <summary>
 	/// イーズイン
 	/// </summary>
 	/// <param name="_time">経過時間</param>
