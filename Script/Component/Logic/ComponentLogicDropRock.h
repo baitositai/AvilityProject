@@ -72,7 +72,7 @@ private:
 	static constexpr int ATTACK_POINT = 40;
 
 	//近接攻撃開始アニメーションインデックス
-	static constexpr int SHORT_ATTACK_ANIM_INDEX = 29;
+	static constexpr int SHORT_ATTACK_ANIM_INDEX = 27;
 
 
 	// 所有者
