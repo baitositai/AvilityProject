@@ -37,6 +37,9 @@ void SoundManager::SceneChangeResources()
 		// 次へ
 		++it;
 	}
+
+	// 再生しているBGMをクリア
+	playingBgmList_.clear();
 }
 
 void SoundManager::Update()
@@ -113,11 +116,14 @@ void SoundManager::PlayBgm(const SoundType::BGM key, const bool topPos, const in
 	}
 
 	// 音量調整
-	loadedBgmMap_[key].volume = volume;
-	ChangeVolumeBgm(volume, key);
+	loadedBgmMap_[key].volume = defaultVolumeBgm_;
+	ChangeVolumeBgm(defaultVolumeBgm_, key);
 
 	//再生
 	PlaySoundMem(loadedBgmMap_[key].handle, loadedBgmMap_[key].playType, topPos);
+
+	// リストに追加
+	playingBgmList_.push_back(key);
 }
 
 void SoundManager::PlaySe(const SoundType::SE key, const bool topPos, const int volume)
@@ -140,8 +146,8 @@ void SoundManager::PlaySe(const SoundType::SE key, const bool topPos, const int 
 	}
 
 	// 音量調整
-	loadedSeMap_[key].volume = volume;
-	ChangeVolumeSe(volume, key);
+	loadedSeMap_[key].volume = defaultVolumeSe_;
+	ChangeVolumeSe(defaultVolumeSe_, key);
 
 	//再生
 	PlaySoundMem(loadedSeMap_[key].handle, loadedSeMap_[key].playType, topPos);
@@ -160,6 +166,9 @@ void SoundManager::StopBgm(const SoundType::BGM key)
 
 	//停止
 	StopSoundMem(loadedBgmMap_[key].handle);
+
+	// リストから削除
+	auto listIt = std::find(playingBgmList_.begin(), playingBgmList_.end(), key);
 }
 
 void SoundManager::StopSe(const SoundType::SE key)
@@ -237,15 +246,60 @@ void SoundManager::StopAllSe()
 
 void SoundManager::ChangeVolumeBgm(const int volume, const SoundType::BGM bgm)
 {
-	//音源の音量変更
-	ChangeVolumeSoundMem(MAX * volume / defaultVolumeBgm_, loadedBgmMap_[bgm].handle);
+	// 音量の範囲チェック
+	int inputVolume = volume;
+	if (inputVolume < 0)
+	{
+		inputVolume = 0;
+	}
+	if (inputVolume > MAX)
+	{
+		inputVolume = MAX;
+	}
+
+	// マスター音量を考慮した音量計算
+	int calculatedVolume = 0;
+	if (defaultVolumeBgm_ > 0)
+	{
+		calculatedVolume = static_cast<int>(static_cast<float>(MAX * defaultVolumeBgm_) / 100.0f);
+	}
+
+	// 音源の存在確認と音量変更
+	auto it = loadedBgmMap_.find(bgm);
+	if (it != loadedBgmMap_.end())
+	{
+		ChangeVolumeSoundMem(calculatedVolume, it->second.handle);
+	}
 }
 
 void SoundManager::ChangeVolumeSe(const int volume, const SoundType::SE se)
 {
-	//音源の音量変更
-	ChangeVolumeSoundMem(MAX * volume / defaultVolumeSe_, loadedSeMap_[se].handle);
-}
+	// 音量の範囲チェック
+	int inputVolume = volume;
+	if (inputVolume < 0)
+	{
+		inputVolume = 0;
+	}
+	if (inputVolume > MAX)
+	{
+		inputVolume = MAX;
+	}
+
+	// マスター音量を考慮した音量計算
+	int calculatedVolume = 0;
+	if (defaultVolumeSe_ > 0)
+	{
+
+		calculatedVolume = static_cast<int>(static_cast<float>(MAX * defaultVolumeSe_) / 100.0f);
+	}
+
+	// 音源の存在確認と音量変更
+	auto it = loadedSeMap_.find(se);
+	if (it != loadedSeMap_.end())
+	{
+		ChangeVolumeSoundMem(calculatedVolume, it->second.handle);
+	}
+} 
 
 bool SoundManager::IsCheckPlaySe(const SoundType::SE se) const
 {
@@ -264,6 +318,16 @@ void SoundManager::Release()
 	loadedBgmMap_.clear();
 	loadedSeMap_.clear();
 	fadeSeMap_.clear();
+}
+
+void SoundManager::SetDefaultVolumeBgm(const int volume)
+{
+	defaultVolumeBgm_ = volume;
+
+	for(auto & bgm : playingBgmList_)
+	{
+		ChangeVolumeBgm(defaultVolumeBgm_, bgm);
+	}
 }
 
 int SoundManager::GetPlayType(const TYPE soundType)

@@ -87,7 +87,7 @@ public:
 	/// BGMのデフォルト音量設定
 	/// </summary>
 	/// <param name="volume">BGMのデフォルト音量</param>
-	void SetDefaultVolumeBgm(const int volume) { defaultVolumeBgm_ = volume; }
+	void SetDefaultVolumeBgm(const int volume);
 
 	/// <summary>
 	/// SEのデフォルト音量設定
@@ -180,6 +180,9 @@ private:
 
 	// 追加処理
 	void Add(const std::string& key, ResourceSound* resource);
+
+	// 再生しているBGMリスト
+	std::vector<SoundType::BGM> playingBgmList_;
 
 	// コンストラクタ
 	SoundManager();
