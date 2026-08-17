@@ -488,7 +488,7 @@ void SceneTutorial::UpdateStepEnd()
 		// タイトルシーンに戻る
 		scnMng_.ChangeScene(SceneManager::SCENE_ID::TITLE);
 		sndMng_.StopBgm(soundType_);
-		playerMng_.AllDetachItem();
+		//playerMng_.AllDetachItem();
 		itemMng_.SetAllIsCarry(false);
 	}
 }
