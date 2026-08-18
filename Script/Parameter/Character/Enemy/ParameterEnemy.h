@@ -53,6 +53,9 @@ public:
 	// ‹–—e‹——£
 	float permissibleDistance_;
 
+	// UŒ‚‚Ì’x‰„ŠÔ
+	float attackDelayTime_;
+
 	// ¶¬—¦
 	float spawnRate_;
 

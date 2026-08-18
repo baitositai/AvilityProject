@@ -3,6 +3,7 @@
 ParameterActor::ParameterActor() :
 	scale_(1.0f),
 	angle_(0.0f),
+	criticalDamageRate_(0.0f),
 	alpha_(1.0f),
     drawIndex_(0.0f),
 	direction_(false), 
@@ -146,7 +147,7 @@ Vector2F ParameterActor::GetBack()
     return vec;
 }
 
-Vector2F ParameterActor::GetUp()
+const Vector2F ParameterActor::GetUp()
 {
     // 上方向は重力ベクトルを完全に反転させたもの
     Vector2F vec = GetGravityDirectionVector();

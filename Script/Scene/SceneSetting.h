@@ -105,4 +105,3 @@ private:
 	// ”š‚Ì•`‰æ
 	void DrawNumber(const Vector2& pos, const int volume);
 };
-

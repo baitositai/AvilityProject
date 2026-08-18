@@ -1,13 +1,16 @@
 #include "../../Manager/Game/CollisionManager.h"
 #include "../../Manager/Game/PlayerManager.h"
+#include "../../Manager/Game/UiManager.h"
 #include "../../Manager/Common/SceneManager.h"
+#include "../../Manager/Common/SoundManager.h"
 #include "../../Object/Character/Enemy/EnemyBase.h"
+#include "../../Object/Character/Player.h"
 #include "../../Object/Common/Animation.h"
 #include "../../Collider/ColliderFan.h"
 #include "../../Utility/UtilityCommon.h"
+#include "../../Ui/Enemy/UiWarning.h"
 #include "ComponentLogicChase.h"
 
-#include "../../Object/Character/Player.h"
 
 ComponentLogicChase::ComponentLogicChase(EnemyBase& owner) :
 	ComponentLogicBase(owner),
@@ -16,6 +19,7 @@ ComponentLogicChase::ComponentLogicChase(EnemyBase& owner) :
 {
 	moveDirection_ = 0.0f;
 	eyeBaseAngle_ = 0.0f;
+	attackDelayTimer_ = 0.0f;
 	stopTimer_ = 0.0f;
 	moveDistance_ = {};
 	isMove_ = false;
@@ -24,6 +28,7 @@ ComponentLogicChase::ComponentLogicChase(EnemyBase& owner) :
 	// 状態遷移処理のマップを初期化
 	changeStateMap_.emplace(STATE::NONE, std::bind(&ComponentLogicChase::ChangeStateChase, this));
 	changeStateMap_.emplace(STATE::CHASE, std::bind(&ComponentLogicChase::ChangeStateChase, this));
+	changeStateMap_.emplace(STATE::DELAY, std::bind(&ComponentLogicChase::ChangeStateDelay, this));
 }
 
 ComponentLogicChase::~ComponentLogicChase()
@@ -124,33 +129,31 @@ void ComponentLogicChase::UpdateChase()
 	// ターゲットに近づいた場合 攻撃間合いに入ったか
 	if (distance <= parameter_.attackStartDistance_)
 	{
+		// 状態遷移
+		ChangeState(STATE::DELAY);
+	}
+}
+
+void ComponentLogicChase::UpdateDelay()
+{
+	// 遅延時間を減算
+	attackDelayTimer_ -= sceneManager_.GetDeltaTime();
+
+	// 遅延時間が0以下になった場合
+	if (attackDelayTimer_ <= 0.0f)
+	{		
 		// 攻撃に変更
-		owner_.ChangeState(EnemyBase::STATE::ATTACK);
-
-		// 攻撃のアニメーションを開始（ループしない）
+		owner_.ChangeState(EnemyBase::STATE::ATTACK);	
+		
+		// 攻撃のアニメーションを開始
 		owner_.GetAnimation().Play(Animation::TYPE::ATTACK, false);
-
-		// 次回アニメーションを指定しない
-		owner_.GetAnimation().SetNextAnimationType(Animation::TYPE::MAX);
-
+		
 		// 攻撃判定
 		parameter_.isAction_ = true;
 
 		// 終了判定
 		isEnd_ = true;
-
-		// 視野コライダー判定を無効
-		colliderFan_->SetIsActive(false);
 	}
-	//// ターゲットから離れた場合 見失う距離まで離れたか
-	//else if (distance >= parameter_.eyeDistance_)
-	//{
-	//	// パトロールに変更
-	//	ChangeState(STATE::PATROL);
-
-	//	// ターゲット座標を空にする
-	//	parameter_.targetPos_ = nullptr;
-	//}
 }
 
 void ComponentLogicChase::ChangeState(const STATE state)
@@ -167,6 +170,32 @@ void ComponentLogicChase::ChangeStateChase()
 	update_ = std::bind(&ComponentLogicChase::UpdateChase, this);
 }
 
+void ComponentLogicChase::ChangeStateDelay()
+{
+	update_ = std::bind(&ComponentLogicChase::UpdateDelay, this);
+
+	// 攻撃のアニメーションを開始
+	owner_.GetAnimation().Play(Animation::TYPE::ATTACK, false);
+
+	// 停止
+	owner_.GetAnimation().Stop();
+
+	// 次回アニメーションを指定しない
+	owner_.GetAnimation().SetNextAnimationType(Animation::TYPE::MAX);
+
+	// 視野コライダー判定を無効
+	colliderFan_->SetIsActive(false);
+
+	// 遅延時間の設定
+	attackDelayTimer_ = parameter_.attackDelayTime_;
+
+	// 効果音再生
+	soundManager_.PlaySe(SoundType::SE::ALARM);
+
+	// 警告UIの表示
+	UiManager::GetInstance().Add(std::make_unique<UiWarning>(owner_), UiManager::LAYER::UI);
+}
+
 void ComponentLogicChase::UpdateEyeAngle()
 {
 	// キャラクターの向きに応じてコライダーの角度を更新
@@ -178,6 +207,12 @@ void ComponentLogicChase::UpdateAnimation()
 {
 	Animation& animation = owner_.GetAnimation();
 	Animation::TYPE type = Animation::TYPE::MAX;
+
+	// 攻撃の遅延時間中はアニメーションを指定しない
+	if (state_ == STATE::DELAY)
+	{
+		return;
+	}
 
 	// 移動量がある場合
 	if (parameter_.moveAmount_.x > 0.0f)

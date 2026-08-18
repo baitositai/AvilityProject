@@ -66,7 +66,7 @@ public:
 	/// 現在の上方向のベクトルを返す
 	/// </summary>
 	/// <returns>上方向のベクトル</returns>	
-	Vector2F GetUp();
+	const Vector2F GetUp();
 
 	/// <summary>
 	/// 現在の下方向のベクトルを返す

@@ -54,6 +54,7 @@ private:
 	{
 		NONE,	//
 		CHASE,	// 追跡
+		DELAY,	// 遅延
 	};
 
 	// 所有者
@@ -64,6 +65,9 @@ private:
 
 	// 移動停止時間
 	float stopTimer_;
+
+	// 攻撃遅延タイマー
+	float attackDelayTimer_;
 
 	// パトロールの移動距離
 	Vector2F moveDistance_;
@@ -91,10 +95,12 @@ private:
 
 	//移動種類別に更新処理
 	void UpdateChase();
+	void UpdateDelay();
 
 	// 状態遷移処理
 	void ChangeState(const STATE state);
 	void ChangeStateChase();
+	void ChangeStateDelay();
 
 	// 視界角度の更新
 	void UpdateEyeAngle();

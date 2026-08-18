@@ -11,6 +11,7 @@ ParameterEnemy::ParameterEnemy() :
 	eyeAngleRad_(0.0f),
 	eyeDistance_(0.0f),
 	attackStartDistance_(0.0f),
+	attackDelayTime_(0.0f),
 	permissibleDistance_(0.0f),
 	shotDamageInterval_(0.0f),
 	dropMoney_(0.0f),
@@ -35,6 +36,7 @@ void ParameterEnemy::LoadParameter(const Json& parameter)
 	eyeAngle_ = parameter.value("eyeAngle", 0.0f);
 	eyeDistance_ = parameter.value("eyeDistance", 0.0f);
     attackStartDistance_ = parameter.value("attackStartDistance", 0.0f);
+	attackDelayTime_ = parameter.value("attackDelayTime", 0.0f);
 	permissibleDistance_ = parameter.value("permissibleDistance", 0.0f);
 	spawnRate_ = parameter.value("spawnRate", 0.0f);
 	dropMoney_ = parameter.value("dropMoney", -1);

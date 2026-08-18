@@ -73,6 +73,10 @@ void EnemyPanda::Defence()
 		// 次回アニメーションを指定
 		animation_->SetNextAnimationType(type, animation_->IsLoop());
 	}
+	else if (type == Animation::TYPE::DEFENCE)
+	{
+		return;
+	}
 	
 	// アニメーション処理
 	animation_->Play(Animation::TYPE::DEFENCE, false);
