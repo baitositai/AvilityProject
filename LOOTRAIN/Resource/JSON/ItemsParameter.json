@@ -1,0 +1,417 @@
+{
+  "abilities": {
+    "superman": {
+      "index": 0,
+      "amount": 30000,
+      "shopMessage": "スーパーマンのように強くなるぞ"
+    },
+    "airwalk": {
+      "index": 1,
+      "amount": 20000,
+      "shopMessage": "無限ジャンプで空を歩けるぞ"
+    },
+    "gravityControll": {
+      "index": 2,
+      "amount": 15000,
+      "shopMessage": "上下左右自由に重力を切り替えれるぞ"
+    },
+    "shot": {
+      "index": 3,
+      "amount": 30000,
+      "shopMessage": "縦横無尽にに飛び回る。私が大砲よ"
+    },
+    "airslash": {
+      "index": 4,
+      "amount": 15000,
+      "shopMessage": "ジャンプと同時に衝撃波を出すぞ"
+    },
+    "metal": {
+      "index": 5,
+      "amount": 10000,
+      "shopMessage": "体がメタルになって重くなるぞ"
+    },
+    "stamp": {
+      "index": 6,
+      "amount": 30000,
+      "shopMessage": "地面に向かって勢いよく落ちるぞ"
+    },
+    "teleport": {
+      "index": 7,
+      "amount": 20000,
+      "shopMessage": "瞬間移動。出現時に攻撃もできるぞ"
+    },
+    "giant": {
+      "index": 8,
+      "amount": 25000,
+      "shopMessage": "でっかくなって強くなるぞ"
+    }
+  },
+  "avilityCommon": {
+    "hitBoxSize": {
+      "x": 48,
+      "y": 48
+    },
+    "hitRadius": 24,
+    "transparent": true,
+    "gravityPower": 9.8,
+    "resourceKey": "avilityItems",
+    "componentKeys": [
+      "knockBack",
+      "gravity",
+      "move"
+    ]
+  },
+  "foodCommon": {
+    "gravityPower": 9.8,
+    "transparent": true,
+    "shopMessage": "食べると体力を回復するぞ",
+    "hitBoxSize": {
+      "x": 48,
+      "y": 48
+    },
+    "hitRadius": 24,
+    "resourceKey": "foods",
+    "componentKeys": [
+      "knockBack",
+      "gravity",
+      "move"
+    ]
+  },
+  "foods": {
+    "friedEgg": {
+      "index": 0,
+      "healHp": 20,
+      "amount": 2000
+    },
+    "waffle": {
+      "index": 1,
+      "healHp": 25,
+      "amount": 2500
+    },
+    "pineapple": {
+      "index": 2,
+      "healHp": 40,
+      "amount": 4000
+    },
+    "bacon": {
+      "index": 3,
+      "healHp": 15,
+      "amount": 1500
+    },
+    "beer": {
+      "index": 4,
+      "healHp": 10,
+      "amount": 1000
+    },
+    "steak": {
+      "index": 5,
+      "healHp": 85,
+      "amount": 8500
+    },
+    "cheese": {
+      "index": 6,
+      "healHp": 30,
+      "amount": 3000
+    },
+    "roastedChicken": {
+      "index": 7,
+      "healHp": 80,
+      "amount": 8000
+    },
+    "bread": {
+      "index": 8,
+      "healHp": 25,
+      "amount": 2500
+    },
+    "eggplant": {
+      "index": 9,
+      "healHp": 15,
+      "amount": 1500
+    },
+    "redChili": {
+      "index": 10,
+      "healHp": 5,
+      "amount": 500
+    },
+    "greenChili": {
+      "index": 11,
+      "healHp": 5,
+      "amount": 500
+    },
+    "tomato": {
+      "index": 12,
+      "healHp": 12,
+      "amount": 1200
+    },
+    "strawberry": {
+      "index": 13,
+      "healHp": 15,
+      "amount": 1500
+    },
+    "apple": {
+      "index": 14,
+      "healHp": 18,
+      "amount": 1800
+    },
+    "kiwi": {
+      "index": 15,
+      "healHp": 20,
+      "amount": 2000
+    },
+    "pumpkinPie": {
+      "index": 16,
+      "healHp": 45,
+      "amount": 4500
+    },
+    "cheesecake": {
+      "index": 17,
+      "healHp": 50,
+      "amount": 5000
+    },
+    "pretzel": {
+      "index": 18,
+      "healHp": 15,
+      "amount": 1500
+    },
+    "salami": {
+      "index": 19,
+      "healHp": 35,
+      "amount": 3500
+    },
+    "salmonFillet": {
+      "index": 20,
+      "healHp": 55,
+      "amount": 5500
+    },
+    "honeyJar": {
+      "index": 21,
+      "healHp": 60,
+      "amount": 6000
+    },
+    "jerky": {
+      "index": 22,
+      "healHp": 40,
+      "amount": 4000
+    },
+    "potato": {
+      "index": 23,
+      "healHp": 15,
+      "amount": 1500
+    },
+    "watermelon": {
+      "index": 24,
+      "healHp": 30,
+      "amount": 3000
+    },
+    "pancakes": {
+      "index": 25,
+      "healHp": 35,
+      "amount": 3500
+    },
+    "chickenLeg": {
+      "index": 26,
+      "healHp": 45,
+      "amount": 4500
+    },
+    "cherry": {
+      "index": 27,
+      "healHp": 10,
+      "amount": 1000
+    },
+    "chocolate": {
+      "index": 28,
+      "healHp": 25,
+      "amount": 2500
+    },
+    "sodaCan": {
+      "index": 29,
+      "healHp": 20,
+      "amount": 2000
+    },
+    "avocado": {
+      "index": 30,
+      "healHp": 22,
+      "amount": 2200
+    },
+    "meatSlice": {
+      "index": 31,
+      "healHp": 50,
+      "amount": 5000
+    },
+    "shrimp": {
+      "index": 32,
+      "healHp": 30,
+      "amount": 3000
+    },
+    "olive": {
+      "index": 33,
+      "healHp": 8,
+      "amount": 800
+    },
+    "picklesJar": {
+      "index": 34,
+      "healHp": 35,
+      "amount": 3500
+    },
+    "bakedPotato": {
+      "index": 35,
+      "healHp": 25,
+      "amount": 2500
+    }
+  },
+  "money": {
+    "coin": {
+      "amount": 100,
+      "hitBoxSize": {
+        "x": 18,
+        "y": 18
+      },
+      "hitRadius": 12,
+      "resourceKey": "coins",
+      "animation": {
+        "idle": {
+          "no": 0,
+          "speed": 0.1,
+          "num": 3
+        }
+      },
+      "divisionNum": {
+        "x": 3,
+        "y": 3
+      }
+    },
+    "coinBag": {
+      "amount": 1000,
+      "hitBoxSize": {
+        "x": 40,
+        "y": 40
+      },
+      "hitRadius": 24,
+      "resourceKey": "coinBag",
+      "animation": {
+        "idle": {
+          "no": 0,
+          "speed": 0.1,
+          "num": 3
+        }
+      },
+      "divisionNum": {
+        "x": 2,
+        "y": 2
+      }
+    }
+  },
+  "moneyCommon": {
+    "scale": 1.0,
+    "transparent": true,
+    "gravityPower": 9.8,
+    "componentKeys": [
+      "knockBack",
+      "gravity",
+      "move"
+    ]
+  },
+  "potionCommon": {
+    "hitBoxSize": {
+      "x": 48,
+      "y": 48
+    },
+    "hitRadius": 24,
+    "scale": 0.5,
+    "transparent": true,
+    "gravityPower": 9.8,
+    "resourceKey": "potions",
+    "componentKeys": [
+      "knockBack",
+      "gravity",
+      "move"
+    ]
+  },
+  "potions": {
+    "potionAttackUp": {
+      "index": 0,
+      "amount": 30000,
+      "attackUp": 5,
+      "shopMessage": "攻撃力が上がるぞ"
+    },
+    "potionHpMaxUp": {
+      "index": 2,
+      "amount": 10000,
+      "hpMaxUp": 20,
+      "shopMessage": "体力の上限が上がるぞ"
+    },
+    "potionSpeedUp": {
+      "index": 1,
+      "amount": 20000,
+      "speedUp": 0.2,
+      "shopMessage": "移動速度が上がるぞ"
+    }
+  },
+  "treasure": {
+    "beckoningCat": {
+      "amount": 3000,
+      "resourceKey": "beckoningCat",
+      "hitBoxSize": {
+        "x": 72,
+        "y": 96
+      }
+    },
+    "tv": {
+      "amount": 10000,
+      "resourceKey": "tv",
+      "hitBoxSize": {
+        "x": 128,
+        "y": 96
+      }
+    },
+    "tinRobot": {
+      "amount": 5000,
+      "resourceKey": "tinRobot",
+      "hitBoxSize": {
+        "x": 96,
+        "y": 128
+      }
+    },
+    "clayWork": {
+      "amount": 20,
+      "resourceKey": "clayWork",
+      "hitBoxSize": {
+        "x": 48,
+        "y": 75
+      }
+    },
+    "bottleShip": {
+      "amount": 7500,
+      "resourceKey": "bottleShip",
+      "hitBoxSize": {
+        "x": 64,
+        "y": 48
+      }
+    },
+    "stuffedToy": {
+      "amount": 4500,
+      "resourceKey": "stuffedToy",
+      "hitBoxSize": {
+        "x": 91,
+        "y": 128
+      }
+    },
+    "pot": {
+      "amount": 12000,
+      "resourceKey": "pot",
+      "hitBoxSize": {
+        "x": 96,
+        "y": 128
+      }
+    }
+  },
+  "treasureCommon": {
+    "gravityPower": 9.8,
+    "transparent": true,
+    "componentKeys": [
+      "knockBack",
+      "gravity",
+      "move"
+    ]
+  }
+}

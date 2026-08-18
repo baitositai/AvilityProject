@@ -1,0 +1,167 @@
+{
+  "player": {
+    "angle": 0.0,
+    "animation": {
+      "idle": {
+        "no": 0,
+        "speed": 0.2,
+        "num": 7
+      },
+      "walk": {
+        "no": 1,
+        "speed": 0.2,
+        "num": 8
+      },
+      "dash": {
+        "no": 2,
+        "speed": 0.2,
+        "num": 12
+      },
+      "jump": {
+        "no": 3,
+        "speed": 0.2,
+        "num": 4
+      },
+      "fall": {
+        "no": 4,
+        "speed": 0.2,
+        "num": 4
+      },
+      "damage": {
+        "no": 5,
+        "speed": 0.2,
+        "num": 3
+      },
+      "dead": {
+        "no": 6,
+        "speed": 0.1,
+        "num": 15
+      },
+      "attack": {
+        "no": 7,
+        "speed": 0.2,
+        "num": 15
+      }
+    },
+    "attackPower": 10,
+    "componentKeys": [
+      "jump",
+      "knockBack",
+      "gravity",
+      "move",
+      "spriteAnimation",
+      "invincible",
+      "cameraRangeCheck"
+    ],
+    "criticalRate": 0.05,
+    "criticalDamageRate": 1.5,
+    "dashAddSpeed": 2.0,
+    "damageColor": {
+      "r": 0,
+      "g": -255,
+      "b": -255
+    },
+    "defaultAttackDistance": 30.0,
+    "defaultAttackRadius": 20.0,
+    "defaultAttackStartFrame": 108,
+    "defaultAttackSecondFrame": 114,
+    "direction": false,
+    "divisionNum": {
+      "x": 15,
+      "y": 8
+    },
+    "gravityPower": 9.8,
+    "hitBoxSize": {
+      "x": 16,
+      "y": 18
+    },
+    "hp": 200,
+    "invincibleTimeMax": 2.0,
+    "jumpCount": 1,
+    "jumpCountMax": 2,
+    "jumpPowerMax": 22.5,
+    "localPos": {
+      "x": 0,
+      "y": 0
+    },
+    "moveSpeed": 2.0,
+    "moveSpeedLimit": 10.0,
+    "resourceKey": "player",
+    "scale": 3.0,
+    "stateComponentKeys": {
+      "alive": "playerProcess",
+      "attack": "playerAttack",
+      "hit": "dummy",
+      "dead": "playerDead",
+      "spawn": "spawn",
+      "enter": "enter"
+    },
+    "transparent": true,
+    "weight": 0.9,
+    "avility": {
+      "airslash": {
+        "attackBoostRate": 0,
+        "moveSpeedBoostRate": 0,
+        "gravityBoostRate": 0,
+        "defenceRate": 0,
+        "criticalRate": 0.0
+      },
+      "airwalk": {
+        "attackBoostRate": 0,
+        "moveSpeedBoostRate": 0.05,
+        "gravityBoostRate": 0,
+        "defenceRate": 0,
+        "criticalRate": 0.0
+      },
+      "giant": {
+        "attackBoostRate": 0.3,
+        "moveSpeedBoostRate": 0,
+        "gravityBoostRate": 0.05,
+        "defenceRate": 0.25,
+        "criticalRate": 0.02
+      },
+      "gravityControll": {
+        "attackBoostRate": 0.1,
+        "moveSpeedBoostRate": 0,
+        "gravityBoostRate": 0,
+        "defenceRate": 0.1,
+        "criticalRate": 0.02
+      },
+      "metal": {
+        "attackBoostRate": 0.3,
+        "moveSpeedBoostRate": -0.5,
+        "gravityBoostRate": 0.2,
+        "defenceRate": 0.25,
+        "criticalRate": 0.1
+      },
+      "shot": {
+        "attackBoostRate": 0.0,
+        "moveSpeedBoostRate": 0.1,
+        "gravityBoostRate": 0,
+        "defenceRate": 0,
+        "criticalRate": 0.0
+      },
+      "stamp": {
+        "attackBoostRate": 0.0,
+        "moveSpeedBoostRate": 0,
+        "gravityBoostRate": 0,
+        "defenceRate": 0,
+        "criticalRate": 0.0
+      },
+      "superman": {
+        "attackBoostRate": 0.3,
+        "moveSpeedBoostRate": 1,
+        "gravityBoostRate": 0,
+        "defenceRate": 0,
+        "criticalRate": 0.02
+      },
+      "teleport": {
+        "attackBoostRate": 0.0,
+        "moveSpeedBoostRate": 0.2,
+        "gravityBoostRate": 0,
+        "defenceRate": 0,
+        "criticalRate": 0.0
+      }
+    }
+  }
+}

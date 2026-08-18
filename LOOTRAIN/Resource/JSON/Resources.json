@@ -1,0 +1,1891 @@
+{
+  "resources": [
+    {
+      "key": "fontDot",
+      "sceneIds": [ 0 ],
+      "type": "font",
+      "path": "Resource/Font/Dot.otf",
+      "fontName": "ベストテンDOT"
+    },
+    {
+      "key": "fontKinkakuji",
+      "sceneIds": [ 0 ],
+      "type": "font",
+      "path": "Resource/Font/Kinkakuji-Normal.otf",
+      "fontName": "金畫字 Normal"
+    },
+    {
+      "key": "player1",
+      "sceneIds": [ 2, 3, 4, 5, 6 ],
+      "type": "texture",
+      "divX": 15,
+      "divY": 8,
+      "sizeX": 144,
+      "sizeY": 144,
+      "path": "Resource/Image/Player/Player1.png"
+    },
+    {
+      "key": "player2",
+      "sceneIds": [ 2, 3, 4, 5, 6 ],
+      "type": "texture",
+      "divX": 15,
+      "divY": 8,
+      "sizeX": 144,
+      "sizeY": 144,
+      "path": "Resource/Image/Player/Player2.png"
+    },
+    {
+      "key": "player3",
+      "sceneIds": [ 2, 3, 4, 5, 6 ],
+      "type": "texture",
+      "divX": 15,
+      "divY": 8,
+      "sizeX": 144,
+      "sizeY": 144,
+      "path": "Resource/Image/Player/Player3.png"
+    },
+    {
+      "key": "player4",
+      "sceneIds": [ 2, 3, 4, 5, 6 ],
+      "type": "texture",
+      "divX": 15,
+      "divY": 8,
+      "sizeX": 144,
+      "sizeY": 144,
+      "path": "Resource/Image/Player/Player4.png"
+    },
+    {
+      "key": "playerNormal",
+      "sceneIds": [ 2, 3, 4, 5, 6 ],
+      "type": "texture",
+      "divX": 15,
+      "divY": 8,
+      "sizeX": 144,
+      "sizeY": 144,
+      "path": "Resource/Image/Player/PlayerNormal.png"
+    },
+    {
+      "key": "clone",
+      "sceneIds": [ 3 ],
+      "type": "texture",
+      "divX": 10,
+      "divY": 9,
+      "sizeX": 96,
+      "sizeY": 96,
+      "path": "Resource/Image/Enemy/Clone.png"
+    },
+    {
+      "key": "slime",
+      "sceneIds": [ 3 ],
+      "type": "texture",
+      "divX": 19,
+      "divY": 4,
+      "sizeX": 156,
+      "sizeY": 156,
+      "path": "Resource/Image/Enemy/Slime.png"
+    },
+    {
+      "key": "mushroom",
+      "sceneIds": [ 3 ],
+      "type": "texture",
+      "divX": 11,
+      "divY": 6,
+      "sizeX": 150,
+      "sizeY": 150,
+      "path": "Resource/Image/Enemy/Mushroom.png"
+    },
+    {
+      "key": "hat",
+      "sceneIds": [ 3 ],
+      "type": "texture",
+      "divX": 8,
+      "divY": 5,
+      "sizeX": 38,
+      "sizeY": 30,
+      "path": "Resource/Image/Enemy/Hat.png"
+    },
+    {
+      "key": "snake",
+      "sceneIds": [ 3 ],
+      "type": "texture",
+      "divX": 11,
+      "divY": 5,
+      "sizeX": 64,
+      "sizeY": 64,
+      "path": "Resource/Image/Enemy/Snake.png"
+    },
+    {
+      "key": "samurai",
+      "sceneIds": [ 3 ],
+      "type": "texture",
+      "divX": 5,
+      "divY": 5,
+      "sizeX": 128,
+      "sizeY": 64,
+      "path": "Resource/Image/Enemy/Samurai.png"
+    },
+    {
+      "key": "bgmTitle",
+      "path": "Resource/Sound/Bgm/BgmTitle.mp3",
+      "sceneIds": [ 1 ],
+      "soundType": "bgm",
+      "type": "sound"
+    },
+    {
+      "key": "bgmResult",
+      "path": "Resource/Sound/Bgm/BgmResult.wav",
+      "sceneIds": [ 5, 6 ],
+      "soundType": "bgm",
+      "type": "sound"
+    },
+    {
+      "key": "seSelect",
+      "path": "Resource/Sound/Se/SeSelect.mp3",
+      "sceneIds": [ 1 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seGameStart",
+      "path": "Resource/Sound/Se/SeGameStart.mp3",
+      "sceneIds": [ 1 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seDecision",
+      "path": "Resource/Sound/Se/SeDecision.mp3",
+      "sceneIds": [ 1 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "titleLogo",
+      "path": "Resource/Image/Ui/TitleLogo.png",
+      "sceneIds": [ 1 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 960,
+      "sizeY": 203
+    },
+    {
+      "key": "airslash",
+      "type": "texture",
+      "path": "Resource/Image/Effect/Airslash.png",
+      "divX": 4,
+      "divY": 1,
+      "sceneIds": [ 2, 3, 4, 6 ],
+      "sizeX": 64,
+      "sizeY": 64
+    },
+    {
+      "key": "teleportEnter",
+      "type": "texture",
+      "path": "Resource/Image/Effect/TeleportEnter.png",
+      "divX": 9,
+      "divY": 1,
+      "sceneIds": [ 2, 3, 4, 6 ],
+      "sizeX": 96,
+      "sizeY": 96
+    },
+    {
+      "key": "teleportExit",
+      "type": "texture",
+      "path": "Resource/Image/Effect/TeleportExit.png",
+      "divX": 11,
+      "divY": 1,
+      "sceneIds": [ 2, 3, 4, 6 ],
+      "sizeX": 96,
+      "sizeY": 96
+    },
+    {
+      "key": "groundChipsDungeon",
+      "type": "sprite",
+      "path": "Resource/Image/Stage/GroundChipsDungeon.png",
+      "divX": 15,
+      "divY": 18,
+      "sceneIds": [ 3, 4 ],
+      "sizeX": 32,
+      "sizeY": 32
+    },
+    {
+      "key": "door",
+      "path": "Resource/Image/Gimmick/Door.png",
+      "sceneIds": [ 3 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 160,
+      "sizeY": 240
+    },
+    {
+      "key": "train",
+      "type": "texture",
+      "path": "Resource/Image/Train/Train.png",
+      "divX": 16,
+      "divY": 1,
+      "sceneIds": [ 1, 2, 3, 4 ],
+      "sizeX": 256,
+      "sizeY": 64
+    },
+    {
+      "key": "loadingTrain",
+      "type": "sprite",
+      "path": "Resource/Image/Train/LoadingTrain.png",
+      "divX": 16,
+      "divY": 1,
+      "sceneIds": [ 0 ],
+      "sizeX": 256,
+      "sizeY": 64
+    },
+    {
+      "key": "maid",
+      "type": "texture",
+      "path": "Resource/Image/Enemy/Maid.png",
+      "divX": 9,
+      "divY": 7,
+      "sceneIds": [ 4 ],
+      "sizeX": 256,
+      "sizeY": 128
+    },
+    {
+      "key": "backGround0",
+      "path": "Resource/Image/BackGround/BackGround0.png",
+      "sceneIds": [ 1, 2, 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 630,
+      "sizeY": 360
+    },
+    {
+      "key": "backGround1",
+      "path": "Resource/Image/BackGround/BackGround1.png",
+      "sceneIds": [ 1, 2, 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 630,
+      "sizeY": 360
+    },
+    {
+      "key": "backGround2",
+      "path": "Resource/Image/BackGround/BackGround2.png",
+      "sceneIds": [ 1, 2, 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 630,
+      "sizeY": 360
+    },
+    {
+      "key": "backGround3",
+      "path": "Resource/Image/BackGround/BackGround3.png",
+      "sceneIds": [ 1, 2, 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 630,
+      "sizeY": 360
+    },
+    {
+      "key": "backGround4",
+      "path": "Resource/Image/BackGround/BackGround4.png",
+      "sceneIds": [ 1, 2, 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 630,
+      "sizeY": 360
+    },
+    {
+      "key": "backGround5",
+      "path": "Resource/Image/BackGround/BackGround5.png",
+      "sceneIds": [ 1, 2, 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 630,
+      "sizeY": 360
+    },
+    {
+      "key": "backGround6",
+      "path": "Resource/Image/BackGround/BackGround6.png",
+      "sceneIds": [ 1, 2, 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 630,
+      "sizeY": 360
+    },
+    {
+      "key": "backGround7",
+      "path": "Resource/Image/BackGround/BackGround7.png",
+      "sceneIds": [ 1, 2, 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 630,
+      "sizeY": 360
+    },
+    {
+      "key": "backGround8",
+      "path": "Resource/Image/BackGround/BackGround8.png",
+      "sceneIds": [ 1, 2, 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 630,
+      "sizeY": 360
+    },
+    {
+      "key": "titleGround",
+      "path": "Resource/Image/BackGround/TitleGround.png",
+      "sceneIds": [ 1 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 1280,
+      "sizeY": 736
+    },
+    {
+      "key": "pleaseButton",
+      "path": "Resource/Image/Ui/PleaseBButton.png",
+      "sceneIds": [ 1 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 640,
+      "sizeY": 64
+    },
+    {
+      "key": "backTitle",
+      "path": "Resource/Image/Ui/BackTitle.png",
+      "sceneIds": [ 1 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 449,
+      "sizeY": 65
+    },
+    {
+      "key": "backGame",
+      "path": "Resource/Image/Ui/BackGame.png",
+      "sceneIds": [ 1 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 502,
+      "sizeY": 92
+    },
+    {
+      "key": "gold",
+      "path": "Resource/Image/Ui/G.png",
+      "sceneIds": [ 1 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 111,
+      "sizeY": 128
+    },
+    {
+      "key": "result",
+      "path": "Resource/Image/Ui/Result.png",
+      "sceneIds": [ 1 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 559,
+      "sizeY": 128
+    },
+    {
+      "key": "totalScoreEarned",
+      "path": "Resource/Image/Ui/TotalScoreEarned.png",
+      "sceneIds": [ 1 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 559,
+      "sizeY": 128
+    },
+    {
+      "key": "guestRoom",
+      "path": "Resource/Image/BackGround/GuestRoom.png",
+      "sceneIds": [ 2 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 1280,
+      "sizeY": 736
+    },
+    {
+      "key": "guestRoomDeco",
+      "path": "Resource/Image/BackGround/GuestRoomDecoration.png",
+      "sceneIds": [ 2 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 1280,
+      "sizeY": 736
+    },
+    {
+      "key": "guestRoomChips",
+      "path": "Resource/Image/Stage/GuestRoomChips.png",
+      "sceneIds": [ 2 ],
+      "type": "sprite",
+      "divX": 22,
+      "divY": 20,
+      "sizeX": 32,
+      "sizeY": 32
+    },
+    {
+      "key": "treasureChests",
+      "path": "Resource/Image/Gimmick/TreasureChests.png",
+      "sceneIds": [ 2, 3 ],
+      "type": "texture",
+      "divX": 8,
+      "divY": 2,
+      "sizeX": 138,
+      "sizeY": 96
+    },
+    {
+      "key": "target",
+      "path": "Resource/Image/Gimmick/Target.png",
+      "sceneIds": [ 3 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 96,
+      "sizeY": 96
+    },
+    {
+      "key": "avilityItems",
+      "path": "Resource/Image/Item/AvilityItems.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 5,
+      "divY": 2,
+      "sizeX": 96,
+      "sizeY": 96
+    },
+    {
+      "key": "avilityItemsSprite",
+      "path": "Resource/Image/Item/AvilityItems.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "sprite",
+      "divX": 5,
+      "divY": 2,
+      "sizeX": 96,
+      "sizeY": 96
+    },
+    {
+      "key": "foods",
+      "path": "Resource/Image/Item/Foods.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 6,
+      "divY": 6,
+      "sizeX": 48,
+      "sizeY": 48
+    },
+    {
+      "key": "beckoningCat",
+      "path": "Resource/Image/Item/BeckoningCat.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 72,
+      "sizeY": 96
+    },
+    {
+      "key": "bottleShip",
+      "path": "Resource/Image/Item/BottleShip.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 64,
+      "sizeY": 48
+    },
+    {
+      "key": "clayWork",
+      "path": "Resource/Image/Item/ClayWork.png",
+      "sceneIds": [1, 2, 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 48,
+      "sizeY": 75
+    },
+    {
+      "key": "pot",
+      "path": "Resource/Image/Item/Pot.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 96,
+      "sizeY": 128
+    },
+    {
+      "key": "stuffedToy",
+      "path": "Resource/Image/Item/StuffedToy.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 91,
+      "sizeY": 128
+    },
+    {
+      "key": "tinRobot",
+      "path": "Resource/Image/Item/TinRobot.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 96,
+      "sizeY": 128
+    },
+    {
+      "key": "tv",
+      "path": "Resource/Image/Item/Tv.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 128,
+      "sizeY": 96
+    },
+    {
+      "key": "creasks",
+      "path": "Resource/Image/Effect/Creasks.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 6,
+      "divY": 6,
+      "sizeX": 48,
+      "sizeY": 48
+    },
+    {
+      "key": "coins",
+      "path": "Resource/Image/Item/Coins.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 3,
+      "divY": 3,
+      "sizeX": 48,
+      "sizeY": 48
+    },
+    {
+      "key": "coinBag",
+      "path": "Resource/Image/Item/CoinBag.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 2,
+      "divY": 2,
+      "sizeX": 64,
+      "sizeY": 64
+    },
+    {
+      "key": "seTrainWhistle",
+      "path": "Resource/Sound/Se/SeTrainWhistle.mp3",
+      "sceneIds": [ 1, 2 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "bgmGame1",
+      "path": "Resource/Sound/Bgm/BgmGame1.mp3",
+      "sceneIds": [],
+      "soundType": "bgm",
+      "type": "sound"
+    },
+    {
+      "key": "bgmGame2",
+      "path": "Resource/Sound/Bgm/BgmGame2.mp3",
+      "sceneIds": [],
+      "soundType": "bgm",
+      "type": "sound"
+    },
+    {
+      "key": "bgmGame3",
+      "path": "Resource/Sound/Bgm/BgmGame3.mp3",
+      "sceneIds": [],
+      "soundType": "bgm",
+      "type": "sound"
+    },
+    {
+      "key": "bgmGame4",
+      "path": "Resource/Sound/Bgm/BgmGame4.mp3",
+      "sceneIds": [],
+      "soundType": "bgm",
+      "type": "sound"
+    },
+    {
+      "key": "bgmGame5",
+      "path": "Resource/Sound/Bgm/BgmGame5.mp3",
+      "sceneIds": [],
+      "soundType": "bgm",
+      "type": "sound"
+    },
+    {
+      "key": "bgmBossBattleBamboo",
+      "path": "Resource/Sound/Bgm/BgmBossBattleBamboo.mp3",
+      "sceneIds": [],
+      "soundType": "bgm",
+      "type": "sound"
+    },
+    {
+      "key": "bgmBossBattleMaid",
+      "path": "Resource/Sound/Bgm/BgmBossBattleMaid.mp3",
+      "sceneIds": [],
+      "soundType": "bgm",
+      "type": "sound"
+    },
+    {
+      "key": "bgmTrainRoom",
+      "path": "Resource/Sound/Bgm/BgmTrainRoom.mp3",
+      "sceneIds": [ 2 ],
+      "soundType": "bgm",
+      "type": "sound"
+    },
+    {
+      "key": "bgmTrain",
+      "path": "Resource/Sound/Bgm/BgmTrain.mp3",
+      "sceneIds": [ 1, 2 ],
+      "soundType": "bgm",
+      "type": "sound"
+    },
+    {
+      "key": "gameClear",
+      "path": "Resource/Image/BackGround/GameClear.png",
+      "sceneIds": [ 5 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 1672,
+      "sizeY": 941
+    },
+    {
+      "key": "gameOver",
+      "path": "Resource/Image/BackGround/GameOver.png",
+      "sceneIds": [ 6 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 1672,
+      "sizeY": 941
+    },
+    {
+      "key": "playerHpGage",
+      "path": "Resource/Image/Ui/PlayerHpGage.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 175,
+      "sizeY": 31
+    },
+    {
+      "key": "numbers",
+      "path": "Resource/Image/Ui/Numbers.png",
+      "sceneIds": [ 0 ],
+      "type": "sprite",
+      "divX": 5,
+      "divY": 2,
+      "sizeX": 128,
+      "sizeY": 128
+    },
+    {
+      "key": "ranks",
+      "path": "Resource/Image/Ui/Ranks.png",
+      "sceneIds": [ 0 ],
+      "type": "sprite",
+      "divX": 5,
+      "divY": 1,
+      "sizeX": 256,
+      "sizeY": 256
+    },
+    {
+      "key": "playerIcons",
+      "path": "Resource/Image/Ui/PlayerIcons.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "sprite",
+      "divX": 4,
+      "divY": 1,
+      "sizeX": 100,
+      "sizeY": 65
+    },
+    {
+      "key": "gameStatusUis",
+      "path": "Resource/Image/Ui/GameStatusUis.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "sprite",
+      "divX": 1,
+      "divY": 2,
+      "sizeX": 380,
+      "sizeY": 48
+    },
+    {
+      "key": "playerStatusMessageUis",
+      "path": "Resource/Image/Ui/PlayerStatusMessageUis.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "sprite",
+      "divX": 1,
+      "divY": 2,
+      "sizeX": 80,
+      "sizeY": 20
+    },
+    {
+      "key": "hpBars",
+      "path": "Resource/Image/Ui/HpBars.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "sprite",
+      "divX": 1,
+      "divY": 4,
+      "sizeX": 166,
+      "sizeY": 21
+    },
+    {
+      "key": "playerSelectAvilityBar",
+      "path": "Resource/Image/Ui/PlayerSelectAvilityBar.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 263,
+      "sizeY": 28
+    },
+    {
+      "key": "playerSelectAvility",
+      "path": "Resource/Image/Ui/PlayerSelectAvility.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 263,
+      "sizeY": 28
+    },
+    {
+      "key": "sbSelectAvility",
+      "path": "Resource/Image/SpeechBubble/SB_SelectAvility.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 128,
+      "sizeY": 128
+    },
+    {
+      "key": "panda",
+      "path": "Resource/Image/Enemy/Panda.png",
+      "sceneIds": [ 4 ],
+      "type": "texture",
+      "divX": 18,
+      "divY": 10,
+      "sizeX": 128,
+      "sizeY": 64
+    },
+    {
+      "key": "gaiaGolem",
+      "path": "Resource/Image/Enemy/GaiaGolem.png",
+      "sceneIds": [ 4 ],
+      "type": "texture",
+      "divX": 8,
+      "divY": 5,
+      "sizeX": 200,
+      "sizeY": 132
+    },
+    {
+      "key": "glacier",
+      "path": "Resource/Image/Enemy/Glacier.png",
+      "sceneIds": [ 4 ],
+      "type": "texture",
+      "divX": 8,
+      "divY": 5,
+      "sizeX": 200,
+      "sizeY": 132
+    },
+    {
+      "key": "ifrit",
+      "path": "Resource/Image/Enemy/Ifrit.png",
+      "sceneIds": [ 4 ],
+      "type": "texture",
+      "divX": 8,
+      "divY": 5,
+      "sizeX": 200,
+      "sizeY": 132
+    },
+    {
+      "key": "sylph",
+      "path": "Resource/Image/Enemy/Sylph.png",
+      "sceneIds": [ 4 ],
+      "type": "texture",
+      "divX": 10,
+      "divY": 5,
+      "sizeX": 200,
+      "sizeY": 132
+    },
+    {
+      "key": "bamboo",
+      "path": "Resource/Image/Gimmick/BambooBar.png",
+      "sceneIds": [ 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 40,
+      "sizeY": 64
+    },
+    {
+      "key": "growingBamboo",
+      "path": "Resource/Image/Gimmick/GrowingBamboo.png",
+      "sceneIds": [ 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 24,
+      "sizeY": 85
+    },
+    {
+      "key": "hpGageBoss",
+      "path": "Resource/Image/Ui/HpGageBoss.png",
+      "sceneIds": [ 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 739,
+      "sizeY": 41
+    },
+    {
+      "key": "standardTexture",
+      "path": "Resource/Shader/StandardTexture.cso",
+      "sceneIds": [ 0 ],
+      "type": "pixelShader"
+    },
+    {
+      "key": "standardSprite",
+      "path": "Resource/Shader/StandardSprite.cso",
+      "sceneIds": [ 0 ],
+      "type": "pixelShader"
+    },
+    {
+      "key": "ItemSprite",
+      "path": "Resource/Shader/ItemSprite.cso",
+      "sceneIds": [ 0 ],
+      "type": "pixelShader"
+    },
+    {
+      "key": "PlayerSprite",
+      "path": "Resource/Shader/PlayerSprite.cso",
+      "sceneIds": [ 0 ],
+      "type": "pixelShader"
+    },
+    {
+      "key": "Fade",
+      "path": "Resource/Shader/Fade.cso",
+      "sceneIds": [ 0 ],
+      "type": "pixelShader"
+    },
+    {
+      "key": "enemySprite",
+      "path": "Resource/Shader/EnemySprite.cso",
+      "sceneIds": [ 3, 4 ],
+      "type": "pixelShader"
+    },
+    {
+      "key": "bossNamePlate",
+      "path": "Resource/Image/Ui/BossNamePlate.png",
+      "sceneIds": [ 3, 4 ],
+      "type": "sprite",
+      "divX": 1,
+      "divY": 3,
+      "sizeX": 300,
+      "sizeY": 28
+    },
+    {
+      "key": "potions",
+      "path": "Resource/Image/Item/Potions.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 3,
+      "divY": 1,
+      "sizeX": 96,
+      "sizeY": 96
+    },
+    {
+      "key": "shop",
+      "path": "Resource/Image/Gimmick/Shop.png",
+      "sceneIds": [ 2 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 181,
+      "sizeY": 129
+    },
+    {
+      "key": "uiShop",
+      "path": "Resource/Image/Ui/UiShop.png",
+      "sceneIds": [ 2 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 107,
+      "sizeY": 64
+    },
+    {
+      "key": "backGroundShop",
+      "path": "Resource/Image/BackGround/BackGroundShop.png",
+      "sceneIds": [ 2 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 1280,
+      "sizeY": 720
+    },
+    {
+      "key": "pauseSprite",
+      "path": "Resource/Image/Ui/PauseSprite.png",
+      "sceneIds": [ 0 ],
+      "type": "sprite",
+      "divX": 1,
+      "divY": 4,
+      "sizeX": 498,
+      "sizeY": 72
+    },
+    {
+      "key": "arrow",
+      "path": "Resource/Image/Ui/Arrow.png",
+      "sceneIds": [ 2 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 64,
+      "sizeY": 64
+    },
+    {
+      "key": "dropRock",
+      "path": "Resource/Image/Gimmick/DropRock.png",
+      "sceneIds": [ 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 270,
+      "sizeY": 262
+    },
+    {
+      "key": "seAbilityShotCharge",
+      "path": "Resource/Sound/Se/SeAbilityShotCharge.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seAbilityShotStart",
+      "path": "Resource/Sound/Se/SeAbilityShotStart.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seAbilityStampCharge",
+      "path": "Resource/Sound/Se/SeAbilityStampCharge.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seAbilityStampLanding",
+      "path": "Resource/Sound/Se/SeAbilityStampLanding.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seAbilityTeleportEnter",
+      "path": "Resource/Sound/Se/SeAbilityTeleportEnter.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seAbilityTeleportExit",
+      "path": "Resource/Sound/Se/SeAbilityTeleportExit.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seApplause",
+      "path": "Resource/Sound/Se/SeApplause.mp3",
+      "sceneIds": [],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seCancel",
+      "path": "Resource/Sound/Se/SeCancel.mp3",
+      "sceneIds": [ 0 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seCheers",
+      "path": "Resource/Sound/Se/SeCheers.mp3",
+      "sceneIds": [],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seGetAbility",
+      "path": "Resource/Sound/Se/SeGetAbility.mp3",
+      "sceneIds": [ 3 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seGetMoney",
+      "path": "Resource/Sound/Se/SeGetMoney.mp3",
+      "sceneIds": [ 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seGetPotion",
+      "path": "Resource/Sound/Se/SeGetPotion.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seGetTreasure",
+      "path": "Resource/Sound/Se/SeGetTreasure.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seHeal",
+      "path": "Resource/Sound/Se/SeHeal.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seJump",
+      "path": "Resource/Sound/Se/SeJump.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seJumpLanding",
+      "path": "Resource/Sound/Se/SeJumpLanding.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seJumpSecond",
+      "path": "Resource/Sound/Se/SeJumpSecond.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "sePlayerAttackHit",
+      "path": "Resource/Sound/Se/SePlayerAttackHit.mp3",
+      "sceneIds": [ 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "sePlayerDamage",
+      "path": "Resource/Sound/Se/SePlayerDamage.mp3",
+      "sceneIds": [ 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "sePlayerDead",
+      "path": "Resource/Sound/Se/SePlayerDead.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seSwingAxe1",
+      "path": "Resource/Sound/Se/SeSwingAxe1.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seSwingAxe2",
+      "path": "Resource/Sound/Se/SeSwingAxe2.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seThrow",
+      "path": "Resource/Sound/Se/SeThrow.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seGrowingBamboo",
+      "path": "Resource/Sound/Se/SeGrowingBamboo.mp3",
+      "sceneIds": [],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seOpenTreasureBox",
+      "path": "Resource/Sound/Se/SeOpenTreasureBox.mp3",
+      "sceneIds": [ 3 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seDoor",
+      "path": "Resource/Sound/Se/SeDoor.mp3",
+      "sceneIds": [ 3 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seAbilityGravityChange",
+      "path": "Resource/Sound/Se/SeAbilityGravityChange.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seAirSlash",
+      "path": "Resource/Sound/Se/SeAirSlash.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seDead",
+      "path": "Resource/Sound/Se/SeDead.mp3",
+      "sceneIds": [ 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seEventStart",
+      "path": "Resource/Sound/Se/SeEventStart.mp3",
+      "sceneIds": [ 3 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seEventStart",
+      "path": "Resource/Sound/Se/SeEventStart.mp3",
+      "sceneIds": [ 3 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seDisplayExplanation",
+      "path": "Resource/Sound/Se/SeDisplayExplanation.mp3",
+      "sceneIds": [ 2, 3 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seAlarm",
+      "path": "Resource/Sound/Se/SeAlarm.mp3",
+      "sceneIds": [],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seRockDestroy",
+      "path": "Resource/Sound/Se/SeRockDestroy.mp3",
+      "sceneIds": [],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seBossDestroy",
+      "path": "Resource/Sound/Se/SeBossDestroy.mp3",
+      "sceneIds": [ 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seRapidFire",
+      "path": "Resource/Sound/Se/SeRapidFire.mp3",
+      "sceneIds": [ 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "sePlayerRespawn",
+      "path": "Resource/Sound/Se/SePlayerRespawn.mp3",
+      "sceneIds": [ 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seFailue",
+      "path": "Resource/Sound/Se/SeFailue.mp3",
+      "sceneIds": [ 3 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seTreasureBox",
+      "path": "Resource/Sound/Se/SeTreasureBox.mp3",
+      "sceneIds": [ 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seRank",
+      "path": "Resource/Sound/Se/SeRank.mp3",
+      "sceneIds": [ 5 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seGameParticipation",
+      "path": "Resource/Sound/Se/SeGameParticipation.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seGameLeave",
+      "path": "Resource/Sound/Se/SeGameLeave.mp3",
+      "sceneIds": [ 2, 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seGameOver",
+      "path": "Resource/Sound/Se/SeGameOver.mp3",
+      "sceneIds": [ 6 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seTextAnimation",
+      "path": "Resource/Sound/Se/SeTextAnimation.mp3",
+      "sceneIds": [ 2 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seShopEnter",
+      "path": "Resource/Sound/Se/SeShopEnter.mp3",
+      "sceneIds": [ 2 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "sePurchase",
+      "path": "Resource/Sound/Se/SePurchase.mp3",
+      "sceneIds": [ 2 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seGolemAttack",
+      "path": "Resource/Sound/Se/SeGolemAttack.mp3",
+      "sceneIds": [],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seReady",
+      "path": "Resource/Sound/Se/SeReady.mp3",
+      "sceneIds": [ 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seGo",
+      "path": "Resource/Sound/Se/SeGo.mp3",
+      "sceneIds": [ 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seGong",
+      "path": "Resource/Sound/Se/SeGong.mp3",
+      "sceneIds": [ 3, 4 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seSwordsClash",
+      "path": "Resource/Sound/Se/SeSwordsClash.mp3",
+      "sceneIds": [],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seBambooThrow",
+      "path": "Resource/Sound/Se/SeBambooThrow.mp3",
+      "sceneIds": [],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seTargetDestroy",
+      "path": "Resource/Sound/Se/SeTargetDestroy.mp3",
+      "sceneIds": [ 3 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seDrumRoll",
+      "path": "Resource/Sound/Se/SeDrumRoll.mp3",
+      "sceneIds": [ 3 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "seDrumRollEnd",
+      "path": "Resource/Sound/Se/SeDrumRollEnd.mp3",
+      "sceneIds": [ 3 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "effectDamage",
+      "path": "Resource/Image/Effect/Damage.png",
+      "sceneIds": [ 3, 4 ],
+      "type": "texture",
+      "divX": 7,
+      "divY": 1,
+      "sizeX": 50,
+      "sizeY": 48
+    },
+    {
+      "key": "dashSmoke",
+      "path": "Resource/Image/Effect/DashSmoke.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 12,
+      "divY": 1,
+      "sizeX": 64,
+      "sizeY": 64
+    },
+    {
+      "key": "effectDiscovery",
+      "path": "Resource/Image/Effect/DashSmoke.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 7,
+      "divY": 1,
+      "sizeX": 64,
+      "sizeY": 64
+    },
+    {
+      "key": "effectDiscovery",
+      "path": "Resource/Image/Effect/DashSmoke.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 6,
+      "divY": 1,
+      "sizeX": 64,
+      "sizeY": 64
+    },
+    {
+      "key": "effectEnemyDead",
+      "path": "Resource/Image/Effect/EnemyDead.png",
+      "sceneIds": [ 3, 4 ],
+      "type": "texture",
+      "divX": 9,
+      "divY": 1,
+      "sizeX": 120,
+      "sizeY": 120
+    },
+    {
+      "key": "effectEnemySpawn",
+      "path": "Resource/Image/Effect/EnemySpawn.png",
+      "sceneIds": [ 3, 4 ],
+      "type": "texture",
+      "divX": 8,
+      "divY": 1,
+      "sizeX": 96,
+      "sizeY": 96
+    },
+    {
+      "key": "effectGetAbility",
+      "path": "Resource/Image/Effect/GetAbility.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 9,
+      "divY": 1,
+      "sizeX": 256,
+      "sizeY": 144
+    },
+    {
+      "key": "effectGetAbility",
+      "path": "Resource/Image/Effect/GetAbility.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 9,
+      "divY": 1,
+      "sizeX": 120,
+      "sizeY": 120
+    },
+    {
+      "key": "effectHeal",
+      "path": "Resource/Image/Effect/Heal.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 18,
+      "divY": 1,
+      "sizeX": 96,
+      "sizeY": 96
+    },
+    {
+      "key": "effectHit",
+      "path": "Resource/Image/Effect/Hit.png",
+      "sceneIds": [ 3, 4 ],
+      "type": "texture",
+      "divX": 5,
+      "divY": 1,
+      "sizeX": 64,
+      "sizeY": 64
+    },
+    {
+      "key": "effectJump",
+      "path": "Resource/Image/Effect/Jump.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 6,
+      "divY": 1,
+      "sizeX": 75,
+      "sizeY": 23
+    },
+    {
+      "key": "effectLanding",
+      "path": "Resource/Image/Effect/Landing.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 8,
+      "divY": 1,
+      "sizeX": 118,
+      "sizeY": 29
+    },
+    {
+      "key": "effectRespawn",
+      "path": "Resource/Image/Effect/Respawn.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 10,
+      "divY": 1,
+      "sizeX": 96,
+      "sizeY": 96
+    },
+    {
+      "key": "shotCharge",
+      "path": "Resource/Image/Effect/ShotCharge.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 12,
+      "divY": 1,
+      "sizeX": 96,
+      "sizeY": 96
+    },
+    {
+      "key": "sparkle",
+      "path": "Resource/Image/Effect/Sparkle.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 4,
+      "divY": 4,
+      "sizeX": 128,
+      "sizeY": 128
+    },
+    {
+      "key": "stampCharge",
+      "path": "Resource/Image/Effect/StampCharge.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 6,
+      "divY": 2,
+      "sizeX": 128,
+      "sizeY": 128
+    },
+    {
+      "key": "stampLanding",
+      "path": "Resource/Image/Effect/StampLanding.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 7,
+      "divY": 1,
+      "sizeX": 140,
+      "sizeY": 50
+    },
+    {
+      "key": "changeGravity",
+      "path": "Resource/Image/Effect/ChangeGravity.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 9,
+      "divY": 1,
+      "sizeX": 96,
+      "sizeY": 96
+    },
+    {
+      "key": "attackUp",
+      "path": "Resource/Image/Effect/AttackUp.png",
+      "sceneIds": [ 2, 3 ],
+      "type": "texture",
+      "divX": 31,
+      "divY": 1,
+      "sizeX": 96,
+      "sizeY": 96
+    },
+    {
+      "key": "hpUp",
+      "path": "Resource/Image/Effect/HpUp.png",
+      "sceneIds": [ 2, 3 ],
+      "type": "texture",
+      "divX": 31,
+      "divY": 1,
+      "sizeX": 96,
+      "sizeY": 96
+    },
+    {
+      "key": "speedUp",
+      "path": "Resource/Image/Effect/SpeedUp.png",
+      "sceneIds": [ 2, 3 ],
+      "type": "texture",
+      "divX": 31,
+      "divY": 1,
+      "sizeX": 96,
+      "sizeY": 96
+    },
+    {
+      "key": "rockLanding",
+      "path": "Resource/Image/Effect/RockSmoke.png",
+      "sceneIds": [ 4 ],
+      "type": "texture",
+      "divX": 11,
+      "divY": 1,
+      "sizeX": 64,
+      "sizeY": 64
+    },
+    {
+      "key": "rockCreate",
+      "path": "Resource/Image/Effect/RockCreate.png",
+      "sceneIds": [ 4 ],
+      "type": "texture",
+      "divX": 12,
+      "divY": 1,
+      "sizeX": 64,
+      "sizeY": 64
+    },
+    {
+      "key": "rockBreak",
+      "path": "Resource/Image/Effect/RockBreak.png",
+      "sceneIds": [ 4 ],
+      "type": "texture",
+      "divX": 12,
+      "divY": 1,
+      "sizeX": 64,
+      "sizeY": 64
+    },
+    {
+      "key": "damageGolem",
+      "path": "Resource/Image/Effect/GolemDamage.png",
+      "sceneIds": [ 4 ],
+      "type": "texture",
+      "divX": 6,
+      "divY": 1,
+      "sizeX": 64,
+      "sizeY": 64
+    },
+    {
+      "key": "uiMission",
+      "path": "Resource/Image/Ui/Mission.png",
+      "sceneIds": [ 3 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 546,
+      "sizeY": 116
+    },
+    {
+      "key": "uiMissionMessage",
+      "path": "Resource/Image/Ui/MissionMessage.png",
+      "sceneIds": [ 3 ],
+      "type": "sprite",
+      "divX": 1,
+      "divY": 4,
+      "sizeX": 708,
+      "sizeY": 64
+    },
+    {
+      "key": "treasureThrowHit",
+      "path": "Resource/Image/Effect/TreasureThrowHit.png",
+      "sceneIds": [ 3, 4 ],
+      "type": "texture",
+      "divX": 12,
+      "divY": 1,
+      "sizeX": 64,
+      "sizeY": 64
+    },
+    {
+      "key": "getAbility",
+      "path": "Resource/Image/Effect/GetAbility.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 9,
+      "divY": 1,
+      "sizeX": 256,
+      "sizeY": 144
+    },
+    {
+      "key": "uiPlayerAnnhilationMessage",
+      "path": "Resource/Image/Ui/PlayerAnnhilationMessage.png",
+      "sceneIds": [ 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 740,
+      "sizeY": 100
+    },
+    {
+      "key": "uiTrainTime",
+      "path": "Resource/Image/Ui/TrainTime.png",
+      "sceneIds": [ 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 1456,
+      "sizeY": 360
+    },
+    {
+      "key": "buttonExpand",
+      "path": "Resource/Image/Ui/ButtonExPand.png",
+      "sceneIds": [ 2, 3, 4, 5, 6 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 222,
+      "sizeY": 119
+    },
+    {
+      "key": "newPlayer",
+      "path": "Resource/Image/Ui/NewPlayer.png",
+      "sceneIds": [ 2, 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 128,
+      "sizeY": 128
+    },
+    {
+      "key": "respawnMessage",
+      "path": "Resource/Image/Ui/RespawnMessage.png",
+      "sceneIds": [ 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 128,
+      "sizeY": 128
+    },
+    {
+      "key": "bossSilhouette",
+      "path": "Resource/Image/Ui/BossSilhouette.png",
+      "sceneIds": [ 2 ],
+      "type": "sprite",
+      "divX": 3,
+      "divY": 1,
+      "sizeX": 96,
+      "sizeY": 96
+    },
+    {
+      "key": "explanations",
+      "path": "Resource/Image/Ui/Explanations.png",
+      "sceneIds": [ 2, 3 ],
+      "type": "sprite",
+      "divX": 5,
+      "divY": 3,
+      "sizeX": 192,
+      "sizeY": 192
+    },
+    {
+      "key": "uiShop",
+      "path": "Resource/Image/Ui/UiShop.png",
+      "sceneIds": [ 2 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 107,
+      "sizeY": 64
+    },
+    {
+      "key": "readyBar",
+      "path": "Resource/Image/Ui/ReadyBar.png",
+      "sceneIds": [ 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 687,
+      "sizeY": 16
+    },
+    {
+      "key": "ready",
+      "path": "Resource/Image/Ui/Ready.png",
+      "sceneIds": [ 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 621,
+      "sizeY": 216
+    },
+    {
+      "key": "go",
+      "path": "Resource/Image/Ui/Go.png",
+      "sceneIds": [ 3, 4 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 356,
+      "sizeY": 221
+    },
+    {
+      "key": "startMessages",
+      "path": "Resource/Image/Ui/StartMessages.png",
+      "sceneIds": [ 2, 3 ],
+      "type": "sprite",
+      "divX": 1,
+      "divY": 2,
+      "sizeX": 443,
+      "sizeY": 50
+    },
+    {
+      "key": "uiTitle",
+      "path": "Resource/Image/Ui/UiTitle.png",
+      "sceneIds": [ 1 ],
+      "type": "sprite",
+      "divX": 1,
+      "divY": 4,
+      "sizeX": 555,
+      "sizeY": 120
+    },
+    {
+      "key": "uiGetItem",
+      "path": "Resource/Image/Ui/UiGetItem.png",
+      "sceneIds": [ 2, 3 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 128,
+      "sizeY": 128
+    },
+    {
+      "key": "uiEnter",
+      "path": "Resource/Image/Ui/UiEnter.png",
+      "sceneIds": [ 2, 3 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 128,
+      "sizeY": 128
+    },
+    {
+      "key": "uiOpen",
+      "path": "Resource/Image/Ui/UiOpen.png",
+      "sceneIds": [ 2, 3 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 128,
+      "sizeY": 128
+    },
+    {
+      "key": "titleMenuExplanations",
+      "path": "Resource/Image/Ui/TitleMenuExplanations.png",
+      "sceneIds": [ 1 ],
+      "type": "sprite",
+      "divX": 1,
+      "divY": 4,
+      "sizeX": 473,
+      "sizeY": 120
+    },
+    {
+      "key": "uiOpen",
+      "path": "Resource/Image/Ui/UiOpen.png",
+      "sceneIds": [ 2, 3 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 128,
+      "sizeY": 128
+    },
+    {
+      "key": "menu",
+      "path": "Resource/Image/Ui/Menu.png",
+      "sceneIds": [ 1 ],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 451,
+      "sizeY": 150
+    },
+    {
+      "key": "seSuccess",
+      "path": "Resource/Sound/Se/SeSuccess.mp3",
+      "sceneIds": [ 8 ],
+      "soundType": "se",
+      "type": "sound"
+    },
+    {
+      "key": "triangle",
+      "path": "Resource/Image/Ui/Triangle.png",
+      "sceneIds": [],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 64,
+      "sizeY": 64
+    },
+    {
+      "key": "triangle",
+      "path": "Resource/Image/Ui/Triangle.png",
+      "sceneIds": [],
+      "type": "texture",
+      "divX": 1,
+      "divY": 1,
+      "sizeX": 64,
+      "sizeY": 64
+    },
+    {
+      "key": "settings",
+      "path": "Resource/Image/Ui/Settings.png",
+      "sceneIds": [  ],
+      "type": "sprite",
+      "divX": 1,
+      "divY": 5,
+      "sizeX": 320,
+      "sizeY": 64
+    },
+    {
+      "key": "screenMode",
+      "path": "Resource/Image/Ui/ScreenMode.png",
+      "sceneIds": [  ],
+      "type": "sprite",
+      "divX": 1,
+      "divY": 2,
+      "sizeX": 449,
+      "sizeY": 64
+    }
+  ]
+}
