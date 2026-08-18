@@ -57,7 +57,9 @@ void PlayerCheckAnnihilation::ChnageAnnihilation()
 		uiPlayerAnnhilation_ = ui.get();
 		UiManager::GetInstance().Add(std::move(ui));
 	}
-	uiPlayerAnnhilation_->SetIsActive(true);
+
+	//残機が残っていたらUIを表示する
+	if(playerManager_.GetPlayerLeft() > 0) uiPlayerAnnhilation_->SetIsActive(true);
 }
 
 void PlayerCheckAnnihilation::ChangeAlive()
