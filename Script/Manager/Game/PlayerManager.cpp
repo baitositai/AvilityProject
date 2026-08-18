@@ -180,8 +180,15 @@ void PlayerManager::AddPlayersLeft(const int addLeft)
 	// 残機が0未満の場合
 	if (playersLeft_ < 1)
 	{
-		// プレイヤー1が死亡状態の場合
-		if (playerList_.front()->GetState() == Player::STATE::DEAD)
+		// 生存しているプレイヤーがいるか確認
+		auto alivePlayer=std::find_if(playerList_.begin(), playerList_.end(),
+			[](const std::unique_ptr<Player>& player)
+			{
+				return player->GetState() != Player::STATE::DEAD;
+			});
+
+		// 生存しているプレイヤーがいない場合
+		if (alivePlayer == playerList_.end())
 		{
 			// ゲームオーバーへ
 			SceneManager::GetInstance().ChangeScene(SceneManager::SCENE_ID::GAMEOVER);
