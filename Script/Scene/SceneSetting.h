@@ -42,18 +42,22 @@ private:
 		SCREEN,
 		VOLUME_BGM,
 		VOLUME_SE,
-		ETC,
+		BACK,
+		APPLY,
 		MAX
 	};
 
+	static constexpr int SLECT_MAX = 4;
+
 	// 総種類数
-	static constexpr int TYPE_MAX = 4;
+	static constexpr int TYPE_MAX = static_cast<int>(TYPE::MAX);
 
 	// アプリケーションの参照
 	Application& application_;
 
 	// 選択項目
 	int selectIndex_;
+	int selectType_;
 	
 	// ウィンドウ判定
 	bool isWindow_;

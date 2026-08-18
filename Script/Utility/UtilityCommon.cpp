@@ -334,6 +334,17 @@ int UtilityCommon::WrapStepIndex(const int index, const int step, const int min,
     return value;
 }
 
+float UtilityCommon::EaseLerping(float _time, const float _totalTime, const float _start, const float _end)
+{
+    // ï‚ä‘åWêî
+    float t = _time / _totalTime;
+    float dis = _end - _start;
+    if (t < 0.0f) t = 0.0f;
+    if (t > 1.0f) t = 1.0f;
+
+	return _start + dis * t;
+}
+
 float UtilityCommon::EaseInQuad(const float time, const float totalTime, const float start, const float end)
 {
     float distance = end - start;

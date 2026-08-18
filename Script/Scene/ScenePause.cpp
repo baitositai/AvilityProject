@@ -7,6 +7,7 @@
 #include "../Manager/Common/SceneManager.h"
 #include "../Manager/Common/Camera.h"
 #include "../Utility/UtilityCommon.h"
+#include "SceneSetting.h"
 #include "ScenePause.h"
 
 ScenePause::ScenePause()
@@ -30,9 +31,11 @@ ScenePause::ScenePause()
 			scnMng_.PopScene();
 			mainCamera.PauseRestart();
 		}},
-		{LIST::NONE,[this]()
+		{LIST::SETTING,[this]()
 		{
-			
+			auto settingScene = std::make_shared<SceneSetting>();
+			settingScene->SetPadNo(PadNo_);
+			scnMng_.PushScene(settingScene);
 		}},
 		{LIST::TITLE,[this]()
 		{
@@ -82,9 +85,11 @@ ScenePause::ScenePause(Input::JOYPAD_NO PadNo)
 			scnMng_.PopScene();
 			mainCamera.PauseRestart();
 		}},
-		{LIST::NONE,[this]()
+		{LIST::SETTING,[this]()
 		{
-
+			auto settingScene = std::make_shared<SceneSetting>();
+			settingScene->SetPadNo(PadNo_);
+			scnMng_.PushScene(settingScene);
 		}},
 		{LIST::TITLE,[this]()
 		{

@@ -13,7 +13,7 @@ public:
 	enum class LIST
 	{
 		RESUME,		// 続ける
-		NONE,		// なし
+		SETTING,	// 設定
 		TITLE,		// タイトルに戻る
 		GAME_END,   // ゲームの終了
 		MAX
