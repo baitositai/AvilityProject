@@ -18,7 +18,7 @@ public:
 		MAID,
 		PANDA,
 		GAIA_GOLEM,
-
+		AZAGRIM,
 		MAX,
 	};
 
@@ -29,13 +29,14 @@ public:
 	static constexpr int WEAK_MAX = static_cast<int>(TYPE::MAID);
 
 	// ボス総数
-	static constexpr int BOSS_MAX = 3;
+	static constexpr int BOSS_MAX = 4;
 
 	// ボスのリスト
 	static constexpr TYPE BOSS_LIST[BOSS_MAX] = {
 		TYPE::MAID,
 		TYPE::PANDA,
-		TYPE::GAIA_GOLEM
+		TYPE::GAIA_GOLEM,
+		TYPE::AZAGRIM
 	};
 
 	// ボス種類をランダムで決定する

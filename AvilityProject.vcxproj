@@ -153,6 +153,8 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Parameter\Character\Enemy\ParameterEnemyAzagrim.cpp" />
+    <ClCompile Include="Script\Object\Character\Enemy\EnemyAzagrim.cpp" />
     <ClCompile Include="Script\Scene\SceneSetting.cpp" />
     <ClCompile Include="Script\Scene\SceneTutorial.cpp" />
     <ClCompile Include="Script\Scene\SceneAbilityTrial.cpp" />
@@ -420,6 +422,8 @@
     <ClCompile Include="Script\Ui\Enemy\UiWarning.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Parameter\Character\Enemy\ParameterEnemyAzagrim.h" />
+    <ClInclude Include="Script\Object\Character\Enemy\EnemyAzagrim.h" />
     <ClInclude Include="Script\Scene\SceneSetting.h" />
     <ClInclude Include="Script\Scene\SceneTutorial.h" />
     <ClInclude Include="Script\Scene\SceneAbilityTrial.h" />

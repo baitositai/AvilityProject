@@ -274,6 +274,8 @@
     <ClCompile Include="Script\Scene\SceneTutorial.cpp" />
     <ClCompile Include="Script\Scene\SceneSetting.cpp" />
     <ClCompile Include="Script\Ui\Enemy\UiWarning.cpp" />
+    <ClCompile Include="Script\Object\Character\Enemy\EnemyAzagrim.cpp" />
+    <ClCompile Include="Script\Parameter\Character\Enemy\ParameterEnemyAzagrim.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\System\PlayerCheckAnnihilation.h" />
@@ -603,6 +605,8 @@
     <ClInclude Include="Script\Scene\SceneTutorial.h" />
     <ClInclude Include="Script\Scene\SceneSetting.h" />
     <ClInclude Include="Script\Ui\Enemy\UiWarning.h" />
+    <ClInclude Include="Script\Object\Character\Enemy\EnemyAzagrim.h" />
+    <ClInclude Include="Script\Parameter\Character\Enemy\ParameterEnemyAzagrim.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AvilityProject.rc" />

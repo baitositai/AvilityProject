@@ -840,5 +840,75 @@
         "probability": 1.0
       }
     }
+  },
+  "azagrim": {
+    "componentKeys": [
+      "knockBack",
+      "invincible",
+      "move",
+      "spriteAnimation"
+    ],
+    "stateComponentKeys": {
+      "alive": "enemyAlive",
+      "attack": "attackDefault",
+      "hit": "dummy",
+      "dead": "enemyDead",
+      "spawn": "dummy",
+      "enter": "dummy"
+    },
+    "resourceKey": "azagrim",
+    "scale": 1.2,
+    "angle": 0.0,
+    "criticalRate": 0.05,
+    "criticalDamageRate": 1.6,
+    "direction": true,
+    "transparent": true,
+    "moveSpeed": 2.5,
+    "hp": 2000,
+    "bossUiNamePlateIndex": 2,
+    "attackPower": 50,
+    "gravityPower": 9.8,
+    "logicDelay": 1.0,
+    "defaultAttackDistance": 50.0,
+    "defaultAttackRadius": 50.0,
+    "defaultAttackStartFrame": 27,
+    "weight": 0.9,
+    "invincibleTimeMax": 2.0,
+    "attackStartDistance": 150.0,
+    "attackDelayTime": 1.0,
+    "permissibleDistance": 10.0,
+    "eyeAngle": 70.0,
+    "outLineRate": 0.0,
+    "eyeDistance": 700.0,
+    "spawnRate": 0.1,
+    "habitatType": "air",
+    "divisionNum": {
+      "x": 8,
+      "y": 5
+    },
+    "hitBoxSize": {
+      "x": 256,
+      "y": 256
+    },
+    "localPos": {
+      "x": 0,
+      "y": 0
+    },
+    "defaultAttackLoaclPos": {
+      "x": 50,
+      "y": 8
+    },
+    "animation": {
+      "idle": {
+        "no": 0,
+        "speed": 0.1,
+        "num": 16
+      }
+    },
+    "logic": {
+      "patrol": {
+        "probability": 2.0
+      }
+    }
   }
 }

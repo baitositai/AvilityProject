@@ -11,6 +11,7 @@
 #include "../../Object/Character/Enemy/EnemyMaid.h"
 #include "../../Object/Character/Enemy/EnemyPanda.h"
 #include "../../Object/Character/Enemy/EnemyGaiaGolem.h"
+#include "../../Object/Character/Enemy/EnemyAzagrim.h"
 
 #include "../Utility/UtilityLoad.h"
 #include "EnemyGenerator.h"
@@ -57,6 +58,10 @@ EnemyGenerator::EnemyGenerator()
 	createEnemyMap_.emplace(EnemyTypes::TYPE::GAIA_GOLEM, [this]()
 		{
 			return CreateEnemyGaiaGolem();
+		});
+	createEnemyMap_.emplace(EnemyTypes::TYPE::AZAGRIM, [this]()
+		{
+			return CreateEnemyAzagrim();
 		});
 }
 
@@ -114,6 +119,11 @@ void EnemyGenerator::InitParameter()
 	auto parameterGaiaGolem = std::make_unique<ParameterEnemyGaiaGolem>();
 	parameterGaiaGolem->LoadParameter(jsonGaiaGolemParameter);
 	templateParameterMap_.emplace(EnemyTypes::TYPE::GAIA_GOLEM, std::move(parameterGaiaGolem));
+
+	const auto& jsonAzagrimParameter = jsonParameterMap.at("azagrim").front();
+	auto parameterAzagrim = std::make_unique<ParameterEnemyAzagrim>();
+	parameterAzagrim->LoadParameter(jsonAzagrimParameter);
+	templateParameterMap_.emplace(EnemyTypes::TYPE::AZAGRIM, std::move(parameterAzagrim));
 }
 
 std::unordered_map<EnemyTypes::TYPE, std::vector<std::unique_ptr<EnemyBase>>> EnemyGenerator::CreateEnemyMap(const Parameter& parameter)
@@ -289,4 +299,22 @@ std::unique_ptr<EnemyGaiaGolem> EnemyGenerator::CreateEnemyGaiaGolem()
 	// 生成したものを返す
 	auto parameter = std::make_unique<ParameterEnemyGaiaGolem>(*parameterGaiaGolem);
 	return std::make_unique<EnemyGaiaGolem>(std::move(parameter));
+}
+
+std::unique_ptr<EnemyAzagrim> EnemyGenerator::CreateEnemyAzagrim()
+{
+	// アザグリム用のパラメータにキャスト
+	auto parameterBase = templateParameterMap_.at(EnemyTypes::TYPE::AZAGRIM).get();
+	auto parameterAzagrim = dynamic_cast<ParameterEnemyAzagrim*>(parameterBase);
+
+	// 空の場合
+	if (parameterAzagrim == nullptr)
+	{
+		// 空で返す
+		return nullptr;
+	}
+
+	// 生成したものを返す
+	auto parameter = std::make_unique<ParameterEnemyAzagrim>(*parameterAzagrim);
+	return std::make_unique<EnemyAzagrim>(std::move(parameter));
 }

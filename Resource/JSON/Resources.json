@@ -901,7 +901,7 @@
       "sceneIds": [ 3, 4 ],
       "type": "sprite",
       "divX": 1,
-      "divY": 3,
+      "divY": 4,
       "sizeX": 300,
       "sizeY": 28
     },
@@ -1705,7 +1705,7 @@
       "path": "Resource/Image/Ui/BossSilhouette.png",
       "sceneIds": [ 2 ],
       "type": "sprite",
-      "divX": 3,
+      "divX": 4,
       "divY": 1,
       "sizeX": 96,
       "sizeY": 96
@@ -1896,6 +1896,16 @@
       "divY": 1,
       "sizeX": 128,
       "sizeY": 128
+    },
+    {
+      "key": "azagrim",
+      "path": "Resource/Image/Enemy/Azagrim.png",
+      "sceneIds": [ 4 ],
+      "type": "texture",
+      "divX": 4,
+      "divY": 4,
+      "sizeX": 384,
+      "sizeY": 256
     }
   ]
 }

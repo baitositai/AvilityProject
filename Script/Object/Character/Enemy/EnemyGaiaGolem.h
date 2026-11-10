@@ -27,8 +27,8 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	/// <param name=""></param>
-	void Update(void) override;
+	void Update() override;
+
 private:
 
 	//固有のパラメータ

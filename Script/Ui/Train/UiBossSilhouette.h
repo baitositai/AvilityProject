@@ -35,7 +35,8 @@ private:
 	{
 		{ EnemyTypes::TYPE::PANDA, 0},
 		{ EnemyTypes::TYPE::MAID, 1},
-		{ EnemyTypes::TYPE::GAIA_GOLEM, 2}
+		{ EnemyTypes::TYPE::GAIA_GOLEM, 2},
+		{ EnemyTypes::TYPE::AZAGRIM, 3}
 	};
 
 	// ìGÇÃä«óùéQè∆

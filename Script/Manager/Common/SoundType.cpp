@@ -86,6 +86,7 @@ const std::map<EnemyTypes::TYPE, SoundType::BGM> SoundType::BOSS_SOUND_MAP =
 	{EnemyTypes::TYPE::GAIA_GOLEM, SoundType::BGM::BOSS_MAID },
 	{EnemyTypes::TYPE::MAID, SoundType::BGM::BOSS_MAID },
 	{EnemyTypes::TYPE::PANDA, SoundType::BGM::BOSS_BAMBOO },
+	{EnemyTypes::TYPE::AZAGRIM, SoundType::BGM::BOSS_MAID },
 };
 
 std::string SoundType::GetStringFromBGM(BGM bgmType)
