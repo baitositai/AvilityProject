@@ -35,7 +35,15 @@ public:
 
 private:
 
+	std::function<void()> createHomingEffectCallback_;	
+
+	static constexpr float HOMING_EFFECT_INTERVAL = 0.5f;
+
 	EnemyAzagrim& owner_;
+
+	float timer_ = 0.0f;
+
+	void CreateHomingEffect();
 
 };
 

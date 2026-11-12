@@ -1906,6 +1906,16 @@
       "divY": 4,
       "sizeX": 384,
       "sizeY": 256
+    },
+    {
+      "key": "homingFire",
+      "path": "Resource/Image/Effect/HomingFire.png",
+      "sceneIds": [ 4 ],
+      "type": "texture",
+      "divX": 8,
+      "divY": 1,
+      "sizeX": 16,
+      "sizeY": 32
     }
   ]
 }
