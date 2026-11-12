@@ -40,6 +40,7 @@
 #include "../../Component/Logic/ComponentLogicMaid.h"
 #include "../../Component/Logic/ComponentLogicDropRock.h"
 #include "../../Component/Logic/ComponentLogicGroundRock.h"
+#include "../../Component/Logic/ComponentLogicHoming.h"
 
 #include "../../Object/Character/CharacterBase.h" 
 #include "../../Object/Character/Player.h" 
@@ -47,6 +48,7 @@
 #include "../../Object/Character/Enemy/EnemyPanda.h" 
 #include "../../Object/Character/Enemy/EnemyMaid.h" 
 #include "../../Object/Character/Enemy/EnemyGaiaGolem.h" 
+#include "../../Object/Character/Enemy/EnemyAzagrim.h" 
 #include "../../Object/ActorBase.h" 
 
 #include "FactoryComponent.h"
@@ -364,6 +366,18 @@ std::unique_ptr<ComponentLogicGroundRock> FactoryComponent::CreateComponentLogic
     return std::make_unique<ComponentLogicGroundRock>(*enemyPtr);
 }
 
+std::unique_ptr<ComponentLogicHoming> FactoryComponent::CreateComponentLogicHoming(ActorBase& owner)
+{
+    auto* enemyPtr = dynamic_cast<EnemyAzagrim*>(&owner);
+
+    if (enemyPtr == nullptr)
+    {
+        // ÉLÉÉÉXÉgÇ…é∏îsÇµÇΩèÍçánullptrÇï‘Ç∑
+        return nullptr;
+    }
+    return std::make_unique<ComponentLogicHoming>(*enemyPtr);
+}
+
 std::unique_ptr<ComponentKnockBack> FactoryComponent::CreateComponentKnockBack(ActorBase& owner)
 {
     return std::make_unique<ComponentKnockBack>(owner);
@@ -655,6 +669,10 @@ FactoryComponent::FactoryComponent()
     componentCreateMap_.emplace("debugCreateItemAvility", [this](ActorBase& owner)
         {
             return CreateComponentDebugCreateItemAvility(owner);
+        });
+    componentCreateMap_.emplace("homing", [this](ActorBase& owner)
+        {
+            return CreateComponentLogicHoming(owner);
         });
     componentCreateMap_.emplace("cameraRangeCheck", [this](ActorBase& owner)
         {

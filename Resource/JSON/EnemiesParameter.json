@@ -863,7 +863,7 @@
     "criticalDamageRate": 1.6,
     "direction": true,
     "transparent": true,
-    "moveSpeed": 2.5,
+    "moveSpeed": 0.5,
     "hp": 2000,
     "bossUiNamePlateIndex": 2,
     "attackPower": 50,
@@ -906,7 +906,7 @@
       }
     },
     "logic": {
-      "patrol": {
+      "homing": {
         "probability": 2.0
       }
     }

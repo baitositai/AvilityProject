@@ -276,6 +276,7 @@
     <ClCompile Include="Script\Ui\Enemy\UiWarning.cpp" />
     <ClCompile Include="Script\Object\Character\Enemy\EnemyAzagrim.cpp" />
     <ClCompile Include="Script\Parameter\Character\Enemy\ParameterEnemyAzagrim.cpp" />
+    <ClCompile Include="Script\Component\Logic\ComponentLogicHoming.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\System\PlayerCheckAnnihilation.h" />
@@ -607,6 +608,7 @@
     <ClInclude Include="Script\Ui\Enemy\UiWarning.h" />
     <ClInclude Include="Script\Object\Character\Enemy\EnemyAzagrim.h" />
     <ClInclude Include="Script\Parameter\Character\Enemy\ParameterEnemyAzagrim.h" />
+    <ClInclude Include="Script\Component\Logic\ComponentLogicHoming.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AvilityProject.rc" />

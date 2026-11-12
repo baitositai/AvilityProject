@@ -26,9 +26,24 @@ public:
 	/// 更新
 	/// </summary>
 	/// <param name=""></param>
+	void Init(void) override;
+
+	/// <summary>
+	/// 更新
+	/// </summary>
+	/// <param name=""></param>
 	void Update(void) override;
 
+	/// <summary>
+	/// 移動処理
+	/// </summary>
+	void MobiusLoop();
+
 private:
+
+	float timer_;
+	Vector2F center_;
+
 
 	//固有のパラメータ
 	ParameterEnemyAzagrim* parameterEnemyAzagrim_;
